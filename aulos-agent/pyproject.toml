@@ -1,0 +1,37 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "aulos-agent"
+version = "0.1.0"
+description = "LangChain / LangGraph agent runtime for the aulos initiative"
+readme = "README.md"
+requires-python = ">=3.11"
+license = { text = "MIT" }
+authors = [{ name = "aulos" }]
+dependencies = [
+  "langchain-core>=0.3.0",
+  "langgraph>=0.2.0",
+  "langchain-openai>=0.2.0",
+  "pydantic>=2.0",
+  "pydantic-settings>=2.0",
+  "python-dotenv>=1.0",
+]
+
+[project.optional-dependencies]
+anthropic = ["langchain-anthropic>=0.2.0"]
+dev = [
+  "pytest>=8.0",
+  "pytest-asyncio>=0.23",
+]
+
+[project.scripts]
+aulos-agent = "aulos_agent.cli:main"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/aulos_agent"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]

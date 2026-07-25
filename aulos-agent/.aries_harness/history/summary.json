@@ -1,0 +1,562 @@
+{
+  "generated_at": "2026-07-25T10:58:33+00:00",
+  "project_root": "/home/ubuntu/hackathon/aulos/aulos-agent",
+  "harness_root": "/home/ubuntu/hackathon/aulos/aulos-agent/.aries_harness",
+  "history_root": "/home/ubuntu/hackathon/aulos/aulos-agent/.aries_harness/history",
+  "project_id": "aulos-agent",
+  "owner": "ubuntu",
+  "branch": "not a git repository",
+  "working_tree": {
+    "clean": false,
+    "change_count": 110,
+    "changes": [
+      {
+        "status": "??",
+        "path": ".aries_harness/ADR.md"
+      },
+      {
+        "status": "??",
+        "path": ".aries_harness/ARIES_HARNESS_FINGERPRINT.json"
+      },
+      {
+        "status": "??",
+        "path": ".aries_harness/EVAL.md"
+      },
+      {
+        "status": "??",
+        "path": ".aries_harness/INDEX.md"
+      },
+      {
+        "status": "??",
+        "path": ".aries_harness/JOURNAL.md"
+      },
+      {
+        "status": "??",
+        "path": ".aries_harness/MEMORY.md"
+      },
+      {
+        "status": "??",
+        "path": ".aries_harness/MISSION.md"
+      },
+      {
+        "status": "??",
+        "path": ".aries_harness/PIPELINE.md"
+      },
+      {
+        "status": "??",
+        "path": ".aries_harness/README.md"
+      },
+      {
+        "status": "??",
+        "path": ".aries_harness/RISKS.md"
+      },
+      {
+        "status": "??",
+        "path": ".aries_harness/RUNBOOK.md"
+      },
+      {
+        "status": "??",
+        "path": ".aries_harness/STATE.md"
+      },
+      {
+        "status": "??",
+        "path": ".aries_harness/TASK_STACK.md"
+      },
+      {
+        "status": "??",
+        "path": ".aries_harness/archive/.gitkeep"
+      },
+      {
+        "status": "??",
+        "path": ".aries_harness/checkpoints/.gitkeep"
+      },
+      {
+        "status": "??",
+        "path": ".aries_harness/decisions/.gitkeep"
+      },
+      {
+        "status": "??",
+        "path": ".aries_harness/decisions/adrs/.gitkeep"
+      },
+      {
+        "status": "??",
+        "path": ".aries_harness/decisions/adrs/ADR-001-langgraph-runtime.md"
+      },
+      {
+        "status": "??",
+        "path": ".aries_harness/decisions/adrs/README.md"
+      },
+      {
+        "status": "??",
+        "path": ".aries_harness/decisions/architecture/.gitkeep"
+      },
+      {
+        "status": "??",
+        "path": ".aries_harness/decisions/architecture/ARCH-001-langchain-agent-architecture.md"
+      },
+      {
+        "status": "??",
+        "path": ".aries_harness/decisions/architecture/README.md"
+      },
+      {
+        "status": "??",
+        "path": ".aries_harness/history/.gitkeep"
+      },
+      {
+        "status": "??",
+        "path": ".aries_harness/history/DAILY_SUMMARY_INDEX.md"
+      },
+      {
+        "status": "??",
+        "path": ".aries_harness/history/DOC_TRACE.md"
+      },
+      {
+        "status": "??",
+        "path": ".aries_harness/history/README.md"
+      },
+      {
+        "status": "??",
+        "path": ".aries_harness/history/RETROSPECTIVE.md"
+      },
+      {
+        "status": "??",
+        "path": ".aries_harness/history/ROADMAP.md"
+      },
+      {
+        "status": "??",
+        "path": ".aries_harness/history/STATUS.md"
+      },
+      {
+        "status": "??",
+        "path": ".aries_harness/history/TIMELINE.md"
+      },
+      {
+        "status": "??",
+        "path": ".aries_harness/history/daily/.gitkeep"
+      },
+      {
+        "status": "??",
+        "path": ".aries_harness/history/daily/2026-07-25.md"
+      },
+      {
+        "status": "??",
+        "path": ".aries_harness/history/doc-trace.json"
+      },
+      {
+        "status": "??",
+        "path": ".aries_harness/history/summary.json"
+      },
+      {
+        "status": "??",
+        "path": ".aries_harness/layers/MetaDefineLayer/README.md"
+      },
+      {
+        "status": "??",
+        "path": ".aries_harness/layers/RunCookingLayer/README.md"
+      },
+      {
+        "status": "??",
+        "path": ".aries_harness/layers/SharedSupportSurface/README.md"
+      },
+      {
+        "status": "??",
+        "path": ".aries_harness/memory/.gitkeep"
+      },
+      {
+        "status": "??",
+        "path": ".aries_harness/memory/INDEX.md"
+      },
+      {
+        "status": "??",
+        "path": ".aries_harness/memory/cards/.gitkeep"
+      },
+      {
+        "status": "??",
+        "path": ".aries_harness/memory/cards/README.md"
+      },
+      {
+        "status": "??",
+        "path": ".aries_harness/references/.gitkeep"
+      },
+      {
+        "status": "??",
+        "path": ".aries_harness/references/HDM-001-harness-design-memo.md"
+      },
+      {
+        "status": "??",
+        "path": ".aries_harness/references/REG-001-artifact-register.md"
+      },
+      {
+        "status": "??",
+        "path": ".aries_harness/references/TRACE-001-value-traceability.md"
+      },
+      {
+        "status": "??",
+        "path": ".aries_harness/references/domain/.gitkeep"
+      },
+      {
+        "status": "??",
+        "path": ".aries_harness/references/domain/README.md"
+      },
+      {
+        "status": "??",
+        "path": ".aries_harness/references/iterations/.gitkeep"
+      },
+      {
+        "status": "??",
+        "path": ".aries_harness/references/iterations/README.md"
+      },
+      {
+        "status": "??",
+        "path": ".aries_harness/references/requests/.gitkeep"
+      },
+      {
+        "status": "??",
+        "path": ".aries_harness/references/requests/README.md"
+      },
+      {
+        "status": "??",
+        "path": ".aries_harness/references/requests/REQ-001-langchain-agent-bootstrap.md"
+      },
+      {
+        "status": "??",
+        "path": ".aries_harness/references/risks/.gitkeep"
+      },
+      {
+        "status": "??",
+        "path": ".aries_harness/references/risks/README.md"
+      },
+      {
+        "status": "??",
+        "path": ".aries_harness/references/specs/.gitkeep"
+      },
+      {
+        "status": "??",
+        "path": ".aries_harness/references/specs/README.md"
+      },
+      {
+        "status": "??",
+        "path": ".aries_harness/references/specs/SPEC-001-langchain-agent-runtime.md"
+      },
+      {
+        "status": "??",
+        "path": ".aries_harness/references/stories/.gitkeep"
+      },
+      {
+        "status": "??",
+        "path": ".aries_harness/references/stories/README.md"
+      },
+      {
+        "status": "??",
+        "path": ".aries_harness/references/stories/STORY-PACK-001-agent-bootstrap.md"
+      },
+      {
+        "status": "??",
+        "path": ".aries_harness/references/tasks/.gitkeep"
+      },
+      {
+        "status": "??",
+        "path": ".aries_harness/references/tasks/EC-001-bootstrap-execution-card.md"
+      },
+      {
+        "status": "??",
+        "path": ".aries_harness/references/tasks/README.md"
+      },
+      {
+        "status": "??",
+        "path": ".aries_harness/runs/.gitkeep"
+      },
+      {
+        "status": "??",
+        "path": ".aries_harness/runs/deployments/.gitkeep"
+      },
+      {
+        "status": "??",
+        "path": ".aries_harness/runs/deployments/README.md"
+      },
+      {
+        "status": "??",
+        "path": ".aries_harness/runs/github/.gitkeep"
+      },
+      {
+        "status": "??",
+        "path": ".aries_harness/runs/github/README.md"
+      },
+      {
+        "status": "??",
+        "path": ".aries_harness/runs/reports/.gitkeep"
+      },
+      {
+        "status": "??",
+        "path": ".aries_harness/runs/reports/README.md"
+      },
+      {
+        "status": "??",
+        "path": ".aries_harness/runs/tests/.gitkeep"
+      },
+      {
+        "status": "??",
+        "path": ".aries_harness/runs/tests/README.md"
+      },
+      {
+        "status": "??",
+        "path": ".aries_harness/runs/tests/VR-001-story-001-bootstrap.md"
+      },
+      {
+        "status": "??",
+        "path": ".env.example"
+      },
+      {
+        "status": "??",
+        "path": ".gitignore"
+      },
+      {
+        "status": "??",
+        "path": "AGENTS.md"
+      },
+      {
+        "status": "??",
+        "path": "CLAUDE.md"
+      },
+      {
+        "status": "??",
+        "path": "README.md"
+      },
+      {
+        "status": "??",
+        "path": "pyproject.toml"
+      },
+      {
+        "status": "??",
+        "path": "scripts/aries-harness/ah.sh"
+      },
+      {
+        "status": "??",
+        "path": "scripts/aries-harness/aries-harness.sh"
+      },
+      {
+        "status": "??",
+        "path": "scripts/aries-harness/dev-history.py"
+      },
+      {
+        "status": "??",
+        "path": "scripts/aries-harness/init-project.sh"
+      },
+      {
+        "status": "??",
+        "path": "scripts/aries-harness/memory-inspect.py"
+      },
+      {
+        "status": "??",
+        "path": "scripts/aries-harness/pipeline-inspect.py"
+      },
+      {
+        "status": "??",
+        "path": "scripts/aries-harness/runs-inspect.py"
+      },
+      {
+        "status": "??",
+        "path": "scripts/aries-harness/well-organized.py"
+      },
+      {
+        "status": "??",
+        "path": "src/aulos_agent/__init__.py"
+      },
+      {
+        "status": "??",
+        "path": "src/aulos_agent/__main__.py"
+      },
+      {
+        "status": "??",
+        "path": "src/aulos_agent/cli.py"
+      },
+      {
+        "status": "??",
+        "path": "src/aulos_agent/config/__init__.py"
+      },
+      {
+        "status": "??",
+        "path": "src/aulos_agent/config/settings.py"
+      },
+      {
+        "status": "??",
+        "path": "src/aulos_agent/graph/__init__.py"
+      },
+      {
+        "status": "??",
+        "path": "src/aulos_agent/graph/builder.py"
+      },
+      {
+        "status": "??",
+        "path": "src/aulos_agent/graph/nodes.py"
+      },
+      {
+        "status": "??",
+        "path": "src/aulos_agent/graph/state.py"
+      },
+      {
+        "status": "??",
+        "path": "src/aulos_agent/llm/__init__.py"
+      },
+      {
+        "status": "??",
+        "path": "src/aulos_agent/llm/factory.py"
+      },
+      {
+        "status": "??",
+        "path": "src/aulos_agent/memory/__init__.py"
+      },
+      {
+        "status": "??",
+        "path": "src/aulos_agent/memory/checkpointer.py"
+      },
+      {
+        "status": "??",
+        "path": "src/aulos_agent/observability/__init__.py"
+      },
+      {
+        "status": "??",
+        "path": "src/aulos_agent/observability/tracing.py"
+      },
+      {
+        "status": "??",
+        "path": "src/aulos_agent/prompts/__init__.py"
+      },
+      {
+        "status": "??",
+        "path": "src/aulos_agent/prompts/templates.py"
+      },
+      {
+        "status": "??",
+        "path": "src/aulos_agent/tools/__init__.py"
+      },
+      {
+        "status": "??",
+        "path": "src/aulos_agent/tools/builtin.py"
+      },
+      {
+        "status": "??",
+        "path": "src/aulos_agent/tools/registry.py"
+      },
+      {
+        "status": "??",
+        "path": "tests/test_graph.py"
+      },
+      {
+        "status": "??",
+        "path": "tests/test_settings.py"
+      },
+      {
+        "status": "??",
+        "path": "tests/test_tools.py"
+      }
+    ]
+  },
+  "current_phase": "Summarize complete for STORY-001 \u2014 ready for STORY-002 (live provider)",
+  "current_milestone": [
+    "no current milestone recorded"
+  ],
+  "next_action": [
+    "no next action recorded"
+  ],
+  "roadmap": {
+    "now": [
+      "no next action recorded"
+    ],
+    "next": [
+      "no next action recorded"
+    ],
+    "later": [
+      "In scope: single-agent LangGraph ReAct-style package, config/LLM/tools/memory/observability seams, offline verification, harness artifact ladder",
+      "Out of scope: multi-agent swarm product, production deployment, custom UI, model training",
+      "Package installs; offline `pytest` passes; ARCH-001 / SPEC-001 / STORY-001 are linked in the artifact register; CLI runs with `AULOS_LLM_PROVIDER=fake`"
+    ]
+  },
+  "retrospective": {
+    "recent_changes": [
+      "STORY-001 bootstrap complete for `aulos-agent`",
+      "Applied aries-harness init + REQ/SPEC/STORY/ARCH/ADR ladder",
+      "Scaffolded LangChain/LangGraph package: config, llm, prompts, tools, memory, graph, observability, cli",
+      "initialized `.aries_harness/`",
+      "wrote `ARIES_HARNESS_FINGERPRINT.json`",
+      "no execution history recorded yet"
+    ],
+    "wins": [
+      "STORY-001 bootstrap complete for `aulos-agent`",
+      "Applied aries-harness init + REQ/SPEC/STORY/ARCH/ADR ladder",
+      "Scaffolded LangChain/LangGraph package: config, llm, prompts, tools, memory, graph, observability, cli",
+      "initialized `.aries_harness/`"
+    ],
+    "needs_attention": [
+      "working tree is dirty with 110 tracked or untracked change(s)",
+      "no explicit next-up slice is recorded"
+    ],
+    "durable_reminders": [
+      "promote only repeatable pitfalls, not one-off incidents"
+    ]
+  },
+  "daily_summaries": [
+    {
+      "date": "2026-07-25",
+      "journal_headings": [
+        "2026-07-25T11:00:00Z",
+        "2026-07-25T10:55:22Z"
+      ],
+      "journal_items": [
+        "STORY-001 bootstrap complete for `aulos-agent`",
+        "Applied aries-harness init + REQ/SPEC/STORY/ARCH/ADR ladder",
+        "Scaffolded LangChain/LangGraph package: config, llm, prompts, tools, memory, graph, observability, cli",
+        "Verified: `pytest` 7 passed; CLI smoke with `AULOS_LLM_PROVIDER=fake`",
+        "Residual: live provider invoke (STORY-002), durable memory (STORY-003)",
+        "initialized `.aries_harness/`",
+        "wrote `ARIES_HARNESS_FINGERPRINT.json`",
+        "no execution history recorded yet"
+      ],
+      "feature_evolution": [
+        "STORY-001 bootstrap complete for `aulos-agent`",
+        "Applied aries-harness init + REQ/SPEC/STORY/ARCH/ADR ladder",
+        "Scaffolded LangChain/LangGraph package: config, llm, prompts, tools, memory, graph, observability, cli",
+        "Verified: `pytest` 7 passed; CLI smoke with `AULOS_LLM_PROVIDER=fake`",
+        "initialized `.aries_harness/`",
+        "wrote `ARIES_HARNESS_FINGERPRINT.json`",
+        "no execution history recorded yet"
+      ],
+      "git_commits": [],
+      "working_tree_hints": [
+        "?? .aries_harness/ADR.md",
+        "?? .aries_harness/ARIES_HARNESS_FINGERPRINT.json",
+        "?? .aries_harness/EVAL.md",
+        "?? .aries_harness/INDEX.md",
+        "?? .aries_harness/JOURNAL.md",
+        "?? .aries_harness/MEMORY.md",
+        "?? .aries_harness/MISSION.md",
+        "?? .aries_harness/PIPELINE.md"
+      ]
+    }
+  ],
+  "doc_trace_summary": {
+    "document_count": 48,
+    "docs_with_issues": 0,
+    "dirty_docs": 48,
+    "by_layer": {
+      "MetaDefineLayer": 24,
+      "SharedSupportSurface": 14,
+      "RunCookingLayer": 10
+    },
+    "by_effective_status": {
+      "active": 39,
+      "generated": 9
+    }
+  },
+  "evidence_sources": [
+    ".aries_harness/MISSION.md",
+    ".aries_harness/TASK_STACK.md",
+    ".aries_harness/STATE.md",
+    ".aries_harness/JOURNAL.md",
+    ".aries_harness/EVAL.md",
+    ".aries_harness/MEMORY.md",
+    "git status --porcelain=v1",
+    "git log",
+    ".aries_harness/**/*.md frontmatter + git file history"
+  ]
+}
