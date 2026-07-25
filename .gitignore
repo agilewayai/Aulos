@@ -23,6 +23,9 @@ venv/
 .vscode/
 .DS_Store
 
+# Node
+node_modules/
+
 # Runtime / local
 *.log
 .langsmith/

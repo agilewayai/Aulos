@@ -1,0 +1,34 @@
+---
+schema_version: "0.1"
+project_id: "{{PROJECT_ID}}"
+owner: "{{OWNER}}"
+doc_role: "pipeline-tasks-readme"
+harness_layer: "MetaDefineLayer"
+managed_by: "aries-harness"
+fingerprint: "aries-harness/bootstrap-doc/v1"
+generated_by: "/aries-harness init"
+initialized_at: "{{DATE}}"
+---
+
+# Task Breakdown
+
+Use this directory for detailed work-breakdown artifacts that are too large or too structured for `TASK_STACK.md`.
+
+## Recommended naming
+
+- `TASK-*`
+- `task-breakdown-*`
+- `slice-*`
+- `backlog-*`
+
+## Each artifact should make clear
+
+- work slices
+- dependencies
+- owner and status
+- linkage to iteration or request artifacts
+
+## Layer rule
+
+- this directory belongs to `MetaDefineLayer`
+- keep the live working queue in `TASK_STACK.md`, not here

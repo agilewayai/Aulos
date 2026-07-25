@@ -1,0 +1,33 @@
+---
+schema_version: "0.1"
+project_id: "{{PROJECT_ID}}"
+owner: "{{OWNER}}"
+doc_role: "pipeline-domain-readme"
+harness_layer: "MetaDefineLayer"
+managed_by: "aries-harness"
+fingerprint: "aries-harness/bootstrap-doc/v1"
+generated_by: "/aries-harness init"
+initialized_at: "{{DATE}}"
+---
+
+# Domain Analysis
+
+Use this directory for domain analysis, bounded-context notes, modeling outputs, and ubiquitous-language artifacts.
+
+## Recommended naming
+
+- `DOM-*`
+- `domain-*`
+- `model-*`
+
+## Each artifact should make clear
+
+- business concepts and language
+- key invariants
+- context boundaries
+- explicit vs inferred conclusions
+
+## Layer rule
+
+- this directory belongs to `MetaDefineLayer`
+- do not treat runtime logs or test evidence as domain truth

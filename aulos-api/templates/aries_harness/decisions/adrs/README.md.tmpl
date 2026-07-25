@@ -1,0 +1,32 @@
+---
+schema_version: "0.1"
+project_id: "{{PROJECT_ID}}"
+owner: "{{OWNER}}"
+doc_role: "pipeline-adrs-readme"
+harness_layer: "MetaDefineLayer"
+managed_by: "aries-harness"
+fingerprint: "aries-harness/bootstrap-doc/v1"
+generated_by: "/aries-harness init"
+initialized_at: "{{DATE}}"
+---
+
+# ADR Records
+
+Use this directory for detailed architecture decision records that are linked from the root `ADR.md` index.
+
+## Recommended naming
+
+- `ADR-*`
+- `decision-*`
+
+## Each artifact should make clear
+
+- decision statement
+- context and tradeoffs
+- consequences and affected artifacts
+- owner and status
+
+## Layer rule
+
+- this directory belongs to `MetaDefineLayer`
+- keep `ADR.md` as the short decision index and avoid duplicating transient execution logs here
