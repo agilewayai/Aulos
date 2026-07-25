@@ -1,16 +1,16 @@
 {
   "summary": {
-    "document_count": 48,
+    "document_count": 52,
     "docs_with_issues": 0,
     "dirty_docs": 0,
     "by_layer": {
-      "MetaDefineLayer": 24,
-      "SharedSupportSurface": 14,
+      "MetaDefineLayer": 27,
+      "SharedSupportSurface": 15,
       "RunCookingLayer": 10
     },
     "by_effective_status": {
-      "active": 39,
-      "generated": 9
+      "active": 42,
+      "generated": 10
     }
   },
   "documents": [
@@ -103,14 +103,14 @@
       "layer": "SharedSupportSurface",
       "declared_layer": "SharedSupportSurface",
       "effective_status": "generated",
-      "effective_since": "2026-07-25T16:23:54+00:00",
+      "effective_since": "2026-07-25T18:52:17+00:00",
       "managed_by": "aries-harness",
       "fingerprint": "aries-harness/bootstrap-doc/v1",
       "last_updated_at": "",
       "completed_at": "",
       "timebox_actual": "",
-      "content_fingerprint": "sha256:46d0ae178a405de6d4a4bf58f5b2ba9d8e4930125df96e8740a0d92d941cdba9",
-      "observed_content_fingerprint": "sha256:46d0ae178a405de6d4a4bf58f5b2ba9d8e4930125df96e8740a0d92d941cdba9",
+      "content_fingerprint": "sha256:f70c6cce4eb8bba57d59d6e8483a95e6b138734e01fb496a113d0742b6dc2ede",
+      "observed_content_fingerprint": "sha256:f70c6cce4eb8bba57d59d6e8483a95e6b138734e01fb496a113d0742b6dc2ede",
       "trace_history_source": "filesystem-only",
       "trace_last_commit_sha": "",
       "trace_last_commit_at": "",
@@ -122,11 +122,16 @@
         "trace_revision_count": "0"
       },
       "latest_commit": {
-        "sha": "0d5cb01",
-        "date": "2026-07-25",
-        "subject": "Initial commit: Aulos hackathon workspace with LangChain agent runtime."
+        "sha": "555cf53",
+        "date": "2026-07-26",
+        "subject": "Ship listening product, mandatory harness, facility layout, and UTC/local time."
       },
       "recent_updates": [
+        {
+          "sha": "555cf53",
+          "date": "2026-07-26",
+          "subject": "Ship listening product, mandatory harness, facility layout, and UTC/local time."
+        },
         {
           "sha": "0d5cb01",
           "date": "2026-07-25",
@@ -150,8 +155,8 @@
       "last_updated_at": "",
       "completed_at": "",
       "timebox_actual": "",
-      "content_fingerprint": "sha256:0ba65701bfd6e3476c818ece377d5c5a932d7efc517e9bd0e50030a1a7aea835",
-      "observed_content_fingerprint": "sha256:0ba65701bfd6e3476c818ece377d5c5a932d7efc517e9bd0e50030a1a7aea835",
+      "content_fingerprint": "sha256:0f4326c4a9dcacee31696a05dfe7195438cb98bb24e65cc7fba5a3f234467ba6",
+      "observed_content_fingerprint": "sha256:0f4326c4a9dcacee31696a05dfe7195438cb98bb24e65cc7fba5a3f234467ba6",
       "trace_history_source": "filesystem-only",
       "trace_last_commit_sha": "",
       "trace_last_commit_at": "",
@@ -191,8 +196,8 @@
       "last_updated_at": "",
       "completed_at": "",
       "timebox_actual": "",
-      "content_fingerprint": "sha256:2b7ac7c276f6de6c144ec95ded75992f4d4a217b7d20dee428be49d69b28ad6d",
-      "observed_content_fingerprint": "sha256:2b7ac7c276f6de6c144ec95ded75992f4d4a217b7d20dee428be49d69b28ad6d",
+      "content_fingerprint": "sha256:f5665dcc6fd34ec007858cc0f33fe9b884f0dea7210190d79f361565ea586c61",
+      "observed_content_fingerprint": "sha256:f5665dcc6fd34ec007858cc0f33fe9b884f0dea7210190d79f361565ea586c61",
       "trace_history_source": "filesystem-only",
       "trace_last_commit_sha": "",
       "trace_last_commit_at": "",
@@ -204,11 +209,16 @@
         "trace_revision_count": "0"
       },
       "latest_commit": {
-        "sha": "93c0f6e",
-        "date": "2026-07-25",
-        "subject": "Add aulos-skills, aulos-ops, host deploy, and fleet operating defaults."
+        "sha": "555cf53",
+        "date": "2026-07-26",
+        "subject": "Ship listening product, mandatory harness, facility layout, and UTC/local time."
       },
       "recent_updates": [
+        {
+          "sha": "555cf53",
+          "date": "2026-07-26",
+          "subject": "Ship listening product, mandatory harness, facility layout, and UTC/local time."
+        },
         {
           "sha": "93c0f6e",
           "date": "2026-07-25",
@@ -332,11 +342,16 @@
         "trace_revision_count": "0"
       },
       "latest_commit": {
-        "sha": "0d5cb01",
-        "date": "2026-07-25",
-        "subject": "Initial commit: Aulos hackathon workspace with LangChain agent runtime."
+        "sha": "555cf53",
+        "date": "2026-07-26",
+        "subject": "Ship listening product, mandatory harness, facility layout, and UTC/local time."
       },
       "recent_updates": [
+        {
+          "sha": "555cf53",
+          "date": "2026-07-26",
+          "subject": "Ship listening product, mandatory harness, facility layout, and UTC/local time."
+        },
         {
           "sha": "0d5cb01",
           "date": "2026-07-25",
@@ -553,6 +568,37 @@
       "issues": []
     },
     {
+      "path": "decisions/adrs/ADR-003-listening-via-agent-tools.md",
+      "repo_path": ".aries_harness/decisions/adrs/ADR-003-listening-via-agent-tools.md",
+      "doc_role": "adr-record",
+      "layer": "MetaDefineLayer",
+      "declared_layer": "MetaDefineLayer",
+      "effective_status": "active",
+      "effective_since": "2026-07-25T17:10:00Z",
+      "managed_by": "aries-harness",
+      "fingerprint": "aries-harness/bootstrap-doc/v1",
+      "last_updated_at": "",
+      "completed_at": "",
+      "timebox_actual": "",
+      "content_fingerprint": "sha256:4f540710adb9426133410b7cfb75fb5ec41b273b68e37f5ba9a3fdca71f8ab85",
+      "observed_content_fingerprint": "sha256:4f540710adb9426133410b7cfb75fb5ec41b273b68e37f5ba9a3fdca71f8ab85",
+      "trace_history_source": "filesystem-only",
+      "trace_last_commit_sha": "",
+      "trace_last_commit_at": "",
+      "trace_revision_count": "0",
+      "observed_trace": {
+        "trace_history_source": "filesystem-only",
+        "trace_last_commit_sha": "",
+        "trace_last_commit_at": "",
+        "trace_revision_count": "0"
+      },
+      "latest_commit": null,
+      "recent_updates": [],
+      "dirty": false,
+      "issue_count": 0,
+      "issues": []
+    },
+    {
       "path": "decisions/adrs/README.md",
       "repo_path": ".aries_harness/decisions/adrs/README.md",
       "doc_role": "pipeline-adrs-readme",
@@ -619,17 +665,53 @@
         "trace_revision_count": "0"
       },
       "latest_commit": {
-        "sha": "0d5cb01",
-        "date": "2026-07-25",
-        "subject": "Initial commit: Aulos hackathon workspace with LangChain agent runtime."
+        "sha": "555cf53",
+        "date": "2026-07-26",
+        "subject": "Ship listening product, mandatory harness, facility layout, and UTC/local time."
       },
       "recent_updates": [
+        {
+          "sha": "555cf53",
+          "date": "2026-07-26",
+          "subject": "Ship listening product, mandatory harness, facility layout, and UTC/local time."
+        },
         {
           "sha": "0d5cb01",
           "date": "2026-07-25",
           "subject": "Initial commit: Aulos hackathon workspace with LangChain agent runtime."
         }
       ],
+      "dirty": false,
+      "issue_count": 0,
+      "issues": []
+    },
+    {
+      "path": "decisions/architecture/ARCH-002-agent-orchestrated-listening.md",
+      "repo_path": ".aries_harness/decisions/architecture/ARCH-002-agent-orchestrated-listening.md",
+      "doc_role": "system-design",
+      "layer": "MetaDefineLayer",
+      "declared_layer": "MetaDefineLayer",
+      "effective_status": "active",
+      "effective_since": "2026-07-25T17:10:00Z",
+      "managed_by": "aries-harness",
+      "fingerprint": "aries-harness/bootstrap-doc/v1",
+      "last_updated_at": "",
+      "completed_at": "",
+      "timebox_actual": "",
+      "content_fingerprint": "sha256:eaeca628220c9e1c56450c4f99fe9a965edd76a84da2f4fac79a467213e128c3",
+      "observed_content_fingerprint": "sha256:eaeca628220c9e1c56450c4f99fe9a965edd76a84da2f4fac79a467213e128c3",
+      "trace_history_source": "filesystem-only",
+      "trace_last_commit_sha": "",
+      "trace_last_commit_at": "",
+      "trace_revision_count": "0",
+      "observed_trace": {
+        "trace_history_source": "filesystem-only",
+        "trace_last_commit_sha": "",
+        "trace_last_commit_at": "",
+        "trace_revision_count": "0"
+      },
+      "latest_commit": null,
+      "recent_updates": [],
       "dirty": false,
       "issue_count": 0,
       "issues": []
@@ -682,14 +764,14 @@
       "layer": "SharedSupportSurface",
       "declared_layer": "SharedSupportSurface",
       "effective_status": "generated",
-      "effective_since": "2026-07-25T10:58:33+00:00",
+      "effective_since": "2026-07-25T16:42:04+00:00",
       "managed_by": "aries-harness",
       "fingerprint": "aries-harness/history-doc/v1",
       "last_updated_at": "",
       "completed_at": "",
       "timebox_actual": "",
-      "content_fingerprint": "sha256:b1a52c10575405722d0335402129a27de5a6ffd5792bff5ef30bea1ffd2cfa30",
-      "observed_content_fingerprint": "sha256:b1a52c10575405722d0335402129a27de5a6ffd5792bff5ef30bea1ffd2cfa30",
+      "content_fingerprint": "sha256:5472f0fbd7b338638072f83c78426d75e6d828f52a83427186dfb0d4d11644c9",
+      "observed_content_fingerprint": "sha256:5472f0fbd7b338638072f83c78426d75e6d828f52a83427186dfb0d4d11644c9",
       "trace_history_source": "filesystem-only",
       "trace_last_commit_sha": "",
       "trace_last_commit_at": "",
@@ -701,11 +783,16 @@
         "trace_revision_count": "0"
       },
       "latest_commit": {
-        "sha": "0d5cb01",
-        "date": "2026-07-25",
-        "subject": "Initial commit: Aulos hackathon workspace with LangChain agent runtime."
+        "sha": "555cf53",
+        "date": "2026-07-26",
+        "subject": "Ship listening product, mandatory harness, facility layout, and UTC/local time."
       },
       "recent_updates": [
+        {
+          "sha": "555cf53",
+          "date": "2026-07-26",
+          "subject": "Ship listening product, mandatory harness, facility layout, and UTC/local time."
+        },
         {
           "sha": "0d5cb01",
           "date": "2026-07-25",
@@ -723,14 +810,14 @@
       "layer": "SharedSupportSurface",
       "declared_layer": "SharedSupportSurface",
       "effective_status": "generated",
-      "effective_since": "2026-07-25T10:58:33+00:00",
+      "effective_since": "2026-07-25T16:42:04+00:00",
       "managed_by": "aries-harness",
       "fingerprint": "aries-harness/history-doc/v1",
       "last_updated_at": "",
       "completed_at": "",
       "timebox_actual": "",
-      "content_fingerprint": "sha256:c803c6f5cb7d90f91f5064fc4ebd182916edd48d43d3976d71c8c18fc635712e",
-      "observed_content_fingerprint": "sha256:c803c6f5cb7d90f91f5064fc4ebd182916edd48d43d3976d71c8c18fc635712e",
+      "content_fingerprint": "sha256:01693d6bee51a4efc240c7707f4c28f003bf2ecfb75769c017cd1ee51f24949e",
+      "observed_content_fingerprint": "sha256:01693d6bee51a4efc240c7707f4c28f003bf2ecfb75769c017cd1ee51f24949e",
       "trace_history_source": "filesystem-only",
       "trace_last_commit_sha": "",
       "trace_last_commit_at": "",
@@ -742,11 +829,16 @@
         "trace_revision_count": "0"
       },
       "latest_commit": {
-        "sha": "0d5cb01",
-        "date": "2026-07-25",
-        "subject": "Initial commit: Aulos hackathon workspace with LangChain agent runtime."
+        "sha": "555cf53",
+        "date": "2026-07-26",
+        "subject": "Ship listening product, mandatory harness, facility layout, and UTC/local time."
       },
       "recent_updates": [
+        {
+          "sha": "555cf53",
+          "date": "2026-07-26",
+          "subject": "Ship listening product, mandatory harness, facility layout, and UTC/local time."
+        },
         {
           "sha": "0d5cb01",
           "date": "2026-07-25",
@@ -764,14 +856,14 @@
       "layer": "SharedSupportSurface",
       "declared_layer": "SharedSupportSurface",
       "effective_status": "generated",
-      "effective_since": "2026-07-25T10:58:33+00:00",
+      "effective_since": "2026-07-25T16:42:04+00:00",
       "managed_by": "aries-harness",
       "fingerprint": "aries-harness/history-doc/v1",
       "last_updated_at": "",
       "completed_at": "",
       "timebox_actual": "",
-      "content_fingerprint": "sha256:578e86e2c344d53d454d6c31633e9cad2824b7b701bb949cee45b43e255c5b02",
-      "observed_content_fingerprint": "sha256:578e86e2c344d53d454d6c31633e9cad2824b7b701bb949cee45b43e255c5b02",
+      "content_fingerprint": "sha256:b7e6d866928652ad47233e697aaea848b0fc0e94dfcd13af1da8d1a6534a50c9",
+      "observed_content_fingerprint": "sha256:b7e6d866928652ad47233e697aaea848b0fc0e94dfcd13af1da8d1a6534a50c9",
       "trace_history_source": "filesystem-only",
       "trace_last_commit_sha": "",
       "trace_last_commit_at": "",
@@ -783,11 +875,16 @@
         "trace_revision_count": "0"
       },
       "latest_commit": {
-        "sha": "0d5cb01",
-        "date": "2026-07-25",
-        "subject": "Initial commit: Aulos hackathon workspace with LangChain agent runtime."
+        "sha": "555cf53",
+        "date": "2026-07-26",
+        "subject": "Ship listening product, mandatory harness, facility layout, and UTC/local time."
       },
       "recent_updates": [
+        {
+          "sha": "555cf53",
+          "date": "2026-07-26",
+          "subject": "Ship listening product, mandatory harness, facility layout, and UTC/local time."
+        },
         {
           "sha": "0d5cb01",
           "date": "2026-07-25",
@@ -805,14 +902,14 @@
       "layer": "SharedSupportSurface",
       "declared_layer": "SharedSupportSurface",
       "effective_status": "generated",
-      "effective_since": "2026-07-25T10:58:33+00:00",
+      "effective_since": "2026-07-25T16:42:04+00:00",
       "managed_by": "aries-harness",
       "fingerprint": "aries-harness/history-doc/v1",
       "last_updated_at": "",
       "completed_at": "",
       "timebox_actual": "",
-      "content_fingerprint": "sha256:032ccaafe7cc0338bfdf8c58be2c7d2ee1afe4a74ec5a90e652991b1004523af",
-      "observed_content_fingerprint": "sha256:032ccaafe7cc0338bfdf8c58be2c7d2ee1afe4a74ec5a90e652991b1004523af",
+      "content_fingerprint": "sha256:c60cf2b933f0906ee18e964a1c71ce420d77f93ea6f7c65d784cd0ae3b06bdb9",
+      "observed_content_fingerprint": "sha256:c60cf2b933f0906ee18e964a1c71ce420d77f93ea6f7c65d784cd0ae3b06bdb9",
       "trace_history_source": "filesystem-only",
       "trace_last_commit_sha": "",
       "trace_last_commit_at": "",
@@ -824,11 +921,16 @@
         "trace_revision_count": "0"
       },
       "latest_commit": {
-        "sha": "0d5cb01",
-        "date": "2026-07-25",
-        "subject": "Initial commit: Aulos hackathon workspace with LangChain agent runtime."
+        "sha": "555cf53",
+        "date": "2026-07-26",
+        "subject": "Ship listening product, mandatory harness, facility layout, and UTC/local time."
       },
       "recent_updates": [
+        {
+          "sha": "555cf53",
+          "date": "2026-07-26",
+          "subject": "Ship listening product, mandatory harness, facility layout, and UTC/local time."
+        },
         {
           "sha": "0d5cb01",
           "date": "2026-07-25",
@@ -846,14 +948,14 @@
       "layer": "SharedSupportSurface",
       "declared_layer": "SharedSupportSurface",
       "effective_status": "generated",
-      "effective_since": "2026-07-25T10:58:33+00:00",
+      "effective_since": "2026-07-25T16:42:04+00:00",
       "managed_by": "aries-harness",
       "fingerprint": "aries-harness/history-doc/v1",
       "last_updated_at": "",
       "completed_at": "",
       "timebox_actual": "",
-      "content_fingerprint": "sha256:c452e2c64d57410c0e44a7054fdd6293fc0045087872d6cc18b221a58b8f1646",
-      "observed_content_fingerprint": "sha256:c452e2c64d57410c0e44a7054fdd6293fc0045087872d6cc18b221a58b8f1646",
+      "content_fingerprint": "sha256:da207433931209308c7e130c6c8a3e10d0a387f716d7858a74971cdc54a897c1",
+      "observed_content_fingerprint": "sha256:da207433931209308c7e130c6c8a3e10d0a387f716d7858a74971cdc54a897c1",
       "trace_history_source": "filesystem-only",
       "trace_last_commit_sha": "",
       "trace_last_commit_at": "",
@@ -865,11 +967,16 @@
         "trace_revision_count": "0"
       },
       "latest_commit": {
-        "sha": "0d5cb01",
-        "date": "2026-07-25",
-        "subject": "Initial commit: Aulos hackathon workspace with LangChain agent runtime."
+        "sha": "555cf53",
+        "date": "2026-07-26",
+        "subject": "Ship listening product, mandatory harness, facility layout, and UTC/local time."
       },
       "recent_updates": [
+        {
+          "sha": "555cf53",
+          "date": "2026-07-26",
+          "subject": "Ship listening product, mandatory harness, facility layout, and UTC/local time."
+        },
         {
           "sha": "0d5cb01",
           "date": "2026-07-25",
@@ -887,14 +994,14 @@
       "layer": "SharedSupportSurface",
       "declared_layer": "SharedSupportSurface",
       "effective_status": "generated",
-      "effective_since": "2026-07-25T10:58:33+00:00",
+      "effective_since": "2026-07-25T16:42:04+00:00",
       "managed_by": "aries-harness",
       "fingerprint": "aries-harness/history-doc/v1",
       "last_updated_at": "",
       "completed_at": "",
       "timebox_actual": "",
-      "content_fingerprint": "sha256:9252e74599799a199004eb555e0a3cd14a3262fa3ca9969744bf109e17015dfb",
-      "observed_content_fingerprint": "sha256:9252e74599799a199004eb555e0a3cd14a3262fa3ca9969744bf109e17015dfb",
+      "content_fingerprint": "sha256:ca25b6c51704ea0d15e7014ee4bd28e33844e090773dd13cbb34bdfa8233191f",
+      "observed_content_fingerprint": "sha256:ca25b6c51704ea0d15e7014ee4bd28e33844e090773dd13cbb34bdfa8233191f",
       "trace_history_source": "filesystem-only",
       "trace_last_commit_sha": "",
       "trace_last_commit_at": "",
@@ -906,11 +1013,16 @@
         "trace_revision_count": "0"
       },
       "latest_commit": {
-        "sha": "0d5cb01",
-        "date": "2026-07-25",
-        "subject": "Initial commit: Aulos hackathon workspace with LangChain agent runtime."
+        "sha": "555cf53",
+        "date": "2026-07-26",
+        "subject": "Ship listening product, mandatory harness, facility layout, and UTC/local time."
       },
       "recent_updates": [
+        {
+          "sha": "555cf53",
+          "date": "2026-07-26",
+          "subject": "Ship listening product, mandatory harness, facility layout, and UTC/local time."
+        },
         {
           "sha": "0d5cb01",
           "date": "2026-07-25",
@@ -928,14 +1040,14 @@
       "layer": "SharedSupportSurface",
       "declared_layer": "SharedSupportSurface",
       "effective_status": "generated",
-      "effective_since": "2026-07-25T10:58:33+00:00",
+      "effective_since": "2026-07-25T16:42:04+00:00",
       "managed_by": "aries-harness",
       "fingerprint": "aries-harness/history-doc/v1",
       "last_updated_at": "",
       "completed_at": "",
       "timebox_actual": "",
-      "content_fingerprint": "sha256:b48a187fe22ba13a0cff9efc3d75394d76bb3f59e5b9d41823e351057083a0c8",
-      "observed_content_fingerprint": "sha256:b48a187fe22ba13a0cff9efc3d75394d76bb3f59e5b9d41823e351057083a0c8",
+      "content_fingerprint": "sha256:7a7d70c0dfe6a4e74f1d934d1761b10123fba265d632586064faceac957369fe",
+      "observed_content_fingerprint": "sha256:7a7d70c0dfe6a4e74f1d934d1761b10123fba265d632586064faceac957369fe",
       "trace_history_source": "filesystem-only",
       "trace_last_commit_sha": "",
       "trace_last_commit_at": "",
@@ -947,11 +1059,16 @@
         "trace_revision_count": "0"
       },
       "latest_commit": {
-        "sha": "0d5cb01",
-        "date": "2026-07-25",
-        "subject": "Initial commit: Aulos hackathon workspace with LangChain agent runtime."
+        "sha": "555cf53",
+        "date": "2026-07-26",
+        "subject": "Ship listening product, mandatory harness, facility layout, and UTC/local time."
       },
       "recent_updates": [
+        {
+          "sha": "555cf53",
+          "date": "2026-07-26",
+          "subject": "Ship listening product, mandatory harness, facility layout, and UTC/local time."
+        },
         {
           "sha": "0d5cb01",
           "date": "2026-07-25",
@@ -969,14 +1086,14 @@
       "layer": "SharedSupportSurface",
       "declared_layer": "SharedSupportSurface",
       "effective_status": "generated",
-      "effective_since": "2026-07-25T10:58:33+00:00",
+      "effective_since": "2026-07-25T16:42:04+00:00",
       "managed_by": "aries-harness",
       "fingerprint": "aries-harness/history-doc/v1",
       "last_updated_at": "",
       "completed_at": "",
       "timebox_actual": "",
-      "content_fingerprint": "sha256:e4771b4177a4c570428f194632e5f40cf0cb0188bb59aecd7fc1169185955b9d",
-      "observed_content_fingerprint": "sha256:e4771b4177a4c570428f194632e5f40cf0cb0188bb59aecd7fc1169185955b9d",
+      "content_fingerprint": "sha256:944112f37ef6d8d370b8e61607eab37e850aeaef4b4259826cf1fb7a63c92eac",
+      "observed_content_fingerprint": "sha256:944112f37ef6d8d370b8e61607eab37e850aeaef4b4259826cf1fb7a63c92eac",
       "trace_history_source": "filesystem-only",
       "trace_last_commit_sha": "",
       "trace_last_commit_at": "",
@@ -988,17 +1105,53 @@
         "trace_revision_count": "0"
       },
       "latest_commit": {
-        "sha": "0d5cb01",
-        "date": "2026-07-25",
-        "subject": "Initial commit: Aulos hackathon workspace with LangChain agent runtime."
+        "sha": "555cf53",
+        "date": "2026-07-26",
+        "subject": "Ship listening product, mandatory harness, facility layout, and UTC/local time."
       },
       "recent_updates": [
+        {
+          "sha": "555cf53",
+          "date": "2026-07-26",
+          "subject": "Ship listening product, mandatory harness, facility layout, and UTC/local time."
+        },
         {
           "sha": "0d5cb01",
           "date": "2026-07-25",
           "subject": "Initial commit: Aulos hackathon workspace with LangChain agent runtime."
         }
       ],
+      "dirty": false,
+      "issue_count": 0,
+      "issues": []
+    },
+    {
+      "path": "history/daily/2026-07-26.md",
+      "repo_path": ".aries_harness/history/daily/2026-07-26.md",
+      "doc_role": "history-daily-summary",
+      "layer": "SharedSupportSurface",
+      "declared_layer": "SharedSupportSurface",
+      "effective_status": "generated",
+      "effective_since": "2026-07-25T16:42:04+00:00",
+      "managed_by": "aries-harness",
+      "fingerprint": "aries-harness/history-doc/v1",
+      "last_updated_at": "",
+      "completed_at": "",
+      "timebox_actual": "",
+      "content_fingerprint": "sha256:73d0a0188568f387f4d1bcc4d348baf3dc9ad14fdc9d319821e53473a941bc06",
+      "observed_content_fingerprint": "sha256:73d0a0188568f387f4d1bcc4d348baf3dc9ad14fdc9d319821e53473a941bc06",
+      "trace_history_source": "filesystem-only",
+      "trace_last_commit_sha": "",
+      "trace_last_commit_at": "",
+      "trace_revision_count": "0",
+      "observed_trace": {
+        "trace_history_source": "filesystem-only",
+        "trace_last_commit_sha": "",
+        "trace_last_commit_at": "",
+        "trace_revision_count": "0"
+      },
+      "latest_commit": null,
+      "recent_updates": [],
       "dirty": false,
       "issue_count": 0,
       "issues": []
@@ -1614,6 +1767,37 @@
           "subject": "Initial commit: Aulos hackathon workspace with LangChain agent runtime."
         }
       ],
+      "dirty": false,
+      "issue_count": 0,
+      "issues": []
+    },
+    {
+      "path": "references/specs/SPEC-002-agent-orchestrated-listening.md",
+      "repo_path": ".aries_harness/references/specs/SPEC-002-agent-orchestrated-listening.md",
+      "doc_role": "spec-package",
+      "layer": "MetaDefineLayer",
+      "declared_layer": "MetaDefineLayer",
+      "effective_status": "active",
+      "effective_since": "2026-07-25T17:10:00Z",
+      "managed_by": "aries-harness",
+      "fingerprint": "aries-harness/bootstrap-doc/v1",
+      "last_updated_at": "",
+      "completed_at": "",
+      "timebox_actual": "",
+      "content_fingerprint": "sha256:700ab4d1a49654e44f84a5c31de447a3e4cd94a891f7c8af8fe2871e2ee44ae1",
+      "observed_content_fingerprint": "sha256:700ab4d1a49654e44f84a5c31de447a3e4cd94a891f7c8af8fe2871e2ee44ae1",
+      "trace_history_source": "filesystem-only",
+      "trace_last_commit_sha": "",
+      "trace_last_commit_at": "",
+      "trace_revision_count": "0",
+      "observed_trace": {
+        "trace_history_source": "filesystem-only",
+        "trace_last_commit_sha": "",
+        "trace_last_commit_at": "",
+        "trace_revision_count": "0"
+      },
+      "latest_commit": null,
+      "recent_updates": [],
       "dirty": false,
       "issue_count": 0,
       "issues": []

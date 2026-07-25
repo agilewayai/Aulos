@@ -18,3 +18,6 @@ def test_default_registry_includes_builtins():
     names = {t.name for t in get_tools()}
     assert "echo_text" in names
     assert "get_current_utc_time" in names
+    # Skill tools are registered when aulos-skills is importable
+    assert "run_listening_skill" in names
+    assert "finalize_listening_guide" in names

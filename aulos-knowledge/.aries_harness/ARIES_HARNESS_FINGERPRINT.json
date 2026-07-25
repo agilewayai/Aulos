@@ -1,0 +1,104 @@
+{
+  "schema_version": "0.1",
+  "managed_by": "aries-harness",
+  "fingerprint": "aries-harness/bootstrap-root/v1",
+  "generated_by": "/aries-harness init",
+  "root_dir": ".aries_harness",
+  "project_id": "aulos-knowledge",
+  "owner": "ubuntu",
+  "initialized_at": "2026-07-25T17:25:00+00:00",
+  "canonical_commands": [
+    "/aries-harness init",
+    "/aries-harness well-organized",
+    "/aries-harness pipeline-inspect",
+    "/aries-harness memory-inspect",
+    "/aries-harness history-refresh",
+    "/aries-harness history-status"
+  ],
+  "markdown_fingerprint": {
+    "managed_by": "aries-harness",
+    "fingerprint": "aries-harness/bootstrap-doc/v1"
+  },
+  "document_governance": {
+    "required_frontmatter": [
+      "harness_layer",
+      "managed_by",
+      "fingerprint",
+      "effective_status",
+      "effective_since",
+      "content_fingerprint",
+      "trace_history_source",
+      "trace_last_commit_sha",
+      "trace_last_commit_at",
+      "trace_revision_count"
+    ],
+    "default_effective_status": {
+      "canonical_docs": "active",
+      "history_surface": "generated",
+      "archive": "archived"
+    },
+    "trace_history_source": {
+      "git_repository": "git",
+      "non_git_project": "filesystem-only"
+    },
+    "trace_outputs": [
+      "history/DOC_TRACE.md",
+      "history/doc-trace.json"
+    ]
+  },
+  "layer_model": {
+    "strategy": "compatibility-dual-layer-with-shared-support",
+    "meta_define_layer": {
+      "root_docs": [
+        "MISSION.md",
+        "ADR.md",
+        "RUNBOOK.md",
+        "EVAL.md",
+        "RISKS.md"
+      ],
+      "managed_directories": [
+        "references",
+        "references/requests",
+        "references/specs",
+        "references/stories",
+        "references/domain",
+        "references/iterations",
+        "references/tasks",
+        "references/risks",
+        "decisions",
+        "decisions/architecture",
+        "decisions/adrs"
+      ]
+    },
+    "run_cooking_layer": {
+      "root_docs": [
+        "TASK_STACK.md",
+        "PIPELINE.md",
+        "STATE.md",
+        "JOURNAL.md"
+      ],
+      "managed_directories": [
+        "checkpoints",
+        "runs",
+        "runs/tests",
+        "runs/reports",
+        "runs/github",
+        "runs/deployments"
+      ]
+    },
+    "shared_support_surface": {
+      "root_docs": [
+        "README.md",
+        "INDEX.md",
+        "MEMORY.md"
+      ],
+      "managed_directories": [
+        "layers",
+        "memory",
+        "memory/cards",
+        "history",
+        "archive"
+      ]
+    }
+  }
+}

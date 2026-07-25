@@ -1,0 +1,13 @@
+id: enabler-agent-reach
+name: Agent Reach Search Enabler
+version: 0.1.0
+layer: enabler
+runtime: agent
+summary: >
+  Audited, policy-fenced search/read enabler vendored from Panniantong/Agent-Reach.
+  Composes with Wikipedia/DDG/Brave web-research — does not own listening orchestration.
+depends_on: []
+triggers: []
+inputs: [research_query, source_urls]
+outputs: [search_hits, page_markdown, enabler_meta]
+observability_title: Open-web search enabler (Agent Reach)

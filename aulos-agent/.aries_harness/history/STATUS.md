@@ -8,10 +8,10 @@ managed_by: "aries-harness"
 fingerprint: "aries-harness/history-doc/v1"
 generated_by: "/aries-harness history-refresh"
 initialized_at: "2026-07-25T10:55:22Z"
-generated_at: "2026-07-25T16:23:54+00:00"
+generated_at: "2026-07-25T18:52:18+00:00"
 effective_status: "generated"
-effective_since: "2026-07-25T16:23:54+00:00"
-content_fingerprint: "sha256:7ddc9615ffd1e5a151fcd0488d8e468a09d3d47e8a149cbca5722ba7e39f1144"
+effective_since: "2026-07-25T18:52:18+00:00"
+content_fingerprint: "sha256:d8e5f716f1bc23b8cc9f9262c01256cef2255cb419a0130db0a214ba1b6cd040"
 trace_history_source: "filesystem-only"
 trace_last_commit_sha: ""
 trace_last_commit_at: ""
@@ -19,7 +19,7 @@ trace_revision_count: "0"
 ---
 # Current Status
 
-Generated at: `2026-07-25T16:23:54+00:00`
+Generated at: `2026-07-25T18:52:18+00:00`
 
 ## Current phase
 
@@ -29,16 +29,16 @@ Generated at: `2026-07-25T16:23:54+00:00`
 
 - no branch or workspace details recorded
 - git branch: main
-- HEAD: `93c0f6e` Add aulos-skills, aulos-ops, host deploy, and fleet operating defaults.
+- HEAD: `555cf53` Ship listening product, mandatory harness, facility layout, and UTC/local time.
 - working tree: dirty
-- change: `M` `.gitignore`
-- change: `M` `AGENTS.md`
-- change: `M` `CLAUDE.md`
 - change: `M` `aulos-agent/.aries_harness/ARIES_HARNESS_FINGERPRINT.json`
 - change: `M` `aulos-agent/.aries_harness/INDEX.md`
+- change: `M` `aulos-agent/.aries_harness/JOURNAL.md`
 - change: `M` `aulos-agent/.aries_harness/MEMORY.md`
-- change: `M` `aulos-agent/.aries_harness/README.md`
-- change: `M` `aulos-agent/.aries_harness/decisions/architecture/ARCH-001-langchain-agent-architecture.md`
+- change: `M` `aulos-agent/.aries_harness/history/DAILY_SUMMARY_INDEX.md`
+- change: `M` `aulos-agent/.aries_harness/history/DOC_TRACE.md`
+- change: `M` `aulos-agent/.aries_harness/history/README.md`
+- change: `M` `aulos-agent/.aries_harness/history/RETROSPECTIVE.md`
 
 ## Current milestone
 

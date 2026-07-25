@@ -10,13 +10,17 @@ generated_by: "/aries-harness init"
 initialized_at: "2026-07-25T10:55:22Z"
 effective_status: "active"
 effective_since: "2026-07-25T10:55:22Z"
-content_fingerprint: "sha256:0ba65701bfd6e3476c818ece377d5c5a932d7efc517e9bd0e50030a1a7aea835"
+content_fingerprint: "sha256:0f4326c4a9dcacee31696a05dfe7195438cb98bb24e65cc7fba5a3f234467ba6"
 trace_history_source: "filesystem-only"
 trace_last_commit_sha: ""
 trace_last_commit_at: ""
 trace_revision_count: "0"
 ---
 # Journal
+
+## 2026-07-25T17:15:00Z
+
+- ARCH-002 / ADR-003 / SPEC-002: agent-orchestrated listening via skill tools + ListeningPlaybookFakeModel
 
 ## 2026-07-25T11:00:00Z
 

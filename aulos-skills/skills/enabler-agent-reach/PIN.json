@@ -1,0 +1,19 @@
+{
+  "source": "https://github.com/Panniantong/Agent-Reach",
+  "owner": "Panniantong",
+  "repo": "Agent-Reach",
+  "ref": "main",
+  "commit": "b4d52c46c9113cb0f653d6df4cf71ebadf4930ac",
+  "commit_date_utc": "2026-07-25T04:56:06Z",
+  "skill_path": "agent_reach/skill/",
+  "version_declared": "1.5.0",
+  "license": "MIT",
+  "installed_at_utc": "2026-07-25T18:30:00Z",
+  "install_mode": "vendored-skill-docs+aulos-policy-wrapper",
+  "not_installed": [
+    "agent-reach CLI system install (apt/npm)",
+    "browser-cookie3 cookie extraction",
+    "social platform cookie configure",
+    "MCP write / comment backends"
+  ]
+}

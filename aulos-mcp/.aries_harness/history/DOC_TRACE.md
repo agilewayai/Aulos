@@ -8,10 +8,10 @@ managed_by: "aries-harness"
 fingerprint: "aries-harness/history-doc/v1"
 generated_by: "/aries-harness history-refresh"
 initialized_at: "2026-07-25T11:07:44Z"
-generated_at: "2026-07-25T16:23:55+00:00"
+generated_at: "2026-07-25T18:52:28+00:00"
 effective_status: "generated"
-effective_since: "2026-07-25T16:23:55+00:00"
-content_fingerprint: "sha256:570a416d84c266b7a5000d25d172aef9111edd6914da177f209735b27f948abe"
+effective_since: "2026-07-25T18:52:28+00:00"
+content_fingerprint: "sha256:18f43434c53652a97ed277af76843f51354610addaa090e4585050f42fc2095e"
 trace_history_source: "filesystem-only"
 trace_last_commit_sha: ""
 trace_last_commit_at: ""
@@ -19,7 +19,7 @@ trace_revision_count: "0"
 ---
 # Document Trace
 
-Generated at: `2026-07-25T16:23:55+00:00`
+Generated at: `2026-07-25T18:52:28+00:00`
 
 ## Summary
 
@@ -66,12 +66,13 @@ Generated at: `2026-07-25T16:23:55+00:00`
 
 - role: harness-index
 - layer: SharedSupportSurface
-- effective status: generated since 2026-07-25T16:23:55+00:00
-- content fingerprint: `sha256:b8023cb17eb2cb23d8e6300455e861069654dc10db1d0684c926fbef5d657941`
+- effective status: generated since 2026-07-25T18:52:28+00:00
+- content fingerprint: `sha256:c688556efed43d17c3b114e49d1556798210c14879b6b927e6c7d255a71d856a`
 - trace: filesystem-only / count=0 / sha=none
-- latest revision: `7632d9b` 2026-07-25 Add aulos-web, aulos-api, and aulos-mcp sub-projects under aries-harness.
+- latest revision: `555cf53` 2026-07-26 Ship listening product, mandatory harness, facility layout, and UTC/local time.
 - dirty: no
 - earlier revisions:
+  - `7632d9b` 2026-07-25 Add aulos-web, aulos-api, and aulos-mcp sub-projects under aries-harness.
   - `0d5cb01` 2026-07-25 Initial commit: Aulos hackathon workspace with LangChain agent runtime.
 
 ### JOURNAL.md
@@ -91,11 +92,11 @@ Generated at: `2026-07-25T16:23:55+00:00`
 - effective status: active since 2026-07-25T11:07:44Z
 - content fingerprint: `sha256:2b7ac7c276f6de6c144ec95ded75992f4d4a217b7d20dee428be49d69b28ad6d`
 - trace: filesystem-only / count=0 / sha=none
-- latest revision: `93c0f6e` 2026-07-25 Add aulos-skills, aulos-ops, host deploy, and fleet operating defaults.
+- latest revision: `555cf53` 2026-07-26 Ship listening product, mandatory harness, facility layout, and UTC/local time.
 - dirty: no
 - earlier revisions:
+  - `93c0f6e` 2026-07-25 Add aulos-skills, aulos-ops, host deploy, and fleet operating defaults.
   - `7632d9b` 2026-07-25 Add aulos-web, aulos-api, and aulos-mcp sub-projects under aries-harness.
-  - `0d5cb01` 2026-07-25 Initial commit: Aulos hackathon workspace with LangChain agent runtime.
 
 ### MISSION.md
 
@@ -126,9 +127,10 @@ Generated at: `2026-07-25T16:23:55+00:00`
 - effective status: active since 2026-07-25T11:07:44Z
 - content fingerprint: `sha256:d5d87e7ccb4bdb5195026b1a43c1b2c580c20f3e1a8ad9f39c3d60f298a3d3e1`
 - trace: filesystem-only / count=0 / sha=none
-- latest revision: `7632d9b` 2026-07-25 Add aulos-web, aulos-api, and aulos-mcp sub-projects under aries-harness.
+- latest revision: `555cf53` 2026-07-26 Ship listening product, mandatory harness, facility layout, and UTC/local time.
 - dirty: no
 - earlier revisions:
+  - `7632d9b` 2026-07-25 Add aulos-web, aulos-api, and aulos-mcp sub-projects under aries-harness.
   - `0d5cb01` 2026-07-25 Initial commit: Aulos hackathon workspace with LangChain agent runtime.
 
 ### RISKS.md
@@ -204,8 +206,10 @@ Generated at: `2026-07-25T16:23:55+00:00`
 - effective status: active since 2026-07-25T11:10:22Z
 - content fingerprint: `sha256:7ff16256e20c01cfd5d9a2738110bc1a7d1ae8a3aff4a998188286947d568223`
 - trace: filesystem-only / count=0 / sha=none
-- latest revision: `7632d9b` 2026-07-25 Add aulos-web, aulos-api, and aulos-mcp sub-projects under aries-harness.
+- latest revision: `555cf53` 2026-07-26 Ship listening product, mandatory harness, facility layout, and UTC/local time.
 - dirty: no
+- earlier revisions:
+  - `7632d9b` 2026-07-25 Add aulos-web, aulos-api, and aulos-mcp sub-projects under aries-harness.
 
 ### decisions/architecture/README.md
 
@@ -223,89 +227,101 @@ Generated at: `2026-07-25T16:23:55+00:00`
 
 - role: history-daily-summary-index
 - layer: SharedSupportSurface
-- effective status: generated since 2026-07-25T11:10:23+00:00
-- content fingerprint: `sha256:dbce48a8273d3cb902d5ff47b26121e6d6083d8830cd577d08f94a08238509b2`
+- effective status: generated since 2026-07-25T16:23:55+00:00
+- content fingerprint: `sha256:05d0b039e6415e9dfdb2690592771cb30a4f0cf43dd95b4de65ae80e6c30c2df`
 - trace: filesystem-only / count=0 / sha=none
-- latest revision: `7632d9b` 2026-07-25 Add aulos-web, aulos-api, and aulos-mcp sub-projects under aries-harness.
+- latest revision: `555cf53` 2026-07-26 Ship listening product, mandatory harness, facility layout, and UTC/local time.
 - dirty: no
 - earlier revisions:
+  - `7632d9b` 2026-07-25 Add aulos-web, aulos-api, and aulos-mcp sub-projects under aries-harness.
   - `0d5cb01` 2026-07-25 Initial commit: Aulos hackathon workspace with LangChain agent runtime.
 
 ### history/DOC_TRACE.md
 
 - role: history-doc-trace
 - layer: SharedSupportSurface
-- effective status: generated since 2026-07-25T11:10:23+00:00
-- content fingerprint: `sha256:107f088e811a559c6ffef07a7161f2939c944f9aaedfb2406d34593dc005e62a`
+- effective status: generated since 2026-07-25T16:23:55+00:00
+- content fingerprint: `sha256:570a416d84c266b7a5000d25d172aef9111edd6914da177f209735b27f948abe`
 - trace: filesystem-only / count=0 / sha=none
-- latest revision: `7632d9b` 2026-07-25 Add aulos-web, aulos-api, and aulos-mcp sub-projects under aries-harness.
+- latest revision: `555cf53` 2026-07-26 Ship listening product, mandatory harness, facility layout, and UTC/local time.
 - dirty: no
 - earlier revisions:
+  - `7632d9b` 2026-07-25 Add aulos-web, aulos-api, and aulos-mcp sub-projects under aries-harness.
   - `0d5cb01` 2026-07-25 Initial commit: Aulos hackathon workspace with LangChain agent runtime.
 
 ### history/README.md
 
 - role: history-readme
 - layer: SharedSupportSurface
-- effective status: generated since 2026-07-25T11:10:23+00:00
-- content fingerprint: `sha256:bb4e21f98aa7acb233f18b92b1fcdaa50fa3d21557cc8b2be6f348a6eea814f4`
+- effective status: generated since 2026-07-25T16:23:55+00:00
+- content fingerprint: `sha256:640b8df69d927e3773e7429086d6fe30b1bc992dfb915ed9cc6f4be0cb64ca79`
 - trace: filesystem-only / count=0 / sha=none
-- latest revision: `7632d9b` 2026-07-25 Add aulos-web, aulos-api, and aulos-mcp sub-projects under aries-harness.
+- latest revision: `555cf53` 2026-07-26 Ship listening product, mandatory harness, facility layout, and UTC/local time.
 - dirty: no
 - earlier revisions:
+  - `7632d9b` 2026-07-25 Add aulos-web, aulos-api, and aulos-mcp sub-projects under aries-harness.
   - `0d5cb01` 2026-07-25 Initial commit: Aulos hackathon workspace with LangChain agent runtime.
 
 ### history/RETROSPECTIVE.md
 
 - role: history-retrospective
 - layer: SharedSupportSurface
-- effective status: generated since 2026-07-25T11:10:23+00:00
-- content fingerprint: `sha256:9d5f4c1b787c28edb6016ee30827183b7136c86d3e9d98812cba267c7ecfa041`
+- effective status: generated since 2026-07-25T16:23:55+00:00
+- content fingerprint: `sha256:5f27a7201c02151cc517edf5555a9a75ba1583d4c544733460c0a3b272d2d638`
 - trace: filesystem-only / count=0 / sha=none
-- latest revision: `7632d9b` 2026-07-25 Add aulos-web, aulos-api, and aulos-mcp sub-projects under aries-harness.
+- latest revision: `555cf53` 2026-07-26 Ship listening product, mandatory harness, facility layout, and UTC/local time.
 - dirty: no
 - earlier revisions:
+  - `7632d9b` 2026-07-25 Add aulos-web, aulos-api, and aulos-mcp sub-projects under aries-harness.
   - `0d5cb01` 2026-07-25 Initial commit: Aulos hackathon workspace with LangChain agent runtime.
 
 ### history/ROADMAP.md
 
 - role: history-roadmap
 - layer: SharedSupportSurface
-- effective status: generated since 2026-07-25T11:10:23+00:00
-- content fingerprint: `sha256:66072909d64974ad882040c73397743439d8a106a1ffbd0bfa160879847cfbaf`
+- effective status: generated since 2026-07-25T16:23:55+00:00
+- content fingerprint: `sha256:ddffb89dc78b98205f86000614176d96117012fb2d18c1bf629f0c1dd5a697aa`
 - trace: filesystem-only / count=0 / sha=none
-- latest revision: `7632d9b` 2026-07-25 Add aulos-web, aulos-api, and aulos-mcp sub-projects under aries-harness.
+- latest revision: `555cf53` 2026-07-26 Ship listening product, mandatory harness, facility layout, and UTC/local time.
 - dirty: no
+- earlier revisions:
+  - `7632d9b` 2026-07-25 Add aulos-web, aulos-api, and aulos-mcp sub-projects under aries-harness.
 
 ### history/STATUS.md
 
 - role: history-status
 - layer: SharedSupportSurface
-- effective status: generated since 2026-07-25T11:10:23+00:00
-- content fingerprint: `sha256:cc72236c7bc345aeb0924765b4a878ada2395634307a3a26438c4008677c526a`
+- effective status: generated since 2026-07-25T16:23:55+00:00
+- content fingerprint: `sha256:fc9bd28aed5fc2586164a917dbe7554fdbae17a63ed68f236adf1ceb694cdbb5`
 - trace: filesystem-only / count=0 / sha=none
-- latest revision: `7632d9b` 2026-07-25 Add aulos-web, aulos-api, and aulos-mcp sub-projects under aries-harness.
+- latest revision: `555cf53` 2026-07-26 Ship listening product, mandatory harness, facility layout, and UTC/local time.
 - dirty: no
+- earlier revisions:
+  - `7632d9b` 2026-07-25 Add aulos-web, aulos-api, and aulos-mcp sub-projects under aries-harness.
 
 ### history/TIMELINE.md
 
 - role: history-timeline
 - layer: SharedSupportSurface
-- effective status: generated since 2026-07-25T11:10:23+00:00
-- content fingerprint: `sha256:aee056b1402c5594b50538262ca5a21b0c23f75029afd0831dd37079eb611ee2`
+- effective status: generated since 2026-07-25T16:23:55+00:00
+- content fingerprint: `sha256:b6c502ac129643fe9ed77187898af9aaa474252e1de24f904f9b625db08b2bfe`
 - trace: filesystem-only / count=0 / sha=none
-- latest revision: `7632d9b` 2026-07-25 Add aulos-web, aulos-api, and aulos-mcp sub-projects under aries-harness.
+- latest revision: `555cf53` 2026-07-26 Ship listening product, mandatory harness, facility layout, and UTC/local time.
 - dirty: no
+- earlier revisions:
+  - `7632d9b` 2026-07-25 Add aulos-web, aulos-api, and aulos-mcp sub-projects under aries-harness.
 
 ### history/daily/2026-07-25.md
 
 - role: history-daily-summary
 - layer: SharedSupportSurface
-- effective status: generated since 2026-07-25T11:10:23+00:00
-- content fingerprint: `sha256:6ccd237dcc19b88eaa5e6a507a56685cf97f4d82ac8e2775660d68945a59cf4f`
+- effective status: generated since 2026-07-25T16:23:55+00:00
+- content fingerprint: `sha256:bf1755b9384630d6fb29eb9acf42022153d20765eaeacd2aa1a692c10c3ff3cf`
 - trace: filesystem-only / count=0 / sha=none
-- latest revision: `7632d9b` 2026-07-25 Add aulos-web, aulos-api, and aulos-mcp sub-projects under aries-harness.
+- latest revision: `555cf53` 2026-07-26 Ship listening product, mandatory harness, facility layout, and UTC/local time.
 - dirty: no
+- earlier revisions:
+  - `7632d9b` 2026-07-25 Add aulos-web, aulos-api, and aulos-mcp sub-projects under aries-harness.
 
 ### layers/MetaDefineLayer/README.md
 

@@ -8,10 +8,10 @@ managed_by: "aries-harness"
 fingerprint: "aries-harness/bootstrap-doc/v1"
 generated_by: "/aries-harness well-organized"
 initialized_at: "2026-07-25T11:20:05Z"
-last_organized_at: "2026-07-25T16:29:44+00:00"
+last_organized_at: "2026-07-25T18:53:02+00:00"
 effective_status: "generated"
-effective_since: "2026-07-25T16:29:44+00:00"
-content_fingerprint: "sha256:224b3a18ea563ace94f7327a2475e62ffb52f86eb3ee335cdb3984c3c3db73bd"
+effective_since: "2026-07-25T18:53:02+00:00"
+content_fingerprint: "sha256:ffab0f9c26e5401bd98ca3a779e5fc1e037c1e89b858228886cc44f06f363aa5"
 trace_history_source: "filesystem-only"
 trace_last_commit_sha: ""
 trace_last_commit_at: ""
@@ -19,7 +19,7 @@ trace_revision_count: "0"
 ---
 # Harness Index
 
-Last organized: `2026-07-25T16:29:44+00:00`
+Last organized: `2026-07-25T18:53:02+00:00`
 
 Canonical spelling: `/aries-harness well-organized`
 
@@ -67,6 +67,7 @@ Fingerprint marker: `aries-harness` / `aries-harness/bootstrap-doc/v1`
 - [REQ-003-salon-codex-listening-guide.md](references/requests/REQ-003-salon-codex-listening-guide.md)
 - [REQ-004-cold-path-salon-parity.md](references/requests/REQ-004-cold-path-salon-parity.md)
 - [REQ-005-ambient-media-identity.md](references/requests/REQ-005-ambient-media-identity.md)
+- [REQ-006-work-identity-catalog.md](references/requests/REQ-006-work-identity-catalog.md)
 
 #### `references/specs/`
 - role: behavior and acceptance contracts derived from requests
@@ -77,6 +78,7 @@ Fingerprint marker: `aries-harness` / `aries-harness/bootstrap-doc/v1`
 - [SPEC-004-listening-synthesize.md](references/specs/SPEC-004-listening-synthesize.md)
 - [SPEC-005-bilingual-salon-codex.md](references/specs/SPEC-005-bilingual-salon-codex.md)
 - [SPEC-006-ambient-media-and-identity.md](references/specs/SPEC-006-ambient-media-and-identity.md)
+- [SPEC-008-work-identity-and-resolver.md](references/specs/SPEC-008-work-identity-and-resolver.md)
 
 #### `references/stories/`
 - role: sprintable slices linked to specs and verification
@@ -85,6 +87,7 @@ Fingerprint marker: `aries-harness` / `aries-harness/bootstrap-doc/v1`
 
 #### `references/domain/`
 - role: domain analysis and modeling artifacts
+- [DOM-002-listening-identity.md](references/domain/DOM-002-listening-identity.md)
 - [README.md](references/domain/README.md)
 
 #### `references/iterations/`
@@ -116,6 +119,7 @@ Fingerprint marker: `aries-harness` / `aries-harness/bootstrap-doc/v1`
 - role: detailed ADR records linked from the root ADR index
 - [ADR-001-filesystem-skill-packs.md](decisions/adrs/ADR-001-filesystem-skill-packs.md)
 - [ADR-002-domain-runtime-listening-skills.md](decisions/adrs/ADR-002-domain-runtime-listening-skills.md)
+- [ADR-004-catalog-over-heuristics.md](decisions/adrs/ADR-004-catalog-over-heuristics.md)
 - [README.md](decisions/adrs/README.md)
 
 ## RunCookingLayer
@@ -152,6 +156,7 @@ Fingerprint marker: `aries-harness` / `aries-harness/bootstrap-doc/v1`
 #### `runs/reports/`
 - role: iteration reports and closeouts
 - [AUDIT-001-aries-harness-process-compliance.md](runs/reports/AUDIT-001-aries-harness-process-compliance.md)
+- [EVOL-2026-07-26-locale-intake-enabler.md](runs/reports/EVOL-2026-07-26-locale-intake-enabler.md)
 - [README.md](runs/reports/README.md)
 
 #### `runs/github/`

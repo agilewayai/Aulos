@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from datetime import datetime
 
-from fastapi import APIRouter, Depends, HTTPException, Query, status
+from fastapi import APIRouter, Depends, HTTPException, Query, Request, status
 from pydantic import BaseModel, EmailStr, Field, field_serializer
 from sqlalchemy import func
 from sqlalchemy.orm import Session, joinedload
@@ -27,6 +27,11 @@ from aulos_api.services.llm_providers import (
     test_llm_provider,
 )
 from aulos_api.services.embeddings import load_embed_config, save_embed_config
+from aulos_api.services.web_research import (
+    load_web_research_config,
+    public_web_research_config,
+    save_web_research_config,
+)
 from aulos_api.services.knowledge_base import knowledge_stats
 from aulos_api.services.skills_ops import list_domain_skills, run_skill_probe, set_skill_enabled
 from aulos_api.timefmt import to_utc_iso
@@ -622,6 +627,56 @@ def get_embeddings(
     return EmbedConfigOut(**load_embed_config(db).public_dict())
 
 
+class WebResearchConfigOut(BaseModel):
+    enabled: bool = True
+    min_rag_hits: int = 3
+    min_dossier_richness: int = 5
+    refresh_after_hours: int = 168
+    brave_api_key_set: bool = False
+    persist_global: bool = True
+    max_sources: int = 10
+    agent_reach_enabled: bool = True
+
+
+class WebResearchConfigUpdate(BaseModel):
+    enabled: bool | None = None
+    min_rag_hits: int | None = None
+    min_dossier_richness: int | None = None
+    refresh_after_hours: int | None = None
+    brave_api_key: str | None = None
+    persist_global: bool | None = None
+    max_sources: int | None = None
+    agent_reach_enabled: bool | None = None
+
+
+@router.get("/web-research", response_model=WebResearchConfigOut)
+def get_web_research(
+    _: User = Depends(require_roles("superadmin")),
+    db: Session = Depends(get_db),
+) -> WebResearchConfigOut:
+    return WebResearchConfigOut(**public_web_research_config(load_web_research_config(db)))
+
+
+@router.put("/web-research", response_model=WebResearchConfigOut)
+def put_web_research(
+    body: WebResearchConfigUpdate,
+    _: User = Depends(require_roles("superadmin")),
+    db: Session = Depends(get_db),
+) -> WebResearchConfigOut:
+    cfg = save_web_research_config(
+        db,
+        enabled=body.enabled,
+        min_rag_hits=body.min_rag_hits,
+        min_dossier_richness=body.min_dossier_richness,
+        refresh_after_hours=body.refresh_after_hours,
+        brave_api_key=body.brave_api_key,
+        persist_global=body.persist_global,
+        max_sources=body.max_sources,
+        agent_reach_enabled=body.agent_reach_enabled,
+    )
+    return WebResearchConfigOut(**cfg)
+
+
 @router.put("/embeddings", response_model=EmbedConfigOut)
 def put_embeddings(
     body: EmbedConfigUpdate,
@@ -646,7 +701,38 @@ def ops_knowledge_stats(
     _: User = Depends(require_roles("superadmin")),
     db: Session = Depends(get_db),
 ) -> dict:
-    return knowledge_stats(db)
+    """Legacy local SQLite KB counts + optional knowledge-plane health."""
+    local = knowledge_stats(db)
+    from aulos_api.services.knowledge_proxy import knowledge_enabled, knowledge_base_url
+
+    out = {**local, "plane_enabled": knowledge_enabled(), "plane_url": knowledge_base_url()}
+    return out
+
+
+@router.api_route("/knowledge/plane/{path:path}", methods=["GET", "POST", "PATCH", "PUT", "DELETE"])
+async def ops_knowledge_plane_proxy(
+    path: str,
+    request: Request,
+    _: User = Depends(require_roles("superadmin")),
+):
+    """Proxy OPS Knowledge audit UI to aulos-knowledge (SPEC-010)."""
+    from fastapi.responses import JSONResponse
+
+    from aulos_api.services.knowledge_proxy import proxy_knowledge
+
+    body = None
+    if request.method.upper() in {"POST", "PUT", "PATCH"}:
+        try:
+            body = await request.json()
+        except Exception:  # noqa: BLE001
+            body = None
+    status_code, data = await proxy_knowledge(
+        request.method,
+        f"/{path}",
+        json_body=body,
+        params=dict(request.query_params),
+    )
+    return JSONResponse(content=data, status_code=status_code)
 
 
 class SkillOut(BaseModel):
@@ -718,3 +804,39 @@ def post_skills_probe(
             detail=f"Skill probe failed: {exc}",
         ) from exc
     return SkillProbeOut(**result)
+
+
+class DbRoleIn(BaseModel):
+    role: str  # primary | failover
+    reason: str = "ops"
+
+
+@router.get("/db/ha")
+def ops_db_ha(_: User = Depends(require_roles("superadmin"))) -> dict:
+    from aulos_api.services import db_ha
+
+    return db_ha.ha_status()
+
+
+@router.post("/db/sync")
+def ops_db_sync(
+    _: User = Depends(require_roles("superadmin")),
+    queue: bool = Query(True),
+) -> dict:
+    """Enqueue primary→failover clone (Redis queue) or run inline if Redis down."""
+    from aulos_api.services import db_ha
+
+    if queue:
+        return db_ha.enqueue_sync(trigger="ops")
+    return db_ha.clone_primary_to_failover(trigger="ops-inline")
+
+
+@router.post("/db/role")
+def ops_db_role(body: DbRoleIn, _: User = Depends(require_roles("superadmin"))) -> dict:
+    from aulos_api.services import db_ha
+
+    try:
+        role = db_ha.set_active_role(body.role, reason=body.reason or "ops")
+    except ValueError as exc:
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=str(exc)) from exc
+    return {"ok": True, "active_role": role, "status": db_ha.ha_status()}

@@ -42,7 +42,8 @@ def test_listening_chain_goldberg() -> None:
         "upload.wikimedia.org",
         "Myths",
         'loading="eager"',
-        'data-lang="zh"',
+        'data-lang="zh-Hans"',
+        'data-lang="zh-Hant"',
         'data-lang="en"',
         "作曲家",
         "何以传世",
@@ -67,8 +68,8 @@ def test_listening_chain_goldberg() -> None:
         "说明",
     ):
         assert needle in html, f"missing Salon Codex chamber marker: {needle}"
-    assert "composer-zh" in html and "introduction-zh" in html
-    assert html.index("composer-zh") < html.index("introduction-zh")
+    assert "composer-zh-Hans" in html or "composer-zh" in html
+    assert "introduction-zh-Hans" in html or "introduction-zh" in html
     assert '<aside class="ambient' in html
     assert html.index('<aside class="ambient') < html.index('<nav class="lang-switch"')
     assert "aulos-owner-bar" not in html
@@ -103,7 +104,8 @@ def test_listening_chain_beethoven_cello_zh_approaches_salon_parity() -> None:
         "Discogs",
         "Anatomy of the work",
         "Op. 69",
-        'data-lang="zh"',
+        'data-lang="zh-Hans"',
+        'data-lang="zh-Hant"',
         "作曲家",
         "大提琴",
         "作品69",
@@ -117,7 +119,8 @@ def test_listening_chain_beethoven_cello_zh_approaches_salon_parity() -> None:
     ):
         assert needle in html, f"missing chamber marker: {needle}"
     assert "我准备开始欣赏" not in report.work_title
-    assert "SkillRuntime" not in html.split('data-lang="zh"')[1].split('data-lang="en"')[0]
+    zh_pane = html.split('data-lang="zh-Hans"')[1].split("data-lang=")[0]
+    assert "SkillRuntime" not in zh_pane
     assert "Goldberg" not in html
     assert "Aria bass" not in html
     assert "哥德堡" not in html
@@ -176,6 +179,131 @@ def test_eval_hard_fails_without_ambient() -> None:
     assert result.outputs.get("pass") is False
     notes = str(result.outputs.get("eval_notes") or "")
     assert "ambient" in notes.lower()
+
+
+def test_listening_chain_bach_cello_suites_identity() -> None:
+    """Solo cello suites must not inherit Goldberg keyboard or Beethoven duo shelves."""
+    root = Path(__file__).resolve().parents[1]
+    runtime = SkillRuntime(roots=[root / "skills"])
+    polluted_kb = {
+        "work_title": "J.S. Bach — Goldberg Variations, BWV 988",
+        "composer": "Johann Sebastian Bach",
+        "listening_thesis": "Hold the Aria bass before chasing surface figuration.",
+        "work_introduction": "Open Goldberg / Ishizaka keyboard cycle.",
+        "depth_points": ["Lock the Aria bass", "Glenn Gould monument"],
+        "ambient_audio": {"playlist_id": "open-goldberg-ishizaka"},
+        "zh": {"listening_thesis": "哥德堡咏叹调低音"},
+    }
+    report = runtime.run_listening_chain(
+        message="我准备开始欣赏巴赫的大提琴无伴奏组曲。你帮我写一份详细的欣赏导赏",
+        kb_dossier=polluted_kb,
+        rag_hits=["Hold the Aria bass architecture from Goldberg BWV 988."],
+        rag_mode="vector",
+    )
+    assert "Cello" in report.work_title or "大提琴" in report.work_title
+    assert "Goldberg" not in report.work_title
+    assert report.composer == "Johann Sebastian Bach"
+    assert report.context.get("work_id") == "bach.cello-suites.bwv-1007-1012"
+    assert "solo-cello-suites" in (report.context.get("family_hints") or [])
+    html = report.guide_html
+    for banned in (
+        "Goldberg",
+        "Aria bass",
+        "哥德堡",
+        "Glenn Gould",
+        "Ishizaka",
+        "Op. 69",
+        "作品69",
+        "duo citizenship",
+        "二重公民权",
+        "Maisky",
+    ):
+        assert banned not in html, f"pollution marker leaked: {banned}"
+    # Explicit keyboard catalog may appear only as a negative caveat, not as identity
+    assert "Hold the Aria" not in html
+    assert "open-goldberg" not in html.lower()
+    assert "BWV 1007" in html or "组曲" in html
+    ambient = (report.context.get("corpus_dossier") or {}).get("ambient_audio") or {}
+    amb_blob = str(ambient).lower()
+    assert "ishizaka" not in amb_blob
+    assert "goldberg" not in amb_blob
+    assert "1007" in amb_blob or "cello" in amb_blob or "prelude" in amb_blob
+
+
+def test_intake_solo_cello_suites_family() -> None:
+    root = Path(__file__).resolve().parents[1]
+    runtime = SkillRuntime(roots=[root / "skills"])
+    out = runtime.run_trigger(
+        "listening.intake",
+        {"raw_message": "Bach unaccompanied cello suites BWV 1007-1012", "work_hint": ""},
+    ).outputs
+    assert out.get("work_id") == "bach.cello-suites.bwv-1007-1012"
+    assert "solo-cello-suites" in (out.get("family_hints") or [])
+    assert "keyboard-variations" not in (out.get("family_hints") or [])
+    assert "duo-cello-piano" not in (out.get("family_hints") or [])
+    assert "Goldberg" not in str(out.get("work_title"))
+    assert out.get("conflict_markers")
+
+
+def test_intake_chopin_and_mahler_from_catalog() -> None:
+    """Productization proof: new composers resolve from catalog YAML alone."""
+    root = Path(__file__).resolve().parents[1]
+    runtime = SkillRuntime(roots=[root / "skills"])
+    chopin = runtime.run_trigger(
+        "listening.intake",
+        {"raw_message": "Chopin Nocturne Op. 9 No. 2 listening guide", "work_hint": ""},
+    ).outputs
+    assert chopin.get("work_id") == "chopin.nocturne-op9-no2"
+    mazurka = runtime.run_trigger(
+        "listening.intake",
+        {"raw_message": "肖邦玛祖卡详细导赏", "work_hint": ""},
+    ).outputs
+    assert mazurka.get("work_id") == "chopin.mazurkas"
+    assert "character-dance-piano" in (mazurka.get("family_hints") or [])
+    mahler = runtime.run_trigger(
+        "listening.intake",
+        {"raw_message": "马勒第五交响曲导赏", "work_hint": ""},
+    ).outputs
+    assert mahler.get("work_id") == "mahler.symphony-5"
+
+
+def test_mazurka_chain_approaches_goldberg_atelier_coverage() -> None:
+    """Evo bar: dance-character family ships full atelier chambers (no case hardcode)."""
+    root = Path(__file__).resolve().parents[1]
+    runtime = SkillRuntime(roots=[root / "skills"])
+    report = runtime.run_listening_chain(
+        message="我准备开始欣赏肖邦的玛祖卡。你帮我写一份详细的欣赏导赏",
+    )
+    assert report.context.get("work_id") == "chopin.mazurkas"
+    assert "character-dance-piano" in (report.context.get("family_hints") or [])
+    assert report.eval_pass
+    assert report.eval_score >= 8
+    html = report.guide_html
+    for marker in (
+        "作曲家",
+        "创作背景与时代",
+        "何以传世",
+        "声响世界",
+        "名家演绎",
+        "聆听室",
+        "id='composer-zh-Hans'",
+        "id='genesis-zh-Hans'",
+        "id='stature-zh-Hans'",
+        "id='sound-zh-Hans'",
+        "id='interpretations-zh-Hans'",
+        "id='media-zh-Hans'",
+    ):
+        assert marker in html, f"missing atelier marker: {marker}"
+    # No Goldberg pollution
+    for banned in ("Goldberg", "哥德堡", "Glenn Gould", "Hold the Aria"):
+        assert banned not in html
+    # Honest Chopin peer ambient (catalog-ref), not Goldberg/Beethoven pollution
+    assert "aulos-ambient" in html
+    assert "Chopin" in html or "肖邦" in html
+    assert "Nocturne" in html or "夜曲" in html
+    assert "Goldberg" not in html
+    assert "Moonlight" not in html
+    assert "月光" not in html
 
 
 def test_listening_chain_does_not_collapse_to_goldberg() -> None:

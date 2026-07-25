@@ -55,7 +55,8 @@ _STOP_TOKENS = {
     "我想",
     "写",
 }
-# Composer-only tokens are too weak to claim "same work" (Bach ≠ every Bach piece).
+# Composer-only / catalog-prefix tokens are too weak to claim "same work".
+# Prefer catalog/policies/weak_tokens.yaml when aulos-skills is on the path.
 _WEAK_IDENTITY_TOKENS = {
     "bach",
     "johann",
@@ -68,14 +69,62 @@ _WEAK_IDENTITY_TOKENS = {
     "amadeus",
     "chopin",
     "frederic",
+    "mahler",
+    "gustav",
     "debussy",
     "claude",
     "巴赫",
     "贝多芬",
     "莫扎特",
     "肖邦",
+    "马勒",
     "德彪西",
+    "bwv",
+    "woo",
+    "hob",
+    "kv",
+    "k",
+    "op",
+    "opus",
+    "no",
+    "nr",
+    "suite",
+    "suites",
+    "sonata",
+    "sonatas",
+    "variation",
+    "variations",
+    "concerto",
+    "symphony",
+    "nocturne",
+    "nocturnes",
+    "prelude",
+    "fugue",
+    "组曲",
+    "奏鸣曲",
+    "变奏",
+    "变奏曲",
+    "交响",
+    "夜曲",
 }
+
+
+def _load_weak_tokens() -> set[str]:
+    """Merge defaults with catalog policy when available (SPEC-008)."""
+    weak = set(_WEAK_IDENTITY_TOKENS)
+    try:
+        _ensure_skills()
+        from aulos_skills.identity import default_catalog_root
+
+        path = default_catalog_root() / "policies" / "weak_tokens.yaml"
+        if path.is_file():
+            import yaml
+
+            data = yaml.safe_load(path.read_text(encoding="utf-8")) or {}
+            weak |= {str(t).lower() for t in (data.get("tokens") or []) if t}
+    except Exception:  # noqa: BLE001
+        pass
+    return weak
 
 
 def normalize_work_key(title: str, composer: str = "") -> str:
@@ -94,32 +143,44 @@ def works_compatible(
     doc_title: str = "",
     doc_composer: str = "",
     doc_work_key: str = "",
+    doc_work_id: str = "",
+    resolved_work_id: str = "",
     min_score: float = 0.0,
     score: float = 0.0,
 ) -> bool:
     """True when a KB document is about the same work the user asked for.
 
-    Nearest-neighbor embeddings alone are not enough when the corpus is sparse —
-    otherwise every cold query collapses onto the flagship Goldberg dossier.
+    Catalog work_id match is authoritative. Otherwise require distinctive overlap —
+    never composer-only or catalog-prefix-only (SPEC-008).
     """
+    weak = _load_weak_tokens()
+    if resolved_work_id and doc_work_id:
+        return resolved_work_id == doc_work_id and score >= min_score
+    if resolved_work_id and doc_work_key and resolved_work_id.endswith(doc_work_key):
+        return score >= min_score
+
     q_tokens = _content_tokens(query)
     title_tokens = _content_tokens(f"{doc_title} {doc_composer}")
     if not q_tokens or not title_tokens:
         return False
 
-    # Exact-ish work_key containment (seeded keys like bwv-988)
+    # Exact-ish work_key containment (seeded keys like bwv-988) — only when
+    # the query also carries a distinctive non-weak token from the title.
     hint_key = normalize_work_key(query)
     work_key = (doc_work_key or "").lower()
     if work_key and len(work_key) >= 5 and (work_key in hint_key or hint_key in work_key):
-        return score >= min_score
+        distinctive = title_tokens - weak
+        if distinctive & q_tokens and score >= min_score:
+            return True
+        return False
 
     overlap = q_tokens & title_tokens
-    distinctive = title_tokens - _WEAK_IDENTITY_TOKENS
+    distinctive = title_tokens - weak
     distinctive_hit = bool(distinctive & q_tokens)
     if distinctive_hit and score >= min_score:
         return True
-    # Two+ overlapping tokens, with at least one non-composer token preferred
-    if len(overlap) >= 2 and (overlap - _WEAK_IDENTITY_TOKENS) and score >= min_score:
+    strong = overlap - weak
+    if len(overlap) >= 2 and strong and score >= min_score:
         return True
     return False
 
@@ -315,7 +376,7 @@ def upsert_from_report(db: Session, *, report: Any, guide_id: int, user_id: int)
 
 
 def seed_corpus_knowledge(db: Session) -> int:
-    """Index curated corpus YAML as global (user_id=None) knowledge once."""
+    """Index curated corpus YAML + Work Catalog identity cards as global knowledge once."""
     global _SEED_FLAG
     existing = (
         db.query(KnowledgeDocument.id)
@@ -331,18 +392,21 @@ def seed_corpus_knowledge(db: Session) -> int:
         import yaml
     except ImportError:
         return 0
-    roots = [
-        Path(__file__).resolve().parents[4] / "aulos-skills" / "skills" / "aulos-listening-corpus" / "assets" / "corpus",
-    ]
     count = 0
-    for corpus_dir in roots:
-        index_path = corpus_dir / "index.yaml"
-        if not index_path.is_file():
-            continue
+    corpus_dir = (
+        Path(__file__).resolve().parents[4]
+        / "aulos-skills"
+        / "skills"
+        / "aulos-listening-corpus"
+        / "assets"
+        / "corpus"
+    )
+    index_path = corpus_dir / "index.yaml"
+    if index_path.is_file():
         try:
             index = yaml.safe_load(index_path.read_text(encoding="utf-8")) or {}
         except Exception:  # noqa: BLE001
-            continue
+            index = {}
         for entry in index.get("works") or index.get("entries") or []:
             rel = str(entry.get("path") or "")
             if not rel.endswith((".yaml", ".yml")):
@@ -369,6 +433,45 @@ def seed_corpus_knowledge(db: Session) -> int:
                 user_id=None,
             )
             count += 1
+
+    # Seed Work Catalog identity cards so RAG has correct attractors (SPEC-008)
+    try:
+        from aulos_skills.identity import WorkCatalog, default_catalog_root
+
+        catalog = WorkCatalog(default_catalog_root())
+        for work in catalog.works.values():
+            # Skip if full dossier already seeded under corpus_key
+            if work.corpus_key:
+                continue
+            composer_name = ""
+            card = catalog.composers.get(work.composer_id)
+            if card:
+                composer_name = card.name_en or card.name_zh
+            identity_dossier = {
+                "work_id": work.work_id,
+                "work_title": work.canonical_title,
+                "composer": composer_name,
+                "catalog_numbers": work.catalog_numbers,
+                "aliases": work.aliases,
+                "facets": work.facets,
+                "family_id": work.family_id,
+                "listening_thesis": f"Identity card for {work.canonical_title}.",
+                "identity_only": True,
+            }
+            key = f"catalog:{work.work_id}"
+            upsert_document(
+                db,
+                work_key=key,
+                title=work.canonical_title,
+                composer=composer_name,
+                dossier=identity_dossier,
+                source_guide_id=None,
+                user_id=None,
+            )
+            count += 1
+    except Exception as exc:  # noqa: BLE001
+        logger.warning("kb_seed_catalog_failed err=%s", exc)
+
     _SEED_FLAG = True
     logger.info("kb_seed_corpus docs=%s", count)
     return count
@@ -402,14 +505,23 @@ def retrieve(
             ),
         )
 
-    # Build candidate chunks — soft-filter by identity; never fall back to "all docs"
-    # (that previously made every query inherit the flagship Goldberg dossier).
+    # Soft-filter: require ≥1 non-weak distinctive token from the query in the doc blob.
+    weak = _load_weak_tokens()
     chunk_rows: list[tuple[KnowledgeChunk, KnowledgeDocument]] = []
     for doc in docs:
+        blob = f"{doc.title} {doc.composer} {doc.work_key}".lower()
+        try:
+            meta = json.loads(doc.dossier_json or "{}")
+        except json.JSONDecodeError:
+            meta = {}
+        if meta.get("work_id"):
+            blob = f"{blob} {meta.get('work_id')}"
         if hint_key and hint_key[:20] not in (doc.work_key or "") and hint_key not in (doc.work_key or ""):
-            blob = f"{doc.title} {doc.composer} {doc.work_key}"
             tokens = _content_tokens(hint_key.replace("-", " "))
-            if tokens and not any(t in blob.lower() for t in tokens):
+            strong_tokens = tokens - weak
+            if strong_tokens and not any(t in blob for t in strong_tokens):
+                continue
+            if not strong_tokens:
                 continue
         for ch in db.query(KnowledgeChunk).filter(KnowledgeChunk.document_id == doc.id).all():
             chunk_rows.append((ch, doc))
@@ -440,11 +552,16 @@ def retrieve(
     scored.sort(key=lambda x: x[0], reverse=True)
     compatible: list[tuple[float, KnowledgeChunk, KnowledgeDocument]] = []
     for score, ch, doc in scored:
+        try:
+            meta = json.loads(doc.dossier_json or "{}")
+        except json.JSONDecodeError:
+            meta = {}
         if works_compatible(
             qtext,
             doc_title=doc.title or "",
             doc_composer=doc.composer or "",
             doc_work_key=doc.work_key or "",
+            doc_work_id=str(meta.get("work_id") or ""),
             min_score=0.12,
             score=float(score),
         ):
@@ -472,18 +589,24 @@ def retrieve(
 
     kb_dossier: dict[str, Any] = {}
     # Full dossier injection requires identity match — never nearest-neighbor alone.
-    if best_doc and best_score >= 0.18 and works_compatible(
-        qtext,
-        doc_title=best_doc.title or "",
-        doc_composer=best_doc.composer or "",
-        doc_work_key=best_doc.work_key or "",
-        min_score=0.18,
-        score=float(best_score),
-    ):
+    if best_doc and best_score >= 0.18:
         try:
-            kb_dossier = json.loads(best_doc.dossier_json or "{}")
+            meta = json.loads(best_doc.dossier_json or "{}")
         except json.JSONDecodeError:
-            kb_dossier = {}
+            meta = {}
+        # Identity-only catalog cards must not replace a full Salon dossier
+        if meta.get("identity_only"):
+            meta = {}
+        elif works_compatible(
+            qtext,
+            doc_title=best_doc.title or "",
+            doc_composer=best_doc.composer or "",
+            doc_work_key=best_doc.work_key or "",
+            doc_work_id=str(meta.get("work_id") or ""),
+            min_score=0.18,
+            score=float(best_score),
+        ):
+            kb_dossier = meta
 
     rag_hits = [h["text"] for h in hits]
     logger.info(

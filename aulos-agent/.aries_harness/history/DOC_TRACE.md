@@ -8,10 +8,10 @@ managed_by: "aries-harness"
 fingerprint: "aries-harness/history-doc/v1"
 generated_by: "/aries-harness history-refresh"
 initialized_at: "2026-07-25T10:55:22Z"
-generated_at: "2026-07-25T16:23:54+00:00"
+generated_at: "2026-07-25T18:52:18+00:00"
 effective_status: "generated"
-effective_since: "2026-07-25T16:23:54+00:00"
-content_fingerprint: "sha256:9eb5e7cc7e7fce2edae898bab764f8d90dacffc00ab21f69a470885846395dc8"
+effective_since: "2026-07-25T18:52:18+00:00"
+content_fingerprint: "sha256:77ce310aa4e5c68dc9703fd651e35c126b7794a9565f08448b10994d09bd8610"
 trace_history_source: "filesystem-only"
 trace_last_commit_sha: ""
 trace_last_commit_at: ""
@@ -19,24 +19,24 @@ trace_revision_count: "0"
 ---
 # Document Trace
 
-Generated at: `2026-07-25T16:23:54+00:00`
+Generated at: `2026-07-25T18:52:18+00:00`
 
 ## Summary
 
-- managed Markdown docs: 48
+- managed Markdown docs: 52
 - docs with governance gaps: 0
 - dirty docs: 0
 
 ## By layer
 
-- MetaDefineLayer: 24
+- MetaDefineLayer: 27
 - RunCookingLayer: 10
-- SharedSupportSurface: 14
+- SharedSupportSurface: 15
 
 ## By effective status
 
-- active: 39
-- generated: 9
+- active: 42
+- generated: 10
 
 ## Managed docs
 
@@ -64,18 +64,20 @@ Generated at: `2026-07-25T16:23:54+00:00`
 
 - role: harness-index
 - layer: SharedSupportSurface
-- effective status: generated since 2026-07-25T16:23:54+00:00
-- content fingerprint: `sha256:46d0ae178a405de6d4a4bf58f5b2ba9d8e4930125df96e8740a0d92d941cdba9`
+- effective status: generated since 2026-07-25T18:52:17+00:00
+- content fingerprint: `sha256:f70c6cce4eb8bba57d59d6e8483a95e6b138734e01fb496a113d0742b6dc2ede`
 - trace: filesystem-only / count=0 / sha=none
-- latest revision: `0d5cb01` 2026-07-25 Initial commit: Aulos hackathon workspace with LangChain agent runtime.
+- latest revision: `555cf53` 2026-07-26 Ship listening product, mandatory harness, facility layout, and UTC/local time.
 - dirty: no
+- earlier revisions:
+  - `0d5cb01` 2026-07-25 Initial commit: Aulos hackathon workspace with LangChain agent runtime.
 
 ### JOURNAL.md
 
 - role: journal
 - layer: RunCookingLayer
 - effective status: active since 2026-07-25T10:55:22Z
-- content fingerprint: `sha256:0ba65701bfd6e3476c818ece377d5c5a932d7efc517e9bd0e50030a1a7aea835`
+- content fingerprint: `sha256:0f4326c4a9dcacee31696a05dfe7195438cb98bb24e65cc7fba5a3f234467ba6`
 - trace: filesystem-only / count=0 / sha=none
 - latest revision: `0d5cb01` 2026-07-25 Initial commit: Aulos hackathon workspace with LangChain agent runtime.
 - dirty: no
@@ -85,11 +87,12 @@ Generated at: `2026-07-25T16:23:54+00:00`
 - role: memory
 - layer: SharedSupportSurface
 - effective status: active since 2026-07-25T10:55:22Z
-- content fingerprint: `sha256:2b7ac7c276f6de6c144ec95ded75992f4d4a217b7d20dee428be49d69b28ad6d`
+- content fingerprint: `sha256:f5665dcc6fd34ec007858cc0f33fe9b884f0dea7210190d79f361565ea586c61`
 - trace: filesystem-only / count=0 / sha=none
-- latest revision: `93c0f6e` 2026-07-25 Add aulos-skills, aulos-ops, host deploy, and fleet operating defaults.
+- latest revision: `555cf53` 2026-07-26 Ship listening product, mandatory harness, facility layout, and UTC/local time.
 - dirty: no
 - earlier revisions:
+  - `93c0f6e` 2026-07-25 Add aulos-skills, aulos-ops, host deploy, and fleet operating defaults.
   - `0d5cb01` 2026-07-25 Initial commit: Aulos hackathon workspace with LangChain agent runtime.
 
 ### MISSION.md
@@ -119,8 +122,10 @@ Generated at: `2026-07-25T16:23:54+00:00`
 - effective status: active since 2026-07-25T10:55:22Z
 - content fingerprint: `sha256:9dcf012215531bf00de7ced7c83a5d164cc6eec56e4148f2c2dca3dd98931c91`
 - trace: filesystem-only / count=0 / sha=none
-- latest revision: `0d5cb01` 2026-07-25 Initial commit: Aulos hackathon workspace with LangChain agent runtime.
+- latest revision: `555cf53` 2026-07-26 Ship listening product, mandatory harness, facility layout, and UTC/local time.
 - dirty: no
+- earlier revisions:
+  - `0d5cb01` 2026-07-25 Initial commit: Aulos hackathon workspace with LangChain agent runtime.
 
 ### RISKS.md
 
@@ -172,6 +177,16 @@ Generated at: `2026-07-25T16:23:54+00:00`
 - latest revision: `0d5cb01` 2026-07-25 Initial commit: Aulos hackathon workspace with LangChain agent runtime.
 - dirty: no
 
+### decisions/adrs/ADR-003-listening-via-agent-tools.md
+
+- role: adr-record
+- layer: MetaDefineLayer
+- effective status: active since 2026-07-25T17:10:00Z
+- content fingerprint: `sha256:4f540710adb9426133410b7cfb75fb5ec41b273b68e37f5ba9a3fdca71f8ab85`
+- trace: filesystem-only / count=0 / sha=none
+- latest revision: no git history recorded
+- dirty: no
+
 ### decisions/adrs/README.md
 
 - role: pipeline-adrs-readme
@@ -189,7 +204,19 @@ Generated at: `2026-07-25T16:23:54+00:00`
 - effective status: active since 2026-07-25T10:58:13+00:00
 - content fingerprint: `sha256:980e08728ef52ce47b3af54b23aaa5169a0fed47ae907ad13f5ffb25696adcc0`
 - trace: filesystem-only / count=0 / sha=none
-- latest revision: `0d5cb01` 2026-07-25 Initial commit: Aulos hackathon workspace with LangChain agent runtime.
+- latest revision: `555cf53` 2026-07-26 Ship listening product, mandatory harness, facility layout, and UTC/local time.
+- dirty: no
+- earlier revisions:
+  - `0d5cb01` 2026-07-25 Initial commit: Aulos hackathon workspace with LangChain agent runtime.
+
+### decisions/architecture/ARCH-002-agent-orchestrated-listening.md
+
+- role: system-design
+- layer: MetaDefineLayer
+- effective status: active since 2026-07-25T17:10:00Z
+- content fingerprint: `sha256:eaeca628220c9e1c56450c4f99fe9a965edd76a84da2f4fac79a467213e128c3`
+- trace: filesystem-only / count=0 / sha=none
+- latest revision: no git history recorded
 - dirty: no
 
 ### decisions/architecture/README.md
@@ -206,80 +233,106 @@ Generated at: `2026-07-25T16:23:54+00:00`
 
 - role: history-daily-summary-index
 - layer: SharedSupportSurface
-- effective status: generated since 2026-07-25T10:58:33+00:00
-- content fingerprint: `sha256:b1a52c10575405722d0335402129a27de5a6ffd5792bff5ef30bea1ffd2cfa30`
+- effective status: generated since 2026-07-25T16:42:04+00:00
+- content fingerprint: `sha256:5472f0fbd7b338638072f83c78426d75e6d828f52a83427186dfb0d4d11644c9`
 - trace: filesystem-only / count=0 / sha=none
-- latest revision: `0d5cb01` 2026-07-25 Initial commit: Aulos hackathon workspace with LangChain agent runtime.
+- latest revision: `555cf53` 2026-07-26 Ship listening product, mandatory harness, facility layout, and UTC/local time.
 - dirty: no
+- earlier revisions:
+  - `0d5cb01` 2026-07-25 Initial commit: Aulos hackathon workspace with LangChain agent runtime.
 
 ### history/DOC_TRACE.md
 
 - role: history-doc-trace
 - layer: SharedSupportSurface
-- effective status: generated since 2026-07-25T10:58:33+00:00
-- content fingerprint: `sha256:c803c6f5cb7d90f91f5064fc4ebd182916edd48d43d3976d71c8c18fc635712e`
+- effective status: generated since 2026-07-25T16:42:04+00:00
+- content fingerprint: `sha256:01693d6bee51a4efc240c7707f4c28f003bf2ecfb75769c017cd1ee51f24949e`
 - trace: filesystem-only / count=0 / sha=none
-- latest revision: `0d5cb01` 2026-07-25 Initial commit: Aulos hackathon workspace with LangChain agent runtime.
+- latest revision: `555cf53` 2026-07-26 Ship listening product, mandatory harness, facility layout, and UTC/local time.
 - dirty: no
+- earlier revisions:
+  - `0d5cb01` 2026-07-25 Initial commit: Aulos hackathon workspace with LangChain agent runtime.
 
 ### history/README.md
 
 - role: history-readme
 - layer: SharedSupportSurface
-- effective status: generated since 2026-07-25T10:58:33+00:00
-- content fingerprint: `sha256:578e86e2c344d53d454d6c31633e9cad2824b7b701bb949cee45b43e255c5b02`
+- effective status: generated since 2026-07-25T16:42:04+00:00
+- content fingerprint: `sha256:b7e6d866928652ad47233e697aaea848b0fc0e94dfcd13af1da8d1a6534a50c9`
 - trace: filesystem-only / count=0 / sha=none
-- latest revision: `0d5cb01` 2026-07-25 Initial commit: Aulos hackathon workspace with LangChain agent runtime.
+- latest revision: `555cf53` 2026-07-26 Ship listening product, mandatory harness, facility layout, and UTC/local time.
 - dirty: no
+- earlier revisions:
+  - `0d5cb01` 2026-07-25 Initial commit: Aulos hackathon workspace with LangChain agent runtime.
 
 ### history/RETROSPECTIVE.md
 
 - role: history-retrospective
 - layer: SharedSupportSurface
-- effective status: generated since 2026-07-25T10:58:33+00:00
-- content fingerprint: `sha256:032ccaafe7cc0338bfdf8c58be2c7d2ee1afe4a74ec5a90e652991b1004523af`
+- effective status: generated since 2026-07-25T16:42:04+00:00
+- content fingerprint: `sha256:c60cf2b933f0906ee18e964a1c71ce420d77f93ea6f7c65d784cd0ae3b06bdb9`
 - trace: filesystem-only / count=0 / sha=none
-- latest revision: `0d5cb01` 2026-07-25 Initial commit: Aulos hackathon workspace with LangChain agent runtime.
+- latest revision: `555cf53` 2026-07-26 Ship listening product, mandatory harness, facility layout, and UTC/local time.
 - dirty: no
+- earlier revisions:
+  - `0d5cb01` 2026-07-25 Initial commit: Aulos hackathon workspace with LangChain agent runtime.
 
 ### history/ROADMAP.md
 
 - role: history-roadmap
 - layer: SharedSupportSurface
-- effective status: generated since 2026-07-25T10:58:33+00:00
-- content fingerprint: `sha256:c452e2c64d57410c0e44a7054fdd6293fc0045087872d6cc18b221a58b8f1646`
+- effective status: generated since 2026-07-25T16:42:04+00:00
+- content fingerprint: `sha256:da207433931209308c7e130c6c8a3e10d0a387f716d7858a74971cdc54a897c1`
 - trace: filesystem-only / count=0 / sha=none
-- latest revision: `0d5cb01` 2026-07-25 Initial commit: Aulos hackathon workspace with LangChain agent runtime.
+- latest revision: `555cf53` 2026-07-26 Ship listening product, mandatory harness, facility layout, and UTC/local time.
 - dirty: no
+- earlier revisions:
+  - `0d5cb01` 2026-07-25 Initial commit: Aulos hackathon workspace with LangChain agent runtime.
 
 ### history/STATUS.md
 
 - role: history-status
 - layer: SharedSupportSurface
-- effective status: generated since 2026-07-25T10:58:33+00:00
-- content fingerprint: `sha256:9252e74599799a199004eb555e0a3cd14a3262fa3ca9969744bf109e17015dfb`
+- effective status: generated since 2026-07-25T16:42:04+00:00
+- content fingerprint: `sha256:ca25b6c51704ea0d15e7014ee4bd28e33844e090773dd13cbb34bdfa8233191f`
 - trace: filesystem-only / count=0 / sha=none
-- latest revision: `0d5cb01` 2026-07-25 Initial commit: Aulos hackathon workspace with LangChain agent runtime.
+- latest revision: `555cf53` 2026-07-26 Ship listening product, mandatory harness, facility layout, and UTC/local time.
 - dirty: no
+- earlier revisions:
+  - `0d5cb01` 2026-07-25 Initial commit: Aulos hackathon workspace with LangChain agent runtime.
 
 ### history/TIMELINE.md
 
 - role: history-timeline
 - layer: SharedSupportSurface
-- effective status: generated since 2026-07-25T10:58:33+00:00
-- content fingerprint: `sha256:b48a187fe22ba13a0cff9efc3d75394d76bb3f59e5b9d41823e351057083a0c8`
+- effective status: generated since 2026-07-25T16:42:04+00:00
+- content fingerprint: `sha256:7a7d70c0dfe6a4e74f1d934d1761b10123fba265d632586064faceac957369fe`
 - trace: filesystem-only / count=0 / sha=none
-- latest revision: `0d5cb01` 2026-07-25 Initial commit: Aulos hackathon workspace with LangChain agent runtime.
+- latest revision: `555cf53` 2026-07-26 Ship listening product, mandatory harness, facility layout, and UTC/local time.
 - dirty: no
+- earlier revisions:
+  - `0d5cb01` 2026-07-25 Initial commit: Aulos hackathon workspace with LangChain agent runtime.
 
 ### history/daily/2026-07-25.md
 
 - role: history-daily-summary
 - layer: SharedSupportSurface
-- effective status: generated since 2026-07-25T10:58:33+00:00
-- content fingerprint: `sha256:e4771b4177a4c570428f194632e5f40cf0cb0188bb59aecd7fc1169185955b9d`
+- effective status: generated since 2026-07-25T16:42:04+00:00
+- content fingerprint: `sha256:944112f37ef6d8d370b8e61607eab37e850aeaef4b4259826cf1fb7a63c92eac`
 - trace: filesystem-only / count=0 / sha=none
-- latest revision: `0d5cb01` 2026-07-25 Initial commit: Aulos hackathon workspace with LangChain agent runtime.
+- latest revision: `555cf53` 2026-07-26 Ship listening product, mandatory harness, facility layout, and UTC/local time.
+- dirty: no
+- earlier revisions:
+  - `0d5cb01` 2026-07-25 Initial commit: Aulos hackathon workspace with LangChain agent runtime.
+
+### history/daily/2026-07-26.md
+
+- role: history-daily-summary
+- layer: SharedSupportSurface
+- effective status: generated since 2026-07-25T16:42:04+00:00
+- content fingerprint: `sha256:73d0a0188568f387f4d1bcc4d348baf3dc9ad14fdc9d319821e53473a941bc06`
+- trace: filesystem-only / count=0 / sha=none
+- latest revision: no git history recorded
 - dirty: no
 
 ### layers/MetaDefineLayer/README.md
@@ -430,6 +483,16 @@ Generated at: `2026-07-25T16:23:54+00:00`
 - content fingerprint: `sha256:b98c3e0fd9f12955338507bf16b91ec57e2630e81d3379b984b38d468d61f6ee`
 - trace: filesystem-only / count=0 / sha=none
 - latest revision: `0d5cb01` 2026-07-25 Initial commit: Aulos hackathon workspace with LangChain agent runtime.
+- dirty: no
+
+### references/specs/SPEC-002-agent-orchestrated-listening.md
+
+- role: spec-package
+- layer: MetaDefineLayer
+- effective status: active since 2026-07-25T17:10:00Z
+- content fingerprint: `sha256:700ab4d1a49654e44f84a5c31de447a3e4cd94a891f7c8af8fe2871e2ee44ae1`
+- trace: filesystem-only / count=0 / sha=none
+- latest revision: no git history recorded
 - dirty: no
 
 ### references/stories/README.md

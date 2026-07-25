@@ -8,10 +8,10 @@ managed_by: "aries-harness"
 fingerprint: "aries-harness/history-doc/v1"
 generated_by: "/aries-harness history-refresh"
 initialized_at: "2026-07-25T11:07:42Z"
-generated_at: "2026-07-25T16:29:51+00:00"
+generated_at: "2026-07-25T18:52:19+00:00"
 effective_status: "generated"
-effective_since: "2026-07-25T16:29:51+00:00"
-content_fingerprint: "sha256:d2c9062f8a5a7eda335b9265bd56428fe55351caabbb91898c7dba9408a93032"
+effective_since: "2026-07-25T18:52:19+00:00"
+content_fingerprint: "sha256:be07205a2f56b12422546c708a283b3b634769f518e5c7eccce42edcff5b2109"
 trace_history_source: "filesystem-only"
 trace_last_commit_sha: ""
 trace_last_commit_at: ""
@@ -19,7 +19,7 @@ trace_revision_count: "0"
 ---
 # Timeline
 
-Generated at: `2026-07-25T16:29:51+00:00`
+Generated at: `2026-07-25T18:52:19+00:00`
 
 ## Journal milestones
 
@@ -35,21 +35,22 @@ Generated at: `2026-07-25T16:29:51+00:00`
 
 ## Recent git commits
 
+- `555cf53` 2026-07-26 Ship listening product, mandatory harness, facility layout, and UTC/local time.
 - `93c0f6e` 2026-07-25 Add aulos-skills, aulos-ops, host deploy, and fleet operating defaults.
 - `7632d9b` 2026-07-25 Add aulos-web, aulos-api, and aulos-mcp sub-projects under aries-harness.
 - `0d5cb01` 2026-07-25 Initial commit: Aulos hackathon workspace with LangChain agent runtime.
 
 ## Working tree snapshot
 
-- `M` `.gitignore`
-- `M` `AGENTS.md`
-- `M` `CLAUDE.md`
 - `M` `aulos-agent/.aries_harness/INDEX.md`
+- `M` `aulos-agent/.aries_harness/JOURNAL.md`
 - `M` `aulos-agent/.aries_harness/MEMORY.md`
-- `M` `aulos-agent/.aries_harness/README.md`
-- `M` `aulos-agent/.aries_harness/decisions/architecture/ARCH-001-langchain-agent-architecture.md`
 - `M` `aulos-agent/.aries_harness/history/DAILY_SUMMARY_INDEX.md`
 - `M` `aulos-agent/.aries_harness/history/DOC_TRACE.md`
 - `M` `aulos-agent/.aries_harness/history/README.md`
 - `M` `aulos-agent/.aries_harness/history/RETROSPECTIVE.md`
 - `M` `aulos-agent/.aries_harness/history/ROADMAP.md`
+- `M` `aulos-agent/.aries_harness/history/STATUS.md`
+- `M` `aulos-agent/.aries_harness/history/TIMELINE.md`
+- `M` `aulos-agent/.aries_harness/history/daily/2026-07-25.md`
+- `M` `aulos-agent/.aries_harness/history/doc-trace.json`

@@ -1,0 +1,54 @@
+work_id: bach.cello-suites.bwv-1007-1012
+composer_id: johann-sebastian-bach
+canonical_title: J.S. Bach — Six Suites for Unaccompanied Cello, BWV 1007–1012
+canonical_title_zh: 巴赫 — 无伴奏大提琴组曲，BWV 1007–1012
+aliases:
+  - Cello Suites
+  - Unaccompanied Cello Suites
+  - Solo Cello Suites
+  - Six Cello Suites
+  - BWV 1007
+  - BWV 1008
+  - BWV 1009
+  - BWV 1010
+  - BWV 1011
+  - BWV 1012
+  - 大提琴无伴奏组曲
+  - 无伴奏大提琴组曲
+  - 大提琴组曲
+catalog_numbers:
+  - BWV 1007
+  - BWV 1008
+  - BWV 1009
+  - BWV 1010
+  - BWV 1011
+  - BWV 1012
+facets:
+  instruments: [cello, violoncello]
+  ensemble: [solo, unaccompanied]
+  forms: [suite, suites]
+  era: baroque
+family_id: solo-cello-suites
+corpus_key: null
+ambient_ref: cello-as-speaker-bach-suite1
+identity:
+  distinctive_tokens:
+    - cello
+    - violoncello
+    - 大提琴
+    - unaccompanied
+    - 无伴奏
+    - "1007"
+    - "1008"
+    - "1009"
+    - "1010"
+    - "1011"
+    - "1012"
+  conflict_work_ids:
+    - bach.goldberg.bwv-988
+    - beethoven.cello-sonatas-variations
+  conflict_markers: []
+provenance:
+  authority: BWV 1007–1012; Anna Magdalena copy transmission
+  notes: "Dating (Cöthen period) debated — treat year as uncertain when stated."
+  uncertain: true

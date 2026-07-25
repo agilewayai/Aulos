@@ -8,10 +8,10 @@ managed_by: "aries-harness"
 fingerprint: "aries-harness/history-doc/v1"
 generated_by: "/aries-harness history-refresh"
 initialized_at: "2026-07-25T11:20:06Z"
-generated_at: "2026-07-25T16:29:54+00:00"
+generated_at: "2026-07-25T18:52:23+00:00"
 effective_status: "generated"
-effective_since: "2026-07-25T16:29:54+00:00"
-content_fingerprint: "sha256:bb23fe01f864fa5359a48191175b75b1f7affbe0d0c26167cc6bf86209d39a42"
+effective_since: "2026-07-25T18:52:23+00:00"
+content_fingerprint: "sha256:38cdc13c36a38eda02a8befdf125203b5bd641c068767a2a8c2170479114d47c"
 trace_history_source: "filesystem-only"
 trace_last_commit_sha: ""
 trace_last_commit_at: ""
@@ -19,11 +19,11 @@ trace_revision_count: "0"
 ---
 # Document Trace
 
-Generated at: `2026-07-25T16:29:54+00:00`
+Generated at: `2026-07-25T18:52:23+00:00`
 
 ## Summary
 
-- managed Markdown docs: 48
+- managed Markdown docs: 49
 - docs with governance gaps: 0
 - dirty docs: 0
 
@@ -31,12 +31,12 @@ Generated at: `2026-07-25T16:29:54+00:00`
 
 - MetaDefineLayer: 24
 - RunCookingLayer: 10
-- SharedSupportSurface: 14
+- SharedSupportSurface: 15
 
 ## By effective status
 
 - active: 39
-- generated: 9
+- generated: 10
 
 ## Managed docs
 
@@ -69,25 +69,26 @@ Generated at: `2026-07-25T16:29:54+00:00`
 
 - role: harness-index
 - layer: SharedSupportSurface
-- effective status: generated since 2026-07-25T16:29:54+00:00
-- content fingerprint: `sha256:d1684adf66c64626fa7fa95612e91ff7cd363a372c21ba7306c817207d406e96`
+- effective status: generated since 2026-07-25T18:52:23+00:00
+- content fingerprint: `sha256:935113b73c38b3451ea6b72d793e84d01aa53e6d8470bab7867bababd77be993`
 - trace: filesystem-only / count=0 / sha=none
-- latest revision: `93c0f6e` 2026-07-25 Add aulos-skills, aulos-ops, host deploy, and fleet operating defaults.
+- latest revision: `555cf53` 2026-07-26 Ship listening product, mandatory harness, facility layout, and UTC/local time.
 - dirty: no
 - earlier revisions:
+  - `93c0f6e` 2026-07-25 Add aulos-skills, aulos-ops, host deploy, and fleet operating defaults.
   - `7632d9b` 2026-07-25 Add aulos-web, aulos-api, and aulos-mcp sub-projects under aries-harness.
-  - `0d5cb01` 2026-07-25 Initial commit: Aulos hackathon workspace with LangChain agent runtime.
 
 ### JOURNAL.md
 
 - role: journal
 - layer: RunCookingLayer
 - effective status: active since 2026-07-25T11:20:06Z
-- content fingerprint: `sha256:ef349556784cde22720362ff0b02ef7e6479f608f48e6531b2234a7398275a7b`
+- content fingerprint: `sha256:988545d94c883bb883b89c8f415869bb5f5a6aa4b95d11755e4b5f1066be4ea0`
 - trace: filesystem-only / count=0 / sha=none
-- latest revision: `93c0f6e` 2026-07-25 Add aulos-skills, aulos-ops, host deploy, and fleet operating defaults.
+- latest revision: `555cf53` 2026-07-26 Ship listening product, mandatory harness, facility layout, and UTC/local time.
 - dirty: no
 - earlier revisions:
+  - `93c0f6e` 2026-07-25 Add aulos-skills, aulos-ops, host deploy, and fleet operating defaults.
   - `7632d9b` 2026-07-25 Add aulos-web, aulos-api, and aulos-mcp sub-projects under aries-harness.
 
 ### MEMORY.md
@@ -97,11 +98,11 @@ Generated at: `2026-07-25T16:29:54+00:00`
 - effective status: active since 2026-07-25T11:20:06Z
 - content fingerprint: `sha256:e6fa4aa609dceb09769b6f3c3e569e7a2ecfed1504f25cee4b788b2ea5a30583`
 - trace: filesystem-only / count=0 / sha=none
-- latest revision: `93c0f6e` 2026-07-25 Add aulos-skills, aulos-ops, host deploy, and fleet operating defaults.
+- latest revision: `555cf53` 2026-07-26 Ship listening product, mandatory harness, facility layout, and UTC/local time.
 - dirty: no
 - earlier revisions:
+  - `93c0f6e` 2026-07-25 Add aulos-skills, aulos-ops, host deploy, and fleet operating defaults.
   - `7632d9b` 2026-07-25 Add aulos-web, aulos-api, and aulos-mcp sub-projects under aries-harness.
-  - `0d5cb01` 2026-07-25 Initial commit: Aulos hackathon workspace with LangChain agent runtime.
 
 ### MISSION.md
 
@@ -133,11 +134,11 @@ Generated at: `2026-07-25T16:29:54+00:00`
 - effective status: active since 2026-07-25T11:20:06Z
 - content fingerprint: `sha256:5d9437aeead8bef59835d666e4fa114ba725e0d2ea105c8cc586a567500a982f`
 - trace: filesystem-only / count=0 / sha=none
-- latest revision: `93c0f6e` 2026-07-25 Add aulos-skills, aulos-ops, host deploy, and fleet operating defaults.
+- latest revision: `555cf53` 2026-07-26 Ship listening product, mandatory harness, facility layout, and UTC/local time.
 - dirty: no
 - earlier revisions:
+  - `93c0f6e` 2026-07-25 Add aulos-skills, aulos-ops, host deploy, and fleet operating defaults.
   - `7632d9b` 2026-07-25 Add aulos-web, aulos-api, and aulos-mcp sub-projects under aries-harness.
-  - `0d5cb01` 2026-07-25 Initial commit: Aulos hackathon workspace with LangChain agent runtime.
 
 ### RISKS.md
 
@@ -221,9 +222,10 @@ Generated at: `2026-07-25T16:29:54+00:00`
 - effective status: active since 2026-07-25T11:22:04Z
 - content fingerprint: `sha256:9231f8c95104da78b96408517d61f393d2611c06684680f9bd5ac42c6462ec62`
 - trace: filesystem-only / count=0 / sha=none
-- latest revision: `93c0f6e` 2026-07-25 Add aulos-skills, aulos-ops, host deploy, and fleet operating defaults.
+- latest revision: `555cf53` 2026-07-26 Ship listening product, mandatory harness, facility layout, and UTC/local time.
 - dirty: no
 - earlier revisions:
+  - `93c0f6e` 2026-07-25 Add aulos-skills, aulos-ops, host deploy, and fleet operating defaults.
   - `7632d9b` 2026-07-25 Add aulos-web, aulos-api, and aulos-mcp sub-projects under aries-harness.
 
 ### decisions/architecture/README.md
@@ -243,99 +245,114 @@ Generated at: `2026-07-25T16:29:54+00:00`
 
 - role: history-daily-summary-index
 - layer: SharedSupportSurface
-- effective status: generated since 2026-07-25T16:23:59+00:00
-- content fingerprint: `sha256:33feab769892d0d96967de6a334707cf488aac574878b2324a6144452fdf4dc5`
+- effective status: generated since 2026-07-25T17:23:12+00:00
+- content fingerprint: `sha256:c173cf903c3f0ec72282e10e8ea197b089c589fba52f9c2333e1ca2985e0ad18`
 - trace: filesystem-only / count=0 / sha=none
-- latest revision: `93c0f6e` 2026-07-25 Add aulos-skills, aulos-ops, host deploy, and fleet operating defaults.
+- latest revision: `555cf53` 2026-07-26 Ship listening product, mandatory harness, facility layout, and UTC/local time.
 - dirty: no
 - earlier revisions:
+  - `93c0f6e` 2026-07-25 Add aulos-skills, aulos-ops, host deploy, and fleet operating defaults.
   - `7632d9b` 2026-07-25 Add aulos-web, aulos-api, and aulos-mcp sub-projects under aries-harness.
-  - `0d5cb01` 2026-07-25 Initial commit: Aulos hackathon workspace with LangChain agent runtime.
 
 ### history/DOC_TRACE.md
 
 - role: history-doc-trace
 - layer: SharedSupportSurface
-- effective status: generated since 2026-07-25T16:23:59+00:00
-- content fingerprint: `sha256:2e14d2c263c680a17b9206d43351e8b4c3023fcabc18afb9116795b132ea8d84`
+- effective status: generated since 2026-07-25T17:23:12+00:00
+- content fingerprint: `sha256:225562ca2662c044f3a4846a0ec1f58b506709456b72162c53d88b6b017d8b4c`
 - trace: filesystem-only / count=0 / sha=none
-- latest revision: `93c0f6e` 2026-07-25 Add aulos-skills, aulos-ops, host deploy, and fleet operating defaults.
+- latest revision: `555cf53` 2026-07-26 Ship listening product, mandatory harness, facility layout, and UTC/local time.
 - dirty: no
 - earlier revisions:
+  - `93c0f6e` 2026-07-25 Add aulos-skills, aulos-ops, host deploy, and fleet operating defaults.
   - `7632d9b` 2026-07-25 Add aulos-web, aulos-api, and aulos-mcp sub-projects under aries-harness.
-  - `0d5cb01` 2026-07-25 Initial commit: Aulos hackathon workspace with LangChain agent runtime.
 
 ### history/README.md
 
 - role: history-readme
 - layer: SharedSupportSurface
-- effective status: generated since 2026-07-25T16:23:59+00:00
-- content fingerprint: `sha256:2d315c0cd829c510669906bd59bb25afe39b8d21621c132c7d018990f87ebfd1`
+- effective status: generated since 2026-07-25T17:23:12+00:00
+- content fingerprint: `sha256:c1dfa7a3ad30571f5578d0c9382767c7ea29b165c908f36f569d4863942ecbb6`
 - trace: filesystem-only / count=0 / sha=none
-- latest revision: `93c0f6e` 2026-07-25 Add aulos-skills, aulos-ops, host deploy, and fleet operating defaults.
+- latest revision: `555cf53` 2026-07-26 Ship listening product, mandatory harness, facility layout, and UTC/local time.
 - dirty: no
 - earlier revisions:
+  - `93c0f6e` 2026-07-25 Add aulos-skills, aulos-ops, host deploy, and fleet operating defaults.
   - `7632d9b` 2026-07-25 Add aulos-web, aulos-api, and aulos-mcp sub-projects under aries-harness.
-  - `0d5cb01` 2026-07-25 Initial commit: Aulos hackathon workspace with LangChain agent runtime.
 
 ### history/RETROSPECTIVE.md
 
 - role: history-retrospective
 - layer: SharedSupportSurface
-- effective status: generated since 2026-07-25T16:23:59+00:00
-- content fingerprint: `sha256:05213d018da80ad99b6832e5c1d438980067cbaa49da6e068157195e28e1a5eb`
+- effective status: generated since 2026-07-25T17:23:12+00:00
+- content fingerprint: `sha256:af5921c320cafa9fa8b852c2f29d65c8cf487955db44ee36871f1eca3e287f55`
 - trace: filesystem-only / count=0 / sha=none
-- latest revision: `93c0f6e` 2026-07-25 Add aulos-skills, aulos-ops, host deploy, and fleet operating defaults.
+- latest revision: `555cf53` 2026-07-26 Ship listening product, mandatory harness, facility layout, and UTC/local time.
 - dirty: no
 - earlier revisions:
+  - `93c0f6e` 2026-07-25 Add aulos-skills, aulos-ops, host deploy, and fleet operating defaults.
   - `7632d9b` 2026-07-25 Add aulos-web, aulos-api, and aulos-mcp sub-projects under aries-harness.
-  - `0d5cb01` 2026-07-25 Initial commit: Aulos hackathon workspace with LangChain agent runtime.
 
 ### history/ROADMAP.md
 
 - role: history-roadmap
 - layer: SharedSupportSurface
-- effective status: generated since 2026-07-25T16:23:59+00:00
-- content fingerprint: `sha256:1d538e833f75f7ce51c69776086c2b1c41e8cd24e0a72034daab64b6b7775585`
+- effective status: generated since 2026-07-25T17:23:12+00:00
+- content fingerprint: `sha256:ad337313ca033d5a86583be90ca5eda66fa6b42e740e4be9c0c58eea6dd539e1`
 - trace: filesystem-only / count=0 / sha=none
-- latest revision: `93c0f6e` 2026-07-25 Add aulos-skills, aulos-ops, host deploy, and fleet operating defaults.
+- latest revision: `555cf53` 2026-07-26 Ship listening product, mandatory harness, facility layout, and UTC/local time.
 - dirty: no
 - earlier revisions:
+  - `93c0f6e` 2026-07-25 Add aulos-skills, aulos-ops, host deploy, and fleet operating defaults.
   - `7632d9b` 2026-07-25 Add aulos-web, aulos-api, and aulos-mcp sub-projects under aries-harness.
 
 ### history/STATUS.md
 
 - role: history-status
 - layer: SharedSupportSurface
-- effective status: generated since 2026-07-25T16:23:59+00:00
-- content fingerprint: `sha256:55dc686b5171116a68b2b7c216b657a46dd7f07fe3567ae187e6b0d248daa0d0`
+- effective status: generated since 2026-07-25T17:23:12+00:00
+- content fingerprint: `sha256:1108a8a69b0de7d42f11930694b9dfe3cb6971b9641ef3fc0ef8cffe8a4fce1d`
 - trace: filesystem-only / count=0 / sha=none
-- latest revision: `93c0f6e` 2026-07-25 Add aulos-skills, aulos-ops, host deploy, and fleet operating defaults.
+- latest revision: `555cf53` 2026-07-26 Ship listening product, mandatory harness, facility layout, and UTC/local time.
 - dirty: no
 - earlier revisions:
+  - `93c0f6e` 2026-07-25 Add aulos-skills, aulos-ops, host deploy, and fleet operating defaults.
   - `7632d9b` 2026-07-25 Add aulos-web, aulos-api, and aulos-mcp sub-projects under aries-harness.
 
 ### history/TIMELINE.md
 
 - role: history-timeline
 - layer: SharedSupportSurface
-- effective status: generated since 2026-07-25T16:23:59+00:00
-- content fingerprint: `sha256:c0d1d54537ffe0dbc0db21d1c968cd05f2fa95ec703339f2ef46cd2059570c5d`
+- effective status: generated since 2026-07-25T17:23:12+00:00
+- content fingerprint: `sha256:d3fd91f036ba904608492d6db5dd76d7fd2fabf151566139913c92a8f1bcb412`
 - trace: filesystem-only / count=0 / sha=none
-- latest revision: `93c0f6e` 2026-07-25 Add aulos-skills, aulos-ops, host deploy, and fleet operating defaults.
+- latest revision: `555cf53` 2026-07-26 Ship listening product, mandatory harness, facility layout, and UTC/local time.
 - dirty: no
+- earlier revisions:
+  - `93c0f6e` 2026-07-25 Add aulos-skills, aulos-ops, host deploy, and fleet operating defaults.
 
 ### history/daily/2026-07-25.md
 
 - role: history-daily-summary
 - layer: SharedSupportSurface
-- effective status: generated since 2026-07-25T16:23:59+00:00
-- content fingerprint: `sha256:23020760251643216fd0c0a386e1c344712ec2c72521d52ffa5c08906b535ad8`
+- effective status: generated since 2026-07-25T17:23:12+00:00
+- content fingerprint: `sha256:50ea04f051ffd6590c63846b3211d95ea508058e17e631201a34e09df2a90820`
 - trace: filesystem-only / count=0 / sha=none
-- latest revision: `93c0f6e` 2026-07-25 Add aulos-skills, aulos-ops, host deploy, and fleet operating defaults.
+- latest revision: `555cf53` 2026-07-26 Ship listening product, mandatory harness, facility layout, and UTC/local time.
 - dirty: no
 - earlier revisions:
+  - `93c0f6e` 2026-07-25 Add aulos-skills, aulos-ops, host deploy, and fleet operating defaults.
   - `7632d9b` 2026-07-25 Add aulos-web, aulos-api, and aulos-mcp sub-projects under aries-harness.
+
+### history/daily/2026-07-26.md
+
+- role: history-daily-summary
+- layer: SharedSupportSurface
+- effective status: generated since 2026-07-25T17:23:12+00:00
+- content fingerprint: `sha256:bf6dcb0e0cf2f24bbbe31c0b386b923ac30fe18d7fa5981aeeecf49cbc58957d`
+- trace: filesystem-only / count=0 / sha=none
+- latest revision: no git history recorded
+- dirty: no
 
 ### layers/MetaDefineLayer/README.md
 

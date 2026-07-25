@@ -8,10 +8,10 @@ managed_by: "aries-harness"
 fingerprint: "aries-harness/bootstrap-doc/v1"
 generated_by: "/aries-harness well-organized"
 initialized_at: "2026-07-25T11:07:43Z"
-last_organized_at: "2026-07-25T16:29:49+00:00"
+last_organized_at: "2026-07-25T18:52:15+00:00"
 effective_status: "generated"
-effective_since: "2026-07-25T16:29:49+00:00"
-content_fingerprint: "sha256:a0b894f6be757a85b8573f46c405122a4ada1f9a530a3750c1385ba69e281add"
+effective_since: "2026-07-25T18:52:15+00:00"
+content_fingerprint: "sha256:373e927a11ca18fdfc20a35ed087920685f171840a47fa5a2955f3fb793e432f"
 trace_history_source: "filesystem-only"
 trace_last_commit_sha: ""
 trace_last_commit_at: ""
@@ -19,7 +19,7 @@ trace_revision_count: "0"
 ---
 # Harness Index
 
-Last organized: `2026-07-25T16:29:49+00:00`
+Last organized: `2026-07-25T18:52:15+00:00`
 
 Canonical spelling: `/aries-harness well-organized`
 
@@ -65,6 +65,7 @@ Fingerprint marker: `aries-harness` / `aries-harness/bootstrap-doc/v1`
 - [REQ-001-aulos-api-bootstrap.md](references/requests/REQ-001-aulos-api-bootstrap.md)
 - [REQ-002-users-roles-auth-mvp.md](references/requests/REQ-002-users-roles-auth-mvp.md)
 - [REQ-003-classical-listening-guide-mvp.md](references/requests/REQ-003-classical-listening-guide-mvp.md)
+- [REQ-006-rag-work-identity-catalog.md](references/requests/REQ-006-rag-work-identity-catalog.md)
 
 #### `references/specs/`
 - role: behavior and acceptance contracts derived from requests
@@ -112,6 +113,7 @@ Fingerprint marker: `aries-harness` / `aries-harness/bootstrap-doc/v1`
 - role: detailed ADR records linked from the root ADR index
 - [ADR-001-fastapi-gateway.md](decisions/adrs/ADR-001-fastapi-gateway.md)
 - [ADR-002-sqlite-jwt-mailgun.md](decisions/adrs/ADR-002-sqlite-jwt-mailgun.md)
+- [ADR-007-business-pg-sqlite-failover.md](decisions/adrs/ADR-007-business-pg-sqlite-failover.md)
 - [README.md](decisions/adrs/README.md)
 
 ## RunCookingLayer

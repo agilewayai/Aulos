@@ -52,6 +52,19 @@ Do not treat design, architecture, spec, history, organization, devops, or produ
 - **Product UI (web/ops):** format with `formatDateTime` / `formatTime` in `src/time.ts` — uses `toLocaleString(undefined, …)` so the **OS / browser timezone** is used. Never force `timeZone: 'UTC'` for user-visible stamps.
 - **Out of scope:** `.aries_harness/` generated docs may keep UTC timestamps (shared operator surface).
 
+## Chinese locales (script tags only)
+
+- Guide UI: **简体** (`zh-Hans`) + **繁体** (`zh-Hant`) + English.
+- Open-source source must not introduce regional locale abbreviations in code, UI, or prompts.
+- Identity stays Catalog-driven (SPEC-008); intake recovers composer from `《》` / catalog aliases.
+
+## Product capabilities via Agent + Skill Harness (forced)
+
+- **Core power** is `aulos-agent` + `aulos-skills` packs + tools — not API Python workflow scripts.
+- Listening / 导赏 jobs: API authenticates, injects RAG/context, persists results; **Agent** calls `run_listening_skill` (and related tools) per skill playbook.
+- Do **not** reintroduce `SkillRuntime.iter_listening_chain` (or equivalent) as the product orchestrator inside `aulos-api`.
+- Domain improvements ship as skill pack PRs; agent tools stay thin adapters over `run_trigger`.
+
 ## Iteration → harness promotion (mandatory)
 
 Every product fix, playback fix, eval change, or cold-path parity improvement must land as:

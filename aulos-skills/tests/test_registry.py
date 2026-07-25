@@ -28,6 +28,14 @@ def test_discover_bundled_skills() -> None:
     assert "aulos-listening" in ids
     assert "aulos-listening-depth" in ids
     assert "aulos-listening-corpus" in ids
+    # External search enabler (Agent Reach) — policy-fenced, no listening triggers
+    assert "enabler-agent-reach" in ids
+    enabler = next(s for s in skills if s.skill_id == "enabler-agent-reach")
+    assert enabler.layer == "enabler"
+    assert enabler.triggers == ()
+    assert (enabler.path / "docs/SECURITY_AUDIT.md").is_file()
+    assert (enabler.path / "PIN.json").is_file()
+    assert (enabler.path / "policy.yaml").is_file()
 
 
 def test_settings_roots(tmp_path: Path) -> None:

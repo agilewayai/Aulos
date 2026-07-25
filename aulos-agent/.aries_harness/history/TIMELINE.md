@@ -8,10 +8,10 @@ managed_by: "aries-harness"
 fingerprint: "aries-harness/history-doc/v1"
 generated_by: "/aries-harness history-refresh"
 initialized_at: "2026-07-25T10:55:22Z"
-generated_at: "2026-07-25T16:23:54+00:00"
+generated_at: "2026-07-25T18:52:18+00:00"
 effective_status: "generated"
-effective_since: "2026-07-25T16:23:54+00:00"
-content_fingerprint: "sha256:18e4ccd3e7ab2f9765ec293720378c77fe7f98e61fad294ea2d4dff077acf7a6"
+effective_since: "2026-07-25T18:52:18+00:00"
+content_fingerprint: "sha256:9b2a75250af84a793d508956dfa3bf1be0d0b06ba8def9c696a25f57dde5f6c6"
 trace_history_source: "filesystem-only"
 trace_last_commit_sha: ""
 trace_last_commit_at: ""
@@ -19,9 +19,13 @@ trace_revision_count: "0"
 ---
 # Timeline
 
-Generated at: `2026-07-25T16:23:54+00:00`
+Generated at: `2026-07-25T18:52:18+00:00`
 
 ## Journal milestones
+
+### 2026-07-25T17:15:00Z
+
+- ARCH-002 / ADR-003 / SPEC-002: agent-orchestrated listening via skill tools + ListeningPlaybookFakeModel
 
 ### 2026-07-25T11:00:00Z
 
@@ -39,21 +43,22 @@ Generated at: `2026-07-25T16:23:54+00:00`
 
 ## Recent git commits
 
+- `555cf53` 2026-07-26 Ship listening product, mandatory harness, facility layout, and UTC/local time.
 - `93c0f6e` 2026-07-25 Add aulos-skills, aulos-ops, host deploy, and fleet operating defaults.
 - `7632d9b` 2026-07-25 Add aulos-web, aulos-api, and aulos-mcp sub-projects under aries-harness.
 - `0d5cb01` 2026-07-25 Initial commit: Aulos hackathon workspace with LangChain agent runtime.
 
 ## Working tree snapshot
 
-- `M` `.gitignore`
-- `M` `AGENTS.md`
-- `M` `CLAUDE.md`
 - `M` `aulos-agent/.aries_harness/ARIES_HARNESS_FINGERPRINT.json`
 - `M` `aulos-agent/.aries_harness/INDEX.md`
+- `M` `aulos-agent/.aries_harness/JOURNAL.md`
 - `M` `aulos-agent/.aries_harness/MEMORY.md`
-- `M` `aulos-agent/.aries_harness/README.md`
-- `M` `aulos-agent/.aries_harness/decisions/architecture/ARCH-001-langchain-agent-architecture.md`
-- `M` `aulos-agent/.env.example`
-- `M` `aulos-agent/AGENTS.md`
-- `M` `aulos-agent/CLAUDE.md`
-- `M` `aulos-agent/README.md`
+- `M` `aulos-agent/.aries_harness/history/DAILY_SUMMARY_INDEX.md`
+- `M` `aulos-agent/.aries_harness/history/DOC_TRACE.md`
+- `M` `aulos-agent/.aries_harness/history/README.md`
+- `M` `aulos-agent/.aries_harness/history/RETROSPECTIVE.md`
+- `M` `aulos-agent/.aries_harness/history/ROADMAP.md`
+- `M` `aulos-agent/.aries_harness/history/STATUS.md`
+- `M` `aulos-agent/.aries_harness/history/TIMELINE.md`
+- `M` `aulos-agent/.aries_harness/history/daily/2026-07-25.md`

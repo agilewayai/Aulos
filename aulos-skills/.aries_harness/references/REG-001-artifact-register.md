@@ -9,7 +9,7 @@ fingerprint: "aries-harness/bootstrap-doc/v1"
 initialized_at: "2026-07-25T11:22:04Z"
 effective_status: "active"
 effective_since: "2026-07-25T11:22:04Z"
-content_fingerprint: "sha256:ab1d3b88315387845e5fbf92a80a5da8de2a631fffa80fe49f2ed12bca31d509"
+content_fingerprint: "sha256:8661324a5112a0ffd0df50fd6df4dc311286a23e556262e201543210a2e23561"
 trace_history_source: "filesystem-only"
 trace_last_commit_sha: ""
 trace_last_commit_at: ""
@@ -24,15 +24,19 @@ trace_revision_count: "0"
 | REQ-003 | request | references/requests/REQ-003-salon-codex-listening-guide.md | active |
 | REQ-004 | request | references/requests/REQ-004-cold-path-salon-parity.md | active |
 | REQ-005 | request | references/requests/REQ-005-ambient-media-identity.md | active |
+| REQ-006 | request | references/requests/REQ-006-work-identity-catalog.md | active |
 | SPEC-001 | spec | references/specs/SPEC-001-skills-harness.md | active |
 | SPEC-002 | spec | references/specs/SPEC-002-domain-runtime-listening-skills.md | active |
 | SPEC-003 | spec | references/specs/SPEC-003-salon-codex-dossier.md | active |
 | SPEC-004 | spec | references/specs/SPEC-004-listening-synthesize.md | active |
 | SPEC-005 | spec | references/specs/SPEC-005-bilingual-salon-codex.md | active |
 | SPEC-006 | spec | references/specs/SPEC-006-ambient-media-and-identity.md | active |
+| SPEC-008 | spec | references/specs/SPEC-008-work-identity-and-resolver.md | active |
 | STORY-PACK-001 | story-pack | references/stories/STORY-PACK-001-bootstrap.md | active |
 | ARCH-001 | architecture | decisions/architecture/ARCH-001-skills-harness-architecture.md | active |
 | ADR-001 | adr | decisions/adrs/ADR-001-filesystem-skill-packs.md | accepted |
+| ADR-004 | adr | decisions/adrs/ADR-004-catalog-over-heuristics.md | accepted |
+| DOM-002 | domain | references/domain/DOM-002-listening-identity.md | active |
 | TRACE-001 | traceability | references/TRACE-001-value-traceability.md | active |
 | EC-001 | execution-card | references/tasks/EC-001-bootstrap-execution-card.md | active |
 | CKPT-005 | checkpoint | checkpoints/CKPT-005-ambient-identity-gates.md | complete |

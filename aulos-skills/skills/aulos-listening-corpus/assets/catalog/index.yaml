@@ -1,0 +1,29 @@
+# Work Identity Catalog — register
+
+composers:
+  - id: johann-sebastian-bach
+    path: composers/johann-sebastian-bach.yaml
+  - id: ludwig-van-beethoven
+    path: composers/ludwig-van-beethoven.yaml
+  - id: frederic-chopin
+    path: composers/frederic-chopin.yaml
+  - id: gustav-mahler
+    path: composers/gustav-mahler.yaml
+  - id: antonin-dvorak
+    path: composers/antonin-dvorak.yaml
+
+works:
+  - id: bach.goldberg.bwv-988
+    path: works/bach.goldberg.bwv-988.yaml
+  - id: bach.cello-suites.bwv-1007-1012
+    path: works/bach.cello-suites.bwv-1007-1012.yaml
+  - id: beethoven.cello-sonatas-variations
+    path: works/beethoven.cello-sonatas-variations.yaml
+  - id: chopin.nocturne-op9-no2
+    path: works/chopin.nocturne-op9-no2.yaml
+  - id: chopin.mazurkas
+    path: works/chopin.mazurkas.yaml
+  - id: mahler.symphony-5
+    path: works/mahler.symphony-5.yaml
+  - id: dvorak.dumky-trio
+    path: works/dvorak.dumky-trio.yaml

@@ -1,0 +1,175 @@
+family_id: solo-cello-suites
+match:
+  instruments:
+  - cello
+  - violoncello
+  - 大提琴
+  forms:
+  - suite
+  - suites
+  - 组曲
+  - unaccompanied
+  - 无伴奏
+  - solo
+  composers:
+  - bach
+  - j.s. bach
+  - johann sebastian bach
+  - 巴赫
+work_title_template: '{composer} — Cello Suites (unaccompanied)'
+catalog: Bach — Six Suites for Unaccompanied Cello, BWV 1007–1012
+era: High Baroque (c. 1717–1723, Cöthen period — dating debated)
+form: Six dance suites for solo cello — prelude + allemande, courante, sarabande, optional galanteries,
+  gigue; one instrument as complete speaker
+listening_thesis: 'Listen for the cello as a complete speaker: how a single line implies bass, harmony,
+  and dance character without piano partnership.'
+work_introduction: Bach’s six cello suites are not “sonatas missing a piano.” They are an atelier of
+  solo rhetoric — each suite a room of dance manners held by one bow. A serious path treats the set as
+  six architectures of speech, not a single famous prelude with five appendices.
+genesis:
+  year: c. 1717–1723
+  place: Cöthen (court of Leopold) — manuscript transmission later; Anna Magdalena copy central
+  publication: No authorized print in Bach’s lifetime; 19th-century rediscovery (notably Casals) reshaped
+    reception
+  patronage: Courtly chamber culture; exact dedicatee evidence is thin — state uncertainty honestly
+  background: The suites train the ear to hear implied polyphony inside a single melodic stream — bass
+    footsteps under dance figures.
+  instrument_culture: Baroque cello (gut, shorter neck, period bow) vs modern steel-string cello — articulation
+    and chord voicing differ; name the setup when claiming “authentic” color.
+historical_stature:
+  reasons:
+  - Emancipates the cello as a complete soloist — architecture without continuo.
+  - Dance suite as listening curriculum — character change under unity of tonic room.
+  - Casals-to-present reception turns specialist manuscripts into a cultural monument.
+  - Measuring rod for later unaccompanied cello literature.
+  reception_arc: Courtly manuscript → 19th-c. rediscovery → Casals monument → HIP vs modern cello debates.
+width_points:
+- Six suites as six tonic rooms — G, D, C, E-flat, C minor, D — not one prelude plus leftovers.
+- Dance order is the map — prelude speech, then allemande / courante / sarabande / galanteries / gigue.
+- Implied polyphony — hear the “missing” bass foot under the singing line.
+- Reception lives in performers (Casals, Starker, Bylsma, Wispelwey, Isserlis…) more than in a single print.
+depth_points:
+- Lock the ear on Suite I Prelude’s harmonic footsteps before chasing fame.
+- In each suite, name the dance character before the virtuoso surface.
+- Sarabandes as slow speech — silence and weight inside the bar.
+- Compare two suites in the same evening — what changes when the tonic room changes?
+- Chordal writing — when the bow must imply several voices at once.
+listening_map:
+- label: Suite I (G major) — Prelude
+  cue: Harmonic footsteps and open-string resonance — the public doorway.
+- label: Allemande → Courante
+  cue: Walking rhetoric into running speech.
+- label: Sarabande
+  cue: Slow weight — dance as meditation.
+- label: Galanteries (Menuets / Bourrées / Gavottes)
+  cue: Courtly character rooms between sarabande and gigue.
+- label: Gigue / later suites
+  cue: Closing wit; then open Suite II–VI as new tonic architectures.
+variation_deepdives:
+- title: Prelude as harmony lesson
+  note: Can you hum the bass footsteps of Suite I Prelude without the recording?
+- title: Sarabande speech
+  note: Journal three places where silence feels like grammar.
+- title: Suite as room
+  note: After Suite I, open Suite V (C minor) — same dances, different weather.
+sound_world:
+  original_instrument: Solo Baroque / modern cello (no continuo)
+  ensemble_notes: Unaccompanied — any piano partnership belongs to a different shelf (duo sonatas).
+  modern_modes:
+  - Period cello intimacy
+  - Modern cello architecture
+  - Comparative suite-to-suite listening
+interpretations:
+- artist: Pablo Casals
+  year: early–mid 20th c.
+  why_listen: The rediscovery monument — rhetorical gravity that made the suites public culture.
+- artist: Anner Bylsma / period school
+  year: late 20th c.
+  why_listen: HIP articulation and dance gait without Romantic swell as default.
+- artist: János Starker / modern school
+  year: mid–late 20th c.
+  why_listen: Architectural clarity on modern cello — line as structure.
+appreciation_videos: []
+vinyl_and_discography:
+- label: Casals legacy sets
+  note: Start with the reception story, then compare a HIP set of the same suite.
+- label: One suite, two bows
+  note: Same suite on period vs modern cello — journal balance and speech, not “winner.”
+related_works:
+- Bach — Violin Sonatas & Partitas (solo string sibling architecture)
+- Bach — Keyboard suites / Partitas (dance manners on another instrument)
+- Later unaccompanied cello etudes and suites (Kodály, Britten) as reception aftershocks
+practice_notes:
+- One evening — Suite I only; journal the prelude’s bass footsteps.
+- One evening — three sarabandes from different suites; compare weight.
+- One evening — Suite V; notice scordatura / darker weather if using a historical setup note.
+- Mute the track and sing the gigue rhythm — test dance memory.
+myths_and_caveats:
+- Do not treat every Casals anecdote as documented fact without a source.
+- BWV dating and Anna Magdalena copy debates remain open — say “debated” when unsure.
+- These are not Beethoven cello-and-piano sonatas; do not import duo-sonata rhetoric.
+- Keyboard variation cycles (BWV 988 and kin) are a different shelf — never a substitute identity for the cello suites.
+ambient_audio:
+  url: https://commons.wikimedia.org/wiki/Special:FilePath/Bach_-_Cello_Suite_no._1_in_G_major,_BWV_1007_-_I._Prélude.ogg
+  title: Bach — Cello Suite No. 1, BWV 1007 — I. Prélude
+  title_zh: 巴赫 — 无伴奏大提琴组曲第一号，BWV 1007 — 前奏曲
+  credit: Public-domain cello recording via Wikimedia Commons
+  credit_zh: 公有领域大提琴录音（Wikimedia Commons）
+  volume: 0.26
+  autoplay: true
+  loop: true
+  why: "Open recording of Suite I Prelude — the public doorway into the unaccompanied cello suite shelf."
+  why_zh: "组曲第一号前奏曲公开授权录音——进入无伴奏大提琴组曲书架的公共入口。"
+zh:
+  work_title: 约翰·塞巴斯蒂安·巴赫 — 无伴奏大提琴组曲
+  composer: 约翰·塞巴斯蒂安·巴赫
+  catalog: 巴赫 — 六首无伴奏大提琴组曲，BWV 1007–1012
+  era: 盛期巴洛克（约1717–1723，科腾时期——具体年代仍有争议）
+  form: 六首独奏大提琴舞曲组曲——前奏曲＋阿勒曼德、库朗特、萨拉班德、可选加洛特舞、吉格；一件乐器完成全部言说
+  listening_thesis: 听大提琴如何独自完成言说：单声部如何暗示低音、和声与舞曲性格，而无须钢琴合伙。
+  work_introduction: 巴赫的六首大提琴组曲绝非“缺了钢琴的奏鸣曲”。它们是一座独白修辞的工坊——每首组曲是一间由弓独自撑起的舞曲礼仪之室。认真的路径，当把整套视为六座言说建筑，而非一支名曲前奏曲外加五段附录。
+  genesis:
+    year: 约1717–1723
+    place: 科腾（利奥波德宫廷）——手稿流传在后；安娜·玛格达蕾娜抄本至关重要
+    publication: 巴赫生前无权威刊本；19世纪再发现（尤其卡萨尔斯）重塑接受史
+    patronage: 宫廷室内乐文化；确切题献证据稀薄——不确定处须诚实标明
+    background: 这些组曲训练耳朵在单一旋律流中听出隐含的复调——舞步之下的低音脚步。
+    instrument_culture: 巴洛克大提琴（肠弦、较短琴颈、古弓）对抗现代钢弦大提琴——发音与和弦排列不同；声称“本真”音色时须点明设置。
+  historical_stature:
+    reasons:
+    - 解放大提琴为完整独奏者——无需通奏低音的建筑。
+    - 舞曲组曲作为聆听课程——在同一主音房间内变换性格。
+    - 自卡萨尔斯以降的接受史，把专家手稿变成文化纪念碑。
+    - 成为后世无伴奏大提琴文献的测量准绳。
+    reception_arc: 宫廷手稿 → 19世纪再发现 → 卡萨尔斯纪念碑 → 历史演奏与现代大提琴之争。
+  width_points:
+  - 六首组曲是六个主音房间——G、D、C、降E、c小调、D——而非一支前奏曲加上剩余。
+  - 舞曲顺序即地图——前奏言说，而后阿勒曼德／库朗特／萨拉班德／加洛特／吉格。
+  - 隐含复调——在歌唱声部之下听见“缺席”的低音脚步。
+  - 接受史活在演奏家身上，多于活在某一刊本上。
+  depth_points:
+  - 先锁定第一号前奏曲的和声脚步，再追逐名声。
+  - 每首组曲先命名舞曲性格，再听炫技表面。
+  - 萨拉班德是慢速言说——小节内的重量与休止。
+  - 同一晚比较两首组曲——主音房间一变，天气如何变？
+  - 和弦写法——弓必须同时暗示几个声部之时。
+  listening_map:
+  - label: 第一号（G大调）— 前奏曲
+    cue: 和声脚步与空弦共鸣——公共入口。
+  - label: 阿勒曼德 → 库朗特
+    cue: 从步行修辞进入奔跑言说。
+  - label: 萨拉班德
+    cue: 慢速重量——舞曲即冥想。
+  - label: 加洛特类舞曲
+    cue: 萨拉班德与吉格之间的宫廷性格之室。
+  - label: 吉格／后续组曲
+    cue: 收束的机智；再打开第二至第六号作为新的主音建筑。
+  practice_notes:
+  - 一晚只听第一号；记下前奏曲的低音脚步。
+  - 一晚听三首不同组曲的萨拉班德；比较重量。
+  - 关掉录音哼吉格节奏——检验舞曲记忆。
+  myths_and_caveats:
+  - 勿把每个卡萨尔斯轶事当作已核实事实。
+  - BWV 年代与安娜·玛格达蕾娜抄本争论仍开放——不确定时写“有争议”。
+  - 它们不是贝多芬大提琴与钢琴奏鸣曲；勿导入二重奏鸣修辞。
+  - 键盘变奏套曲（如 BWV 988 一类）是另一书架——绝不可顶替大提琴组曲的身份。

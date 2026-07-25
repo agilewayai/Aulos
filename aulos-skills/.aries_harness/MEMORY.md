@@ -10,7 +10,7 @@ generated_by: "/aries-harness init"
 initialized_at: "2026-07-25T11:20:05Z"
 effective_status: "active"
 effective_since: "2026-07-25T11:20:05Z"
-content_fingerprint: "sha256:92a53763bd8e747a5c501550a54990262e8a4422a9e458a3906478d150e4d156"
+content_fingerprint: "sha256:c6686d731dc724b00bddbfe575ebb8420528bc9d4e4b0afa8afb8a7049cbe09b"
 trace_history_source: "filesystem-only"
 trace_last_commit_sha: ""
 trace_last_commit_at: ""
@@ -32,6 +32,11 @@ trace_revision_count: "0"
 - Cold-path synthesize: family structural lists win; scrub foreign flagship chambers; KB needs positive title match.
 - Media contract: `/v1/media/audio` cache→proxy→origin with `Content-Disposition: inline`.
 - Eval hard-fails missing ambient player.
+- **Identity:** Catalog YAML + `IdentityResolver` only — no composer/work `elif` in runtime (SPEC-008 / ADR-004).
+- **Chinese locales:** `zh-Hans` (简体) + `zh-Hant` (繁体) only. Never regional codes (`*TW*`, `*CN*` region tags) in OSS source or UI.
+- **Intake:** parse `作曲家《作品》` / book titles; CJK catalog aliases match at len≥2; never ship `Unknown composer` when text/catalog already names one.
+- **Search enablers:** Wikipedia → DDG → Brave → Agent Reach Jina deepen (`enabler-agent-reach`); fence social cookies / CLI system install.
+- **Web research:** cold_fill / refresh / skip — richness is a floor, not forever-skip; TTL refresh merges into KB.
 
 ### Environment / tooling
 
@@ -47,6 +52,12 @@ trace_revision_count: "0"
 - Source of truth: `git@github.com:agilewayai/aries-harness-skills.git` (not `AriesHarnessStudio` / `aries-studio`).
 - Local reference clone: `/home/ubuntu/studio/aries-harness-skills` (keep in sync with origin).
 
+
+
+### Agent-centric listening
+
+- 导赏 is Agent tool-chain (`run_listening_skill`), not API `iter_listening_chain`.
+- See aulos-agent ARCH-002 / ADR-003 / SPEC-002.
 
 ### Timezone display
 

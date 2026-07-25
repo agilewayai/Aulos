@@ -7,6 +7,7 @@ Persistent host daemons + k3s Ingress for public HTTPS.
 | https://aulos.purezen.ai | `aulos-web.service` → `:5091` |
 | https://aulos-ops.purezen.ai | `aulos-ops.service` → `:5092` |
 | (local) API | `aulos-api.service` → `127.0.0.1:5090` (proxied by both portals) |
+| (local) Knowledge plane | `aulos-knowledge.service` → `127.0.0.1:5095` (OPS Knowledge tab via API proxy) |
 
 ## One-shot deploy / restart
 
@@ -24,7 +25,7 @@ bash deploy/start-host.sh
 ## Status
 
 ```bash
-systemctl --user status aulos-host.target aulos-api aulos-web aulos-ops
+systemctl --user status aulos-host.target aulos-api aulos-web aulos-ops aulos-knowledge
 curl -fsS https://aulos.purezen.ai/health
 curl -fsS https://aulos-ops.purezen.ai/health
 ```

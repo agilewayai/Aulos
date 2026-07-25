@@ -1,0 +1,37 @@
+work_id: chopin.nocturne-op9-no2
+composer_id: frederic-chopin
+canonical_title: Frédéric Chopin — Nocturne in E-flat major, Op. 9 No. 2
+canonical_title_zh: 肖邦 — 降E大调夜曲，作品9之2
+aliases:
+  - Nocturne Op. 9 No. 2
+  - Op. 9 No. 2
+  - Chopin Nocturne
+  - 夜曲作品9之2
+  - 肖邦夜曲
+catalog_numbers:
+  - Op. 9 No. 2
+  - Op.9 No.2
+  - Opus 9 No. 2
+facets:
+  instruments: [piano]
+  ensemble: [solo]
+  forms: [nocturne, nocturnes]
+  era: romantic
+family_id: null
+corpus_key: null
+ambient_ref: chopin-nocturne-op9-2
+identity:
+  distinctive_tokens:
+    - nocturne
+    - 夜曲
+    - "9"
+    - chopin
+    - 肖邦
+  conflict_work_ids:
+    - bach.goldberg.bwv-988
+    - mahler.symphony-5
+    - chopin.mazurkas
+  conflict_markers: []
+provenance:
+  authority: Chopin Op. 9 set — No. 2 in E-flat major
+  notes: Thin identity slot for productization — full Salon dossier not required for resolve.

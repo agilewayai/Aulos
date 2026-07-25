@@ -1,0 +1,17 @@
+composer_id: antonin-dvorak
+name_en: Antonín Dvořák
+name_zh: 安东宁·德沃夏克
+aliases:
+  - dvorak
+  - dvořák
+  - antonin dvorak
+  - antonín dvořák
+  - 德沃夏克
+  - 德弗札克
+  - 德伏夏克
+  - 安东宁·德沃夏克
+lifespan: 1841–1904
+era: romantic
+provenance:
+  authority: standard biographical reference
+  notes: Composer card only — work shelves live under works/*.yaml.

@@ -10,7 +10,16 @@ Environment=AULOS_API_HOST=127.0.0.1
 Environment=AULOS_API_PORT=5090
 Environment=AULOS_API_FAKE_AGENT=true
 Environment=AULOS_API_CORS_ORIGINS=https://aulos.purezen.ai,https://aulos-ops.purezen.ai,http://127.0.0.1:5091,http://127.0.0.1:5092
-Environment=AULOS_DB_URL=sqlite:////home/ubuntu/hackathon/aulos/aulos-api/data/aulos.db
+Environment=AULOS_DB_URL=postgresql+psycopg://aulos:aulos@127.0.0.1:5433/aulos
+Environment=AULOS_DB_FAILOVER_URL=sqlite:////home/ubuntu/hackathon/aulos/aulos-api/data/aulos.db
+Environment=AULOS_DB_ACTIVE_ROLE=primary
+Environment=AULOS_DB_SYNC_ENABLED=true
+Environment=AULOS_DB_SYNC_INTERVAL_SEC=300
+Environment=AULOS_DB_AUTO_FAILOVER=true
+Environment=AULOS_DB_AUTO_FAILBACK=false
+Environment=AULOS_REDIS_URL=redis://127.0.0.1:6379/0
+Environment=AULOS_KNOWLEDGE_BASE_URL=http://127.0.0.1:5095
+Environment=AULOS_KNOWLEDGE_PLANE_ENABLED=true
 Environment=AULOS_JWT_SECRET=aulos-dev-jwt-secret-change-me-32b
 Environment=AULOS_MAIL_PROVIDER=auto
 Environment=AULOS_WEB_BASE_URL=https://aulos.purezen.ai

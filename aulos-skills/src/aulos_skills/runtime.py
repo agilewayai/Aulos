@@ -15,6 +15,7 @@ import yaml
 from aulos_skills.ambient_agent import select_ambient
 from aulos_skills.ambient_playlist import resolve_ambient_audio
 from aulos_skills.config import get_settings
+from aulos_skills.identity import resolve_identity
 from aulos_skills.registry import SkillManifest, discover_skills, skill_body
 from aulos_skills.salon_codex import (
     composer_to_dossier,
@@ -326,70 +327,31 @@ class SkillRuntime:
         }
 
     def _run_intake(self, context: dict[str, Any]) -> dict[str, Any]:
+        from aulos_skills.intake_parse import guess_composer_and_title
+        from aulos_skills.identity import load_catalog
+
         message = str(context.get("raw_message") or "")
         hint = str(context.get("work_hint") or "")
         text = f"{hint} {message}".strip()
         lowered = text.lower()
-        corpus_keys: list[str] = []
-        family_hints: list[str] = []
-        composer = ""
-        work_title = ""
 
-        # --- famous work aliases (tight — do not map every Bach+variation to Goldberg) ---
-        if (
-            "goldberg" in lowered
-            or "哥德堡" in text
-            or "bwv 988" in lowered
-            or "bwv-988" in lowered
-            or "bwv988" in lowered.replace(" ", "")
-        ):
-            work_title = "J.S. Bach — Goldberg Variations, BWV 988"
-            composer = "Johann Sebastian Bach"
-            corpus_keys = ["bwv-988"]
-            family_hints = ["keyboard-variations"]
-        elif (
-            ("beethoven" in lowered or "贝多芬" in text)
-            and ("cello" in lowered or "violoncello" in lowered or "大提琴" in text)
-            and (
-                "sonata" in lowered
-                or "奏鸣" in text
-                or "variation" in lowered
-                or "变奏" in text
-                or "piano" in lowered
-                or "钢琴" in text
-            )
-        ):
-            work_title = "Ludwig van Beethoven — Cello Sonatas & Variations (with piano)"
-            composer = "Ludwig van Beethoven"
-            family_hints = ["duo-cello-piano"]
+        # Catalog-driven identity (SPEC-008) — no per-work elif trees.
+        identity = resolve_identity(message, work_hint=hint)
+        out = identity.to_context()
+
+        if identity.status == "work" and identity.work_title:
+            work_title = identity.work_title
+            composer = identity.composer_name
         else:
-            # strip EN/ZH guide-request boilerplate
-            cleaned = text
-            for pat in (
-                r"(?i)\b(i('m| am)?|listening to|learning|study|studying|help me|please|about|the work|"
-                r"write|compose|create|make)\b",
-                r"我准备开始欣赏|我想欣赏|请帮我|帮我写|写一份|详细的?欣赏导赏|欣赏导赏|导赏",
-                r"[。．！!？?]",
-            ):
-                cleaned = re.sub(pat, " ", cleaned)
-            cleaned = re.sub(r"\s+", " ", cleaned).strip(" .,!?:;-、，")
-            quoted = re.findall(r"[\"“](.+?)[\"”]", text)
-            if quoted:
-                work_title = quoted[0].strip()
-            else:
-                work_title = cleaned[:160] if len(cleaned) >= 3 else "Unspecified classical work"
-
-            if "beethoven" in lowered or "贝多芬" in text:
-                composer = "Ludwig van Beethoven"
-            elif "bach" in lowered or "巴赫" in text:
-                composer = "Johann Sebastian Bach"
-
-            if ("cello" in lowered or "大提琴" in text) and (
-                "piano" in lowered or "钢琴" in text or "sonata" in lowered or "奏鸣" in text
-            ):
-                family_hints.append("duo-cello-piano")
-            if "variation" in lowered or "变奏" in text:
-                family_hints.append("keyboard-variations")
+            cat = load_catalog()
+            guessed = guess_composer_and_title(text, catalog_composers=cat.composers)
+            work_title = guessed["work_title"] or "Unspecified classical work"
+            composer = identity.composer_name or guessed["composer"]
+            if guessed.get("composer_id") and not out.get("composer_id"):
+                out["composer_id"] = guessed["composer_id"]
+            # Prefer catalog canonical title when soft-guess only got composer_only
+            if identity.status == "composer_only" and not guessed["work_title"]:
+                work_title = f"{composer} — unspecified work" if composer else work_title
 
         goal = "structural_learning"
         if any(w in lowered for w in ("first time", "first hearing", "beginner")) or "入门" in text:
@@ -397,14 +359,18 @@ class SkillRuntime:
         elif any(w in lowered for w in ("perform", "practice", "rehearse")) or "练习" in text:
             goal = "performance_prep"
 
-        return {
-            "work_title": work_title,
-            "composer_guess": composer,
-            "listener_goal": goal,
-            "experience_level": "curious_listener",
-            "corpus_keys": corpus_keys,
-            "family_hints": family_hints,
-        }
+        out.update(
+            {
+                "work_title": work_title,
+                "composer_guess": composer,
+                "composer": composer,
+                "listener_goal": goal,
+                "experience_level": "curious_listener",
+                "corpus_keys": list(out.get("corpus_keys") or identity.corpus_keys),
+                "family_hints": list(out.get("family_hints") or ([] if not identity.family_id else [identity.family_id])),
+            }
+        )
+        return out
 
     def _synthesize_assets_dir(self, skill: SkillManifest) -> Path:
         return skill.path / "assets"
@@ -482,10 +448,20 @@ class SkillRuntime:
         sources: list[str] = []
         kb_dossier = dict(context.get("kb_dossier") or {})
         # Refuse KB dossiers that belong to a different work than intake identified.
-        # Require a positive title match — empty kb titles must not smuggle flagship chunks.
-        if kb_dossier and work_title:
+        # Prefer catalog work_id / corpus_key; fall back to title sameness.
+        if kb_dossier and (work_title or context.get("work_id")):
             kb_title = str(kb_dossier.get("work_title") or "")
-            if not kb_title or not self._titles_look_same(work_title, kb_title):
+            kb_work_id = str(kb_dossier.get("work_id") or "")
+            resolved_id = str(context.get("work_id") or "")
+            corpus_keys = {str(k) for k in (context.get("corpus_keys") or []) if k}
+            kb_corpus = str(kb_dossier.get("dossier_id") or kb_dossier.get("corpus_key") or "")
+            id_mismatch = bool(resolved_id and kb_work_id and resolved_id != kb_work_id)
+            key_mismatch = bool(corpus_keys and kb_corpus and kb_corpus not in corpus_keys)
+            title_mismatch = bool(
+                work_title and kb_title and not self._titles_look_same(work_title, kb_title)
+            )
+            # Wrong-title / wrong-id KB must never thicken a resolved shelf.
+            if id_mismatch or key_mismatch or title_mismatch:
                 kb_dossier = {}
         if kb_dossier:
             layers.append(kb_dossier)
@@ -569,25 +545,61 @@ class SkillRuntime:
             if "kb-rag" not in sources:
                 sources.append("kb-rag-hits")
 
-        # When a family scaffold owns the shelf, prefer its structural lists —
-        # LLM/RAG often smuggles flagship (Goldberg) chambers into cold works.
+        # Family is a FORM scaffold floor only — never a composer branch and never
+        # allowed to overwrite richer KB/LLM chambers (copilot+KB owns thickening).
         if family and not context.get("corpus_hit"):
-            from aulos_skills.salon_codex import SALON_LIST_KEYS, _coerce_list
+            from aulos_skills.salon_codex import SALON_LIST_KEYS, _coerce_list, _merge_list
 
             for key in SALON_LIST_KEYS:
                 fam_list = _coerce_list(family.get(key))
-                if fam_list:
+                cur = _coerce_list(merged.get(key))
+                if not fam_list:
+                    continue
+                if not cur:
                     merged[key] = fam_list
-            if family.get("listening_thesis"):
-                merged["listening_thesis"] = family["listening_thesis"]
-            if family.get("work_introduction"):
-                merged["work_introduction"] = family["work_introduction"]
-            if family.get("ambient_audio"):
-                merged["ambient_audio"] = dict(family["ambient_audio"])
+                elif len(cur) < 2:
+                    # Thin LLM/KB — lift to family floor, keep any extras
+                    merged[key] = _merge_list(fam_list, cur)
+                else:
+                    # Richer enrich wins; family only fills novel items
+                    merged[key] = _merge_list(cur, fam_list)
+            for key in ("genesis", "historical_stature", "sound_world", "ambient_audio"):
+                fam_val = family.get(key)
+                cur_val = merged.get(key)
+                empty = cur_val in (None, "", {}, [])
+                if fam_val and empty:
+                    merged[key] = dict(fam_val) if isinstance(fam_val, dict) else fam_val
+            for key in ("era", "form", "catalog", "listening_thesis", "work_introduction"):
+                if family.get(key) and not str(merged.get(key) or "").strip():
+                    merged[key] = family[key]
             if family.get("zh"):
-                merged["zh"] = merge_dossiers(dict(merged.get("zh") or {}), dict(family.get("zh") or {}))
+                zh_fam = dict(family.get("zh") or {})
+                zh_merged = merge_dossiers(dict(merged.get("zh") or {}), zh_fam)
+                # Gap-fill zh lists the same way
+                for key in SALON_LIST_KEYS:
+                    fam_list = _coerce_list(zh_fam.get(key))
+                    cur = _coerce_list(zh_merged.get(key))
+                    if not fam_list:
+                        continue
+                    if not cur:
+                        zh_merged[key] = fam_list
+                    elif len(cur) < 2:
+                        zh_merged[key] = _merge_list(fam_list, cur)
+                    else:
+                        zh_merged[key] = _merge_list(cur, fam_list)
+                for key in ("genesis", "historical_stature", "sound_world"):
+                    if zh_fam.get(key) and not zh_merged.get(key):
+                        zh_merged[key] = zh_fam[key]
+                for key in ("era", "form", "catalog", "listening_thesis", "work_introduction"):
+                    if zh_fam.get(key) and not str(zh_merged.get(key) or "").strip():
+                        zh_merged[key] = zh_fam[key]
+                merged["zh"] = zh_merged
 
-        merged = self._scrub_foreign_chambers(merged, work_title=str(merged.get("work_title") or work_title))
+        merged = self._scrub_foreign_chambers(
+            merged,
+            work_title=str(merged.get("work_title") or work_title),
+            conflict_markers=list(context.get("conflict_markers") or []),
+        )
 
         return {
             "synthesize_hit": True,
@@ -596,29 +608,33 @@ class SkillRuntime:
             "work_title": merged.get("work_title") or work_title,
             "composer_guess": merged.get("composer") or composer_name,
             "composer": merged.get("composer") or composer_name,
+            "work_id": context.get("work_id"),
+            "conflict_markers": list(context.get("conflict_markers") or []),
         }
 
     @staticmethod
-    def _scrub_foreign_chambers(dossier: dict[str, Any], *, work_title: str) -> dict[str, Any]:
-        """Drop list items that clearly belong to another flagship work."""
+    def _scrub_foreign_chambers(
+        dossier: dict[str, Any],
+        *,
+        work_title: str,
+        conflict_markers: list[str] | None = None,
+    ) -> dict[str, Any]:
+        """Drop list items AND scalars that belong to conflict works (catalog-derived)."""
+        active = [m.lower() for m in (conflict_markers or []) if m and len(str(m)) >= 3]
         title_l = (work_title or "").lower()
-        foreign_markers = (
-            ("goldberg", ("goldberg", "bwv 988", "哥德堡", "ishizaka", "aria bass")),
-            ("diabelli", ("diabelli", "op. 120", "op.120")),
-        )
-        active: list[str] = []
-        for name, markers in foreign_markers:
-            if name in title_l or any(m in title_l for m in markers):
-                continue
-            active.extend(markers)
+        # Never scrub markers that are part of the confirmed title itself
+        active = [m for m in active if m not in title_l]
         if not active:
             return dossier
+
+        def polluted(blob: str) -> bool:
+            return any(m in blob for m in active)
 
         def cleanse(items: list[Any]) -> list[Any]:
             out = []
             for item in items:
                 blob = json.dumps(item, ensure_ascii=False).lower() if not isinstance(item, str) else item.lower()
-                if any(m in blob for m in active):
+                if polluted(blob):
                     continue
                 out.append(item)
             return out
@@ -638,6 +654,33 @@ class SkillRuntime:
         ):
             if out.get(key):
                 out[key] = cleanse(list(out.get(key) or []))
+
+        for key in ("listening_thesis", "work_introduction", "form", "catalog", "era"):
+            val = out.get(key)
+            if isinstance(val, str) and polluted(val.lower()):
+                out[key] = ""
+
+        amb = dict(out.get("ambient_audio") or {})
+        if amb:
+            amb_blob = json.dumps(amb, ensure_ascii=False).lower()
+            why_blob = f"{amb.get('why') or ''} {amb.get('why_zh') or ''}".lower()
+            peerish = any(
+                w in why_blob
+                for w in (
+                    "peer",
+                    "stand-in",
+                    "stand in",
+                    "atmosphere",
+                    "关联",
+                    "尚无",
+                    "open library",
+                    "公开授权库",
+                )
+            )
+            # Keep catalog/family peer atmosphere; scrub only alien flagship audio
+            if polluted(amb_blob) and not peerish and amb.get("selection_source") != "catalog-ref":
+                out["ambient_audio"] = {}
+
         zh = dict(out.get("zh") or {})
         if zh:
             for key in (
@@ -654,18 +697,39 @@ class SkillRuntime:
             ):
                 if zh.get(key):
                     zh[key] = cleanse(list(zh.get(key) or []))
+            for key in ("listening_thesis", "work_introduction", "form", "catalog", "era"):
+                val = zh.get(key)
+                if isinstance(val, str) and polluted(val.lower()):
+                    zh[key] = ""
             out["zh"] = zh
         return out
 
     @staticmethod
     def _titles_look_same(a: str, b: str) -> bool:
-        """Loose same-work check so RAG cannot rename Mozart → Goldberg."""
+        """Same-work check — catalog weak tokens alone never prove identity."""
         ta = {t.lower() for t in re.findall(r"[a-z0-9\u4e00-\u9fff]{3,}", a or "", flags=re.I)}
         tb = {t.lower() for t in re.findall(r"[a-z0-9\u4e00-\u9fff]{3,}", b or "", flags=re.I)}
         if not ta or not tb:
             return False
-        weak = {"bach", "beethoven", "mozart", "johann", "sebastian", "ludwig", "巴赫", "贝多芬", "莫扎特"}
-        if (ta & tb) - weak:
+        try:
+            from aulos_skills.identity import load_catalog
+
+            weak = set(load_catalog().weak_tokens)
+        except Exception:  # noqa: BLE001
+            weak = {
+                "bach",
+                "beethoven",
+                "mozart",
+                "bwv",
+                "opus",
+                "suite",
+                "sonata",
+                "variation",
+                "symphony",
+                "nocturne",
+            }
+        strong = (ta & tb) - weak
+        if strong:
             return True
         return ta == tb
 
@@ -961,15 +1025,30 @@ class SkillRuntime:
 
     def _run_compose(self, context: dict[str, Any]) -> dict[str, Any]:
         from aulos_skills.guide_render import render_bilingual_guide_html
-        from aulos_skills.i18n import dossier_has_zh
+        from aulos_skills.i18n import dossier_has_zh, ensure_chinese_variants, prefer_chinese_variant, re_has_cjk
 
         work_title = str(context.get("work_title") or "Classical work")
         composer = str(
             context.get("composer")
             or context.get("composer_guess")
             or (context.get("corpus_dossier") or {}).get("composer")
-            or "Unknown composer"
+            or ""
         )
+        if not composer or composer.lower() in {"unknown", "unknown composer", "composer"}:
+            from aulos_skills.intake_parse import guess_composer_and_title
+            from aulos_skills.identity import load_catalog
+
+            recovered = guess_composer_and_title(
+                f"{work_title} {context.get('raw_message') or ''}",
+                catalog_composers=load_catalog().composers,
+            )
+            composer = recovered.get("composer") or composer
+            if recovered.get("work_title") and (
+                "一份" in work_title or "导赏" in work_title or work_title.startswith("Unspecified")
+            ):
+                work_title = recovered["work_title"]
+        if not composer:
+            composer = "Unknown composer"
         width = dict(context.get("width_dossier") or {})
         depth = dict(context.get("depth_dossier") or {})
         dossier = dict(width.get("salon_dossier") or context.get("corpus_dossier") or {})
@@ -1020,6 +1099,9 @@ class SkillRuntime:
             era=str(dossier.get("era") or context.get("era") or ""),
             form=str(dossier.get("form") or context.get("form") or ""),
             family_hints=list(context.get("family_hints") or []),
+            facets=dict(context.get("facets") or {}),
+            ambient_ref=str(context.get("ambient_ref") or "") or None,
+            conflict_markers=list(context.get("conflict_markers") or []),
             existing=dict(dossier.get("ambient_audio") or {}),
             corpus_dir=corpus_dir,
         )
@@ -1032,25 +1114,68 @@ class SkillRuntime:
                 zh["ambient_audio"] = zh_ambient
                 dossier["zh"] = zh
 
+        dossier = ensure_chinese_variants(dossier)
+
         # Prefer Chinese chrome when the listener wrote in Chinese and ZH prose exists
         raw_msg = str(context.get("raw_message") or "")
-        prefer_zh = bool(re.search(r"[\u4e00-\u9fff]", raw_msg))
+        prefer_zh = re_has_cjk(raw_msg)
+        default_lang = prefer_chinese_variant(raw_msg) if prefer_zh else "en"
         if prefer_zh:
             context["prefer_zh"] = True
+            context["prefer_lang"] = default_lang
+
+        # Seed minimal Chinese layers from catalog titles so 简体/繁体 switcher
+        # appears even before LLM/corpus prose arrives.
+        if prefer_zh and not dossier_has_zh(dossier):
+            from aulos_skills.i18n import to_traditional
+
+            title_zh = str(context.get("work_title_zh") or "").strip()
+            if not title_zh and context.get("work_id"):
+                from aulos_skills.identity import load_catalog
+
+                work = load_catalog().works.get(str(context.get("work_id")))
+                if work is not None:
+                    title_zh = str(work.canonical_title_zh or "")
+            composer_zh = ""
+            if context.get("composer_id"):
+                from aulos_skills.identity import load_catalog
+
+                card = load_catalog().composers.get(str(context.get("composer_id")))
+                if card is not None:
+                    composer_zh = str(card.name_zh or "")
+            seed = {
+                "work_title": title_zh or work_title,
+                "composer": composer_zh or composer,
+                "listening_thesis": "",
+                "work_introduction": "",
+                "era": str(dossier.get("era") or ""),
+                "form": str(dossier.get("form") or ""),
+                "catalog": str(dossier.get("catalog") or ""),
+            }
+            # Chinese lede — never paste English thesis into zh seed
+            seed["listening_thesis"] = f"《{seed['work_title']}》聆听导赏。"
+            dossier["zh"] = seed
+            dossier["zh_hans"] = dict(seed)
+            dossier["zh_hant"] = {
+                **{k: to_traditional(v) if isinstance(v, str) else v for k, v in seed.items()},
+            }
+            dossier = ensure_chinese_variants(dossier)
 
         thesis_en = str(dossier.get("listening_thesis") or "").strip()
         thesis_zh = ""
         if dossier_has_zh(dossier):
-            thesis_zh = str((dossier.get("zh") or {}).get("listening_thesis") or "").strip()
+            thesis_zh = str((dossier.get("zh") or dossier.get("zh_hans") or {}).get("listening_thesis") or "").strip()
         summary = (thesis_zh if prefer_zh and thesis_zh else thesis_en) or thesis_zh or (
             f"A structured listening path for {work_title}."
         )
+        html_default = default_lang if (prefer_zh and dossier_has_zh(dossier)) else "en"
         html = render_bilingual_guide_html(
             dossier=dossier,
             work_title=work_title,
             composer=composer,
             summary_en=thesis_en,
             summary_zh=thesis_zh,
+            default_lang=html_default,
         )
         return {
             "guide_html": html,
@@ -1110,14 +1235,46 @@ class SkillRuntime:
         )
         structure_hits = sum(1 for n in needed if n in html_l or n in html)
         # bilingual craft
-        bilingual = 'data-lang="zh"' in html and 'data-lang="en"' in html
-        if context.get("corpus_hit") or context.get("synthesize_hit"):
+        bilingual = (
+            'data-lang="zh-Hans"' in html
+            or 'data-lang="zh-Hant"' in html
+            or 'data-lang="zh"' in html
+        ) and 'data-lang="en"' in html
+        rich_identity = bool(
+            context.get("corpus_hit")
+            or context.get("synthesize_hit")
+            or context.get("family_hints")
+            or context.get("work_id")
+        )
+        # Full atelier coverage when identity/family/corpus resolved (product bar vs thin cold path)
+        atelier_pairs = (
+            ("id='composer-", "作曲家"),
+            ("id='genesis-", "创作背景与时代"),
+            ("id='stature-", "何以传世"),
+            ("id='sound-", "声响世界"),
+            ("id='interpretations-", "名家演绎"),
+            ("id='media-", "聆听室"),
+        )
+        atelier_hits = 0
+        missing_atelier: list[str] = []
+        for en_id, zh_label in atelier_pairs:
+            present = en_id in html_l or zh_label in html
+            if present:
+                atelier_hits += 1
+            else:
+                missing_atelier.append(zh_label)
+        if rich_identity:
             media_hits = sum(
                 1
-                for n in ("interpretations", "名家演绎", "discogs", "sound world", "声响世界")
+                for n in ("interpretations", "名家演绎", "discogs", "sound world", "声响世界", "聆听室")
                 if n.lower() in html_l or n in html
             )
             structure_hits += 1 if media_hits >= 2 else 0
+            structure_hits += 1 if atelier_hits >= 4 else 0
+            if atelier_hits < 4:
+                notes.append(
+                    "Missing atelier chambers: " + ", ".join(missing_atelier[:4])
+                )
         structure_hits += 1 if bilingual else 0
         has_ambient = 'id="aulos-ambient"' in html or "data-ambient-player" in html
         if has_ambient:
@@ -1132,6 +1289,10 @@ class SkillRuntime:
         # craft
         score += 2 if "<!DOCTYPE html>" in html and ("Fraunces" in html or "Noto Serif SC" in html) else (1 if html else 0)
         if not has_ambient:
+            score = min(score, 7)
+            passed = False
+        elif rich_identity and atelier_hits < 4:
+            # Identity-resolved guides must ship the full atelier shelf (Goldberg parity bar)
             score = min(score, 7)
             passed = False
         else:

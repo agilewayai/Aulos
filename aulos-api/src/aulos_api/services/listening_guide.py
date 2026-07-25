@@ -1,4 +1,4 @@
-"""Classical listening-guide workflow powered by aulos-skills SkillRuntime."""
+"""Classical listening-guide workflow — API gateway delegates to aulos-agent tools."""
 
 from __future__ import annotations
 
@@ -13,7 +13,9 @@ from typing import Any
 
 from sqlalchemy.orm import Session
 
+from aulos_api.config import get_settings
 from aulos_api.db.models import ListeningGuide
+from aulos_api.services.agent_proxy import AgentProxy
 from aulos_api.services.knowledge_base import retrieve as kb_retrieve
 from aulos_api.services.knowledge_base import upsert_from_report
 from aulos_api.services.llm_providers import chat_with_ops_llm, load_llm_config
@@ -21,17 +23,6 @@ from aulos_api.services.skills_ops import _load_disabled
 from aulos_api.timefmt import to_utc_iso_optional
 
 logger = logging.getLogger("aulos_api.listening")
-
-
-def _ensure_aulos_skills_importable() -> None:
-    try:
-        import aulos_skills  # noqa: F401
-        return
-    except ImportError:
-        pass
-    sibling = Path(__file__).resolve().parents[4] / "aulos-skills" / "src"
-    if sibling.is_dir() and str(sibling) not in sys.path:
-        sys.path.insert(0, str(sibling))
 
 
 def utcnow() -> datetime:
@@ -61,6 +52,7 @@ def _research_payload(report: Any) -> dict[str, Any]:
         "synthesize_source": ctx.get("synthesize_source"),
         "rag_mode": ctx.get("rag_mode"),
         "rag_hit_count": len(ctx.get("rag_hits") or []),
+        "web_research": ctx.get("web_research") or ctx.get("web_research_meta"),
         "corpus_dossier": dossier,
         "work_title": report.work_title,
         "composer": report.composer,
@@ -68,44 +60,84 @@ def _research_payload(report: Any) -> dict[str, Any]:
     }
 
 
-async def _optional_llm_dossier(db: Session, work_title: str, composer: str) -> tuple[dict | None, str | None, str]:
+async def _optional_llm_dossier(
+    db: Session,
+    work_title: str,
+    composer: str,
+    *,
+    rag_hits: list[str] | None = None,
+    facets: dict[str, Any] | None = None,
+    family_id: str | None = None,
+) -> tuple[dict | None, str | None, str]:
+    """Generic Salon Codex enricher — no composer/work branches; KB hits as evidence."""
     cfg = load_llm_config(db)
     if not cfg.ready_for_live:
-        return None, None, "skills"
+        return None, None, "agent-skills"
+    facet_bits = []
+    for key in ("instruments", "forms", "era", "ensemble"):
+        vals = list((facets or {}).get(key) or [])
+        if vals:
+            facet_bits.append(f"{key}: {', '.join(str(v) for v in vals)}")
+    evidence = [str(h).strip() for h in (rag_hits or []) if str(h).strip()][:8]
+    evidence_block = "\n".join(f"- {h[:280]}" for h in evidence) if evidence else "- (none yet — rely on established musicology; label uncertainty)"
     prompt = (
         "You are Aulos, a classical listening-guide research agent.\n"
+        "Fill a bilingual Salon Codex dossier for ANY identified work. "
+        "Do not specialize by composer name in procedure — use form/instrument/era facets and evidence.\n"
         f"Work: {work_title}\n"
-        f"Composer: {composer or 'unknown'}\n\n"
-        "Return ONLY a compact JSON object (no markdown) with bilingual Salon Codex fields:\n"
-        "listening_thesis, work_introduction, width_points, depth_points,\n"
-        "listening_map ({{label,cue}}), practice_notes, myths_and_caveats,\n"
-        "and a nested object zh with the SAME fields in professional Classical-Chinese 导赏 prose "
-        "(museum wall-text quality; no Chinglish; no raw English skill jargon; use terms like 奏鸣曲/变奏/对位/羽管键琴 appropriately).\n"
-        "Optional: related_works, interpretations.\n"
-        "Rules: ear-actionable; label legends; no invented Discogs/YouTube IDs; keep JSON under 1200 words."
-        "\nCRITICAL: the zh object is required — omit neither English nor Chinese layers."
+        f"Composer: {composer or 'unknown'}\n"
+        f"Family hint (optional scaffold id): {family_id or 'none'}\n"
+        f"Facets: {'; '.join(facet_bits) if facet_bits else 'none'}\n\n"
+        "KB / prior-research evidence (may be partial; never invent citations beyond search URLs):\n"
+        f"{evidence_block}\n\n"
+        "Return ONLY a compact JSON object (no markdown) with:\n"
+        "listening_thesis, work_introduction, era, form,\n"
+        "composer_profile {{lifespan, summary, temperament, place_in_oeuvre, place_in_history}},\n"
+        "genesis {{year, place, publication, patronage, background, instrument_culture}},\n"
+        "historical_stature {{reasons: [], reception_arc}},\n"
+        "width_points, depth_points,\n"
+        "listening_map ([{{label,cue}}]), variation_deepdives ([{{title,note}}]),\n"
+        "sound_world {{original_instrument, ensemble_notes, modern_modes: []}},\n"
+        "related_works ([{{title,why}}]),\n"
+        "interpretations ([{{artist,year,instrument,era_note,why_listen}}] — named traditions OK; "
+        "youtube_url/discogs_url only as https://www.youtube.com/results?search_query=... or "
+        "https://www.discogs.com/search/?q=... search links),\n"
+        "appreciation_videos ([{{title,url,why}}] search links only),\n"
+        "vinyl_and_discography ([{{label,url,note}}] Discogs search links only),\n"
+        "practice_notes, myths_and_caveats,\n"
+        "and nested zh_hans with the SAME chambers in Simplified Chinese 导赏 prose "
+        "(简体：肖邦/德沃夏克/导赏/录音; no Chinglish; no skill jargon),\n"
+        "and nested zh_hant with the SAME chambers in Traditional Chinese "
+        "(繁体：蕭邦/德弗札克/導賞/錄音; 繁体字形与用词).\n"
+        "Also include legacy nested zh equal to zh_hans for compatibility.\n"
+        "Rules: ear-actionable; label legends; no invented Discogs/YouTube item IDs; "
+        "no copying unrelated flagship works; keep JSON under 2200 words.\n"
+        "CRITICAL: zh_hans and zh_hant required — omit neither English nor Chinese layers."
     )
     try:
         live = await chat_with_ops_llm(db=db, message=prompt, timeout=90.0)
     except Exception as exc:  # noqa: BLE001
         logger.warning("llm_dossier_failed work=%s err=%s", work_title, exc)
-        return None, None, "skills"
+        return None, None, "agent-skills"
     if live is None:
-        return None, None, "skills"
+        return None, None, "agent-skills"
     text, provider = live
     try:
+        sibling = Path(__file__).resolve().parents[4] / "aulos-skills" / "src"
+        if sibling.is_dir() and str(sibling) not in sys.path:
+            sys.path.insert(0, str(sibling))
         from aulos_skills.salon_codex import parse_llm_dossier_json
     except ImportError:
-        return None, text[:400], f"skills+{provider}"
+        return None, text[:400], f"agent-skills+{provider}"
     dossier = parse_llm_dossier_json(text)
     note = None if dossier else text[:400]
-    return (dossier or None), note, f"skills+{provider}"
+    return (dossier or None), note, f"agent-skills+{provider}"
 
 
 async def _optional_llm_note(db: Session, work_title: str) -> tuple[str | None, str]:
     cfg = load_llm_config(db)
     if not cfg.ready_for_live:
-        return None, "skills"
+        return None, "agent-skills"
     prompt = (
         "You are Aulos, a classical-music research agent. "
         f"Give a compact enrichment note (max 80 words) for listening to: {work_title}."
@@ -114,15 +146,25 @@ async def _optional_llm_note(db: Session, work_title: str) -> tuple[str | None, 
         live = await chat_with_ops_llm(db=db, message=prompt, timeout=45.0)
     except Exception as exc:  # noqa: BLE001
         logger.warning("llm_note_failed work=%s err=%s", work_title, exc)
-        return None, "skills"
+        return None, "agent-skills"
     if live is None:
-        return None, "skills"
+        return None, "agent-skills"
     text, provider = live
-    return text, f"skills+{provider}"
+    return text, f"agent-skills+{provider}"
+
+
+def _steps_as_dicts(report: Any) -> list[dict[str, Any]]:
+    out: list[dict[str, Any]] = []
+    for s in report.steps or []:
+        if hasattr(s, "to_workflow_dict"):
+            out.append(s.to_workflow_dict())
+        elif isinstance(s, dict):
+            out.append(s)
+    return out
 
 
 def _apply_report_to_row(row: ListeningGuide, *, report: Any, source: str) -> ListeningGuide:
-    steps = [s.to_workflow_dict() for s in report.steps]
+    steps = _steps_as_dicts(report)
     row.work_title = report.work_title
     row.composer = report.composer
     row.status = "completed"
@@ -170,7 +212,7 @@ def _persist_report(
 
 def _rag_context(db: Session, *, message: str, work_hint: str, composer: str, user_id: int) -> dict[str, Any]:
     try:
-        return kb_retrieve(
+        local = kb_retrieve(
             db,
             query=message,
             work_hint=work_hint,
@@ -180,7 +222,56 @@ def _rag_context(db: Session, *, message: str, work_hint: str, composer: str, us
         )
     except Exception as exc:  # noqa: BLE001
         logger.warning("kb_retrieve_failed err=%s", exc)
-        return {"rag_mode": "error", "hits": [], "kb_dossier": {}, "rag_hits": []}
+        local = {"rag_mode": "error", "hits": [], "kb_dossier": {}, "rag_hits": []}
+
+    # Professional plane (aulos-knowledge) — feature-flagged; filter by Catalog work_id
+    try:
+        from aulos_api.services.knowledge_proxy import knowledge_enabled, retrieve_sync
+
+        if knowledge_enabled():
+            work_id = ""
+            composer_id = ""
+            try:
+                from aulos_skills.identity import resolve_identity
+
+                ident = resolve_identity(message, work_hint=work_hint or "")
+                if ident.status == "work" and ident.work_id:
+                    work_id = ident.work_id
+                if ident.composer_id:
+                    composer_id = ident.composer_id
+            except Exception as exc:  # noqa: BLE001
+                logger.warning("identity_resolve_for_rag_failed err=%s", exc)
+
+            plane = retrieve_sync(
+                query=message,
+                work_id=work_id,
+                composer_id=composer_id if not work_id else "",
+                k=6,
+            )
+            if plane.get("hits"):
+                # Hard filter: if we know work_id, drop any hit that names a different aulos_work_id
+                hits_plane = list(plane.get("hits") or [])
+                if work_id:
+                    hits_plane = [
+                        h
+                        for h in hits_plane
+                        if not h.get("aulos_work_id") or h.get("aulos_work_id") == work_id
+                    ]
+                hits = list(local.get("hits") or []) + hits_plane
+                rag_hits = list(local.get("rag_hits") or []) + [
+                    str(h.get("text") or "") for h in hits_plane
+                ]
+                local = {
+                    **local,
+                    "hits": hits,
+                    "rag_hits": [t for t in rag_hits if t][:12],
+                    "rag_mode": f"{local.get('rag_mode')}+knowledge-plane",
+                    "knowledge_plane": True,
+                    "knowledge_work_id": work_id,
+                }
+    except Exception as exc:  # noqa: BLE001
+        logger.warning("knowledge_plane_retrieve_failed err=%s", exc)
+    return local
 
 
 async def _run_chain_core(
@@ -192,32 +283,101 @@ async def _run_chain_core(
     on_step: Callable[[dict[str, Any]], None] | None = None,
     yield_steps: bool = False,
 ) -> AsyncIterator[dict[str, Any] | Any]:
-    """Shared create/recompose chain. Yields step dicts when yield_steps, then SkillRunReport."""
-    _ensure_aulos_skills_importable()
-    from aulos_skills.runtime import SkillRunReport, SkillRuntime
-
+    """Gateway: identity → RAG/KB → generic LLM enrich → skill tools (no composer branches)."""
     disabled = _load_disabled(db)
-    runtime = SkillRuntime()
-    intake = runtime.run_trigger(
-        "listening.intake",
-        {"raw_message": message, "work_hint": work_hint or ""},
-        disabled_skill_ids=disabled,
-    )
-    work_guess = str(intake.outputs.get("work_title") or message[:80])
-    composer_guess = str(intake.outputs.get("composer_guess") or "")
+    work_guess = (work_hint or message)[:120]
+    # Identity first so KB + copilot enrich the resolved shelf, not the raw utterance.
+    work_title = work_guess
+    composer_name = ""
+    family_id: str | None = None
+    work_id = ""
+    facets: dict[str, Any] = {}
+    try:
+        from aulos_skills.identity import resolve_identity
+
+        ident = resolve_identity(message, work_hint=work_hint or "")
+        if ident.work_title:
+            work_title = ident.work_title
+        if ident.composer_name:
+            composer_name = ident.composer_name
+        family_id = ident.family_id
+        work_id = str(ident.work_id or "")
+        facets = dict(ident.facets or {})
+    except Exception as exc:  # noqa: BLE001
+        logger.warning("identity_resolve_for_enrich_failed err=%s", exc)
+
     rag = _rag_context(
         db,
         message=message,
-        work_hint=work_hint or work_guess,
-        composer=composer_guess,
+        work_hint=work_hint or work_title,
+        composer=composer_name,
         user_id=user_id,
     )
-    llm_dossier, enrichment, source = await _optional_llm_dossier(db, work_guess, composer_guess)
-    if llm_dossier is None and enrichment is None:
-        enrichment, source = await _optional_llm_note(db, work_guess)
 
-    report: SkillRunReport | None = None
-    for item in runtime.iter_listening_chain(
+    # Cold KB → open-web gather → LLM verify → persist so next RAG is stronger
+    web_meta: dict[str, Any] = {}
+    try:
+        from aulos_api.services.web_research import run_web_research
+
+        web = await run_web_research(
+            db,
+            work_title=work_title,
+            composer=composer_name,
+            work_id=work_id,
+            facets=facets,
+            user_id=user_id,
+            rag=rag,
+        )
+        web_meta = {
+            k: web.get(k)
+            for k in ("skipped", "reason", "persisted_doc_ids", "rag_mode_suffix", "action", "decision")
+            if k in web
+        }
+        if not web.get("skipped"):
+            rag_hits = list(rag.get("rag_hits") or []) + list(web.get("rag_hits") or [])
+            rag["rag_hits"] = [t for t in rag_hits if t][:16]
+            web_dossier = dict(web.get("dossier") or {})
+            if web_dossier:
+                existing = dict(rag.get("kb_dossier") or {})
+                if web.get("action") == "refresh" and existing:
+                    rag["kb_dossier"] = web_dossier  # already merged in run_web_research
+                elif not existing or len(json.dumps(web_dossier, ensure_ascii=False)) > len(
+                    json.dumps(existing, ensure_ascii=False)
+                ):
+                    rag["kb_dossier"] = {**existing, **web_dossier} if existing else web_dossier
+            suffix = str(web.get("rag_mode_suffix") or "web-research")
+            rag["rag_mode"] = f"{rag.get('rag_mode') or 'none'}+{suffix}"
+            rag["web_research"] = {
+                "sources": len(web.get("sources") or []),
+                "persisted_doc_ids": list(web.get("persisted_doc_ids") or []),
+                "verified": bool((web_dossier.get("_provenance") or {}).get("verified")),
+                "action": web.get("action"),
+                "decision": web.get("decision"),
+            }
+    except Exception as exc:  # noqa: BLE001
+        logger.warning("web_research_failed work=%s err=%s", work_title, exc)
+        web_meta = {"skipped": True, "reason": f"error:{exc}"}
+
+    llm_dossier, enrichment, source = await _optional_llm_dossier(
+        db,
+        work_title,
+        composer_name,
+        rag_hits=list(rag.get("rag_hits") or []),
+        facets=facets,
+        family_id=family_id,
+    )
+    if llm_dossier is None and enrichment is None:
+        enrichment, source = await _optional_llm_note(db, work_title)
+
+    emitted: list[dict[str, Any]] = []
+
+    def _capture(step: dict[str, Any]) -> None:
+        emitted.append(step)
+        if on_step is not None:
+            on_step(step)
+
+    proxy = AgentProxy(get_settings())
+    report = proxy.run_listening(
         message=message,
         work_hint=work_hint,
         llm_enrichment=enrichment,
@@ -226,21 +386,20 @@ async def _run_chain_core(
         rag_hits=list(rag.get("rag_hits") or []),
         rag_mode=str(rag.get("rag_mode") or ""),
         disabled_skill_ids=disabled,
-    ):
-        if isinstance(item, SkillRunReport):
-            report = item
-        else:
-            step = item.to_workflow_dict()
-            if on_step is not None:
-                on_step(step)
-            if yield_steps:
-                yield {"event": "step", "data": step}
-
-    assert report is not None
-    if source != "skills":
+        on_step=_capture if (yield_steps or on_step) else None,
+    )
+    if source != "agent-skills":
         report.source = source
     report.context["rag_mode"] = rag.get("rag_mode")
     report.context["rag_hits"] = rag.get("rag_hits") or []
+    if rag.get("web_research"):
+        report.context["web_research"] = rag.get("web_research")
+    if web_meta:
+        report.context["web_research_meta"] = web_meta
+
+    if yield_steps:
+        for step in report.steps or emitted:
+            yield {"event": "step", "data": step}
     yield report
 
 

@@ -1,0 +1,39 @@
+work_id: mahler.symphony-5
+composer_id: gustav-mahler
+canonical_title: Gustav Mahler — Symphony No. 5
+canonical_title_zh: 马勒 — 第五交响曲
+aliases:
+  - Mahler Symphony No. 5
+  - Mahler Fifth
+  - Symphony No. 5
+  - Fifth Symphony
+  - 马勒第五交响曲
+  - 第五交响曲
+catalog_numbers:
+  - Symphony No. 5
+  - Sym. 5
+facets:
+  instruments: [orchestra]
+  ensemble: [orchestra]
+  forms: [symphony]
+  era: late-romantic
+family_id: null
+corpus_key: null
+ambient_ref: null
+identity:
+  distinctive_tokens:
+    - mahler
+    - 马勒
+    - symphony
+    - 交响
+    - "5"
+    - fifth
+    - 第五
+  conflict_work_ids:
+    - bach.goldberg.bwv-988
+    - chopin.nocturne-op9-no2
+  conflict_markers: []
+provenance:
+  authority: Mahler Symphony No. 5 (1901–02)
+  notes: Thin identity slot — Adagietto reception lore must not invent commission myths.
+  uncertain: false

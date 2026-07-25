@@ -350,6 +350,41 @@ export function fetchEmbedConfig() {
   return request<EmbedConfig>('/v1/ops/embeddings', {}, true)
 }
 
+export type WebResearchConfig = {
+  enabled: boolean
+  min_rag_hits: number
+  min_dossier_richness: number
+  refresh_after_hours: number
+  brave_api_key_set: boolean
+  persist_global: boolean
+  max_sources: number
+  agent_reach_enabled: boolean
+}
+
+export function fetchWebResearchConfig() {
+  return request<WebResearchConfig>('/v1/ops/web-research', {}, true)
+}
+
+export function updateWebResearchConfig(payload: {
+  enabled?: boolean
+  min_rag_hits?: number
+  min_dossier_richness?: number
+  refresh_after_hours?: number
+  brave_api_key?: string
+  persist_global?: boolean
+  max_sources?: number
+  agent_reach_enabled?: boolean
+}) {
+  return request<WebResearchConfig>(
+    '/v1/ops/web-research',
+    {
+      method: 'PUT',
+      body: JSON.stringify(payload),
+    },
+    true,
+  )
+}
+
 export function updateEmbedConfig(payload: {
   provider?: string
   api_key?: string
@@ -367,9 +402,227 @@ export function updateEmbedConfig(payload: {
 }
 
 export function fetchKnowledgeStats() {
-  return request<{ documents: number; chunks: number; embed_ready: boolean }>(
-    '/v1/ops/knowledge/stats',
-    {},
+  return request<{
+    documents: number
+    chunks: number
+    embed_ready: boolean
+    plane_enabled?: boolean
+    plane_url?: string
+  }>('/v1/ops/knowledge/stats', {}, true)
+}
+
+export type KnowledgeSource = {
+  id: string
+  name: string
+  tier: string
+  connector: string
+  license_class: string
+  rate_limit_qps: number
+  enabled: boolean
+  notes: string
+}
+
+export type KnowledgeJob = {
+  id: number
+  source_id: string
+  status: string
+  error: string
+  created_at?: string | null
+  finished_at?: string | null
+}
+
+export type KnowledgeDoc = {
+  id: number
+  title: string
+  entity_type?: string
+  entity_id?: string
+  aulos_work_id: string
+  status: string
+  source_id: string
+  artifact_id?: number | null
+  job_id?: number | null
+  extractor_version: string
+  license_class: string
+  body_preview?: string
+  body?: string
+}
+
+export type KnowledgeComposer = {
+  id: string
+  name_en: string
+  name_zh: string
+  lifespan: string
+  external_ids: Record<string, string>
+}
+
+export type KnowledgePlaneStats = {
+  sources: number
+  works: number
+  composers?: number
+  documents: number
+  documents_published: number
+  documents_quarantine: number
+  jobs: number
+  artifacts: number
+  media_assets?: number
+  media_images?: number
+  media_audio?: number
+  media_meta?: number
+}
+
+function plane(path: string, init: RequestInit = {}) {
+  return request<unknown>(`/v1/ops/knowledge/plane${path}`, init, true)
+}
+
+export function fetchKnowledgePlaneHealth() {
+  return plane('/health') as Promise<{ status: string; service: string; version: string }>
+}
+
+export function fetchKnowledgePlaneStats() {
+  return plane('/v1/kb/stats') as Promise<KnowledgePlaneStats>
+}
+
+export function fetchKnowledgeSources() {
+  return plane('/v1/admin/sources') as Promise<KnowledgeSource[]>
+}
+
+export function fetchKnowledgeJobs() {
+  return plane('/v1/admin/jobs') as Promise<KnowledgeJob[]>
+}
+
+export function enqueueKnowledgeJob(sourceId: string, params: Record<string, unknown> = {}) {
+  return plane('/v1/admin/jobs', {
+    method: 'POST',
+    body: JSON.stringify({ source_id: sourceId, params }),
+  }) as Promise<KnowledgeJob>
+}
+
+export function fetchKnowledgeComposers() {
+  return plane('/v1/admin/composers') as Promise<KnowledgeComposer[]>
+}
+
+export function fetchKnowledgeDocuments(opts: {
+  status?: string
+  entity_type?: string
+  source_id?: string
+  q?: string
+  limit?: number
+} = {}) {
+  const sp = new URLSearchParams()
+  if (opts.status) sp.set('status', opts.status)
+  if (opts.entity_type) sp.set('entity_type', opts.entity_type)
+  if (opts.source_id) sp.set('source_id', opts.source_id)
+  if (opts.q) sp.set('q', opts.q)
+  if (opts.limit) sp.set('limit', String(opts.limit))
+  const q = sp.toString()
+  return plane(`/v1/admin/documents${q ? `?${q}` : ''}`) as Promise<KnowledgeDoc[]>
+}
+
+export function fetchKnowledgeDocument(documentId: number) {
+  return plane(`/v1/admin/documents/${documentId}`) as Promise<KnowledgeDoc>
+}
+
+export function fetchKnowledgeProvenance(documentId: number) {
+  return plane(`/v1/admin/provenance/${documentId}`) as Promise<Record<string, unknown>>
+}
+
+export function fetchKnowledgeArtifact(artifactId: number) {
+  return plane(`/v1/admin/artifacts/${artifactId}`) as Promise<{
+    id: number
+    content_hash: string
+    storage_path: string
+    source_url: string
+    exists: boolean
+    preview: string
+  }>
+}
+
+export function knowledgeRetrieveLab(query: string, workId = '', composerId = '') {
+  return plane('/v1/kb/retrieve', {
+    method: 'POST',
+    body: JSON.stringify({ query, work_id: workId, composer_id: composerId, k: 6 }),
+  }) as Promise<{ hits: Array<{ title: string; score: number; text: string; aulos_work_id?: string }> }>
+}
+
+export function patchKnowledgeSource(sourceId: string, payload: { enabled?: boolean }) {
+  return plane(`/v1/admin/sources/${encodeURIComponent(sourceId)}`, {
+    method: 'PATCH',
+    body: JSON.stringify(payload),
+  }) as Promise<{ ok: boolean; id: string; enabled: boolean }>
+}
+
+export function quarantineKnowledgeDocument(docId: number) {
+  return plane(`/v1/admin/documents/${docId}/quarantine`, {
+    method: 'POST',
+    body: JSON.stringify({}),
+  }) as Promise<{ ok: boolean; status: string }>
+}
+
+export function publishKnowledgeDocument(docId: number) {
+  return plane(`/v1/admin/documents/${docId}/publish`, {
+    method: 'POST',
+    body: JSON.stringify({}),
+  }) as Promise<{ ok: boolean; status: string }>
+}
+
+export type KnowledgeMedia = {
+  id: number
+  kind: string
+  title: string
+  entity_id: string
+  storage_path: string
+  byte_size: number
+  license_class: string
+  exists_on_disk: boolean
+  content_type: string
+  source_url: string
+}
+
+export function fetchKnowledgeMedia(opts: { kind?: string; entity_id?: string; limit?: number } = {}) {
+  const sp = new URLSearchParams()
+  if (opts.kind) sp.set('kind', opts.kind)
+  if (opts.entity_id) sp.set('entity_id', opts.entity_id)
+  if (opts.limit) sp.set('limit', String(opts.limit))
+  const q = sp.toString()
+  return plane(`/v1/admin/media${q ? `?${q}` : ''}`) as Promise<KnowledgeMedia[]>
+}
+
+export type DbHaStatus = {
+  active_role: 'primary' | 'failover' | string
+  primary: { url_scheme: string; dialect: string; ok: boolean }
+  failover: {
+    configured: boolean
+    url_scheme: string | null
+    dialect: string | null
+    ok: boolean
+  }
+  sync: {
+    status: string
+    at?: string | null
+    error?: string
+    tables?: Record<string, number>
+    duration_ms?: number
+    trigger?: string
+    row_total?: number
+  }
+  auto_failover: boolean
+  sync_interval_sec: number
+  redis_queue?: string
+}
+
+export function fetchDbHa() {
+  return request<DbHaStatus>('/v1/ops/db/ha', {}, true)
+}
+
+export function enqueueDbSync(queue = true) {
+  const q = queue ? '?queue=true' : '?queue=false'
+  return request<Record<string, unknown>>(`/v1/ops/db/sync${q}`, { method: 'POST' }, true)
+}
+
+export function setDbActiveRole(role: 'primary' | 'failover', reason = 'ops') {
+  return request<{ ok: boolean; active_role: string; status: DbHaStatus }>(
+    '/v1/ops/db/role',
+    { method: 'POST', body: JSON.stringify({ role, reason }) },
     true,
   )
 }

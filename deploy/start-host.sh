@@ -39,13 +39,13 @@ cp -f "$ROOT/deploy/systemd/user/"*.service "$UNIT_DIR/"
 cp -f "$ROOT/deploy/systemd/user/"*.target "$UNIT_DIR/"
 systemctl --user daemon-reload
 systemctl --user enable --now aulos-host.target
-systemctl --user restart aulos-api.service aulos-web.service aulos-ops.service
+systemctl --user restart aulos-api.service aulos-web.service aulos-ops.service aulos-knowledge.service
 
 echo "[5/5] Apply k3s Ingress"
 sudo kubectl apply -f "$ROOT/deploy/k3s/aulos.yaml"
 
 echo
-systemctl --user --no-pager --plain status aulos-api.service aulos-web.service aulos-ops.service | sed -n '1,80p'
+systemctl --user --no-pager --plain status aulos-api.service aulos-web.service aulos-ops.service aulos-knowledge.service | sed -n '1,100p'
 echo
 sudo kubectl get ingress aulos-web aulos-ops
 echo
@@ -53,6 +53,7 @@ echo "Local smoke:"
 curl -fsS "http://127.0.0.1:5090/health" && echo
 curl -fsSI "http://127.0.0.1:5091/" | head -5
 curl -fsSI "http://127.0.0.1:5092/" | head -5
+curl -fsS "http://127.0.0.1:5095/health" && echo
 echo "Public hosts (may need a few seconds for ingress):"
 curl -fsSI "https://aulos.purezen.ai/" | head -8 || true
 curl -fsSI "https://aulos-ops.purezen.ai/" | head -8 || true

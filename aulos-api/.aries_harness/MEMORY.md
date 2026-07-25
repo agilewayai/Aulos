@@ -10,7 +10,7 @@ generated_by: "/aries-harness init"
 initialized_at: "2026-07-25T11:07:43Z"
 effective_status: "active"
 effective_since: "2026-07-25T11:07:43Z"
-content_fingerprint: "sha256:e6fa4aa609dceb09769b6f3c3e569e7a2ecfed1504f25cee4b788b2ea5a30583"
+content_fingerprint: "sha256:91f9c2f4133bd64a8ba1b159b5d52dcb8c32ea396fd1b60946ca2b05f978ea27"
 trace_history_source: "filesystem-only"
 trace_last_commit_sha: ""
 trace_last_commit_at: ""
@@ -44,6 +44,12 @@ trace_revision_count: "0"
 - Source of truth: `git@github.com:agilewayai/aries-harness-skills.git` (not `AriesHarnessStudio` / `aries-studio`).
 - Local reference clone: `/home/ubuntu/studio/aries-harness-skills` (keep in sync with origin).
 
+
+
+### Agent-centric listening
+
+- 导赏 is Agent tool-chain (`run_listening_skill`), not API `iter_listening_chain`.
+- See aulos-agent ARCH-002 / ADR-003 / SPEC-002.
 
 ### Timezone display
 

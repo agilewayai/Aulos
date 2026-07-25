@@ -1,11 +1,22 @@
 id: aulos-listening-intake
 name: Listening Intent Intake
-version: 0.2.0
+version: 0.3.0
 layer: domain-runtime
 runtime: agent
-summary: Normalize listening intent (EN/ZH) — work title, composer, corpus keys, family hints.
+summary: Catalog-driven identity via IdentityResolver (SPEC-008) — work_id, family, conflicts.
 triggers:
   - listening.intake
 inputs: [raw_message, work_hint]
-outputs: [work_title, composer_guess, listener_goal, experience_level, corpus_keys, family_hints]
+outputs:
+  - work_title
+  - composer_guess
+  - listener_goal
+  - experience_level
+  - corpus_keys
+  - family_hints
+  - work_id
+  - conflict_markers
+  - facets
+  - ambient_ref
+  - identity_status
 observability_title: Understand listening intent

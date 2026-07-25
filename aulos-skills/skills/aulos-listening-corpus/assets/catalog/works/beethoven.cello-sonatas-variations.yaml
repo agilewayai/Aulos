@@ -1,0 +1,49 @@
+work_id: beethoven.cello-sonatas-variations
+composer_id: ludwig-van-beethoven
+canonical_title: Ludwig van Beethoven — Cello Sonatas & Variations (with piano)
+canonical_title_zh: 贝多芬 — 大提琴与钢琴奏鸣曲及变奏曲
+aliases:
+  - Cello Sonatas
+  - Cello Sonatas and Variations
+  - Beethoven cello piano
+  - Opp. 5, 69, 102
+  - 大提琴奏鸣曲
+  - 大提琴与钢琴
+  - 大提琴钢琴奏鸣曲
+catalog_numbers:
+  - Op. 5
+  - Op. 69
+  - Op. 102
+  - Op. 66
+  - WoO 45
+  - WoO 46
+facets:
+  instruments: [cello, piano]
+  ensemble: [duo]
+  forms: [sonata, sonatas, variation, variations]
+  era: classical-romantic
+family_id: duo-cello-piano
+corpus_key: null
+ambient_ref: cello-as-speaker-bach-suite1
+identity:
+  distinctive_tokens:
+    - cello
+    - 大提琴
+    - piano
+    - 钢琴
+    - "69"
+    - "102"
+    - duo
+    - 奏鸣
+  conflict_work_ids:
+    - bach.goldberg.bwv-988
+  conflict_markers:
+    - goldberg
+    - 哥德堡
+    - aria bass
+    - ishizaka
+    - unaccompanied
+    - 无伴奏
+provenance:
+  authority: Beethoven Werke — sonatas Opp. 5, 69, 102; variations WoO 45–46 & Op. 66
+  notes: Duo citizenship shelf — not unaccompanied Bach suites.

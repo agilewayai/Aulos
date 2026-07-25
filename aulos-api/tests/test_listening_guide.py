@@ -56,7 +56,15 @@ def _user_headers(client: TestClient) -> dict[str, str]:
     return {"Authorization": f"Bearer {login.json()['access_token']}"}
 
 
-def test_goldberg_listening_guide_workflow(client: TestClient) -> None:
+def test_goldberg_listening_guide_workflow(client: TestClient, monkeypatch: pytest.MonkeyPatch) -> None:
+    # Architecture gate: product path must not orchestrate SkillRuntime.iter_listening_chain
+    import aulos_skills.runtime as rt
+
+    def _boom(*_a, **_k):  # noqa: ANN001
+        raise AssertionError("API must not call SkillRuntime.iter_listening_chain")
+
+    monkeypatch.setattr(rt.SkillRuntime, "iter_listening_chain", _boom)
+
     headers = _user_headers(client)
     res = client.post(
         "/v1/listening-guides",
@@ -78,6 +86,7 @@ def test_goldberg_listening_guide_workflow(client: TestClient) -> None:
     assert "aulos-listening-depth" in body["skill_versions"]
     assert "<!DOCTYPE html>" in body["guide_html"]
     assert "Listening map" in body["guide_html"]
+    assert body.get("source") in {"agent-skills", "skills", "skills+fake"} or "agent" in str(body.get("source"))
     assert "Wide research" in body["guide_html"]
 
     listed = client.get("/v1/listening-guides", headers=headers)

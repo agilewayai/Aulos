@@ -1,17 +1,17 @@
 {
   "summary": {
-    "document_count": 73,
+    "document_count": 79,
     "docs_with_issues": 0,
     "dirty_docs": 0,
     "by_layer": {
-      "MetaDefineLayer": 37,
-      "SharedSupportSurface": 16,
-      "RunCookingLayer": 16,
+      "MetaDefineLayer": 41,
+      "SharedSupportSurface": 17,
+      "RunCookingLayer": 17,
       "unclassified": 4
     },
     "by_effective_status": {
-      "active": 64,
-      "generated": 9
+      "active": 69,
+      "generated": 10
     }
   },
   "documents": [
@@ -28,8 +28,8 @@
       "last_updated_at": "",
       "completed_at": "",
       "timebox_actual": "",
-      "content_fingerprint": "sha256:3491bd10bdd76e5be7392005bb8ea188917284e143999edb2ab7c8710afe5512",
-      "observed_content_fingerprint": "sha256:3491bd10bdd76e5be7392005bb8ea188917284e143999edb2ab7c8710afe5512",
+      "content_fingerprint": "sha256:e4b9471857700b0895d56f007b2ef7f8ce3a36474220d18acf4e78bef0db4ca5",
+      "observed_content_fingerprint": "sha256:e4b9471857700b0895d56f007b2ef7f8ce3a36474220d18acf4e78bef0db4ca5",
       "trace_history_source": "filesystem-only",
       "trace_last_commit_sha": "",
       "trace_last_commit_at": "",
@@ -87,11 +87,16 @@
         "trace_revision_count": "0"
       },
       "latest_commit": {
-        "sha": "93c0f6e",
-        "date": "2026-07-25",
-        "subject": "Add aulos-skills, aulos-ops, host deploy, and fleet operating defaults."
+        "sha": "555cf53",
+        "date": "2026-07-26",
+        "subject": "Ship listening product, mandatory harness, facility layout, and UTC/local time."
       },
       "recent_updates": [
+        {
+          "sha": "555cf53",
+          "date": "2026-07-26",
+          "subject": "Ship listening product, mandatory harness, facility layout, and UTC/local time."
+        },
         {
           "sha": "93c0f6e",
           "date": "2026-07-25",
@@ -114,14 +119,14 @@
       "layer": "SharedSupportSurface",
       "declared_layer": "SharedSupportSurface",
       "effective_status": "generated",
-      "effective_since": "2026-07-25T16:29:44+00:00",
+      "effective_since": "2026-07-25T18:53:02+00:00",
       "managed_by": "aries-harness",
       "fingerprint": "aries-harness/bootstrap-doc/v1",
       "last_updated_at": "",
       "completed_at": "",
       "timebox_actual": "",
-      "content_fingerprint": "sha256:224b3a18ea563ace94f7327a2475e62ffb52f86eb3ee335cdb3984c3c3db73bd",
-      "observed_content_fingerprint": "sha256:224b3a18ea563ace94f7327a2475e62ffb52f86eb3ee335cdb3984c3c3db73bd",
+      "content_fingerprint": "sha256:ffab0f9c26e5401bd98ca3a779e5fc1e037c1e89b858228886cc44f06f363aa5",
+      "observed_content_fingerprint": "sha256:ffab0f9c26e5401bd98ca3a779e5fc1e037c1e89b858228886cc44f06f363aa5",
       "trace_history_source": "filesystem-only",
       "trace_last_commit_sha": "",
       "trace_last_commit_at": "",
@@ -133,11 +138,16 @@
         "trace_revision_count": "0"
       },
       "latest_commit": {
-        "sha": "93c0f6e",
-        "date": "2026-07-25",
-        "subject": "Add aulos-skills, aulos-ops, host deploy, and fleet operating defaults."
+        "sha": "555cf53",
+        "date": "2026-07-26",
+        "subject": "Ship listening product, mandatory harness, facility layout, and UTC/local time."
       },
       "recent_updates": [
+        {
+          "sha": "555cf53",
+          "date": "2026-07-26",
+          "subject": "Ship listening product, mandatory harness, facility layout, and UTC/local time."
+        },
         {
           "sha": "93c0f6e",
           "date": "2026-07-25",
@@ -166,8 +176,8 @@
       "last_updated_at": "",
       "completed_at": "",
       "timebox_actual": "",
-      "content_fingerprint": "sha256:0671c7f4c9e45f1d94c53d2a662ec7ee7c59a63a0c51a2ca6be0c5c0ec2c8313",
-      "observed_content_fingerprint": "sha256:0671c7f4c9e45f1d94c53d2a662ec7ee7c59a63a0c51a2ca6be0c5c0ec2c8313",
+      "content_fingerprint": "sha256:8ae54cb20207c4efd2c4eac3b8baf4aabc3ec75847cdef68e6334ef9029a0110",
+      "observed_content_fingerprint": "sha256:8ae54cb20207c4efd2c4eac3b8baf4aabc3ec75847cdef68e6334ef9029a0110",
       "trace_history_source": "filesystem-only",
       "trace_last_commit_sha": "",
       "trace_last_commit_at": "",
@@ -179,11 +189,16 @@
         "trace_revision_count": "0"
       },
       "latest_commit": {
-        "sha": "93c0f6e",
-        "date": "2026-07-25",
-        "subject": "Add aulos-skills, aulos-ops, host deploy, and fleet operating defaults."
+        "sha": "555cf53",
+        "date": "2026-07-26",
+        "subject": "Ship listening product, mandatory harness, facility layout, and UTC/local time."
       },
       "recent_updates": [
+        {
+          "sha": "555cf53",
+          "date": "2026-07-26",
+          "subject": "Ship listening product, mandatory harness, facility layout, and UTC/local time."
+        },
         {
           "sha": "93c0f6e",
           "date": "2026-07-25",
@@ -207,8 +222,8 @@
       "last_updated_at": "",
       "completed_at": "",
       "timebox_actual": "",
-      "content_fingerprint": "sha256:92a53763bd8e747a5c501550a54990262e8a4422a9e458a3906478d150e4d156",
-      "observed_content_fingerprint": "sha256:92a53763bd8e747a5c501550a54990262e8a4422a9e458a3906478d150e4d156",
+      "content_fingerprint": "sha256:c6686d731dc724b00bddbfe575ebb8420528bc9d4e4b0afa8afb8a7049cbe09b",
+      "observed_content_fingerprint": "sha256:c6686d731dc724b00bddbfe575ebb8420528bc9d4e4b0afa8afb8a7049cbe09b",
       "trace_history_source": "filesystem-only",
       "trace_last_commit_sha": "",
       "trace_last_commit_at": "",
@@ -220,11 +235,16 @@
         "trace_revision_count": "0"
       },
       "latest_commit": {
-        "sha": "93c0f6e",
-        "date": "2026-07-25",
-        "subject": "Add aulos-skills, aulos-ops, host deploy, and fleet operating defaults."
+        "sha": "555cf53",
+        "date": "2026-07-26",
+        "subject": "Ship listening product, mandatory harness, facility layout, and UTC/local time."
       },
       "recent_updates": [
+        {
+          "sha": "555cf53",
+          "date": "2026-07-26",
+          "subject": "Ship listening product, mandatory harness, facility layout, and UTC/local time."
+        },
         {
           "sha": "93c0f6e",
           "date": "2026-07-25",
@@ -234,11 +254,6 @@
           "sha": "7632d9b",
           "date": "2026-07-25",
           "subject": "Add aulos-web, aulos-api, and aulos-mcp sub-projects under aries-harness."
-        },
-        {
-          "sha": "0d5cb01",
-          "date": "2026-07-25",
-          "subject": "Initial commit: Aulos hackathon workspace with LangChain agent runtime."
         }
       ],
       "dirty": false,
@@ -363,11 +378,16 @@
         "trace_revision_count": "0"
       },
       "latest_commit": {
-        "sha": "93c0f6e",
-        "date": "2026-07-25",
-        "subject": "Add aulos-skills, aulos-ops, host deploy, and fleet operating defaults."
+        "sha": "555cf53",
+        "date": "2026-07-26",
+        "subject": "Ship listening product, mandatory harness, facility layout, and UTC/local time."
       },
       "recent_updates": [
+        {
+          "sha": "555cf53",
+          "date": "2026-07-26",
+          "subject": "Ship listening product, mandatory harness, facility layout, and UTC/local time."
+        },
         {
           "sha": "93c0f6e",
           "date": "2026-07-25",
@@ -377,11 +397,6 @@
           "sha": "7632d9b",
           "date": "2026-07-25",
           "subject": "Add aulos-web, aulos-api, and aulos-mcp sub-projects under aries-harness."
-        },
-        {
-          "sha": "0d5cb01",
-          "date": "2026-07-25",
-          "subject": "Initial commit: Aulos hackathon workspace with LangChain agent runtime."
         }
       ],
       "dirty": false,
@@ -516,11 +531,16 @@
         "trace_revision_count": "0"
       },
       "latest_commit": {
-        "sha": "93c0f6e",
-        "date": "2026-07-25",
-        "subject": "Add aulos-skills, aulos-ops, host deploy, and fleet operating defaults."
+        "sha": "555cf53",
+        "date": "2026-07-26",
+        "subject": "Ship listening product, mandatory harness, facility layout, and UTC/local time."
       },
       "recent_updates": [
+        {
+          "sha": "555cf53",
+          "date": "2026-07-26",
+          "subject": "Ship listening product, mandatory harness, facility layout, and UTC/local time."
+        },
         {
           "sha": "93c0f6e",
           "date": "2026-07-25",
@@ -562,11 +582,16 @@
         "trace_revision_count": "0"
       },
       "latest_commit": {
-        "sha": "93c0f6e",
-        "date": "2026-07-25",
-        "subject": "Add aulos-skills, aulos-ops, host deploy, and fleet operating defaults."
+        "sha": "555cf53",
+        "date": "2026-07-26",
+        "subject": "Ship listening product, mandatory harness, facility layout, and UTC/local time."
       },
       "recent_updates": [
+        {
+          "sha": "555cf53",
+          "date": "2026-07-26",
+          "subject": "Ship listening product, mandatory harness, facility layout, and UTC/local time."
+        },
         {
           "sha": "93c0f6e",
           "date": "2026-07-25",
@@ -607,8 +632,18 @@
         "trace_last_commit_at": "",
         "trace_revision_count": "0"
       },
-      "latest_commit": null,
-      "recent_updates": [],
+      "latest_commit": {
+        "sha": "555cf53",
+        "date": "2026-07-26",
+        "subject": "Ship listening product, mandatory harness, facility layout, and UTC/local time."
+      },
+      "recent_updates": [
+        {
+          "sha": "555cf53",
+          "date": "2026-07-26",
+          "subject": "Ship listening product, mandatory harness, facility layout, and UTC/local time."
+        }
+      ],
       "dirty": false,
       "issue_count": 0,
       "issues": []
@@ -638,8 +673,18 @@
         "trace_last_commit_at": "",
         "trace_revision_count": "0"
       },
-      "latest_commit": null,
-      "recent_updates": [],
+      "latest_commit": {
+        "sha": "555cf53",
+        "date": "2026-07-26",
+        "subject": "Ship listening product, mandatory harness, facility layout, and UTC/local time."
+      },
+      "recent_updates": [
+        {
+          "sha": "555cf53",
+          "date": "2026-07-26",
+          "subject": "Ship listening product, mandatory harness, facility layout, and UTC/local time."
+        }
+      ],
       "dirty": false,
       "issue_count": 0,
       "issues": []
@@ -669,8 +714,18 @@
         "trace_last_commit_at": "",
         "trace_revision_count": "0"
       },
-      "latest_commit": null,
-      "recent_updates": [],
+      "latest_commit": {
+        "sha": "555cf53",
+        "date": "2026-07-26",
+        "subject": "Ship listening product, mandatory harness, facility layout, and UTC/local time."
+      },
+      "recent_updates": [
+        {
+          "sha": "555cf53",
+          "date": "2026-07-26",
+          "subject": "Ship listening product, mandatory harness, facility layout, and UTC/local time."
+        }
+      ],
       "dirty": false,
       "issue_count": 0,
       "issues": []
@@ -700,8 +755,18 @@
         "trace_last_commit_at": "",
         "trace_revision_count": "0"
       },
-      "latest_commit": null,
-      "recent_updates": [],
+      "latest_commit": {
+        "sha": "555cf53",
+        "date": "2026-07-26",
+        "subject": "Ship listening product, mandatory harness, facility layout, and UTC/local time."
+      },
+      "recent_updates": [
+        {
+          "sha": "555cf53",
+          "date": "2026-07-26",
+          "subject": "Ship listening product, mandatory harness, facility layout, and UTC/local time."
+        }
+      ],
       "dirty": false,
       "issue_count": 0,
       "issues": []
@@ -765,8 +830,49 @@
       "last_updated_at": "",
       "completed_at": "",
       "timebox_actual": "",
-      "content_fingerprint": "sha256:22088228fc14e57045418554da5bef545a4a546c61f6574aed89e7318bbcc6f8",
-      "observed_content_fingerprint": "sha256:22088228fc14e57045418554da5bef545a4a546c61f6574aed89e7318bbcc6f8",
+      "content_fingerprint": "sha256:02e52db97d56ddb28d2a35288969297fb0316fd9c65a35a78b01b6fd605097b2",
+      "observed_content_fingerprint": "sha256:02e52db97d56ddb28d2a35288969297fb0316fd9c65a35a78b01b6fd605097b2",
+      "trace_history_source": "filesystem-only",
+      "trace_last_commit_sha": "",
+      "trace_last_commit_at": "",
+      "trace_revision_count": "0",
+      "observed_trace": {
+        "trace_history_source": "filesystem-only",
+        "trace_last_commit_sha": "",
+        "trace_last_commit_at": "",
+        "trace_revision_count": "0"
+      },
+      "latest_commit": {
+        "sha": "555cf53",
+        "date": "2026-07-26",
+        "subject": "Ship listening product, mandatory harness, facility layout, and UTC/local time."
+      },
+      "recent_updates": [
+        {
+          "sha": "555cf53",
+          "date": "2026-07-26",
+          "subject": "Ship listening product, mandatory harness, facility layout, and UTC/local time."
+        }
+      ],
+      "dirty": false,
+      "issue_count": 0,
+      "issues": []
+    },
+    {
+      "path": "decisions/adrs/ADR-004-catalog-over-heuristics.md",
+      "repo_path": ".aries_harness/decisions/adrs/ADR-004-catalog-over-heuristics.md",
+      "doc_role": "adr",
+      "layer": "MetaDefineLayer",
+      "declared_layer": "MetaDefineLayer",
+      "effective_status": "active",
+      "effective_since": "2026-07-25T17:01:00+00:00",
+      "managed_by": "aries-harness",
+      "fingerprint": "aries-harness/bootstrap-doc/v1",
+      "last_updated_at": "",
+      "completed_at": "",
+      "timebox_actual": "",
+      "content_fingerprint": "sha256:37edfe19d0e60476b1e2a03c2affd0d5fc7b2573cc0e248762b6cfe7bedc8413",
+      "observed_content_fingerprint": "sha256:37edfe19d0e60476b1e2a03c2affd0d5fc7b2573cc0e248762b6cfe7bedc8413",
       "trace_history_source": "filesystem-only",
       "trace_last_commit_sha": "",
       "trace_last_commit_at": "",
@@ -860,11 +966,16 @@
         "trace_revision_count": "0"
       },
       "latest_commit": {
-        "sha": "93c0f6e",
-        "date": "2026-07-25",
-        "subject": "Add aulos-skills, aulos-ops, host deploy, and fleet operating defaults."
+        "sha": "555cf53",
+        "date": "2026-07-26",
+        "subject": "Ship listening product, mandatory harness, facility layout, and UTC/local time."
       },
       "recent_updates": [
+        {
+          "sha": "555cf53",
+          "date": "2026-07-26",
+          "subject": "Ship listening product, mandatory harness, facility layout, and UTC/local time."
+        },
         {
           "sha": "93c0f6e",
           "date": "2026-07-25",
@@ -900,8 +1011,18 @@
         "trace_last_commit_at": "",
         "trace_revision_count": "0"
       },
-      "latest_commit": null,
-      "recent_updates": [],
+      "latest_commit": {
+        "sha": "555cf53",
+        "date": "2026-07-26",
+        "subject": "Ship listening product, mandatory harness, facility layout, and UTC/local time."
+      },
+      "recent_updates": [
+        {
+          "sha": "555cf53",
+          "date": "2026-07-26",
+          "subject": "Ship listening product, mandatory harness, facility layout, and UTC/local time."
+        }
+      ],
       "dirty": false,
       "issue_count": 0,
       "issues": []
@@ -931,8 +1052,18 @@
         "trace_last_commit_at": "",
         "trace_revision_count": "0"
       },
-      "latest_commit": null,
-      "recent_updates": [],
+      "latest_commit": {
+        "sha": "555cf53",
+        "date": "2026-07-26",
+        "subject": "Ship listening product, mandatory harness, facility layout, and UTC/local time."
+      },
+      "recent_updates": [
+        {
+          "sha": "555cf53",
+          "date": "2026-07-26",
+          "subject": "Ship listening product, mandatory harness, facility layout, and UTC/local time."
+        }
+      ],
       "dirty": false,
       "issue_count": 0,
       "issues": []
@@ -962,8 +1093,18 @@
         "trace_last_commit_at": "",
         "trace_revision_count": "0"
       },
-      "latest_commit": null,
-      "recent_updates": [],
+      "latest_commit": {
+        "sha": "555cf53",
+        "date": "2026-07-26",
+        "subject": "Ship listening product, mandatory harness, facility layout, and UTC/local time."
+      },
+      "recent_updates": [
+        {
+          "sha": "555cf53",
+          "date": "2026-07-26",
+          "subject": "Ship listening product, mandatory harness, facility layout, and UTC/local time."
+        }
+      ],
       "dirty": false,
       "issue_count": 0,
       "issues": []
@@ -1039,8 +1180,18 @@
         "trace_last_commit_at": "",
         "trace_revision_count": "0"
       },
-      "latest_commit": null,
-      "recent_updates": [],
+      "latest_commit": {
+        "sha": "555cf53",
+        "date": "2026-07-26",
+        "subject": "Ship listening product, mandatory harness, facility layout, and UTC/local time."
+      },
+      "recent_updates": [
+        {
+          "sha": "555cf53",
+          "date": "2026-07-26",
+          "subject": "Ship listening product, mandatory harness, facility layout, and UTC/local time."
+        }
+      ],
       "dirty": false,
       "issue_count": 0,
       "issues": []
@@ -1070,8 +1221,18 @@
         "trace_last_commit_at": "",
         "trace_revision_count": "0"
       },
-      "latest_commit": null,
-      "recent_updates": [],
+      "latest_commit": {
+        "sha": "555cf53",
+        "date": "2026-07-26",
+        "subject": "Ship listening product, mandatory harness, facility layout, and UTC/local time."
+      },
+      "recent_updates": [
+        {
+          "sha": "555cf53",
+          "date": "2026-07-26",
+          "subject": "Ship listening product, mandatory harness, facility layout, and UTC/local time."
+        }
+      ],
       "dirty": false,
       "issue_count": 0,
       "issues": []
@@ -1101,8 +1262,18 @@
         "trace_last_commit_at": "",
         "trace_revision_count": "0"
       },
-      "latest_commit": null,
-      "recent_updates": [],
+      "latest_commit": {
+        "sha": "555cf53",
+        "date": "2026-07-26",
+        "subject": "Ship listening product, mandatory harness, facility layout, and UTC/local time."
+      },
+      "recent_updates": [
+        {
+          "sha": "555cf53",
+          "date": "2026-07-26",
+          "subject": "Ship listening product, mandatory harness, facility layout, and UTC/local time."
+        }
+      ],
       "dirty": false,
       "issue_count": 0,
       "issues": []
@@ -1120,39 +1291,8 @@
       "last_updated_at": "",
       "completed_at": "",
       "timebox_actual": "",
-      "content_fingerprint": "sha256:92ff6c734803b1cbc86df9bb9bdebdfc6e7072ec24c2ddf5857a81cabceba6d1",
-      "observed_content_fingerprint": "sha256:92ff6c734803b1cbc86df9bb9bdebdfc6e7072ec24c2ddf5857a81cabceba6d1",
-      "trace_history_source": "filesystem-only",
-      "trace_last_commit_sha": "",
-      "trace_last_commit_at": "",
-      "trace_revision_count": "0",
-      "observed_trace": {
-        "trace_history_source": "filesystem-only",
-        "trace_last_commit_sha": "",
-        "trace_last_commit_at": "",
-        "trace_revision_count": "0"
-      },
-      "latest_commit": null,
-      "recent_updates": [],
-      "dirty": false,
-      "issue_count": 0,
-      "issues": []
-    },
-    {
-      "path": "history/DAILY_SUMMARY_INDEX.md",
-      "repo_path": ".aries_harness/history/DAILY_SUMMARY_INDEX.md",
-      "doc_role": "history-daily-summary-index",
-      "layer": "SharedSupportSurface",
-      "declared_layer": "SharedSupportSurface",
-      "effective_status": "generated",
-      "effective_since": "2026-07-25T16:25:01+00:00",
-      "managed_by": "aries-harness",
-      "fingerprint": "aries-harness/history-doc/v1",
-      "last_updated_at": "",
-      "completed_at": "",
-      "timebox_actual": "",
-      "content_fingerprint": "sha256:9e2f7bed8331240a3a0f07ff560467591462cfea35cb71783b8dd8e0adb078e3",
-      "observed_content_fingerprint": "sha256:9e2f7bed8331240a3a0f07ff560467591462cfea35cb71783b8dd8e0adb078e3",
+      "content_fingerprint": "sha256:d4a394100c09e953a6f5b5ca83c561ee1f37627d2c33ae99725f3fea1746bac6",
+      "observed_content_fingerprint": "sha256:d4a394100c09e953a6f5b5ca83c561ee1f37627d2c33ae99725f3fea1746bac6",
       "trace_history_source": "filesystem-only",
       "trace_last_commit_sha": "",
       "trace_last_commit_at": "",
@@ -1164,11 +1304,57 @@
         "trace_revision_count": "0"
       },
       "latest_commit": {
-        "sha": "93c0f6e",
-        "date": "2026-07-25",
-        "subject": "Add aulos-skills, aulos-ops, host deploy, and fleet operating defaults."
+        "sha": "555cf53",
+        "date": "2026-07-26",
+        "subject": "Ship listening product, mandatory harness, facility layout, and UTC/local time."
       },
       "recent_updates": [
+        {
+          "sha": "555cf53",
+          "date": "2026-07-26",
+          "subject": "Ship listening product, mandatory harness, facility layout, and UTC/local time."
+        }
+      ],
+      "dirty": false,
+      "issue_count": 0,
+      "issues": []
+    },
+    {
+      "path": "history/DAILY_SUMMARY_INDEX.md",
+      "repo_path": ".aries_harness/history/DAILY_SUMMARY_INDEX.md",
+      "doc_role": "history-daily-summary-index",
+      "layer": "SharedSupportSurface",
+      "declared_layer": "SharedSupportSurface",
+      "effective_status": "generated",
+      "effective_since": "2026-07-25T18:52:07+00:00",
+      "managed_by": "aries-harness",
+      "fingerprint": "aries-harness/history-doc/v1",
+      "last_updated_at": "",
+      "completed_at": "",
+      "timebox_actual": "",
+      "content_fingerprint": "sha256:933a30f06a3dc1828de5feaca2188826fa9d9e440b3576acdfd7078d6ae1f6c8",
+      "observed_content_fingerprint": "sha256:933a30f06a3dc1828de5feaca2188826fa9d9e440b3576acdfd7078d6ae1f6c8",
+      "trace_history_source": "filesystem-only",
+      "trace_last_commit_sha": "",
+      "trace_last_commit_at": "",
+      "trace_revision_count": "0",
+      "observed_trace": {
+        "trace_history_source": "filesystem-only",
+        "trace_last_commit_sha": "",
+        "trace_last_commit_at": "",
+        "trace_revision_count": "0"
+      },
+      "latest_commit": {
+        "sha": "555cf53",
+        "date": "2026-07-26",
+        "subject": "Ship listening product, mandatory harness, facility layout, and UTC/local time."
+      },
+      "recent_updates": [
+        {
+          "sha": "555cf53",
+          "date": "2026-07-26",
+          "subject": "Ship listening product, mandatory harness, facility layout, and UTC/local time."
+        },
         {
           "sha": "93c0f6e",
           "date": "2026-07-25",
@@ -1191,14 +1377,14 @@
       "layer": "SharedSupportSurface",
       "declared_layer": "SharedSupportSurface",
       "effective_status": "generated",
-      "effective_since": "2026-07-25T16:25:01+00:00",
+      "effective_since": "2026-07-25T18:52:07+00:00",
       "managed_by": "aries-harness",
       "fingerprint": "aries-harness/history-doc/v1",
       "last_updated_at": "",
       "completed_at": "",
       "timebox_actual": "",
-      "content_fingerprint": "sha256:1e19091e9e6852aa215d25740980283bb6cedcadf4b1c081cc9e1b61d764892b",
-      "observed_content_fingerprint": "sha256:1e19091e9e6852aa215d25740980283bb6cedcadf4b1c081cc9e1b61d764892b",
+      "content_fingerprint": "sha256:ea5ab83ff3a25d8d49a8666a03d098f6d4e09a054f9a2e76fbd989d84e21ae4c",
+      "observed_content_fingerprint": "sha256:ea5ab83ff3a25d8d49a8666a03d098f6d4e09a054f9a2e76fbd989d84e21ae4c",
       "trace_history_source": "filesystem-only",
       "trace_last_commit_sha": "",
       "trace_last_commit_at": "",
@@ -1210,11 +1396,16 @@
         "trace_revision_count": "0"
       },
       "latest_commit": {
-        "sha": "93c0f6e",
-        "date": "2026-07-25",
-        "subject": "Add aulos-skills, aulos-ops, host deploy, and fleet operating defaults."
+        "sha": "555cf53",
+        "date": "2026-07-26",
+        "subject": "Ship listening product, mandatory harness, facility layout, and UTC/local time."
       },
       "recent_updates": [
+        {
+          "sha": "555cf53",
+          "date": "2026-07-26",
+          "subject": "Ship listening product, mandatory harness, facility layout, and UTC/local time."
+        },
         {
           "sha": "93c0f6e",
           "date": "2026-07-25",
@@ -1237,14 +1428,14 @@
       "layer": "SharedSupportSurface",
       "declared_layer": "SharedSupportSurface",
       "effective_status": "generated",
-      "effective_since": "2026-07-25T16:25:01+00:00",
+      "effective_since": "2026-07-25T18:52:07+00:00",
       "managed_by": "aries-harness",
       "fingerprint": "aries-harness/history-doc/v1",
       "last_updated_at": "",
       "completed_at": "",
       "timebox_actual": "",
-      "content_fingerprint": "sha256:28d2864b648f8f027607e35a13829bffe57bb8f4c23446aa3bbeb13354013044",
-      "observed_content_fingerprint": "sha256:28d2864b648f8f027607e35a13829bffe57bb8f4c23446aa3bbeb13354013044",
+      "content_fingerprint": "sha256:30bc8bb8b2c8994daa15f31ae621623a2d8e8d5092bbb70e50f0eeba5d3e8454",
+      "observed_content_fingerprint": "sha256:30bc8bb8b2c8994daa15f31ae621623a2d8e8d5092bbb70e50f0eeba5d3e8454",
       "trace_history_source": "filesystem-only",
       "trace_last_commit_sha": "",
       "trace_last_commit_at": "",
@@ -1256,11 +1447,16 @@
         "trace_revision_count": "0"
       },
       "latest_commit": {
-        "sha": "93c0f6e",
-        "date": "2026-07-25",
-        "subject": "Add aulos-skills, aulos-ops, host deploy, and fleet operating defaults."
+        "sha": "555cf53",
+        "date": "2026-07-26",
+        "subject": "Ship listening product, mandatory harness, facility layout, and UTC/local time."
       },
       "recent_updates": [
+        {
+          "sha": "555cf53",
+          "date": "2026-07-26",
+          "subject": "Ship listening product, mandatory harness, facility layout, and UTC/local time."
+        },
         {
           "sha": "93c0f6e",
           "date": "2026-07-25",
@@ -1270,11 +1466,6 @@
           "sha": "7632d9b",
           "date": "2026-07-25",
           "subject": "Add aulos-web, aulos-api, and aulos-mcp sub-projects under aries-harness."
-        },
-        {
-          "sha": "0d5cb01",
-          "date": "2026-07-25",
-          "subject": "Initial commit: Aulos hackathon workspace with LangChain agent runtime."
         }
       ],
       "dirty": false,
@@ -1288,14 +1479,14 @@
       "layer": "SharedSupportSurface",
       "declared_layer": "SharedSupportSurface",
       "effective_status": "generated",
-      "effective_since": "2026-07-25T16:25:01+00:00",
+      "effective_since": "2026-07-25T18:52:07+00:00",
       "managed_by": "aries-harness",
       "fingerprint": "aries-harness/history-doc/v1",
       "last_updated_at": "",
       "completed_at": "",
       "timebox_actual": "",
-      "content_fingerprint": "sha256:aa895d0b885a5b4b929cc5dadd6c0c40a1ee13a6b7df7338dbd8f4affdf2c86d",
-      "observed_content_fingerprint": "sha256:aa895d0b885a5b4b929cc5dadd6c0c40a1ee13a6b7df7338dbd8f4affdf2c86d",
+      "content_fingerprint": "sha256:8b9d76faeb8dcdead1834d417834a0c2440ab57e98adbf7bdba472f46a35c1e3",
+      "observed_content_fingerprint": "sha256:8b9d76faeb8dcdead1834d417834a0c2440ab57e98adbf7bdba472f46a35c1e3",
       "trace_history_source": "filesystem-only",
       "trace_last_commit_sha": "",
       "trace_last_commit_at": "",
@@ -1307,11 +1498,16 @@
         "trace_revision_count": "0"
       },
       "latest_commit": {
-        "sha": "93c0f6e",
-        "date": "2026-07-25",
-        "subject": "Add aulos-skills, aulos-ops, host deploy, and fleet operating defaults."
+        "sha": "555cf53",
+        "date": "2026-07-26",
+        "subject": "Ship listening product, mandatory harness, facility layout, and UTC/local time."
       },
       "recent_updates": [
+        {
+          "sha": "555cf53",
+          "date": "2026-07-26",
+          "subject": "Ship listening product, mandatory harness, facility layout, and UTC/local time."
+        },
         {
           "sha": "93c0f6e",
           "date": "2026-07-25",
@@ -1321,11 +1517,6 @@
           "sha": "7632d9b",
           "date": "2026-07-25",
           "subject": "Add aulos-web, aulos-api, and aulos-mcp sub-projects under aries-harness."
-        },
-        {
-          "sha": "0d5cb01",
-          "date": "2026-07-25",
-          "subject": "Initial commit: Aulos hackathon workspace with LangChain agent runtime."
         }
       ],
       "dirty": false,
@@ -1339,14 +1530,14 @@
       "layer": "SharedSupportSurface",
       "declared_layer": "SharedSupportSurface",
       "effective_status": "generated",
-      "effective_since": "2026-07-25T16:25:01+00:00",
+      "effective_since": "2026-07-25T18:52:07+00:00",
       "managed_by": "aries-harness",
       "fingerprint": "aries-harness/history-doc/v1",
       "last_updated_at": "",
       "completed_at": "",
       "timebox_actual": "",
-      "content_fingerprint": "sha256:8a009054e70c8b6d5cd18586eb4d0e30f39952c589da09879cb786a7e81da8ec",
-      "observed_content_fingerprint": "sha256:8a009054e70c8b6d5cd18586eb4d0e30f39952c589da09879cb786a7e81da8ec",
+      "content_fingerprint": "sha256:022221b20185470961458413c7cb9d50efac3f72e76655e932c16c061bfe99d4",
+      "observed_content_fingerprint": "sha256:022221b20185470961458413c7cb9d50efac3f72e76655e932c16c061bfe99d4",
       "trace_history_source": "filesystem-only",
       "trace_last_commit_sha": "",
       "trace_last_commit_at": "",
@@ -1358,11 +1549,16 @@
         "trace_revision_count": "0"
       },
       "latest_commit": {
-        "sha": "93c0f6e",
-        "date": "2026-07-25",
-        "subject": "Add aulos-skills, aulos-ops, host deploy, and fleet operating defaults."
+        "sha": "555cf53",
+        "date": "2026-07-26",
+        "subject": "Ship listening product, mandatory harness, facility layout, and UTC/local time."
       },
       "recent_updates": [
+        {
+          "sha": "555cf53",
+          "date": "2026-07-26",
+          "subject": "Ship listening product, mandatory harness, facility layout, and UTC/local time."
+        },
         {
           "sha": "93c0f6e",
           "date": "2026-07-25",
@@ -1385,14 +1581,14 @@
       "layer": "SharedSupportSurface",
       "declared_layer": "SharedSupportSurface",
       "effective_status": "generated",
-      "effective_since": "2026-07-25T16:25:01+00:00",
+      "effective_since": "2026-07-25T18:52:07+00:00",
       "managed_by": "aries-harness",
       "fingerprint": "aries-harness/history-doc/v1",
       "last_updated_at": "",
       "completed_at": "",
       "timebox_actual": "",
-      "content_fingerprint": "sha256:df94e717ec805295062786480f6ae12778302892d4071ff89b396b074028bf88",
-      "observed_content_fingerprint": "sha256:df94e717ec805295062786480f6ae12778302892d4071ff89b396b074028bf88",
+      "content_fingerprint": "sha256:ddfe60a37c4fd5a53b1879f39d823102e97394ba53abf7ae24a02276ecce3b09",
+      "observed_content_fingerprint": "sha256:ddfe60a37c4fd5a53b1879f39d823102e97394ba53abf7ae24a02276ecce3b09",
       "trace_history_source": "filesystem-only",
       "trace_last_commit_sha": "",
       "trace_last_commit_at": "",
@@ -1404,11 +1600,16 @@
         "trace_revision_count": "0"
       },
       "latest_commit": {
-        "sha": "93c0f6e",
-        "date": "2026-07-25",
-        "subject": "Add aulos-skills, aulos-ops, host deploy, and fleet operating defaults."
+        "sha": "555cf53",
+        "date": "2026-07-26",
+        "subject": "Ship listening product, mandatory harness, facility layout, and UTC/local time."
       },
       "recent_updates": [
+        {
+          "sha": "555cf53",
+          "date": "2026-07-26",
+          "subject": "Ship listening product, mandatory harness, facility layout, and UTC/local time."
+        },
         {
           "sha": "93c0f6e",
           "date": "2026-07-25",
@@ -1431,14 +1632,14 @@
       "layer": "SharedSupportSurface",
       "declared_layer": "SharedSupportSurface",
       "effective_status": "generated",
-      "effective_since": "2026-07-25T16:25:01+00:00",
+      "effective_since": "2026-07-25T18:52:07+00:00",
       "managed_by": "aries-harness",
       "fingerprint": "aries-harness/history-doc/v1",
       "last_updated_at": "",
       "completed_at": "",
       "timebox_actual": "",
-      "content_fingerprint": "sha256:0a06a807ae9326832b9fbcbd1251c1b155021edff4ace6cd2fd75c3b0bb61651",
-      "observed_content_fingerprint": "sha256:0a06a807ae9326832b9fbcbd1251c1b155021edff4ace6cd2fd75c3b0bb61651",
+      "content_fingerprint": "sha256:35ec3100efbfe470bc703b16baec12036b925511f6f35d2dfedb749426cce8f3",
+      "observed_content_fingerprint": "sha256:35ec3100efbfe470bc703b16baec12036b925511f6f35d2dfedb749426cce8f3",
       "trace_history_source": "filesystem-only",
       "trace_last_commit_sha": "",
       "trace_last_commit_at": "",
@@ -1450,11 +1651,16 @@
         "trace_revision_count": "0"
       },
       "latest_commit": {
-        "sha": "93c0f6e",
-        "date": "2026-07-25",
-        "subject": "Add aulos-skills, aulos-ops, host deploy, and fleet operating defaults."
+        "sha": "555cf53",
+        "date": "2026-07-26",
+        "subject": "Ship listening product, mandatory harness, facility layout, and UTC/local time."
       },
       "recent_updates": [
+        {
+          "sha": "555cf53",
+          "date": "2026-07-26",
+          "subject": "Ship listening product, mandatory harness, facility layout, and UTC/local time."
+        },
         {
           "sha": "93c0f6e",
           "date": "2026-07-25",
@@ -1472,14 +1678,14 @@
       "layer": "SharedSupportSurface",
       "declared_layer": "SharedSupportSurface",
       "effective_status": "generated",
-      "effective_since": "2026-07-25T16:25:01+00:00",
+      "effective_since": "2026-07-25T18:52:07+00:00",
       "managed_by": "aries-harness",
       "fingerprint": "aries-harness/history-doc/v1",
       "last_updated_at": "",
       "completed_at": "",
       "timebox_actual": "",
-      "content_fingerprint": "sha256:7136f11eb4f467c025a56c893b715dd8463d3d73e7c22ec6ac7645b1c335d1a5",
-      "observed_content_fingerprint": "sha256:7136f11eb4f467c025a56c893b715dd8463d3d73e7c22ec6ac7645b1c335d1a5",
+      "content_fingerprint": "sha256:60d80728eed6b6c6388b1209df5467f812e87fdecc7ee8dff008931e224a6ed8",
+      "observed_content_fingerprint": "sha256:60d80728eed6b6c6388b1209df5467f812e87fdecc7ee8dff008931e224a6ed8",
       "trace_history_source": "filesystem-only",
       "trace_last_commit_sha": "",
       "trace_last_commit_at": "",
@@ -1491,11 +1697,16 @@
         "trace_revision_count": "0"
       },
       "latest_commit": {
-        "sha": "93c0f6e",
-        "date": "2026-07-25",
-        "subject": "Add aulos-skills, aulos-ops, host deploy, and fleet operating defaults."
+        "sha": "555cf53",
+        "date": "2026-07-26",
+        "subject": "Ship listening product, mandatory harness, facility layout, and UTC/local time."
       },
       "recent_updates": [
+        {
+          "sha": "555cf53",
+          "date": "2026-07-26",
+          "subject": "Ship listening product, mandatory harness, facility layout, and UTC/local time."
+        },
         {
           "sha": "93c0f6e",
           "date": "2026-07-25",
@@ -1507,6 +1718,37 @@
           "subject": "Add aulos-web, aulos-api, and aulos-mcp sub-projects under aries-harness."
         }
       ],
+      "dirty": false,
+      "issue_count": 0,
+      "issues": []
+    },
+    {
+      "path": "history/daily/2026-07-26.md",
+      "repo_path": ".aries_harness/history/daily/2026-07-26.md",
+      "doc_role": "history-daily-summary",
+      "layer": "SharedSupportSurface",
+      "declared_layer": "SharedSupportSurface",
+      "effective_status": "generated",
+      "effective_since": "2026-07-25T18:52:07+00:00",
+      "managed_by": "aries-harness",
+      "fingerprint": "aries-harness/history-doc/v1",
+      "last_updated_at": "",
+      "completed_at": "",
+      "timebox_actual": "",
+      "content_fingerprint": "sha256:512e1652c00083d538e36850152938e20b1d90eb0f06a5c72cf9aa82af4c7c68",
+      "observed_content_fingerprint": "sha256:512e1652c00083d538e36850152938e20b1d90eb0f06a5c72cf9aa82af4c7c68",
+      "trace_history_source": "filesystem-only",
+      "trace_last_commit_sha": "",
+      "trace_last_commit_at": "",
+      "trace_revision_count": "0",
+      "observed_trace": {
+        "trace_history_source": "filesystem-only",
+        "trace_last_commit_sha": "",
+        "trace_last_commit_at": "",
+        "trace_revision_count": "0"
+      },
+      "latest_commit": null,
+      "recent_updates": [],
       "dirty": false,
       "issue_count": 0,
       "issues": []
@@ -1685,11 +1927,16 @@
         "trace_revision_count": "0"
       },
       "latest_commit": {
-        "sha": "93c0f6e",
-        "date": "2026-07-25",
-        "subject": "Add aulos-skills, aulos-ops, host deploy, and fleet operating defaults."
+        "sha": "555cf53",
+        "date": "2026-07-26",
+        "subject": "Ship listening product, mandatory harness, facility layout, and UTC/local time."
       },
       "recent_updates": [
+        {
+          "sha": "555cf53",
+          "date": "2026-07-26",
+          "subject": "Ship listening product, mandatory harness, facility layout, and UTC/local time."
+        },
         {
           "sha": "93c0f6e",
           "date": "2026-07-25",
@@ -1699,11 +1946,6 @@
           "sha": "7632d9b",
           "date": "2026-07-25",
           "subject": "Add aulos-web, aulos-api, and aulos-mcp sub-projects under aries-harness."
-        },
-        {
-          "sha": "0d5cb01",
-          "date": "2026-07-25",
-          "subject": "Initial commit: Aulos hackathon workspace with LangChain agent runtime."
         }
       ],
       "dirty": false,
@@ -1736,11 +1978,16 @@
         "trace_revision_count": "0"
       },
       "latest_commit": {
-        "sha": "93c0f6e",
-        "date": "2026-07-25",
-        "subject": "Add aulos-skills, aulos-ops, host deploy, and fleet operating defaults."
+        "sha": "555cf53",
+        "date": "2026-07-26",
+        "subject": "Ship listening product, mandatory harness, facility layout, and UTC/local time."
       },
       "recent_updates": [
+        {
+          "sha": "555cf53",
+          "date": "2026-07-26",
+          "subject": "Ship listening product, mandatory harness, facility layout, and UTC/local time."
+        },
         {
           "sha": "93c0f6e",
           "date": "2026-07-25",
@@ -1776,8 +2023,18 @@
         "trace_last_commit_at": "",
         "trace_revision_count": "0"
       },
-      "latest_commit": null,
-      "recent_updates": [],
+      "latest_commit": {
+        "sha": "555cf53",
+        "date": "2026-07-26",
+        "subject": "Ship listening product, mandatory harness, facility layout, and UTC/local time."
+      },
+      "recent_updates": [
+        {
+          "sha": "555cf53",
+          "date": "2026-07-26",
+          "subject": "Ship listening product, mandatory harness, facility layout, and UTC/local time."
+        }
+      ],
       "dirty": false,
       "issue_count": 0,
       "issues": []
@@ -1887,8 +2144,8 @@
       "last_updated_at": "",
       "completed_at": "",
       "timebox_actual": "",
-      "content_fingerprint": "sha256:ab1d3b88315387845e5fbf92a80a5da8de2a631fffa80fe49f2ed12bca31d509",
-      "observed_content_fingerprint": "sha256:ab1d3b88315387845e5fbf92a80a5da8de2a631fffa80fe49f2ed12bca31d509",
+      "content_fingerprint": "sha256:8661324a5112a0ffd0df50fd6df4dc311286a23e556262e201543210a2e23561",
+      "observed_content_fingerprint": "sha256:8661324a5112a0ffd0df50fd6df4dc311286a23e556262e201543210a2e23561",
       "trace_history_source": "filesystem-only",
       "trace_last_commit_sha": "",
       "trace_last_commit_at": "",
@@ -1900,11 +2157,16 @@
         "trace_revision_count": "0"
       },
       "latest_commit": {
-        "sha": "93c0f6e",
-        "date": "2026-07-25",
-        "subject": "Add aulos-skills, aulos-ops, host deploy, and fleet operating defaults."
+        "sha": "555cf53",
+        "date": "2026-07-26",
+        "subject": "Ship listening product, mandatory harness, facility layout, and UTC/local time."
       },
       "recent_updates": [
+        {
+          "sha": "555cf53",
+          "date": "2026-07-26",
+          "subject": "Ship listening product, mandatory harness, facility layout, and UTC/local time."
+        },
         {
           "sha": "93c0f6e",
           "date": "2026-07-25",
@@ -1962,6 +2224,37 @@
           "subject": "Add aulos-web, aulos-api, and aulos-mcp sub-projects under aries-harness."
         }
       ],
+      "dirty": false,
+      "issue_count": 0,
+      "issues": []
+    },
+    {
+      "path": "references/domain/DOM-002-listening-identity.md",
+      "repo_path": ".aries_harness/references/domain/DOM-002-listening-identity.md",
+      "doc_role": "domain-analysis",
+      "layer": "MetaDefineLayer",
+      "declared_layer": "MetaDefineLayer",
+      "effective_status": "active",
+      "effective_since": "2026-07-25T17:01:00+00:00",
+      "managed_by": "aries-harness",
+      "fingerprint": "aries-harness/bootstrap-doc/v1",
+      "last_updated_at": "",
+      "completed_at": "",
+      "timebox_actual": "",
+      "content_fingerprint": "sha256:ba130f56412d147266abe41a6c18299f6880712102981026bcac7bf9849118de",
+      "observed_content_fingerprint": "sha256:ba130f56412d147266abe41a6c18299f6880712102981026bcac7bf9849118de",
+      "trace_history_source": "filesystem-only",
+      "trace_last_commit_sha": "",
+      "trace_last_commit_at": "",
+      "trace_revision_count": "0",
+      "observed_trace": {
+        "trace_history_source": "filesystem-only",
+        "trace_last_commit_sha": "",
+        "trace_last_commit_at": "",
+        "trace_revision_count": "0"
+      },
+      "latest_commit": null,
+      "recent_updates": [],
       "dirty": false,
       "issue_count": 0,
       "issues": []
@@ -2180,8 +2473,18 @@
         "trace_last_commit_at": "",
         "trace_revision_count": "0"
       },
-      "latest_commit": null,
-      "recent_updates": [],
+      "latest_commit": {
+        "sha": "555cf53",
+        "date": "2026-07-26",
+        "subject": "Ship listening product, mandatory harness, facility layout, and UTC/local time."
+      },
+      "recent_updates": [
+        {
+          "sha": "555cf53",
+          "date": "2026-07-26",
+          "subject": "Ship listening product, mandatory harness, facility layout, and UTC/local time."
+        }
+      ],
       "dirty": false,
       "issue_count": 0,
       "issues": []
@@ -2211,8 +2514,18 @@
         "trace_last_commit_at": "",
         "trace_revision_count": "0"
       },
-      "latest_commit": null,
-      "recent_updates": [],
+      "latest_commit": {
+        "sha": "555cf53",
+        "date": "2026-07-26",
+        "subject": "Ship listening product, mandatory harness, facility layout, and UTC/local time."
+      },
+      "recent_updates": [
+        {
+          "sha": "555cf53",
+          "date": "2026-07-26",
+          "subject": "Ship listening product, mandatory harness, facility layout, and UTC/local time."
+        }
+      ],
       "dirty": false,
       "issue_count": 0,
       "issues": []
@@ -2242,8 +2555,18 @@
         "trace_last_commit_at": "",
         "trace_revision_count": "0"
       },
-      "latest_commit": null,
-      "recent_updates": [],
+      "latest_commit": {
+        "sha": "555cf53",
+        "date": "2026-07-26",
+        "subject": "Ship listening product, mandatory harness, facility layout, and UTC/local time."
+      },
+      "recent_updates": [
+        {
+          "sha": "555cf53",
+          "date": "2026-07-26",
+          "subject": "Ship listening product, mandatory harness, facility layout, and UTC/local time."
+        }
+      ],
       "dirty": false,
       "issue_count": 0,
       "issues": []
@@ -2263,6 +2586,47 @@
       "timebox_actual": "",
       "content_fingerprint": "sha256:4e7d7eb7b7a47ee0bf7a14217508500075c5be967506d6c5f4cb65cf8e04cced",
       "observed_content_fingerprint": "sha256:4e7d7eb7b7a47ee0bf7a14217508500075c5be967506d6c5f4cb65cf8e04cced",
+      "trace_history_source": "filesystem-only",
+      "trace_last_commit_sha": "",
+      "trace_last_commit_at": "",
+      "trace_revision_count": "0",
+      "observed_trace": {
+        "trace_history_source": "filesystem-only",
+        "trace_last_commit_sha": "",
+        "trace_last_commit_at": "",
+        "trace_revision_count": "0"
+      },
+      "latest_commit": {
+        "sha": "555cf53",
+        "date": "2026-07-26",
+        "subject": "Ship listening product, mandatory harness, facility layout, and UTC/local time."
+      },
+      "recent_updates": [
+        {
+          "sha": "555cf53",
+          "date": "2026-07-26",
+          "subject": "Ship listening product, mandatory harness, facility layout, and UTC/local time."
+        }
+      ],
+      "dirty": false,
+      "issue_count": 0,
+      "issues": []
+    },
+    {
+      "path": "references/requests/REQ-006-work-identity-catalog.md",
+      "repo_path": ".aries_harness/references/requests/REQ-006-work-identity-catalog.md",
+      "doc_role": "request-brief",
+      "layer": "MetaDefineLayer",
+      "declared_layer": "MetaDefineLayer",
+      "effective_status": "active",
+      "effective_since": "2026-07-25T17:01:00+00:00",
+      "managed_by": "aries-harness",
+      "fingerprint": "aries-harness/bootstrap-doc/v1",
+      "last_updated_at": "",
+      "completed_at": "",
+      "timebox_actual": "",
+      "content_fingerprint": "sha256:176262ed64f2fe62a0a5645499504551479060d74a6e9461d1512b2013e104bd",
+      "observed_content_fingerprint": "sha256:176262ed64f2fe62a0a5645499504551479060d74a6e9461d1512b2013e104bd",
       "trace_history_source": "filesystem-only",
       "trace_last_commit_sha": "",
       "trace_last_commit_at": "",
@@ -2447,8 +2811,18 @@
         "trace_last_commit_at": "",
         "trace_revision_count": "0"
       },
-      "latest_commit": null,
-      "recent_updates": [],
+      "latest_commit": {
+        "sha": "555cf53",
+        "date": "2026-07-26",
+        "subject": "Ship listening product, mandatory harness, facility layout, and UTC/local time."
+      },
+      "recent_updates": [
+        {
+          "sha": "555cf53",
+          "date": "2026-07-26",
+          "subject": "Ship listening product, mandatory harness, facility layout, and UTC/local time."
+        }
+      ],
       "dirty": false,
       "issue_count": 0,
       "issues": []
@@ -2478,8 +2852,18 @@
         "trace_last_commit_at": "",
         "trace_revision_count": "0"
       },
-      "latest_commit": null,
-      "recent_updates": [],
+      "latest_commit": {
+        "sha": "555cf53",
+        "date": "2026-07-26",
+        "subject": "Ship listening product, mandatory harness, facility layout, and UTC/local time."
+      },
+      "recent_updates": [
+        {
+          "sha": "555cf53",
+          "date": "2026-07-26",
+          "subject": "Ship listening product, mandatory harness, facility layout, and UTC/local time."
+        }
+      ],
       "dirty": false,
       "issue_count": 0,
       "issues": []
@@ -2509,8 +2893,18 @@
         "trace_last_commit_at": "",
         "trace_revision_count": "0"
       },
-      "latest_commit": null,
-      "recent_updates": [],
+      "latest_commit": {
+        "sha": "555cf53",
+        "date": "2026-07-26",
+        "subject": "Ship listening product, mandatory harness, facility layout, and UTC/local time."
+      },
+      "recent_updates": [
+        {
+          "sha": "555cf53",
+          "date": "2026-07-26",
+          "subject": "Ship listening product, mandatory harness, facility layout, and UTC/local time."
+        }
+      ],
       "dirty": false,
       "issue_count": 0,
       "issues": []
@@ -2540,8 +2934,18 @@
         "trace_last_commit_at": "",
         "trace_revision_count": "0"
       },
-      "latest_commit": null,
-      "recent_updates": [],
+      "latest_commit": {
+        "sha": "555cf53",
+        "date": "2026-07-26",
+        "subject": "Ship listening product, mandatory harness, facility layout, and UTC/local time."
+      },
+      "recent_updates": [
+        {
+          "sha": "555cf53",
+          "date": "2026-07-26",
+          "subject": "Ship listening product, mandatory harness, facility layout, and UTC/local time."
+        }
+      ],
       "dirty": false,
       "issue_count": 0,
       "issues": []
@@ -2559,8 +2963,49 @@
       "last_updated_at": "",
       "completed_at": "",
       "timebox_actual": "",
-      "content_fingerprint": "sha256:8e47b750aa0b4c594533609d4e8321c7947a482bc9fa1334ce1714e54c3e5120",
-      "observed_content_fingerprint": "sha256:8e47b750aa0b4c594533609d4e8321c7947a482bc9fa1334ce1714e54c3e5120",
+      "content_fingerprint": "sha256:91b38752a1ee0716f981b841db146de5feb47576db021c96e63f73c03d54254a",
+      "observed_content_fingerprint": "sha256:91b38752a1ee0716f981b841db146de5feb47576db021c96e63f73c03d54254a",
+      "trace_history_source": "filesystem-only",
+      "trace_last_commit_sha": "",
+      "trace_last_commit_at": "",
+      "trace_revision_count": "0",
+      "observed_trace": {
+        "trace_history_source": "filesystem-only",
+        "trace_last_commit_sha": "",
+        "trace_last_commit_at": "",
+        "trace_revision_count": "0"
+      },
+      "latest_commit": {
+        "sha": "555cf53",
+        "date": "2026-07-26",
+        "subject": "Ship listening product, mandatory harness, facility layout, and UTC/local time."
+      },
+      "recent_updates": [
+        {
+          "sha": "555cf53",
+          "date": "2026-07-26",
+          "subject": "Ship listening product, mandatory harness, facility layout, and UTC/local time."
+        }
+      ],
+      "dirty": false,
+      "issue_count": 0,
+      "issues": []
+    },
+    {
+      "path": "references/specs/SPEC-008-work-identity-and-resolver.md",
+      "repo_path": ".aries_harness/references/specs/SPEC-008-work-identity-and-resolver.md",
+      "doc_role": "spec-package",
+      "layer": "MetaDefineLayer",
+      "declared_layer": "MetaDefineLayer",
+      "effective_status": "active",
+      "effective_since": "2026-07-25T17:01:00+00:00",
+      "managed_by": "aries-harness",
+      "fingerprint": "aries-harness/bootstrap-doc/v1",
+      "last_updated_at": "",
+      "completed_at": "",
+      "timebox_actual": "",
+      "content_fingerprint": "sha256:26656052723405f0ff8455126c738a733dba576a64176e837da7978e5f7a2cf2",
+      "observed_content_fingerprint": "sha256:26656052723405f0ff8455126c738a733dba576a64176e837da7978e5f7a2cf2",
       "trace_history_source": "filesystem-only",
       "trace_last_commit_sha": "",
       "trace_last_commit_at": "",
@@ -2893,6 +3338,47 @@
         "trace_last_commit_at": "",
         "trace_revision_count": "0"
       },
+      "latest_commit": {
+        "sha": "555cf53",
+        "date": "2026-07-26",
+        "subject": "Ship listening product, mandatory harness, facility layout, and UTC/local time."
+      },
+      "recent_updates": [
+        {
+          "sha": "555cf53",
+          "date": "2026-07-26",
+          "subject": "Ship listening product, mandatory harness, facility layout, and UTC/local time."
+        }
+      ],
+      "dirty": false,
+      "issue_count": 0,
+      "issues": []
+    },
+    {
+      "path": "runs/reports/EVOL-2026-07-26-locale-intake-enabler.md",
+      "repo_path": ".aries_harness/runs/reports/EVOL-2026-07-26-locale-intake-enabler.md",
+      "doc_role": "iteration-report",
+      "layer": "RunCookingLayer",
+      "declared_layer": "RunCookingLayer",
+      "effective_status": "active",
+      "effective_since": "2026-07-25T18:52:58+00:00",
+      "managed_by": "aries-harness",
+      "fingerprint": "aries-harness/bootstrap-doc/v1",
+      "last_updated_at": "",
+      "completed_at": "",
+      "timebox_actual": "",
+      "content_fingerprint": "sha256:819b80864551c863d711817f256d57dd972cb8c2b440f2e0b33c7de11c692174",
+      "observed_content_fingerprint": "sha256:819b80864551c863d711817f256d57dd972cb8c2b440f2e0b33c7de11c692174",
+      "trace_history_source": "filesystem-only",
+      "trace_last_commit_sha": "",
+      "trace_last_commit_at": "",
+      "trace_revision_count": "0",
+      "observed_trace": {
+        "trace_history_source": "filesystem-only",
+        "trace_last_commit_sha": "",
+        "trace_last_commit_at": "",
+        "trace_revision_count": "0"
+      },
       "latest_commit": null,
       "recent_updates": [],
       "dirty": false,
@@ -3072,8 +3558,18 @@
         "trace_last_commit_at": "",
         "trace_revision_count": "0"
       },
-      "latest_commit": null,
-      "recent_updates": [],
+      "latest_commit": {
+        "sha": "555cf53",
+        "date": "2026-07-26",
+        "subject": "Ship listening product, mandatory harness, facility layout, and UTC/local time."
+      },
+      "recent_updates": [
+        {
+          "sha": "555cf53",
+          "date": "2026-07-26",
+          "subject": "Ship listening product, mandatory harness, facility layout, and UTC/local time."
+        }
+      ],
       "dirty": false,
       "issue_count": 0,
       "issues": []

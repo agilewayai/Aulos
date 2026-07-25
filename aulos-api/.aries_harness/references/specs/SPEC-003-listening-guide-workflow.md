@@ -9,7 +9,7 @@ fingerprint: "aries-harness/bootstrap-doc/v1"
 initialized_at: "2026-07-25T16:23:49+00:00"
 effective_status: "active"
 effective_since: "2026-07-25T16:23:49+00:00"
-content_fingerprint: "sha256:638c2e2fdb5febaa355cbea3984bc99c2958616e43a74b5fac26be4b363932ee"
+content_fingerprint: "sha256:dff441d93fd7f05a6f6dd07fe4b653e276378b5aeb8d92c4d82b47196f3fab9c"
 trace_history_source: "filesystem-only"
 trace_last_commit_sha: ""
 trace_last_commit_at: ""
@@ -72,8 +72,16 @@ When ops LLM is not live-ready, use curated research packs (Goldberg Variations 
 Research is cached into the knowledge base for RAG on later composes (FastEmbed local by default; lexical fallback if unavailable).
 Ambient theme audio renders as a collapsed mini-player (expand for recording credit).
 
+## Orchestration (SPEC-003 delta — agent-centric)
+
+- **API must not** orchestrate `SkillRuntime.iter_listening_chain` / stepwise `run_trigger`.
+- API injects RAG / optional LLM dossier into the job payload, then delegates to **aulos-agent** (`AgentProxy.run_listening`).
+- Agent executes the listening skill tool chain (`run_listening_skill` per trigger) per ARCH-002 / ADR-003.
+- Persistence and SSE remain in the API gateway.
+
 ## Verification
 
 - pytest covers step shape, Goldberg detection, HTML presence, auth gate
 - pytest covers publish/public, recompose slug stability, knowledge search
+- pytest asserts listening path goes through AgentProxy (not API-local skill chain)
 - web studio renders steps + sandboxed guide iframe; Re-compose + Update publish controls

@@ -1,0 +1,36 @@
+work_id: chopin.mazurkas
+composer_id: frederic-chopin
+canonical_title: Frédéric Chopin — Mazurkas (piano character dances)
+canonical_title_zh: 肖邦 — 玛祖卡（钢琴性格舞曲）
+aliases:
+  - Mazurkas
+  - Mazurka
+  - Chopin Mazurkas
+  - Chopin Mazurka
+  - 玛祖卡
+  - 马祖卡
+  - 肖邦玛祖卡
+  - 肖邦马祖卡
+catalog_numbers: []
+facets:
+  instruments: [piano]
+  ensemble: [solo]
+  forms: [mazurka, mazurkas, dance, character-dance]
+  era: romantic
+family_id: character-dance-piano
+corpus_key: null
+ambient_ref: chopin-nocturne-op9-2
+identity:
+  distinctive_tokens:
+    - mazurka
+    - mazurkas
+    - 玛祖卡
+    - 马祖卡
+  conflict_work_ids:
+    - chopin.nocturne-op9-no2
+    - bach.goldberg.bwv-988
+    - mahler.symphony-5
+  conflict_markers: []
+provenance:
+  authority: Chopin mazurka œuvre (Opp. 6–7, 17, 24, 30, 33, 41, 50, 56, 59, 63; posthumous sets)
+  notes: Series shelf for the dance-character atelier — not a single opus card. Full Salon dossier lives in synthesize family.

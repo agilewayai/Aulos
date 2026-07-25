@@ -16,6 +16,7 @@ import {
   fetchLlmConfig,
   fetchSkills,
   fetchEmbedConfig,
+  fetchWebResearchConfig,
   fetchKnowledgeStats,
   probeSkills,
   resendUserVerification,
@@ -24,6 +25,7 @@ import {
   toggleSkill,
   updateLlmConfig,
   updateEmbedConfig,
+  updateWebResearchConfig,
   updateMailgun,
   updateOpsUser,
   type DeliveryRow,
@@ -37,11 +39,14 @@ import {
   type SkillProbe,
   type SkillRow,
   type User,
+  type WebResearchConfig,
 } from './api'
+import { KnowledgePanel } from './KnowledgePanel'
+import { DbHaPanel } from './DbHaPanel'
 import { formatDateTime, formatTime } from './time'
 import './App.css'
 
-type TabId = 'overview' | 'users' | 'llm' | 'skills' | 'mail' | 'fleet'
+type TabId = 'overview' | 'users' | 'llm' | 'skills' | 'mail' | 'fleet' | 'knowledge'
 
 function App() {
   const [user, setUser] = useState<User | null>(null)
@@ -70,9 +75,21 @@ function App() {
     'sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2',
   )
   const [embedBase, setEmbedBase] = useState('https://api.openai.com/v1')
-  const [kbStats, setKbStats] = useState<{ documents: number; chunks: number; embed_ready: boolean } | null>(
-    null,
-  )
+  const [webResearch, setWebResearch] = useState<WebResearchConfig | null>(null)
+  const [webEnabled, setWebEnabled] = useState(true)
+  const [webMinHits, setWebMinHits] = useState(3)
+  const [webMinRich, setWebMinRich] = useState(5)
+  const [webRefreshHours, setWebRefreshHours] = useState(168)
+  const [webPersistGlobal, setWebPersistGlobal] = useState(true)
+  const [webAgentReach, setWebAgentReach] = useState(true)
+  const [webBraveKey, setWebBraveKey] = useState('')
+  const [kbStats, setKbStats] = useState<{
+    documents: number
+    chunks: number
+    embed_ready: boolean
+    plane_enabled?: boolean
+    plane_url?: string
+  } | null>(null)
   const [skills, setSkills] = useState<SkillRow[]>([])
   const [skillProbe, setSkillProbe] = useState<SkillProbe | null>(null)
   const [skillProbeMsg, setSkillProbeMsg] = useState(
@@ -168,9 +185,19 @@ function App() {
       setEmbedBase(emb.base_url)
       setEmbedKey('')
       setKbStats(await fetchKnowledgeStats())
+      const wr = await fetchWebResearchConfig()
+      setWebResearch(wr)
+      setWebEnabled(wr.enabled)
+      setWebMinHits(wr.min_rag_hits)
+      setWebMinRich(wr.min_dossier_richness)
+      setWebRefreshHours(wr.refresh_after_hours ?? 168)
+      setWebPersistGlobal(wr.persist_global)
+      setWebAgentReach(wr.agent_reach_enabled ?? true)
+      setWebBraveKey('')
     } catch {
       setEmbed(null)
       setKbStats(null)
+      setWebResearch(null)
     }
     try {
       setSkills(await fetchSkills())
@@ -275,6 +302,41 @@ function App() {
       )
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Embeddings save failed')
+    } finally {
+      setBusy(false)
+    }
+  }
+
+  async function onSaveWebResearch(event: FormEvent) {
+    event.preventDefault()
+    setBusy(true)
+    setError(null)
+    setNotice(null)
+    try {
+      const cfg = await updateWebResearchConfig({
+        enabled: webEnabled,
+        min_rag_hits: webMinHits,
+        min_dossier_richness: webMinRich,
+        refresh_after_hours: webRefreshHours,
+        persist_global: webPersistGlobal,
+        agent_reach_enabled: webAgentReach,
+        brave_api_key: webBraveKey.trim() || undefined,
+      })
+      setWebResearch(cfg)
+      setWebEnabled(cfg.enabled)
+      setWebMinHits(cfg.min_rag_hits)
+      setWebMinRich(cfg.min_dossier_richness)
+      setWebRefreshHours(cfg.refresh_after_hours)
+      setWebPersistGlobal(cfg.persist_global)
+      setWebAgentReach(cfg.agent_reach_enabled ?? true)
+      setWebBraveKey('')
+      setNotice(
+        cfg.enabled
+          ? `Web research on — cold-fill when thin; refresh after ${cfg.refresh_after_hours}h (0=always). Agent Reach Jina=${cfg.agent_reach_enabled}.`
+          : 'Web research disabled.',
+      )
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Web research save failed')
     } finally {
       setBusy(false)
     }
@@ -539,6 +601,7 @@ function App() {
                   ['overview', 'Overview'],
                   ['users', 'Users'],
                   ['llm', 'LLM'],
+                  ['knowledge', 'Knowledge'],
                   ['skills', 'Skills'],
                   ['mail', 'Mail'],
                   ['fleet', 'Fleet'],
@@ -548,7 +611,9 @@ function App() {
                   key={id}
                   type="button"
                   className={tab === id ? 'tab active' : 'tab'}
-                  onClick={() => setTab(id)}
+                  onClick={() => {
+                    setTab(id)
+                  }}
                 >
                   {label}
                 </button>
@@ -990,7 +1055,89 @@ function App() {
                     {busy ? 'Saving…' : 'Save embeddings'}
                   </button>
                 </form>
+                <form className="auth-form" onSubmit={(e) => void onSaveWebResearch(e)}>
+                  <h3>Web research → KB</h3>
+                  <p className="settings-lead">
+                    Cold-fill when local KB chambers are thin; refresh when past TTL even if rich
+                    (merge, do not freeze). Wikipedia / DuckDuckGo (+ optional Brave) → optional
+                    Agent Reach Jina deepen → LLM verify → KB upsert. No composer-specific branches.
+                    Social cookies / Agent Reach CLI install remain denied.
+                  </p>
+                  <label className="check">
+                    <input
+                      type="checkbox"
+                      checked={webEnabled}
+                      onChange={(e) => setWebEnabled(e.target.checked)}
+                    />
+                    Enabled
+                  </label>
+                  <label className="check">
+                    <input
+                      type="checkbox"
+                      checked={webPersistGlobal}
+                      onChange={(e) => setWebPersistGlobal(e.target.checked)}
+                    />
+                    Persist to global KB (shared growth)
+                  </label>
+                  <label className="check">
+                    <input
+                      type="checkbox"
+                      checked={webAgentReach}
+                      onChange={(e) => setWebAgentReach(e.target.checked)}
+                    />
+                    Agent Reach enabler (Jina deepen of trusted URLs)
+                  </label>
+                  <label htmlFor="web-min-hits">Cold-fill: min RAG hits</label>
+                  <input
+                    id="web-min-hits"
+                    type="number"
+                    min={0}
+                    value={webMinHits}
+                    onChange={(e) => setWebMinHits(Number(e.target.value) || 0)}
+                  />
+                  <label htmlFor="web-min-rich">Cold-fill: min dossier richness</label>
+                  <input
+                    id="web-min-rich"
+                    type="number"
+                    min={0}
+                    value={webMinRich}
+                    onChange={(e) => setWebMinRich(Number(e.target.value) || 0)}
+                  />
+                  <label htmlFor="web-refresh-h">Refresh after hours (0 = always re-check)</label>
+                  <input
+                    id="web-refresh-h"
+                    type="number"
+                    min={0}
+                    value={webRefreshHours}
+                    onChange={(e) => setWebRefreshHours(Number(e.target.value) || 0)}
+                  />
+                  <label htmlFor="web-brave">Brave API key (optional)</label>
+                  <input
+                    id="web-brave"
+                    type="password"
+                    autoComplete="off"
+                    value={webBraveKey}
+                    onChange={(e) => setWebBraveKey(e.target.value)}
+                    placeholder={
+                      webResearch?.brave_api_key_set ? '•••••••• (leave blank to keep)' : 'optional'
+                    }
+                  />
+                  <button type="submit" disabled={busy}>
+                    {busy ? 'Saving…' : 'Save web research'}
+                  </button>
+                </form>
               </section>
+            ) : null}
+
+            {tab === 'knowledge' ? (
+              <KnowledgePanel
+                busy={busy}
+                setBusy={setBusy}
+                setError={setError}
+                setNotice={setNotice}
+                planeEnabled={kbStats?.plane_enabled}
+                planeUrl={kbStats?.plane_url}
+              />
             ) : null}
 
             {tab === 'skills' ? (
@@ -1195,24 +1342,27 @@ function App() {
             ) : null}
 
             {tab === 'fleet' ? (
-              <section className="fleet">
-                <h2>Fleet</h2>
-                <ul className="service-list">
-                  {AULOS_SERVICES.map((svc, index) => (
-                    <li
-                      key={svc.id}
-                      className="service-row"
-                      style={{ animationDelay: `${0.05 * index}s` }}
-                    >
-                      <div>
-                        <p className="svc-name">{svc.name}</p>
-                        <p className="svc-role">{svc.role}</p>
-                      </div>
-                      <code className="svc-path">{svc.path}</code>
-                    </li>
-                  ))}
-                </ul>
-              </section>
+              <>
+                <DbHaPanel busy={busy} setBusy={setBusy} setError={setError} setNotice={setNotice} />
+                <section className="fleet">
+                  <h2>Fleet</h2>
+                  <ul className="service-list">
+                    {AULOS_SERVICES.map((svc, index) => (
+                      <li
+                        key={svc.id}
+                        className="service-row"
+                        style={{ animationDelay: `${0.05 * index}s` }}
+                      >
+                        <div>
+                          <p className="svc-name">{svc.name}</p>
+                          <p className="svc-role">{svc.role}</p>
+                        </div>
+                        <code className="svc-path">{svc.path}</code>
+                      </li>
+                    ))}
+                  </ul>
+                </section>
+              </>
             ) : null}
           </>
         )}

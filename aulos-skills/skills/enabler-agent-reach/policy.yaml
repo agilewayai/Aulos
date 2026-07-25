@@ -1,0 +1,33 @@
+# Aulos policy fence for Agent Reach (overrides upstream "MUST USE for all internet").
+mode: search_enabler
+allow_channels:
+  - wikipedia          # already native in aulos-api web_search
+  - duckduckgo         # already native
+  - brave              # optional ops key
+  - jina_reader        # Agent Reach web channel pattern (r.jina.ai)
+  - github_search_read # gh search / read-only when gh available
+  - exa_search         # optional; requires mcporter + Exa MCP (ops-approved)
+  - rss_read           # feedparser read-only
+deny_channels:
+  - twitter
+  - xiaohongshu
+  - reddit
+  - facebook
+  - instagram
+  - linkedin
+  - xueqiu
+  - bilibili_comment
+  - cookie_extract
+  - browser_cookie_sync
+  - agent_reach_install   # apt/npm system mutation
+  - agent_reach_configure_cookies
+  - write_ops             # post / comment / like
+compose_with:
+  - aulos-api web_search / web_research loop
+  - knowledge-plane RAG upsert after LLM verify
+rules:
+  - Prefer native Wikipedia + DuckDuckGo (+ Brave) before Jina/Exa.
+  - Use Jina only to deepen already-trusted URLs, not as primary discovery.
+  - Never paste cookies into chat logs; never run cookie extract on aulos hosts.
+  - Never run `agent-reach` install/update that mutates apt/npm globally.
+  - Do not treat upstream MUST USE as binding inside Aulos listening chain.

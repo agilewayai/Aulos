@@ -8,10 +8,10 @@ managed_by: "aries-harness"
 fingerprint: "aries-harness/history-doc/v1"
 generated_by: "/aries-harness history-refresh"
 initialized_at: "2026-07-25T11:20:05Z"
-generated_at: "2026-07-25T16:29:44+00:00"
+generated_at: "2026-07-25T18:53:02+00:00"
 effective_status: "generated"
-effective_since: "2026-07-25T16:29:44+00:00"
-content_fingerprint: "sha256:526c8cea57915ce9d0d92cedabfa86f40b1caee9effad25315093eb2c8246f4b"
+effective_since: "2026-07-25T18:53:02+00:00"
+content_fingerprint: "sha256:25218562ae1085182aadbad197320085097229c140de27128b7a8867b6743a1d"
 trace_history_source: "filesystem-only"
 trace_last_commit_sha: ""
 trace_last_commit_at: ""
@@ -19,9 +19,40 @@ trace_revision_count: "0"
 ---
 # Timeline
 
-Generated at: `2026-07-25T16:29:44+00:00`
+Generated at: `2026-07-25T18:53:02+00:00`
 
 ## Journal milestones
+
+### 2026-07-25T18:50:00Z
+
+- Fixed Unknown composer: Chinese 《》 title parse + catalog soft aliases (CJK len≥2); added Dvořák Dumky catalog shelf
+- Chinese locales: **简体 (zh-Hans)** + **繁体 (zh-Hant)** — script tags only
+- Guide switcher: 简体 | 繁体 | English
+
+### 2026-07-25T18:35:00Z
+
+- External skill intake: **Agent Reach** (`Panniantong/Agent-Reach` @ `b4d52c46…`)
+- Security audit → conditional allow as **search enabler only**
+- Installed `skills/enabler-agent-reach/` (policy fence; social/cookie/CLI-install denied)
+- Wired Jina deepen into `aulos-api` web_search / web-research + OPS toggle
+- Verified: registry discovers enabler; web_research tests pass
+
+### 2026-07-26T01:15:00Z
+
+- Work Identity Catalog productized (REQ-006 / SPEC-008 / DOM-002 / ADR-004)
+- Catalog schema + 5 works (Bach Goldberg/Cello, Beethoven duo, Chopin/Mahler slots)
+- IdentityResolver wired into intake/scrub/ambient; RAG seeds catalog cards
+- Removed work-name elif trees; identity authority is catalog YAML
+
+### 2026-07-26T00:55:00Z
+
+- Deep identity audit + fix: Bach cello suites pollution (Goldberg / Beethoven duo)
+- Added `solo-cello-suites` family; hardened intake, scrub, ambient conflict gates
+- SPEC-006 identity rules updated; hard-fail tests for cello suites + ambient
+
+### 2026-07-25T17:15:00Z
+
+- operating-defaults 0.4.0: product capabilities via Agent + Skill Harness; ADR-002 consequences updated
 
 ### 2026-07-25T17:00:00Z
 
@@ -42,55 +73,24 @@ Generated at: `2026-07-25T16:29:44+00:00`
 - Updated init/router usage strings, READMEs, operating-defaults 0.3.1, service-bootstrap
 - Smoke: history-status / memory-inspect / well-organized OK from new paths
 
-### 2026-07-25T16:25:00Z
-
-- Fleet AGENTS.md / CLAUDE.md: Aries Harness promoted to **mandatory default (forced)**
-- operating-defaults skill → 0.3.0; MEMORY snapshots across sub-projects updated
-- Explicit: chat-only without harness artifacts is incomplete; waive only if operator says so
-
-### 2026-07-25T16:20:00Z
-
-- AUDIT-001: process compliance review — verdict **partial/late**, not developed under harness process
-- Remediated F1/F2: refreshed STATE/TASK_STACK; registered REQ-005/SPEC-006/CKPT-005/VR-005/AUDIT-001 in REG+INDEX
-- Honest claim: behavior shipped then self-evolution promoted; future slices must open RUN-* and SPEC/tests first
-
-### 2026-07-25T16:15:00Z
-
-- Promoted ambient/media/identity iteration into harness: REQ-005, SPEC-006, CKPT-005, insights
-- Skill bumps: compose/eval 0.3.0, synthesize 0.2.0, corpus 0.3.0, listening router 0.2.0
-- Gates: ambient hard-fail in eval; family list ownership + foreign-chamber scrub; media `inline`
-- Tests: Beethoven ambient/parity, Goldberg pollution scrub, eval without ambient fails
-- Operating default: every product iteration must promote into skill harness assets
-
-### 2026-07-25T14:53:12Z
-
-- Ambient theme audio + owner toolbar script in guide_render for /g share pages
-- synthesize merges kb_dossier / rag_hits from API knowledge retrieve
-- iter_listening_chain accepts kb_dossier, rag_hits, rag_mode
-
-### 2026-07-25T14:35:00Z
-
-- Bilingual Salon Codex: every guide now has EN + professional 中文 panes with language toggle (default 中文 when zh pack exists)
-- Curated zh for Goldberg corpus + Beethoven cello family/composer cards; LLM prompt asks for nested zh JSON
-- Guardrails strip skill/ops jargon from Chinese prose; Noto Serif SC for Chinese display
-
 ## Recent git commits
 
+- `555cf53` 2026-07-26 Ship listening product, mandatory harness, facility layout, and UTC/local time.
 - `93c0f6e` 2026-07-25 Add aulos-skills, aulos-ops, host deploy, and fleet operating defaults.
 - `7632d9b` 2026-07-25 Add aulos-web, aulos-api, and aulos-mcp sub-projects under aries-harness.
 - `0d5cb01` 2026-07-25 Initial commit: Aulos hackathon workspace with LangChain agent runtime.
 
 ## Working tree snapshot
 
-- `M` `.gitignore`
 - `M` `AGENTS.md`
-- `M` `CLAUDE.md`
 - `M` `aulos-agent/.aries_harness/INDEX.md`
+- `M` `aulos-agent/.aries_harness/JOURNAL.md`
 - `M` `aulos-agent/.aries_harness/MEMORY.md`
-- `M` `aulos-agent/.aries_harness/README.md`
-- `M` `aulos-agent/.aries_harness/decisions/architecture/ARCH-001-langchain-agent-architecture.md`
 - `M` `aulos-agent/.aries_harness/history/DAILY_SUMMARY_INDEX.md`
 - `M` `aulos-agent/.aries_harness/history/DOC_TRACE.md`
 - `M` `aulos-agent/.aries_harness/history/README.md`
 - `M` `aulos-agent/.aries_harness/history/RETROSPECTIVE.md`
 - `M` `aulos-agent/.aries_harness/history/ROADMAP.md`
+- `M` `aulos-agent/.aries_harness/history/STATUS.md`
+- `M` `aulos-agent/.aries_harness/history/TIMELINE.md`
+- `M` `aulos-agent/.aries_harness/history/daily/2026-07-25.md`

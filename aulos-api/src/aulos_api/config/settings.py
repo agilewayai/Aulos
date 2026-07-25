@@ -27,6 +27,16 @@ class Settings(BaseSettings):
     fake_agent: bool = Field(default=True, alias="AULOS_API_FAKE_AGENT")
 
     db_url: str = Field(default="sqlite:///./data/aulos.db", alias="AULOS_DB_URL")
+    # SQLite (or secondary) mirror for HA — kept in sync from primary
+    db_failover_url: str = Field(default="", alias="AULOS_DB_FAILOVER_URL")
+    db_active_role: str = Field(default="primary", alias="AULOS_DB_ACTIVE_ROLE")  # primary|failover
+    db_sync_enabled: bool = Field(default=True, alias="AULOS_DB_SYNC_ENABLED")
+    db_sync_interval_sec: int = Field(default=300, alias="AULOS_DB_SYNC_INTERVAL_SEC")
+    db_auto_failover: bool = Field(default=True, alias="AULOS_DB_AUTO_FAILOVER")
+    db_auto_failback: bool = Field(default=False, alias="AULOS_DB_AUTO_FAILBACK")
+    redis_url: str = Field(default="redis://127.0.0.1:6379/0", alias="AULOS_REDIS_URL")
+    db_sync_redis_url: str = Field(default="", alias="AULOS_DB_SYNC_REDIS_URL")  # empty → use redis_url
+
     jwt_secret: str = Field(default="dev-only-change-me", alias="AULOS_JWT_SECRET")
     jwt_expire_minutes: int = Field(default=60 * 24, alias="AULOS_JWT_EXPIRE_MINUTES")
     mail_provider: str = Field(default="auto", alias="AULOS_MAIL_PROVIDER")
@@ -46,6 +56,16 @@ class Settings(BaseSettings):
     abuse_strike_window_sec: int = Field(default=300, alias="AULOS_ABUSE_STRIKE_WINDOW_SEC")
 
     media_cache_dir: str = Field(default="data/media-cache", alias="AULOS_MEDIA_CACHE_DIR")
+
+    # Professional music knowledge plane (aulos-knowledge) — separate from business DB
+    knowledge_base_url: str = Field(
+        default="http://127.0.0.1:5095",
+        alias="AULOS_KNOWLEDGE_BASE_URL",
+    )
+    knowledge_plane_enabled: bool = Field(
+        default=False,
+        alias="AULOS_KNOWLEDGE_PLANE_ENABLED",
+    )
 
     @property
     def cors_origin_list(self) -> list[str]:

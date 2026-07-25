@@ -28,6 +28,8 @@ SALON_DICT_KEYS = (
     "sound_world",
     "ambient_audio",
     "zh",
+    "zh_hans",
+    "zh_hant",
 )
 
 SALON_SCALAR_KEYS = (
@@ -129,7 +131,7 @@ def merge_dossiers(*layers: dict[str, Any] | None) -> dict[str, Any]:
             elif val not in (None, ""):
                 out[key] = val
         for key in SALON_DICT_KEYS:
-            if key == "zh":
+            if key in {"zh", "zh_hans", "zh_hant"}:
                 continue
             if layer.get(key):
                 if key == "historical_stature":
@@ -141,11 +143,20 @@ def merge_dossiers(*layers: dict[str, Any] | None) -> dict[str, Any]:
                     out["historical_stature"] = merged
                 else:
                     out[key] = _merge_dict(dict(out.get(key) or {}), dict(layer.get(key) or {}))
-        if layer.get("zh"):
-            # Nested Chinese dossier — merge as a dossier, never nest zh inside zh
-            zh_layer = dict(layer.get("zh") or {})
-            zh_layer.pop("zh", None)
-            out["zh"] = merge_dossiers(dict(out.get("zh") or {}), zh_layer)
+        for zh_key in ("zh", "zh_hans", "zh_hant"):
+            if layer.get(zh_key):
+                zh_layer = dict(layer.get(zh_key) or {})
+                for nested in ("zh", "zh_hans", "zh_hant"):
+                    zh_layer.pop(nested, None)
+                out[zh_key] = merge_dossiers(dict(out.get(zh_key) or {}), zh_layer)
+        # Keep simplified slots synced
+        hans = out.get("zh_hans") or out.get("zh")
+        if hans:
+            out["zh"] = dict(hans)
+            out["zh_hans"] = dict(hans)
+        hant = out.get("zh_hant")
+        if hant:
+            out["zh_hant"] = dict(hant)
         for key in SALON_LIST_KEYS:
             if layer.get(key):
                 out[key] = _merge_list(_coerce_list(out.get(key)), _coerce_list(layer.get(key)))
@@ -203,10 +214,18 @@ def parse_llm_dossier_json(text: str) -> dict[str, Any]:
     for key in SALON_LIST_KEYS:
         if key in data:
             data[key] = _coerce_list(data.get(key))
-    if isinstance(data.get("zh"), dict):
-        for key in SALON_LIST_KEYS:
-            if key in data["zh"]:
-                data["zh"][key] = _coerce_list(data["zh"].get(key))
+    for zh_key in ("zh", "zh_hans", "zh_hant"):
+        if isinstance(data.get(zh_key), dict):
+            for key in SALON_LIST_KEYS:
+                if key in data[zh_key]:
+                    data[zh_key][key] = _coerce_list(data[zh_key].get(key))
+    hans = data.get("zh_hans") or data.get("zh")
+    if isinstance(hans, dict):
+        data["zh"] = dict(hans)
+        data["zh_hans"] = dict(hans)
+    hant = data.get("zh_hant")
+    if isinstance(hant, dict):
+        data["zh_hant"] = dict(hant)
     return data
 
 

@@ -1,0 +1,37 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "aulos-knowledge"
+version = "0.1.0"
+description = "Aulos professional music knowledge plane — sources, crawl, entities, vectors"
+readme = "README.md"
+requires-python = ">=3.11"
+license = { text = "MIT" }
+authors = [{ name = "aulos" }]
+dependencies = [
+  "fastapi>=0.115.0",
+  "uvicorn[standard]>=0.32.0",
+  "httpx>=0.27.0",
+  "pydantic>=2.0",
+  "pydantic-settings>=2.0",
+  "python-dotenv>=1.0",
+  "sqlalchemy>=2.0",
+  "PyYAML>=6.0",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=8.0"]
+postgres = ["psycopg[binary]>=3.1", "pgvector>=0.3.0"]
+worker = ["redis>=5.0", "arq>=0.26.0"]
+
+[project.scripts]
+aulos-knowledge = "aulos_knowledge.cli:main"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/aulos_knowledge"]
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+testpaths = ["tests"]

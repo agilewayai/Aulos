@@ -8,10 +8,10 @@ managed_by: "aries-harness"
 fingerprint: "aries-harness/history-doc/v1"
 generated_by: "/aries-harness history-refresh"
 initialized_at: "2026-07-25T11:07:43Z"
-generated_at: "2026-07-25T16:29:49+00:00"
+generated_at: "2026-07-25T18:52:15+00:00"
 effective_status: "generated"
-effective_since: "2026-07-25T16:29:49+00:00"
-content_fingerprint: "sha256:6b61d3ff2172c0b4a89c4ec214ed20e81824570fcbfee7e6cfd442a2a51f4ba6"
+effective_since: "2026-07-25T18:52:15+00:00"
+content_fingerprint: "sha256:60db80b993ce2e1158e1f3e7f56922de56ba77bcf33e4514c9ba3dda7d35034b"
 trace_history_source: "filesystem-only"
 trace_last_commit_sha: ""
 trace_last_commit_at: ""
@@ -19,9 +19,35 @@ trace_revision_count: "0"
 ---
 # Timeline
 
-Generated at: `2026-07-25T16:29:49+00:00`
+Generated at: `2026-07-25T18:52:15+00:00`
 
 ## Journal milestones
+
+### 2026-07-25T18:25:45Z
+
+- Web research loop: thin RAG → Wikipedia/DDG (+ optional Brave) → LLM verify → KB upsert (user + global)
+- Ops `/v1/ops/web-research` + LLM tab controls; query variants for opus-specific titles
+- Verified: `tests/test_web_research.py` 5 passed; live Dvořák Dumky `rag_mode=no_match+web-research`, persisted docs 12/13, next search 6 hits
+
+### 2026-07-25T17:22:35Z
+
+- STORY-PACK-007 S2: `_rag_context` resolves Catalog work_id for knowledge-plane retrieve
+- Client-side drop of mismatched `aulos_work_id` hits; `tests/test_knowledge_plane_rag.py` green
+
+### 2026-07-26T01:15:00Z
+
+- RAG aligned to Work Identity Catalog (REQ-006): seed identity cards; weak tokens from policy
+- works_compatible respects work_id; identity_only cards never replace full dossiers
+
+### 2026-07-26T00:55:00Z
+
+- RAG identity gate: `bwv`/form words are weak tokens; soft-filter requires distinctive overlap
+- Retrieve must not attach Goldberg `kb_dossier` to Bach cello suites / 大提琴无伴奏组曲
+- SPEC-006 identity hard-gate + regression tests
+
+### 2026-07-25T17:15:00Z
+
+- Listening gateway delegates to AgentProxy.run_listening (no local iter_listening_chain)
 
 ### 2026-07-25T17:00:00Z
 
@@ -40,49 +66,24 @@ Generated at: `2026-07-25T16:29:49+00:00`
 - aulos-web register/login/verify UI; aulos-ops superadmin + Mailgun settings
 - pytest auth suite green; public smoke on aulos.purezen.ai / aulos-ops.purezen.ai
 
-### 2026-07-25T11:07:43Z
-
-- initialized `.aries_harness/`
-- wrote `ARIES_HARNESS_FINGERPRINT.json`
-- no execution history recorded yet
-
-### 2026-07-25T12:21:57Z
-
-- Added ops-managed LLM providers (DeepSeek + Grok) with GET/PUT/test; chat uses live provider when ready.
-- Verified: pytest 20 passed; ops UI LLM tab deployed.
-
-### 2026-07-25T12:55:17Z
-
-- Shipped listening-guide MVP (REQ-003/SPEC-003): width+depth research workflow, HTML guide, observable steps, web studio UI.
-- Verified: pytest 22 passed; Goldberg smoke guide created; aulos-web redeployed.
-
-### 2026-07-25T13:23:08Z
-
-- Longrun 1–4 done: SkillRuntime drives listening guides; skill_versions persisted; MCP skills.list/run; ops Skills tab; web shows skill ids.
-- Verified: skills 5 / api 22 pytest; live Goldberg probe score=10; guide steps cite aulos-listening-*.
-
-### 2026-07-25T13:34:45Z
-
-- Closed residual 1–4: ops Disable now skips skill steps at runtime; SSE `/v1/listening-guides/stream`; web live chain; serve.py streams event-stream.
-- Verified: skills 7 / api 24 pytest; SSE smoke on :5090 and proxy :5091.
-
 ## Recent git commits
 
+- `555cf53` 2026-07-26 Ship listening product, mandatory harness, facility layout, and UTC/local time.
 - `93c0f6e` 2026-07-25 Add aulos-skills, aulos-ops, host deploy, and fleet operating defaults.
 - `7632d9b` 2026-07-25 Add aulos-web, aulos-api, and aulos-mcp sub-projects under aries-harness.
 - `0d5cb01` 2026-07-25 Initial commit: Aulos hackathon workspace with LangChain agent runtime.
 
 ## Working tree snapshot
 
-- `M` `.gitignore`
-- `M` `AGENTS.md`
-- `M` `CLAUDE.md`
 - `M` `aulos-agent/.aries_harness/INDEX.md`
+- `M` `aulos-agent/.aries_harness/JOURNAL.md`
 - `M` `aulos-agent/.aries_harness/MEMORY.md`
-- `M` `aulos-agent/.aries_harness/README.md`
-- `M` `aulos-agent/.aries_harness/decisions/architecture/ARCH-001-langchain-agent-architecture.md`
 - `M` `aulos-agent/.aries_harness/history/DAILY_SUMMARY_INDEX.md`
 - `M` `aulos-agent/.aries_harness/history/DOC_TRACE.md`
 - `M` `aulos-agent/.aries_harness/history/README.md`
 - `M` `aulos-agent/.aries_harness/history/RETROSPECTIVE.md`
 - `M` `aulos-agent/.aries_harness/history/ROADMAP.md`
+- `M` `aulos-agent/.aries_harness/history/STATUS.md`
+- `M` `aulos-agent/.aries_harness/history/TIMELINE.md`
+- `M` `aulos-agent/.aries_harness/history/daily/2026-07-25.md`
+- `M` `aulos-agent/.aries_harness/history/doc-trace.json`

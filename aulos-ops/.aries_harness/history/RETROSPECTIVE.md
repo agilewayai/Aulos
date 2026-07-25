@@ -8,10 +8,10 @@ managed_by: "aries-harness"
 fingerprint: "aries-harness/history-doc/v1"
 generated_by: "/aries-harness history-refresh"
 initialized_at: "2026-07-25T11:20:06Z"
-generated_at: "2026-07-25T16:29:54+00:00"
+generated_at: "2026-07-25T18:52:23+00:00"
 effective_status: "generated"
-effective_since: "2026-07-25T16:29:54+00:00"
-content_fingerprint: "sha256:dd0dd5bad788b7821d41f608e550171ac4208068afecc943c8137638121a034e"
+effective_since: "2026-07-25T18:52:23+00:00"
+content_fingerprint: "sha256:7e20c7cb879facbdee19141631712d0f61040c2b053268c75efe8a4dfe70c599"
 trace_history_source: "filesystem-only"
 trace_last_commit_sha: ""
 trace_last_commit_at: ""
@@ -19,25 +19,26 @@ trace_revision_count: "0"
 ---
 # Retrospective Snapshot
 
-Generated at: `2026-07-25T16:29:54+00:00`
+Generated at: `2026-07-25T18:52:23+00:00`
 
 ## Recent changes
 
+- SPEC-010: OPS Knowledge audit UI opened — Browse/proofread, Sources, Jobs & crawl, Retrieve lab
+- Knowledge APIs: document detail+body, publish restore, composers list, document filters
+- systemd `aulos-knowledge.service` on PG; API `AULOS_KNOWLEDGE_BASE_URL`; ops rebuilt to :5092 / aulos-ops.purezen.ai
+- STORY-PACK-007 S4: Knowledge tab plane up/down badge + empty-state when plane unreachable
 - Added ``src/time.ts``; users/deliveries/health refresh use OS-local timestamps
-- initialized `.aries_harness/`
-- wrote `ARIES_HARNESS_FINGERPRINT.json`
-- no execution history recorded yet
 
 ## What is working
 
-- Added ``src/time.ts``; users/deliveries/health refresh use OS-local timestamps
-- initialized `.aries_harness/`
-- wrote `ARIES_HARNESS_FINGERPRINT.json`
-- no execution history recorded yet
+- SPEC-010: OPS Knowledge audit UI opened — Browse/proofread, Sources, Jobs & crawl, Retrieve lab
+- Knowledge APIs: document detail+body, publish restore, composers list, document filters
+- systemd `aulos-knowledge.service` on PG; API `AULOS_KNOWLEDGE_BASE_URL`; ops rebuilt to :5092 / aulos-ops.purezen.ai
+- STORY-PACK-007 S4: Knowledge tab plane up/down badge + empty-state when plane unreachable
 
 ## What needs attention
 
-- working tree is dirty with 723 tracked or untracked change(s)
+- working tree is dirty with 255 tracked or untracked change(s)
 - no explicit next-up slice is recorded
 
 ## Durable reminders

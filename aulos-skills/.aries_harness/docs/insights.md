@@ -8,13 +8,67 @@ fingerprint: "aries-harness/bootstrap-doc/v1"
 initialized_at: "2026-07-25T16:19:58+00:00"
 effective_status: "active"
 effective_since: "2026-07-25T16:19:58+00:00"
-content_fingerprint: "sha256:92ff6c734803b1cbc86df9bb9bdebdfc6e7072ec24c2ddf5857a81cabceba6d1"
+content_fingerprint: "sha256:d4a394100c09e953a6f5b5ca83c561ee1f37627d2c33ae99725f3fea1746bac6"
 trace_history_source: "filesystem-only"
 trace_last_commit_sha: ""
 trace_last_commit_at: ""
 trace_revision_count: "0"
 ---
 # Insights — aulos-skills durable baseline
+
+## 2026-07-26 — Locale script tags only (promoted)
+
+- Guide languages: **English / 简体 / 繁体** via `zh-Hans` and `zh-Hant`.
+- Do not use regional locale abbreviations in open-source source, UI, or LLM prompts.
+- Dossier keys: `zh` / `zh_hans` (simplified), `zh_hant` (traditional); synthesize Hant from Hans when missing.
+- Measurable gate: `tests/test_intake_i18n.py` asserts `data-lang="zh-Hans|zh-Hant"` and switcher labels 简体|繁体.
+
+## 2026-07-26 — Intake composer recovery (promoted)
+
+- `Unknown composer` with clear Chinese 《书名》 text was intake failure, not missing LLM.
+- Fix path: `intake_parse.guess_composer_and_title` + catalog shelf (e.g. Dumky) + compose recovery.
+- Soft alias match: CJK aliases usable at length ≥ 2 (肖邦/巴赫).
+- Gate: `tests/test_identity.py` Dumky resolve; `test_intake_i18n.py` no Unknown composer.
+
+## 2026-07-26 — Agent Reach as fenced search enabler (promoted)
+
+- Install truth: owner `Panniantong/Agent-Reach` pinned commit under `skills/enabler-agent-reach/`.
+- Allow Jina deepen / optional Exa+gh read; deny cookies, social CLIs, `agent-reach` apt/npm install.
+- OPS toggle: `agent_reach_enabled` on web-research config.
+
+## 2026-07-26 — Professional Music Knowledge Plane (promoted)
+
+- Encyclopedic music data (works, composers, history, discography) lives in
+  **aulos-knowledge**, not in `aulos.db` with users/guides.
+- Identity remains Catalog/Resolver (SPEC-008); content richness comes from the
+  knowledge plane with allowlisted sources + artifact provenance (ADR-006).
+- OPS **Knowledge** tab audits sources/jobs/documents/provenance.
+- Enable RAG merge with `AULOS_KNOWLEDGE_PLANE_ENABLED=true`.
+
+## 2026-07-26 — Work Identity Catalog is identity authority (promoted)
+
+- **Root cause of cross-work pollution was missing identity entities**, not missing
+  Bach-cello `if` branches. Procedural heuristics cannot productize Chopin/Mahler.
+- **Catalog YAML is the authority** (`assets/catalog/`). Intake uses
+  `IdentityResolver` only — no work-proper-name `elif` in runtime/ambient.
+- **RAG enhances content after identity**; it must not alone decide the work.
+- **Positive + negative identity:** `distinctive_tokens` + `conflict_work_ids` →
+  derived `conflict_markers` for scrub/ambient.
+- Adding a composer/work = authoring catalog records (+ optional family/dossier),
+  not editing Python. Thin slots (Chopin nocturne, Mahler 5) prove extensibility.
+- See REQ-006, SPEC-008, DOM-002, ADR-004.
+
+## 2026-07-26 — Solo cello suites identity (superseded by Catalog)
+
+- Earlier case patches (solo-cello family + scrub tuples) were symptom medicine.
+- Behavior preserved via catalog record `bach.cello-suites.bwv-1007-1012`;
+  implementation now Catalog-driven.
+
+## 2026-07-25 — Agent-centric 导赏 (promoted)
+
+- Product core is **Agent + Skill Harness + tools**, not API Python orchestration.
+- Listening jobs: API injects RAG/context and persists; **aulos-agent** calls `run_listening_skill` per trigger.
+- Do not reintroduce `SkillRuntime.iter_listening_chain` as the product entrypoint in `aulos-api`.
 
 ## 2026-07-25 — Timezone: store UTC / display OS local (promoted)
 

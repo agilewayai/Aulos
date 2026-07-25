@@ -9,7 +9,7 @@ fingerprint: "aries-harness/bootstrap-doc/v1"
 initialized_at: "2026-07-25T16:23:49+00:00"
 effective_status: "active"
 effective_since: "2026-07-25T16:23:49+00:00"
-content_fingerprint: "sha256:6d67e66cba44aa961e4a8e2b4da5919ece5afc143eb05fa2bbd5e5f99e6c0e59"
+content_fingerprint: "sha256:1bee9cdd18c127bc5c13b5f095117807072d36b4bbac363ce71244e7e01a7620"
 trace_history_source: "filesystem-only"
 trace_last_commit_sha: ""
 trace_last_commit_at: ""
@@ -39,11 +39,26 @@ Before the skill chain:
 - `GET|PUT /v1/ops/embeddings` (superadmin)
 - `GET /v1/ops/knowledge/stats` (superadmin)
 
-## Seed
+## Identity gate (hard)
 
-Curated corpus YAML (`bwv-988`, …) indexed once as global documents on first retrieve/stats.
+Identity confirmation is owned by the **Work Identity Catalog** (aulos-skills SPEC-008).
+API RAG must not alone decide which work a query is about.
+
+`works_compatible(query, doc_…)` / retrieve:
+
+- Prefer explicit `work_id` / `corpus_key` match against resolved identity when provided.
+- Composer-only overlap is never enough.
+- Catalog prefixes and generic form words are **weak** (shared policy with skills catalog).
+- Soft-filter: require ≥1 non-weak distinctive token; composer-only queries must not open
+  the whole composer shelf.
+- Seed indexes Catalog identity cards (short chunks) alongside full Salon dossiers so the
+  correct attractors exist in the vector/lexical space.
+- `kb_dossier` attaches only when the best doc passes the identity gate at the score floor.
 
 ## Verification
 
 - Compose indexes chunks; search returns Goldberg hits without embed key (lexical).
 - Recompose reindexes same work_key.
+- Retrieve for Bach cello suites / 大提琴无伴奏组曲 must **not** attach Goldberg `kb_dossier`.
+- Retrieve for Mozart must not attach Goldberg hits.
+- Chopin / Mahler catalog slots must not collapse onto Goldberg without Resolver code changes.

@@ -46,6 +46,12 @@ async def lifespan(_app: FastAPI):
     _configure_logging()
     clear_fake_mailbox()
     bootstrap_identity()
+    try:
+        from aulos_api.services.db_ha import start_ha_worker
+
+        start_ha_worker()
+    except Exception as exc:  # noqa: BLE001
+        logging.getLogger("aulos_api.db_ha").warning("db_ha_worker_skip err=%s", exc)
     threading.Thread(target=_warm_media_cache, name="aulos-media-prefetch", daemon=True).start()
     yield
 

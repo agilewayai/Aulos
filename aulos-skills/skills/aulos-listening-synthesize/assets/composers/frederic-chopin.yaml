@@ -1,0 +1,32 @@
+composer: Frédéric Chopin
+aliases:
+- chopin
+- frederic chopin
+- frédéric chopin
+- Frédéric Chopin
+- 肖邦
+- 弗雷德里克·肖邦
+composer_portrait:
+  image_url: https://upload.wikimedia.org/wikipedia/commons/e/e8/Frederic_Chopin_photo.jpeg
+  credit: Louis-Auguste Bisson — Portrait of Frédéric Chopin (public domain via Wikimedia Commons)
+  caption: Chopin in the 1840s — the face of salon intimacy and national dance memory.
+composer_profile:
+  lifespan: 1810–1849
+  summary: 'Frédéric Chopin made the solo piano a complete theatre of lyric speech, dance character,
+    and private rhetoric — Warsaw roots carried into Paris salon culture.'
+  temperament: Intimate virtuoso — rubato as grammar, not decoration; national dances as character rooms.
+  place_in_oeuvre: Mazurkas, nocturnes, waltzes, and polonaises form a lifelong atlas of Polish dance
+    memory and nocturnal song under piano hands.
+  place_in_history: After early salon fame, reception made Chopin the measure of Romantic piano poetry
+    and of how “national” character can live inside absolute music.
+zh:
+  composer: 弗雷德里克·肖邦
+  composer_portrait:
+    caption: 一八四〇年代的肖邦——沙龙亲密与民族舞曲记忆的面容。
+    credit: 比松《肖邦肖像》（公有领域，经 Wikimedia Commons）
+  composer_profile:
+    lifespan: 1810–1849
+    summary: 弗雷德里克·肖邦使独奏钢琴成为抒情言说、舞曲性格与私人修辞的完整剧场——华沙根系带入巴黎沙龙文化。
+    temperament: 亲密的炫技者——弹性速度是语法而非装饰；民族舞曲是性格之室。
+    place_in_oeuvre: 玛祖卡、夜曲、圆舞曲与波洛奈兹，构成钢琴手下波兰舞曲记忆与夜歌的终生地图。
+    place_in_history: 早期沙龙声名之后，接受史使肖邦成为浪漫钢琴诗意的准绳，也成为“民族性格”如何栖居于绝对音乐的标尺。

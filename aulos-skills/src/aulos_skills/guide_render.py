@@ -1,4 +1,4 @@
-"""Bilingual Salon Codex HTML renderer."""
+"""Multilingual Salon Codex HTML renderer (EN / 简体 / 繁體)."""
 
 from __future__ import annotations
 
@@ -6,8 +6,18 @@ import json
 from html import escape
 from typing import Any
 
-from aulos_skills.i18n import UI_COPY, dossier_has_zh, localize_view, strip_tech_leaks_zh
-
+from aulos_skills.i18n import (
+    LANG_EN,
+    LANG_ZH_HANS,
+    LANG_ZH_HANT,
+    UI_COPY,
+    dossier_has_zh,
+    ensure_chinese_variants,
+    is_chinese_lang,
+    localize_view,
+    normalize_lang,
+    strip_tech_leaks_zh,
+)
 
 def _li(items: list[Any]) -> str:
     out = []
@@ -30,10 +40,15 @@ def _p(text: str, *, zh: bool = False) -> str:
 
 
 def _pick(item: dict[str, Any], key: str, lang: str) -> str:
-    if lang == "zh":
+    if is_chinese_lang(lang):
         alt = item.get(f"{key}_zh")
         if alt:
             return str(alt)
+        # Optional explicit Traditional field
+        if normalize_lang(lang) == LANG_ZH_HANT:
+            alt_hant = item.get(f"{key}_zh_hant") or item.get(f"{key}_hant")
+            if alt_hant:
+                return str(alt_hant)
     return str(item.get(key) or "")
 
 
@@ -45,8 +60,9 @@ def _render_lang_article(
     dossier: dict[str, Any],
     summary: str,
 ) -> str:
-    ui = UI_COPY[lang]
-    zh = lang == "zh"
+    lang = normalize_lang(lang)
+    ui = UI_COPY.get(lang) or UI_COPY[LANG_ZH_HANS]
+    zh = is_chinese_lang(lang)
     era = str(dossier.get("era") or "")
     form = str(dossier.get("form") or "")
     catalog = str(dossier.get("catalog") or "")
@@ -275,10 +291,9 @@ def _render_lang_article(
     if zh:
         lede = strip_tech_leaks_zh(lede)
 
-    hidden = " hidden" if lang != "zh" else ""
-    # default visible language: Chinese when available is set by caller via class
+    # Caller removes `hidden` from the default language pane.
     return f"""
-<article class="lang-pane" data-lang="{lang}"{hidden} lang="{ 'zh-CN' if zh else 'en' }">
+<article class="lang-pane" data-lang="{lang}" hidden lang="{lang if zh else 'en'}">
   <p class="eyebrow">{escape(ui['eyebrow'])}</p>
   <h1>{escape(title)}</h1>
   <p class="lede">{escape(lede)}</p>
@@ -312,12 +327,14 @@ def _ambient_bar(ambient: dict[str, Any], *, default_lang: str) -> str:
     except (TypeError, ValueError):
         volume = 0.28
     volume = max(0.05, min(volume, 0.85))
-    ui = UI_COPY[default_lang if default_lang in UI_COPY else "zh"]
-    title = title_zh if default_lang == "zh" else title_en
-    credit = credit_zh if default_lang == "zh" else credit_en
+    default_lang = normalize_lang(default_lang)
+    ui = UI_COPY.get(default_lang) or UI_COPY[LANG_ZH_HANS]
+    use_zh = is_chinese_lang(default_lang)
+    title = title_zh if use_zh else title_en
+    credit = credit_zh if use_zh else credit_en
     why_en = str(ambient.get("why") or "")
     why_zh = str(ambient.get("why_zh") or why_en)
-    why = why_zh if default_lang == "zh" else why_en
+    why = why_zh if use_zh else why_en
     why_html = ""
     if why:
         why_label = ui.get("ambient_why") or "Why this music"
@@ -354,7 +371,7 @@ def _ambient_bar(ambient: dict[str, Any], *, default_lang: str) -> str:
         for i, tr in enumerate(tracks):
             t_en = str(tr.get("title") or f"Track {i + 1}")
             t_zh = str(tr.get("title_zh") or t_en)
-            label = t_zh if default_lang == "zh" else t_en
+            label = t_zh if use_zh else t_en
             n = tr.get("n") or (i + 1)
             active = " is-active" if i == 0 else ""
             items.append(
@@ -415,81 +432,123 @@ def render_bilingual_guide_html(
     composer: str = "",
     summary_en: str = "",
     summary_zh: str = "",
+    default_lang: str | None = None,
 ) -> str:
-    en_view = localize_view(dossier, "en")
+    dossier = ensure_chinese_variants(dossier)
+    en_view = localize_view(dossier, LANG_EN)
     has_zh = dossier_has_zh(dossier)
-    zh_view = localize_view(dossier, "zh") if has_zh else None
+    zh_hans_view = localize_view(dossier, LANG_ZH_HANS) if has_zh else None
+    zh_hant_view = localize_view(dossier, LANG_ZH_HANT) if has_zh else None
 
     title = str(en_view.get("work_title") or work_title or "Listening guide")
     composer_name = str(en_view.get("composer") or composer or "")
     summary_en = summary_en or str(en_view.get("listening_thesis") or "")
-    summary_zh = summary_zh or (str(zh_view.get("listening_thesis") or "") if zh_view else "")
+    summary_zh_hans = summary_zh or (
+        str(zh_hans_view.get("listening_thesis") or "") if zh_hans_view else ""
+    )
+    summary_zh_hant = str(zh_hant_view.get("listening_thesis") or "") if zh_hant_view else summary_zh_hans
 
-    default_lang = "zh" if has_zh else "en"
+    if default_lang:
+        default_lang = normalize_lang(default_lang)
+    else:
+        default_lang = LANG_ZH_HANS if has_zh else LANG_EN
+    if has_zh and default_lang == LANG_EN:
+        pass
+    elif has_zh and not is_chinese_lang(default_lang):
+        default_lang = LANG_ZH_HANS
+
     ambient = dict(en_view.get("ambient_audio") or dossier.get("ambient_audio") or {})
     ambient_html = _ambient_bar(ambient, default_lang=default_lang)
 
     en_article = _render_lang_article(
-        lang="en",
+        lang=LANG_EN,
         work_title=title,
         composer=composer_name,
         dossier=en_view,
         summary=summary_en,
     )
-    if not has_zh:
-        en_article = en_article.replace(" hidden", "", 1)
+    zh_hans_article = ""
+    zh_hant_article = ""
+    if zh_hans_view:
+        zh_hans_article = _render_lang_article(
+            lang=LANG_ZH_HANS,
+            work_title=str(zh_hans_view.get("work_title") or title),
+            composer=str(zh_hans_view.get("composer") or composer_name),
+            dossier=zh_hans_view,
+            summary=summary_zh_hans,
+        )
+    if zh_hant_view:
+        zh_hant_article = _render_lang_article(
+            lang=LANG_ZH_HANT,
+            work_title=str(zh_hant_view.get("work_title") or title),
+            composer=str(zh_hant_view.get("composer") or composer_name),
+            dossier=zh_hant_view,
+            summary=summary_zh_hant,
+        )
 
-    zh_article = ""
-    if zh_view:
-        zh_article = _render_lang_article(
-            lang="zh",
-            work_title=str(zh_view.get("work_title") or title),
-            composer=str(zh_view.get("composer") or composer_name),
-            dossier=zh_view,
-            summary=summary_zh,
+    # Reveal default pane
+    def _unhide(article: str, lang: str) -> str:
+        if not article:
+            return article
+        marker = f'data-lang="{lang}" hidden'
+        if default_lang == lang and marker in article:
+            return article.replace(marker, f'data-lang="{lang}"', 1)
+        return article
+
+    en_article = _unhide(en_article, LANG_EN)
+    zh_hans_article = _unhide(zh_hans_article, LANG_ZH_HANS)
+    zh_hant_article = _unhide(zh_hant_article, LANG_ZH_HANT)
+    if not has_zh:
+        en_article = en_article.replace(' data-lang="en" hidden', ' data-lang="en"', 1).replace(
+            'data-lang="en" hidden', 'data-lang="en"', 1
         )
 
     switcher = ""
     if has_zh:
+        def _btn(code: str, label: str) -> str:
+            active = "active" if default_lang == code else ""
+            return (
+                f'<button type="button" data-set-lang="{code}" class="{active}">'
+                f"{escape(label)}</button>"
+            )
+
         switcher = f"""
 <nav class="lang-switch" aria-label="Language">
-  <button type="button" data-set-lang="zh" class="{'active' if default_lang == 'zh' else ''}">{escape(UI_COPY['zh']['lang_zh'])}</button>
-  <button type="button" data-set-lang="en" class="{'active' if default_lang == 'en' else ''}">{escape(UI_COPY['en']['lang_en'])}</button>
+  {_btn(LANG_ZH_HANS, "简体")}
+  {_btn(LANG_ZH_HANT, "繁体")}
+  {_btn(LANG_EN, "English")}
 </nav>
 """
 
+    def _ambient_pack(code: str) -> dict[str, str]:
+        ui = UI_COPY[code]
+        return {
+            "label": ui["ambient_label"],
+            "play": ui["ambient_play"],
+            "pause": ui["ambient_pause"],
+            "hint": ui["ambient_hint"],
+            "expand": ui["ambient_expand"],
+            "collapse": ui["ambient_collapse"],
+            "playlist": ui["ambient_playlist"],
+            "playlist_hint": ui["ambient_playlist_hint"],
+            "now": ui["ambient_now"],
+            "why_label": ui["ambient_why"],
+        }
+
     ambient_labels_json = json.dumps(
         {
-            "zh": {
-                "label": UI_COPY["zh"]["ambient_label"],
-                "play": UI_COPY["zh"]["ambient_play"],
-                "pause": UI_COPY["zh"]["ambient_pause"],
-                "hint": UI_COPY["zh"]["ambient_hint"],
-                "expand": UI_COPY["zh"]["ambient_expand"],
-                "collapse": UI_COPY["zh"]["ambient_collapse"],
-                "playlist": UI_COPY["zh"]["ambient_playlist"],
-                "playlist_hint": UI_COPY["zh"]["ambient_playlist_hint"],
-                "now": UI_COPY["zh"]["ambient_now"],
-                "why_label": UI_COPY["zh"]["ambient_why"],
-            },
-            "en": {
-                "label": UI_COPY["en"]["ambient_label"],
-                "play": UI_COPY["en"]["ambient_play"],
-                "pause": UI_COPY["en"]["ambient_pause"],
-                "hint": UI_COPY["en"]["ambient_hint"],
-                "expand": UI_COPY["en"]["ambient_expand"],
-                "collapse": UI_COPY["en"]["ambient_collapse"],
-                "playlist": UI_COPY["en"]["ambient_playlist"],
-                "playlist_hint": UI_COPY["en"]["ambient_playlist_hint"],
-                "now": UI_COPY["en"]["ambient_now"],
-                "why_label": UI_COPY["en"]["ambient_why"],
-            },
+            LANG_ZH_HANS: _ambient_pack(LANG_ZH_HANS),
+            LANG_ZH_HANT: _ambient_pack(LANG_ZH_HANT),
+            "zh": _ambient_pack(LANG_ZH_HANS),  # legacy
+            LANG_EN: _ambient_pack(LANG_EN),
         },
         ensure_ascii=False,
     ).replace("<", "\\u003c")
 
+    html_lang = default_lang if is_chinese_lang(default_lang) else "en"
+
     return f"""<!DOCTYPE html>
-<html lang="{ 'zh-CN' if default_lang == 'zh' else 'en' }">
+<html lang="{html_lang}">
 <head>
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
@@ -512,6 +571,14 @@ body {{
     linear-gradient(168deg, #10171c 0%, #0c1216 48%, #12191f 100%);
 }}
 .wrap {{ max-width: 44rem; margin: 0 auto; padding: 2.75rem 1.25rem 7.5rem; }}
+.lang-pane[data-lang="zh-Hans"] h1,
+.lang-pane[data-lang="zh-Hans"] .lede,
+.lang-pane[data-lang="zh-Hans"] h2,
+.lang-pane[data-lang="zh-Hans"] h3 {{ font-family: "Noto Serif SC", Fraunces, serif; }}
+.lang-pane[data-lang="zh-Hant"] h1,
+.lang-pane[data-lang="zh-Hant"] .lede,
+.lang-pane[data-lang="zh-Hant"] h2,
+.lang-pane[data-lang="zh-Hant"] h3 {{ font-family: Fraunces, "Noto Serif SC", "Songti SC", serif; }}
 .ambient {{
   position: fixed;
   z-index: 60;
@@ -629,11 +696,14 @@ body {{
 }}
 .lang-switch button.active {{ background: var(--accent); color: #1a1410; }}
 .lang-pane[hidden] {{ display: none !important; }}
-.lang-pane[data-lang="zh"] h1,
-.lang-pane[data-lang="zh"] h2,
-.lang-pane[data-lang="zh"] h3,
-.lang-pane[data-lang="zh"] .lede,
-.lang-pane[data-lang="zh"] .ambient:not(.is-collapsed) .ambient-title {{
+.lang-pane[data-lang="zh-Hans"] h1,
+.lang-pane[data-lang="zh-Hans"] h2,
+.lang-pane[data-lang="zh-Hans"] h3,
+.lang-pane[data-lang="zh-Hans"] .lede,
+.lang-pane[data-lang="zh-Hant"] h1,
+.lang-pane[data-lang="zh-Hant"] h2,
+.lang-pane[data-lang="zh-Hant"] h3,
+.lang-pane[data-lang="zh-Hant"] .lede {{
   font-family: "Noto Serif SC", Fraunces, "Songti SC", serif;
 }}
 @media (max-width: 719px) {{
@@ -644,7 +714,8 @@ body {{
   }}
 }}
 .eyebrow {{ letter-spacing: 0.2em; text-transform: uppercase; color: var(--accent); font-size: 0.72rem; font-weight: 700; margin: 0 0 0.85rem; }}
-.lang-pane[data-lang="zh"] .eyebrow {{ letter-spacing: 0.28em; }}
+.lang-pane[data-lang="zh-Hans"] .eyebrow,
+.lang-pane[data-lang="zh-Hant"] .eyebrow {{ letter-spacing: 0.28em; }}
 h1 {{ font-family: Fraunces, Georgia, serif; font-weight: 700; font-size: clamp(1.75rem, 7vw, 3.05rem); line-height: 1.07; letter-spacing: -0.03em; margin: 0 0 0.85rem; }}
 .lede {{ color: var(--mute); font-size: clamp(1rem, 3.6vw, 1.1rem); line-height: 1.7; margin: 0 0 1.5rem; max-width: 38rem; font-family: Fraunces, Georgia, serif; font-weight: 500; }}
 .meta {{ display: flex; flex-wrap: wrap; gap: 0.5rem; margin: 0 0 2.5rem; }}
@@ -672,7 +743,8 @@ ul {{ margin: 0; padding-left: 1.15rem; display: grid; gap: 0.55rem; color: var(
 }}
 .facts {{ display: grid; gap: 0.85rem; }}
 .fact span {{ display: block; letter-spacing: 0.14em; text-transform: uppercase; font-size: 0.68rem; color: var(--accent); font-weight: 700; margin-bottom: 0.25rem; }}
-.lang-pane[data-lang="zh"] .fact span {{ letter-spacing: 0.22em; }}
+.lang-pane[data-lang="zh-Hans"] .fact span,
+.lang-pane[data-lang="zh-Hant"] .fact span {{ letter-spacing: 0.22em; }}
 .fact p {{ margin: 0; }}
 .map, .rels, .interps, .medias {{ display: grid; gap: 0.7rem; }}
 .map-item, .rel, .interp, .media {{
@@ -693,7 +765,8 @@ img {{ max-width: 100%; height: auto; }}
 <main class="wrap">
   {ambient_html}
   {switcher}
-  {zh_article}
+  {zh_hans_article}
+  {zh_hant_article}
   {en_article}
 </main>
 <script type="application/json" id="aulos-ambient-i18n">{ambient_labels_json}</script>
@@ -708,6 +781,10 @@ img {{ max-width: 100%; height: auto; }}
     if (node) ambientI18n = JSON.parse(node.textContent || "{{}}");
   }} catch (e) {{}}
 
+  function isZh(lang) {{
+    return lang === "zh" || lang === "zh-Hans" || lang === "zh-Hant";
+  }}
+
   function currentLang() {{
     var visible = document.querySelector('.lang-pane:not([hidden])');
     return (visible && visible.getAttribute("data-lang")) || "{default_lang}";
@@ -716,7 +793,7 @@ img {{ max-width: 100%; height: auto; }}
   function refreshAmbientCopy(lang) {{
     var box = document.querySelector(".ambient");
     if (!box) return;
-    var pack = ambientI18n[lang] || ambientI18n.zh || ambientI18n.en || {{}};
+    var pack = ambientI18n[lang] || ambientI18n["zh-Hans"] || ambientI18n.zh || ambientI18n.en || {{}};
     var isPlaylist = box.getAttribute("data-ambient-mode") === "playlist";
     var kicker = box.querySelector('[data-i18n-ambient="label"]');
     var hint = box.querySelector('[data-i18n-ambient="hint"]');
@@ -735,17 +812,17 @@ img {{ max-width: 100%; height: auto; }}
       var liveEn = box.getAttribute("data-now-title-en");
       var liveZh = box.getAttribute("data-now-title-zh");
       if (liveEn || liveZh) {{
-        title.textContent = lang === "zh" ? (liveZh || liveEn) : (liveEn || liveZh);
+        title.textContent = isZh(lang) ? (liveZh || liveEn) : (liveEn || liveZh);
       }} else {{
-        title.textContent = box.getAttribute(lang === "zh" ? "data-title-zh" : "data-title-en") || title.textContent;
+        title.textContent = box.getAttribute(isZh(lang) ? "data-title-zh" : "data-title-en") || title.textContent;
       }}
     }}
-    if (credit) credit.textContent = box.getAttribute(lang === "zh" ? "data-credit-zh" : "data-credit-en") || credit.textContent;
+    if (credit) credit.textContent = box.getAttribute(isZh(lang) ? "data-credit-zh" : "data-credit-en") || credit.textContent;
     var whyLabel = box.querySelector('[data-i18n-ambient="why_label"]');
     var why = box.querySelector('[data-i18n-ambient="why"]');
     if (whyLabel && pack.why_label) whyLabel.textContent = pack.why_label;
     if (why) {{
-      why.textContent = lang === "zh"
+      why.textContent = isZh(lang)
         ? (why.getAttribute("data-why-zh") || why.getAttribute("data-why-en") || why.textContent)
         : (why.getAttribute("data-why-en") || why.getAttribute("data-why-zh") || why.textContent);
     }}
@@ -764,7 +841,7 @@ img {{ max-width: 100%; height: auto; }}
     box.querySelectorAll(".ambient-track").forEach(function (tr) {{
       var t = tr.querySelector("[data-i18n-track-title]");
       if (!t) return;
-      t.textContent = lang === "zh"
+      t.textContent = isZh(lang)
         ? (tr.getAttribute("data-title-zh") || tr.getAttribute("data-title-en") || t.textContent)
         : (tr.getAttribute("data-title-en") || tr.getAttribute("data-title-zh") || t.textContent);
     }});
@@ -778,7 +855,7 @@ img {{ max-width: 100%; height: auto; }}
     buttons.forEach(function (b) {{
       b.classList.toggle("active", b.getAttribute("data-set-lang") === lang);
     }});
-    root.setAttribute("lang", lang === "zh" ? "zh-CN" : "en");
+    root.setAttribute("lang", isZh(lang) ? lang : "en");
     try {{ localStorage.setItem("aulos_guide_lang", lang); }} catch (e) {{}}
     refreshAmbientCopy(lang);
   }}
@@ -787,7 +864,8 @@ img {{ max-width: 100%; height: auto; }}
   }});
   var saved = null;
   try {{ saved = localStorage.getItem("aulos_guide_lang"); }} catch (e) {{}}
-  if (saved === "en" || saved === "zh") {{
+  if (saved === "zh") saved = "zh-Hans";
+  if (saved === "en" || saved === "zh-Hans" || saved === "zh-Hant") {{
     if (document.querySelector('.lang-pane[data-lang="' + saved + '"]')) setLang(saved);
   }} else {{
     refreshAmbientCopy(currentLang());

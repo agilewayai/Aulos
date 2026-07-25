@@ -1,0 +1,11 @@
+# Local runtime / durable Docker bind mounts — never commit DB / media blobs
+data/persist/postgres/
+data/persist/redis/
+data/persist/backups/
+data/persist/artifacts/
+data/artifacts/
+*.db
+.venv/
+__pycache__/
+*.pyc
+.env

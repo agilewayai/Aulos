@@ -3,6 +3,7 @@
 from pathlib import Path
 
 from aulos_skills.ambient_agent import select_ambient
+from aulos_skills.identity import resolve_identity
 from aulos_skills.runtime import SkillRuntime
 
 
@@ -27,13 +28,33 @@ def test_related_bach_suite_without_curated() -> None:
         work_title="French Suite No. 5",
         composer="Johann Sebastian Bach",
         era="Baroque",
-        form="suite",
+        form="french suite",
+        facets={"instruments": ["keyboard", "harpsichord"]},
         corpus_dir=_corpus(),
     )
     assert amb.get("url") or amb.get("tracks")
     assert amb.get("selection_source") == "related"
     assert "why_zh" in amb and amb["why_zh"]
-    assert "巴赫" in amb["why_zh"] or "Goldberg" in amb.get("title", "") or "咏叹" in amb.get("title_zh", "")
+    assert "1007" not in str(amb.get("url") or "")
+    assert "Cello Suite" not in str(amb.get("title") or "")
+
+
+def test_solo_cello_suites_reject_goldberg_curated() -> None:
+    ident = resolve_identity("巴赫大提琴无伴奏组曲")
+    amb = select_ambient(
+        work_title=ident.work_title,
+        composer=ident.composer_name,
+        family_hints=[ident.family_id] if ident.family_id else [],
+        facets=ident.facets,
+        ambient_ref=ident.ambient_ref,
+        conflict_markers=ident.conflict_markers,
+        existing={"playlist_id": "open-goldberg-ishizaka"},
+        corpus_dir=_corpus(),
+    )
+    assert amb.get("selection_source") in {"related", "default", "catalog-ref"}
+    blob = str(amb).lower()
+    assert "ishizaka" not in blob
+    assert "1007" in blob or "cello" in blob or amb.get("selection_id") == "cello-as-speaker-bach-suite1"
 
 
 def test_mozart_gets_classical_peer_or_default() -> None:

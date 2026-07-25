@@ -1,0 +1,14 @@
+composer_id: frederic-chopin
+name_en: Frédéric Chopin
+name_zh: 弗雷德里克·肖邦
+aliases:
+  - chopin
+  - frederic chopin
+  - frédéric chopin
+  - 肖邦
+  - 弗雷德里克·肖邦
+lifespan: 1810–1849
+era: romantic
+provenance:
+  authority: standard biographical reference
+  notes: Composer card only — work shelves live under works/*.yaml.

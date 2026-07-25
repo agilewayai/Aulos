@@ -32,6 +32,21 @@ def test_works_compatible_requires_distinctive_overlap() -> None:
         doc_work_key="bwv-988",
         score=0.66,
     )
+    # Catalog prefix "BWV" alone must never equate Cello Suites with Goldberg
+    assert not works_compatible(
+        "Bach Cello Suites BWV 1007–1012",
+        doc_title="J.S. Bach — Goldberg Variations, BWV 988",
+        doc_composer="Johann Sebastian Bach",
+        doc_work_key="bwv-988",
+        score=0.9,
+    )
+    assert not works_compatible(
+        "巴赫 大提琴无伴奏组曲",
+        doc_title="J.S. Bach — Goldberg Variations, BWV 988",
+        doc_composer="Johann Sebastian Bach",
+        doc_work_key="bwv-988",
+        score=0.85,
+    )
 
 
 @pytest.fixture()
@@ -82,5 +97,31 @@ def test_retrieve_does_not_attach_goldberg_to_mozart(client: TestClient) -> None
         assert result.get("rag_mode") in {"no_match", "empty", "lexical", "vector", "fastembed", "openai"}
         for hit in result.get("hits") or []:
             assert "Goldberg" not in (hit.get("title") or "")
+    finally:
+        db.close()
+
+
+def test_retrieve_does_not_attach_goldberg_to_cello_suites(client: TestClient) -> None:
+    """Regression: shared 'Bach'+'BWV' must not inject Goldberg kb_dossier onto cello suites."""
+    from aulos_api.db.session import SessionLocal, get_engine
+    from aulos_api.services.knowledge_base import retrieve, seed_corpus_knowledge
+
+    get_engine()
+    db = SessionLocal()
+    try:
+        seed_corpus_knowledge(db)
+        for query, hint in (
+            ("Bach Cello Suites BWV 1007-1012", "Bach Cello Suites BWV 1007-1012"),
+            ("巴赫大提琴无伴奏组曲", "巴赫大提琴无伴奏组曲"),
+            ("I'm listening to Bach unaccompanied cello suites", "Bach unaccompanied cello suites"),
+        ):
+            result = retrieve(db, query=query, work_hint=hint, composer="Johann Sebastian Bach", user_id=1, k=6)
+            dossier = result.get("kb_dossier") or {}
+            title = str(dossier.get("work_title") or "")
+            assert "Goldberg" not in title, f"polluted dossier for {query!r}: {title}"
+            assert "哥德堡" not in title
+            for hit in result.get("hits") or []:
+                assert "Goldberg" not in (hit.get("title") or "")
+                assert "988" not in (hit.get("title") or "")
     finally:
         db.close()

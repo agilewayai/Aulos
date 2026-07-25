@@ -1,0 +1,96 @@
+# aulos-knowledge infra — durable host bind mounts + digest-pinned images.
+#
+# Persistence contract (survives docker restart / container recreate / reboot):
+# - Postgres+pgvector data → ../data/persist/postgres  (KB + embeddings + media_assets rows)
+# - Redis AOF+RDB        → ../data/persist/redis
+# - Crawl JSON + images + PD audio + music-file meta → host ../data/persist/artifacts
+#   (aulos-knowledge service; not inside Postgres container)
+#
+# Named Docker volumes are NOT used — bind mounts survive `docker compose down`
+# and `docker compose down -v` (host dirs are never deleted by Compose).
+# Destroying data requires explicitly deleting ../data/persist/* .
+#
+# Image trust: see IMAGE_DIGESTS.md. Ports localhost-only. no-new-privileges.
+
+name: aulos-knowledge
+
+services:
+  postgres:
+    image: pgvector/pgvector@sha256:1d533553fefe4f12e5d80c7b80622ba0c382abb5758856f52983d8789179f0fb
+    pull_policy: if_not_present
+    environment:
+      POSTGRES_USER: aulos
+      POSTGRES_PASSWORD: aulos
+      POSTGRES_DB: aulos_knowledge
+      # Faster clean shutdown so WAL is flushed before container stop
+      POSTGRES_INITDB_ARGS: "--data-checksums"
+    ports:
+      - "127.0.0.1:5433:5432"
+    volumes:
+      - ../data/persist/postgres:/var/lib/postgresql/data
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
+    cap_add:
+      - CHOWN
+      - DAC_OVERRIDE
+      - FOWNER
+      - SETGID
+      - SETUID
+    read_only: false
+    tmpfs:
+      - /tmp
+      - /run
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U aulos -d aulos_knowledge"]
+      interval: 5s
+      timeout: 5s
+      retries: 12
+      start_period: 15s
+    stop_grace_period: 60s
+    restart: unless-stopped
+
+  redis:
+    image: redis@sha256:6ab0b6e7381779332f97b8ca76193e45b0756f38d4c0dcda72dbb3c32061ab99
+    pull_policy: if_not_present
+    # Dual persistence: AOF (everysec) + periodic RDB snapshot
+    command:
+      - redis-server
+      - --dir
+      - /data
+      - --appendonly
+      - "yes"
+      - --appendfsync
+      - everysec
+      - --save
+      - "60"
+      - "1"
+      - --save
+      - "300"
+      - "10"
+      - --protected-mode
+      - "no"
+      - --bind
+      - "0.0.0.0"
+    ports:
+      - "127.0.0.1:6379:6379"
+    volumes:
+      - ../data/persist/redis:/data
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
+    cap_add:
+      # Entrypoint chowns /data; without DAC_OVERRIDE root cannot traverse mode-700 AOF dirs
+      - CHOWN
+      - DAC_OVERRIDE
+      - SETGID
+      - SETUID
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 12
+    stop_grace_period: 30s
+    restart: unless-stopped

@@ -1,0 +1,36 @@
+work_id: dvorak.dumky-trio
+composer_id: antonin-dvorak
+canonical_title: Antonín Dvořák — Piano Trio No. 4 in E minor, Op. 90 “Dumky”
+canonical_title_zh: 德沃夏克 — 钢琴三重奏第四号《杜姆卡》，作品90
+aliases:
+  - Dumky
+  - Dumky Trio
+  - Dumky piano trio
+  - Dvorak Dumky
+  - Dvořák Dumky
+  - Piano Trio No. 4
+  - Op. 90 Dumky
+  - 杜姆卡
+  - 杜姆卡三重奏
+  - 德沃夏克杜姆卡
+  - 德弗札克杜姆卡
+catalog_numbers:
+  - Op. 90
+  - Op.90
+facets:
+  instruments: [piano, violin, cello]
+  ensemble: [piano-trio]
+  forms: [trio, dumky, character-dance]
+  era: romantic
+family_id: null
+corpus_key: null
+ambient_ref: null
+identity:
+  distinctive_tokens:
+    - dumky
+    - 杜姆卡
+  conflict_work_ids: []
+  conflict_markers: []
+provenance:
+  authority: Dvořák Piano Trio No. 4 Op. 90
+  notes: Catalog identity shelf — Salon dossier via web research / synthesize, not hardcoded prose.

@@ -10,7 +10,7 @@ generated_by: "/aries-harness init"
 initialized_at: "2026-07-25T10:55:22Z"
 effective_status: "active"
 effective_since: "2026-07-25T10:55:22Z"
-content_fingerprint: "sha256:2b7ac7c276f6de6c144ec95ded75992f4d4a217b7d20dee428be49d69b28ad6d"
+content_fingerprint: "sha256:f5665dcc6fd34ec007858cc0f33fe9b884f0dea7210190d79f361565ea586c61"
 trace_history_source: "filesystem-only"
 trace_last_commit_sha: ""
 trace_last_commit_at: ""
@@ -25,6 +25,12 @@ trace_revision_count: "0"
 - treat `checkpoints/` and `runs/` as episodic memory, not durable truth
 
 ## Active durable truths
+
+### Agent-centric listening
+
+- 导赏 is Agent tool-chain (`run_listening_skill`), not API `iter_listening_chain`.
+- See aulos-agent ARCH-002 / ADR-003 / SPEC-002.
+
 
 ### Architecture / invariants
 

@@ -10,13 +10,39 @@ generated_by: "/aries-harness init"
 initialized_at: "2026-07-25T11:07:43Z"
 effective_status: "active"
 effective_since: "2026-07-25T11:07:43Z"
-content_fingerprint: "sha256:8309f12989e91f6287e53ffa150e58e6d324dc66527a981049706cdd7958ded7"
+content_fingerprint: "sha256:438c0b1f87ac47df5057ce76242a6782bbebc86da23672fc4b54929bc34f4fce"
 trace_history_source: "filesystem-only"
 trace_last_commit_sha: ""
 trace_last_commit_at: ""
 trace_revision_count: "0"
 ---
 # Journal
+
+## 2026-07-25T18:25:45Z
+
+- Web research loop: thin RAG → Wikipedia/DDG (+ optional Brave) → LLM verify → KB upsert (user + global)
+- Ops `/v1/ops/web-research` + LLM tab controls; query variants for opus-specific titles
+- Verified: `tests/test_web_research.py` 5 passed; live Dvořák Dumky `rag_mode=no_match+web-research`, persisted docs 12/13, next search 6 hits
+
+## 2026-07-25T17:22:35Z
+
+- STORY-PACK-007 S2: `_rag_context` resolves Catalog work_id for knowledge-plane retrieve
+- Client-side drop of mismatched `aulos_work_id` hits; `tests/test_knowledge_plane_rag.py` green
+
+## 2026-07-26T01:15:00Z
+
+- RAG aligned to Work Identity Catalog (REQ-006): seed identity cards; weak tokens from policy
+- works_compatible respects work_id; identity_only cards never replace full dossiers
+
+## 2026-07-26T00:55:00Z
+
+- RAG identity gate: `bwv`/form words are weak tokens; soft-filter requires distinctive overlap
+- Retrieve must not attach Goldberg `kb_dossier` to Bach cello suites / 大提琴无伴奏组曲
+- SPEC-006 identity hard-gate + regression tests
+
+## 2026-07-25T17:15:00Z
+
+- Listening gateway delegates to AgentProxy.run_listening (no local iter_listening_chain)
 
 ## 2026-07-25T17:00:00Z
 

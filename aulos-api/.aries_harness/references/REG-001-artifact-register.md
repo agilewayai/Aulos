@@ -9,7 +9,7 @@ fingerprint: "aries-harness/bootstrap-doc/v1"
 initialized_at: "2026-07-25T11:10:22Z"
 effective_status: "active"
 effective_since: "2026-07-25T11:10:22Z"
-content_fingerprint: "sha256:40d134e2472441ba9aa1d0b4f585ef75355175c1c6cd67a838cee141d5d0edb5"
+content_fingerprint: "sha256:819d6f9462d6e9c958632f72211479c78d1c9a6668dd1077308dc2d74e99a61f"
 trace_history_source: "filesystem-only"
 trace_last_commit_sha: ""
 trace_last_commit_at: ""
@@ -26,6 +26,7 @@ trace_revision_count: "0"
 | Artifact ID | Type | Canonical path | Status |
 | --- | --- | --- | --- |
 | REQ-001 | request | references/requests/REQ-001-aulos-api-bootstrap.md | active |
+| REQ-006 | request | references/requests/REQ-006-rag-work-identity-catalog.md | active |
 | SPEC-001 | spec | references/specs/SPEC-001-api-gateway.md | active |
 | STORY-PACK-001 | story-pack | references/stories/STORY-PACK-001-bootstrap.md | active |
 | ARCH-001 | architecture | decisions/architecture/ARCH-001-api-gateway-architecture.md | active |

@@ -26,6 +26,7 @@ Also: UI/UX → **`ui-ux-pro-max`**. Canonical policy: `../aulos-skills/skills/a
 - Keep backend selection in `config/settings.py` + `services/agent_proxy.py`.
 - Offline tests must pass with fake agent mode (`AULOS_API_FAKE_AGENT=true`).
 - Timestamps: store/emit UTC via `aulos_api.timefmt.to_utc_iso` (SPEC-007); never return naive local wall-clock.
+- Listening: delegate to `AgentProxy.run_listening` (agent skill tools); do not call `SkillRuntime.iter_listening_chain` from the API.
 - Update `.aries_harness/` artifacts when scope, architecture, or acceptance changes.
 - Follow TDD coding loop (Red → Green → Refactor) inside Inspect → Plan → Verify → Summarize; journal durable notes in `.aries_harness/JOURNAL.md`.
 

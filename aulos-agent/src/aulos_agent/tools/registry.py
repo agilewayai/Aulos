@@ -10,9 +10,13 @@ from aulos_agent.tools.builtin import echo_text, get_current_utc_time
 def default_tools() -> list[BaseTool]:
     tools: list[BaseTool] = [get_current_utc_time, echo_text]
     try:
-        from aulos_agent.tools.skills import list_aulos_skills, run_listening_skill_chain
+        from aulos_agent.tools.skills import (
+            finalize_listening_guide,
+            list_aulos_skills,
+            run_listening_skill,
+        )
 
-        tools.extend([list_aulos_skills, run_listening_skill_chain])
+        tools.extend([list_aulos_skills, run_listening_skill, finalize_listening_guide])
     except Exception:  # noqa: BLE001 — optional sibling skills package
         pass
     return tools

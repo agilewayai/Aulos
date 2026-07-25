@@ -1,0 +1,13 @@
+composer_id: gustav-mahler
+name_en: Gustav Mahler
+name_zh: 古斯塔夫·马勒
+aliases:
+  - mahler
+  - gustav mahler
+  - 马勒
+  - 古斯塔夫·马勒
+lifespan: 1860–1911
+era: late-romantic
+provenance:
+  authority: standard biographical reference
+  notes: Composer card only — work shelves live under works/*.yaml.

@@ -1,0 +1,63 @@
+# Tokens that never prove same-work identity alone.
+# Shared by IdentityResolver and API RAG soft-filter / works_compatible.
+# Work.identity.distinctive_tokens still score even when a token appears here —
+# this list only blocks generic leftover overlap (e.g. "bach"+"bwv" without 988/1007).
+
+tokens:
+  - bach
+  - johann
+  - sebastian
+  - beethoven
+  - ludwig
+  - van
+  - mozart
+  - wolfgang
+  - amadeus
+  - chopin
+  - frederic
+  - frédéric
+  - mahler
+  - gustav
+  - dvorak
+  - dvořák
+  - antonin
+  - antonín
+  - debussy
+  - claude
+  - 巴赫
+  - 贝多芬
+  - 莫扎特
+  - 肖邦
+  - 马勒
+  - 德沃夏克
+  - 德弗札克
+  - 德彪西
+  - bwv
+  - woo
+  - hob
+  - kv
+  - k
+  - op
+  - opus
+  - no
+  - nr
+  - sym
+  - suite
+  - suites
+  - sonata
+  - sonatas
+  - variation
+  - variations
+  - concerto
+  - symphony
+  - nocturne
+  - nocturnes
+  - prelude
+  - fugue
+  - 组曲
+  - 奏鸣曲
+  - 变奏
+  - 变奏曲
+  - 交响
+  - 交响乐
+  - 夜曲

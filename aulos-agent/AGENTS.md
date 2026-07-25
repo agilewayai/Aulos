@@ -23,6 +23,7 @@ Also: UI/UX → **`ui-ux-pro-max`**. Canonical policy: `../aulos-skills/skills/a
 ## Coding rules
 
 - Prefer extending `tools/` and `graph/nodes.py` over inventing parallel agent frameworks.
+- Listening / 导赏: orchestrate via skill tools (`run_listening_skill`); see ARCH-002 / SPEC-002.
 - Keep provider selection in `llm/factory.py` + `config/settings.py`.
 - Offline tests must pass without live API keys (`AULOS_LLM_PROVIDER=fake`).
 - Update `.aries_harness/` artifacts when scope, architecture, or acceptance changes.
@@ -31,7 +32,9 @@ Also: UI/UX → **`ui-ux-pro-max`**. Canonical policy: `../aulos-skills/skills/a
 ## Key paths
 
 - Architecture: `.aries_harness/decisions/architecture/ARCH-001-langchain-agent-architecture.md`
+- Listening architecture: `.aries_harness/decisions/architecture/ARCH-002-agent-orchestrated-listening.md`
 - Spec: `.aries_harness/references/specs/SPEC-001-langchain-agent-runtime.md`
+- Listening spec: `.aries_harness/references/specs/SPEC-002-agent-orchestrated-listening.md`
 - Execution card: `.aries_harness/references/tasks/EC-001-bootstrap-execution-card.md`
 - Package: `src/aulos_agent/`
 

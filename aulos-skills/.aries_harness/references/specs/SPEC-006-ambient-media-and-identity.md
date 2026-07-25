@@ -9,7 +9,7 @@ fingerprint: "aries-harness/bootstrap-doc/v1"
 initialized_at: "2026-07-25T16:19:58+00:00"
 effective_status: "active"
 effective_since: "2026-07-25T16:19:58+00:00"
-content_fingerprint: "sha256:8e47b750aa0b4c594533609d4e8321c7947a482bc9fa1334ce1714e54c3e5120"
+content_fingerprint: "sha256:91b38752a1ee0716f981b841db146de5feb47576db021c96e63f73c03d54254a"
 trace_history_source: "filesystem-only"
 trace_last_commit_sha: ""
 trace_last_commit_at: ""
@@ -40,11 +40,19 @@ API must serve cached files with `Content-Disposition: inline` (never `attachmen
 
 ## Synthesize identity rules
 
-- KB dossier injection requires **positive** title match (empty `work_title` → refuse).
+- **Catalog is identity authority** (SPEC-008 / ADR-004). Intake uses `IdentityResolver`;
+  runtime must not add work-proper-name `elif` branches.
+- KB dossier injection requires **positive** identity match (`work_id` / `corpus_key` /
+  distinctive catalog tokens). Empty `work_title` → refuse.
+- Catalog prefixes (`bwv`, `op`, …) and generic form words are **weak** (see
+  `catalog/policies/weak_tokens.yaml`) — they never prove same-work alone.
+- Intake shelves come from resolved `family_id`, not hardcoded Bach/Beethoven trees.
 - When a genre-family scaffold matches and corpus missed, **family structural lists win**
   over LLM/RAG merge appends.
-- Scrub foreign flagship markers (`goldberg`, `bwv 988`, `哥德堡`, `aria bass`, …)
-  from cold-path list chambers unless the work title itself is that flagship.
+- Scrub uses **catalog-derived `conflict_markers`** (from `conflict_work_ids`), applied to
+  lists **and** scalars (`listening_thesis`, `work_introduction`, `ambient_audio`).
+- Curated ambient that carries conflict markers is discarded; related/default selection
+  uses `ambient_ref` or facet instrument intersection (generic timbre gate).
 
 ## Eval gate
 

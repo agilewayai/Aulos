@@ -11,7 +11,8 @@ related:
     playlist_id: open-goldberg-ishizaka
     composers: [bach, j.s. bach, johann sebastian bach, 巴赫]
     eras: [baroque, 巴洛克]
-    forms: [variation, variations, 变奏, 变奏曲, keyboard, harpsichord, piano, 键盘]
+    instruments: [keyboard, piano, harpsichord, 钢琴, 羽管键琴, 键盘]
+    forms: [variation, variations, 变奏, 变奏曲, goldberg, 哥德堡, keyboard, harpsichord, piano, 键盘]
     weight: 12
     why: "Open Goldberg Variations (CC0) — a complete public Bach keyboard cycle for variation/keyboard listening."
     why_zh: "选用石坂木美子《Open Goldberg Variations》（CC0）完整套曲：同为巴赫键盘变奏宇宙的公开授权录音。"
@@ -24,7 +25,8 @@ related:
     credit_zh: 石坂木美子 — Open Goldberg Variations（CC0，Wikimedia Commons）
     composers: [bach, j.s. bach, johann sebastian bach, 巴赫]
     eras: [baroque, 巴洛克]
-    forms: [suite, allemande, gigue, 舞曲, 组曲, prelude, fugue, 赋格, 前奏]
+    instruments: [keyboard, piano, harpsichord, 钢琴, 羽管键琴, 键盘]
+    forms: [allemande, gigue, 舞曲, prelude, fugue, 赋格, 前奏, partita, 帕蒂塔, french suite, english suite]
     weight: 8
     why: "No complete public recording of this Bach work was available; using the Open Goldberg Aria as a period keyboard companion."
     why_zh: "本巴赫作品暂无完整公开授权录音；选用《Open Goldberg》咏叹调作为同代键盘气质的关联背景。"
@@ -50,7 +52,8 @@ related:
     credit_zh: 公有领域大提琴录音（Wikimedia Commons）
     composers: [bach, j.s. bach, johann sebastian bach, 巴赫]
     eras: [baroque, classical, romantic, 巴洛克, 古典, 浪漫]
-    forms: [cello, violoncello, 大提琴, suite, 组曲, chamber, 室内, sonata, 奏鸣曲]
+    instruments: [cello, violoncello, 大提琴]
+    forms: [cello, violoncello, 大提琴, suite, suites, 组曲, unaccompanied, 无伴奏, chamber, 室内]
     peers: [beethoven, brahms, 贝多芬, 勃拉姆斯]
     weight: 16
     why: "Cello-forward companion from the open library — Suite I Prelude as cello-as-complete-speaker atmosphere."
@@ -77,10 +80,10 @@ related:
     credit_zh: Peter Johnston／Musopen — CC0（Wikimedia Commons）
     composers: [chopin, frédéric chopin, frederic chopin, 肖邦]
     eras: [romantic, 浪漫]
-    forms: [nocturne, 夜曲, piano, 钢琴]
+    forms: [nocturne, 夜曲, piano, 钢琴, mazurka, mazurkas, waltz, polonaise, 玛祖卡, 马祖卡, 圆舞曲, 波洛奈兹]
     weight: 10
-    why: "Chopin nocturne from the open library — same composer / lyric night-piece family."
-    why_zh: "选用肖邦《夜曲》Op.9 No.2（公开授权）：同作曲家、同属抒情夜曲语汇。"
+    why: "Chopin nocturne from the open library — same composer / Romantic piano peer (lyric or dance-character shelf)."
+    why_zh: "选用肖邦《夜曲》Op.9 No.2（公开授权）：同作曲家浪漫钢琴关联（抒情夜曲或性格舞曲货架）。"
 
   - id: chopin-nocturne-op9-1
     file: Chopin,_Nocturne_No._1_in_B_Flat_Minor,_Op._9.ogg
@@ -103,7 +106,7 @@ related:
     credit_zh: Luke Faulkner／Musopen — CC0（Wikimedia Commons）
     composers: []
     eras: [romantic, 浪漫]
-    forms: [piano, 钢琴, nocturne, 夜曲, ballade, 叙事曲, prelude, 前奏曲]
+    forms: [piano, 钢琴, nocturne, 夜曲, ballade, 叙事曲, prelude, 前奏曲, mazurka, waltz, polonaise, 玛祖卡, 圆舞曲, 波洛奈兹]
     peers: [schumann, liszt, mendelssohn, 舒曼, 李斯特, 门德尔松]
     weight: 6
     why: "No work-specific public recording; using a Romantic piano nocturne as a period peer atmosphere."
@@ -117,7 +120,8 @@ related:
     credit_zh: 石坂木美子 — Open Goldberg Variations（CC0）
     composers: []
     eras: [baroque, 巴洛克]
-    forms: [keyboard, organ, 管风琴, suite, 组曲, fugue, 赋格]
+    instruments: [keyboard, organ, 管风琴, harpsichord, 羽管键琴]
+    forms: [keyboard, organ, 管风琴, fugue, 赋格, partita]
     peers: [handel, telemann, scarlatti, 亨德尔, 泰勒曼, 斯卡拉蒂, vivaldi, 维瓦尔第]
     weight: 6
     why: "No work-specific public recording; Bach's Open Goldberg Aria stands in as a High-Baroque keyboard peer."

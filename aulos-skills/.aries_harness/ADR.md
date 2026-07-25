@@ -10,7 +10,7 @@ generated_by: "/aries-harness init"
 initialized_at: "2026-07-25T11:20:05Z"
 effective_status: "active"
 effective_since: "2026-07-25T11:20:05Z"
-content_fingerprint: "sha256:3491bd10bdd76e5be7392005bb8ea188917284e143999edb2ab7c8710afe5512"
+content_fingerprint: "sha256:e4b9471857700b0895d56f007b2ef7f8ce3a36474220d18acf4e78bef0db4ca5"
 trace_history_source: "filesystem-only"
 trace_last_commit_sha: ""
 trace_last_commit_at: ""
@@ -20,11 +20,11 @@ trace_revision_count: "0"
 
 ## Decision index
 
-- no decisions recorded yet
+- ADR-004 — Catalog over procedural identity heuristics (`decisions/adrs/ADR-004-catalog-over-heuristics.md`)
 
 ## Current decision
 
-- none yet
+- Work Catalog + IdentityResolver own listening identity; RAG does not alone confirm work.
 
 ## Detailed architecture artifacts
 

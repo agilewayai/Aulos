@@ -97,8 +97,10 @@ body.has-owner-bar{padding-top:0!important}
     var hint = amb.querySelector(".ambient-hint");
     var toggle = amb.querySelector(".ambient-toggle");
     var audio = amb.querySelector("audio");
-    var lang = (document.documentElement.getAttribute("lang") || "").indexOf("zh") === 0 ? "zh" : "en";
-    var expandLabel = lang === "zh" ? "说明" : "Info";
+    var langAttr = document.documentElement.getAttribute("lang") || "";
+    var isHant = langAttr === "zh-Hant";
+    var lang = langAttr.indexOf("zh") === 0 ? "zh" : "en";
+    var expandLabel = lang === "zh" ? (isHant ? "說明" : "说明") : "Info";
     var collapseLabel = lang === "zh" ? "收起" : "Hide";
     var mini = document.createElement("div");
     mini.className = "ambient-mini";

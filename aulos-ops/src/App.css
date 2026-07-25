@@ -287,6 +287,145 @@ body,
   font-weight: 600;
 }
 
+.plane-status-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.45rem;
+}
+
+.plane-badge {
+  display: inline-block;
+  min-width: 2.4rem;
+  padding: 0.12rem 0.45rem;
+  border: 1px solid var(--line);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  text-align: center;
+}
+
+.plane-badge-ok {
+  color: var(--ok);
+  border-color: var(--ok);
+}
+
+.plane-badge-down {
+  color: var(--down);
+  border-color: var(--down);
+}
+
+.plane-badge-unknown {
+  color: var(--muted, #888);
+}
+
+.knowledge-empty {
+  margin: 0.75rem 0 1rem;
+  padding: 0.9rem 1rem;
+  border: 1px dashed var(--line);
+  background: var(--panel);
+}
+
+.knowledge-empty p {
+  margin: 0 0 0.65rem;
+}
+
+.muted {
+  color: var(--muted, #888);
+}
+
+.knowledge-subtabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  margin: 0.85rem 0 1rem;
+}
+
+.knowledge-stats {
+  margin: 0.75rem 0 0.25rem;
+}
+
+.knowledge-filters {
+  align-items: end;
+  gap: 0.65rem;
+  margin-bottom: 0.85rem;
+}
+
+.knowledge-filters label.grow {
+  flex: 1 1 12rem;
+}
+
+.knowledge-split {
+  display: grid;
+  grid-template-columns: minmax(16rem, 0.95fr) minmax(18rem, 1.25fr);
+  gap: 1.1rem;
+  align-items: start;
+}
+
+.knowledge-doc-list {
+  max-height: 28rem;
+  overflow: auto;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  padding: 0.35rem 0;
+}
+
+.knowledge-doc-list li.selected {
+  background: color-mix(in srgb, var(--panel) 70%, var(--ok) 12%);
+}
+
+.doc-pick {
+  display: grid;
+  gap: 0.15rem;
+  width: 100%;
+  text-align: left;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  padding: 0.45rem 0.2rem;
+  cursor: pointer;
+  font: inherit;
+}
+
+.doc-status {
+  display: inline-block;
+  margin-right: 0.35rem;
+  padding: 0.05rem 0.35rem;
+  border: 1px solid var(--line);
+  font-size: 0.72rem;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+}
+
+.doc-status-published {
+  color: var(--ok);
+  border-color: var(--ok);
+}
+
+.doc-status-quarantine {
+  color: var(--down);
+  border-color: var(--down);
+}
+
+.knowledge-body {
+  max-height: 22rem;
+  overflow: auto;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.knowledge-crawl {
+  margin: 0.75rem 0 1rem;
+  align-items: end;
+}
+
+@media (max-width: 900px) {
+  .knowledge-split {
+    grid-template-columns: 1fr;
+  }
+}
+
 .auth-panel {
   max-width: 28rem;
 }

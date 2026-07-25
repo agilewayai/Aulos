@@ -9,7 +9,7 @@ fingerprint: "aries-harness/bootstrap-doc/v1"
 initialized_at: "2026-07-25T16:19:58+00:00"
 effective_status: "active"
 effective_since: "2026-07-25T16:19:58+00:00"
-content_fingerprint: "sha256:22088228fc14e57045418554da5bef545a4a546c61f6574aed89e7318bbcc6f8"
+content_fingerprint: "sha256:02e52db97d56ddb28d2a35288969297fb0316fd9c65a35a78b01b6fd605097b2"
 trace_history_source: "filesystem-only"
 trace_last_commit_sha: ""
 trace_last_commit_at: ""
@@ -35,6 +35,6 @@ Aulos needs compounding 导赏 capability. Hardcoding research in the API does n
 ## Consequences
 
 - Guide quality improvements ship as skill PRs in `aulos-skills`
-- Agent/API become thinner orchestrators
+- Agent/API become thinner orchestrators — **API must not** run `iter_listening_chain`; **Agent** calls per-trigger skill tools (see aulos-agent ADR-003 / ARCH-002)
 - Eval rubrics become first-class and testable offline
-- Requires a SkillRuntime implementation slice next (not only docs)
+- `SkillRuntime.run_trigger` is the tool implementation seam; product orchestration lives in the agent playbook

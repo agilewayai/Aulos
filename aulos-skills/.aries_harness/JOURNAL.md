@@ -10,13 +10,44 @@ generated_by: "/aries-harness init"
 initialized_at: "2026-07-25T11:20:05Z"
 effective_status: "active"
 effective_since: "2026-07-25T11:20:05Z"
-content_fingerprint: "sha256:0671c7f4c9e45f1d94c53d2a662ec7ee7c59a63a0c51a2ca6be0c5c0ec2c8313"
+content_fingerprint: "sha256:8ae54cb20207c4efd2c4eac3b8baf4aabc3ec75847cdef68e6334ef9029a0110"
 trace_history_source: "filesystem-only"
 trace_last_commit_sha: ""
 trace_last_commit_at: ""
 trace_revision_count: "0"
 ---
 # Journal
+
+## 2026-07-25T18:50:00Z
+
+- Fixed Unknown composer: Chinese 《》 title parse + catalog soft aliases (CJK len≥2); added Dvořák Dumky catalog shelf
+- Chinese locales: **简体 (zh-Hans)** + **繁体 (zh-Hant)** — script tags only
+- Guide switcher: 简体 | 繁体 | English
+
+## 2026-07-25T18:35:00Z
+
+- External skill intake: **Agent Reach** (`Panniantong/Agent-Reach` @ `b4d52c46…`)
+- Security audit → conditional allow as **search enabler only**
+- Installed `skills/enabler-agent-reach/` (policy fence; social/cookie/CLI-install denied)
+- Wired Jina deepen into `aulos-api` web_search / web-research + OPS toggle
+- Verified: registry discovers enabler; web_research tests pass
+
+## 2026-07-26T01:15:00Z
+
+- Work Identity Catalog productized (REQ-006 / SPEC-008 / DOM-002 / ADR-004)
+- Catalog schema + 5 works (Bach Goldberg/Cello, Beethoven duo, Chopin/Mahler slots)
+- IdentityResolver wired into intake/scrub/ambient; RAG seeds catalog cards
+- Removed work-name elif trees; identity authority is catalog YAML
+
+## 2026-07-26T00:55:00Z
+
+- Deep identity audit + fix: Bach cello suites pollution (Goldberg / Beethoven duo)
+- Added `solo-cello-suites` family; hardened intake, scrub, ambient conflict gates
+- SPEC-006 identity rules updated; hard-fail tests for cello suites + ambient
+
+## 2026-07-25T17:15:00Z
+
+- operating-defaults 0.4.0: product capabilities via Agent + Skill Harness; ADR-002 consequences updated
 
 ## 2026-07-25T17:00:00Z
 

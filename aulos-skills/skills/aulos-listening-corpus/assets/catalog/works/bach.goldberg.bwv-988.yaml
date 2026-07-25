@@ -1,0 +1,40 @@
+work_id: bach.goldberg.bwv-988
+composer_id: johann-sebastian-bach
+canonical_title: J.S. Bach — Goldberg Variations, BWV 988
+canonical_title_zh: 巴赫 — 哥德堡变奏曲，BWV 988
+aliases:
+  - Goldberg Variations
+  - Goldberg
+  - BWV 988
+  - BWV-988
+  - 哥德堡变奏曲
+  - 哥德堡
+  - Open Goldberg
+catalog_numbers:
+  - BWV 988
+  - BWV-988
+facets:
+  instruments: [keyboard, harpsichord, piano]
+  ensemble: [solo]
+  forms: [variation, variations]
+  era: baroque
+family_id: keyboard-variations
+corpus_key: bwv-988
+ambient_ref: bach-open-goldberg-full
+identity:
+  distinctive_tokens:
+    - goldberg
+    - 哥德堡
+    - 988
+    - ishizaka
+    - aria bass
+  conflict_work_ids:
+    - bach.cello-suites.bwv-1007-1012
+    - beethoven.cello-sonatas-variations
+  conflict_markers:
+    - cello suite
+    - 无伴奏大提琴
+    - bwv 1007
+provenance:
+  authority: BWV / Clavier-Übung IV
+  notes: Full Salon dossier seeded as corpus bwv-988.

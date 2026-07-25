@@ -13,9 +13,21 @@ composers:
       - johann sebastian bach
       - 巴赫
       - 约翰·塞巴斯蒂安·巴赫
+  - id: frederic-chopin
+    path: frederic-chopin.yaml
+    aliases:
+      - chopin
+      - frederic chopin
+      - frédéric chopin
+      - 肖邦
+      - 弗雷德里克·肖邦
 
 families:
+  - id: solo-cello-suites
+    path: solo-cello-suites.yaml
   - id: duo-cello-piano
     path: duo-cello-piano.yaml
   - id: keyboard-variations
     path: keyboard-variations.yaml
+  - id: character-dance-piano
+    path: character-dance-piano.yaml

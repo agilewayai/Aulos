@@ -17,6 +17,8 @@ Also:
 - **UI/UX** — apply the **`ui-ux-pro-max`** skill before visual/UX design changes.
 - **Listening-product changes** — promote into `aulos-skills` REQ/SPEC/SKILL/eval/tests + journal.
 - **Timestamps** — store UTC on the wire; display OS/browser local time in product UIs (`src/time.ts`).
+- **Chinese UI** — 简体 (`zh-Hans`) / 繁体 (`zh-Hant`) only; no regional locale codes in OSS source.
+- **Listening identity** — Catalog + IdentityResolver; no composer/work hardcoding in Python.
 
 Canonical policy: [`aulos-skills/skills/aulos-operating-defaults/SKILL.md`](aulos-skills/skills/aulos-operating-defaults/SKILL.md)
 

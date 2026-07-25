@@ -18,11 +18,14 @@ After compose, before showing the guide as final (or to annotate caveats).
 
 - Missing ambient player (`id="aulos-ambient"` or `data-ambient-player`) → **fail**
 - Corpus/synthesize hit without EN+ZH panes → note + structure penalty
+- Identity-resolved guides (`work_id` / `family_hints` / corpus|synthesize hit) missing ≥4 of
+  composer / genesis / stature / sound / interpretations / media chambers → **fail**
+  (Goldberg atelier parity bar — filled by family pack or corpus, not case hardcode)
 
 ## Procedure
 
 1. Score the five criteria.
-2. Apply hard gates (ambient required).
+2. Apply hard gates (ambient required; atelier chambers when identity resolved).
 3. If fail: list concrete revision notes for compose retry.
 4. Always return notes even on pass (continuous improvement).
 
@@ -32,3 +35,4 @@ After compose, before showing the guide as final (or to annotate caveats).
 - Failing guides solely for missing live web citations when corpus is solid
 - Passing corpus flagship guides that omit interpretations/media shelf
 - Passing silent pages (no ambient) that look complete in headings alone
+- Passing thin cold-path scaffolds for catalog-resolved works (must ship full atelier)
