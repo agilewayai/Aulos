@@ -10,6 +10,13 @@ This file stays aligned with `AGENTS.md` so Claude and Codex share the same proj
 
 Work inside `aulos-agent/` (this directory). Do not treat the parent `aulos/` folder as the package root unless explicitly asked.
 
+## Operating defaults (fleet)
+
+- Work under **aries-harness** for product design, system architecture, spec development, `history-refresh`, `well-organized`, and devops.
+- Coding loop is **TDD** (Red → Green → Refactor) inside Inspect → Plan → Verify → Summarize.
+- For UI/UX design or changes, apply the **`ui-ux-pro-max`** skill.
+- Canonical policy: `aulos-skills/skills/aulos-operating-defaults/SKILL.md` (and workspace `AGENTS.md`).
+
 ## Coding rules
 
 - Prefer extending `tools/` and `graph/nodes.py` over inventing parallel agent frameworks.

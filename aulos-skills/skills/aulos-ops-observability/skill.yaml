@@ -1,0 +1,5 @@
+id: aulos-ops-observability
+name: Aulos Ops Observability
+version: 0.1.0
+layer: observability
+summary: Operator playbook for reading service health, harness history, and run evidence from the ops portal.

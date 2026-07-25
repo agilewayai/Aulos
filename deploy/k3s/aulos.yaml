@@ -1,0 +1,113 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: aulos-web
+  namespace: default
+  labels:
+    app: aulos-web
+    managed-by: aries-harness
+spec:
+  type: ClusterIP
+  ports:
+    - name: http
+      port: 80
+      protocol: TCP
+      targetPort: 5091
+---
+apiVersion: discovery.k8s.io/v1
+kind: EndpointSlice
+metadata:
+  name: aulos-web-1
+  namespace: default
+  labels:
+    app: aulos-web
+    managed-by: aries-harness
+    kubernetes.io/service-name: aulos-web
+addressType: IPv4
+ports:
+  - name: http
+    protocol: TCP
+    port: 5091
+endpoints:
+  - addresses:
+      - 10.3.17.90
+    conditions:
+      ready: true
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: aulos-web
+  namespace: default
+  labels:
+    app: aulos-web
+    managed-by: aries-harness
+spec:
+  rules:
+    - host: aulos.purezen.ai
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: aulos-web
+                port:
+                  number: 80
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: aulos-ops
+  namespace: default
+  labels:
+    app: aulos-ops
+    managed-by: aries-harness
+spec:
+  type: ClusterIP
+  ports:
+    - name: http
+      port: 80
+      protocol: TCP
+      targetPort: 5092
+---
+apiVersion: discovery.k8s.io/v1
+kind: EndpointSlice
+metadata:
+  name: aulos-ops-1
+  namespace: default
+  labels:
+    app: aulos-ops
+    managed-by: aries-harness
+    kubernetes.io/service-name: aulos-ops
+addressType: IPv4
+ports:
+  - name: http
+    protocol: TCP
+    port: 5092
+endpoints:
+  - addresses:
+      - 10.3.17.90
+    conditions:
+      ready: true
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: aulos-ops
+  namespace: default
+  labels:
+    app: aulos-ops
+    managed-by: aries-harness
+spec:
+  rules:
+    - host: aulos-ops.purezen.ai
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: aulos-ops
+                port:
+                  number: 80

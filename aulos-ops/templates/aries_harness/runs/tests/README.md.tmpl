@@ -1,0 +1,34 @@
+---
+schema_version: "0.1"
+project_id: "{{PROJECT_ID}}"
+owner: "{{OWNER}}"
+doc_role: "pipeline-tests-readme"
+harness_layer: "RunCookingLayer"
+managed_by: "aries-harness"
+fingerprint: "aries-harness/bootstrap-doc/v1"
+generated_by: "/aries-harness init"
+initialized_at: "{{DATE}}"
+---
+
+# Test Execution And Fixes
+
+Use this directory for test execution logs, fix attempts, regression notes, and validation closeouts.
+
+## Recommended naming
+
+- `TESTRUN-*`
+- `test-execution-*`
+- `fix-*`
+- `verification-*`
+
+## Each artifact should make clear
+
+- commands or suites run
+- pass/fail result
+- fixes applied or still needed
+- next verification step
+
+## Layer rule
+
+- this directory belongs to `RunCookingLayer`
+- keep stable verification policy in `EVAL.md`, not here

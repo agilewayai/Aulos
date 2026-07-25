@@ -8,13 +8,21 @@
 
 Work inside `aulos-web/` (this directory). Do not treat the parent `aulos/` folder as the package root unless explicitly asked.
 
+## Operating defaults (fleet)
+
+- Work under **aries-harness** for product design, system architecture, spec development, `history-refresh`, `well-organized`, and devops.
+- Coding loop is **TDD** (Red → Green → Refactor) inside Inspect → Plan → Verify → Summarize.
+- For UI/UX design or changes, apply the **`ui-ux-pro-max`** skill.
+- Canonical policy: `aulos-skills/skills/aulos-operating-defaults/SKILL.md` (and workspace `AGENTS.md`).
+
 ## Coding rules
 
 - Keep the chat console as the primary surface; route all agent I/O through `aulos-api`.
+- For UI/UX changes, apply the `ui-ux-pro-max` skill before visual edits.
 - Prefer extending `src/api.ts` + `src/App.tsx` over adding parallel client stacks.
 - Dev proxy targets local gateway (`vite.config.ts`); do not hardcode secrets.
 - Update `.aries_harness/` artifacts when scope, architecture, or acceptance changes.
-- Follow Inspect → Plan → Edit → Verify → Summarize; journal durable notes in `.aries_harness/JOURNAL.md`.
+- Follow TDD coding loop (Red → Green → Refactor) inside Inspect → Plan → Verify → Summarize; journal durable notes in `.aries_harness/JOURNAL.md`.
 
 ## Key paths
 

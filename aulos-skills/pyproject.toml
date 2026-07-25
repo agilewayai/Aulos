@@ -1,0 +1,33 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "aulos-skills"
+version = "0.1.0"
+description = "Aulos main harness skills pack — skill registry, playbooks, and operator CLI"
+readme = "README.md"
+requires-python = ">=3.11"
+license = { text = "MIT" }
+authors = [{ name = "aulos" }]
+dependencies = [
+  "pydantic>=2.0",
+  "pydantic-settings>=2.0",
+  "python-dotenv>=1.0",
+  "pyyaml>=6.0",
+]
+
+[project.optional-dependencies]
+dev = [
+  "pytest>=8.0",
+]
+
+[project.scripts]
+aulos-skills = "aulos_skills.cli:main"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/aulos_skills"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]

@@ -1,0 +1,5 @@
+id: aulos-core
+name: Aulos Core Harness
+version: 0.1.0
+layer: core
+summary: Primary Aulos harness loop with TDD coding and aries-harness defaults for design/spec/history/devops.

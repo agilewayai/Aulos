@@ -8,13 +8,20 @@
 
 Work inside `aulos-mcp/` (this directory). Do not treat the parent `aulos/` folder as the package root unless explicitly asked.
 
+## Operating defaults (fleet)
+
+- Work under **aries-harness** for product design, system architecture, spec development, `history-refresh`, `well-organized`, and devops.
+- Coding loop is **TDD** (Red → Green → Refactor) inside Inspect → Plan → Verify → Summarize.
+- For UI/UX design or changes, apply the **`ui-ux-pro-max`** skill.
+- Canonical policy: `aulos-skills/skills/aulos-operating-defaults/SKILL.md` (and workspace `AGENTS.md`).
+
 ## Coding rules
 
 - Prefer extending `tools/` and registering them in `server/` over parallel MCP stacks.
 - Keep transport/config in `config/settings.py`.
 - Offline tool unit tests must pass without a live MCP host.
 - Update `.aries_harness/` artifacts when scope, architecture, or acceptance changes.
-- Follow Inspect → Plan → Edit → Verify → Summarize; journal durable notes in `.aries_harness/JOURNAL.md`.
+- Follow TDD coding loop (Red → Green → Refactor) inside Inspect → Plan → Verify → Summarize; journal durable notes in `.aries_harness/JOURNAL.md`.
 
 ## Key paths
 

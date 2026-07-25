@@ -1,0 +1,14 @@
+:root {
+  font-family: 'Sora', 'Avenir Next', sans-serif;
+  line-height: 1.5;
+  font-weight: 500;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+}
+
+#root {
+  min-height: 100vh;
+}

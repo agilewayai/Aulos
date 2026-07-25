@@ -29,3 +29,5 @@ node_modules/
 # Runtime / local
 *.log
 .langsmith/
+.run/
+

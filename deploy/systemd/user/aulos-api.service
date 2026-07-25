@@ -1,0 +1,24 @@
+[Unit]
+Description=aulos API gateway (:5090)
+After=network-online.target
+PartOf=aulos-host.target
+
+[Service]
+Type=simple
+WorkingDirectory=/home/ubuntu/hackathon/aulos/aulos-api
+Environment=AULOS_API_HOST=127.0.0.1
+Environment=AULOS_API_PORT=5090
+Environment=AULOS_API_FAKE_AGENT=true
+Environment=AULOS_API_CORS_ORIGINS=https://aulos.purezen.ai,https://aulos-ops.purezen.ai,http://127.0.0.1:5091,http://127.0.0.1:5092
+EnvironmentFile=-/home/ubuntu/hackathon/aulos/.run/host.env
+ExecStart=/home/ubuntu/hackathon/aulos/aulos-api/.venv/bin/aulos-api --host 127.0.0.1 --port 5090
+Restart=always
+RestartSec=2
+KillMode=control-group
+TimeoutStopSec=15
+StandardOutput=append:/home/ubuntu/hackathon/aulos/.run/api.log
+StandardError=append:/home/ubuntu/hackathon/aulos/.run/api.log
+
+[Install]
+WantedBy=default.target
+Also=aulos-host.target

@@ -1,0 +1,1293 @@
+{
+  "generated_at": "2026-07-25T11:36:53+00:00",
+  "project_root": "/home/ubuntu/hackathon/aulos/aulos-skills",
+  "harness_root": "/home/ubuntu/hackathon/aulos/aulos-skills/.aries_harness",
+  "history_root": "/home/ubuntu/hackathon/aulos/aulos-skills/.aries_harness/history",
+  "project_id": "aulos-skills",
+  "owner": "ubuntu",
+  "branch": "main",
+  "working_tree": {
+    "clean": false,
+    "change_count": 292,
+    "changes": [
+      {
+        "status": "M",
+        "path": ".gitignore"
+      },
+      {
+        "status": "M",
+        "path": "README.md"
+      },
+      {
+        "status": "M",
+        "path": "aulos-agent/.aries_harness/MEMORY.md"
+      },
+      {
+        "status": "M",
+        "path": "aulos-agent/AGENTS.md"
+      },
+      {
+        "status": "M",
+        "path": "aulos-agent/CLAUDE.md"
+      },
+      {
+        "status": "M",
+        "path": "aulos-api/.aries_harness/MEMORY.md"
+      },
+      {
+        "status": "M",
+        "path": "aulos-api/AGENTS.md"
+      },
+      {
+        "status": "M",
+        "path": "aulos-api/CLAUDE.md"
+      },
+      {
+        "status": "M",
+        "path": "aulos-mcp/.aries_harness/MEMORY.md"
+      },
+      {
+        "status": "M",
+        "path": "aulos-mcp/AGENTS.md"
+      },
+      {
+        "status": "M",
+        "path": "aulos-mcp/CLAUDE.md"
+      },
+      {
+        "status": "M",
+        "path": "aulos-web/.aries_harness/MEMORY.md"
+      },
+      {
+        "status": "M",
+        "path": "aulos-web/AGENTS.md"
+      },
+      {
+        "status": "M",
+        "path": "aulos-web/CLAUDE.md"
+      },
+      {
+        "status": "M",
+        "path": "aulos-web/package-lock.json"
+      },
+      {
+        "status": "??",
+        "path": "AGENTS.md"
+      },
+      {
+        "status": "??",
+        "path": "CLAUDE.md"
+      },
+      {
+        "status": "??",
+        "path": "aulos-ops/.aries_harness/ADR.md"
+      },
+      {
+        "status": "??",
+        "path": "aulos-ops/.aries_harness/ARIES_HARNESS_FINGERPRINT.json"
+      },
+      {
+        "status": "??",
+        "path": "aulos-ops/.aries_harness/EVAL.md"
+      },
+      {
+        "status": "??",
+        "path": "aulos-ops/.aries_harness/INDEX.md"
+      },
+      {
+        "status": "??",
+        "path": "aulos-ops/.aries_harness/JOURNAL.md"
+      },
+      {
+        "status": "??",
+        "path": "aulos-ops/.aries_harness/MEMORY.md"
+      },
+      {
+        "status": "??",
+        "path": "aulos-ops/.aries_harness/MISSION.md"
+      },
+      {
+        "status": "??",
+        "path": "aulos-ops/.aries_harness/PIPELINE.md"
+      },
+      {
+        "status": "??",
+        "path": "aulos-ops/.aries_harness/README.md"
+      },
+      {
+        "status": "??",
+        "path": "aulos-ops/.aries_harness/RISKS.md"
+      },
+      {
+        "status": "??",
+        "path": "aulos-ops/.aries_harness/RUNBOOK.md"
+      },
+      {
+        "status": "??",
+        "path": "aulos-ops/.aries_harness/STATE.md"
+      },
+      {
+        "status": "??",
+        "path": "aulos-ops/.aries_harness/TASK_STACK.md"
+      },
+      {
+        "status": "??",
+        "path": "aulos-ops/.aries_harness/archive/.gitkeep"
+      },
+      {
+        "status": "??",
+        "path": "aulos-ops/.aries_harness/checkpoints/.gitkeep"
+      },
+      {
+        "status": "??",
+        "path": "aulos-ops/.aries_harness/decisions/.gitkeep"
+      },
+      {
+        "status": "??",
+        "path": "aulos-ops/.aries_harness/decisions/adrs/.gitkeep"
+      },
+      {
+        "status": "??",
+        "path": "aulos-ops/.aries_harness/decisions/adrs/ADR-001-vite-ops-portal.md"
+      },
+      {
+        "status": "??",
+        "path": "aulos-ops/.aries_harness/decisions/adrs/README.md"
+      },
+      {
+        "status": "??",
+        "path": "aulos-ops/.aries_harness/decisions/architecture/.gitkeep"
+      },
+      {
+        "status": "??",
+        "path": "aulos-ops/.aries_harness/decisions/architecture/ARCH-001-ops-portal-architecture.md"
+      },
+      {
+        "status": "??",
+        "path": "aulos-ops/.aries_harness/decisions/architecture/README.md"
+      },
+      {
+        "status": "??",
+        "path": "aulos-ops/.aries_harness/history/.gitkeep"
+      },
+      {
+        "status": "??",
+        "path": "aulos-ops/.aries_harness/history/DAILY_SUMMARY_INDEX.md"
+      },
+      {
+        "status": "??",
+        "path": "aulos-ops/.aries_harness/history/DOC_TRACE.md"
+      },
+      {
+        "status": "??",
+        "path": "aulos-ops/.aries_harness/history/README.md"
+      },
+      {
+        "status": "??",
+        "path": "aulos-ops/.aries_harness/history/RETROSPECTIVE.md"
+      },
+      {
+        "status": "??",
+        "path": "aulos-ops/.aries_harness/history/ROADMAP.md"
+      },
+      {
+        "status": "??",
+        "path": "aulos-ops/.aries_harness/history/STATUS.md"
+      },
+      {
+        "status": "??",
+        "path": "aulos-ops/.aries_harness/history/TIMELINE.md"
+      },
+      {
+        "status": "??",
+        "path": "aulos-ops/.aries_harness/history/daily/.gitkeep"
+      },
+      {
+        "status": "??",
+        "path": "aulos-ops/.aries_harness/history/daily/2026-07-25.md"
+      },
+      {
+        "status": "??",
+        "path": "aulos-ops/.aries_harness/history/doc-trace.json"
+      },
+      {
+        "status": "??",
+        "path": "aulos-ops/.aries_harness/history/summary.json"
+      },
+      {
+        "status": "??",
+        "path": "aulos-ops/.aries_harness/layers/MetaDefineLayer/README.md"
+      },
+      {
+        "status": "??",
+        "path": "aulos-ops/.aries_harness/layers/RunCookingLayer/README.md"
+      },
+      {
+        "status": "??",
+        "path": "aulos-ops/.aries_harness/layers/SharedSupportSurface/README.md"
+      },
+      {
+        "status": "??",
+        "path": "aulos-ops/.aries_harness/memory/.gitkeep"
+      },
+      {
+        "status": "??",
+        "path": "aulos-ops/.aries_harness/memory/INDEX.md"
+      },
+      {
+        "status": "??",
+        "path": "aulos-ops/.aries_harness/memory/cards/.gitkeep"
+      },
+      {
+        "status": "??",
+        "path": "aulos-ops/.aries_harness/memory/cards/README.md"
+      },
+      {
+        "status": "??",
+        "path": "aulos-ops/.aries_harness/references/.gitkeep"
+      },
+      {
+        "status": "??",
+        "path": "aulos-ops/.aries_harness/references/HDM-001-harness-design-memo.md"
+      },
+      {
+        "status": "??",
+        "path": "aulos-ops/.aries_harness/references/REG-001-artifact-register.md"
+      },
+      {
+        "status": "??",
+        "path": "aulos-ops/.aries_harness/references/TRACE-001-value-traceability.md"
+      },
+      {
+        "status": "??",
+        "path": "aulos-ops/.aries_harness/references/domain/.gitkeep"
+      },
+      {
+        "status": "??",
+        "path": "aulos-ops/.aries_harness/references/domain/README.md"
+      },
+      {
+        "status": "??",
+        "path": "aulos-ops/.aries_harness/references/iterations/.gitkeep"
+      },
+      {
+        "status": "??",
+        "path": "aulos-ops/.aries_harness/references/iterations/README.md"
+      },
+      {
+        "status": "??",
+        "path": "aulos-ops/.aries_harness/references/requests/.gitkeep"
+      },
+      {
+        "status": "??",
+        "path": "aulos-ops/.aries_harness/references/requests/README.md"
+      },
+      {
+        "status": "??",
+        "path": "aulos-ops/.aries_harness/references/requests/REQ-001-aulos-ops-bootstrap.md"
+      },
+      {
+        "status": "??",
+        "path": "aulos-ops/.aries_harness/references/risks/.gitkeep"
+      },
+      {
+        "status": "??",
+        "path": "aulos-ops/.aries_harness/references/risks/README.md"
+      },
+      {
+        "status": "??",
+        "path": "aulos-ops/.aries_harness/references/specs/.gitkeep"
+      },
+      {
+        "status": "??",
+        "path": "aulos-ops/.aries_harness/references/specs/README.md"
+      },
+      {
+        "status": "??",
+        "path": "aulos-ops/.aries_harness/references/specs/SPEC-001-ops-portal.md"
+      },
+      {
+        "status": "??",
+        "path": "aulos-ops/.aries_harness/references/stories/.gitkeep"
+      },
+      {
+        "status": "??",
+        "path": "aulos-ops/.aries_harness/references/stories/README.md"
+      },
+      {
+        "status": "??",
+        "path": "aulos-ops/.aries_harness/references/stories/STORY-PACK-001-bootstrap.md"
+      },
+      {
+        "status": "??",
+        "path": "aulos-ops/.aries_harness/references/tasks/.gitkeep"
+      },
+      {
+        "status": "??",
+        "path": "aulos-ops/.aries_harness/references/tasks/EC-001-bootstrap-execution-card.md"
+      },
+      {
+        "status": "??",
+        "path": "aulos-ops/.aries_harness/references/tasks/README.md"
+      },
+      {
+        "status": "??",
+        "path": "aulos-ops/.aries_harness/runs/.gitkeep"
+      },
+      {
+        "status": "??",
+        "path": "aulos-ops/.aries_harness/runs/deployments/.gitkeep"
+      },
+      {
+        "status": "??",
+        "path": "aulos-ops/.aries_harness/runs/deployments/README.md"
+      },
+      {
+        "status": "??",
+        "path": "aulos-ops/.aries_harness/runs/github/.gitkeep"
+      },
+      {
+        "status": "??",
+        "path": "aulos-ops/.aries_harness/runs/github/README.md"
+      },
+      {
+        "status": "??",
+        "path": "aulos-ops/.aries_harness/runs/reports/.gitkeep"
+      },
+      {
+        "status": "??",
+        "path": "aulos-ops/.aries_harness/runs/reports/README.md"
+      },
+      {
+        "status": "??",
+        "path": "aulos-ops/.aries_harness/runs/tests/.gitkeep"
+      },
+      {
+        "status": "??",
+        "path": "aulos-ops/.aries_harness/runs/tests/README.md"
+      },
+      {
+        "status": "??",
+        "path": "aulos-ops/.aries_harness/runs/tests/VR-001-story-001-bootstrap.md"
+      },
+      {
+        "status": "??",
+        "path": "aulos-ops/.env.example"
+      },
+      {
+        "status": "??",
+        "path": "aulos-ops/.gitignore"
+      },
+      {
+        "status": "??",
+        "path": "aulos-ops/.oxlintrc.json"
+      },
+      {
+        "status": "??",
+        "path": "aulos-ops/AGENTS.md"
+      },
+      {
+        "status": "??",
+        "path": "aulos-ops/CLAUDE.md"
+      },
+      {
+        "status": "??",
+        "path": "aulos-ops/README.md"
+      },
+      {
+        "status": "??",
+        "path": "aulos-ops/index.html"
+      },
+      {
+        "status": "??",
+        "path": "aulos-ops/package-lock.json"
+      },
+      {
+        "status": "??",
+        "path": "aulos-ops/package.json"
+      },
+      {
+        "status": "??",
+        "path": "aulos-ops/public/favicon.svg"
+      },
+      {
+        "status": "??",
+        "path": "aulos-ops/public/icons.svg"
+      },
+      {
+        "status": "??",
+        "path": "aulos-ops/scripts/aries-harness/ah.sh"
+      },
+      {
+        "status": "??",
+        "path": "aulos-ops/scripts/aries-harness/aries-harness.sh"
+      },
+      {
+        "status": "??",
+        "path": "aulos-ops/scripts/aries-harness/dev-history.py"
+      },
+      {
+        "status": "??",
+        "path": "aulos-ops/scripts/aries-harness/init-project.sh"
+      },
+      {
+        "status": "??",
+        "path": "aulos-ops/scripts/aries-harness/memory-inspect.py"
+      },
+      {
+        "status": "??",
+        "path": "aulos-ops/scripts/aries-harness/pipeline-inspect.py"
+      },
+      {
+        "status": "??",
+        "path": "aulos-ops/scripts/aries-harness/runs-inspect.py"
+      },
+      {
+        "status": "??",
+        "path": "aulos-ops/scripts/aries-harness/well-organized.py"
+      },
+      {
+        "status": "??",
+        "path": "aulos-ops/src/App.css"
+      },
+      {
+        "status": "??",
+        "path": "aulos-ops/src/App.tsx"
+      },
+      {
+        "status": "??",
+        "path": "aulos-ops/src/api.ts"
+      },
+      {
+        "status": "??",
+        "path": "aulos-ops/src/index.css"
+      },
+      {
+        "status": "??",
+        "path": "aulos-ops/src/main.tsx"
+      },
+      {
+        "status": "??",
+        "path": "aulos-ops/templates/aries_harness/ADR.md.tmpl"
+      },
+      {
+        "status": "??",
+        "path": "aulos-ops/templates/aries_harness/ARIES_HARNESS_FINGERPRINT.json.tmpl"
+      },
+      {
+        "status": "??",
+        "path": "aulos-ops/templates/aries_harness/EVAL.md.tmpl"
+      },
+      {
+        "status": "??",
+        "path": "aulos-ops/templates/aries_harness/INDEX.md.tmpl"
+      },
+      {
+        "status": "??",
+        "path": "aulos-ops/templates/aries_harness/JOURNAL.md.tmpl"
+      },
+      {
+        "status": "??",
+        "path": "aulos-ops/templates/aries_harness/MEMORY.md.tmpl"
+      },
+      {
+        "status": "??",
+        "path": "aulos-ops/templates/aries_harness/MISSION.md.tmpl"
+      },
+      {
+        "status": "??",
+        "path": "aulos-ops/templates/aries_harness/PIPELINE.md.tmpl"
+      },
+      {
+        "status": "??",
+        "path": "aulos-ops/templates/aries_harness/README.md.tmpl"
+      },
+      {
+        "status": "??",
+        "path": "aulos-ops/templates/aries_harness/RISKS.md.tmpl"
+      },
+      {
+        "status": "??",
+        "path": "aulos-ops/templates/aries_harness/RUNBOOK.md.tmpl"
+      },
+      {
+        "status": "??",
+        "path": "aulos-ops/templates/aries_harness/STATE.md.tmpl"
+      },
+      {
+        "status": "??",
+        "path": "aulos-ops/templates/aries_harness/TASK_STACK.md.tmpl"
+      },
+      {
+        "status": "??",
+        "path": "aulos-ops/templates/aries_harness/decisions/adrs/README.md.tmpl"
+      },
+      {
+        "status": "??",
+        "path": "aulos-ops/templates/aries_harness/decisions/architecture/README.md.tmpl"
+      },
+      {
+        "status": "??",
+        "path": "aulos-ops/templates/aries_harness/history/README.md.tmpl"
+      },
+      {
+        "status": "??",
+        "path": "aulos-ops/templates/aries_harness/layers/MetaDefineLayer/README.md.tmpl"
+      },
+      {
+        "status": "??",
+        "path": "aulos-ops/templates/aries_harness/layers/RunCookingLayer/README.md.tmpl"
+      },
+      {
+        "status": "??",
+        "path": "aulos-ops/templates/aries_harness/layers/SharedSupportSurface/README.md.tmpl"
+      },
+      {
+        "status": "??",
+        "path": "aulos-ops/templates/aries_harness/memory/INDEX.md.tmpl"
+      },
+      {
+        "status": "??",
+        "path": "aulos-ops/templates/aries_harness/memory/cards/README.md.tmpl"
+      },
+      {
+        "status": "??",
+        "path": "aulos-ops/templates/aries_harness/references/domain/README.md.tmpl"
+      },
+      {
+        "status": "??",
+        "path": "aulos-ops/templates/aries_harness/references/iterations/README.md.tmpl"
+      },
+      {
+        "status": "??",
+        "path": "aulos-ops/templates/aries_harness/references/requests/README.md.tmpl"
+      },
+      {
+        "status": "??",
+        "path": "aulos-ops/templates/aries_harness/references/risks/README.md.tmpl"
+      },
+      {
+        "status": "??",
+        "path": "aulos-ops/templates/aries_harness/references/specs/README.md.tmpl"
+      },
+      {
+        "status": "??",
+        "path": "aulos-ops/templates/aries_harness/references/stories/README.md.tmpl"
+      },
+      {
+        "status": "??",
+        "path": "aulos-ops/templates/aries_harness/references/tasks/README.md.tmpl"
+      },
+      {
+        "status": "??",
+        "path": "aulos-ops/templates/aries_harness/runs/deployments/README.md.tmpl"
+      },
+      {
+        "status": "??",
+        "path": "aulos-ops/templates/aries_harness/runs/github/README.md.tmpl"
+      },
+      {
+        "status": "??",
+        "path": "aulos-ops/templates/aries_harness/runs/reports/README.md.tmpl"
+      },
+      {
+        "status": "??",
+        "path": "aulos-ops/templates/aries_harness/runs/tests/README.md.tmpl"
+      },
+      {
+        "status": "??",
+        "path": "aulos-ops/tsconfig.app.json"
+      },
+      {
+        "status": "??",
+        "path": "aulos-ops/tsconfig.json"
+      },
+      {
+        "status": "??",
+        "path": "aulos-ops/tsconfig.node.json"
+      },
+      {
+        "status": "??",
+        "path": "aulos-ops/vite.config.ts"
+      },
+      {
+        "status": "??",
+        "path": "aulos-skills/.aries_harness/ADR.md"
+      },
+      {
+        "status": "??",
+        "path": "aulos-skills/.aries_harness/ARIES_HARNESS_FINGERPRINT.json"
+      },
+      {
+        "status": "??",
+        "path": "aulos-skills/.aries_harness/EVAL.md"
+      },
+      {
+        "status": "??",
+        "path": "aulos-skills/.aries_harness/INDEX.md"
+      },
+      {
+        "status": "??",
+        "path": "aulos-skills/.aries_harness/JOURNAL.md"
+      },
+      {
+        "status": "??",
+        "path": "aulos-skills/.aries_harness/MEMORY.md"
+      },
+      {
+        "status": "??",
+        "path": "aulos-skills/.aries_harness/MISSION.md"
+      },
+      {
+        "status": "??",
+        "path": "aulos-skills/.aries_harness/PIPELINE.md"
+      },
+      {
+        "status": "??",
+        "path": "aulos-skills/.aries_harness/README.md"
+      },
+      {
+        "status": "??",
+        "path": "aulos-skills/.aries_harness/RISKS.md"
+      },
+      {
+        "status": "??",
+        "path": "aulos-skills/.aries_harness/RUNBOOK.md"
+      },
+      {
+        "status": "??",
+        "path": "aulos-skills/.aries_harness/STATE.md"
+      },
+      {
+        "status": "??",
+        "path": "aulos-skills/.aries_harness/TASK_STACK.md"
+      },
+      {
+        "status": "??",
+        "path": "aulos-skills/.aries_harness/archive/.gitkeep"
+      },
+      {
+        "status": "??",
+        "path": "aulos-skills/.aries_harness/checkpoints/.gitkeep"
+      },
+      {
+        "status": "??",
+        "path": "aulos-skills/.aries_harness/decisions/.gitkeep"
+      },
+      {
+        "status": "??",
+        "path": "aulos-skills/.aries_harness/decisions/adrs/.gitkeep"
+      },
+      {
+        "status": "??",
+        "path": "aulos-skills/.aries_harness/decisions/adrs/ADR-001-filesystem-skill-packs.md"
+      },
+      {
+        "status": "??",
+        "path": "aulos-skills/.aries_harness/decisions/adrs/README.md"
+      },
+      {
+        "status": "??",
+        "path": "aulos-skills/.aries_harness/decisions/architecture/.gitkeep"
+      },
+      {
+        "status": "??",
+        "path": "aulos-skills/.aries_harness/decisions/architecture/ARCH-001-skills-harness-architecture.md"
+      },
+      {
+        "status": "??",
+        "path": "aulos-skills/.aries_harness/decisions/architecture/README.md"
+      },
+      {
+        "status": "??",
+        "path": "aulos-skills/.aries_harness/history/.gitkeep"
+      },
+      {
+        "status": "??",
+        "path": "aulos-skills/.aries_harness/history/DAILY_SUMMARY_INDEX.md"
+      },
+      {
+        "status": "??",
+        "path": "aulos-skills/.aries_harness/history/DOC_TRACE.md"
+      },
+      {
+        "status": "??",
+        "path": "aulos-skills/.aries_harness/history/README.md"
+      },
+      {
+        "status": "??",
+        "path": "aulos-skills/.aries_harness/history/RETROSPECTIVE.md"
+      },
+      {
+        "status": "??",
+        "path": "aulos-skills/.aries_harness/history/ROADMAP.md"
+      },
+      {
+        "status": "??",
+        "path": "aulos-skills/.aries_harness/history/STATUS.md"
+      },
+      {
+        "status": "??",
+        "path": "aulos-skills/.aries_harness/history/TIMELINE.md"
+      },
+      {
+        "status": "??",
+        "path": "aulos-skills/.aries_harness/history/daily/.gitkeep"
+      },
+      {
+        "status": "??",
+        "path": "aulos-skills/.aries_harness/history/daily/2026-07-25.md"
+      },
+      {
+        "status": "??",
+        "path": "aulos-skills/.aries_harness/history/doc-trace.json"
+      },
+      {
+        "status": "??",
+        "path": "aulos-skills/.aries_harness/history/summary.json"
+      },
+      {
+        "status": "??",
+        "path": "aulos-skills/.aries_harness/layers/MetaDefineLayer/README.md"
+      },
+      {
+        "status": "??",
+        "path": "aulos-skills/.aries_harness/layers/RunCookingLayer/README.md"
+      },
+      {
+        "status": "??",
+        "path": "aulos-skills/.aries_harness/layers/SharedSupportSurface/README.md"
+      },
+      {
+        "status": "??",
+        "path": "aulos-skills/.aries_harness/memory/.gitkeep"
+      },
+      {
+        "status": "??",
+        "path": "aulos-skills/.aries_harness/memory/INDEX.md"
+      },
+      {
+        "status": "??",
+        "path": "aulos-skills/.aries_harness/memory/cards/.gitkeep"
+      },
+      {
+        "status": "??",
+        "path": "aulos-skills/.aries_harness/memory/cards/CARD-001-operating-defaults.md"
+      },
+      {
+        "status": "??",
+        "path": "aulos-skills/.aries_harness/memory/cards/README.md"
+      },
+      {
+        "status": "??",
+        "path": "aulos-skills/.aries_harness/references/.gitkeep"
+      },
+      {
+        "status": "??",
+        "path": "aulos-skills/.aries_harness/references/HDM-001-harness-design-memo.md"
+      },
+      {
+        "status": "??",
+        "path": "aulos-skills/.aries_harness/references/REG-001-artifact-register.md"
+      },
+      {
+        "status": "??",
+        "path": "aulos-skills/.aries_harness/references/TRACE-001-value-traceability.md"
+      },
+      {
+        "status": "??",
+        "path": "aulos-skills/.aries_harness/references/domain/.gitkeep"
+      },
+      {
+        "status": "??",
+        "path": "aulos-skills/.aries_harness/references/domain/README.md"
+      },
+      {
+        "status": "??",
+        "path": "aulos-skills/.aries_harness/references/iterations/.gitkeep"
+      },
+      {
+        "status": "??",
+        "path": "aulos-skills/.aries_harness/references/iterations/README.md"
+      },
+      {
+        "status": "??",
+        "path": "aulos-skills/.aries_harness/references/requests/.gitkeep"
+      },
+      {
+        "status": "??",
+        "path": "aulos-skills/.aries_harness/references/requests/README.md"
+      },
+      {
+        "status": "??",
+        "path": "aulos-skills/.aries_harness/references/requests/REQ-001-aulos-skills-bootstrap.md"
+      },
+      {
+        "status": "??",
+        "path": "aulos-skills/.aries_harness/references/risks/.gitkeep"
+      },
+      {
+        "status": "??",
+        "path": "aulos-skills/.aries_harness/references/risks/README.md"
+      },
+      {
+        "status": "??",
+        "path": "aulos-skills/.aries_harness/references/specs/.gitkeep"
+      },
+      {
+        "status": "??",
+        "path": "aulos-skills/.aries_harness/references/specs/README.md"
+      },
+      {
+        "status": "??",
+        "path": "aulos-skills/.aries_harness/references/specs/SPEC-001-skills-harness.md"
+      },
+      {
+        "status": "??",
+        "path": "aulos-skills/.aries_harness/references/stories/.gitkeep"
+      },
+      {
+        "status": "??",
+        "path": "aulos-skills/.aries_harness/references/stories/README.md"
+      },
+      {
+        "status": "??",
+        "path": "aulos-skills/.aries_harness/references/stories/STORY-PACK-001-bootstrap.md"
+      },
+      {
+        "status": "??",
+        "path": "aulos-skills/.aries_harness/references/tasks/.gitkeep"
+      },
+      {
+        "status": "??",
+        "path": "aulos-skills/.aries_harness/references/tasks/EC-001-bootstrap-execution-card.md"
+      },
+      {
+        "status": "??",
+        "path": "aulos-skills/.aries_harness/references/tasks/README.md"
+      },
+      {
+        "status": "??",
+        "path": "aulos-skills/.aries_harness/runs/.gitkeep"
+      },
+      {
+        "status": "??",
+        "path": "aulos-skills/.aries_harness/runs/deployments/.gitkeep"
+      },
+      {
+        "status": "??",
+        "path": "aulos-skills/.aries_harness/runs/deployments/README.md"
+      },
+      {
+        "status": "??",
+        "path": "aulos-skills/.aries_harness/runs/github/.gitkeep"
+      },
+      {
+        "status": "??",
+        "path": "aulos-skills/.aries_harness/runs/github/README.md"
+      },
+      {
+        "status": "??",
+        "path": "aulos-skills/.aries_harness/runs/reports/.gitkeep"
+      },
+      {
+        "status": "??",
+        "path": "aulos-skills/.aries_harness/runs/reports/README.md"
+      },
+      {
+        "status": "??",
+        "path": "aulos-skills/.aries_harness/runs/tests/.gitkeep"
+      },
+      {
+        "status": "??",
+        "path": "aulos-skills/.aries_harness/runs/tests/README.md"
+      },
+      {
+        "status": "??",
+        "path": "aulos-skills/.aries_harness/runs/tests/VR-001-story-001-bootstrap.md"
+      },
+      {
+        "status": "??",
+        "path": "aulos-skills/.env.example"
+      },
+      {
+        "status": "??",
+        "path": "aulos-skills/.gitignore"
+      },
+      {
+        "status": "??",
+        "path": "aulos-skills/AGENTS.md"
+      },
+      {
+        "status": "??",
+        "path": "aulos-skills/CLAUDE.md"
+      },
+      {
+        "status": "??",
+        "path": "aulos-skills/README.md"
+      },
+      {
+        "status": "??",
+        "path": "aulos-skills/pyproject.toml"
+      },
+      {
+        "status": "??",
+        "path": "aulos-skills/scripts/aries-harness/ah.sh"
+      },
+      {
+        "status": "??",
+        "path": "aulos-skills/scripts/aries-harness/aries-harness.sh"
+      },
+      {
+        "status": "??",
+        "path": "aulos-skills/scripts/aries-harness/dev-history.py"
+      },
+      {
+        "status": "??",
+        "path": "aulos-skills/scripts/aries-harness/init-project.sh"
+      },
+      {
+        "status": "??",
+        "path": "aulos-skills/scripts/aries-harness/memory-inspect.py"
+      },
+      {
+        "status": "??",
+        "path": "aulos-skills/scripts/aries-harness/pipeline-inspect.py"
+      },
+      {
+        "status": "??",
+        "path": "aulos-skills/scripts/aries-harness/runs-inspect.py"
+      },
+      {
+        "status": "??",
+        "path": "aulos-skills/scripts/aries-harness/well-organized.py"
+      },
+      {
+        "status": "??",
+        "path": "aulos-skills/skills/aulos-core/SKILL.md"
+      },
+      {
+        "status": "??",
+        "path": "aulos-skills/skills/aulos-core/skill.yaml"
+      },
+      {
+        "status": "??",
+        "path": "aulos-skills/skills/aulos-operating-defaults/SKILL.md"
+      },
+      {
+        "status": "??",
+        "path": "aulos-skills/skills/aulos-operating-defaults/skill.yaml"
+      },
+      {
+        "status": "??",
+        "path": "aulos-skills/skills/aulos-ops-observability/SKILL.md"
+      },
+      {
+        "status": "??",
+        "path": "aulos-skills/skills/aulos-ops-observability/skill.yaml"
+      },
+      {
+        "status": "??",
+        "path": "aulos-skills/skills/aulos-service-bootstrap/SKILL.md"
+      },
+      {
+        "status": "??",
+        "path": "aulos-skills/skills/aulos-service-bootstrap/skill.yaml"
+      },
+      {
+        "status": "??",
+        "path": "aulos-skills/src/aulos_skills/__init__.py"
+      },
+      {
+        "status": "??",
+        "path": "aulos-skills/src/aulos_skills/__main__.py"
+      },
+      {
+        "status": "??",
+        "path": "aulos-skills/src/aulos_skills/cli.py"
+      },
+      {
+        "status": "??",
+        "path": "aulos-skills/src/aulos_skills/config.py"
+      },
+      {
+        "status": "??",
+        "path": "aulos-skills/src/aulos_skills/registry.py"
+      },
+      {
+        "status": "??",
+        "path": "aulos-skills/templates/aries_harness/ADR.md.tmpl"
+      },
+      {
+        "status": "??",
+        "path": "aulos-skills/templates/aries_harness/ARIES_HARNESS_FINGERPRINT.json.tmpl"
+      },
+      {
+        "status": "??",
+        "path": "aulos-skills/templates/aries_harness/EVAL.md.tmpl"
+      },
+      {
+        "status": "??",
+        "path": "aulos-skills/templates/aries_harness/INDEX.md.tmpl"
+      },
+      {
+        "status": "??",
+        "path": "aulos-skills/templates/aries_harness/JOURNAL.md.tmpl"
+      },
+      {
+        "status": "??",
+        "path": "aulos-skills/templates/aries_harness/MEMORY.md.tmpl"
+      },
+      {
+        "status": "??",
+        "path": "aulos-skills/templates/aries_harness/MISSION.md.tmpl"
+      },
+      {
+        "status": "??",
+        "path": "aulos-skills/templates/aries_harness/PIPELINE.md.tmpl"
+      },
+      {
+        "status": "??",
+        "path": "aulos-skills/templates/aries_harness/README.md.tmpl"
+      },
+      {
+        "status": "??",
+        "path": "aulos-skills/templates/aries_harness/RISKS.md.tmpl"
+      },
+      {
+        "status": "??",
+        "path": "aulos-skills/templates/aries_harness/RUNBOOK.md.tmpl"
+      },
+      {
+        "status": "??",
+        "path": "aulos-skills/templates/aries_harness/STATE.md.tmpl"
+      },
+      {
+        "status": "??",
+        "path": "aulos-skills/templates/aries_harness/TASK_STACK.md.tmpl"
+      },
+      {
+        "status": "??",
+        "path": "aulos-skills/templates/aries_harness/decisions/adrs/README.md.tmpl"
+      },
+      {
+        "status": "??",
+        "path": "aulos-skills/templates/aries_harness/decisions/architecture/README.md.tmpl"
+      },
+      {
+        "status": "??",
+        "path": "aulos-skills/templates/aries_harness/history/README.md.tmpl"
+      },
+      {
+        "status": "??",
+        "path": "aulos-skills/templates/aries_harness/layers/MetaDefineLayer/README.md.tmpl"
+      },
+      {
+        "status": "??",
+        "path": "aulos-skills/templates/aries_harness/layers/RunCookingLayer/README.md.tmpl"
+      },
+      {
+        "status": "??",
+        "path": "aulos-skills/templates/aries_harness/layers/SharedSupportSurface/README.md.tmpl"
+      },
+      {
+        "status": "??",
+        "path": "aulos-skills/templates/aries_harness/memory/INDEX.md.tmpl"
+      },
+      {
+        "status": "??",
+        "path": "aulos-skills/templates/aries_harness/memory/cards/README.md.tmpl"
+      },
+      {
+        "status": "??",
+        "path": "aulos-skills/templates/aries_harness/references/domain/README.md.tmpl"
+      },
+      {
+        "status": "??",
+        "path": "aulos-skills/templates/aries_harness/references/iterations/README.md.tmpl"
+      },
+      {
+        "status": "??",
+        "path": "aulos-skills/templates/aries_harness/references/requests/README.md.tmpl"
+      },
+      {
+        "status": "??",
+        "path": "aulos-skills/templates/aries_harness/references/risks/README.md.tmpl"
+      },
+      {
+        "status": "??",
+        "path": "aulos-skills/templates/aries_harness/references/specs/README.md.tmpl"
+      },
+      {
+        "status": "??",
+        "path": "aulos-skills/templates/aries_harness/references/stories/README.md.tmpl"
+      },
+      {
+        "status": "??",
+        "path": "aulos-skills/templates/aries_harness/references/tasks/README.md.tmpl"
+      },
+      {
+        "status": "??",
+        "path": "aulos-skills/templates/aries_harness/runs/deployments/README.md.tmpl"
+      },
+      {
+        "status": "??",
+        "path": "aulos-skills/templates/aries_harness/runs/github/README.md.tmpl"
+      },
+      {
+        "status": "??",
+        "path": "aulos-skills/templates/aries_harness/runs/reports/README.md.tmpl"
+      },
+      {
+        "status": "??",
+        "path": "aulos-skills/templates/aries_harness/runs/tests/README.md.tmpl"
+      },
+      {
+        "status": "??",
+        "path": "aulos-skills/tests/test_registry.py"
+      },
+      {
+        "status": "??",
+        "path": "deploy/README.md"
+      },
+      {
+        "status": "??",
+        "path": "deploy/k3s/aulos.yaml"
+      },
+      {
+        "status": "??",
+        "path": "deploy/serve.py"
+      },
+      {
+        "status": "??",
+        "path": "deploy/start-host.sh"
+      },
+      {
+        "status": "??",
+        "path": "deploy/systemd/user/aulos-api.service"
+      },
+      {
+        "status": "??",
+        "path": "deploy/systemd/user/aulos-host.target"
+      },
+      {
+        "status": "??",
+        "path": "deploy/systemd/user/aulos-ops.service"
+      },
+      {
+        "status": "??",
+        "path": "deploy/systemd/user/aulos-web.service"
+      }
+    ]
+  },
+  "current_phase": "Bootstrap STORY-001 in progress / ready for verify",
+  "current_milestone": [
+    "no current milestone recorded"
+  ],
+  "next_action": [
+    "no next action recorded"
+  ],
+  "roadmap": {
+    "now": [
+      "no next action recorded"
+    ],
+    "next": [
+      "no next action recorded"
+    ],
+    "later": [
+      "In scope: skill packs under skills/, registry discovery, aulos-skills CLI, offline pytest, harness artifact ladder",
+      "Out of scope: publishing marketplace, remote skill sync productization, multi-tenant skill ACLs",
+      "pytest green; `aulos-skills list` shows bundled skills; ARCH/SPEC/STORY linked"
+    ]
+  },
+  "retrospective": {
+    "recent_changes": [
+      "initialized `.aries_harness/`",
+      "wrote `ARIES_HARNESS_FINGERPRINT.json`",
+      "no execution history recorded yet"
+    ],
+    "wins": [
+      "initialized `.aries_harness/`",
+      "wrote `ARIES_HARNESS_FINGERPRINT.json`",
+      "no execution history recorded yet"
+    ],
+    "needs_attention": [
+      "working tree is dirty with 292 tracked or untracked change(s)",
+      "no explicit next-up slice is recorded"
+    ],
+    "durable_reminders": [
+      "aries-harness first for product design, architecture, spec, history-refresh, well-organized, devops",
+      "TDD coding loop (Red \u2192 Green \u2192 Refactor)",
+      "UI/UX work must apply `ui-ux-pro-max`",
+      "see `aulos-skills` skill `aulos-operating-defaults` / CARD-001",
+      "promote only repeatable pitfalls, not one-off incidents"
+    ]
+  },
+  "daily_summaries": [
+    {
+      "date": "2026-07-25",
+      "journal_headings": [
+        "2026-07-25T11:20:05Z"
+      ],
+      "journal_items": [
+        "initialized `.aries_harness/`",
+        "wrote `ARIES_HARNESS_FINGERPRINT.json`",
+        "no execution history recorded yet"
+      ],
+      "feature_evolution": [
+        "initialized `.aries_harness/`",
+        "wrote `ARIES_HARNESS_FINGERPRINT.json`",
+        "no execution history recorded yet",
+        "Add aulos-web, aulos-api, and aulos-mcp sub-projects under aries-harness.",
+        "Initial commit: Aulos hackathon workspace with LangChain agent runtime."
+      ],
+      "git_commits": [
+        {
+          "sha": "7632d9b",
+          "date": "2026-07-25",
+          "subject": "Add aulos-web, aulos-api, and aulos-mcp sub-projects under aries-harness."
+        },
+        {
+          "sha": "0d5cb01",
+          "date": "2026-07-25",
+          "subject": "Initial commit: Aulos hackathon workspace with LangChain agent runtime."
+        }
+      ],
+      "working_tree_hints": [
+        "M .gitignore",
+        "M README.md",
+        "M aulos-agent/.aries_harness/MEMORY.md",
+        "M aulos-agent/AGENTS.md",
+        "M aulos-agent/CLAUDE.md",
+        "M aulos-api/.aries_harness/MEMORY.md",
+        "M aulos-api/AGENTS.md",
+        "M aulos-api/CLAUDE.md"
+      ]
+    }
+  ],
+  "doc_trace_summary": {
+    "document_count": 49,
+    "docs_with_issues": 0,
+    "dirty_docs": 0,
+    "by_layer": {
+      "MetaDefineLayer": 24,
+      "SharedSupportSurface": 15,
+      "RunCookingLayer": 10
+    },
+    "by_effective_status": {
+      "active": 40,
+      "generated": 9
+    }
+  },
+  "evidence_sources": [
+    ".aries_harness/MISSION.md",
+    ".aries_harness/TASK_STACK.md",
+    ".aries_harness/STATE.md",
+    ".aries_harness/JOURNAL.md",
+    ".aries_harness/EVAL.md",
+    ".aries_harness/MEMORY.md",
+    "git status --porcelain=v1",
+    "git log",
+    ".aries_harness/**/*.md frontmatter + git file history"
+  ]
+}

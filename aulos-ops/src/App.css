@@ -1,0 +1,266 @@
+:root {
+  --ink: #101820;
+  --ink-soft: #4a5a68;
+  --panel: rgba(255, 255, 255, 0.78);
+  --line: rgba(16, 24, 32, 0.12);
+  --ok: #1f7a4c;
+  --down: #a33b2a;
+  --accent: #c45b12;
+  --font-display: 'Sora', 'Avenir Next', sans-serif;
+  --font-mono: 'IBM Plex Mono', ui-monospace, monospace;
+  color: var(--ink);
+  background: #edf1f4;
+  font-family: var(--font-display);
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  min-height: 100%;
+  margin: 0;
+}
+
+.shell {
+  position: relative;
+  min-height: 100vh;
+  overflow: hidden;
+}
+
+.grid-bg {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(rgba(16, 24, 32, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(16, 24, 32, 0.04) 1px, transparent 1px),
+    radial-gradient(ellipse 70% 45% at 0% 0%, rgba(196, 91, 18, 0.16), transparent 55%),
+    linear-gradient(160deg, #f5f7f9 0%, #e8eef3 55%, #dfe7ee 100%);
+  background-size:
+    28px 28px,
+    28px 28px,
+    auto,
+    auto;
+  animation: drift 20s ease-in-out infinite alternate;
+  z-index: 0;
+}
+
+@keyframes drift {
+  from {
+    background-position:
+      0 0,
+      0 0,
+      0 0,
+      0 0;
+  }
+  to {
+    background-position:
+      14px 8px,
+      14px 8px,
+      0 0,
+      0 0;
+  }
+}
+
+.top,
+.stage {
+  position: relative;
+  z-index: 1;
+}
+
+.top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 1rem;
+  padding: 1.75rem clamp(1.25rem, 4vw, 3rem) 0.75rem;
+  animation: rise 0.6s ease-out both;
+}
+
+.brand {
+  margin: 0;
+  font-size: clamp(2rem, 5vw, 3rem);
+  font-weight: 700;
+  letter-spacing: -0.04em;
+  line-height: 1;
+}
+
+.tagline {
+  margin: 0.5rem 0 0;
+  color: var(--ink-soft);
+  font-size: 0.98rem;
+  font-weight: 500;
+}
+
+.refresh {
+  appearance: none;
+  border: 1px solid var(--line);
+  background: var(--panel);
+  color: var(--ink);
+  font: inherit;
+  font-size: 0.92rem;
+  font-weight: 600;
+  padding: 0.65rem 1rem;
+  cursor: pointer;
+  transition: transform 0.15s ease, border-color 0.15s ease;
+}
+
+.refresh:hover:not(:disabled) {
+  transform: translateY(-1px);
+  border-color: rgba(196, 91, 18, 0.45);
+}
+
+.refresh:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.stage {
+  display: grid;
+  gap: 1.5rem;
+  padding: 1rem clamp(1.25rem, 4vw, 3rem) 2rem;
+  max-width: 60rem;
+}
+
+.health,
+.fleet {
+  animation: rise 0.75s ease-out both;
+}
+
+.health h2,
+.fleet h2 {
+  margin: 0 0 0.75rem;
+  font-size: 0.8rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  font-weight: 600;
+}
+
+.status-line {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  padding: 0.9rem 1rem;
+  border: 1px solid var(--line);
+  background: var(--panel);
+  font-weight: 600;
+}
+
+.status-line.ok {
+  color: var(--ok);
+}
+
+.status-line.down {
+  color: var(--down);
+}
+
+.dot {
+  width: 0.65rem;
+  height: 0.65rem;
+  border-radius: 50%;
+  background: currentColor;
+  box-shadow: 0 0 0 0 currentColor;
+  animation: ping 1.8s ease-out infinite;
+}
+
+@keyframes ping {
+  0% {
+    box-shadow: 0 0 0 0 color-mix(in srgb, currentColor 35%, transparent);
+  }
+  100% {
+    box-shadow: 0 0 0 10px transparent;
+  }
+}
+
+.meta {
+  margin: 0.55rem 0 0;
+  color: var(--ink-soft);
+  font-size: 0.85rem;
+  font-family: var(--font-mono);
+}
+
+.backends {
+  list-style: none;
+  margin: 0.85rem 0 0;
+  padding: 0;
+  display: grid;
+  gap: 0.4rem;
+}
+
+.backends li {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.55rem 0.75rem;
+  border: 1px solid var(--line);
+  background: rgba(255, 255, 255, 0.55);
+  font-family: var(--font-mono);
+  font-size: 0.88rem;
+}
+
+.service-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 0.55rem;
+}
+
+.service-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.85rem 1rem;
+  border: 1px solid var(--line);
+  background: var(--panel);
+  animation: rise 0.5s ease-out both;
+}
+
+.svc-name {
+  margin: 0;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.svc-role {
+  margin: 0.2rem 0 0;
+  color: var(--ink-soft);
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.svc-path {
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+  color: var(--ink-soft);
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 640px) {
+  .top {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .service-row {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}

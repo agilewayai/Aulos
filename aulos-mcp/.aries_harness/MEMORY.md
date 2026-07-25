@@ -37,6 +37,11 @@ trace_revision_count: "0"
 
 ### Workflow / operator preferences
 
+- aries-harness first for product design, architecture, spec, history-refresh, well-organized, devops
+- TDD coding loop (Red → Green → Refactor)
+- UI/UX work must apply `ui-ux-pro-max`
+- see `aulos-skills` skill `aulos-operating-defaults` / CARD-001
+
 - note stable operator or project preferences here
 
 ### Recurring pitfalls

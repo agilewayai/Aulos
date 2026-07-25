@@ -1,0 +1,7 @@
+[Unit]
+Description=aulos host stack (api + web + ops)
+Wants=aulos-api.service aulos-web.service aulos-ops.service
+After=aulos-api.service aulos-web.service aulos-ops.service
+
+[Install]
+WantedBy=default.target

@@ -10,6 +10,13 @@ Mirror of `AGENTS.md` for Claude-compatible agents.
 
 Work inside `aulos-web/` (this directory).
 
+## Operating defaults (fleet)
+
+- Work under **aries-harness** for product design, system architecture, spec development, `history-refresh`, `well-organized`, and devops.
+- Coding loop is **TDD** (Red → Green → Refactor) inside Inspect → Plan → Verify → Summarize.
+- For UI/UX design or changes, apply the **`ui-ux-pro-max`** skill.
+- Canonical policy: `aulos-skills/skills/aulos-operating-defaults/SKILL.md` (and workspace `AGENTS.md`).
+
 ## Coding rules
 
 - Chat console → `aulos-api` only.

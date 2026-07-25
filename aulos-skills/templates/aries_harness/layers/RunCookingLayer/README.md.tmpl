@@ -1,0 +1,38 @@
+---
+schema_version: "0.1"
+project_id: "{{PROJECT_ID}}"
+owner: "{{OWNER}}"
+doc_role: "layer-manifest"
+harness_layer: "RunCookingLayer"
+layer_manifest_for: "RunCookingLayer"
+managed_by: "aries-harness"
+fingerprint: "aries-harness/bootstrap-doc/v1"
+generated_by: "/aries-harness init"
+initialized_at: "{{DATE}}"
+---
+
+# RunCookingLayer
+
+This layer holds the live execution queue, phase progression, state transitions, checkpoints, and delivery evidence.
+
+## Owns root docs
+
+- `TASK_STACK.md`
+- `PIPELINE.md`
+- `STATE.md`
+- `JOURNAL.md`
+
+## Owns managed collections
+
+- `checkpoints/`
+- `runs/`
+- `runs/tests/`
+- `runs/reports/`
+- `runs/github/`
+- `runs/deployments/`
+
+## Rules
+
+- keep current execution state and evidence here
+- do not redefine stable architecture, approval policy, or mission boundaries here
+- summarize what happened and promote stable conclusions back into `MetaDefineLayer` when they harden

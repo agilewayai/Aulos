@@ -1,0 +1,21 @@
+[Unit]
+Description=aulos Web static host (:5091)
+After=network-online.target aulos-api.service
+PartOf=aulos-host.target
+Wants=aulos-api.service
+
+[Service]
+Type=simple
+WorkingDirectory=/home/ubuntu/hackathon/aulos/aulos-web
+EnvironmentFile=-/home/ubuntu/hackathon/aulos/.run/host.env
+ExecStart=/usr/bin/python3 /home/ubuntu/hackathon/aulos/deploy/serve.py --root dist --host 0.0.0.0 --port 5091 --proxy-host 127.0.0.1 --proxy-port 5090
+Restart=always
+RestartSec=2
+KillMode=control-group
+TimeoutStopSec=10
+StandardOutput=append:/home/ubuntu/hackathon/aulos/.run/web.log
+StandardError=append:/home/ubuntu/hackathon/aulos/.run/web.log
+
+[Install]
+WantedBy=default.target
+Also=aulos-host.target

@@ -1,0 +1,32 @@
+---
+schema_version: "0.1"
+project_id: "{{PROJECT_ID}}"
+owner: "{{OWNER}}"
+doc_role: "evaluation"
+harness_layer: "MetaDefineLayer"
+managed_by: "aries-harness"
+fingerprint: "aries-harness/bootstrap-doc/v1"
+generated_by: "/aries-harness init"
+initialized_at: "{{DATE}}"
+---
+
+# Evaluation
+
+## Verification commands
+
+- lint:
+- typecheck:
+- test:
+
+## Acceptance notes
+
+- define the minimum verification gate here
+
+## Layer boundary
+
+- this file defines the verification contract and acceptance gate
+- do not turn this file into a run log or test transcript
+
+## Execution evidence
+
+- store detailed test execution and fix notes under `runs/tests/`

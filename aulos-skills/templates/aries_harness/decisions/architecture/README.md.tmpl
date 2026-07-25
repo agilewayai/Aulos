@@ -1,0 +1,33 @@
+---
+schema_version: "0.1"
+project_id: "{{PROJECT_ID}}"
+owner: "{{OWNER}}"
+doc_role: "pipeline-architecture-readme"
+harness_layer: "MetaDefineLayer"
+managed_by: "aries-harness"
+fingerprint: "aries-harness/bootstrap-doc/v1"
+generated_by: "/aries-harness init"
+initialized_at: "{{DATE}}"
+---
+
+# System Design
+
+Use this directory for architecture design packs, system-design notes, interface boundaries, and implementation-facing design deltas.
+
+## Recommended naming
+
+- `ARCH-*`
+- `system-design-*`
+- `architecture-*`
+
+## Each artifact should make clear
+
+- design intent
+- main components or seams
+- tradeoffs
+- linked risks and verification anchors
+
+## Layer rule
+
+- this directory belongs to `MetaDefineLayer`
+- keep runtime execution output and debugging transcripts out of architecture packs
