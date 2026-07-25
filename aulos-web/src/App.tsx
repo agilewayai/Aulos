@@ -26,6 +26,8 @@ type Mode = 'login' | 'register' | 'verify' | 'studio'
 const EXAMPLE =
   "I'm beginning to listen to Bach's Goldberg Variations — I want to learn this masterwork while I listen."
 
+const DISCOGS_EXAMPLE = "/discogs #423-287-1"
+
 /** Make guide HTML playable inside srcDoc / blob: absolute media base + floating player CSS. */
 function prepareGuideHtml(html: string): string {
   if (!html) return html
@@ -447,8 +449,11 @@ function App() {
               <p className="eyebrow">Listening studio</p>
               <h1 id="studio-title">Tell Aulos what you are learning</h1>
               <p className="hero-copy">
-                Name a masterwork you are listening to. Aulos researches widely and deeply, then
-                composes a professional listening guide — with every thinking step visible.
+                Name a masterwork, or paste a Discogs release with{" "}
+                <code>/discogs #release-id</code> or a catalog number like{" "}
+                <code>/discogs #423-287-1</code>. Aulos recovers the work, composer, and
+                performers, then composes a professional listening guide — with every thinking
+                step visible.
               </p>
               <form className="composer studio-composer" onSubmit={onCompose}>
                 <label className="sr-only" htmlFor="prompt">
@@ -458,7 +463,7 @@ function App() {
                   id="prompt"
                   rows={3}
                   value={draft}
-                  placeholder="I'm listening to…"
+                  placeholder="I'm listening to… or /discogs #423-287-1"
                   onChange={(e) => setDraft(e.target.value)}
                 />
                 <div className="composer-actions">
@@ -469,6 +474,14 @@ function App() {
                     onClick={() => setDraft(EXAMPLE)}
                   >
                     Use Goldberg example
+                  </button>
+                  <button
+                    type="button"
+                    className="ghost"
+                    disabled={busy}
+                    onClick={() => setDraft(DISCOGS_EXAMPLE)}
+                  >
+                    Use /discogs example
                   </button>
                   <button type="submit" disabled={busy || !draft.trim()}>
                     {busy ? 'Researching…' : 'Compose listening guide'}

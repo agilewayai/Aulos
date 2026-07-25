@@ -10,13 +10,42 @@ generated_by: "/aries-harness init"
 initialized_at: "2026-07-25T11:07:43Z"
 effective_status: "active"
 effective_since: "2026-07-25T11:07:43Z"
-content_fingerprint: "sha256:438c0b1f87ac47df5057ce76242a6782bbebc86da23672fc4b54929bc34f4fce"
+content_fingerprint: "sha256:f9d3386b24489f08d04f40ff2dae3c780de46a43d00b84ab9d6ba2c02fbc54f5"
 trace_history_source: "filesystem-only"
 trace_last_commit_sha: ""
 trace_last_commit_at: ""
 trace_revision_count: "0"
 ---
 # Journal
+
+## 2026-07-25T19:50:00Z
+
+- REVIEW-008 smoke `423-287-1`: was truncating to release 423; now catno search → Mozart/Horowitz
+- Fixes: parse catno, Discogs search, exclude composer from performers, workish titles
+- Verify: `test_discogs.py` 6 passed; live `resolve_discogs_message("/discogs #423-287-1")` SMOKE_OK
+
+## 2026-07-25T19:40:00Z
+
+- Root cause of “no Discogs token UI”: local-only; live OPS/API not redeployed
+- Deployed host: OPS nav **Discogs** tab + `/v1/ops/discogs` (401 without auth = route live)
+
+## 2026-07-25T19:35:00Z
+
+- OPS GUI: dedicated **Integrations** tab for Discogs token (status + enable + save/clear); Overview link
+
+## 2026-07-25T19:30:00Z
+
+- OPS office: `/v1/ops/discogs` + LLM tab form to store Discogs personal user token (overrides env)
+
+## 2026-07-25T19:20:00Z
+
+- Renamed slash command `/discog` → `/discogs` (parser only accepts `/discogs`)
+
+## 2026-07-25T19:15:00Z
+
+- STORY-PACK-008 `/discogs`: REQ/SPEC/STORY/CKPT authored; id = Discogs **release** (master fallback)
+- Implemented `services/discogs.py` + `parse_discogs_command`; wired `_run_chain_core` seed vinyl/interpretations
+- Studio hint for `/discogs #release-id`; tests: `test_discogs.py` 4 passed; listening-guide regression green
 
 ## 2026-07-25T18:25:45Z
 

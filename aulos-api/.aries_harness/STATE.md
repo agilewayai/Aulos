@@ -9,7 +9,7 @@ fingerprint: "aries-harness/bootstrap-doc/v1"
 initialized_at: "2026-07-25T11:10:22Z"
 effective_status: "active"
 effective_since: "2026-07-25T11:10:22Z"
-content_fingerprint: "sha256:90cd241a2cc4217d78e11651c3af6feb5c7e0f5e3a0e7fb56da1f8c3d0a8c151"
+content_fingerprint: "sha256:9c026be0bce78b08d23dfa81019f63941489119cb24430ac7c3bbefea8a17121"
 trace_history_source: "filesystem-only"
 trace_last_commit_sha: ""
 trace_last_commit_at: ""
@@ -19,25 +19,25 @@ trace_revision_count: "0"
 
 ## Current phase
 
-- STORY-002..005 auth MVP in progress
+- STORY-PACK-008 `/discogs` release → listening guide (longrun RUN-008-DISCOG-001)
 
 ## Current phase (prior)
 
-- Bootstrap STORY-001 in progress / ready for verify
+- Auth MVP + web research / locale closeout
 
 ## Active run
 
-- RUN-BOOTSTRAP-001
+- RUN-008-DISCOG-001
 
 ## Hot facts
 
-- Auth MVP foundation live: roles `user`/`superadmin`; Mailgun ops config; email verification required before login
-- Live: https://aulos.purezen.ai (register/login) · https://aulos-ops.purezen.ai (superadmin)
-
+- `/discogs #release-id` parses in skills; API fetches Discogs release (master fallback), analyzes credits, seeds vinyl/interpretations, runs full 导赏 chain
+- Env: optional `AULOS_DISCOGS_TOKEN` or `AULOS_DISCOGS_KEY`+`SECRET`
+- Live: https://aulos.purezen.ai · https://aulos-ops.purezen.ai
 
 - Project root: `aulos-api/`
 - Role: API gateway
-- Sibling services: aulos-web, aulos-api, aulos-mcp, aulos-agent
+- Sibling services: aulos-web, aulos-api, aulos-mcp, aulos-agent, aulos-knowledge, aulos-skills
 
 ## Open risks
 

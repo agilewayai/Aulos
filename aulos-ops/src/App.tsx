@@ -17,6 +17,7 @@ import {
   fetchSkills,
   fetchEmbedConfig,
   fetchWebResearchConfig,
+  fetchDiscogsConfig,
   fetchKnowledgeStats,
   probeSkills,
   resendUserVerification,
@@ -26,9 +27,11 @@ import {
   updateLlmConfig,
   updateEmbedConfig,
   updateWebResearchConfig,
+  updateDiscogsConfig,
   updateMailgun,
   updateOpsUser,
   type DeliveryRow,
+  type DiscogsConfig,
   type EmbedConfig,
   type HealthResponse,
   type LlmConfig,
@@ -46,7 +49,7 @@ import { DbHaPanel } from './DbHaPanel'
 import { formatDateTime, formatTime } from './time'
 import './App.css'
 
-type TabId = 'overview' | 'users' | 'llm' | 'skills' | 'mail' | 'fleet' | 'knowledge'
+type TabId = 'overview' | 'users' | 'llm' | 'skills' | 'mail' | 'fleet' | 'knowledge' | 'discogs'
 
 function App() {
   const [user, setUser] = useState<User | null>(null)
@@ -83,6 +86,10 @@ function App() {
   const [webPersistGlobal, setWebPersistGlobal] = useState(true)
   const [webAgentReach, setWebAgentReach] = useState(true)
   const [webBraveKey, setWebBraveKey] = useState('')
+  const [discogs, setDiscogs] = useState<DiscogsConfig | null>(null)
+  const [discogsEnabled, setDiscogsEnabled] = useState(true)
+  const [discogsToken, setDiscogsToken] = useState('')
+  const [discogsClearToken, setDiscogsClearToken] = useState(false)
   const [kbStats, setKbStats] = useState<{
     documents: number
     chunks: number
@@ -198,6 +205,15 @@ function App() {
       setEmbed(null)
       setKbStats(null)
       setWebResearch(null)
+    }
+    try {
+      const dg = await fetchDiscogsConfig()
+      setDiscogs(dg)
+      setDiscogsEnabled(dg.enabled)
+      setDiscogsToken('')
+      setDiscogsClearToken(false)
+    } catch {
+      setDiscogs(null)
     }
     try {
       setSkills(await fetchSkills())
@@ -337,6 +353,33 @@ function App() {
       )
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Web research save failed')
+    } finally {
+      setBusy(false)
+    }
+  }
+
+  async function onSaveDiscogs(event: FormEvent) {
+    event.preventDefault()
+    setBusy(true)
+    setError(null)
+    setNotice(null)
+    try {
+      const cfg = await updateDiscogsConfig({
+        enabled: discogsEnabled,
+        user_token: discogsClearToken ? undefined : discogsToken.trim() || undefined,
+        clear_user_token: discogsClearToken,
+      })
+      setDiscogs(cfg)
+      setDiscogsEnabled(cfg.enabled)
+      setDiscogsToken('')
+      setDiscogsClearToken(false)
+      setNotice(
+        cfg.enabled
+          ? `Discogs ${cfg.authenticated ? `authenticated (${cfg.auth_source})` : 'enabled — unauthenticated low tier'}; studio /discogs uses this token.`
+          : 'Discogs connector disabled.',
+      )
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Discogs save failed')
     } finally {
       setBusy(false)
     }
@@ -601,6 +644,7 @@ function App() {
                   ['overview', 'Overview'],
                   ['users', 'Users'],
                   ['llm', 'LLM'],
+                  ['discogs', 'Discogs'],
                   ['knowledge', 'Knowledge'],
                   ['skills', 'Skills'],
                   ['mail', 'Mail'],
@@ -684,10 +728,30 @@ function App() {
                         {' · '}
                         llm live={overview.llm_ready_for_live ? 'yes' : 'no'}
                         {' · '}
+                        Discogs:{' '}
+                        <strong>
+                          {discogs == null
+                            ? '—'
+                            : !discogs.enabled
+                              ? 'off'
+                              : discogs.authenticated
+                                ? discogs.auth_source
+                                : 'no token'}
+                        </strong>
+                        {' · '}
                         roles:{' '}
                         {Object.entries(overview.roles)
                           .map(([name, count]) => `${name}=${count}`)
                           .join(', ') || 'none'}
+                      </p>
+                      <p className="settings-lead">
+                        <button
+                          type="button"
+                          className="linkish"
+                          onClick={() => setTab('discogs')}
+                        >
+                          Open Discogs token settings →
+                        </button>
                       </p>
                     </>
                   ) : (
@@ -1124,6 +1188,117 @@ function App() {
                   />
                   <button type="submit" disabled={busy}>
                     {busy ? 'Saving…' : 'Save web research'}
+                  </button>
+                </form>
+                <p className="settings-lead">
+                  Discogs personal token for <code>/discogs</code> lives under the{' '}
+                  <button
+                    type="button"
+                    className="linkish"
+                    onClick={() => setTab('discogs')}
+                  >
+                    Discogs
+                  </button>{' '}
+                  tab.
+                </p>
+              </section>
+            ) : null}
+
+            {tab === 'discogs' ? (
+              <section className="settings" aria-labelledby="discogs-title">
+                <div className="section-head">
+                  <h2 id="discogs-title">Discogs token</h2>
+                  <button
+                    type="button"
+                    className="refresh"
+                    disabled={busy}
+                    onClick={() => {
+                      void (async () => {
+                        try {
+                          const dg = await fetchDiscogsConfig()
+                          setDiscogs(dg)
+                          setDiscogsEnabled(dg.enabled)
+                          setDiscogsToken('')
+                          setDiscogsClearToken(false)
+                          setNotice(
+                            dg.authenticated
+                              ? `Discogs auth: ${dg.auth_source}`
+                              : 'Discogs: no token (low-tier API)',
+                          )
+                        } catch (err) {
+                          setError(err instanceof Error ? err.message : 'Discogs refresh failed')
+                        }
+                      })()
+                    }}
+                  >
+                    Refresh
+                  </button>
+                </div>
+                <form className="auth-form discogs-form" onSubmit={(e) => void onSaveDiscogs(e)}>
+                  <p className="settings-lead">
+                    Paste your Discogs <strong>personal user token</strong> here. Studio slash
+                    command <code>/discogs #release-id</code> or catalog number{" "}
+                    <code>/discogs #423-287-1</code> uses it for higher rate limits.
+                    Create a token at{' '}
+                    <a
+                      href="https://www.discogs.com/settings/developers"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      discogs.com/settings/developers
+                    </a>
+                    . OPS token overrides env <code>AULOS_DISCOGS_TOKEN</code>.
+                  </p>
+                  <div className="discogs-status" role="status">
+                    <span
+                      className={`dot ${discogs?.authenticated ? 'ok-dot' : 'down-dot'}`}
+                      aria-hidden="true"
+                    />
+                    <span>
+                      {discogs == null
+                        ? 'Could not load Discogs config — is API /v1/ops/discogs deployed?'
+                        : discogs.enabled
+                          ? discogs.authenticated
+                            ? `Connected via ${discogs.auth_source}${
+                                discogs.user_token_set ? ' (token saved in OPS)' : ''
+                              }`
+                            : 'Enabled — unauthenticated low tier (add a token below)'
+                          : 'Connector disabled'}
+                    </span>
+                  </div>
+                  <label className="check">
+                    <input
+                      type="checkbox"
+                      checked={discogsEnabled}
+                      onChange={(e) => setDiscogsEnabled(e.target.checked)}
+                    />
+                    Enable Discogs connector
+                  </label>
+                  <label htmlFor="discogs-token">Personal user token</label>
+                  <input
+                    id="discogs-token"
+                    type="password"
+                    autoComplete="off"
+                    value={discogsToken}
+                    disabled={discogsClearToken || !discogsEnabled}
+                    onChange={(e) => setDiscogsToken(e.target.value)}
+                    placeholder={
+                      discogs?.user_token_set
+                        ? '•••••••• (leave blank to keep current token)'
+                        : 'Paste Discogs personal access token'
+                    }
+                  />
+                  <label className="check">
+                    <input
+                      type="checkbox"
+                      checked={discogsClearToken}
+                      disabled={!discogs?.user_token_set}
+                      onChange={(e) => setDiscogsClearToken(e.target.checked)}
+                    />
+                    Clear stored OPS token
+                  </label>
+                  <button type="submit" disabled={busy}>
+                    {busy ? 'Saving…' : 'Save Discogs token'}
                   </button>
                 </form>
               </section>

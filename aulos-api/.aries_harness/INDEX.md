@@ -8,10 +8,10 @@ managed_by: "aries-harness"
 fingerprint: "aries-harness/bootstrap-doc/v1"
 generated_by: "/aries-harness well-organized"
 initialized_at: "2026-07-25T11:07:43Z"
-last_organized_at: "2026-07-25T18:52:15+00:00"
+last_organized_at: "2026-07-25T19:31:05+00:00"
 effective_status: "generated"
-effective_since: "2026-07-25T18:52:15+00:00"
-content_fingerprint: "sha256:373e927a11ca18fdfc20a35ed087920685f171840a47fa5a2955f3fb793e432f"
+effective_since: "2026-07-25T19:31:05+00:00"
+content_fingerprint: "sha256:1945aac0ef863658edd96d5ef0b4cd8b16c6289dd618c9cbdc8f150f42edde71"
 trace_history_source: "filesystem-only"
 trace_last_commit_sha: ""
 trace_last_commit_at: ""
@@ -19,7 +19,7 @@ trace_revision_count: "0"
 ---
 # Harness Index
 
-Last organized: `2026-07-25T18:52:15+00:00`
+Last organized: `2026-07-25T19:31:05+00:00`
 
 Canonical spelling: `/aries-harness well-organized`
 
@@ -66,6 +66,7 @@ Fingerprint marker: `aries-harness` / `aries-harness/bootstrap-doc/v1`
 - [REQ-002-users-roles-auth-mvp.md](references/requests/REQ-002-users-roles-auth-mvp.md)
 - [REQ-003-classical-listening-guide-mvp.md](references/requests/REQ-003-classical-listening-guide-mvp.md)
 - [REQ-006-rag-work-identity-catalog.md](references/requests/REQ-006-rag-work-identity-catalog.md)
+- [REQ-008-discog-release-guide.md](references/requests/REQ-008-discog-release-guide.md)
 
 #### `references/specs/`
 - role: behavior and acceptance contracts derived from requests
@@ -75,12 +76,14 @@ Fingerprint marker: `aries-harness` / `aries-harness/bootstrap-doc/v1`
 - [SPEC-003-listening-guide-workflow.md](references/specs/SPEC-003-listening-guide-workflow.md)
 - [SPEC-006-research-knowledge-rag.md](references/specs/SPEC-006-research-knowledge-rag.md)
 - [SPEC-007-timezone-utc-store-local-display.md](references/specs/SPEC-007-timezone-utc-store-local-display.md)
+- [SPEC-008-discog-release-guide.md](references/specs/SPEC-008-discog-release-guide.md)
 
 #### `references/stories/`
 - role: sprintable slices linked to specs and verification
 - [README.md](references/stories/README.md)
 - [STORY-PACK-001-bootstrap.md](references/stories/STORY-PACK-001-bootstrap.md)
 - [STORY-PACK-002-auth-mvp.md](references/stories/STORY-PACK-002-auth-mvp.md)
+- [STORY-PACK-008-discog-release-guide.md](references/stories/STORY-PACK-008-discog-release-guide.md)
 
 #### `references/domain/`
 - role: domain analysis and modeling artifacts
@@ -132,7 +135,7 @@ Fingerprint marker: `aries-harness` / `aries-harness/bootstrap-doc/v1`
 
 #### `checkpoints/`
 - role: pause, resume, handoff, and checkpoint artifacts
-- none
+- [CKPT-008-discog-release-guide.md](checkpoints/CKPT-008-discog-release-guide.md)
 
 #### `runs/`
 - role: run summaries and execution evidence

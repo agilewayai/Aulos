@@ -1,15 +1,15 @@
 {
   "summary": {
-    "document_count": 61,
+    "document_count": 68,
     "docs_with_issues": 0,
     "dirty_docs": 0,
     "by_layer": {
-      "MetaDefineLayer": 35,
+      "MetaDefineLayer": 38,
       "SharedSupportSurface": 15,
-      "RunCookingLayer": 11
+      "RunCookingLayer": 15
     },
     "by_effective_status": {
-      "active": 51,
+      "active": 58,
       "generated": 10
     }
   },
@@ -108,14 +108,14 @@
       "layer": "SharedSupportSurface",
       "declared_layer": "SharedSupportSurface",
       "effective_status": "generated",
-      "effective_since": "2026-07-25T18:52:15+00:00",
+      "effective_since": "2026-07-25T19:31:05+00:00",
       "managed_by": "aries-harness",
       "fingerprint": "aries-harness/bootstrap-doc/v1",
       "last_updated_at": "",
       "completed_at": "",
       "timebox_actual": "",
-      "content_fingerprint": "sha256:373e927a11ca18fdfc20a35ed087920685f171840a47fa5a2955f3fb793e432f",
-      "observed_content_fingerprint": "sha256:373e927a11ca18fdfc20a35ed087920685f171840a47fa5a2955f3fb793e432f",
+      "content_fingerprint": "sha256:1945aac0ef863658edd96d5ef0b4cd8b16c6289dd618c9cbdc8f150f42edde71",
+      "observed_content_fingerprint": "sha256:1945aac0ef863658edd96d5ef0b4cd8b16c6289dd618c9cbdc8f150f42edde71",
       "trace_history_source": "filesystem-only",
       "trace_last_commit_sha": "",
       "trace_last_commit_at": "",
@@ -127,11 +127,16 @@
         "trace_revision_count": "0"
       },
       "latest_commit": {
-        "sha": "555cf53",
+        "sha": "53e7437",
         "date": "2026-07-26",
-        "subject": "Ship listening product, mandatory harness, facility layout, and UTC/local time."
+        "subject": "Ship identity catalog, Hans/Hant locales, web research, and knowledge plane."
       },
       "recent_updates": [
+        {
+          "sha": "53e7437",
+          "date": "2026-07-26",
+          "subject": "Ship identity catalog, Hans/Hant locales, web research, and knowledge plane."
+        },
         {
           "sha": "555cf53",
           "date": "2026-07-26",
@@ -141,11 +146,6 @@
           "sha": "7632d9b",
           "date": "2026-07-25",
           "subject": "Add aulos-web, aulos-api, and aulos-mcp sub-projects under aries-harness."
-        },
-        {
-          "sha": "0d5cb01",
-          "date": "2026-07-25",
-          "subject": "Initial commit: Aulos hackathon workspace with LangChain agent runtime."
         }
       ],
       "dirty": false,
@@ -165,8 +165,8 @@
       "last_updated_at": "",
       "completed_at": "",
       "timebox_actual": "",
-      "content_fingerprint": "sha256:438c0b1f87ac47df5057ce76242a6782bbebc86da23672fc4b54929bc34f4fce",
-      "observed_content_fingerprint": "sha256:438c0b1f87ac47df5057ce76242a6782bbebc86da23672fc4b54929bc34f4fce",
+      "content_fingerprint": "sha256:f9d3386b24489f08d04f40ff2dae3c780de46a43d00b84ab9d6ba2c02fbc54f5",
+      "observed_content_fingerprint": "sha256:f9d3386b24489f08d04f40ff2dae3c780de46a43d00b84ab9d6ba2c02fbc54f5",
       "trace_history_source": "filesystem-only",
       "trace_last_commit_sha": "",
       "trace_last_commit_at": "",
@@ -178,11 +178,16 @@
         "trace_revision_count": "0"
       },
       "latest_commit": {
-        "sha": "555cf53",
+        "sha": "53e7437",
         "date": "2026-07-26",
-        "subject": "Ship listening product, mandatory harness, facility layout, and UTC/local time."
+        "subject": "Ship identity catalog, Hans/Hant locales, web research, and knowledge plane."
       },
       "recent_updates": [
+        {
+          "sha": "53e7437",
+          "date": "2026-07-26",
+          "subject": "Ship identity catalog, Hans/Hant locales, web research, and knowledge plane."
+        },
         {
           "sha": "555cf53",
           "date": "2026-07-26",
@@ -224,11 +229,16 @@
         "trace_revision_count": "0"
       },
       "latest_commit": {
-        "sha": "555cf53",
+        "sha": "53e7437",
         "date": "2026-07-26",
-        "subject": "Ship listening product, mandatory harness, facility layout, and UTC/local time."
+        "subject": "Ship identity catalog, Hans/Hant locales, web research, and knowledge plane."
       },
       "recent_updates": [
+        {
+          "sha": "53e7437",
+          "date": "2026-07-26",
+          "subject": "Ship identity catalog, Hans/Hant locales, web research, and knowledge plane."
+        },
         {
           "sha": "555cf53",
           "date": "2026-07-26",
@@ -238,11 +248,6 @@
           "sha": "93c0f6e",
           "date": "2026-07-25",
           "subject": "Add aulos-skills, aulos-ops, host deploy, and fleet operating defaults."
-        },
-        {
-          "sha": "7632d9b",
-          "date": "2026-07-25",
-          "subject": "Add aulos-web, aulos-api, and aulos-mcp sub-projects under aries-harness."
         }
       ],
       "dirty": false,
@@ -497,8 +502,8 @@
       "last_updated_at": "",
       "completed_at": "",
       "timebox_actual": "",
-      "content_fingerprint": "sha256:90cd241a2cc4217d78e11651c3af6feb5c7e0f5e3a0e7fb56da1f8c3d0a8c151",
-      "observed_content_fingerprint": "sha256:90cd241a2cc4217d78e11651c3af6feb5c7e0f5e3a0e7fb56da1f8c3d0a8c151",
+      "content_fingerprint": "sha256:9c026be0bce78b08d23dfa81019f63941489119cb24430ac7c3bbefea8a17121",
+      "observed_content_fingerprint": "sha256:9c026be0bce78b08d23dfa81019f63941489119cb24430ac7c3bbefea8a17121",
       "trace_history_source": "filesystem-only",
       "trace_last_commit_sha": "",
       "trace_last_commit_at": "",
@@ -543,8 +548,8 @@
       "last_updated_at": "",
       "completed_at": "",
       "timebox_actual": "",
-      "content_fingerprint": "sha256:08968d271a73cdcec888a7da86f4bfd95eab04c6dff1fe4000bb520476d17158",
-      "observed_content_fingerprint": "sha256:08968d271a73cdcec888a7da86f4bfd95eab04c6dff1fe4000bb520476d17158",
+      "content_fingerprint": "sha256:0507928b6314eb888a8b73a2792c5243b4c21492d1db688212cb6bae1d0d8bf1",
+      "observed_content_fingerprint": "sha256:0507928b6314eb888a8b73a2792c5243b4c21492d1db688212cb6bae1d0d8bf1",
       "trace_history_source": "filesystem-only",
       "trace_last_commit_sha": "",
       "trace_last_commit_at": "",
@@ -567,6 +572,37 @@
           "subject": "Add aulos-web, aulos-api, and aulos-mcp sub-projects under aries-harness."
         }
       ],
+      "dirty": false,
+      "issue_count": 0,
+      "issues": []
+    },
+    {
+      "path": "checkpoints/CKPT-008-discog-release-guide.md",
+      "repo_path": ".aries_harness/checkpoints/CKPT-008-discog-release-guide.md",
+      "doc_role": "checkpoint",
+      "layer": "RunCookingLayer",
+      "declared_layer": "RunCookingLayer",
+      "effective_status": "active",
+      "effective_since": "2026-07-25T19:00:00+00:00",
+      "managed_by": "aries-harness",
+      "fingerprint": "aries-harness/bootstrap-doc/v1",
+      "last_updated_at": "",
+      "completed_at": "",
+      "timebox_actual": "",
+      "content_fingerprint": "sha256:6ace3b879f78f3bf166d9852de1b5fe7236914fa2a53c4c8a793bcf5651bcd1a",
+      "observed_content_fingerprint": "sha256:6ace3b879f78f3bf166d9852de1b5fe7236914fa2a53c4c8a793bcf5651bcd1a",
+      "trace_history_source": "filesystem-only",
+      "trace_last_commit_sha": "",
+      "trace_last_commit_at": "",
+      "trace_revision_count": "0",
+      "observed_trace": {
+        "trace_history_source": "filesystem-only",
+        "trace_last_commit_sha": "",
+        "trace_last_commit_at": "",
+        "trace_revision_count": "0"
+      },
+      "latest_commit": null,
+      "recent_updates": [],
       "dirty": false,
       "issue_count": 0,
       "issues": []
@@ -678,8 +714,18 @@
         "trace_last_commit_at": "",
         "trace_revision_count": "0"
       },
-      "latest_commit": null,
-      "recent_updates": [],
+      "latest_commit": {
+        "sha": "53e7437",
+        "date": "2026-07-26",
+        "subject": "Ship identity catalog, Hans/Hant locales, web research, and knowledge plane."
+      },
+      "recent_updates": [
+        {
+          "sha": "53e7437",
+          "date": "2026-07-26",
+          "subject": "Ship identity catalog, Hans/Hant locales, web research, and knowledge plane."
+        }
+      ],
       "dirty": false,
       "issue_count": 0,
       "issues": []
@@ -870,14 +916,14 @@
       "layer": "SharedSupportSurface",
       "declared_layer": "SharedSupportSurface",
       "effective_status": "generated",
-      "effective_since": "2026-07-25T17:23:10+00:00",
+      "effective_since": "2026-07-25T19:28:53+00:00",
       "managed_by": "aries-harness",
       "fingerprint": "aries-harness/history-doc/v1",
       "last_updated_at": "",
       "completed_at": "",
       "timebox_actual": "",
-      "content_fingerprint": "sha256:8c92dee1729c8fc25a029703046b3bfe0ae8098edf274503cb036e83370be858",
-      "observed_content_fingerprint": "sha256:8c92dee1729c8fc25a029703046b3bfe0ae8098edf274503cb036e83370be858",
+      "content_fingerprint": "sha256:6d5d820ca77ea327b7db851001323763ee69e1f9a3a3692bb5937b1fefe87710",
+      "observed_content_fingerprint": "sha256:6d5d820ca77ea327b7db851001323763ee69e1f9a3a3692bb5937b1fefe87710",
       "trace_history_source": "filesystem-only",
       "trace_last_commit_sha": "",
       "trace_last_commit_at": "",
@@ -889,11 +935,16 @@
         "trace_revision_count": "0"
       },
       "latest_commit": {
-        "sha": "555cf53",
+        "sha": "53e7437",
         "date": "2026-07-26",
-        "subject": "Ship listening product, mandatory harness, facility layout, and UTC/local time."
+        "subject": "Ship identity catalog, Hans/Hant locales, web research, and knowledge plane."
       },
       "recent_updates": [
+        {
+          "sha": "53e7437",
+          "date": "2026-07-26",
+          "subject": "Ship identity catalog, Hans/Hant locales, web research, and knowledge plane."
+        },
         {
           "sha": "555cf53",
           "date": "2026-07-26",
@@ -903,11 +954,6 @@
           "sha": "7632d9b",
           "date": "2026-07-25",
           "subject": "Add aulos-web, aulos-api, and aulos-mcp sub-projects under aries-harness."
-        },
-        {
-          "sha": "0d5cb01",
-          "date": "2026-07-25",
-          "subject": "Initial commit: Aulos hackathon workspace with LangChain agent runtime."
         }
       ],
       "dirty": false,
@@ -921,14 +967,14 @@
       "layer": "SharedSupportSurface",
       "declared_layer": "SharedSupportSurface",
       "effective_status": "generated",
-      "effective_since": "2026-07-25T17:23:10+00:00",
+      "effective_since": "2026-07-25T19:28:53+00:00",
       "managed_by": "aries-harness",
       "fingerprint": "aries-harness/history-doc/v1",
       "last_updated_at": "",
       "completed_at": "",
       "timebox_actual": "",
-      "content_fingerprint": "sha256:84b124dfb3a140f8875cfa1ffbd930e4457708e64ae4e1899481688924b8d9f9",
-      "observed_content_fingerprint": "sha256:84b124dfb3a140f8875cfa1ffbd930e4457708e64ae4e1899481688924b8d9f9",
+      "content_fingerprint": "sha256:ba8ab4b849c60add7465fa30e4ad742f0bba14a63ccfd46c7a978fcc22723420",
+      "observed_content_fingerprint": "sha256:ba8ab4b849c60add7465fa30e4ad742f0bba14a63ccfd46c7a978fcc22723420",
       "trace_history_source": "filesystem-only",
       "trace_last_commit_sha": "",
       "trace_last_commit_at": "",
@@ -940,11 +986,16 @@
         "trace_revision_count": "0"
       },
       "latest_commit": {
-        "sha": "555cf53",
+        "sha": "53e7437",
         "date": "2026-07-26",
-        "subject": "Ship listening product, mandatory harness, facility layout, and UTC/local time."
+        "subject": "Ship identity catalog, Hans/Hant locales, web research, and knowledge plane."
       },
       "recent_updates": [
+        {
+          "sha": "53e7437",
+          "date": "2026-07-26",
+          "subject": "Ship identity catalog, Hans/Hant locales, web research, and knowledge plane."
+        },
         {
           "sha": "555cf53",
           "date": "2026-07-26",
@@ -954,11 +1005,6 @@
           "sha": "7632d9b",
           "date": "2026-07-25",
           "subject": "Add aulos-web, aulos-api, and aulos-mcp sub-projects under aries-harness."
-        },
-        {
-          "sha": "0d5cb01",
-          "date": "2026-07-25",
-          "subject": "Initial commit: Aulos hackathon workspace with LangChain agent runtime."
         }
       ],
       "dirty": false,
@@ -972,14 +1018,14 @@
       "layer": "SharedSupportSurface",
       "declared_layer": "SharedSupportSurface",
       "effective_status": "generated",
-      "effective_since": "2026-07-25T17:23:10+00:00",
+      "effective_since": "2026-07-25T19:28:53+00:00",
       "managed_by": "aries-harness",
       "fingerprint": "aries-harness/history-doc/v1",
       "last_updated_at": "",
       "completed_at": "",
       "timebox_actual": "",
-      "content_fingerprint": "sha256:9ad4fc09f9dee25d127a22959dca8bd9d6d2e886cf143eff86d7a943a5470f7e",
-      "observed_content_fingerprint": "sha256:9ad4fc09f9dee25d127a22959dca8bd9d6d2e886cf143eff86d7a943a5470f7e",
+      "content_fingerprint": "sha256:d38c34d6e55da9a7c175fcf04b85e62390cf32361eb21907d2013bca66b87835",
+      "observed_content_fingerprint": "sha256:d38c34d6e55da9a7c175fcf04b85e62390cf32361eb21907d2013bca66b87835",
       "trace_history_source": "filesystem-only",
       "trace_last_commit_sha": "",
       "trace_last_commit_at": "",
@@ -991,11 +1037,16 @@
         "trace_revision_count": "0"
       },
       "latest_commit": {
-        "sha": "555cf53",
+        "sha": "53e7437",
         "date": "2026-07-26",
-        "subject": "Ship listening product, mandatory harness, facility layout, and UTC/local time."
+        "subject": "Ship identity catalog, Hans/Hant locales, web research, and knowledge plane."
       },
       "recent_updates": [
+        {
+          "sha": "53e7437",
+          "date": "2026-07-26",
+          "subject": "Ship identity catalog, Hans/Hant locales, web research, and knowledge plane."
+        },
         {
           "sha": "555cf53",
           "date": "2026-07-26",
@@ -1005,11 +1056,6 @@
           "sha": "7632d9b",
           "date": "2026-07-25",
           "subject": "Add aulos-web, aulos-api, and aulos-mcp sub-projects under aries-harness."
-        },
-        {
-          "sha": "0d5cb01",
-          "date": "2026-07-25",
-          "subject": "Initial commit: Aulos hackathon workspace with LangChain agent runtime."
         }
       ],
       "dirty": false,
@@ -1023,14 +1069,14 @@
       "layer": "SharedSupportSurface",
       "declared_layer": "SharedSupportSurface",
       "effective_status": "generated",
-      "effective_since": "2026-07-25T17:23:10+00:00",
+      "effective_since": "2026-07-25T19:28:53+00:00",
       "managed_by": "aries-harness",
       "fingerprint": "aries-harness/history-doc/v1",
       "last_updated_at": "",
       "completed_at": "",
       "timebox_actual": "",
-      "content_fingerprint": "sha256:af0da82d86cbe3b33d3f393037006e374052d08b22fd452e40ba43e43cf82d4f",
-      "observed_content_fingerprint": "sha256:af0da82d86cbe3b33d3f393037006e374052d08b22fd452e40ba43e43cf82d4f",
+      "content_fingerprint": "sha256:f03eae7badcef1343b5223cdbe9651b104b78835b5c04e1bf166c2cb30500790",
+      "observed_content_fingerprint": "sha256:f03eae7badcef1343b5223cdbe9651b104b78835b5c04e1bf166c2cb30500790",
       "trace_history_source": "filesystem-only",
       "trace_last_commit_sha": "",
       "trace_last_commit_at": "",
@@ -1042,11 +1088,16 @@
         "trace_revision_count": "0"
       },
       "latest_commit": {
-        "sha": "555cf53",
+        "sha": "53e7437",
         "date": "2026-07-26",
-        "subject": "Ship listening product, mandatory harness, facility layout, and UTC/local time."
+        "subject": "Ship identity catalog, Hans/Hant locales, web research, and knowledge plane."
       },
       "recent_updates": [
+        {
+          "sha": "53e7437",
+          "date": "2026-07-26",
+          "subject": "Ship identity catalog, Hans/Hant locales, web research, and knowledge plane."
+        },
         {
           "sha": "555cf53",
           "date": "2026-07-26",
@@ -1056,11 +1107,6 @@
           "sha": "7632d9b",
           "date": "2026-07-25",
           "subject": "Add aulos-web, aulos-api, and aulos-mcp sub-projects under aries-harness."
-        },
-        {
-          "sha": "0d5cb01",
-          "date": "2026-07-25",
-          "subject": "Initial commit: Aulos hackathon workspace with LangChain agent runtime."
         }
       ],
       "dirty": false,
@@ -1074,14 +1120,14 @@
       "layer": "SharedSupportSurface",
       "declared_layer": "SharedSupportSurface",
       "effective_status": "generated",
-      "effective_since": "2026-07-25T17:23:10+00:00",
+      "effective_since": "2026-07-25T19:28:53+00:00",
       "managed_by": "aries-harness",
       "fingerprint": "aries-harness/history-doc/v1",
       "last_updated_at": "",
       "completed_at": "",
       "timebox_actual": "",
-      "content_fingerprint": "sha256:9d609bd59426c6e319713eaaa0f1a7cd76cb72dc16e179060b8c773e414daef3",
-      "observed_content_fingerprint": "sha256:9d609bd59426c6e319713eaaa0f1a7cd76cb72dc16e179060b8c773e414daef3",
+      "content_fingerprint": "sha256:f5bcbfb9f00c19b20690578e0fa7905f6d6dd987f8033fe25a580c8ff0d5f4e2",
+      "observed_content_fingerprint": "sha256:f5bcbfb9f00c19b20690578e0fa7905f6d6dd987f8033fe25a580c8ff0d5f4e2",
       "trace_history_source": "filesystem-only",
       "trace_last_commit_sha": "",
       "trace_last_commit_at": "",
@@ -1093,11 +1139,16 @@
         "trace_revision_count": "0"
       },
       "latest_commit": {
-        "sha": "555cf53",
+        "sha": "53e7437",
         "date": "2026-07-26",
-        "subject": "Ship listening product, mandatory harness, facility layout, and UTC/local time."
+        "subject": "Ship identity catalog, Hans/Hant locales, web research, and knowledge plane."
       },
       "recent_updates": [
+        {
+          "sha": "53e7437",
+          "date": "2026-07-26",
+          "subject": "Ship identity catalog, Hans/Hant locales, web research, and knowledge plane."
+        },
         {
           "sha": "555cf53",
           "date": "2026-07-26",
@@ -1120,14 +1171,14 @@
       "layer": "SharedSupportSurface",
       "declared_layer": "SharedSupportSurface",
       "effective_status": "generated",
-      "effective_since": "2026-07-25T17:23:10+00:00",
+      "effective_since": "2026-07-25T19:28:53+00:00",
       "managed_by": "aries-harness",
       "fingerprint": "aries-harness/history-doc/v1",
       "last_updated_at": "",
       "completed_at": "",
       "timebox_actual": "",
-      "content_fingerprint": "sha256:1a0aab554ed2039f7ce4b7a59c417c99a79b3474bdcb3ff3f4ea04d96c31e4cb",
-      "observed_content_fingerprint": "sha256:1a0aab554ed2039f7ce4b7a59c417c99a79b3474bdcb3ff3f4ea04d96c31e4cb",
+      "content_fingerprint": "sha256:6444eff7102af188c62fb6417fb8ba6525dfbd638b02ef83fd0e64c5ea22078e",
+      "observed_content_fingerprint": "sha256:6444eff7102af188c62fb6417fb8ba6525dfbd638b02ef83fd0e64c5ea22078e",
       "trace_history_source": "filesystem-only",
       "trace_last_commit_sha": "",
       "trace_last_commit_at": "",
@@ -1139,11 +1190,16 @@
         "trace_revision_count": "0"
       },
       "latest_commit": {
-        "sha": "555cf53",
+        "sha": "53e7437",
         "date": "2026-07-26",
-        "subject": "Ship listening product, mandatory harness, facility layout, and UTC/local time."
+        "subject": "Ship identity catalog, Hans/Hant locales, web research, and knowledge plane."
       },
       "recent_updates": [
+        {
+          "sha": "53e7437",
+          "date": "2026-07-26",
+          "subject": "Ship identity catalog, Hans/Hant locales, web research, and knowledge plane."
+        },
         {
           "sha": "555cf53",
           "date": "2026-07-26",
@@ -1166,14 +1222,14 @@
       "layer": "SharedSupportSurface",
       "declared_layer": "SharedSupportSurface",
       "effective_status": "generated",
-      "effective_since": "2026-07-25T17:23:10+00:00",
+      "effective_since": "2026-07-25T19:28:53+00:00",
       "managed_by": "aries-harness",
       "fingerprint": "aries-harness/history-doc/v1",
       "last_updated_at": "",
       "completed_at": "",
       "timebox_actual": "",
-      "content_fingerprint": "sha256:81bd2effa569a7a0183985d1d548b5dc9597204a75762bf0bca8fe90b5211a95",
-      "observed_content_fingerprint": "sha256:81bd2effa569a7a0183985d1d548b5dc9597204a75762bf0bca8fe90b5211a95",
+      "content_fingerprint": "sha256:32e83325c23b4d3f4d5b77b436e2f9c40ba9841cd2aea772eb807e6f7e13cf29",
+      "observed_content_fingerprint": "sha256:32e83325c23b4d3f4d5b77b436e2f9c40ba9841cd2aea772eb807e6f7e13cf29",
       "trace_history_source": "filesystem-only",
       "trace_last_commit_sha": "",
       "trace_last_commit_at": "",
@@ -1185,11 +1241,16 @@
         "trace_revision_count": "0"
       },
       "latest_commit": {
-        "sha": "555cf53",
+        "sha": "53e7437",
         "date": "2026-07-26",
-        "subject": "Ship listening product, mandatory harness, facility layout, and UTC/local time."
+        "subject": "Ship identity catalog, Hans/Hant locales, web research, and knowledge plane."
       },
       "recent_updates": [
+        {
+          "sha": "53e7437",
+          "date": "2026-07-26",
+          "subject": "Ship identity catalog, Hans/Hant locales, web research, and knowledge plane."
+        },
         {
           "sha": "555cf53",
           "date": "2026-07-26",
@@ -1212,14 +1273,14 @@
       "layer": "SharedSupportSurface",
       "declared_layer": "SharedSupportSurface",
       "effective_status": "generated",
-      "effective_since": "2026-07-25T17:23:10+00:00",
+      "effective_since": "2026-07-25T19:28:53+00:00",
       "managed_by": "aries-harness",
       "fingerprint": "aries-harness/history-doc/v1",
       "last_updated_at": "",
       "completed_at": "",
       "timebox_actual": "",
-      "content_fingerprint": "sha256:4acfb0313e668ff2746b1dfb8ec9ba8233ebac7f3774ae9ca3d2252f68b3b41b",
-      "observed_content_fingerprint": "sha256:4acfb0313e668ff2746b1dfb8ec9ba8233ebac7f3774ae9ca3d2252f68b3b41b",
+      "content_fingerprint": "sha256:72a28921ce2096aac79b95baf3c4b7f9bc74cfbf6ae1760ba81f5072b5a2fac9",
+      "observed_content_fingerprint": "sha256:72a28921ce2096aac79b95baf3c4b7f9bc74cfbf6ae1760ba81f5072b5a2fac9",
       "trace_history_source": "filesystem-only",
       "trace_last_commit_sha": "",
       "trace_last_commit_at": "",
@@ -1231,11 +1292,16 @@
         "trace_revision_count": "0"
       },
       "latest_commit": {
-        "sha": "555cf53",
+        "sha": "53e7437",
         "date": "2026-07-26",
-        "subject": "Ship listening product, mandatory harness, facility layout, and UTC/local time."
+        "subject": "Ship identity catalog, Hans/Hant locales, web research, and knowledge plane."
       },
       "recent_updates": [
+        {
+          "sha": "53e7437",
+          "date": "2026-07-26",
+          "subject": "Ship identity catalog, Hans/Hant locales, web research, and knowledge plane."
+        },
         {
           "sha": "555cf53",
           "date": "2026-07-26",
@@ -1258,14 +1324,14 @@
       "layer": "SharedSupportSurface",
       "declared_layer": "SharedSupportSurface",
       "effective_status": "generated",
-      "effective_since": "2026-07-25T17:23:10+00:00",
+      "effective_since": "2026-07-25T19:28:53+00:00",
       "managed_by": "aries-harness",
       "fingerprint": "aries-harness/history-doc/v1",
       "last_updated_at": "",
       "completed_at": "",
       "timebox_actual": "",
-      "content_fingerprint": "sha256:0a3ca802e3df8339d63dfba21a19e785dbb99854704260a00a4d35549fe6630c",
-      "observed_content_fingerprint": "sha256:0a3ca802e3df8339d63dfba21a19e785dbb99854704260a00a4d35549fe6630c",
+      "content_fingerprint": "sha256:cd5d76c62bb933310114502bf8708fe75c82bfcfbe96d80f562e79d70c202c40",
+      "observed_content_fingerprint": "sha256:cd5d76c62bb933310114502bf8708fe75c82bfcfbe96d80f562e79d70c202c40",
       "trace_history_source": "filesystem-only",
       "trace_last_commit_sha": "",
       "trace_last_commit_at": "",
@@ -1276,8 +1342,18 @@
         "trace_last_commit_at": "",
         "trace_revision_count": "0"
       },
-      "latest_commit": null,
-      "recent_updates": [],
+      "latest_commit": {
+        "sha": "53e7437",
+        "date": "2026-07-26",
+        "subject": "Ship identity catalog, Hans/Hant locales, web research, and knowledge plane."
+      },
+      "recent_updates": [
+        {
+          "sha": "53e7437",
+          "date": "2026-07-26",
+          "subject": "Ship identity catalog, Hans/Hant locales, web research, and knowledge plane."
+        }
+      ],
       "dirty": false,
       "issue_count": 0,
       "issues": []
@@ -1579,11 +1655,16 @@
         "trace_revision_count": "0"
       },
       "latest_commit": {
-        "sha": "7632d9b",
-        "date": "2026-07-25",
-        "subject": "Add aulos-web, aulos-api, and aulos-mcp sub-projects under aries-harness."
+        "sha": "53e7437",
+        "date": "2026-07-26",
+        "subject": "Ship identity catalog, Hans/Hant locales, web research, and knowledge plane."
       },
       "recent_updates": [
+        {
+          "sha": "53e7437",
+          "date": "2026-07-26",
+          "subject": "Ship identity catalog, Hans/Hant locales, web research, and knowledge plane."
+        },
         {
           "sha": "7632d9b",
           "date": "2026-07-25",
@@ -1921,6 +2002,47 @@
         "trace_last_commit_at": "",
         "trace_revision_count": "0"
       },
+      "latest_commit": {
+        "sha": "53e7437",
+        "date": "2026-07-26",
+        "subject": "Ship identity catalog, Hans/Hant locales, web research, and knowledge plane."
+      },
+      "recent_updates": [
+        {
+          "sha": "53e7437",
+          "date": "2026-07-26",
+          "subject": "Ship identity catalog, Hans/Hant locales, web research, and knowledge plane."
+        }
+      ],
+      "dirty": false,
+      "issue_count": 0,
+      "issues": []
+    },
+    {
+      "path": "references/requests/REQ-008-discog-release-guide.md",
+      "repo_path": ".aries_harness/references/requests/REQ-008-discog-release-guide.md",
+      "doc_role": "request-brief",
+      "layer": "MetaDefineLayer",
+      "declared_layer": "MetaDefineLayer",
+      "effective_status": "active",
+      "effective_since": "2026-07-25T19:00:00+00:00",
+      "managed_by": "aries-harness",
+      "fingerprint": "aries-harness/bootstrap-doc/v1",
+      "last_updated_at": "",
+      "completed_at": "",
+      "timebox_actual": "",
+      "content_fingerprint": "sha256:766427c99ee6f97b6a2b57664f01a8efa01f53226153715e679827eed2840eca",
+      "observed_content_fingerprint": "sha256:766427c99ee6f97b6a2b57664f01a8efa01f53226153715e679827eed2840eca",
+      "trace_history_source": "filesystem-only",
+      "trace_last_commit_sha": "",
+      "trace_last_commit_at": "",
+      "trace_revision_count": "0",
+      "observed_trace": {
+        "trace_history_source": "filesystem-only",
+        "trace_last_commit_sha": "",
+        "trace_last_commit_at": "",
+        "trace_revision_count": "0"
+      },
       "latest_commit": null,
       "recent_updates": [],
       "dirty": false,
@@ -2127,11 +2249,16 @@
         "trace_revision_count": "0"
       },
       "latest_commit": {
-        "sha": "555cf53",
+        "sha": "53e7437",
         "date": "2026-07-26",
-        "subject": "Ship listening product, mandatory harness, facility layout, and UTC/local time."
+        "subject": "Ship identity catalog, Hans/Hant locales, web research, and knowledge plane."
       },
       "recent_updates": [
+        {
+          "sha": "53e7437",
+          "date": "2026-07-26",
+          "subject": "Ship identity catalog, Hans/Hant locales, web research, and knowledge plane."
+        },
         {
           "sha": "555cf53",
           "date": "2026-07-26",
@@ -2168,11 +2295,16 @@
         "trace_revision_count": "0"
       },
       "latest_commit": {
-        "sha": "555cf53",
+        "sha": "53e7437",
         "date": "2026-07-26",
-        "subject": "Ship listening product, mandatory harness, facility layout, and UTC/local time."
+        "subject": "Ship identity catalog, Hans/Hant locales, web research, and knowledge plane."
       },
       "recent_updates": [
+        {
+          "sha": "53e7437",
+          "date": "2026-07-26",
+          "subject": "Ship identity catalog, Hans/Hant locales, web research, and knowledge plane."
+        },
         {
           "sha": "555cf53",
           "date": "2026-07-26",
@@ -2220,6 +2352,37 @@
           "subject": "Ship listening product, mandatory harness, facility layout, and UTC/local time."
         }
       ],
+      "dirty": false,
+      "issue_count": 0,
+      "issues": []
+    },
+    {
+      "path": "references/specs/SPEC-008-discog-release-guide.md",
+      "repo_path": ".aries_harness/references/specs/SPEC-008-discog-release-guide.md",
+      "doc_role": "spec-package",
+      "layer": "MetaDefineLayer",
+      "declared_layer": "MetaDefineLayer",
+      "effective_status": "active",
+      "effective_since": "2026-07-25T19:00:00+00:00",
+      "managed_by": "aries-harness",
+      "fingerprint": "aries-harness/bootstrap-doc/v1",
+      "last_updated_at": "",
+      "completed_at": "",
+      "timebox_actual": "",
+      "content_fingerprint": "sha256:5a9620670b9b3434011176535728c7c01936dc91d1c198c0ea1af909da7da5a2",
+      "observed_content_fingerprint": "sha256:5a9620670b9b3434011176535728c7c01936dc91d1c198c0ea1af909da7da5a2",
+      "trace_history_source": "filesystem-only",
+      "trace_last_commit_sha": "",
+      "trace_last_commit_at": "",
+      "trace_revision_count": "0",
+      "observed_trace": {
+        "trace_history_source": "filesystem-only",
+        "trace_last_commit_sha": "",
+        "trace_last_commit_at": "",
+        "trace_revision_count": "0"
+      },
+      "latest_commit": null,
+      "recent_updates": [],
       "dirty": false,
       "issue_count": 0,
       "issues": []
@@ -2348,6 +2511,37 @@
           "subject": "Ship listening product, mandatory harness, facility layout, and UTC/local time."
         }
       ],
+      "dirty": false,
+      "issue_count": 0,
+      "issues": []
+    },
+    {
+      "path": "references/stories/STORY-PACK-008-discog-release-guide.md",
+      "repo_path": ".aries_harness/references/stories/STORY-PACK-008-discog-release-guide.md",
+      "doc_role": "story-pack",
+      "layer": "MetaDefineLayer",
+      "declared_layer": "MetaDefineLayer",
+      "effective_status": "active",
+      "effective_since": "2026-07-25T19:00:00+00:00",
+      "managed_by": "aries-harness",
+      "fingerprint": "aries-harness/bootstrap-doc/v1",
+      "last_updated_at": "",
+      "completed_at": "",
+      "timebox_actual": "",
+      "content_fingerprint": "sha256:85ca64465bfc61951ef37718618458784e17b7c545f3c43a00ad6e6cd623fefb",
+      "observed_content_fingerprint": "sha256:85ca64465bfc61951ef37718618458784e17b7c545f3c43a00ad6e6cd623fefb",
+      "trace_history_source": "filesystem-only",
+      "trace_last_commit_sha": "",
+      "trace_last_commit_at": "",
+      "trace_revision_count": "0",
+      "observed_trace": {
+        "trace_history_source": "filesystem-only",
+        "trace_last_commit_sha": "",
+        "trace_last_commit_at": "",
+        "trace_revision_count": "0"
+      },
+      "latest_commit": null,
+      "recent_updates": [],
       "dirty": false,
       "issue_count": 0,
       "issues": []
@@ -2532,6 +2726,37 @@
       "issues": []
     },
     {
+      "path": "runs/notes/HOLD-008-discog-awaiting-acceptance.md",
+      "repo_path": ".aries_harness/runs/notes/HOLD-008-discog-awaiting-acceptance.md",
+      "doc_role": "hold-state-note",
+      "layer": "RunCookingLayer",
+      "declared_layer": "RunCookingLayer",
+      "effective_status": "active",
+      "effective_since": "2026-07-25T19:15:00+00:00",
+      "managed_by": "aries-harness",
+      "fingerprint": "aries-harness/bootstrap-doc/v1",
+      "last_updated_at": "",
+      "completed_at": "",
+      "timebox_actual": "",
+      "content_fingerprint": "sha256:dd2cda3f82d3210c2f100291bef73ff04fb1054bef9a0cb9a53b54835d6a42c6",
+      "observed_content_fingerprint": "sha256:dd2cda3f82d3210c2f100291bef73ff04fb1054bef9a0cb9a53b54835d6a42c6",
+      "trace_history_source": "filesystem-only",
+      "trace_last_commit_sha": "",
+      "trace_last_commit_at": "",
+      "trace_revision_count": "0",
+      "observed_trace": {
+        "trace_history_source": "filesystem-only",
+        "trace_last_commit_sha": "",
+        "trace_last_commit_at": "",
+        "trace_revision_count": "0"
+      },
+      "latest_commit": null,
+      "recent_updates": [],
+      "dirty": false,
+      "issue_count": 0,
+      "issues": []
+    },
+    {
       "path": "runs/reports/README.md",
       "repo_path": ".aries_harness/runs/reports/README.md",
       "doc_role": "pipeline-reports-readme",
@@ -2573,6 +2798,68 @@
           "subject": "Initial commit: Aulos hackathon workspace with LangChain agent runtime."
         }
       ],
+      "dirty": false,
+      "issue_count": 0,
+      "issues": []
+    },
+    {
+      "path": "runs/reviews/AUDIT-008-discogs-deep-review.md",
+      "repo_path": ".aries_harness/runs/reviews/AUDIT-008-discogs-deep-review.md",
+      "doc_role": "harness-audit",
+      "layer": "RunCookingLayer",
+      "declared_layer": "RunCookingLayer",
+      "effective_status": "active",
+      "effective_since": "2026-07-25T19:45:00+00:00",
+      "managed_by": "aries-harness",
+      "fingerprint": "aries-harness/bootstrap-doc/v1",
+      "last_updated_at": "",
+      "completed_at": "",
+      "timebox_actual": "",
+      "content_fingerprint": "sha256:37a84e8ae8f8ea386b8517656db6306c8852c40f72a81fb0340553d2ab9af815",
+      "observed_content_fingerprint": "sha256:37a84e8ae8f8ea386b8517656db6306c8852c40f72a81fb0340553d2ab9af815",
+      "trace_history_source": "filesystem-only",
+      "trace_last_commit_sha": "",
+      "trace_last_commit_at": "",
+      "trace_revision_count": "0",
+      "observed_trace": {
+        "trace_history_source": "filesystem-only",
+        "trace_last_commit_sha": "",
+        "trace_last_commit_at": "",
+        "trace_revision_count": "0"
+      },
+      "latest_commit": null,
+      "recent_updates": [],
+      "dirty": false,
+      "issue_count": 0,
+      "issues": []
+    },
+    {
+      "path": "runs/reviews/REVIEW-008-discogs-423-287-1-smoke.md",
+      "repo_path": ".aries_harness/runs/reviews/REVIEW-008-discogs-423-287-1-smoke.md",
+      "doc_role": "review-memo",
+      "layer": "RunCookingLayer",
+      "declared_layer": "RunCookingLayer",
+      "effective_status": "active",
+      "effective_since": "2026-07-25T19:45:00+00:00",
+      "managed_by": "aries-harness",
+      "fingerprint": "aries-harness/bootstrap-doc/v1",
+      "last_updated_at": "",
+      "completed_at": "",
+      "timebox_actual": "",
+      "content_fingerprint": "sha256:bdd667a19777419893286bcb74a2bbe5209d73aaf731525f652671681d282728",
+      "observed_content_fingerprint": "sha256:bdd667a19777419893286bcb74a2bbe5209d73aaf731525f652671681d282728",
+      "trace_history_source": "filesystem-only",
+      "trace_last_commit_sha": "",
+      "trace_last_commit_at": "",
+      "trace_revision_count": "0",
+      "observed_trace": {
+        "trace_history_source": "filesystem-only",
+        "trace_last_commit_sha": "",
+        "trace_last_commit_at": "",
+        "trace_revision_count": "0"
+      },
+      "latest_commit": null,
+      "recent_updates": [],
       "dirty": false,
       "issue_count": 0,
       "issues": []

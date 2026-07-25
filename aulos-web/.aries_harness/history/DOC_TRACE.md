@@ -8,10 +8,10 @@ managed_by: "aries-harness"
 fingerprint: "aries-harness/history-doc/v1"
 generated_by: "/aries-harness history-refresh"
 initialized_at: "2026-07-25T11:07:42Z"
-generated_at: "2026-07-25T18:52:19+00:00"
+generated_at: "2026-07-25T19:31:19+00:00"
 effective_status: "generated"
-effective_since: "2026-07-25T18:52:19+00:00"
-content_fingerprint: "sha256:0cedd0dc2bfb15c35f4e8495796dcdba2db10ad6d9f71a2f8009ed041a52d519"
+effective_since: "2026-07-25T19:31:19+00:00"
+content_fingerprint: "sha256:da8efa2de0644df0aab5239ba27d777faed58c84b0b24750076c1bf0104e1c92"
 trace_history_source: "filesystem-only"
 trace_last_commit_sha: ""
 trace_last_commit_at: ""
@@ -19,11 +19,11 @@ trace_revision_count: "0"
 ---
 # Document Trace
 
-Generated at: `2026-07-25T18:52:19+00:00`
+Generated at: `2026-07-25T19:31:19+00:00`
 
 ## Summary
 
-- managed Markdown docs: 48
+- managed Markdown docs: 49
 - docs with governance gaps: 0
 - dirty docs: 0
 
@@ -31,12 +31,12 @@ Generated at: `2026-07-25T18:52:19+00:00`
 
 - MetaDefineLayer: 24
 - RunCookingLayer: 10
-- SharedSupportSurface: 14
+- SharedSupportSurface: 15
 
 ## By effective status
 
 - active: 39
-- generated: 9
+- generated: 10
 
 ## Managed docs
 
@@ -66,14 +66,14 @@ Generated at: `2026-07-25T18:52:19+00:00`
 
 - role: harness-index
 - layer: SharedSupportSurface
-- effective status: generated since 2026-07-25T18:52:19+00:00
-- content fingerprint: `sha256:404e6b9ffa372608855cb9c33354026c64d4998ba7102fd6bcf18e5fc81aa3bf`
+- effective status: generated since 2026-07-25T19:31:19+00:00
+- content fingerprint: `sha256:afef4629ff651f1a6c433a50aed4a2ba28e03e12d9f64c8c132f71c90488bc3b`
 - trace: filesystem-only / count=0 / sha=none
-- latest revision: `555cf53` 2026-07-26 Ship listening product, mandatory harness, facility layout, and UTC/local time.
+- latest revision: `53e7437` 2026-07-26 Ship identity catalog, Hans/Hant locales, web research, and knowledge plane.
 - dirty: no
 - earlier revisions:
+  - `555cf53` 2026-07-26 Ship listening product, mandatory harness, facility layout, and UTC/local time.
   - `7632d9b` 2026-07-25 Add aulos-web, aulos-api, and aulos-mcp sub-projects under aries-harness.
-  - `0d5cb01` 2026-07-25 Initial commit: Aulos hackathon workspace with LangChain agent runtime.
 
 ### JOURNAL.md
 
@@ -229,101 +229,115 @@ Generated at: `2026-07-25T18:52:19+00:00`
 
 - role: history-daily-summary-index
 - layer: SharedSupportSurface
-- effective status: generated since 2026-07-25T16:29:51+00:00
-- content fingerprint: `sha256:6168e1fdd2a9f852c3bac34934a32ab193ecbe9784291b61cce1650e79ac82dc`
+- effective status: generated since 2026-07-25T19:05:25+00:00
+- content fingerprint: `sha256:847849947eaa3e3a8471241b2d3f6683a937012db332b8a8ba92c0ac3ce8b7a4`
 - trace: filesystem-only / count=0 / sha=none
-- latest revision: `555cf53` 2026-07-26 Ship listening product, mandatory harness, facility layout, and UTC/local time.
+- latest revision: `53e7437` 2026-07-26 Ship identity catalog, Hans/Hant locales, web research, and knowledge plane.
 - dirty: no
 - earlier revisions:
+  - `555cf53` 2026-07-26 Ship listening product, mandatory harness, facility layout, and UTC/local time.
   - `7632d9b` 2026-07-25 Add aulos-web, aulos-api, and aulos-mcp sub-projects under aries-harness.
-  - `0d5cb01` 2026-07-25 Initial commit: Aulos hackathon workspace with LangChain agent runtime.
 
 ### history/DOC_TRACE.md
 
 - role: history-doc-trace
 - layer: SharedSupportSurface
-- effective status: generated since 2026-07-25T16:29:51+00:00
-- content fingerprint: `sha256:1d816953a6c5ec2021ef96e71436d7bf7fa03c09630cf2a429a756cd5473d04c`
+- effective status: generated since 2026-07-25T19:05:25+00:00
+- content fingerprint: `sha256:ad6e028706e65d6f0c6433584b249ef60a2ebd2f435637a3a13c85f628fc2048`
 - trace: filesystem-only / count=0 / sha=none
-- latest revision: `555cf53` 2026-07-26 Ship listening product, mandatory harness, facility layout, and UTC/local time.
+- latest revision: `53e7437` 2026-07-26 Ship identity catalog, Hans/Hant locales, web research, and knowledge plane.
 - dirty: no
 - earlier revisions:
+  - `555cf53` 2026-07-26 Ship listening product, mandatory harness, facility layout, and UTC/local time.
   - `7632d9b` 2026-07-25 Add aulos-web, aulos-api, and aulos-mcp sub-projects under aries-harness.
-  - `0d5cb01` 2026-07-25 Initial commit: Aulos hackathon workspace with LangChain agent runtime.
 
 ### history/README.md
 
 - role: history-readme
 - layer: SharedSupportSurface
-- effective status: generated since 2026-07-25T16:29:51+00:00
-- content fingerprint: `sha256:77c273eb3d793603731a96126d84e3552119b24afb632842d2d3e09372c838f4`
+- effective status: generated since 2026-07-25T19:05:25+00:00
+- content fingerprint: `sha256:6944fe42d9a838ed71691bdd1ac87958aa7b1c337c3eeb4a3d2f16f2d4a7646c`
 - trace: filesystem-only / count=0 / sha=none
-- latest revision: `555cf53` 2026-07-26 Ship listening product, mandatory harness, facility layout, and UTC/local time.
+- latest revision: `53e7437` 2026-07-26 Ship identity catalog, Hans/Hant locales, web research, and knowledge plane.
 - dirty: no
 - earlier revisions:
+  - `555cf53` 2026-07-26 Ship listening product, mandatory harness, facility layout, and UTC/local time.
   - `7632d9b` 2026-07-25 Add aulos-web, aulos-api, and aulos-mcp sub-projects under aries-harness.
-  - `0d5cb01` 2026-07-25 Initial commit: Aulos hackathon workspace with LangChain agent runtime.
 
 ### history/RETROSPECTIVE.md
 
 - role: history-retrospective
 - layer: SharedSupportSurface
-- effective status: generated since 2026-07-25T16:29:51+00:00
-- content fingerprint: `sha256:61e01fc6096b5044ec14f29a3f382d1b104bf549bd41b2c81ef98b1ca5973f55`
+- effective status: generated since 2026-07-25T19:05:25+00:00
+- content fingerprint: `sha256:7a24ce552be261d5d3e0f8f61df8731900a9f476b90d48d29e4cb7d726bafaea`
 - trace: filesystem-only / count=0 / sha=none
-- latest revision: `555cf53` 2026-07-26 Ship listening product, mandatory harness, facility layout, and UTC/local time.
+- latest revision: `53e7437` 2026-07-26 Ship identity catalog, Hans/Hant locales, web research, and knowledge plane.
 - dirty: no
 - earlier revisions:
+  - `555cf53` 2026-07-26 Ship listening product, mandatory harness, facility layout, and UTC/local time.
   - `7632d9b` 2026-07-25 Add aulos-web, aulos-api, and aulos-mcp sub-projects under aries-harness.
-  - `0d5cb01` 2026-07-25 Initial commit: Aulos hackathon workspace with LangChain agent runtime.
 
 ### history/ROADMAP.md
 
 - role: history-roadmap
 - layer: SharedSupportSurface
-- effective status: generated since 2026-07-25T16:29:51+00:00
-- content fingerprint: `sha256:ac368e028edd5db3e16e09f0e3c4623e696ef918764f7f13750b3f03001b655a`
+- effective status: generated since 2026-07-25T19:05:25+00:00
+- content fingerprint: `sha256:5ecbfe8faabd5bc393ecc2f4dfecf841da258b0f05b8fe4a36c6259b0d934747`
 - trace: filesystem-only / count=0 / sha=none
-- latest revision: `555cf53` 2026-07-26 Ship listening product, mandatory harness, facility layout, and UTC/local time.
+- latest revision: `53e7437` 2026-07-26 Ship identity catalog, Hans/Hant locales, web research, and knowledge plane.
 - dirty: no
 - earlier revisions:
+  - `555cf53` 2026-07-26 Ship listening product, mandatory harness, facility layout, and UTC/local time.
   - `7632d9b` 2026-07-25 Add aulos-web, aulos-api, and aulos-mcp sub-projects under aries-harness.
 
 ### history/STATUS.md
 
 - role: history-status
 - layer: SharedSupportSurface
-- effective status: generated since 2026-07-25T16:29:51+00:00
-- content fingerprint: `sha256:b34bed6c4807e21d8a77456fdcfdb93230b0a4d79ebd163ef7773d9d044f61bc`
+- effective status: generated since 2026-07-25T19:05:25+00:00
+- content fingerprint: `sha256:158df2755946762910ef331abfeec7517b53c102d2d9a227d584fc756b5651fb`
 - trace: filesystem-only / count=0 / sha=none
-- latest revision: `555cf53` 2026-07-26 Ship listening product, mandatory harness, facility layout, and UTC/local time.
+- latest revision: `53e7437` 2026-07-26 Ship identity catalog, Hans/Hant locales, web research, and knowledge plane.
 - dirty: no
 - earlier revisions:
+  - `555cf53` 2026-07-26 Ship listening product, mandatory harness, facility layout, and UTC/local time.
   - `7632d9b` 2026-07-25 Add aulos-web, aulos-api, and aulos-mcp sub-projects under aries-harness.
 
 ### history/TIMELINE.md
 
 - role: history-timeline
 - layer: SharedSupportSurface
-- effective status: generated since 2026-07-25T16:29:51+00:00
-- content fingerprint: `sha256:d2c9062f8a5a7eda335b9265bd56428fe55351caabbb91898c7dba9408a93032`
+- effective status: generated since 2026-07-25T19:05:25+00:00
+- content fingerprint: `sha256:27bbfffbe9c94b6321cac7b4e0266dbfa3e5115944061735ec1441c20daa9a68`
 - trace: filesystem-only / count=0 / sha=none
-- latest revision: `555cf53` 2026-07-26 Ship listening product, mandatory harness, facility layout, and UTC/local time.
+- latest revision: `53e7437` 2026-07-26 Ship identity catalog, Hans/Hant locales, web research, and knowledge plane.
 - dirty: no
 - earlier revisions:
+  - `555cf53` 2026-07-26 Ship listening product, mandatory harness, facility layout, and UTC/local time.
   - `7632d9b` 2026-07-25 Add aulos-web, aulos-api, and aulos-mcp sub-projects under aries-harness.
 
 ### history/daily/2026-07-25.md
 
 - role: history-daily-summary
 - layer: SharedSupportSurface
-- effective status: generated since 2026-07-25T16:29:51+00:00
-- content fingerprint: `sha256:006653e0087396799718de049b97a142bd028004de1a59e160cf2f25b9268b1e`
+- effective status: generated since 2026-07-25T19:05:25+00:00
+- content fingerprint: `sha256:caf8e402032cf6e4243bdf17d4764e6fd937a511cd2ec8b02eb728f93764b621`
 - trace: filesystem-only / count=0 / sha=none
-- latest revision: `555cf53` 2026-07-26 Ship listening product, mandatory harness, facility layout, and UTC/local time.
+- latest revision: `53e7437` 2026-07-26 Ship identity catalog, Hans/Hant locales, web research, and knowledge plane.
 - dirty: no
 - earlier revisions:
+  - `555cf53` 2026-07-26 Ship listening product, mandatory harness, facility layout, and UTC/local time.
   - `7632d9b` 2026-07-25 Add aulos-web, aulos-api, and aulos-mcp sub-projects under aries-harness.
+
+### history/daily/2026-07-26.md
+
+- role: history-daily-summary
+- layer: SharedSupportSurface
+- effective status: generated since 2026-07-25T19:05:25+00:00
+- content fingerprint: `sha256:6302db122f152e1c43498df7fcb080d0a3e10d69eb7ce64e4395a1fc9ec75502`
+- trace: filesystem-only / count=0 / sha=none
+- latest revision: `53e7437` 2026-07-26 Ship identity catalog, Hans/Hant locales, web research, and knowledge plane.
+- dirty: no
 
 ### layers/MetaDefineLayer/README.md
 

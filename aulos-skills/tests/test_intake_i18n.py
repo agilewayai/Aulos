@@ -2,7 +2,7 @@
 
 from aulos_skills.guide_render import render_bilingual_guide_html
 from aulos_skills.i18n import LANG_ZH_HANS, to_traditional
-from aulos_skills.intake_parse import guess_composer_and_title
+from aulos_skills.intake_parse import guess_composer_and_title, parse_discogs_command
 from aulos_skills.identity import load_catalog
 from aulos_skills.runtime import SkillRuntime
 
@@ -66,3 +66,15 @@ def test_hant_phrase_conventions() -> None:
     assert "蕭邦" in to_traditional("肖邦玛祖卡导赏")
     assert "導賞" in to_traditional("肖邦玛祖卡导赏")
     assert "德弗札克" in to_traditional("德沃夏克杜姆卡")
+
+
+def test_parse_discogs_slash_command() -> None:
+    assert parse_discogs_command("/discogs #700123") == {
+        "release_id": "700123",
+        "command": "discogs",
+        "ref_kind": "release",
+    }
+    assert parse_discogs_command("/discogs 12")["release_id"] == "12"
+    assert parse_discogs_command("/discogs #423-287-1")["catno"] == "423-287-1"
+    assert parse_discogs_command("/discog #12") is None
+    assert parse_discogs_command("Bach Goldberg") is None

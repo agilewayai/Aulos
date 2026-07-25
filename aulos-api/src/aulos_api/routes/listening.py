@@ -14,6 +14,7 @@ from aulos_api.auth.deps import get_current_user
 from aulos_api.db.models import ListeningGuide, User
 from aulos_api.db.session import get_db
 from aulos_api.services.knowledge_base import knowledge_stats, retrieve as kb_retrieve
+from aulos_api.services.discogs import DiscogsError
 from aulos_api.services.listening_guide import (
     get_owned_guide,
     get_owned_guide_by_share_slug,
@@ -400,12 +401,15 @@ async def create_listening_guide(
     user: User = Depends(get_current_user),
     db: Session = Depends(get_db),
 ) -> ListeningGuideOut:
-    row = await run_listening_guide_workflow(
-        db=db,
-        user_id=user.id,
-        message=body.message.strip(),
-        work_hint=(body.work_hint or "").strip() or None,
-    )
+    try:
+        row = await run_listening_guide_workflow(
+            db=db,
+            user_id=user.id,
+            message=body.message.strip(),
+            work_hint=(body.work_hint or "").strip() or None,
+        )
+    except DiscogsError as exc:
+        raise HTTPException(status_code=exc.status_code, detail=str(exc)) from exc
     return ListeningGuideOut(**guide_to_dict(row))
 
 

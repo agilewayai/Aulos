@@ -8,10 +8,10 @@ managed_by: "aries-harness"
 fingerprint: "aries-harness/history-doc/v1"
 generated_by: "/aries-harness history-refresh"
 initialized_at: "2026-07-25T11:07:43Z"
-generated_at: "2026-07-25T18:52:15+00:00"
+generated_at: "2026-07-25T19:31:05+00:00"
 effective_status: "generated"
-effective_since: "2026-07-25T18:52:15+00:00"
-content_fingerprint: "sha256:d8745907e23d4d13c2d9d66ed666de834af7e1faf9f03e14e49f9b616b0cf22a"
+effective_since: "2026-07-25T19:31:05+00:00"
+content_fingerprint: "sha256:aa0c05f53f231207f059427c1760bc8cde6582d3edbbbfc5524f9d89ae9597fb"
 trace_history_source: "filesystem-only"
 trace_last_commit_sha: ""
 trace_last_commit_at: ""
@@ -19,27 +19,27 @@ trace_revision_count: "0"
 ---
 # Retrospective Snapshot
 
-Generated at: `2026-07-25T18:52:15+00:00`
+Generated at: `2026-07-25T19:31:05+00:00`
 
 ## Recent changes
 
-- Web research loop: thin RAG → Wikipedia/DDG (+ optional Brave) → LLM verify → KB upsert (user + global)
-- Ops `/v1/ops/web-research` + LLM tab controls; query variants for opus-specific titles
-- Verified: `tests/test_web_research.py` 5 passed; live Dvořák Dumky `rag_mode=no_match+web-research`, persisted docs 12/13, next search 6 hits
-- STORY-PACK-007 S2: `_rag_context` resolves Catalog work_id for knowledge-plane retrieve
-- Client-side drop of mismatched `aulos_work_id` hits; `tests/test_knowledge_plane_rag.py` green
-- RAG aligned to Work Identity Catalog (REQ-006): seed identity cards; weak tokens from policy
+- REVIEW-008 smoke `423-287-1`: was truncating to release 423; now catno search → Mozart/Horowitz
+- Fixes: parse catno, Discogs search, exclude composer from performers, workish titles
+- Verify: `test_discogs.py` 6 passed; live `resolve_discogs_message("/discogs #423-287-1")` SMOKE_OK
+- Root cause of “no Discogs token UI”: local-only; live OPS/API not redeployed
+- Deployed host: OPS nav **Discogs** tab + `/v1/ops/discogs` (401 without auth = route live)
+- OPS GUI: dedicated **Integrations** tab for Discogs token (status + enable + save/clear); Overview link
 
 ## What is working
 
-- Web research loop: thin RAG → Wikipedia/DDG (+ optional Brave) → LLM verify → KB upsert (user + global)
-- Ops `/v1/ops/web-research` + LLM tab controls; query variants for opus-specific titles
-- Verified: `tests/test_web_research.py` 5 passed; live Dvořák Dumky `rag_mode=no_match+web-research`, persisted docs 12/13, next search 6 hits
-- STORY-PACK-007 S2: `_rag_context` resolves Catalog work_id for knowledge-plane retrieve
+- REVIEW-008 smoke `423-287-1`: was truncating to release 423; now catno search → Mozart/Horowitz
+- Fixes: parse catno, Discogs search, exclude composer from performers, workish titles
+- Verify: `test_discogs.py` 6 passed; live `resolve_discogs_message("/discogs #423-287-1")` SMOKE_OK
+- Root cause of “no Discogs token UI”: local-only; live OPS/API not redeployed
 
 ## What needs attention
 
-- working tree is dirty with 242 tracked or untracked change(s)
+- working tree is dirty with 56 tracked or untracked change(s)
 - no explicit next-up slice is recorded
 
 ## Durable reminders

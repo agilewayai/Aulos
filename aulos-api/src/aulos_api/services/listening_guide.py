@@ -16,6 +16,7 @@ from sqlalchemy.orm import Session
 from aulos_api.config import get_settings
 from aulos_api.db.models import ListeningGuide
 from aulos_api.services.agent_proxy import AgentProxy
+from aulos_api.services.discogs import DiscogsError, resolve_discogs_message
 from aulos_api.services.knowledge_base import retrieve as kb_retrieve
 from aulos_api.services.knowledge_base import upsert_from_report
 from aulos_api.services.llm_providers import chat_with_ops_llm, load_llm_config
@@ -43,7 +44,7 @@ def _research_payload(report: Any) -> dict[str, Any]:
     if not dossier:
         width = dict(ctx.get("width_dossier") or {})
         dossier = dict(width.get("salon_dossier") or {})
-    return {
+    payload = {
         "eval_pass": report.eval_pass,
         "eval_score": report.eval_score,
         "skill_versions": report.skill_versions,
@@ -58,6 +59,9 @@ def _research_payload(report: Any) -> dict[str, Any]:
         "composer": report.composer,
         "summary": report.summary,
     }
+    if ctx.get("discogs"):
+        payload["discogs"] = ctx.get("discogs")
+    return payload
 
 
 async def _optional_llm_dossier(
@@ -285,6 +289,20 @@ async def _run_chain_core(
 ) -> AsyncIterator[dict[str, Any] | Any]:
     """Gateway: identity → RAG/KB → generic LLM enrich → skill tools (no composer branches)."""
     disabled = _load_disabled(db)
+
+    # SPEC-008: /discogs #release-id → fetch Discogs → rewrite intent + seed dossier
+    discog: dict[str, Any] | None = None
+    try:
+        discog = resolve_discogs_message(message, db=db)
+    except DiscogsError:
+        raise
+    except Exception as exc:  # noqa: BLE001
+        logger.warning("discogs_resolve_failed err=%s", exc)
+        discog = None
+    if discog:
+        message = str(discog.get("listening_intent") or message)
+        work_hint = str(discog.get("work_hint") or work_hint or "")
+
     work_guess = (work_hint or message)[:120]
     # Identity first so KB + copilot enrich the resolved shelf, not the raw utterance.
     work_title = work_guess
@@ -306,6 +324,15 @@ async def _run_chain_core(
     except Exception as exc:  # noqa: BLE001
         logger.warning("identity_resolve_for_enrich_failed err=%s", exc)
 
+    # Prefer Discogs-derived composer/title when Catalog did not confirm a work.
+    if discog:
+        if not composer_name and discog.get("composer"):
+            composer_name = str(discog["composer"])
+        if discog.get("work_title") and (not work_id or work_title == work_guess):
+            # Keep Catalog canonical title when work_id resolved; else use Discogs guess.
+            if not work_id:
+                work_title = str(discog["work_title"])
+
     rag = _rag_context(
         db,
         message=message,
@@ -313,6 +340,25 @@ async def _run_chain_core(
         composer=composer_name,
         user_id=user_id,
     )
+    if discog:
+        seed = dict(discog.get("kb_seed") or {})
+        if seed:
+            existing = dict(rag.get("kb_dossier") or {})
+            # Discogs seed wins for vinyl/interpretations; keep other KB chambers.
+            merged = {**existing, **{k: v for k, v in seed.items() if k != "_provenance"}}
+            prov = dict(existing.get("_provenance") or {})
+            prov.update(dict(seed.get("_provenance") or {}))
+            merged["_provenance"] = prov
+            if work_title:
+                merged["work_title"] = work_title
+            if composer_name:
+                merged["composer"] = composer_name
+            rag["kb_dossier"] = merged
+        snippets = list(discog.get("rag_snippets") or [])
+        if snippets:
+            rag["rag_hits"] = list(snippets) + list(rag.get("rag_hits") or [])
+            rag["rag_hits"] = [t for t in rag["rag_hits"] if t][:16]
+            rag["rag_mode"] = f"{rag.get('rag_mode') or 'none'}+discogs"
 
     # Cold KB → open-web gather → LLM verify → persist so next RAG is stronger
     web_meta: dict[str, Any] = {}
@@ -396,6 +442,18 @@ async def _run_chain_core(
         report.context["web_research"] = rag.get("web_research")
     if web_meta:
         report.context["web_research_meta"] = web_meta
+    if discog:
+        report.context["discogs"] = {
+            "release_id": discog.get("release_id"),
+            "master_id": discog.get("master_id"),
+            "uri": discog.get("uri"),
+            "performers": list(discog.get("performers") or []),
+            "composers": list(discog.get("composers") or []),
+            "work_title": discog.get("work_title"),
+            "composer": discog.get("composer"),
+            "catno_query": discog.get("catno_query"),
+            "command": discog.get("command"),
+        }
 
     if yield_steps:
         for step in report.steps or emitted:
@@ -448,6 +506,11 @@ async def iter_listening_guide_events(
         assert report is not None
         row = _persist_report(db=db, user_id=user_id, report=report, source=report.source)
         yield {"event": "done", "data": guide_to_dict(row)}
+    except DiscogsError as exc:
+        yield {
+            "event": "error",
+            "data": {"detail": str(exc), "status_code": exc.status_code, "code": "discogs"},
+        }
     except Exception as exc:  # noqa: BLE001
         logger.exception("listening_guide_stream_failed")
         yield {"event": "error", "data": {"detail": str(exc)}}

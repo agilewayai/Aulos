@@ -8,10 +8,10 @@ managed_by: "aries-harness"
 fingerprint: "aries-harness/history-doc/v1"
 generated_by: "/aries-harness history-refresh"
 initialized_at: "2026-07-25T11:07:43Z"
-generated_at: "2026-07-25T18:52:15+00:00"
+generated_at: "2026-07-25T19:31:05+00:00"
 effective_status: "generated"
-effective_since: "2026-07-25T18:52:15+00:00"
-content_fingerprint: "sha256:60db80b993ce2e1158e1f3e7f56922de56ba77bcf33e4514c9ba3dda7d35034b"
+effective_since: "2026-07-25T19:31:05+00:00"
+content_fingerprint: "sha256:8d7fb89be47e04764142799a55cdd6f0f9af88bd20b4c53a015ffce2a027e167"
 trace_history_source: "filesystem-only"
 trace_last_commit_sha: ""
 trace_last_commit_at: ""
@@ -19,9 +19,38 @@ trace_revision_count: "0"
 ---
 # Timeline
 
-Generated at: `2026-07-25T18:52:15+00:00`
+Generated at: `2026-07-25T19:31:05+00:00`
 
 ## Journal milestones
+
+### 2026-07-25T19:50:00Z
+
+- REVIEW-008 smoke `423-287-1`: was truncating to release 423; now catno search → Mozart/Horowitz
+- Fixes: parse catno, Discogs search, exclude composer from performers, workish titles
+- Verify: `test_discogs.py` 6 passed; live `resolve_discogs_message("/discogs #423-287-1")` SMOKE_OK
+
+### 2026-07-25T19:40:00Z
+
+- Root cause of “no Discogs token UI”: local-only; live OPS/API not redeployed
+- Deployed host: OPS nav **Discogs** tab + `/v1/ops/discogs` (401 without auth = route live)
+
+### 2026-07-25T19:35:00Z
+
+- OPS GUI: dedicated **Integrations** tab for Discogs token (status + enable + save/clear); Overview link
+
+### 2026-07-25T19:30:00Z
+
+- OPS office: `/v1/ops/discogs` + LLM tab form to store Discogs personal user token (overrides env)
+
+### 2026-07-25T19:20:00Z
+
+- Renamed slash command `/discog` → `/discogs` (parser only accepts `/discogs`)
+
+### 2026-07-25T19:15:00Z
+
+- STORY-PACK-008 `/discogs`: REQ/SPEC/STORY/CKPT authored; id = Discogs **release** (master fallback)
+- Implemented `services/discogs.py` + `parse_discogs_command`; wired `_run_chain_core` seed vinyl/interpretations
+- Studio hint for `/discogs #release-id`; tests: `test_discogs.py` 4 passed; listening-guide regression green
 
 ### 2026-07-25T18:25:45Z
 
@@ -34,40 +63,9 @@ Generated at: `2026-07-25T18:52:15+00:00`
 - STORY-PACK-007 S2: `_rag_context` resolves Catalog work_id for knowledge-plane retrieve
 - Client-side drop of mismatched `aulos_work_id` hits; `tests/test_knowledge_plane_rag.py` green
 
-### 2026-07-26T01:15:00Z
-
-- RAG aligned to Work Identity Catalog (REQ-006): seed identity cards; weak tokens from policy
-- works_compatible respects work_id; identity_only cards never replace full dossiers
-
-### 2026-07-26T00:55:00Z
-
-- RAG identity gate: `bwv`/form words are weak tokens; soft-filter requires distinctive overlap
-- Retrieve must not attach Goldberg `kb_dossier` to Bach cello suites / 大提琴无伴奏组曲
-- SPEC-006 identity hard-gate + regression tests
-
-### 2026-07-25T17:15:00Z
-
-- Listening gateway delegates to AgentProxy.run_listening (no local iter_listening_chain)
-
-### 2026-07-25T17:00:00Z
-
-- Added ``aulos_api.timefmt.to_utc_iso``; listening/ops/mailgun wire UTC ``Z``; tests/test_timefmt.py
-
-### 2026-07-25T14:53:12Z
-
-- Research KB + vector RAG: knowledge_documents/chunks, embeddings ops settings, lexical fallback, corpus seed
-- Recompose/update-publish APIs; by-share ownership; studio + /g owner toolbar
-- SPEC-006; listening tests for KB search + recompose slug stability
-
-### 2026-07-25T11:52:22Z
-
-- STORY-002..005 auth MVP: users/roles, register/verify/login, Mailgun config (fakeable), superadmin ops gate
-- SQLite + JWT + bcrypt; bootstrap superadmin via env
-- aulos-web register/login/verify UI; aulos-ops superadmin + Mailgun settings
-- pytest auth suite green; public smoke on aulos.purezen.ai / aulos-ops.purezen.ai
-
 ## Recent git commits
 
+- `53e7437` 2026-07-26 Ship identity catalog, Hans/Hant locales, web research, and knowledge plane.
 - `555cf53` 2026-07-26 Ship listening product, mandatory harness, facility layout, and UTC/local time.
 - `93c0f6e` 2026-07-25 Add aulos-skills, aulos-ops, host deploy, and fleet operating defaults.
 - `7632d9b` 2026-07-25 Add aulos-web, aulos-api, and aulos-mcp sub-projects under aries-harness.
@@ -75,15 +73,15 @@ Generated at: `2026-07-25T18:52:15+00:00`
 
 ## Working tree snapshot
 
-- `M` `aulos-agent/.aries_harness/INDEX.md`
-- `M` `aulos-agent/.aries_harness/JOURNAL.md`
-- `M` `aulos-agent/.aries_harness/MEMORY.md`
-- `M` `aulos-agent/.aries_harness/history/DAILY_SUMMARY_INDEX.md`
-- `M` `aulos-agent/.aries_harness/history/DOC_TRACE.md`
-- `M` `aulos-agent/.aries_harness/history/README.md`
-- `M` `aulos-agent/.aries_harness/history/RETROSPECTIVE.md`
-- `M` `aulos-agent/.aries_harness/history/ROADMAP.md`
-- `M` `aulos-agent/.aries_harness/history/STATUS.md`
-- `M` `aulos-agent/.aries_harness/history/TIMELINE.md`
-- `M` `aulos-agent/.aries_harness/history/daily/2026-07-25.md`
-- `M` `aulos-agent/.aries_harness/history/doc-trace.json`
+- `M` `aulos-api/.aries_harness/ARIES_HARNESS_FINGERPRINT.json`
+- `M` `aulos-api/.aries_harness/INDEX.md`
+- `M` `aulos-api/.aries_harness/JOURNAL.md`
+- `M` `aulos-api/.aries_harness/STATE.md`
+- `M` `aulos-api/.aries_harness/TASK_STACK.md`
+- `M` `aulos-api/.aries_harness/history/DAILY_SUMMARY_INDEX.md`
+- `M` `aulos-api/.aries_harness/history/DOC_TRACE.md`
+- `M` `aulos-api/.aries_harness/history/README.md`
+- `M` `aulos-api/.aries_harness/history/RETROSPECTIVE.md`
+- `M` `aulos-api/.aries_harness/history/ROADMAP.md`
+- `M` `aulos-api/.aries_harness/history/STATUS.md`
+- `M` `aulos-api/.aries_harness/history/TIMELINE.md`

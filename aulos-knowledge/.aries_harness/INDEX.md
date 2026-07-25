@@ -8,10 +8,10 @@ managed_by: "aries-harness"
 fingerprint: "aries-harness/bootstrap-doc/v1"
 generated_by: "/aries-harness well-organized"
 initialized_at: "2026-07-25T17:25:00+00:00"
-last_organized_at: "2026-07-25T18:52:29+00:00"
+last_organized_at: "2026-07-25T19:31:29+00:00"
 effective_status: "generated"
-effective_since: "2026-07-25T18:52:29+00:00"
-content_fingerprint: "sha256:441412723ea58c61395c845b62b59029455ccc765e2e9a2106e7e7a2bb563be2"
+effective_since: "2026-07-25T19:31:29+00:00"
+content_fingerprint: "sha256:fe48d8f759ca9748a868748375e25725a1320b2ee40210293745410837f2c2e9"
 trace_history_source: "filesystem-only"
 trace_last_commit_sha: ""
 trace_last_commit_at: ""
@@ -19,7 +19,7 @@ trace_revision_count: "0"
 ---
 # Harness Index
 
-Last organized: `2026-07-25T18:52:29+00:00`
+Last organized: `2026-07-25T19:31:29+00:00`
 
 Canonical spelling: `/aries-harness well-organized`
 
@@ -131,6 +131,8 @@ Fingerprint marker: `aries-harness` / `aries-harness/bootstrap-doc/v1`
 ## SharedSupportSurface
 
 ### Root docs
+- [INDEX.md](INDEX.md)
+  generated index of root docs and organized collections
 - [MEMORY.md](MEMORY.md)
   hot durable memory snapshot and retrieval map
 

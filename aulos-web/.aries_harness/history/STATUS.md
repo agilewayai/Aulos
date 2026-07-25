@@ -8,10 +8,10 @@ managed_by: "aries-harness"
 fingerprint: "aries-harness/history-doc/v1"
 generated_by: "/aries-harness history-refresh"
 initialized_at: "2026-07-25T11:07:42Z"
-generated_at: "2026-07-25T18:52:19+00:00"
+generated_at: "2026-07-25T19:31:19+00:00"
 effective_status: "generated"
-effective_since: "2026-07-25T18:52:19+00:00"
-content_fingerprint: "sha256:64e223fd3ea5a9377d12b186cc3fb8654bff475912ea66cd7f12203698e8aa94"
+effective_since: "2026-07-25T19:31:19+00:00"
+content_fingerprint: "sha256:94d6ced50ea68655359d4e3b4056b22a2e226ce7a990d0878245d0803cabd408"
 trace_history_source: "filesystem-only"
 trace_last_commit_sha: ""
 trace_last_commit_at: ""
@@ -19,7 +19,7 @@ trace_revision_count: "0"
 ---
 # Current Status
 
-Generated at: `2026-07-25T18:52:19+00:00`
+Generated at: `2026-07-25T19:31:19+00:00`
 
 ## Current phase
 
@@ -29,16 +29,16 @@ Generated at: `2026-07-25T18:52:19+00:00`
 
 - no branch or workspace details recorded
 - git branch: main
-- HEAD: `555cf53` Ship listening product, mandatory harness, facility layout, and UTC/local time.
+- HEAD: `53e7437` Ship identity catalog, Hans/Hant locales, web research, and knowledge plane.
 - working tree: dirty
-- change: `M` `aulos-agent/.aries_harness/INDEX.md`
-- change: `M` `aulos-agent/.aries_harness/JOURNAL.md`
-- change: `M` `aulos-agent/.aries_harness/MEMORY.md`
-- change: `M` `aulos-agent/.aries_harness/history/DAILY_SUMMARY_INDEX.md`
-- change: `M` `aulos-agent/.aries_harness/history/DOC_TRACE.md`
-- change: `M` `aulos-agent/.aries_harness/history/README.md`
-- change: `M` `aulos-agent/.aries_harness/history/RETROSPECTIVE.md`
-- change: `M` `aulos-agent/.aries_harness/history/ROADMAP.md`
+- change: `M` `aulos-api/.aries_harness/INDEX.md`
+- change: `M` `aulos-api/.aries_harness/JOURNAL.md`
+- change: `M` `aulos-api/.aries_harness/STATE.md`
+- change: `M` `aulos-api/.aries_harness/TASK_STACK.md`
+- change: `M` `aulos-api/.aries_harness/history/DAILY_SUMMARY_INDEX.md`
+- change: `M` `aulos-api/.aries_harness/history/DOC_TRACE.md`
+- change: `M` `aulos-api/.aries_harness/history/README.md`
+- change: `M` `aulos-api/.aries_harness/history/RETROSPECTIVE.md`
 
 ## Current milestone
 

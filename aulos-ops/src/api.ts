@@ -385,6 +385,32 @@ export function updateWebResearchConfig(payload: {
   )
 }
 
+export type DiscogsConfig = {
+  enabled: boolean
+  user_token_set: boolean
+  auth_source: string
+  authenticated: boolean
+}
+
+export function fetchDiscogsConfig() {
+  return request<DiscogsConfig>('/v1/ops/discogs', {}, true)
+}
+
+export function updateDiscogsConfig(payload: {
+  enabled?: boolean
+  user_token?: string
+  clear_user_token?: boolean
+}) {
+  return request<DiscogsConfig>(
+    '/v1/ops/discogs',
+    {
+      method: 'PUT',
+      body: JSON.stringify(payload),
+    },
+    true,
+  )
+}
+
 export function updateEmbedConfig(payload: {
   provider?: string
   api_key?: string

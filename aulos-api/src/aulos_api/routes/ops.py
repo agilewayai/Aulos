@@ -32,6 +32,11 @@ from aulos_api.services.web_research import (
     public_web_research_config,
     save_web_research_config,
 )
+from aulos_api.services.discogs import (
+    load_discogs_config,
+    public_discogs_config,
+    save_discogs_config,
+)
 from aulos_api.services.knowledge_base import knowledge_stats
 from aulos_api.services.skills_ops import list_domain_skills, run_skill_probe, set_skill_enabled
 from aulos_api.timefmt import to_utc_iso
@@ -675,6 +680,42 @@ def put_web_research(
         agent_reach_enabled=body.agent_reach_enabled,
     )
     return WebResearchConfigOut(**cfg)
+
+
+class DiscogsConfigOut(BaseModel):
+    enabled: bool = True
+    user_token_set: bool = False
+    auth_source: str = "none"
+    authenticated: bool = False
+
+
+class DiscogsConfigUpdate(BaseModel):
+    enabled: bool | None = None
+    user_token: str | None = None
+    clear_user_token: bool = False
+
+
+@router.get("/discogs", response_model=DiscogsConfigOut)
+def get_discogs(
+    _: User = Depends(require_roles("superadmin")),
+    db: Session = Depends(get_db),
+) -> DiscogsConfigOut:
+    return DiscogsConfigOut(**public_discogs_config(load_discogs_config(db)))
+
+
+@router.put("/discogs", response_model=DiscogsConfigOut)
+def put_discogs(
+    body: DiscogsConfigUpdate,
+    _: User = Depends(require_roles("superadmin")),
+    db: Session = Depends(get_db),
+) -> DiscogsConfigOut:
+    cfg = save_discogs_config(
+        db,
+        user_token=body.user_token,
+        clear_user_token=body.clear_user_token,
+        enabled=body.enabled,
+    )
+    return DiscogsConfigOut(**cfg)
 
 
 @router.put("/embeddings", response_model=EmbedConfigOut)

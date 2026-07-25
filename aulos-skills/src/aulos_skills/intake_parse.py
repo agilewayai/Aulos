@@ -18,6 +18,35 @@ _BOILERPLATE_PATTERNS = (
     r"[。．！!？?]",
 )
 
+# Studio slash command: /discogs #<release-id|catno>
+# Examples: /discogs #4084139  |  /discogs 423-287-1  |  /discogs #423 287-1
+_DISCOGS_CMD_RE = re.compile(
+    r"(?i)(?:^|\s)/discogs\s+#?(?P<ref>"
+    r"\d+(?:[\s\-–—./]+\d+[A-Za-z0-9]*)+"  # catalog-style (must have separator)
+    r"|\d+"  # bare release / master id
+    r")(?=\s|$|[^\w\-–—./])"
+)
+
+
+def parse_discogs_command(text: str) -> dict[str, str] | None:
+    """Return release_id or catno when message contains /discogs …; else None."""
+    m = _DISCOGS_CMD_RE.search(text or "")
+    if not m:
+        return None
+    ref = re.sub(r"\s+", " ", (m.group("ref") or "").strip())
+    if not ref:
+        return None
+    if re.search(r"[\s\-–—./]", ref):
+        # Normalize common DG-style: 423-287-1 → keep; also expose spaced form later.
+        return {"catno": ref, "command": "discogs", "ref_kind": "catno"}
+    if ref.isdigit():
+        return {"release_id": ref, "command": "discogs", "ref_kind": "release"}
+    return None
+
+
+# Back-compat alias (deprecated name)
+parse_discog_command = parse_discogs_command
+
 _BOOK_TITLE_RE = re.compile(r"[《〈]([^》〉]{1,80})[》〉]")
 _CN_QUOTE_RE = re.compile(r"[「『]([^」』]{1,80})[」』]")
 _LATIN_QUOTE_RE = re.compile(r"[\"“](.+?)[\"”]")

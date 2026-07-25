@@ -503,6 +503,55 @@ body,
   font-weight: 500;
 }
 
+button.linkish {
+  appearance: none;
+  border: 0;
+  background: transparent;
+  padding: 0;
+  color: var(--accent);
+  font: inherit;
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 0.15em;
+  cursor: pointer;
+}
+
+button.linkish:hover {
+  color: var(--ink);
+}
+
+.discogs-form {
+  max-width: 36rem;
+}
+
+.discogs-status {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  margin: 0 0 1rem;
+  padding: 0.7rem 0.85rem;
+  border: 1px solid var(--line);
+  background: rgba(255, 255, 255, 0.9);
+  font-size: 0.92rem;
+  font-weight: 500;
+}
+
+.discogs-status .ok-dot,
+.discogs-status .down-dot {
+  width: 0.65rem;
+  height: 0.65rem;
+  border-radius: 50%;
+  flex: 0 0 auto;
+}
+
+.discogs-status .ok-dot {
+  background: var(--ok);
+}
+
+.discogs-status .down-dot {
+  background: var(--down);
+}
+
 .test-form {
   margin-top: 0.85rem;
 }

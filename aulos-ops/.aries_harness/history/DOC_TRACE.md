@@ -8,10 +8,10 @@ managed_by: "aries-harness"
 fingerprint: "aries-harness/history-doc/v1"
 generated_by: "/aries-harness history-refresh"
 initialized_at: "2026-07-25T11:20:06Z"
-generated_at: "2026-07-25T18:52:23+00:00"
+generated_at: "2026-07-25T19:31:23+00:00"
 effective_status: "generated"
-effective_since: "2026-07-25T18:52:23+00:00"
-content_fingerprint: "sha256:38cdc13c36a38eda02a8befdf125203b5bd641c068767a2a8c2170479114d47c"
+effective_since: "2026-07-25T19:31:23+00:00"
+content_fingerprint: "sha256:2ab18978a7c1d340d3f91310052293c5db8ccf5c4745f1639798b2c73a377296"
 trace_history_source: "filesystem-only"
 trace_last_commit_sha: ""
 trace_last_commit_at: ""
@@ -19,7 +19,7 @@ trace_revision_count: "0"
 ---
 # Document Trace
 
-Generated at: `2026-07-25T18:52:23+00:00`
+Generated at: `2026-07-25T19:31:23+00:00`
 
 ## Summary
 
@@ -69,14 +69,14 @@ Generated at: `2026-07-25T18:52:23+00:00`
 
 - role: harness-index
 - layer: SharedSupportSurface
-- effective status: generated since 2026-07-25T18:52:23+00:00
-- content fingerprint: `sha256:935113b73c38b3451ea6b72d793e84d01aa53e6d8470bab7867bababd77be993`
+- effective status: generated since 2026-07-25T19:31:23+00:00
+- content fingerprint: `sha256:80bbbd6dd068d9542f1b68205413c3bac40528ee5905c1e0223086c10dbc3513`
 - trace: filesystem-only / count=0 / sha=none
-- latest revision: `555cf53` 2026-07-26 Ship listening product, mandatory harness, facility layout, and UTC/local time.
+- latest revision: `53e7437` 2026-07-26 Ship identity catalog, Hans/Hant locales, web research, and knowledge plane.
 - dirty: no
 - earlier revisions:
+  - `555cf53` 2026-07-26 Ship listening product, mandatory harness, facility layout, and UTC/local time.
   - `93c0f6e` 2026-07-25 Add aulos-skills, aulos-ops, host deploy, and fleet operating defaults.
-  - `7632d9b` 2026-07-25 Add aulos-web, aulos-api, and aulos-mcp sub-projects under aries-harness.
 
 ### JOURNAL.md
 
@@ -85,11 +85,11 @@ Generated at: `2026-07-25T18:52:23+00:00`
 - effective status: active since 2026-07-25T11:20:06Z
 - content fingerprint: `sha256:988545d94c883bb883b89c8f415869bb5f5a6aa4b95d11755e4b5f1066be4ea0`
 - trace: filesystem-only / count=0 / sha=none
-- latest revision: `555cf53` 2026-07-26 Ship listening product, mandatory harness, facility layout, and UTC/local time.
+- latest revision: `53e7437` 2026-07-26 Ship identity catalog, Hans/Hant locales, web research, and knowledge plane.
 - dirty: no
 - earlier revisions:
+  - `555cf53` 2026-07-26 Ship listening product, mandatory harness, facility layout, and UTC/local time.
   - `93c0f6e` 2026-07-25 Add aulos-skills, aulos-ops, host deploy, and fleet operating defaults.
-  - `7632d9b` 2026-07-25 Add aulos-web, aulos-api, and aulos-mcp sub-projects under aries-harness.
 
 ### MEMORY.md
 
@@ -245,113 +245,114 @@ Generated at: `2026-07-25T18:52:23+00:00`
 
 - role: history-daily-summary-index
 - layer: SharedSupportSurface
-- effective status: generated since 2026-07-25T17:23:12+00:00
-- content fingerprint: `sha256:c173cf903c3f0ec72282e10e8ea197b089c589fba52f9c2333e1ca2985e0ad18`
+- effective status: generated since 2026-07-25T18:52:23+00:00
+- content fingerprint: `sha256:52feed3595870f19a4177932fbb0db3342e9ee1fc319185789fcad3e5940a257`
 - trace: filesystem-only / count=0 / sha=none
-- latest revision: `555cf53` 2026-07-26 Ship listening product, mandatory harness, facility layout, and UTC/local time.
+- latest revision: `53e7437` 2026-07-26 Ship identity catalog, Hans/Hant locales, web research, and knowledge plane.
 - dirty: no
 - earlier revisions:
+  - `555cf53` 2026-07-26 Ship listening product, mandatory harness, facility layout, and UTC/local time.
   - `93c0f6e` 2026-07-25 Add aulos-skills, aulos-ops, host deploy, and fleet operating defaults.
-  - `7632d9b` 2026-07-25 Add aulos-web, aulos-api, and aulos-mcp sub-projects under aries-harness.
 
 ### history/DOC_TRACE.md
 
 - role: history-doc-trace
 - layer: SharedSupportSurface
-- effective status: generated since 2026-07-25T17:23:12+00:00
-- content fingerprint: `sha256:225562ca2662c044f3a4846a0ec1f58b506709456b72162c53d88b6b017d8b4c`
+- effective status: generated since 2026-07-25T18:52:23+00:00
+- content fingerprint: `sha256:38cdc13c36a38eda02a8befdf125203b5bd641c068767a2a8c2170479114d47c`
 - trace: filesystem-only / count=0 / sha=none
-- latest revision: `555cf53` 2026-07-26 Ship listening product, mandatory harness, facility layout, and UTC/local time.
+- latest revision: `53e7437` 2026-07-26 Ship identity catalog, Hans/Hant locales, web research, and knowledge plane.
 - dirty: no
 - earlier revisions:
+  - `555cf53` 2026-07-26 Ship listening product, mandatory harness, facility layout, and UTC/local time.
   - `93c0f6e` 2026-07-25 Add aulos-skills, aulos-ops, host deploy, and fleet operating defaults.
-  - `7632d9b` 2026-07-25 Add aulos-web, aulos-api, and aulos-mcp sub-projects under aries-harness.
 
 ### history/README.md
 
 - role: history-readme
 - layer: SharedSupportSurface
-- effective status: generated since 2026-07-25T17:23:12+00:00
-- content fingerprint: `sha256:c1dfa7a3ad30571f5578d0c9382767c7ea29b165c908f36f569d4863942ecbb6`
+- effective status: generated since 2026-07-25T18:52:23+00:00
+- content fingerprint: `sha256:a9559dae61ac2198e8903f21d19251dbec4653cd0c67aca09d43952496e1594a`
 - trace: filesystem-only / count=0 / sha=none
-- latest revision: `555cf53` 2026-07-26 Ship listening product, mandatory harness, facility layout, and UTC/local time.
+- latest revision: `53e7437` 2026-07-26 Ship identity catalog, Hans/Hant locales, web research, and knowledge plane.
 - dirty: no
 - earlier revisions:
+  - `555cf53` 2026-07-26 Ship listening product, mandatory harness, facility layout, and UTC/local time.
   - `93c0f6e` 2026-07-25 Add aulos-skills, aulos-ops, host deploy, and fleet operating defaults.
-  - `7632d9b` 2026-07-25 Add aulos-web, aulos-api, and aulos-mcp sub-projects under aries-harness.
 
 ### history/RETROSPECTIVE.md
 
 - role: history-retrospective
 - layer: SharedSupportSurface
-- effective status: generated since 2026-07-25T17:23:12+00:00
-- content fingerprint: `sha256:af5921c320cafa9fa8b852c2f29d65c8cf487955db44ee36871f1eca3e287f55`
+- effective status: generated since 2026-07-25T18:52:23+00:00
+- content fingerprint: `sha256:7e20c7cb879facbdee19141631712d0f61040c2b053268c75efe8a4dfe70c599`
 - trace: filesystem-only / count=0 / sha=none
-- latest revision: `555cf53` 2026-07-26 Ship listening product, mandatory harness, facility layout, and UTC/local time.
+- latest revision: `53e7437` 2026-07-26 Ship identity catalog, Hans/Hant locales, web research, and knowledge plane.
 - dirty: no
 - earlier revisions:
+  - `555cf53` 2026-07-26 Ship listening product, mandatory harness, facility layout, and UTC/local time.
   - `93c0f6e` 2026-07-25 Add aulos-skills, aulos-ops, host deploy, and fleet operating defaults.
-  - `7632d9b` 2026-07-25 Add aulos-web, aulos-api, and aulos-mcp sub-projects under aries-harness.
 
 ### history/ROADMAP.md
 
 - role: history-roadmap
 - layer: SharedSupportSurface
-- effective status: generated since 2026-07-25T17:23:12+00:00
-- content fingerprint: `sha256:ad337313ca033d5a86583be90ca5eda66fa6b42e740e4be9c0c58eea6dd539e1`
+- effective status: generated since 2026-07-25T18:52:23+00:00
+- content fingerprint: `sha256:ebb5223e645577064d04ecad5f0992fff0093c2d8b78a6d3790fd08980dd1870`
 - trace: filesystem-only / count=0 / sha=none
-- latest revision: `555cf53` 2026-07-26 Ship listening product, mandatory harness, facility layout, and UTC/local time.
+- latest revision: `53e7437` 2026-07-26 Ship identity catalog, Hans/Hant locales, web research, and knowledge plane.
 - dirty: no
 - earlier revisions:
+  - `555cf53` 2026-07-26 Ship listening product, mandatory harness, facility layout, and UTC/local time.
   - `93c0f6e` 2026-07-25 Add aulos-skills, aulos-ops, host deploy, and fleet operating defaults.
-  - `7632d9b` 2026-07-25 Add aulos-web, aulos-api, and aulos-mcp sub-projects under aries-harness.
 
 ### history/STATUS.md
 
 - role: history-status
 - layer: SharedSupportSurface
-- effective status: generated since 2026-07-25T17:23:12+00:00
-- content fingerprint: `sha256:1108a8a69b0de7d42f11930694b9dfe3cb6971b9641ef3fc0ef8cffe8a4fce1d`
+- effective status: generated since 2026-07-25T18:52:23+00:00
+- content fingerprint: `sha256:fbfb6aad1b06ec13619ab6ef2e3120dcd9fb7149866236342f09a6202bf69cf9`
 - trace: filesystem-only / count=0 / sha=none
-- latest revision: `555cf53` 2026-07-26 Ship listening product, mandatory harness, facility layout, and UTC/local time.
+- latest revision: `53e7437` 2026-07-26 Ship identity catalog, Hans/Hant locales, web research, and knowledge plane.
 - dirty: no
 - earlier revisions:
+  - `555cf53` 2026-07-26 Ship listening product, mandatory harness, facility layout, and UTC/local time.
   - `93c0f6e` 2026-07-25 Add aulos-skills, aulos-ops, host deploy, and fleet operating defaults.
-  - `7632d9b` 2026-07-25 Add aulos-web, aulos-api, and aulos-mcp sub-projects under aries-harness.
 
 ### history/TIMELINE.md
 
 - role: history-timeline
 - layer: SharedSupportSurface
-- effective status: generated since 2026-07-25T17:23:12+00:00
-- content fingerprint: `sha256:d3fd91f036ba904608492d6db5dd76d7fd2fabf151566139913c92a8f1bcb412`
+- effective status: generated since 2026-07-25T18:52:23+00:00
+- content fingerprint: `sha256:eaad62fffee3a7a277f9524fc1186ce6b33267a6d86a91fd7b99ed207019227a`
 - trace: filesystem-only / count=0 / sha=none
-- latest revision: `555cf53` 2026-07-26 Ship listening product, mandatory harness, facility layout, and UTC/local time.
+- latest revision: `53e7437` 2026-07-26 Ship identity catalog, Hans/Hant locales, web research, and knowledge plane.
 - dirty: no
 - earlier revisions:
+  - `555cf53` 2026-07-26 Ship listening product, mandatory harness, facility layout, and UTC/local time.
   - `93c0f6e` 2026-07-25 Add aulos-skills, aulos-ops, host deploy, and fleet operating defaults.
 
 ### history/daily/2026-07-25.md
 
 - role: history-daily-summary
 - layer: SharedSupportSurface
-- effective status: generated since 2026-07-25T17:23:12+00:00
-- content fingerprint: `sha256:50ea04f051ffd6590c63846b3211d95ea508058e17e631201a34e09df2a90820`
+- effective status: generated since 2026-07-25T18:52:23+00:00
+- content fingerprint: `sha256:0793112ce5f6c01839b115d3b7e28b716fdbea3f0dae3bc0c04e6a7696139c9a`
 - trace: filesystem-only / count=0 / sha=none
-- latest revision: `555cf53` 2026-07-26 Ship listening product, mandatory harness, facility layout, and UTC/local time.
+- latest revision: `53e7437` 2026-07-26 Ship identity catalog, Hans/Hant locales, web research, and knowledge plane.
 - dirty: no
 - earlier revisions:
+  - `555cf53` 2026-07-26 Ship listening product, mandatory harness, facility layout, and UTC/local time.
   - `93c0f6e` 2026-07-25 Add aulos-skills, aulos-ops, host deploy, and fleet operating defaults.
-  - `7632d9b` 2026-07-25 Add aulos-web, aulos-api, and aulos-mcp sub-projects under aries-harness.
 
 ### history/daily/2026-07-26.md
 
 - role: history-daily-summary
 - layer: SharedSupportSurface
-- effective status: generated since 2026-07-25T17:23:12+00:00
-- content fingerprint: `sha256:bf6dcb0e0cf2f24bbbe31c0b386b923ac30fe18d7fa5981aeeecf49cbc58957d`
+- effective status: generated since 2026-07-25T18:52:23+00:00
+- content fingerprint: `sha256:9bf3e76bbfd35ff4f239ad48121be7b6683fc88118202aca8fb85462fd8c24a5`
 - trace: filesystem-only / count=0 / sha=none
-- latest revision: no git history recorded
+- latest revision: `53e7437` 2026-07-26 Ship identity catalog, Hans/Hant locales, web research, and knowledge plane.
 - dirty: no
 
 ### layers/MetaDefineLayer/README.md
