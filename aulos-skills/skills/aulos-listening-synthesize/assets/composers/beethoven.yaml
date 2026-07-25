@@ -1,0 +1,33 @@
+composer: Ludwig van Beethoven
+aliases:
+- beethoven
+- 贝多芬
+- Ludwig van Beethoven
+composer_portrait:
+  image_url: https://upload.wikimedia.org/wikipedia/commons/6/6f/Beethoven.jpg
+  credit: Portrait associated with Beethoven (public domain via Wikimedia Commons)
+  caption: Beethoven — the face most listeners carry into the cello-and-piano room.
+composer_profile:
+  lifespan: 1770–1827
+  summary: 'Ludwig van Beethoven reshaped Classical form from within: sonata, variation, and duo dialogue
+    become vehicles for argument, humor, and late-style compression. His cello-and-piano works span early
+    brilliance through middle-period lyric architecture to late, speech-like concentration.'
+  temperament: Rhetorical and athletic — motives as questions; silences as punctuation; the cello as equal
+    orator beside the piano, not a polite accompanist.
+  place_in_oeuvre: The cello sonatas and variations sit beside the violin sonatas and piano sonatas as
+    a laboratory of duo equality — especially Opp. 69 and 102, where the cello’s voice is emancipated
+    into full sonata citizenship.
+  place_in_history: 'A hinge from Classical duo etiquette toward Romantic chamber intensity. Later cello
+    repertoire (Brahms, Debussy, Shostakovich) still answers problems Beethoven posed here: balance, register,
+    and conversational form.'
+zh:
+  composer: 路德维希·范·贝多芬
+  composer_portrait:
+    caption: 贝多芬——听者走进大提琴与钢琴对谈之室时，最常携带的那一张面容。
+    credit: 贝多芬相关肖像（公有领域，经 Wikimedia Commons）
+  composer_profile:
+    lifespan: 1770–1827
+    summary: 路德维希·范·贝多芬自古典形式内部将其重塑：奏鸣曲、变奏与二重对话，成为论辩、幽默与晚期压缩句法的载体。其大提琴与钢琴作品，自早期锋芒，经中期抒情建筑，至于晚期如言语般的凝练。
+    temperament: 修辞性而富于体能——动机如提问，休止如标点；大提琴是钢琴身旁的平等言说者，而非客套伴奏。
+    place_in_oeuvre: 大提琴奏鸣曲与变奏曲，与小提琴奏鸣曲、钢琴奏鸣曲并列，构成二重平等性的实验室——尤其作品69与102，大提琴声部被解放为完整的奏鸣公民。
+    place_in_history: 自古典二重礼仪转向浪漫室内紧张感的枢纽。后世大提琴文献（勃拉姆斯、德彪西、肖斯塔科维奇）仍在回答贝多芬在此提出的问题：平衡、音区与交谈式形式。

@@ -9,7 +9,7 @@ fingerprint: "aries-harness/bootstrap-doc/v1"
 initialized_at: "2026-07-25T11:36:00Z"
 effective_status: "active"
 effective_since: "2026-07-25T11:36:00Z"
-content_fingerprint: "sha256:30143c417f4f6bbf6c0982797cdc9388e909391e4219af18b3adc248daed7e72"
+content_fingerprint: "sha256:c02abc156009b7f9efca8aaf9bf5837d57bc442efcfc6722ba907e8a0db74e07"
 trace_history_source: "filesystem-only"
 trace_last_commit_sha: ""
 trace_last_commit_at: ""
@@ -19,13 +19,15 @@ trace_revision_count: "0"
 
 ## Fact
 
-Aulos fleet default operating policy (operator preference, 2026-07-25):
+Aulos fleet default operating policy (operator preference, 2026-07-25; strengthened same day):
 
-1. **aries-harness first** for product design, system architecture, spec development, `history-refresh`, `well-organized`, and devops.
+1. **Aries Harness mandatory (forced)** for product design, architecture, specs, coding slices, `history-refresh`, `well-organized`, devops, and self-evolution.
 2. **TDD coding loop** — Red → Green → Refactor inside Inspect → Plan → … → Verify → Summarize.
 3. **UI/UX** — apply the `ui-ux-pro-max` skill for UI structure, visual design, and UX work.
+4. **Chat-only without harness artifacts is incomplete** (AUDIT-001).
+5. **Facility + library** — see `CARD-002-facility-and-library.md`.
 
-Canonical skill pack: `skills/aulos-operating-defaults/` (also summarized in `skills/aulos-core/`).
+Canonical skill pack: `skills/aulos-operating-defaults/` v0.3.2 (also summarized in `skills/aulos-core/`).
 
 ## Refresh trigger
 

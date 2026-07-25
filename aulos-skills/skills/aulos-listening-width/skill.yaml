@@ -1,0 +1,13 @@
+id: aulos-listening-width
+name: Listening Wide Research
+version: 0.2.0
+layer: domain-runtime
+runtime: agent
+summary: Wide Salon Codex — composer portrait/profile, genesis, stature, interpretations, media shelf.
+triggers:
+  - listening.width
+depends_on:
+  - aulos-listening-intake
+inputs: [work_title, corpus_dossier]
+outputs: [width_dossier]
+observability_title: Wide research — context and reception

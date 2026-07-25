@@ -9,7 +9,7 @@ fingerprint: "aries-harness/bootstrap-doc/v1"
 initialized_at: "2026-07-25T11:10:22Z"
 effective_status: "active"
 effective_since: "2026-07-25T11:10:22Z"
-content_fingerprint: "sha256:a3774faaab72f9e03916a61c6828ccd15b5036e2751b572f1642e0c58592b97d"
+content_fingerprint: "sha256:0bc0940af45f2ee3be4a772cb7ecef6756e0e10cfee0dbd838a41716ac8ff371"
 trace_history_source: "filesystem-only"
 trace_last_commit_sha: ""
 trace_last_commit_at: ""
@@ -45,7 +45,7 @@ aulos-web/
 ├── .aries_harness/
 ├── src/App.tsx, api.ts, styles
 ├── public/
-├── scripts/aries-harness/
+├── .aries_harness/scripts/
 └── package.json
 ```
 

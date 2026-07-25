@@ -1,0 +1,32 @@
+---
+schema_version: "0.1"
+project_id: "{{PROJECT_ID}}"
+owner: "{{OWNER}}"
+doc_role: "pipeline-reports-readme"
+harness_layer: "RunCookingLayer"
+managed_by: "aries-harness"
+fingerprint: "aries-harness/bootstrap-doc/v1"
+generated_by: "/aries-harness init"
+initialized_at: "{{DATE}}"
+---
+
+# Iteration Reports
+
+Use this directory for iteration reports, closeout notes, and operator-facing progress summaries.
+
+## Recommended naming
+
+- `REPORT-*`
+- `iteration-report-*`
+- `closeout-*`
+
+## Each artifact should make clear
+
+- what was delivered
+- what remains open
+- operator-facing next action
+
+## Layer rule
+
+- this directory belongs to `RunCookingLayer`
+- iteration closeout evidence lives here, not in `MISSION.md` or `ADR.md`

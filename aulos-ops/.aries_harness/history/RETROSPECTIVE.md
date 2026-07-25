@@ -8,10 +8,10 @@ managed_by: "aries-harness"
 fingerprint: "aries-harness/history-doc/v1"
 generated_by: "/aries-harness history-refresh"
 initialized_at: "2026-07-25T11:20:06Z"
-generated_at: "2026-07-25T11:22:04+00:00"
+generated_at: "2026-07-25T16:29:54+00:00"
 effective_status: "generated"
-effective_since: "2026-07-25T11:22:04+00:00"
-content_fingerprint: "sha256:ab90caefeb8c47018fac01a2f5bf4e3508698f13efc85a9bbc35e8908790ae42"
+effective_since: "2026-07-25T16:29:54+00:00"
+content_fingerprint: "sha256:dd0dd5bad788b7821d41f608e550171ac4208068afecc943c8137638121a034e"
 trace_history_source: "filesystem-only"
 trace_last_commit_sha: ""
 trace_last_commit_at: ""
@@ -19,28 +19,35 @@ trace_revision_count: "0"
 ---
 # Retrospective Snapshot
 
-Generated at: `2026-07-25T11:22:04+00:00`
+Generated at: `2026-07-25T16:29:54+00:00`
 
 ## Recent changes
 
+- Added ``src/time.ts``; users/deliveries/health refresh use OS-local timestamps
 - initialized `.aries_harness/`
 - wrote `ARIES_HARNESS_FINGERPRINT.json`
 - no execution history recorded yet
 
 ## What is working
 
+- Added ``src/time.ts``; users/deliveries/health refresh use OS-local timestamps
 - initialized `.aries_harness/`
 - wrote `ARIES_HARNESS_FINGERPRINT.json`
 - no execution history recorded yet
 
 ## What needs attention
 
-- working tree is dirty with 259 tracked or untracked change(s)
+- working tree is dirty with 723 tracked or untracked change(s)
 - no explicit next-up slice is recorded
 
 ## Durable reminders
 
-- promote only repeatable pitfalls, not one-off incidents
+- Source of truth: `git@github.com:agilewayai/aries-harness-skills.git` (not `AriesHarnessStudio` / `aries-studio`).
+- Local reference clone: `/home/ubuntu/studio/aries-harness-skills` (keep in sync with origin).
+- Store/API: UTC ISO with ``Z``. Display (web/ops): OS/browser timezone via ``src/time.ts`` ``formatDateTime`` / ``formatTime``.
+- Harness scripts/templates: `.aries_harness/scripts/` + `.aries_harness/templates/` (not project-root `scripts/`/`templates/`).
+- Invoke: `bash .aries_harness/scripts/aries-harness.sh <cmd> --project-root .`
+- Aries Harness is the **forced default** process for this project (not optional preference).
 
 ## Promotion rule
 

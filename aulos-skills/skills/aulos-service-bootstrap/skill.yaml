@@ -1,5 +1,5 @@
 id: aulos-service-bootstrap
 name: Aulos Service Bootstrap
-version: 0.1.0
+version: 0.1.1
 layer: coding-loop
 summary: Bootstrap a new aulos-* sub-project with aries-harness init, starter seams, and linked REQ/SPEC/STORY/ARCH.

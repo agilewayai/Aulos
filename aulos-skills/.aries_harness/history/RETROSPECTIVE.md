@@ -8,10 +8,10 @@ managed_by: "aries-harness"
 fingerprint: "aries-harness/history-doc/v1"
 generated_by: "/aries-harness history-refresh"
 initialized_at: "2026-07-25T11:20:05Z"
-generated_at: "2026-07-25T11:36:53+00:00"
+generated_at: "2026-07-25T16:29:44+00:00"
 effective_status: "generated"
-effective_since: "2026-07-25T11:36:53+00:00"
-content_fingerprint: "sha256:5fbf5ee14bd72c643702862ac571b58ac285961f93ea44538f1b07a271b10197"
+effective_since: "2026-07-25T16:29:44+00:00"
+content_fingerprint: "sha256:f10428f1bbb29b1a1c1bf472e96f98ee278aee68b85695869734b97766421593"
 trace_history_source: "filesystem-only"
 trace_last_commit_sha: ""
 trace_last_commit_at: ""
@@ -19,32 +19,37 @@ trace_revision_count: "0"
 ---
 # Retrospective Snapshot
 
-Generated at: `2026-07-25T11:36:53+00:00`
+Generated at: `2026-07-25T16:29:44+00:00`
 
 ## Recent changes
 
-- initialized `.aries_harness/`
-- wrote `ARIES_HARNESS_FINGERPRINT.json`
-- no execution history recorded yet
+- Timezone constraint promoted: store UTC / display OS local (operating-defaults 0.3.3)
+- Self-evolution closeout: process + facility + canonical source
+- Memo: `docs/evolution-cycle-2026-07-25-harness-process-facility.md`
+- Insights promoted; STATE/TASK_STACK updated for day organize + history-refresh
+- Relocated harness **facility** assets into `.aries_harness/` across the fleet
+- Was: project-root `scripts/aries-harness/` + `templates/aries_harness/`
 
 ## What is working
 
-- initialized `.aries_harness/`
-- wrote `ARIES_HARNESS_FINGERPRINT.json`
-- no execution history recorded yet
+- Timezone constraint promoted: store UTC / display OS local (operating-defaults 0.3.3)
+- Self-evolution closeout: process + facility + canonical source
+- Memo: `docs/evolution-cycle-2026-07-25-harness-process-facility.md`
+- Insights promoted; STATE/TASK_STACK updated for day organize + history-refresh
 
 ## What needs attention
 
-- working tree is dirty with 292 tracked or untracked change(s)
+- working tree is dirty with 723 tracked or untracked change(s)
 - no explicit next-up slice is recorded
 
 ## Durable reminders
 
-- aries-harness first for product design, architecture, spec, history-refresh, well-organized, devops
-- TDD coding loop (Red → Green → Refactor)
-- UI/UX work must apply `ui-ux-pro-max`
-- see `aulos-skills` skill `aulos-operating-defaults` / CARD-001
-- promote only repeatable pitfalls, not one-off incidents
+- Listening guides are Salon Codex products: chambers + bilingual panes + playable ambient (SPEC-005/006).
+- Cold-path synthesize: family structural lists win; scrub foreign flagship chambers; KB needs positive title match.
+- Media contract: `/v1/media/audio` cache→proxy→origin with `Content-Disposition: inline`.
+- Eval hard-fails missing ambient player.
+- Source of truth: `git@github.com:agilewayai/aries-harness-skills.git` (not `AriesHarnessStudio` / `aries-studio`).
+- Local reference clone: `/home/ubuntu/studio/aries-harness-skills` (keep in sync with origin).
 
 ## Promotion rule
 

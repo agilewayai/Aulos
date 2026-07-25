@@ -8,10 +8,10 @@ managed_by: "aries-harness"
 fingerprint: "aries-harness/bootstrap-doc/v1"
 generated_by: "/aries-harness well-organized"
 initialized_at: "2026-07-25T11:07:43Z"
-last_organized_at: "2026-07-25T11:10:22+00:00"
+last_organized_at: "2026-07-25T16:29:49+00:00"
 effective_status: "generated"
-effective_since: "2026-07-25T11:10:22+00:00"
-content_fingerprint: "sha256:685f59be6caf56f838c591ceae3f2c7ab505c1cae6989f1372862dbf727c63a1"
+effective_since: "2026-07-25T16:29:49+00:00"
+content_fingerprint: "sha256:a0b894f6be757a85b8573f46c405122a4ada1f9a530a3750c1385ba69e281add"
 trace_history_source: "filesystem-only"
 trace_last_commit_sha: ""
 trace_last_commit_at: ""
@@ -19,7 +19,7 @@ trace_revision_count: "0"
 ---
 # Harness Index
 
-Last organized: `2026-07-25T11:10:22+00:00`
+Last organized: `2026-07-25T16:29:49+00:00`
 
 Canonical spelling: `/aries-harness well-organized`
 
@@ -63,16 +63,23 @@ Fingerprint marker: `aries-harness` / `aries-harness/bootstrap-doc/v1`
 - role: upstream request briefs and business intent anchors
 - [README.md](references/requests/README.md)
 - [REQ-001-aulos-api-bootstrap.md](references/requests/REQ-001-aulos-api-bootstrap.md)
+- [REQ-002-users-roles-auth-mvp.md](references/requests/REQ-002-users-roles-auth-mvp.md)
+- [REQ-003-classical-listening-guide-mvp.md](references/requests/REQ-003-classical-listening-guide-mvp.md)
 
 #### `references/specs/`
 - role: behavior and acceptance contracts derived from requests
 - [README.md](references/specs/README.md)
 - [SPEC-001-api-gateway.md](references/specs/SPEC-001-api-gateway.md)
+- [SPEC-002-users-roles-auth.md](references/specs/SPEC-002-users-roles-auth.md)
+- [SPEC-003-listening-guide-workflow.md](references/specs/SPEC-003-listening-guide-workflow.md)
+- [SPEC-006-research-knowledge-rag.md](references/specs/SPEC-006-research-knowledge-rag.md)
+- [SPEC-007-timezone-utc-store-local-display.md](references/specs/SPEC-007-timezone-utc-store-local-display.md)
 
 #### `references/stories/`
 - role: sprintable slices linked to specs and verification
 - [README.md](references/stories/README.md)
 - [STORY-PACK-001-bootstrap.md](references/stories/STORY-PACK-001-bootstrap.md)
+- [STORY-PACK-002-auth-mvp.md](references/stories/STORY-PACK-002-auth-mvp.md)
 
 #### `references/domain/`
 - role: domain analysis and modeling artifacts
@@ -98,11 +105,13 @@ Fingerprint marker: `aries-harness` / `aries-harness/bootstrap-doc/v1`
 #### `decisions/architecture/`
 - role: system design and architecture packs
 - [ARCH-001-api-gateway-architecture.md](decisions/architecture/ARCH-001-api-gateway-architecture.md)
+- [ARCH-002-users-roles-auth.md](decisions/architecture/ARCH-002-users-roles-auth.md)
 - [README.md](decisions/architecture/README.md)
 
 #### `decisions/adrs/`
 - role: detailed ADR records linked from the root ADR index
 - [ADR-001-fastapi-gateway.md](decisions/adrs/ADR-001-fastapi-gateway.md)
+- [ADR-002-sqlite-jwt-mailgun.md](decisions/adrs/ADR-002-sqlite-jwt-mailgun.md)
 - [README.md](decisions/adrs/README.md)
 
 ## RunCookingLayer
@@ -131,6 +140,7 @@ Fingerprint marker: `aries-harness` / `aries-harness/bootstrap-doc/v1`
 - role: test execution and fix evidence
 - [README.md](runs/tests/README.md)
 - [VR-001-story-001-bootstrap.md](runs/tests/VR-001-story-001-bootstrap.md)
+- [VR-002-auth-mvp.md](runs/tests/VR-002-auth-mvp.md)
 
 #### `runs/reports/`
 - role: iteration reports and closeouts
@@ -166,7 +176,13 @@ Fingerprint marker: `aries-harness` / `aries-harness/bootstrap-doc/v1`
 
 #### `history/`
 - role: generated history projections
+- [DAILY_SUMMARY_INDEX.md](history/DAILY_SUMMARY_INDEX.md)
+- [DOC_TRACE.md](history/DOC_TRACE.md)
 - [README.md](history/README.md)
+- [RETROSPECTIVE.md](history/RETROSPECTIVE.md)
+- [ROADMAP.md](history/ROADMAP.md)
+- [STATUS.md](history/STATUS.md)
+- [TIMELINE.md](history/TIMELINE.md)
 
 #### `archive/`
 - role: retained historical artifacts

@@ -52,6 +52,26 @@ def create_chat_model(settings: Settings | None = None) -> BaseChatModel:
 
         return ChatOpenAI(model=cfg.llm_model, api_key=cfg.openai_api_key)
 
+    if cfg.llm_provider == "deepseek":
+        cfg.require_live_credentials()
+        from langchain_openai import ChatOpenAI
+
+        return ChatOpenAI(
+            model=cfg.llm_model or "deepseek-chat",
+            api_key=cfg.deepseek_api_key,
+            base_url=cfg.deepseek_base_url,
+        )
+
+    if cfg.llm_provider == "grok":
+        cfg.require_live_credentials()
+        from langchain_openai import ChatOpenAI
+
+        return ChatOpenAI(
+            model=cfg.llm_model or "grok-3-mini",
+            api_key=cfg.grok_api_key,
+            base_url=cfg.grok_base_url,
+        )
+
     if cfg.llm_provider == "anthropic":
         cfg.require_live_credentials()
         try:

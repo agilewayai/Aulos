@@ -1,0 +1,11 @@
+id: aulos-listening-corpus
+name: Listening Corpus
+version: 0.3.0
+layer: domain-runtime
+runtime: agent
+summary: Salon Codex dossiers + ambient library/playlists (Goldberg flagship; CC0 media).
+triggers:
+  - listening.corpus
+inputs: [corpus_keys, work_title]
+outputs: [corpus_dossier, corpus_hit]
+observability_title: Load curated masterwork dossier

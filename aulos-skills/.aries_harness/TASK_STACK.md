@@ -8,8 +8,8 @@ managed_by: "aries-harness"
 fingerprint: "aries-harness/bootstrap-doc/v1"
 initialized_at: "2026-07-25T11:22:04Z"
 effective_status: "active"
-effective_since: "2026-07-25T11:22:04Z"
-content_fingerprint: "sha256:f6e4d54eab90afd05b2f07b0e081d35aa466386a2c3e15a7208a2981eb5f5a84"
+effective_since: "2026-07-25T16:20:00Z"
+content_fingerprint: "sha256:26c4de10a0303475ff711f66aedb0e11ffbe9aa7c17df979f91db496d470cf37"
 trace_history_source: "filesystem-only"
 trace_last_commit_sha: ""
 trace_last_commit_at: ""
@@ -19,14 +19,17 @@ trace_revision_count: "0"
 
 ## Now
 
-- Close STORY-001 bootstrap verification for `aulos-skills`
+- Keep SPEC-first + TDD on next listening-product slice (open RUN-* first)
+- Facility + mandatory-harness + self-evolution closeout complete (2026-07-25)
 
 ## Next
 
-- Deepen `aulos-skills` toward live multi-service operator workflows
+- Add ARCH/ADR delta for media failover + studio srcDoc contract if API/web ownership needs explicit seams
+- Adopt formal RUN-* template for every compose/eval behavior change
 
 ## Later
 
+- Align consumer facility layout with upstream `aries-harness-skills` docs if they add `.aries_harness/scripts` packaging
 - Auth, richer observability, production rollout
 
 ## Blocked

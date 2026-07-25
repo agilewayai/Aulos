@@ -15,6 +15,10 @@ if [ ! -x "$ROOT/aulos-api/.venv/bin/aulos-api" ]; then
   python3 -m venv "$ROOT/aulos-api/.venv"
   "$ROOT/aulos-api/.venv/bin/pip" install -e "$ROOT/aulos-api/[dev]"
 fi
+"$ROOT/aulos-api/.venv/bin/pip" install -e "$ROOT/aulos-skills" -q
+if [ -x "$ROOT/aulos-mcp/.venv/bin/python" ]; then
+  "$ROOT/aulos-mcp/.venv/bin/pip" install -e "$ROOT/aulos-skills" -q || true
+fi
 
 echo "[2/5] Build aulos-web"
 (

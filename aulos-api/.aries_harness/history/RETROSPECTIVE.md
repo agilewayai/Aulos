@@ -8,10 +8,10 @@ managed_by: "aries-harness"
 fingerprint: "aries-harness/history-doc/v1"
 generated_by: "/aries-harness history-refresh"
 initialized_at: "2026-07-25T11:07:43Z"
-generated_at: "2026-07-25T11:10:22+00:00"
+generated_at: "2026-07-25T16:29:49+00:00"
 effective_status: "generated"
-effective_since: "2026-07-25T11:10:22+00:00"
-content_fingerprint: "sha256:18d69f99a5dc9134e1de01385779a1609c1c7e4ca0501944a620f5f0dc3f72e4"
+effective_since: "2026-07-25T16:29:49+00:00"
+content_fingerprint: "sha256:06d0d76c9394a801e47d0418f2490e5bc92d6c0471fb736bf88929094fa0ae0e"
 trace_history_source: "filesystem-only"
 trace_last_commit_sha: ""
 trace_last_commit_at: ""
@@ -19,28 +19,37 @@ trace_revision_count: "0"
 ---
 # Retrospective Snapshot
 
-Generated at: `2026-07-25T11:10:22+00:00`
+Generated at: `2026-07-25T16:29:49+00:00`
 
 ## Recent changes
 
-- initialized `.aries_harness/`
-- wrote `ARIES_HARNESS_FINGERPRINT.json`
-- no execution history recorded yet
+- Added ``aulos_api.timefmt.to_utc_iso``; listening/ops/mailgun wire UTC ``Z``; tests/test_timefmt.py
+- Research KB + vector RAG: knowledge_documents/chunks, embeddings ops settings, lexical fallback, corpus seed
+- Recompose/update-publish APIs; by-share ownership; studio + /g owner toolbar
+- SPEC-006; listening tests for KB search + recompose slug stability
+- STORY-002..005 auth MVP: users/roles, register/verify/login, Mailgun config (fakeable), superadmin ops gate
+- SQLite + JWT + bcrypt; bootstrap superadmin via env
 
 ## What is working
 
-- initialized `.aries_harness/`
-- wrote `ARIES_HARNESS_FINGERPRINT.json`
-- no execution history recorded yet
+- Added ``aulos_api.timefmt.to_utc_iso``; listening/ops/mailgun wire UTC ``Z``; tests/test_timefmt.py
+- Research KB + vector RAG: knowledge_documents/chunks, embeddings ops settings, lexical fallback, corpus seed
+- Recompose/update-publish APIs; by-share ownership; studio + /g owner toolbar
+- SPEC-006; listening tests for KB search + recompose slug stability
 
 ## What needs attention
 
-- working tree is dirty with 377 tracked or untracked change(s)
+- working tree is dirty with 723 tracked or untracked change(s)
 - no explicit next-up slice is recorded
 
 ## Durable reminders
 
-- promote only repeatable pitfalls, not one-off incidents
+- Source of truth: `git@github.com:agilewayai/aries-harness-skills.git` (not `AriesHarnessStudio` / `aries-studio`).
+- Local reference clone: `/home/ubuntu/studio/aries-harness-skills` (keep in sync with origin).
+- Store/API: UTC ISO with ``Z``. Display (web/ops): OS/browser timezone via ``src/time.ts`` ``formatDateTime`` / ``formatTime``.
+- Harness scripts/templates: `.aries_harness/scripts/` + `.aries_harness/templates/` (not project-root `scripts/`/`templates/`).
+- Invoke: `bash .aries_harness/scripts/aries-harness.sh <cmd> --project-root .`
+- Aries Harness is the **forced default** process for this project (not optional preference).
 
 ## Promotion rule
 

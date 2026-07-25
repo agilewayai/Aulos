@@ -9,7 +9,7 @@ fingerprint: "aries-harness/bootstrap-doc/v1"
 initialized_at: "2026-07-25T11:10:22Z"
 effective_status: "active"
 effective_since: "2026-07-25T11:10:22Z"
-content_fingerprint: "sha256:63a3d7e6a447ba0a942a9af16d3e0b08d03f0d8b702f56830b36a0be833a0209"
+content_fingerprint: "sha256:a9d1a1b9d22a061c809fbba1d030922a87fb16a08515115566aa28509b4ed55d"
 trace_history_source: "filesystem-only"
 trace_last_commit_sha: ""
 trace_last_commit_at: ""
@@ -25,6 +25,10 @@ trace_revision_count: "0"
 
 - In scope: FastAPI app, health + chat routes, fake-agent mode, CORS, offline pytest, harness artifact ladder
 - Out of scope: auth/SSO, rate limiting productization, multi-tenant tenancy, production deploy
+
+## Active MVP
+
+- REQ-002 / SPEC-002: users-roles auth + Mailgun email validation + superadmin ops config
 
 ## Success test
 

@@ -36,7 +36,7 @@ npm run dev
 
 ```bash
 npm run build
-bash scripts/aries-harness/aries-harness.sh history-status --project-root .
+bash .aries_harness/scripts/aries-harness.sh history-status --project-root .
 ```
 
 ## Harness

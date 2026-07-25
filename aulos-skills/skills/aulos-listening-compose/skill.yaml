@@ -1,0 +1,13 @@
+id: aulos-listening-compose
+name: Listening Guide Compose
+version: 0.3.0
+layer: domain-runtime
+runtime: agent
+summary: Compose bilingual Salon Codex HTML with floating ambient player (cache-first media).
+triggers:
+  - listening.compose
+depends_on:
+  - aulos-listening-depth
+inputs: [work_title, width_dossier, depth_dossier, corpus_dossier]
+outputs: [guide_html, summary]
+observability_title: Compose listening-guide page

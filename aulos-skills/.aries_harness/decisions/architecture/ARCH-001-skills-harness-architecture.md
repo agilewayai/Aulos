@@ -9,7 +9,7 @@ fingerprint: "aries-harness/bootstrap-doc/v1"
 initialized_at: "2026-07-25T11:22:04Z"
 effective_status: "active"
 effective_since: "2026-07-25T11:22:04Z"
-content_fingerprint: "sha256:5ca726eafa787317c36c1906794f52c537a45eb2003b286fd55998aa4bb081e5"
+content_fingerprint: "sha256:cf22009464b81d2d849a3645deb07f71128dafc46433dbfb8e6507b22a2bc825"
 trace_history_source: "filesystem-only"
 trace_last_commit_sha: ""
 trace_last_commit_at: ""
@@ -40,11 +40,16 @@ trace_revision_count: "0"
 ```text
 aulos-skills/
 ├── .aries_harness/
+│   ├── scripts/          # facility CLI (aries-harness.sh, ah.sh, …)
+│   ├── templates/        # init skeletons (*.tmpl)
+│   └── …                 # MISSION/STATE/history/runs/…
 ├── skills/<id>/{skill.yaml,SKILL.md}
 ├── src/aulos_skills/{cli,config,registry}.py
 ├── tests/
 └── pyproject.toml
 ```
+
+Facility scripts/templates stay under `.aries_harness/` — never at project-root `scripts/` or `templates/`.
 
 ## Open decisions
 

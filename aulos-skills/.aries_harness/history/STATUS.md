@@ -8,10 +8,10 @@ managed_by: "aries-harness"
 fingerprint: "aries-harness/history-doc/v1"
 generated_by: "/aries-harness history-refresh"
 initialized_at: "2026-07-25T11:20:05Z"
-generated_at: "2026-07-25T11:36:53+00:00"
+generated_at: "2026-07-25T16:29:44+00:00"
 effective_status: "generated"
-effective_since: "2026-07-25T11:36:53+00:00"
-content_fingerprint: "sha256:fe9c95c468958ba2b7c1c8ad6fbf39776caca4b2e4729ff19a2c483db0ac32b2"
+effective_since: "2026-07-25T16:29:44+00:00"
+content_fingerprint: "sha256:38eef9e9e5f1646219bc08bedabbc2cac50c4a7cc46abdf5b068fa9dc84fdbb1"
 trace_history_source: "filesystem-only"
 trace_last_commit_sha: ""
 trace_last_commit_at: ""
@@ -19,26 +19,26 @@ trace_revision_count: "0"
 ---
 # Current Status
 
-Generated at: `2026-07-25T11:36:53+00:00`
+Generated at: `2026-07-25T16:29:44+00:00`
 
 ## Current phase
 
-- Bootstrap STORY-001 in progress / ready for verify
+- Listening product gates active (CKPT-005 ambient + identity hygiene)
 
 ## Branch and workspace
 
 - no branch or workspace details recorded
 - git branch: main
-- HEAD: `7632d9b` Add aulos-web, aulos-api, and aulos-mcp sub-projects under aries-harness.
+- HEAD: `93c0f6e` Add aulos-skills, aulos-ops, host deploy, and fleet operating defaults.
 - working tree: dirty
 - change: `M` `.gitignore`
-- change: `M` `README.md`
+- change: `M` `AGENTS.md`
+- change: `M` `CLAUDE.md`
+- change: `M` `aulos-agent/.aries_harness/INDEX.md`
 - change: `M` `aulos-agent/.aries_harness/MEMORY.md`
-- change: `M` `aulos-agent/AGENTS.md`
-- change: `M` `aulos-agent/CLAUDE.md`
-- change: `M` `aulos-api/.aries_harness/MEMORY.md`
-- change: `M` `aulos-api/AGENTS.md`
-- change: `M` `aulos-api/CLAUDE.md`
+- change: `M` `aulos-agent/.aries_harness/README.md`
+- change: `M` `aulos-agent/.aries_harness/decisions/architecture/ARCH-001-langchain-agent-architecture.md`
+- change: `M` `aulos-agent/.aries_harness/history/DAILY_SUMMARY_INDEX.md`
 
 ## Current milestone
 
@@ -53,9 +53,10 @@ Generated at: `2026-07-25T11:36:53+00:00`
 
 ## Last verification
 
-- verification command: lint:
-- verification command: typecheck:
-- verification command: test:
+- verification command: unit (skills): `cd aulos-api && .venv/bin/python -m pytest ../aulos-skills/tests/test_runtime.py ../aulos-skills/tests/test_ambient_agent.py ../aulos-skills/tests/test_ambient_playlist.py -q`
+- verification command: unit (media API): `cd aulos-api && .venv/bin/python -m pytest tests/test_media.py -q`
+- verification command: media smoke: `curl -sI 'http://127.0.0.1:5090/v1/media/audio?src=<urlencoded-commons-url>&mode=cache' | grep -i content-disposition` → must contain `inline`
+- verification command: live parity: recompose Goldberg + one cold-path Chinese work; assert bilingual + ambient in `guide_html`
 
 ## Next action
 

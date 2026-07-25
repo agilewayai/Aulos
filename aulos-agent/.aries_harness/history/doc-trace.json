@@ -2,7 +2,7 @@
   "summary": {
     "document_count": 48,
     "docs_with_issues": 0,
-    "dirty_docs": 48,
+    "dirty_docs": 0,
     "by_layer": {
       "MetaDefineLayer": 24,
       "SharedSupportSurface": 14,
@@ -39,9 +39,19 @@
         "trace_last_commit_at": "",
         "trace_revision_count": "0"
       },
-      "latest_commit": null,
-      "recent_updates": [],
-      "dirty": true,
+      "latest_commit": {
+        "sha": "0d5cb01",
+        "date": "2026-07-25",
+        "subject": "Initial commit: Aulos hackathon workspace with LangChain agent runtime."
+      },
+      "recent_updates": [
+        {
+          "sha": "0d5cb01",
+          "date": "2026-07-25",
+          "subject": "Initial commit: Aulos hackathon workspace with LangChain agent runtime."
+        }
+      ],
+      "dirty": false,
       "issue_count": 0,
       "issues": []
     },
@@ -70,9 +80,19 @@
         "trace_last_commit_at": "",
         "trace_revision_count": "0"
       },
-      "latest_commit": null,
-      "recent_updates": [],
-      "dirty": true,
+      "latest_commit": {
+        "sha": "0d5cb01",
+        "date": "2026-07-25",
+        "subject": "Initial commit: Aulos hackathon workspace with LangChain agent runtime."
+      },
+      "recent_updates": [
+        {
+          "sha": "0d5cb01",
+          "date": "2026-07-25",
+          "subject": "Initial commit: Aulos hackathon workspace with LangChain agent runtime."
+        }
+      ],
+      "dirty": false,
       "issue_count": 0,
       "issues": []
     },
@@ -83,14 +103,14 @@
       "layer": "SharedSupportSurface",
       "declared_layer": "SharedSupportSurface",
       "effective_status": "generated",
-      "effective_since": "2026-07-25T10:58:33+00:00",
+      "effective_since": "2026-07-25T16:23:54+00:00",
       "managed_by": "aries-harness",
       "fingerprint": "aries-harness/bootstrap-doc/v1",
       "last_updated_at": "",
       "completed_at": "",
       "timebox_actual": "",
-      "content_fingerprint": "sha256:77e80df49c8d8581135f5b3197d4c0a3783b8cc879da64ff25b21143d47a9998",
-      "observed_content_fingerprint": "sha256:77e80df49c8d8581135f5b3197d4c0a3783b8cc879da64ff25b21143d47a9998",
+      "content_fingerprint": "sha256:46d0ae178a405de6d4a4bf58f5b2ba9d8e4930125df96e8740a0d92d941cdba9",
+      "observed_content_fingerprint": "sha256:46d0ae178a405de6d4a4bf58f5b2ba9d8e4930125df96e8740a0d92d941cdba9",
       "trace_history_source": "filesystem-only",
       "trace_last_commit_sha": "",
       "trace_last_commit_at": "",
@@ -101,9 +121,19 @@
         "trace_last_commit_at": "",
         "trace_revision_count": "0"
       },
-      "latest_commit": null,
-      "recent_updates": [],
-      "dirty": true,
+      "latest_commit": {
+        "sha": "0d5cb01",
+        "date": "2026-07-25",
+        "subject": "Initial commit: Aulos hackathon workspace with LangChain agent runtime."
+      },
+      "recent_updates": [
+        {
+          "sha": "0d5cb01",
+          "date": "2026-07-25",
+          "subject": "Initial commit: Aulos hackathon workspace with LangChain agent runtime."
+        }
+      ],
+      "dirty": false,
       "issue_count": 0,
       "issues": []
     },
@@ -132,9 +162,19 @@
         "trace_last_commit_at": "",
         "trace_revision_count": "0"
       },
-      "latest_commit": null,
-      "recent_updates": [],
-      "dirty": true,
+      "latest_commit": {
+        "sha": "0d5cb01",
+        "date": "2026-07-25",
+        "subject": "Initial commit: Aulos hackathon workspace with LangChain agent runtime."
+      },
+      "recent_updates": [
+        {
+          "sha": "0d5cb01",
+          "date": "2026-07-25",
+          "subject": "Initial commit: Aulos hackathon workspace with LangChain agent runtime."
+        }
+      ],
+      "dirty": false,
       "issue_count": 0,
       "issues": []
     },
@@ -151,8 +191,8 @@
       "last_updated_at": "",
       "completed_at": "",
       "timebox_actual": "",
-      "content_fingerprint": "sha256:3813f45e93d67f82b34c1da7b8a081fd1615c611ac6ead8fb2bf8514cb3dd70a",
-      "observed_content_fingerprint": "sha256:3813f45e93d67f82b34c1da7b8a081fd1615c611ac6ead8fb2bf8514cb3dd70a",
+      "content_fingerprint": "sha256:2b7ac7c276f6de6c144ec95ded75992f4d4a217b7d20dee428be49d69b28ad6d",
+      "observed_content_fingerprint": "sha256:2b7ac7c276f6de6c144ec95ded75992f4d4a217b7d20dee428be49d69b28ad6d",
       "trace_history_source": "filesystem-only",
       "trace_last_commit_sha": "",
       "trace_last_commit_at": "",
@@ -163,9 +203,24 @@
         "trace_last_commit_at": "",
         "trace_revision_count": "0"
       },
-      "latest_commit": null,
-      "recent_updates": [],
-      "dirty": true,
+      "latest_commit": {
+        "sha": "93c0f6e",
+        "date": "2026-07-25",
+        "subject": "Add aulos-skills, aulos-ops, host deploy, and fleet operating defaults."
+      },
+      "recent_updates": [
+        {
+          "sha": "93c0f6e",
+          "date": "2026-07-25",
+          "subject": "Add aulos-skills, aulos-ops, host deploy, and fleet operating defaults."
+        },
+        {
+          "sha": "0d5cb01",
+          "date": "2026-07-25",
+          "subject": "Initial commit: Aulos hackathon workspace with LangChain agent runtime."
+        }
+      ],
+      "dirty": false,
       "issue_count": 0,
       "issues": []
     },
@@ -194,9 +249,19 @@
         "trace_last_commit_at": "",
         "trace_revision_count": "0"
       },
-      "latest_commit": null,
-      "recent_updates": [],
-      "dirty": true,
+      "latest_commit": {
+        "sha": "0d5cb01",
+        "date": "2026-07-25",
+        "subject": "Initial commit: Aulos hackathon workspace with LangChain agent runtime."
+      },
+      "recent_updates": [
+        {
+          "sha": "0d5cb01",
+          "date": "2026-07-25",
+          "subject": "Initial commit: Aulos hackathon workspace with LangChain agent runtime."
+        }
+      ],
+      "dirty": false,
       "issue_count": 0,
       "issues": []
     },
@@ -225,9 +290,19 @@
         "trace_last_commit_at": "",
         "trace_revision_count": "0"
       },
-      "latest_commit": null,
-      "recent_updates": [],
-      "dirty": true,
+      "latest_commit": {
+        "sha": "0d5cb01",
+        "date": "2026-07-25",
+        "subject": "Initial commit: Aulos hackathon workspace with LangChain agent runtime."
+      },
+      "recent_updates": [
+        {
+          "sha": "0d5cb01",
+          "date": "2026-07-25",
+          "subject": "Initial commit: Aulos hackathon workspace with LangChain agent runtime."
+        }
+      ],
+      "dirty": false,
       "issue_count": 0,
       "issues": []
     },
@@ -244,8 +319,8 @@
       "last_updated_at": "",
       "completed_at": "",
       "timebox_actual": "",
-      "content_fingerprint": "sha256:6883fc37f707000b8cc49b141f976838568091169ed6987239d89617f9a98670",
-      "observed_content_fingerprint": "sha256:6883fc37f707000b8cc49b141f976838568091169ed6987239d89617f9a98670",
+      "content_fingerprint": "sha256:9dcf012215531bf00de7ced7c83a5d164cc6eec56e4148f2c2dca3dd98931c91",
+      "observed_content_fingerprint": "sha256:9dcf012215531bf00de7ced7c83a5d164cc6eec56e4148f2c2dca3dd98931c91",
       "trace_history_source": "filesystem-only",
       "trace_last_commit_sha": "",
       "trace_last_commit_at": "",
@@ -256,9 +331,19 @@
         "trace_last_commit_at": "",
         "trace_revision_count": "0"
       },
-      "latest_commit": null,
-      "recent_updates": [],
-      "dirty": true,
+      "latest_commit": {
+        "sha": "0d5cb01",
+        "date": "2026-07-25",
+        "subject": "Initial commit: Aulos hackathon workspace with LangChain agent runtime."
+      },
+      "recent_updates": [
+        {
+          "sha": "0d5cb01",
+          "date": "2026-07-25",
+          "subject": "Initial commit: Aulos hackathon workspace with LangChain agent runtime."
+        }
+      ],
+      "dirty": false,
       "issue_count": 0,
       "issues": []
     },
@@ -287,9 +372,19 @@
         "trace_last_commit_at": "",
         "trace_revision_count": "0"
       },
-      "latest_commit": null,
-      "recent_updates": [],
-      "dirty": true,
+      "latest_commit": {
+        "sha": "0d5cb01",
+        "date": "2026-07-25",
+        "subject": "Initial commit: Aulos hackathon workspace with LangChain agent runtime."
+      },
+      "recent_updates": [
+        {
+          "sha": "0d5cb01",
+          "date": "2026-07-25",
+          "subject": "Initial commit: Aulos hackathon workspace with LangChain agent runtime."
+        }
+      ],
+      "dirty": false,
       "issue_count": 0,
       "issues": []
     },
@@ -318,9 +413,19 @@
         "trace_last_commit_at": "",
         "trace_revision_count": "0"
       },
-      "latest_commit": null,
-      "recent_updates": [],
-      "dirty": true,
+      "latest_commit": {
+        "sha": "0d5cb01",
+        "date": "2026-07-25",
+        "subject": "Initial commit: Aulos hackathon workspace with LangChain agent runtime."
+      },
+      "recent_updates": [
+        {
+          "sha": "0d5cb01",
+          "date": "2026-07-25",
+          "subject": "Initial commit: Aulos hackathon workspace with LangChain agent runtime."
+        }
+      ],
+      "dirty": false,
       "issue_count": 0,
       "issues": []
     },
@@ -349,9 +454,19 @@
         "trace_last_commit_at": "",
         "trace_revision_count": "0"
       },
-      "latest_commit": null,
-      "recent_updates": [],
-      "dirty": true,
+      "latest_commit": {
+        "sha": "0d5cb01",
+        "date": "2026-07-25",
+        "subject": "Initial commit: Aulos hackathon workspace with LangChain agent runtime."
+      },
+      "recent_updates": [
+        {
+          "sha": "0d5cb01",
+          "date": "2026-07-25",
+          "subject": "Initial commit: Aulos hackathon workspace with LangChain agent runtime."
+        }
+      ],
+      "dirty": false,
       "issue_count": 0,
       "issues": []
     },
@@ -380,9 +495,19 @@
         "trace_last_commit_at": "",
         "trace_revision_count": "0"
       },
-      "latest_commit": null,
-      "recent_updates": [],
-      "dirty": true,
+      "latest_commit": {
+        "sha": "0d5cb01",
+        "date": "2026-07-25",
+        "subject": "Initial commit: Aulos hackathon workspace with LangChain agent runtime."
+      },
+      "recent_updates": [
+        {
+          "sha": "0d5cb01",
+          "date": "2026-07-25",
+          "subject": "Initial commit: Aulos hackathon workspace with LangChain agent runtime."
+        }
+      ],
+      "dirty": false,
       "issue_count": 0,
       "issues": []
     },
@@ -411,9 +536,19 @@
         "trace_last_commit_at": "",
         "trace_revision_count": "0"
       },
-      "latest_commit": null,
-      "recent_updates": [],
-      "dirty": true,
+      "latest_commit": {
+        "sha": "0d5cb01",
+        "date": "2026-07-25",
+        "subject": "Initial commit: Aulos hackathon workspace with LangChain agent runtime."
+      },
+      "recent_updates": [
+        {
+          "sha": "0d5cb01",
+          "date": "2026-07-25",
+          "subject": "Initial commit: Aulos hackathon workspace with LangChain agent runtime."
+        }
+      ],
+      "dirty": false,
       "issue_count": 0,
       "issues": []
     },
@@ -442,9 +577,19 @@
         "trace_last_commit_at": "",
         "trace_revision_count": "0"
       },
-      "latest_commit": null,
-      "recent_updates": [],
-      "dirty": true,
+      "latest_commit": {
+        "sha": "0d5cb01",
+        "date": "2026-07-25",
+        "subject": "Initial commit: Aulos hackathon workspace with LangChain agent runtime."
+      },
+      "recent_updates": [
+        {
+          "sha": "0d5cb01",
+          "date": "2026-07-25",
+          "subject": "Initial commit: Aulos hackathon workspace with LangChain agent runtime."
+        }
+      ],
+      "dirty": false,
       "issue_count": 0,
       "issues": []
     },
@@ -461,8 +606,8 @@
       "last_updated_at": "",
       "completed_at": "",
       "timebox_actual": "",
-      "content_fingerprint": "sha256:34ddf87a35aba2f0fd5316da17e24789d4fbdaf70f107874856b31fa74cda89f",
-      "observed_content_fingerprint": "sha256:34ddf87a35aba2f0fd5316da17e24789d4fbdaf70f107874856b31fa74cda89f",
+      "content_fingerprint": "sha256:980e08728ef52ce47b3af54b23aaa5169a0fed47ae907ad13f5ffb25696adcc0",
+      "observed_content_fingerprint": "sha256:980e08728ef52ce47b3af54b23aaa5169a0fed47ae907ad13f5ffb25696adcc0",
       "trace_history_source": "filesystem-only",
       "trace_last_commit_sha": "",
       "trace_last_commit_at": "",
@@ -473,9 +618,19 @@
         "trace_last_commit_at": "",
         "trace_revision_count": "0"
       },
-      "latest_commit": null,
-      "recent_updates": [],
-      "dirty": true,
+      "latest_commit": {
+        "sha": "0d5cb01",
+        "date": "2026-07-25",
+        "subject": "Initial commit: Aulos hackathon workspace with LangChain agent runtime."
+      },
+      "recent_updates": [
+        {
+          "sha": "0d5cb01",
+          "date": "2026-07-25",
+          "subject": "Initial commit: Aulos hackathon workspace with LangChain agent runtime."
+        }
+      ],
+      "dirty": false,
       "issue_count": 0,
       "issues": []
     },
@@ -504,9 +659,19 @@
         "trace_last_commit_at": "",
         "trace_revision_count": "0"
       },
-      "latest_commit": null,
-      "recent_updates": [],
-      "dirty": true,
+      "latest_commit": {
+        "sha": "0d5cb01",
+        "date": "2026-07-25",
+        "subject": "Initial commit: Aulos hackathon workspace with LangChain agent runtime."
+      },
+      "recent_updates": [
+        {
+          "sha": "0d5cb01",
+          "date": "2026-07-25",
+          "subject": "Initial commit: Aulos hackathon workspace with LangChain agent runtime."
+        }
+      ],
+      "dirty": false,
       "issue_count": 0,
       "issues": []
     },
@@ -517,14 +682,14 @@
       "layer": "SharedSupportSurface",
       "declared_layer": "SharedSupportSurface",
       "effective_status": "generated",
-      "effective_since": "2026-07-25T10:58:28+00:00",
+      "effective_since": "2026-07-25T10:58:33+00:00",
       "managed_by": "aries-harness",
       "fingerprint": "aries-harness/history-doc/v1",
       "last_updated_at": "",
       "completed_at": "",
       "timebox_actual": "",
-      "content_fingerprint": "sha256:3fd6a7255cd2bb91f4519947e877f792410065842b6ad4898612c2564ec287d3",
-      "observed_content_fingerprint": "sha256:3fd6a7255cd2bb91f4519947e877f792410065842b6ad4898612c2564ec287d3",
+      "content_fingerprint": "sha256:b1a52c10575405722d0335402129a27de5a6ffd5792bff5ef30bea1ffd2cfa30",
+      "observed_content_fingerprint": "sha256:b1a52c10575405722d0335402129a27de5a6ffd5792bff5ef30bea1ffd2cfa30",
       "trace_history_source": "filesystem-only",
       "trace_last_commit_sha": "",
       "trace_last_commit_at": "",
@@ -535,9 +700,19 @@
         "trace_last_commit_at": "",
         "trace_revision_count": "0"
       },
-      "latest_commit": null,
-      "recent_updates": [],
-      "dirty": true,
+      "latest_commit": {
+        "sha": "0d5cb01",
+        "date": "2026-07-25",
+        "subject": "Initial commit: Aulos hackathon workspace with LangChain agent runtime."
+      },
+      "recent_updates": [
+        {
+          "sha": "0d5cb01",
+          "date": "2026-07-25",
+          "subject": "Initial commit: Aulos hackathon workspace with LangChain agent runtime."
+        }
+      ],
+      "dirty": false,
       "issue_count": 0,
       "issues": []
     },
@@ -548,14 +723,14 @@
       "layer": "SharedSupportSurface",
       "declared_layer": "SharedSupportSurface",
       "effective_status": "generated",
-      "effective_since": "2026-07-25T10:58:28+00:00",
+      "effective_since": "2026-07-25T10:58:33+00:00",
       "managed_by": "aries-harness",
       "fingerprint": "aries-harness/history-doc/v1",
       "last_updated_at": "",
       "completed_at": "",
       "timebox_actual": "",
-      "content_fingerprint": "sha256:7006da93c9f22daa68edc32e65ff32bae8fad714228841e6240962ad6c507af9",
-      "observed_content_fingerprint": "sha256:7006da93c9f22daa68edc32e65ff32bae8fad714228841e6240962ad6c507af9",
+      "content_fingerprint": "sha256:c803c6f5cb7d90f91f5064fc4ebd182916edd48d43d3976d71c8c18fc635712e",
+      "observed_content_fingerprint": "sha256:c803c6f5cb7d90f91f5064fc4ebd182916edd48d43d3976d71c8c18fc635712e",
       "trace_history_source": "filesystem-only",
       "trace_last_commit_sha": "",
       "trace_last_commit_at": "",
@@ -566,9 +741,19 @@
         "trace_last_commit_at": "",
         "trace_revision_count": "0"
       },
-      "latest_commit": null,
-      "recent_updates": [],
-      "dirty": true,
+      "latest_commit": {
+        "sha": "0d5cb01",
+        "date": "2026-07-25",
+        "subject": "Initial commit: Aulos hackathon workspace with LangChain agent runtime."
+      },
+      "recent_updates": [
+        {
+          "sha": "0d5cb01",
+          "date": "2026-07-25",
+          "subject": "Initial commit: Aulos hackathon workspace with LangChain agent runtime."
+        }
+      ],
+      "dirty": false,
       "issue_count": 0,
       "issues": []
     },
@@ -579,14 +764,14 @@
       "layer": "SharedSupportSurface",
       "declared_layer": "SharedSupportSurface",
       "effective_status": "generated",
-      "effective_since": "2026-07-25T10:58:28+00:00",
+      "effective_since": "2026-07-25T10:58:33+00:00",
       "managed_by": "aries-harness",
       "fingerprint": "aries-harness/history-doc/v1",
       "last_updated_at": "",
       "completed_at": "",
       "timebox_actual": "",
-      "content_fingerprint": "sha256:ad7b5135ec475f5d7c6cb98e0b37350c9a92d2e8a799d52b24774fddb1ebac0e",
-      "observed_content_fingerprint": "sha256:ad7b5135ec475f5d7c6cb98e0b37350c9a92d2e8a799d52b24774fddb1ebac0e",
+      "content_fingerprint": "sha256:578e86e2c344d53d454d6c31633e9cad2824b7b701bb949cee45b43e255c5b02",
+      "observed_content_fingerprint": "sha256:578e86e2c344d53d454d6c31633e9cad2824b7b701bb949cee45b43e255c5b02",
       "trace_history_source": "filesystem-only",
       "trace_last_commit_sha": "",
       "trace_last_commit_at": "",
@@ -597,9 +782,19 @@
         "trace_last_commit_at": "",
         "trace_revision_count": "0"
       },
-      "latest_commit": null,
-      "recent_updates": [],
-      "dirty": true,
+      "latest_commit": {
+        "sha": "0d5cb01",
+        "date": "2026-07-25",
+        "subject": "Initial commit: Aulos hackathon workspace with LangChain agent runtime."
+      },
+      "recent_updates": [
+        {
+          "sha": "0d5cb01",
+          "date": "2026-07-25",
+          "subject": "Initial commit: Aulos hackathon workspace with LangChain agent runtime."
+        }
+      ],
+      "dirty": false,
       "issue_count": 0,
       "issues": []
     },
@@ -610,14 +805,14 @@
       "layer": "SharedSupportSurface",
       "declared_layer": "SharedSupportSurface",
       "effective_status": "generated",
-      "effective_since": "2026-07-25T10:58:28+00:00",
+      "effective_since": "2026-07-25T10:58:33+00:00",
       "managed_by": "aries-harness",
       "fingerprint": "aries-harness/history-doc/v1",
       "last_updated_at": "",
       "completed_at": "",
       "timebox_actual": "",
-      "content_fingerprint": "sha256:58372e2e0b7bf8301ee53f74081f1e6f8fef3f38d16078d04c2a65eb69007c3a",
-      "observed_content_fingerprint": "sha256:58372e2e0b7bf8301ee53f74081f1e6f8fef3f38d16078d04c2a65eb69007c3a",
+      "content_fingerprint": "sha256:032ccaafe7cc0338bfdf8c58be2c7d2ee1afe4a74ec5a90e652991b1004523af",
+      "observed_content_fingerprint": "sha256:032ccaafe7cc0338bfdf8c58be2c7d2ee1afe4a74ec5a90e652991b1004523af",
       "trace_history_source": "filesystem-only",
       "trace_last_commit_sha": "",
       "trace_last_commit_at": "",
@@ -628,9 +823,19 @@
         "trace_last_commit_at": "",
         "trace_revision_count": "0"
       },
-      "latest_commit": null,
-      "recent_updates": [],
-      "dirty": true,
+      "latest_commit": {
+        "sha": "0d5cb01",
+        "date": "2026-07-25",
+        "subject": "Initial commit: Aulos hackathon workspace with LangChain agent runtime."
+      },
+      "recent_updates": [
+        {
+          "sha": "0d5cb01",
+          "date": "2026-07-25",
+          "subject": "Initial commit: Aulos hackathon workspace with LangChain agent runtime."
+        }
+      ],
+      "dirty": false,
       "issue_count": 0,
       "issues": []
     },
@@ -641,14 +846,14 @@
       "layer": "SharedSupportSurface",
       "declared_layer": "SharedSupportSurface",
       "effective_status": "generated",
-      "effective_since": "2026-07-25T10:58:28+00:00",
+      "effective_since": "2026-07-25T10:58:33+00:00",
       "managed_by": "aries-harness",
       "fingerprint": "aries-harness/history-doc/v1",
       "last_updated_at": "",
       "completed_at": "",
       "timebox_actual": "",
-      "content_fingerprint": "sha256:bc5779380b22d87ff1eeef760d01d3842d99369128879661c1e0cae9ed2916ff",
-      "observed_content_fingerprint": "sha256:bc5779380b22d87ff1eeef760d01d3842d99369128879661c1e0cae9ed2916ff",
+      "content_fingerprint": "sha256:c452e2c64d57410c0e44a7054fdd6293fc0045087872d6cc18b221a58b8f1646",
+      "observed_content_fingerprint": "sha256:c452e2c64d57410c0e44a7054fdd6293fc0045087872d6cc18b221a58b8f1646",
       "trace_history_source": "filesystem-only",
       "trace_last_commit_sha": "",
       "trace_last_commit_at": "",
@@ -659,9 +864,19 @@
         "trace_last_commit_at": "",
         "trace_revision_count": "0"
       },
-      "latest_commit": null,
-      "recent_updates": [],
-      "dirty": true,
+      "latest_commit": {
+        "sha": "0d5cb01",
+        "date": "2026-07-25",
+        "subject": "Initial commit: Aulos hackathon workspace with LangChain agent runtime."
+      },
+      "recent_updates": [
+        {
+          "sha": "0d5cb01",
+          "date": "2026-07-25",
+          "subject": "Initial commit: Aulos hackathon workspace with LangChain agent runtime."
+        }
+      ],
+      "dirty": false,
       "issue_count": 0,
       "issues": []
     },
@@ -672,14 +887,14 @@
       "layer": "SharedSupportSurface",
       "declared_layer": "SharedSupportSurface",
       "effective_status": "generated",
-      "effective_since": "2026-07-25T10:58:28+00:00",
+      "effective_since": "2026-07-25T10:58:33+00:00",
       "managed_by": "aries-harness",
       "fingerprint": "aries-harness/history-doc/v1",
       "last_updated_at": "",
       "completed_at": "",
       "timebox_actual": "",
-      "content_fingerprint": "sha256:249bdf6969b53cc79b2a05a85570458d6f426a2cb7b0cd0e0c7b893cee1dfc21",
-      "observed_content_fingerprint": "sha256:249bdf6969b53cc79b2a05a85570458d6f426a2cb7b0cd0e0c7b893cee1dfc21",
+      "content_fingerprint": "sha256:9252e74599799a199004eb555e0a3cd14a3262fa3ca9969744bf109e17015dfb",
+      "observed_content_fingerprint": "sha256:9252e74599799a199004eb555e0a3cd14a3262fa3ca9969744bf109e17015dfb",
       "trace_history_source": "filesystem-only",
       "trace_last_commit_sha": "",
       "trace_last_commit_at": "",
@@ -690,9 +905,19 @@
         "trace_last_commit_at": "",
         "trace_revision_count": "0"
       },
-      "latest_commit": null,
-      "recent_updates": [],
-      "dirty": true,
+      "latest_commit": {
+        "sha": "0d5cb01",
+        "date": "2026-07-25",
+        "subject": "Initial commit: Aulos hackathon workspace with LangChain agent runtime."
+      },
+      "recent_updates": [
+        {
+          "sha": "0d5cb01",
+          "date": "2026-07-25",
+          "subject": "Initial commit: Aulos hackathon workspace with LangChain agent runtime."
+        }
+      ],
+      "dirty": false,
       "issue_count": 0,
       "issues": []
     },
@@ -703,14 +928,14 @@
       "layer": "SharedSupportSurface",
       "declared_layer": "SharedSupportSurface",
       "effective_status": "generated",
-      "effective_since": "2026-07-25T10:58:28+00:00",
+      "effective_since": "2026-07-25T10:58:33+00:00",
       "managed_by": "aries-harness",
       "fingerprint": "aries-harness/history-doc/v1",
       "last_updated_at": "",
       "completed_at": "",
       "timebox_actual": "",
-      "content_fingerprint": "sha256:f8954a7534a6f23fa9d7e9e9f79ccb38b8ada5b01790e9accd60696b06cd3b2f",
-      "observed_content_fingerprint": "sha256:f8954a7534a6f23fa9d7e9e9f79ccb38b8ada5b01790e9accd60696b06cd3b2f",
+      "content_fingerprint": "sha256:b48a187fe22ba13a0cff9efc3d75394d76bb3f59e5b9d41823e351057083a0c8",
+      "observed_content_fingerprint": "sha256:b48a187fe22ba13a0cff9efc3d75394d76bb3f59e5b9d41823e351057083a0c8",
       "trace_history_source": "filesystem-only",
       "trace_last_commit_sha": "",
       "trace_last_commit_at": "",
@@ -721,9 +946,19 @@
         "trace_last_commit_at": "",
         "trace_revision_count": "0"
       },
-      "latest_commit": null,
-      "recent_updates": [],
-      "dirty": true,
+      "latest_commit": {
+        "sha": "0d5cb01",
+        "date": "2026-07-25",
+        "subject": "Initial commit: Aulos hackathon workspace with LangChain agent runtime."
+      },
+      "recent_updates": [
+        {
+          "sha": "0d5cb01",
+          "date": "2026-07-25",
+          "subject": "Initial commit: Aulos hackathon workspace with LangChain agent runtime."
+        }
+      ],
+      "dirty": false,
       "issue_count": 0,
       "issues": []
     },
@@ -734,14 +969,14 @@
       "layer": "SharedSupportSurface",
       "declared_layer": "SharedSupportSurface",
       "effective_status": "generated",
-      "effective_since": "2026-07-25T10:58:28+00:00",
+      "effective_since": "2026-07-25T10:58:33+00:00",
       "managed_by": "aries-harness",
       "fingerprint": "aries-harness/history-doc/v1",
       "last_updated_at": "",
       "completed_at": "",
       "timebox_actual": "",
-      "content_fingerprint": "sha256:3e3b97423b0e7869269529ed1824e76cb663b893e7fad3304d363fdfcb03e8ef",
-      "observed_content_fingerprint": "sha256:3e3b97423b0e7869269529ed1824e76cb663b893e7fad3304d363fdfcb03e8ef",
+      "content_fingerprint": "sha256:e4771b4177a4c570428f194632e5f40cf0cb0188bb59aecd7fc1169185955b9d",
+      "observed_content_fingerprint": "sha256:e4771b4177a4c570428f194632e5f40cf0cb0188bb59aecd7fc1169185955b9d",
       "trace_history_source": "filesystem-only",
       "trace_last_commit_sha": "",
       "trace_last_commit_at": "",
@@ -752,9 +987,19 @@
         "trace_last_commit_at": "",
         "trace_revision_count": "0"
       },
-      "latest_commit": null,
-      "recent_updates": [],
-      "dirty": true,
+      "latest_commit": {
+        "sha": "0d5cb01",
+        "date": "2026-07-25",
+        "subject": "Initial commit: Aulos hackathon workspace with LangChain agent runtime."
+      },
+      "recent_updates": [
+        {
+          "sha": "0d5cb01",
+          "date": "2026-07-25",
+          "subject": "Initial commit: Aulos hackathon workspace with LangChain agent runtime."
+        }
+      ],
+      "dirty": false,
       "issue_count": 0,
       "issues": []
     },
@@ -783,9 +1028,19 @@
         "trace_last_commit_at": "",
         "trace_revision_count": "0"
       },
-      "latest_commit": null,
-      "recent_updates": [],
-      "dirty": true,
+      "latest_commit": {
+        "sha": "0d5cb01",
+        "date": "2026-07-25",
+        "subject": "Initial commit: Aulos hackathon workspace with LangChain agent runtime."
+      },
+      "recent_updates": [
+        {
+          "sha": "0d5cb01",
+          "date": "2026-07-25",
+          "subject": "Initial commit: Aulos hackathon workspace with LangChain agent runtime."
+        }
+      ],
+      "dirty": false,
       "issue_count": 0,
       "issues": []
     },
@@ -814,9 +1069,19 @@
         "trace_last_commit_at": "",
         "trace_revision_count": "0"
       },
-      "latest_commit": null,
-      "recent_updates": [],
-      "dirty": true,
+      "latest_commit": {
+        "sha": "0d5cb01",
+        "date": "2026-07-25",
+        "subject": "Initial commit: Aulos hackathon workspace with LangChain agent runtime."
+      },
+      "recent_updates": [
+        {
+          "sha": "0d5cb01",
+          "date": "2026-07-25",
+          "subject": "Initial commit: Aulos hackathon workspace with LangChain agent runtime."
+        }
+      ],
+      "dirty": false,
       "issue_count": 0,
       "issues": []
     },
@@ -845,9 +1110,19 @@
         "trace_last_commit_at": "",
         "trace_revision_count": "0"
       },
-      "latest_commit": null,
-      "recent_updates": [],
-      "dirty": true,
+      "latest_commit": {
+        "sha": "0d5cb01",
+        "date": "2026-07-25",
+        "subject": "Initial commit: Aulos hackathon workspace with LangChain agent runtime."
+      },
+      "recent_updates": [
+        {
+          "sha": "0d5cb01",
+          "date": "2026-07-25",
+          "subject": "Initial commit: Aulos hackathon workspace with LangChain agent runtime."
+        }
+      ],
+      "dirty": false,
       "issue_count": 0,
       "issues": []
     },
@@ -876,9 +1151,19 @@
         "trace_last_commit_at": "",
         "trace_revision_count": "0"
       },
-      "latest_commit": null,
-      "recent_updates": [],
-      "dirty": true,
+      "latest_commit": {
+        "sha": "0d5cb01",
+        "date": "2026-07-25",
+        "subject": "Initial commit: Aulos hackathon workspace with LangChain agent runtime."
+      },
+      "recent_updates": [
+        {
+          "sha": "0d5cb01",
+          "date": "2026-07-25",
+          "subject": "Initial commit: Aulos hackathon workspace with LangChain agent runtime."
+        }
+      ],
+      "dirty": false,
       "issue_count": 0,
       "issues": []
     },
@@ -907,9 +1192,19 @@
         "trace_last_commit_at": "",
         "trace_revision_count": "0"
       },
-      "latest_commit": null,
-      "recent_updates": [],
-      "dirty": true,
+      "latest_commit": {
+        "sha": "0d5cb01",
+        "date": "2026-07-25",
+        "subject": "Initial commit: Aulos hackathon workspace with LangChain agent runtime."
+      },
+      "recent_updates": [
+        {
+          "sha": "0d5cb01",
+          "date": "2026-07-25",
+          "subject": "Initial commit: Aulos hackathon workspace with LangChain agent runtime."
+        }
+      ],
+      "dirty": false,
       "issue_count": 0,
       "issues": []
     },
@@ -938,9 +1233,19 @@
         "trace_last_commit_at": "",
         "trace_revision_count": "0"
       },
-      "latest_commit": null,
-      "recent_updates": [],
-      "dirty": true,
+      "latest_commit": {
+        "sha": "0d5cb01",
+        "date": "2026-07-25",
+        "subject": "Initial commit: Aulos hackathon workspace with LangChain agent runtime."
+      },
+      "recent_updates": [
+        {
+          "sha": "0d5cb01",
+          "date": "2026-07-25",
+          "subject": "Initial commit: Aulos hackathon workspace with LangChain agent runtime."
+        }
+      ],
+      "dirty": false,
       "issue_count": 0,
       "issues": []
     },
@@ -969,9 +1274,19 @@
         "trace_last_commit_at": "",
         "trace_revision_count": "0"
       },
-      "latest_commit": null,
-      "recent_updates": [],
-      "dirty": true,
+      "latest_commit": {
+        "sha": "0d5cb01",
+        "date": "2026-07-25",
+        "subject": "Initial commit: Aulos hackathon workspace with LangChain agent runtime."
+      },
+      "recent_updates": [
+        {
+          "sha": "0d5cb01",
+          "date": "2026-07-25",
+          "subject": "Initial commit: Aulos hackathon workspace with LangChain agent runtime."
+        }
+      ],
+      "dirty": false,
       "issue_count": 0,
       "issues": []
     },
@@ -1000,9 +1315,19 @@
         "trace_last_commit_at": "",
         "trace_revision_count": "0"
       },
-      "latest_commit": null,
-      "recent_updates": [],
-      "dirty": true,
+      "latest_commit": {
+        "sha": "0d5cb01",
+        "date": "2026-07-25",
+        "subject": "Initial commit: Aulos hackathon workspace with LangChain agent runtime."
+      },
+      "recent_updates": [
+        {
+          "sha": "0d5cb01",
+          "date": "2026-07-25",
+          "subject": "Initial commit: Aulos hackathon workspace with LangChain agent runtime."
+        }
+      ],
+      "dirty": false,
       "issue_count": 0,
       "issues": []
     },
@@ -1031,9 +1356,19 @@
         "trace_last_commit_at": "",
         "trace_revision_count": "0"
       },
-      "latest_commit": null,
-      "recent_updates": [],
-      "dirty": true,
+      "latest_commit": {
+        "sha": "0d5cb01",
+        "date": "2026-07-25",
+        "subject": "Initial commit: Aulos hackathon workspace with LangChain agent runtime."
+      },
+      "recent_updates": [
+        {
+          "sha": "0d5cb01",
+          "date": "2026-07-25",
+          "subject": "Initial commit: Aulos hackathon workspace with LangChain agent runtime."
+        }
+      ],
+      "dirty": false,
       "issue_count": 0,
       "issues": []
     },
@@ -1062,9 +1397,19 @@
         "trace_last_commit_at": "",
         "trace_revision_count": "0"
       },
-      "latest_commit": null,
-      "recent_updates": [],
-      "dirty": true,
+      "latest_commit": {
+        "sha": "0d5cb01",
+        "date": "2026-07-25",
+        "subject": "Initial commit: Aulos hackathon workspace with LangChain agent runtime."
+      },
+      "recent_updates": [
+        {
+          "sha": "0d5cb01",
+          "date": "2026-07-25",
+          "subject": "Initial commit: Aulos hackathon workspace with LangChain agent runtime."
+        }
+      ],
+      "dirty": false,
       "issue_count": 0,
       "issues": []
     },
@@ -1093,9 +1438,19 @@
         "trace_last_commit_at": "",
         "trace_revision_count": "0"
       },
-      "latest_commit": null,
-      "recent_updates": [],
-      "dirty": true,
+      "latest_commit": {
+        "sha": "0d5cb01",
+        "date": "2026-07-25",
+        "subject": "Initial commit: Aulos hackathon workspace with LangChain agent runtime."
+      },
+      "recent_updates": [
+        {
+          "sha": "0d5cb01",
+          "date": "2026-07-25",
+          "subject": "Initial commit: Aulos hackathon workspace with LangChain agent runtime."
+        }
+      ],
+      "dirty": false,
       "issue_count": 0,
       "issues": []
     },
@@ -1124,9 +1479,19 @@
         "trace_last_commit_at": "",
         "trace_revision_count": "0"
       },
-      "latest_commit": null,
-      "recent_updates": [],
-      "dirty": true,
+      "latest_commit": {
+        "sha": "0d5cb01",
+        "date": "2026-07-25",
+        "subject": "Initial commit: Aulos hackathon workspace with LangChain agent runtime."
+      },
+      "recent_updates": [
+        {
+          "sha": "0d5cb01",
+          "date": "2026-07-25",
+          "subject": "Initial commit: Aulos hackathon workspace with LangChain agent runtime."
+        }
+      ],
+      "dirty": false,
       "issue_count": 0,
       "issues": []
     },
@@ -1155,9 +1520,19 @@
         "trace_last_commit_at": "",
         "trace_revision_count": "0"
       },
-      "latest_commit": null,
-      "recent_updates": [],
-      "dirty": true,
+      "latest_commit": {
+        "sha": "0d5cb01",
+        "date": "2026-07-25",
+        "subject": "Initial commit: Aulos hackathon workspace with LangChain agent runtime."
+      },
+      "recent_updates": [
+        {
+          "sha": "0d5cb01",
+          "date": "2026-07-25",
+          "subject": "Initial commit: Aulos hackathon workspace with LangChain agent runtime."
+        }
+      ],
+      "dirty": false,
       "issue_count": 0,
       "issues": []
     },
@@ -1186,9 +1561,19 @@
         "trace_last_commit_at": "",
         "trace_revision_count": "0"
       },
-      "latest_commit": null,
-      "recent_updates": [],
-      "dirty": true,
+      "latest_commit": {
+        "sha": "0d5cb01",
+        "date": "2026-07-25",
+        "subject": "Initial commit: Aulos hackathon workspace with LangChain agent runtime."
+      },
+      "recent_updates": [
+        {
+          "sha": "0d5cb01",
+          "date": "2026-07-25",
+          "subject": "Initial commit: Aulos hackathon workspace with LangChain agent runtime."
+        }
+      ],
+      "dirty": false,
       "issue_count": 0,
       "issues": []
     },
@@ -1217,9 +1602,19 @@
         "trace_last_commit_at": "",
         "trace_revision_count": "0"
       },
-      "latest_commit": null,
-      "recent_updates": [],
-      "dirty": true,
+      "latest_commit": {
+        "sha": "0d5cb01",
+        "date": "2026-07-25",
+        "subject": "Initial commit: Aulos hackathon workspace with LangChain agent runtime."
+      },
+      "recent_updates": [
+        {
+          "sha": "0d5cb01",
+          "date": "2026-07-25",
+          "subject": "Initial commit: Aulos hackathon workspace with LangChain agent runtime."
+        }
+      ],
+      "dirty": false,
       "issue_count": 0,
       "issues": []
     },
@@ -1248,9 +1643,19 @@
         "trace_last_commit_at": "",
         "trace_revision_count": "0"
       },
-      "latest_commit": null,
-      "recent_updates": [],
-      "dirty": true,
+      "latest_commit": {
+        "sha": "0d5cb01",
+        "date": "2026-07-25",
+        "subject": "Initial commit: Aulos hackathon workspace with LangChain agent runtime."
+      },
+      "recent_updates": [
+        {
+          "sha": "0d5cb01",
+          "date": "2026-07-25",
+          "subject": "Initial commit: Aulos hackathon workspace with LangChain agent runtime."
+        }
+      ],
+      "dirty": false,
       "issue_count": 0,
       "issues": []
     },
@@ -1279,9 +1684,19 @@
         "trace_last_commit_at": "",
         "trace_revision_count": "0"
       },
-      "latest_commit": null,
-      "recent_updates": [],
-      "dirty": true,
+      "latest_commit": {
+        "sha": "0d5cb01",
+        "date": "2026-07-25",
+        "subject": "Initial commit: Aulos hackathon workspace with LangChain agent runtime."
+      },
+      "recent_updates": [
+        {
+          "sha": "0d5cb01",
+          "date": "2026-07-25",
+          "subject": "Initial commit: Aulos hackathon workspace with LangChain agent runtime."
+        }
+      ],
+      "dirty": false,
       "issue_count": 0,
       "issues": []
     },
@@ -1310,9 +1725,19 @@
         "trace_last_commit_at": "",
         "trace_revision_count": "0"
       },
-      "latest_commit": null,
-      "recent_updates": [],
-      "dirty": true,
+      "latest_commit": {
+        "sha": "0d5cb01",
+        "date": "2026-07-25",
+        "subject": "Initial commit: Aulos hackathon workspace with LangChain agent runtime."
+      },
+      "recent_updates": [
+        {
+          "sha": "0d5cb01",
+          "date": "2026-07-25",
+          "subject": "Initial commit: Aulos hackathon workspace with LangChain agent runtime."
+        }
+      ],
+      "dirty": false,
       "issue_count": 0,
       "issues": []
     },
@@ -1341,9 +1766,19 @@
         "trace_last_commit_at": "",
         "trace_revision_count": "0"
       },
-      "latest_commit": null,
-      "recent_updates": [],
-      "dirty": true,
+      "latest_commit": {
+        "sha": "0d5cb01",
+        "date": "2026-07-25",
+        "subject": "Initial commit: Aulos hackathon workspace with LangChain agent runtime."
+      },
+      "recent_updates": [
+        {
+          "sha": "0d5cb01",
+          "date": "2026-07-25",
+          "subject": "Initial commit: Aulos hackathon workspace with LangChain agent runtime."
+        }
+      ],
+      "dirty": false,
       "issue_count": 0,
       "issues": []
     },
@@ -1372,9 +1807,19 @@
         "trace_last_commit_at": "",
         "trace_revision_count": "0"
       },
-      "latest_commit": null,
-      "recent_updates": [],
-      "dirty": true,
+      "latest_commit": {
+        "sha": "0d5cb01",
+        "date": "2026-07-25",
+        "subject": "Initial commit: Aulos hackathon workspace with LangChain agent runtime."
+      },
+      "recent_updates": [
+        {
+          "sha": "0d5cb01",
+          "date": "2026-07-25",
+          "subject": "Initial commit: Aulos hackathon workspace with LangChain agent runtime."
+        }
+      ],
+      "dirty": false,
       "issue_count": 0,
       "issues": []
     },
@@ -1403,9 +1848,19 @@
         "trace_last_commit_at": "",
         "trace_revision_count": "0"
       },
-      "latest_commit": null,
-      "recent_updates": [],
-      "dirty": true,
+      "latest_commit": {
+        "sha": "0d5cb01",
+        "date": "2026-07-25",
+        "subject": "Initial commit: Aulos hackathon workspace with LangChain agent runtime."
+      },
+      "recent_updates": [
+        {
+          "sha": "0d5cb01",
+          "date": "2026-07-25",
+          "subject": "Initial commit: Aulos hackathon workspace with LangChain agent runtime."
+        }
+      ],
+      "dirty": false,
       "issue_count": 0,
       "issues": []
     },
@@ -1434,9 +1889,19 @@
         "trace_last_commit_at": "",
         "trace_revision_count": "0"
       },
-      "latest_commit": null,
-      "recent_updates": [],
-      "dirty": true,
+      "latest_commit": {
+        "sha": "0d5cb01",
+        "date": "2026-07-25",
+        "subject": "Initial commit: Aulos hackathon workspace with LangChain agent runtime."
+      },
+      "recent_updates": [
+        {
+          "sha": "0d5cb01",
+          "date": "2026-07-25",
+          "subject": "Initial commit: Aulos hackathon workspace with LangChain agent runtime."
+        }
+      ],
+      "dirty": false,
       "issue_count": 0,
       "issues": []
     },
@@ -1465,9 +1930,19 @@
         "trace_last_commit_at": "",
         "trace_revision_count": "0"
       },
-      "latest_commit": null,
-      "recent_updates": [],
-      "dirty": true,
+      "latest_commit": {
+        "sha": "0d5cb01",
+        "date": "2026-07-25",
+        "subject": "Initial commit: Aulos hackathon workspace with LangChain agent runtime."
+      },
+      "recent_updates": [
+        {
+          "sha": "0d5cb01",
+          "date": "2026-07-25",
+          "subject": "Initial commit: Aulos hackathon workspace with LangChain agent runtime."
+        }
+      ],
+      "dirty": false,
       "issue_count": 0,
       "issues": []
     },
@@ -1496,9 +1971,19 @@
         "trace_last_commit_at": "",
         "trace_revision_count": "0"
       },
-      "latest_commit": null,
-      "recent_updates": [],
-      "dirty": true,
+      "latest_commit": {
+        "sha": "0d5cb01",
+        "date": "2026-07-25",
+        "subject": "Initial commit: Aulos hackathon workspace with LangChain agent runtime."
+      },
+      "recent_updates": [
+        {
+          "sha": "0d5cb01",
+          "date": "2026-07-25",
+          "subject": "Initial commit: Aulos hackathon workspace with LangChain agent runtime."
+        }
+      ],
+      "dirty": false,
       "issue_count": 0,
       "issues": []
     }

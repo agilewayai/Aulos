@@ -1,0 +1,13 @@
+id: aulos-listening-synthesize
+name: Listening Salon Synthesize
+version: 0.2.0
+layer: domain-runtime
+runtime: agent
+summary: Compound cards + families (+ LLM) with identity hygiene — family lists win on cold path.
+triggers:
+  - listening.synthesize
+depends_on:
+  - aulos-listening-corpus
+inputs: [work_title, composer_guess, corpus_dossier, corpus_hit, llm_dossier, llm_enrichment, family_hints]
+outputs: [corpus_dossier, synthesize_hit, synthesize_source]
+observability_title: Synthesize Salon Codex dossier

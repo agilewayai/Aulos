@@ -10,13 +10,17 @@ generated_by: "/aries-harness init"
 initialized_at: "2026-07-25T11:07:42Z"
 effective_status: "active"
 effective_since: "2026-07-25T11:07:42Z"
-content_fingerprint: "sha256:1dd7ee02f4d210b5007b1dbd96f43e3b6022e15cd26618c441e7cc152f7aaf62"
+content_fingerprint: "sha256:4f2ba77e9ad9bb982b6201beed1d0dece7255f2107553b16e0de6ad27951111d"
 trace_history_source: "filesystem-only"
 trace_last_commit_sha: ""
 trace_last_commit_at: ""
 trace_revision_count: "0"
 ---
 # Journal
+
+## 2026-07-25T17:00:00Z
+
+- Added ``src/time.ts``; guide history/meta show OS-local timestamps
 
 ## 2026-07-25T11:07:42Z
 

@@ -1,0 +1,348 @@
+dossier_id: bwv-988
+work_title: J.S. Bach — Goldberg Variations, BWV 988
+composer: Johann Sebastian Bach
+catalog: BWV 988
+era: Late Baroque (published 1741, Leipzig)
+form: Aria with 30 variations + closing Aria da capo on a 32-bar ground bass
+listening_thesis: Hold the Aria’s bass architecture in the ear first; the thirty rooms are inventions
+  on that ground, not a parade of unrelated surfaces.
+composer_portrait:
+  image_url: https://upload.wikimedia.org/wikipedia/commons/6/6a/Johann_Sebastian_Bach.jpg
+  credit: Elias Gottlob Haussmann — Portrait of J.S. Bach (1748 version; public domain via Wikimedia Commons)
+  caption: Bach at sixty-one, holding the six-part Canon BWV 1076 — the face of late Leipzig mastery.
+composer_profile:
+  lifespan: 1685–1750
+  summary: 'Johann Sebastian Bach stands as the summit of High Baroque contrapuntism: organist, Kapellmeister,
+    and encyclopedist of keyboard craft. In Leipzig’s later years he gathered a lifetime of technique
+    into published cycles that read like private universities for the hands and the ear.'
+  temperament: Not a Romantic “expressive” persona but a craftsman of order — dance, canon, and rhetoric
+    braided until feeling arrives as structure itself.
+  place_in_oeuvre: 'BWV 988 is the Fourth Part of the Clavier-Übung — the keyboard summa that also includes
+    the Partitas, Italian Concerto / French Overture, and Organ Mass. Among Bach’s variation works it
+    is the most public monument: courtly entertainment raised to encyclopedic art.'
+  place_in_history: A hinge between Baroque variation practice and the modern idea of the “complete keyboard
+    cosmos.” After long 19th-century neglect, early- and mid-20th-century revival (Landowska, then Gould)
+    made it a cultural monument — a work against which pianism and historically informed performance both
+    measure themselves.
+genesis:
+  year: '1741'
+  place: Leipzig
+  publication: Clavier-Übung, Part IV (Nürnberg, Balthasar Schmid)
+  patronage: Associated in later lore with Count Keyserlingk and the young harpsichordist Johann Gottlieb
+    Goldberg; the printed dedication culture is clearer than the “insomnia night music” anecdote.
+  background: 'Bach’s late Leipzig maturity: after decades of church and court service, he published keyboard
+    cycles that teach by exhausting a form. The Aria’s sarabande gait and 32-bar bass become a laboratory
+    for canons (rising by interval), genre paraphrases, hand-crossing bravura, and affective depth.'
+  instrument_culture: Conceived for a two-manual harpsichord — registration and hand distribution matter.
+    The work thrives in intimate chamber scale, not orchestral mass.
+historical_stature:
+  reasons:
+  - 'Encyclopedic variation craft: character pieces, canons, and a quodlibet under one bass.'
+  - Formal architecture listeners can map — midpoint French Overture (Var. 16) as second beginning.
+  - Affective arc with a minor-mode nadir (esp. Var. 25) before comic culmination and remembered Aria.
+  - Reception history turned a specialist print into a 20th-century listening mythos.
+  - Continues to test philosophies of instrument, tempo, ornament, and authenticity.
+  reception_arc: 18th-c specialist print → 19th-c relative obscurity → early 20th-c harpsichord revival
+    → 1955 Gould as popular monument → HIP and modern piano schools in dialogue ever since.
+work_introduction: 'The Goldberg Variations open with an Aria whose beauty is architectural: a sarabande
+  that teaches the ear a ground bass. Thirty variations then invent rooms upon that ground — some courtly,
+  some canonic, some athletic, some almost painfully introspective — before the Aria returns as memory.
+  To listen well is to stop chasing only the filigree and start tracking how one bass supports an entire
+  world of character.'
+width_points:
+- Fourth part of Clavier-Übung; summit of Bach’s published keyboard variation craft.
+- Mix of courtly entertainment and encyclopedic technique (canons, genre paraphrases, hand-crossing).
+- Reception: 19th-c neglect → early 20th-c revival → mid-century recordings as cultural monument.
+- Listening modes differ: harpsichord intimacy vs modern piano architecture vs HIP colors.
+- Place in oeuvre: sibling to Partitas, Italian Concerto, and the late contrapuntal summae.
+depth_points:
+- Lock the ear on the Aria bass before chasing surface figuration.
+- Variation grouping often felt in threes (character + canon); canons rise in interval.
+- Var. 16 French Overture = formal midpoint / second beginning.
+- Minor-mode cluster (15, 21, 25) as affective deepening; 25 as frequent nadir.
+- Quodlibet (30) as witty culmination; Aria return as memory.
+myths_and_caveats:
+- The Keyserlingk / Goldberg “insomnia night music” story is reception lore, historically debated — present
+  as legend, not proven commission narrative.
+- “Authentic” tempo and ornament remain interpretive; cite editions and instruments rather than absolute
+  truth.
+listening_map:
+- label: Aria
+  cue: Bass architecture; sarabande gait — memorize the ground.
+- label: Vars. 1–15
+  cue: Rising canon intervals; alternate character rooms and canons.
+- label: Var. 16
+  cue: Dotted French Overture reopen — hear the second beginning.
+- label: Vars. 17–24
+  cue: Bravura vs cantabile alternation after the Overture.
+- label: Vars. 25–30 + Aria
+  cue: Minor depth → Quodlibet smile → remembered Aria.
+variation_deepdives:
+- title: Aria
+  note: Sarabande rhetoric; the bass is the true theme.
+- title: Canon sequence (every third variation)
+  note: Canons climb by interval — train the ear to catch entries.
+- title: Variation 16 — Ouverture
+  note: Formal hinge; dotted majesty resets the second half.
+- title: Variation 25 — Adagio
+  note: Often the emotional nadir; hold stillness against surrounding dazzle.
+- title: Variation 30 — Quodlibet
+  note: Folksong wit as culmination before the Aria’s return.
+sound_world:
+  original_instrument: Two-manual harpsichord (Clavier) — manuals enable crossed-hand textures without
+    modern damper theater.
+  ensemble_notes: Solo keyboard work. Later arrangements (string trio, orchestra, jazz) are receptions,
+    not Bach’s scoring — useful for color, not as “original.”
+  modern_modes:
+  - Harpsichord / HIP — articulation, unequal temperament colors, chamber intimacy.
+  - Modern piano — sustain, dynamic architecture, Gould-line clarity vs Romantic wash.
+  - Comparative listening — same variation across instruments to hear what the bass still does.
+# Soft room theme / full-work playlist when openly licensed recording exists.
+ambient_audio:
+  playlist_id: open-goldberg-ishizaka
+  url: https://commons.wikimedia.org/wiki/Special:FilePath/Kimiko_Ishizaka_-_01_-_Aria.ogg
+  title: Aria — Goldberg Variations, BWV 988
+  title_zh: 咏叹调（主题）— 哥德堡变奏曲，BWV 988
+  credit: Kimiko Ishizaka — Open Goldberg Variations (CC0 / public domain via Wikimedia Commons)
+  credit_zh: 石坂木美子 — Open Goldberg Variations（CC0 公有领域，Wikimedia Commons）
+  loop_playlist: true
+  volume: 0.28
+  autoplay: true
+related_works:
+- title: Bach — Clavier-Übung I (Partitas, BWV 825–830)
+  why: Same published keyboard cosmos; dance suites as character schooling.
+- title: Bach — Italian Concerto & French Overture (Clavier-Übung II)
+  why: Shares the French Overture rhetoric that reappears at Var. 16.
+- title: Bach — The Art of Fugue / Musical Offering
+  why: Late encyclopedic contrapuntism — different form, same ambition.
+- title: Beethoven — Diabelli Variations, Op. 120
+  why: Later summit of variation as world-building; dialogue across centuries.
+- title: Brahms — Variations on a Theme by Handel, Op. 24
+  why: 19th-c keyboard variation craft in Bach’s long shadow.
+interpretations:
+- artist: Wanda Landowska
+  year: '1933'
+  instrument: Pleyel harpsichord
+  era_note: Early revival — monumental harpsichord presence that reintroduced the work to the century.
+  why_listen: Hear pre-Gould reception; grandeur and rhetoric over modern HIP lightness.
+  discogs_url: https://www.discogs.com/search/?q=Landowska+Goldberg&type=master
+- artist: Glenn Gould
+  year: '1955'
+  instrument: Piano (Columbia)
+  era_note: Breakthrough mono — youthful velocity, crystalline counterpoint, cultural earthquake.
+  why_listen: The recording that made Goldberg a public monument; compare every later piano reading to
+    this voltage.
+  youtube_url: https://www.youtube.com/watch?v=jWshUm0Juxk
+  discogs_url: https://www.discogs.com/master/261784
+- artist: Glenn Gould
+  year: '1981'
+  instrument: Piano (digital remake)
+  era_note: Autumnal revisit — broader tempos, spiritual repose, end-of-life bookend to 1955.
+  why_listen: Same artist, opposite climate; ideal A/B for philosophy of tempo and touch.
+  discogs_url: https://www.discogs.com/master/48325
+- artist: Gustav Leonhardt
+  year: 1976 / later cycles
+  instrument: Harpsichord
+  era_note: HIP authority — speech-like articulation, scholarly poise.
+  why_listen: Counterweight to piano mythos; hear the work as chamber rhetoric.
+  discogs_url: https://www.discogs.com/search/?q=Leonhardt+Goldberg+Variations&type=master
+- artist: Murray Perahia
+  year: '2000'
+  instrument: Piano
+  era_note: Late-century lyric architecture — singing lines without Gould’s eccentricity.
+  why_listen: A humane modern-piano path for first full hearings.
+  discogs_url: https://www.discogs.com/search/?q=Perahia+Goldberg&type=master
+- artist: András Schiff
+  year: multiple (studio & live)
+  instrument: Piano
+  era_note: Pedal clarity and structural narration from a lifelong Bach pianist.
+  why_listen: Pair with his spoken introductions when available — guide + performance.
+  youtube_url: https://www.youtube.com/results?search_query=Andr%C3%A1s+Schiff+Goldberg+Variations
+  discogs_url: https://www.discogs.com/search/?q=Andras+Schiff+Goldberg&type=master
+- artist: Pierre Hantaï
+  year: 1990s–2000s
+  instrument: Harpsichord
+  era_note: French HIP brilliance — dance energy and ornament as living speech.
+  why_listen: If Gould is architecture in steel, Hantaï is architecture in air.
+  discogs_url: https://www.discogs.com/search/?q=Hantai+Goldberg&type=master
+appreciation_videos:
+- title: Gould 1955 with Bach’s handwritten scores (BnF collection)
+  url: https://www.youtube.com/watch?v=jWshUm0Juxk
+  why: Score-following ear training — watch the ground while hearing Gould’s first monument.
+- title: Search — Glenn Gould Goldberg Variations 1981
+  url: https://www.youtube.com/results?search_query=Glenn+Gould+Goldberg+Variations+1981
+  why: Locate the late digital remake for A/B with 1955.
+- title: Search — András Schiff Goldberg lecture / performance
+  url: https://www.youtube.com/results?search_query=Andras+Schiff+Goldberg+Variations+lecture
+  why: Masterclass-host voice closest to Aulos’s ideal 导赏 tone.
+- title: Search — harpsichord Goldberg Hantaï or Leonhardt
+  url: https://www.youtube.com/results?search_query=Goldberg+Variations+harpsichord+Hantai
+  why: Reset the ear from piano orthodoxy to period color.
+vinyl_and_discography:
+- label: Discogs master — Gould Goldberg 1955
+  url: https://www.discogs.com/master/261784
+  note: Columbia ML 5060 lineage and later remasters; the vinyl myth itself.
+- label: Discogs master — Gould Goldberg 1981
+  url: https://www.discogs.com/master/48325
+  note: Digital-era bookend; compare pressings and reissues.
+- label: Discogs search — Goldberg Variations vinyl (all artists)
+  url: https://www.discogs.com/search/?q=Goldberg+Variations&type=master&format_exact=Vinyl
+  note: Browse Landowska, HIP, and modern piano pressings side by side.
+- label: Internet Archive — Gould 1955 streaming copy
+  url: https://archive.org/details/gould-goldberg-variations
+  note: Legal/historical access varies by territory; use as study reference, prefer licensed copies when
+    possible.
+practice_notes:
+- Bass-only pass through Aria + three chosen variations — sing or tap the ground.
+- Canon-entry hunting on every third variation; journal interval and voice.
+- One “character room” evening (Overture / Adagio / Quodlibet).
+- Compare Gould 1955 vs 1981 on the same three variations — tempo philosophy only.
+- One harpsichord vs one piano hearing of Vars. 16 and 25 — instrument as rhetoric.
+zh:
+  work_title: J.S. 巴赫 —《哥德堡变奏曲》，BWV 988
+  composer: 约翰·塞巴斯蒂安·巴赫
+  catalog: BWV 988
+  era: 晚期巴洛克（1741年莱比锡出版）
+  form: 咏叹调（Aria）与三十段变奏，并以 Aria da capo 收束；建立在三十二小节固定低音之上
+  listening_thesis: 先把 Aria 的低音骨架听进心里：其后三十间“房间”，皆是这一地基上的发明，而非互不相干的炫技罗列。
+  work_introduction: 《哥德堡变奏曲》以一首萨拉班德步态的 Aria 开篇，其美首先是建筑性的：它教会耳朵一条可记忆的低音地基。三十段变奏随之在这一地基上展开——或宫廷、或卡农、或炫技、或近乎痛苦的内省——最终
+    Aria 如记忆般归来。真正的聆听，是放下只追逐花纹的习惯，去追踪：同一条低音，如何撑起整个性格世界。
+  composer_portrait:
+    caption: 六十一岁的巴赫，手持六声部卡农 BWV 1076——莱比锡晚期大师风骨的面容。
+    credit: 埃利亚斯·戈特洛布·豪斯曼《巴赫肖像》（1748年本；公有领域，经 Wikimedia Commons）
+  composer_profile:
+    lifespan: 1685–1750
+    summary: 约翰·塞巴斯蒂安·巴赫乃盛期巴洛克对位艺术的巅峰：管风琴家、乐长，亦是键盘技艺的百科全书式编纂者。莱比锡晚期，他将毕生技法收束为一部部出版套曲，如供手与耳共用的私人学府。
+    temperament: 并非浪漫主义意义上的“抒情人格”，而是秩序的工匠——舞曲、卡农与修辞相互编织，直至情感本身显现为结构。
+    place_in_oeuvre: BWV 988为《键盘练习曲》第四部，与帕蒂塔、意大利协奏曲／法国序曲、管风琴弥撒同属其键盘总汇。在巴赫的变奏作品中，它是最公开的纪念碑：宫廷娱乐被提升为百科全书式的艺术。
+    place_in_history: 它衔接巴洛克变奏传统与现代所谓“完整键盘宇宙”的观念。历经十九世纪相对冷落，二十世纪上半叶复兴（朗多芙斯卡，继以古尔德）使其成为文化象征——钢琴艺术与历史表演实践皆以此自测。
+  genesis:
+    year: '1741'
+    place: 莱比锡
+    publication: 《键盘练习曲》第四部（纽伦堡，Balthasar Schmid 刊行）
+    patronage: 后世传说将其与凯泽林克伯爵及年轻羽管键琴家约翰·戈特利布·哥德堡相连；印刷出版的语境较“失眠夜曲”轶闻更为坚实。
+    background: 巴赫莱比锡晚期成熟期：历经教会与宫廷岁月后，他以出版套曲穷尽一种形式来施教。Aria 的萨拉班德步态与三十二小节低音，成为卡农（音程递升）、体裁转写、双手交叉炫技与情感深度的实验室。
+    instrument_culture: 为双层键盘羽管键琴而构思——音栓与双手分配至关重要。作品宜于室内亲密尺度，而非管弦洪流。
+  historical_stature:
+    reasons:
+    - 百科全书式的变奏工艺：性格小品、卡农与诙谐歌（quodlibet）同承一条低音。
+    - 形式建筑可被耳朵测绘——中点法国序曲（第16变奏）如第二次起承。
+    - 情感弧线经小调低谷（尤以第25变奏）后，以诙谐收束与“被记住的 Aria”完成回环。
+    - 接受史使一部专门家的印刷品化为二十世纪的聆听神话。
+    - 持续考验乐器、速度、装饰音与“本真性”的哲学。
+    reception_arc: 十八世纪专门家印刷品 → 十九世纪相对隐没 → 二十世纪初羽管键琴复兴 → 1955年古尔德成为大众纪念碑 → 历史演奏与现代钢琴学派持续对话。
+  width_points:
+  - 《键盘练习曲》第四部；巴赫已刊键盘变奏艺术的巅峰。
+  - 宫廷娱乐与百科全书式技法并存（卡农、体裁转写、双手交叉）。
+  - 接受史：十九世纪冷落 → 二十世纪初复兴 → 世纪中叶录音使之成为文化纪念碑。
+  - 聆听路径因乐器而异：羽管键琴的亲密、现代钢琴的建筑感、历史演奏的音色。
+  - 在其创作中的邻作：帕蒂塔、意大利协奏曲，以及晚期对位总汇。
+  depth_points:
+  - 先锁定 Aria 低音，再追逐表面花纹。
+  - 变奏常可按“三”感知（性格＋卡农）；卡农音程递升。
+  - 第16变奏法国序曲＝形式中点／第二次起承。
+  - 小调群（15、21、25）加深情感；第25变奏常为低谷。
+  - 第30变奏诙谐歌为机智顶点；Aria 再现如记忆。
+  listening_map:
+  - label: Aria
+    cue: 低音骨架；萨拉班德步态——先把地基记住。
+  - label: 变奏 1–15
+    cue: 卡农音程上升；性格之室与卡农交替。
+  - label: 变奏 16
+    cue: 附点法国序曲再启——听出“第二次开始”。
+  - label: 变奏 17–24
+    cue: 序曲之后，炫技与如歌交替。
+  - label: 变奏 25–30 与 Aria
+    cue: 小调深度 → 诙谐一笑 → 被记住的 Aria。
+  variation_deepdives:
+  - title: Aria
+    note: 萨拉班德修辞；真正的主题在低音。
+  - title: 卡农序列（每隔两首）
+    note: 卡农按音程攀升——训练耳朵捕捉进入。
+  - title: 第16变奏 — 序曲
+    note: 形式枢纽；附点庄重重置后半。
+  - title: 第25变奏 — 柔板
+    note: 常为情感低谷；在周围的眩目中守住静定。
+  - title: 第30变奏 — 诙谐歌
+    note: 民谣机智作结，然后 Aria 归来。
+  sound_world:
+    original_instrument: 双层键盘羽管键琴（Clavier）——双手交叉织体依赖键盘分层，而非现代制音踏板的戏剧。
+    ensemble_notes: 独奏键盘作品。后世弦乐三重奏、管弦或爵士改编属于接受史，并非巴赫原谱——可作音色参照，不可当作“原作编制”。
+    modern_modes:
+    - 羽管键琴／历史演奏——发音法、不等律音色、室内亲密。
+    - 现代钢琴——延音、力度建筑；古尔德式清晰与浪漫式笼罩之间的选择。
+    - 对照聆听——同一变奏换乐器，看低音是否依然成立。
+  related_works:
+  - title: 巴赫 —《键盘练习曲》第一部（帕蒂塔，BWV 825–830）
+    why: 同一出版键盘宇宙；舞曲组曲即性格训练。
+  - title: 巴赫 — 意大利协奏曲与法国序曲（《键盘练习曲》第二部）
+    why: 分享第16变奏再度出现的法国序曲修辞。
+  - title: 巴赫 —《赋格的艺术》／《音乐的奉献》
+    why: 晚期百科全书式对位——形式不同，志向同类。
+  - title: 贝多芬 —《迪亚贝利变奏曲》，作品120
+    why: 后世以变奏“建造世界”的巅峰；跨世纪对话。
+  - title: 勃拉姆斯 —《亨德尔主题变奏曲》，作品24
+    why: 十九世纪键盘变奏工艺，仍在巴赫长影之中。
+  interpretations:
+  - artist: 旺达·朗多芙斯卡
+    year: '1933'
+    instrument: 普莱耶尔羽管键琴
+    era_note: 早期复兴——纪念碑式的羽管键琴存在感，使作品重回二十世纪视野。
+    why_listen: 聆听前古尔德时代的接受史；宏大修辞优先于今日历史演奏的轻盈。
+  - artist: 格伦·古尔德
+    year: '1955'
+    instrument: 钢琴（哥伦比亚）
+    era_note: 成名单声道——青春速度、晶体对位，文化地震。
+    why_listen: 使《哥德堡》成为公共纪念碑的录音；后世钢琴诠释皆在此电压下被比较。
+  - artist: 格伦·古尔德
+    year: '1981'
+    instrument: 钢琴（数字重录）
+    era_note: 暮年回访——更宽的速度、精神上的静定，与1955首尾相扣。
+    why_listen: 同一演奏家，相反气候；最宜对照速度与触键哲学。
+  - artist: 古斯塔夫·莱昂哈特
+    year: 1976 及后续
+    instrument: 羽管键琴
+    era_note: 历史演奏权威——如言语般的发音，学者的从容。
+    why_listen: 抗衡钢琴神话；将作品听作室内修辞。
+  - artist: 穆雷·佩拉希亚
+    year: '2000'
+    instrument: 钢琴
+    era_note: 世纪末的抒情建筑——歌唱线条而不取古尔德式偏执。
+    why_listen: 现代钢琴入门整曲的人性路径。
+  - artist: 安德拉斯·席夫
+    year: 多次（录音与现场）
+    instrument: 钢琴
+    era_note: 踏板清晰与结构叙事，来自终身巴赫钢琴家。
+    why_listen: 可与其讲解／导赏对照——最接近 Aulos 理想导赏口吻。
+  - artist: 皮埃尔·昂泰
+    year: 1990–2000年代
+    instrument: 羽管键琴
+    era_note: 法国历史演奏的光泽——舞曲能量与装饰音如活的言语。
+    why_listen: 若古尔德是钢铁建筑，昂泰则是空气中的建筑。
+  appreciation_videos:
+  - title: 古尔德1955，配巴赫手稿（法国国家图书馆音响馆）
+    why: 跟谱练耳——看地基，同时听古尔德第一座纪念碑。
+  - title: 检索 — 格伦·古尔德《哥德堡》1981
+    why: 找到晚期数字重录，与1955对照。
+  - title: 检索 — 安德拉斯·席夫《哥德堡》讲座／演奏
+    why: 大师课主人的声音，最近 Aulos 导赏语气。
+  - title: 检索 — 羽管键琴《哥德堡》昂泰或莱昂哈特
+    why: 以历史音色重置钢琴正统。
+  vinyl_and_discography:
+  - label: Discogs 母带 — 古尔德《哥德堡》1955
+    note: 哥伦比亚 ML 5060 谱系与后世再版；黑胶神话本身。
+  - label: Discogs 母带 — 古尔德《哥德堡》1981
+    note: 数字时代的收束；比较不同压片。
+  - label: Discogs 检索 —《哥德堡变奏曲》黑胶（诸家）
+    note: 并列浏览朗多芙斯卡、历史演奏与现代钢琴。
+  - label: Internet Archive — 古尔德1955流媒体副本
+    note: 各地版权不同；宜作研习参照，有条件时优先正版。
+  practice_notes:
+  - 只听低音：过一遍 Aria 与任选三首变奏——唱或敲打地基。
+  - 猎捕卡农进入：每隔两首变奏；记下音程与声部。
+  - 一个“性格之室”之夜（序曲／柔板／诙谐歌）。
+  - 同一三首变奏，对照古尔德1955与1981——只问速度哲学。
+  - 第16与第25变奏，各听羽管键琴与钢琴版本——乐器即修辞。
+  myths_and_caveats:
+  - 凯泽林克／哥德堡“失眠夜曲”故事属接受史传说，学界有争议——宜作传说呈现，不可写成已证实的委约叙事。
+  - 所谓“本真”速度与装饰音仍是诠释问题；应标明版本与乐器，而非宣称绝对真理。

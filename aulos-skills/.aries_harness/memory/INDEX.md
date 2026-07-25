@@ -10,7 +10,7 @@ generated_by: "/aries-harness init"
 initialized_at: "2026-07-25T11:20:05Z"
 effective_status: "active"
 effective_since: "2026-07-25T11:20:05Z"
-content_fingerprint: "sha256:52918fde108956efd235fa698f33faa43f3b9a3cc2382032afbc602b94d49715"
+content_fingerprint: "sha256:f977690fddd8b2ee07a1671f30336551ae8c9c39f8d55d29d9018499d01f4598"
 trace_history_source: "filesystem-only"
 trace_last_commit_sha: ""
 trace_last_commit_at: ""
@@ -50,4 +50,5 @@ This is the cold recall map for `.aries_harness`.
 
 | Card | Topic |
 | --- | --- |
-| `cards/CARD-001-operating-defaults.md` | Fleet operating defaults (harness / TDD / ui-ux-pro-max) |
+| `cards/CARD-001-operating-defaults.md` | Fleet operating defaults (mandatory harness / TDD / ui-ux-pro-max) |
+| `cards/CARD-002-facility-and-library.md` | Facility paths under `.aries_harness/` + `aries-harness-skills` source pin |

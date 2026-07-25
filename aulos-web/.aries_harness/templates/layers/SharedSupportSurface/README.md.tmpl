@@ -1,0 +1,36 @@
+---
+schema_version: "0.1"
+project_id: "{{PROJECT_ID}}"
+owner: "{{OWNER}}"
+doc_role: "layer-manifest"
+harness_layer: "SharedSupportSurface"
+layer_manifest_for: "SharedSupportSurface"
+managed_by: "aries-harness"
+fingerprint: "aries-harness/bootstrap-doc/v1"
+generated_by: "/aries-harness init"
+initialized_at: "{{DATE}}"
+---
+
+# SharedSupportSurface
+
+This surface supports both primary layers with entry docs, memory, generated projections, and retained history.
+
+## Owns root docs
+
+- `README.md`
+- `INDEX.md`
+- `MEMORY.md`
+
+## Owns managed collections
+
+- `layers/`
+- `memory/`
+- `memory/cards/`
+- `history/`
+- `archive/`
+
+## Rules
+
+- keep support material concise and clearly secondary to the primary layer truths
+- generated projections such as `history/` do not replace either primary layer
+- `MEMORY.md` may retain durable lessons from both layers, but it should not become a hidden process log

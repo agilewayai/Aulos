@@ -8,10 +8,10 @@ managed_by: "aries-harness"
 fingerprint: "aries-harness/bootstrap-doc/v1"
 generated_by: "/aries-harness well-organized"
 initialized_at: "2026-07-25T11:07:44Z"
-last_organized_at: "2026-07-25T11:10:23+00:00"
+last_organized_at: "2026-07-25T16:23:55+00:00"
 effective_status: "generated"
-effective_since: "2026-07-25T11:10:23+00:00"
-content_fingerprint: "sha256:9739a1801023397e4cb6323f4a57ab3cd51aa2b369ca736e648b6a5fcf0b3f2a"
+effective_since: "2026-07-25T16:23:55+00:00"
+content_fingerprint: "sha256:b8023cb17eb2cb23d8e6300455e861069654dc10db1d0684c926fbef5d657941"
 trace_history_source: "filesystem-only"
 trace_last_commit_sha: ""
 trace_last_commit_at: ""
@@ -19,7 +19,7 @@ trace_revision_count: "0"
 ---
 # Harness Index
 
-Last organized: `2026-07-25T11:10:23+00:00`
+Last organized: `2026-07-25T16:23:55+00:00`
 
 Canonical spelling: `/aries-harness well-organized`
 
@@ -166,7 +166,13 @@ Fingerprint marker: `aries-harness` / `aries-harness/bootstrap-doc/v1`
 
 #### `history/`
 - role: generated history projections
+- [DAILY_SUMMARY_INDEX.md](history/DAILY_SUMMARY_INDEX.md)
+- [DOC_TRACE.md](history/DOC_TRACE.md)
 - [README.md](history/README.md)
+- [RETROSPECTIVE.md](history/RETROSPECTIVE.md)
+- [ROADMAP.md](history/ROADMAP.md)
+- [STATUS.md](history/STATUS.md)
+- [TIMELINE.md](history/TIMELINE.md)
 
 #### `archive/`
 - role: retained historical artifacts

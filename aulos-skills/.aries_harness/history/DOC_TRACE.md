@@ -8,10 +8,10 @@ managed_by: "aries-harness"
 fingerprint: "aries-harness/history-doc/v1"
 generated_by: "/aries-harness history-refresh"
 initialized_at: "2026-07-25T11:20:05Z"
-generated_at: "2026-07-25T11:36:53+00:00"
+generated_at: "2026-07-25T16:29:44+00:00"
 effective_status: "generated"
-effective_since: "2026-07-25T11:36:53+00:00"
-content_fingerprint: "sha256:893b99d1844b9c813d3dc0feebc0487cbca1dd85afa152b7ab45152d6568b01b"
+effective_since: "2026-07-25T16:29:44+00:00"
+content_fingerprint: "sha256:61d024f31c9b28b8c12cdd81724b4b812c5639c06bf62055c1ec7b2f3c53095c"
 trace_history_source: "filesystem-only"
 trace_last_commit_sha: ""
 trace_last_commit_at: ""
@@ -19,23 +19,24 @@ trace_revision_count: "0"
 ---
 # Document Trace
 
-Generated at: `2026-07-25T11:36:53+00:00`
+Generated at: `2026-07-25T16:29:44+00:00`
 
 ## Summary
 
-- managed Markdown docs: 49
+- managed Markdown docs: 73
 - docs with governance gaps: 0
 - dirty docs: 0
 
 ## By layer
 
-- MetaDefineLayer: 24
-- RunCookingLayer: 10
-- SharedSupportSurface: 15
+- MetaDefineLayer: 37
+- RunCookingLayer: 16
+- SharedSupportSurface: 16
+- unclassified: 4
 
 ## By effective status
 
-- active: 40
+- active: 64
 - generated: 9
 
 ## Managed docs
@@ -47,37 +48,43 @@ Generated at: `2026-07-25T11:36:53+00:00`
 - effective status: active since 2026-07-25T11:20:05Z
 - content fingerprint: `sha256:3491bd10bdd76e5be7392005bb8ea188917284e143999edb2ab7c8710afe5512`
 - trace: filesystem-only / count=0 / sha=none
-- latest revision: no git history recorded
+- latest revision: `93c0f6e` 2026-07-25 Add aulos-skills, aulos-ops, host deploy, and fleet operating defaults.
 - dirty: no
+- earlier revisions:
+  - `7632d9b` 2026-07-25 Add aulos-web, aulos-api, and aulos-mcp sub-projects under aries-harness.
 
 ### EVAL.md
 
 - role: evaluation
 - layer: MetaDefineLayer
-- effective status: active since 2026-07-25T11:20:05Z
-- content fingerprint: `sha256:dc0bc27c7a69e26c3cb80a8ed90fec3ec7e5155fe46be8802518d2139bbd555a`
+- effective status: active since 2026-07-25T16:10:00Z
+- content fingerprint: `sha256:f7cfec5cb1055aad6c98af5bf8d777b476cc6cb60502220c8128e351214ce1d7`
 - trace: filesystem-only / count=0 / sha=none
-- latest revision: no git history recorded
+- latest revision: `93c0f6e` 2026-07-25 Add aulos-skills, aulos-ops, host deploy, and fleet operating defaults.
 - dirty: no
+- earlier revisions:
+  - `0d5cb01` 2026-07-25 Initial commit: Aulos hackathon workspace with LangChain agent runtime.
 
 ### INDEX.md
 
 - role: harness-index
 - layer: SharedSupportSurface
-- effective status: generated since 2026-07-25T11:36:52+00:00
-- content fingerprint: `sha256:7b956180e04db406131985edef02bc0dc2315d126650e30fb35b2bbf3dead848`
+- effective status: generated since 2026-07-25T16:29:44+00:00
+- content fingerprint: `sha256:224b3a18ea563ace94f7327a2475e62ffb52f86eb3ee335cdb3984c3c3db73bd`
 - trace: filesystem-only / count=0 / sha=none
-- latest revision: no git history recorded
+- latest revision: `93c0f6e` 2026-07-25 Add aulos-skills, aulos-ops, host deploy, and fleet operating defaults.
 - dirty: no
+- earlier revisions:
+  - `0d5cb01` 2026-07-25 Initial commit: Aulos hackathon workspace with LangChain agent runtime.
 
 ### JOURNAL.md
 
 - role: journal
 - layer: RunCookingLayer
 - effective status: active since 2026-07-25T11:20:05Z
-- content fingerprint: `sha256:9f850418d1403bf5d3ee62da9f29033d5527b9407ced456d9378e3a06472c089`
+- content fingerprint: `sha256:0671c7f4c9e45f1d94c53d2a662ec7ee7c59a63a0c51a2ca6be0c5c0ec2c8313`
 - trace: filesystem-only / count=0 / sha=none
-- latest revision: no git history recorded
+- latest revision: `93c0f6e` 2026-07-25 Add aulos-skills, aulos-ops, host deploy, and fleet operating defaults.
 - dirty: no
 
 ### MEMORY.md
@@ -85,10 +92,13 @@ Generated at: `2026-07-25T11:36:53+00:00`
 - role: memory
 - layer: SharedSupportSurface
 - effective status: active since 2026-07-25T11:20:05Z
-- content fingerprint: `sha256:a807ecb55d8e99451ba40249121a201fd3cd642b5393370705974bf34f204ba2`
+- content fingerprint: `sha256:92a53763bd8e747a5c501550a54990262e8a4422a9e458a3906478d150e4d156`
 - trace: filesystem-only / count=0 / sha=none
-- latest revision: no git history recorded
+- latest revision: `93c0f6e` 2026-07-25 Add aulos-skills, aulos-ops, host deploy, and fleet operating defaults.
 - dirty: no
+- earlier revisions:
+  - `7632d9b` 2026-07-25 Add aulos-web, aulos-api, and aulos-mcp sub-projects under aries-harness.
+  - `0d5cb01` 2026-07-25 Initial commit: Aulos hackathon workspace with LangChain agent runtime.
 
 ### MISSION.md
 
@@ -97,7 +107,7 @@ Generated at: `2026-07-25T11:36:53+00:00`
 - effective status: active since 2026-07-25T11:22:04Z
 - content fingerprint: `sha256:16d48614af1fa813887e4f1f649c5dd38dcf349091ab66372f05704c61e74bf9`
 - trace: filesystem-only / count=0 / sha=none
-- latest revision: no git history recorded
+- latest revision: `93c0f6e` 2026-07-25 Add aulos-skills, aulos-ops, host deploy, and fleet operating defaults.
 - dirty: no
 
 ### PIPELINE.md
@@ -107,18 +117,24 @@ Generated at: `2026-07-25T11:36:53+00:00`
 - effective status: active since 2026-07-25T11:20:05Z
 - content fingerprint: `sha256:42ad1d07ef46993df1abef086866d1bbc5776d98feb8d3d4450ee8e318b7d3a0`
 - trace: filesystem-only / count=0 / sha=none
-- latest revision: no git history recorded
+- latest revision: `93c0f6e` 2026-07-25 Add aulos-skills, aulos-ops, host deploy, and fleet operating defaults.
 - dirty: no
+- earlier revisions:
+  - `7632d9b` 2026-07-25 Add aulos-web, aulos-api, and aulos-mcp sub-projects under aries-harness.
+  - `0d5cb01` 2026-07-25 Initial commit: Aulos hackathon workspace with LangChain agent runtime.
 
 ### README.md
 
 - role: harness-readme
 - layer: SharedSupportSurface
 - effective status: active since 2026-07-25T11:20:05Z
-- content fingerprint: `sha256:7d3cbe4b5ea57f57d8e0fd535a8196ea04e1525ae3bc20eafd7cd7d0e6f85c97`
+- content fingerprint: `sha256:7139b836e9bed91fec3d9c335253c07ca95cad21da1a870c9ed456acaf463c26`
 - trace: filesystem-only / count=0 / sha=none
-- latest revision: no git history recorded
+- latest revision: `93c0f6e` 2026-07-25 Add aulos-skills, aulos-ops, host deploy, and fleet operating defaults.
 - dirty: no
+- earlier revisions:
+  - `7632d9b` 2026-07-25 Add aulos-web, aulos-api, and aulos-mcp sub-projects under aries-harness.
+  - `0d5cb01` 2026-07-25 Initial commit: Aulos hackathon workspace with LangChain agent runtime.
 
 ### RISKS.md
 
@@ -127,8 +143,11 @@ Generated at: `2026-07-25T11:36:53+00:00`
 - effective status: active since 2026-07-25T11:20:05Z
 - content fingerprint: `sha256:faeb0e1e0c5175eb9d736c3370fda68d36e2cd36cef14ad1bfbaac0b229442d3`
 - trace: filesystem-only / count=0 / sha=none
-- latest revision: no git history recorded
+- latest revision: `93c0f6e` 2026-07-25 Add aulos-skills, aulos-ops, host deploy, and fleet operating defaults.
 - dirty: no
+- earlier revisions:
+  - `7632d9b` 2026-07-25 Add aulos-web, aulos-api, and aulos-mcp sub-projects under aries-harness.
+  - `0d5cb01` 2026-07-25 Initial commit: Aulos hackathon workspace with LangChain agent runtime.
 
 ### RUNBOOK.md
 
@@ -137,25 +156,72 @@ Generated at: `2026-07-25T11:36:53+00:00`
 - effective status: active since 2026-07-25T11:20:05Z
 - content fingerprint: `sha256:ae376375ed9a418606d37dfab52794644bcf1b0e7765c6e7e748e53cdf1406e5`
 - trace: filesystem-only / count=0 / sha=none
-- latest revision: no git history recorded
+- latest revision: `93c0f6e` 2026-07-25 Add aulos-skills, aulos-ops, host deploy, and fleet operating defaults.
 - dirty: no
+- earlier revisions:
+  - `7632d9b` 2026-07-25 Add aulos-web, aulos-api, and aulos-mcp sub-projects under aries-harness.
+  - `0d5cb01` 2026-07-25 Initial commit: Aulos hackathon workspace with LangChain agent runtime.
 
 ### STATE.md
 
 - role: state
 - layer: RunCookingLayer
-- effective status: active since 2026-07-25T11:22:04Z
-- content fingerprint: `sha256:9511299bb0b9547d0d615c5837c8a73ecdf2906afe30b3211572c398bdfa6636`
+- effective status: active since 2026-07-25T16:20:00Z
+- content fingerprint: `sha256:5e328f11f65861592c537f56dcd9cc046b9242b2351e160844d839c5ab225f7c`
 - trace: filesystem-only / count=0 / sha=none
-- latest revision: no git history recorded
+- latest revision: `93c0f6e` 2026-07-25 Add aulos-skills, aulos-ops, host deploy, and fleet operating defaults.
 - dirty: no
+- earlier revisions:
+  - `7632d9b` 2026-07-25 Add aulos-web, aulos-api, and aulos-mcp sub-projects under aries-harness.
 
 ### TASK_STACK.md
 
 - role: task-stack
 - layer: RunCookingLayer
-- effective status: active since 2026-07-25T11:22:04Z
-- content fingerprint: `sha256:f6e4d54eab90afd05b2f07b0e081d35aa466386a2c3e15a7208a2981eb5f5a84`
+- effective status: active since 2026-07-25T16:20:00Z
+- content fingerprint: `sha256:26c4de10a0303475ff711f66aedb0e11ffbe9aa7c17df979f91db496d470cf37`
+- trace: filesystem-only / count=0 / sha=none
+- latest revision: `93c0f6e` 2026-07-25 Add aulos-skills, aulos-ops, host deploy, and fleet operating defaults.
+- dirty: no
+- earlier revisions:
+  - `7632d9b` 2026-07-25 Add aulos-web, aulos-api, and aulos-mcp sub-projects under aries-harness.
+
+### checkpoints/CKPT-002-skill-runtime-listening.md
+
+- role: checkpoint
+- layer: RunCookingLayer
+- effective status: active since 2026-07-25T16:19:58+00:00
+- content fingerprint: `sha256:75b561823929b31368f812b70d0c567b4adcf48f0258bed1938a0c34848c4c99`
+- trace: filesystem-only / count=0 / sha=none
+- latest revision: no git history recorded
+- dirty: no
+
+### checkpoints/CKPT-003-salon-codex.md
+
+- role: checkpoint
+- layer: RunCookingLayer
+- effective status: active since 2026-07-25T16:19:58+00:00
+- content fingerprint: `sha256:65aa54f626d4dc554a16ab47d2080fac313b17f47ab8ca1aae4efc30680c6889`
+- trace: filesystem-only / count=0 / sha=none
+- latest revision: no git history recorded
+- dirty: no
+
+### checkpoints/CKPT-004-salon-synthesize.md
+
+- role: checkpoint
+- layer: RunCookingLayer
+- effective status: active since 2026-07-25T16:19:58+00:00
+- content fingerprint: `sha256:a5b1ae2e671ee461f24e90bf70f8071f8ea93c6098edb656c215c8ac84b84f7a`
+- trace: filesystem-only / count=0 / sha=none
+- latest revision: no git history recorded
+- dirty: no
+
+### checkpoints/CKPT-005-ambient-identity-gates.md
+
+- role: checkpoint
+- layer: RunCookingLayer
+- effective status: active since 2026-07-25T16:19:58+00:00
+- content fingerprint: `sha256:052920a1996ad2796db8f93036db9a6415769a4880770c6280cb6b89f4814361`
 - trace: filesystem-only / count=0 / sha=none
 - latest revision: no git history recorded
 - dirty: no
@@ -167,6 +233,18 @@ Generated at: `2026-07-25T11:36:53+00:00`
 - effective status: active since 2026-07-25T11:22:04Z
 - content fingerprint: `sha256:7eb49f7cdbaba049be7a1253728bb1a5fc3f08c9970d23265b4c3b1b6e94211d`
 - trace: filesystem-only / count=0 / sha=none
+- latest revision: `93c0f6e` 2026-07-25 Add aulos-skills, aulos-ops, host deploy, and fleet operating defaults.
+- dirty: no
+- earlier revisions:
+  - `7632d9b` 2026-07-25 Add aulos-web, aulos-api, and aulos-mcp sub-projects under aries-harness.
+
+### decisions/adrs/ADR-002-domain-runtime-listening-skills.md
+
+- role: adr-record
+- layer: MetaDefineLayer
+- effective status: active since 2026-07-25T16:19:58+00:00
+- content fingerprint: `sha256:22088228fc14e57045418554da5bef545a4a546c61f6574aed89e7318bbcc6f8`
+- trace: filesystem-only / count=0 / sha=none
 - latest revision: no git history recorded
 - dirty: no
 
@@ -177,15 +255,48 @@ Generated at: `2026-07-25T11:36:53+00:00`
 - effective status: active since 2026-07-25T11:20:05Z
 - content fingerprint: `sha256:167e915331187d369b53e649130c1b2c0dd537d1779ac60b892a4c167dc6d843`
 - trace: filesystem-only / count=0 / sha=none
-- latest revision: no git history recorded
+- latest revision: `93c0f6e` 2026-07-25 Add aulos-skills, aulos-ops, host deploy, and fleet operating defaults.
 - dirty: no
+- earlier revisions:
+  - `7632d9b` 2026-07-25 Add aulos-web, aulos-api, and aulos-mcp sub-projects under aries-harness.
+  - `0d5cb01` 2026-07-25 Initial commit: Aulos hackathon workspace with LangChain agent runtime.
 
 ### decisions/architecture/ARCH-001-skills-harness-architecture.md
 
 - role: system-design
 - layer: MetaDefineLayer
 - effective status: active since 2026-07-25T11:22:04Z
-- content fingerprint: `sha256:5ca726eafa787317c36c1906794f52c537a45eb2003b286fd55998aa4bb081e5`
+- content fingerprint: `sha256:cf22009464b81d2d849a3645deb07f71128dafc46433dbfb8e6507b22a2bc825`
+- trace: filesystem-only / count=0 / sha=none
+- latest revision: `93c0f6e` 2026-07-25 Add aulos-skills, aulos-ops, host deploy, and fleet operating defaults.
+- dirty: no
+
+### decisions/architecture/ARCH-002-agent-skills-listening.md
+
+- role: system-design
+- layer: MetaDefineLayer
+- effective status: active since 2026-07-25T16:19:58+00:00
+- content fingerprint: `sha256:7e3dc385c478d9cc7e025a20d8203149f5bfa84ea55c1b684d43caff82a4a120`
+- trace: filesystem-only / count=0 / sha=none
+- latest revision: no git history recorded
+- dirty: no
+
+### decisions/architecture/ARCH-003-salon-codex-content-model.md
+
+- role: system-design
+- layer: MetaDefineLayer
+- effective status: active since 2026-07-25T16:19:58+00:00
+- content fingerprint: `sha256:f2b5d3847d30fb619520564f6626bf3c8f47e12cfa6e84510017f43b915054b7`
+- trace: filesystem-only / count=0 / sha=none
+- latest revision: no git history recorded
+- dirty: no
+
+### decisions/architecture/ARCH-004-salon-synthesize-atelier.md
+
+- role: system-design
+- layer: MetaDefineLayer
+- effective status: active since 2026-07-25T16:19:58+00:00
+- content fingerprint: `sha256:557d08fc58295d56db577ff79459fb71643561e5bafc95d24d66245992f15f52`
 - trace: filesystem-only / count=0 / sha=none
 - latest revision: no git history recorded
 - dirty: no
@@ -197,6 +308,48 @@ Generated at: `2026-07-25T11:36:53+00:00`
 - effective status: active since 2026-07-25T11:20:05Z
 - content fingerprint: `sha256:9528e4ba2cdd158a07543d8682f1f64492bf3d3928b16e3f8dfe8d717e78a4a2`
 - trace: filesystem-only / count=0 / sha=none
+- latest revision: `93c0f6e` 2026-07-25 Add aulos-skills, aulos-ops, host deploy, and fleet operating defaults.
+- dirty: no
+- earlier revisions:
+  - `0d5cb01` 2026-07-25 Initial commit: Aulos hackathon workspace with LangChain agent runtime.
+
+### docs/evolution-cycle-2026-07-25-ambient-identity.md
+
+- role: managed-doc
+- layer: not set
+- effective status: active since 2026-07-25T16:19:58+00:00
+- content fingerprint: `sha256:9ec33353553beb3430c7c1a84c8815649e92be58d5044a53f849819ca466809d`
+- trace: filesystem-only / count=0 / sha=none
+- latest revision: no git history recorded
+- dirty: no
+
+### docs/evolution-cycle-2026-07-25-harness-process-facility.md
+
+- role: managed-doc
+- layer: SharedSupportSurface
+- effective status: active since 2026-07-25T16:45:00Z
+- content fingerprint: `sha256:89c6671db5dc45150b8aa2e9eede134dd2f4a2407c45f2ab7782f3a86cecbb52`
+- trace: filesystem-only / count=0 / sha=none
+- latest revision: no git history recorded
+- dirty: no
+
+### docs/facility-layout-2026-07-25.md
+
+- role: managed-doc
+- layer: SharedSupportSurface
+- effective status: active since 2026-07-25T16:40:00Z
+- content fingerprint: `sha256:198d0939f71973bcbc446d3784c65a484b49a8d4165d1987fa55c1e24f117d73`
+- trace: filesystem-only / count=0 / sha=none
+- latest revision: no git history recorded
+- dirty: no
+
+### docs/insights.md
+
+- role: managed-doc
+- layer: not set
+- effective status: active since 2026-07-25T16:19:58+00:00
+- content fingerprint: `sha256:92ff6c734803b1cbc86df9bb9bdebdfc6e7072ec24c2ddf5857a81cabceba6d1`
+- trace: filesystem-only / count=0 / sha=none
 - latest revision: no git history recorded
 - dirty: no
 
@@ -204,81 +357,97 @@ Generated at: `2026-07-25T11:36:53+00:00`
 
 - role: history-daily-summary-index
 - layer: SharedSupportSurface
-- effective status: generated since 2026-07-25T11:22:04+00:00
-- content fingerprint: `sha256:5193a8962a83e86662fd8c457ffa571a47a8a6b31a9972944a4b35dc56f1c5c6`
+- effective status: generated since 2026-07-25T16:25:01+00:00
+- content fingerprint: `sha256:9e2f7bed8331240a3a0f07ff560467591462cfea35cb71783b8dd8e0adb078e3`
 - trace: filesystem-only / count=0 / sha=none
-- latest revision: no git history recorded
+- latest revision: `93c0f6e` 2026-07-25 Add aulos-skills, aulos-ops, host deploy, and fleet operating defaults.
 - dirty: no
+- earlier revisions:
+  - `0d5cb01` 2026-07-25 Initial commit: Aulos hackathon workspace with LangChain agent runtime.
 
 ### history/DOC_TRACE.md
 
 - role: history-doc-trace
 - layer: SharedSupportSurface
-- effective status: generated since 2026-07-25T11:22:04+00:00
-- content fingerprint: `sha256:fe92970da8e311cf3a165f4dd5a342628f897fcc7397cbe52c5bf271e69eb113`
+- effective status: generated since 2026-07-25T16:25:01+00:00
+- content fingerprint: `sha256:1e19091e9e6852aa215d25740980283bb6cedcadf4b1c081cc9e1b61d764892b`
 - trace: filesystem-only / count=0 / sha=none
-- latest revision: no git history recorded
+- latest revision: `93c0f6e` 2026-07-25 Add aulos-skills, aulos-ops, host deploy, and fleet operating defaults.
 - dirty: no
+- earlier revisions:
+  - `0d5cb01` 2026-07-25 Initial commit: Aulos hackathon workspace with LangChain agent runtime.
 
 ### history/README.md
 
 - role: history-readme
 - layer: SharedSupportSurface
-- effective status: generated since 2026-07-25T11:22:04+00:00
-- content fingerprint: `sha256:d9d82e6841ce6b773177630eb37d61dc2846e3ee36b506772f32135907b82375`
+- effective status: generated since 2026-07-25T16:25:01+00:00
+- content fingerprint: `sha256:28d2864b648f8f027607e35a13829bffe57bb8f4c23446aa3bbeb13354013044`
 - trace: filesystem-only / count=0 / sha=none
-- latest revision: no git history recorded
+- latest revision: `93c0f6e` 2026-07-25 Add aulos-skills, aulos-ops, host deploy, and fleet operating defaults.
 - dirty: no
+- earlier revisions:
+  - `7632d9b` 2026-07-25 Add aulos-web, aulos-api, and aulos-mcp sub-projects under aries-harness.
+  - `0d5cb01` 2026-07-25 Initial commit: Aulos hackathon workspace with LangChain agent runtime.
 
 ### history/RETROSPECTIVE.md
 
 - role: history-retrospective
 - layer: SharedSupportSurface
-- effective status: generated since 2026-07-25T11:22:04+00:00
-- content fingerprint: `sha256:3f4f6966f2d1c487f60ffd507f8f32c7031db61a995e030f2f6f3fe0f88b2046`
+- effective status: generated since 2026-07-25T16:25:01+00:00
+- content fingerprint: `sha256:aa895d0b885a5b4b929cc5dadd6c0c40a1ee13a6b7df7338dbd8f4affdf2c86d`
 - trace: filesystem-only / count=0 / sha=none
-- latest revision: no git history recorded
+- latest revision: `93c0f6e` 2026-07-25 Add aulos-skills, aulos-ops, host deploy, and fleet operating defaults.
 - dirty: no
+- earlier revisions:
+  - `7632d9b` 2026-07-25 Add aulos-web, aulos-api, and aulos-mcp sub-projects under aries-harness.
+  - `0d5cb01` 2026-07-25 Initial commit: Aulos hackathon workspace with LangChain agent runtime.
 
 ### history/ROADMAP.md
 
 - role: history-roadmap
 - layer: SharedSupportSurface
-- effective status: generated since 2026-07-25T11:22:04+00:00
-- content fingerprint: `sha256:20647b86a2d6be786387c9bf8d445e14f9223759141a518f4628ccef824da6e6`
+- effective status: generated since 2026-07-25T16:25:01+00:00
+- content fingerprint: `sha256:8a009054e70c8b6d5cd18586eb4d0e30f39952c589da09879cb786a7e81da8ec`
 - trace: filesystem-only / count=0 / sha=none
-- latest revision: no git history recorded
+- latest revision: `93c0f6e` 2026-07-25 Add aulos-skills, aulos-ops, host deploy, and fleet operating defaults.
 - dirty: no
+- earlier revisions:
+  - `7632d9b` 2026-07-25 Add aulos-web, aulos-api, and aulos-mcp sub-projects under aries-harness.
 
 ### history/STATUS.md
 
 - role: history-status
 - layer: SharedSupportSurface
-- effective status: generated since 2026-07-25T11:22:04+00:00
-- content fingerprint: `sha256:9e53de4ff4e30bb7b929ba81a5603b1bff23c020984298fd4ea3c938a85ad1ec`
+- effective status: generated since 2026-07-25T16:25:01+00:00
+- content fingerprint: `sha256:df94e717ec805295062786480f6ae12778302892d4071ff89b396b074028bf88`
 - trace: filesystem-only / count=0 / sha=none
-- latest revision: no git history recorded
+- latest revision: `93c0f6e` 2026-07-25 Add aulos-skills, aulos-ops, host deploy, and fleet operating defaults.
 - dirty: no
+- earlier revisions:
+  - `7632d9b` 2026-07-25 Add aulos-web, aulos-api, and aulos-mcp sub-projects under aries-harness.
 
 ### history/TIMELINE.md
 
 - role: history-timeline
 - layer: SharedSupportSurface
-- effective status: generated since 2026-07-25T11:22:04+00:00
-- content fingerprint: `sha256:c44fcf028c897095c7a373b1489dd6093e1b7e7cc69235313e104141e1123170`
+- effective status: generated since 2026-07-25T16:25:01+00:00
+- content fingerprint: `sha256:0a06a807ae9326832b9fbcbd1251c1b155021edff4ace6cd2fd75c3b0bb61651`
 - trace: filesystem-only / count=0 / sha=none
-- latest revision: no git history recorded
+- latest revision: `93c0f6e` 2026-07-25 Add aulos-skills, aulos-ops, host deploy, and fleet operating defaults.
 - dirty: no
 
 ### history/daily/2026-07-25.md
 
 - role: history-daily-summary
 - layer: SharedSupportSurface
-- effective status: generated since 2026-07-25T11:22:04+00:00
-- content fingerprint: `sha256:94b4fd7d946a17a1c3212b7f19996a275ed4a5f77f6a62238cf65b0a0e358c8c`
+- effective status: generated since 2026-07-25T16:25:01+00:00
+- content fingerprint: `sha256:7136f11eb4f467c025a56c893b715dd8463d3d73e7c22ec6ac7645b1c335d1a5`
 - trace: filesystem-only / count=0 / sha=none
-- latest revision: no git history recorded
+- latest revision: `93c0f6e` 2026-07-25 Add aulos-skills, aulos-ops, host deploy, and fleet operating defaults.
 - dirty: no
+- earlier revisions:
+  - `7632d9b` 2026-07-25 Add aulos-web, aulos-api, and aulos-mcp sub-projects under aries-harness.
 
 ### layers/MetaDefineLayer/README.md
 
@@ -287,8 +456,11 @@ Generated at: `2026-07-25T11:36:53+00:00`
 - effective status: active since 2026-07-25T11:20:05Z
 - content fingerprint: `sha256:81ef8118e103fa9992dfde3912f50b67d6f7567380517c85d446d8d8336e1ba6`
 - trace: filesystem-only / count=0 / sha=none
-- latest revision: no git history recorded
+- latest revision: `93c0f6e` 2026-07-25 Add aulos-skills, aulos-ops, host deploy, and fleet operating defaults.
 - dirty: no
+- earlier revisions:
+  - `7632d9b` 2026-07-25 Add aulos-web, aulos-api, and aulos-mcp sub-projects under aries-harness.
+  - `0d5cb01` 2026-07-25 Initial commit: Aulos hackathon workspace with LangChain agent runtime.
 
 ### layers/RunCookingLayer/README.md
 
@@ -297,8 +469,11 @@ Generated at: `2026-07-25T11:36:53+00:00`
 - effective status: active since 2026-07-25T11:20:05Z
 - content fingerprint: `sha256:6f23418946f3c18931eea71d6ad940e25fab3f5a86f30f23bd4a5ffcf97f7571`
 - trace: filesystem-only / count=0 / sha=none
-- latest revision: no git history recorded
+- latest revision: `93c0f6e` 2026-07-25 Add aulos-skills, aulos-ops, host deploy, and fleet operating defaults.
 - dirty: no
+- earlier revisions:
+  - `7632d9b` 2026-07-25 Add aulos-web, aulos-api, and aulos-mcp sub-projects under aries-harness.
+  - `0d5cb01` 2026-07-25 Initial commit: Aulos hackathon workspace with LangChain agent runtime.
 
 ### layers/SharedSupportSurface/README.md
 
@@ -307,25 +482,40 @@ Generated at: `2026-07-25T11:36:53+00:00`
 - effective status: active since 2026-07-25T11:20:05Z
 - content fingerprint: `sha256:5261e7a9bd7d31d6cdb819fcf1b2f4eff72ba30ad2a555ed6db66190832932a2`
 - trace: filesystem-only / count=0 / sha=none
-- latest revision: no git history recorded
+- latest revision: `93c0f6e` 2026-07-25 Add aulos-skills, aulos-ops, host deploy, and fleet operating defaults.
 - dirty: no
+- earlier revisions:
+  - `0d5cb01` 2026-07-25 Initial commit: Aulos hackathon workspace with LangChain agent runtime.
 
 ### memory/INDEX.md
 
 - role: memory-index
 - layer: SharedSupportSurface
 - effective status: active since 2026-07-25T11:20:05Z
-- content fingerprint: `sha256:52918fde108956efd235fa698f33faa43f3b9a3cc2382032afbc602b94d49715`
+- content fingerprint: `sha256:f977690fddd8b2ee07a1671f30336551ae8c9c39f8d55d29d9018499d01f4598`
 - trace: filesystem-only / count=0 / sha=none
-- latest revision: no git history recorded
+- latest revision: `93c0f6e` 2026-07-25 Add aulos-skills, aulos-ops, host deploy, and fleet operating defaults.
 - dirty: no
+- earlier revisions:
+  - `7632d9b` 2026-07-25 Add aulos-web, aulos-api, and aulos-mcp sub-projects under aries-harness.
+  - `0d5cb01` 2026-07-25 Initial commit: Aulos hackathon workspace with LangChain agent runtime.
 
 ### memory/cards/CARD-001-operating-defaults.md
 
 - role: memory-card
 - layer: SharedSupportSurface
 - effective status: active since 2026-07-25T11:36:00Z
-- content fingerprint: `sha256:30143c417f4f6bbf6c0982797cdc9388e909391e4219af18b3adc248daed7e72`
+- content fingerprint: `sha256:c02abc156009b7f9efca8aaf9bf5837d57bc442efcfc6722ba907e8a0db74e07`
+- trace: filesystem-only / count=0 / sha=none
+- latest revision: `93c0f6e` 2026-07-25 Add aulos-skills, aulos-ops, host deploy, and fleet operating defaults.
+- dirty: no
+
+### memory/cards/CARD-002-facility-and-library.md
+
+- role: memory-card
+- layer: SharedSupportSurface
+- effective status: active since 2026-07-25T16:55:00Z
+- content fingerprint: `sha256:c97ea2a2b2d0efa25f81a30fea4290906317cb9d87eae0d4ba2b2aa5f357d7a4`
 - trace: filesystem-only / count=0 / sha=none
 - latest revision: no git history recorded
 - dirty: no
@@ -337,8 +527,10 @@ Generated at: `2026-07-25T11:36:53+00:00`
 - effective status: active since 2026-07-25T11:20:05Z
 - content fingerprint: `sha256:ec51df195a407f2a33edc56e3a94beca85d167ed8835eec113732fa0f337efeb`
 - trace: filesystem-only / count=0 / sha=none
-- latest revision: no git history recorded
+- latest revision: `93c0f6e` 2026-07-25 Add aulos-skills, aulos-ops, host deploy, and fleet operating defaults.
 - dirty: no
+- earlier revisions:
+  - `0d5cb01` 2026-07-25 Initial commit: Aulos hackathon workspace with LangChain agent runtime.
 
 ### references/HDM-001-harness-design-memo.md
 
@@ -347,18 +539,22 @@ Generated at: `2026-07-25T11:36:53+00:00`
 - effective status: active since 2026-07-25T11:22:04Z
 - content fingerprint: `sha256:293546cb6c992f0c39f0d6fab0d05867e9c75312f1686c8379c106e2c0fe0849`
 - trace: filesystem-only / count=0 / sha=none
-- latest revision: no git history recorded
+- latest revision: `93c0f6e` 2026-07-25 Add aulos-skills, aulos-ops, host deploy, and fleet operating defaults.
 - dirty: no
+- earlier revisions:
+  - `7632d9b` 2026-07-25 Add aulos-web, aulos-api, and aulos-mcp sub-projects under aries-harness.
 
 ### references/REG-001-artifact-register.md
 
 - role: managed-doc
 - layer: MetaDefineLayer
 - effective status: active since 2026-07-25T11:22:04Z
-- content fingerprint: `sha256:e7d6e0e26bd7669412a5452b6eecbccfb944cc7b7e73d272eb0609e9067feeff`
+- content fingerprint: `sha256:ab1d3b88315387845e5fbf92a80a5da8de2a631fffa80fe49f2ed12bca31d509`
 - trace: filesystem-only / count=0 / sha=none
-- latest revision: no git history recorded
+- latest revision: `93c0f6e` 2026-07-25 Add aulos-skills, aulos-ops, host deploy, and fleet operating defaults.
 - dirty: no
+- earlier revisions:
+  - `7632d9b` 2026-07-25 Add aulos-web, aulos-api, and aulos-mcp sub-projects under aries-harness.
 
 ### references/TRACE-001-value-traceability.md
 
@@ -367,8 +563,10 @@ Generated at: `2026-07-25T11:36:53+00:00`
 - effective status: active since 2026-07-25T11:22:04Z
 - content fingerprint: `sha256:fe25868924de6e645b356262656f4c4ceb90d0a9f0fcc90ecadd8e831fbdde78`
 - trace: filesystem-only / count=0 / sha=none
-- latest revision: no git history recorded
+- latest revision: `93c0f6e` 2026-07-25 Add aulos-skills, aulos-ops, host deploy, and fleet operating defaults.
 - dirty: no
+- earlier revisions:
+  - `7632d9b` 2026-07-25 Add aulos-web, aulos-api, and aulos-mcp sub-projects under aries-harness.
 
 ### references/domain/README.md
 
@@ -377,8 +575,11 @@ Generated at: `2026-07-25T11:36:53+00:00`
 - effective status: active since 2026-07-25T11:20:05Z
 - content fingerprint: `sha256:54a6e32dc22fbadbc9be34d5b310d5c4a3370391f06546f3987942525955ab86`
 - trace: filesystem-only / count=0 / sha=none
-- latest revision: no git history recorded
+- latest revision: `93c0f6e` 2026-07-25 Add aulos-skills, aulos-ops, host deploy, and fleet operating defaults.
 - dirty: no
+- earlier revisions:
+  - `7632d9b` 2026-07-25 Add aulos-web, aulos-api, and aulos-mcp sub-projects under aries-harness.
+  - `0d5cb01` 2026-07-25 Initial commit: Aulos hackathon workspace with LangChain agent runtime.
 
 ### references/iterations/README.md
 
@@ -387,8 +588,11 @@ Generated at: `2026-07-25T11:36:53+00:00`
 - effective status: active since 2026-07-25T11:20:05Z
 - content fingerprint: `sha256:2aa2bb4ce5d4b1fc49cc2b8c852d3aa40cc78de3915639af1247b60fa9565348`
 - trace: filesystem-only / count=0 / sha=none
-- latest revision: no git history recorded
+- latest revision: `93c0f6e` 2026-07-25 Add aulos-skills, aulos-ops, host deploy, and fleet operating defaults.
 - dirty: no
+- earlier revisions:
+  - `7632d9b` 2026-07-25 Add aulos-web, aulos-api, and aulos-mcp sub-projects under aries-harness.
+  - `0d5cb01` 2026-07-25 Initial commit: Aulos hackathon workspace with LangChain agent runtime.
 
 ### references/requests/README.md
 
@@ -397,8 +601,10 @@ Generated at: `2026-07-25T11:36:53+00:00`
 - effective status: active since 2026-07-25T11:20:05Z
 - content fingerprint: `sha256:22c927c5ee418ca2cb634d5e409d51fc85058248f0cd2501cccf0e4b987648a9`
 - trace: filesystem-only / count=0 / sha=none
-- latest revision: no git history recorded
+- latest revision: `93c0f6e` 2026-07-25 Add aulos-skills, aulos-ops, host deploy, and fleet operating defaults.
 - dirty: no
+- earlier revisions:
+  - `0d5cb01` 2026-07-25 Initial commit: Aulos hackathon workspace with LangChain agent runtime.
 
 ### references/requests/REQ-001-aulos-skills-bootstrap.md
 
@@ -406,6 +612,46 @@ Generated at: `2026-07-25T11:36:53+00:00`
 - layer: MetaDefineLayer
 - effective status: active since 2026-07-25T11:22:04Z
 - content fingerprint: `sha256:c403a4f65571d7e2e932babeef970dd9ca4e754f0f94871a446c3842e59977b4`
+- trace: filesystem-only / count=0 / sha=none
+- latest revision: `93c0f6e` 2026-07-25 Add aulos-skills, aulos-ops, host deploy, and fleet operating defaults.
+- dirty: no
+
+### references/requests/REQ-002-skill-powered-listening.md
+
+- role: business-requirement
+- layer: MetaDefineLayer
+- effective status: active since 2026-07-25T16:19:58+00:00
+- content fingerprint: `sha256:dce043eb44a0285d0daba2d2fe4ca123d9da775e7fd785a5241753a03cdf91cb`
+- trace: filesystem-only / count=0 / sha=none
+- latest revision: no git history recorded
+- dirty: no
+
+### references/requests/REQ-003-salon-codex-listening-guide.md
+
+- role: business-requirement
+- layer: MetaDefineLayer
+- effective status: active since 2026-07-25T16:19:58+00:00
+- content fingerprint: `sha256:67c67fc49a848c73858657244408e0c77e6acfea43b404a4f3d23c7c2121c76b`
+- trace: filesystem-only / count=0 / sha=none
+- latest revision: no git history recorded
+- dirty: no
+
+### references/requests/REQ-004-cold-path-salon-parity.md
+
+- role: business-requirement
+- layer: MetaDefineLayer
+- effective status: active since 2026-07-25T16:19:58+00:00
+- content fingerprint: `sha256:c68fd126f0e5df71b28aeeac2bfcbb1ff8d38c09cf2f97f5b5b94a0bb8ae1c83`
+- trace: filesystem-only / count=0 / sha=none
+- latest revision: no git history recorded
+- dirty: no
+
+### references/requests/REQ-005-ambient-media-identity.md
+
+- role: business-requirement
+- layer: MetaDefineLayer
+- effective status: active since 2026-07-25T16:19:58+00:00
+- content fingerprint: `sha256:4e7d7eb7b7a47ee0bf7a14217508500075c5be967506d6c5f4cb65cf8e04cced`
 - trace: filesystem-only / count=0 / sha=none
 - latest revision: no git history recorded
 - dirty: no
@@ -417,8 +663,10 @@ Generated at: `2026-07-25T11:36:53+00:00`
 - effective status: active since 2026-07-25T11:20:05Z
 - content fingerprint: `sha256:9db206d02b23700dc014f485dab1a81645ca0074556fbdf8ce47546db4bc07af`
 - trace: filesystem-only / count=0 / sha=none
-- latest revision: no git history recorded
+- latest revision: `93c0f6e` 2026-07-25 Add aulos-skills, aulos-ops, host deploy, and fleet operating defaults.
 - dirty: no
+- earlier revisions:
+  - `0d5cb01` 2026-07-25 Initial commit: Aulos hackathon workspace with LangChain agent runtime.
 
 ### references/specs/README.md
 
@@ -427,8 +675,11 @@ Generated at: `2026-07-25T11:36:53+00:00`
 - effective status: active since 2026-07-25T11:20:05Z
 - content fingerprint: `sha256:ab160f26181234c48ddf5eae835a4cb8eb389757b1698679feb262ff525dabf1`
 - trace: filesystem-only / count=0 / sha=none
-- latest revision: no git history recorded
+- latest revision: `93c0f6e` 2026-07-25 Add aulos-skills, aulos-ops, host deploy, and fleet operating defaults.
 - dirty: no
+- earlier revisions:
+  - `7632d9b` 2026-07-25 Add aulos-web, aulos-api, and aulos-mcp sub-projects under aries-harness.
+  - `0d5cb01` 2026-07-25 Initial commit: Aulos hackathon workspace with LangChain agent runtime.
 
 ### references/specs/SPEC-001-skills-harness.md
 
@@ -436,6 +687,58 @@ Generated at: `2026-07-25T11:36:53+00:00`
 - layer: MetaDefineLayer
 - effective status: active since 2026-07-25T11:22:04Z
 - content fingerprint: `sha256:96630c49b0b2fabe47440e4caedc736315293587db72586eced36ebad864ae12`
+- trace: filesystem-only / count=0 / sha=none
+- latest revision: `93c0f6e` 2026-07-25 Add aulos-skills, aulos-ops, host deploy, and fleet operating defaults.
+- dirty: no
+- earlier revisions:
+  - `7632d9b` 2026-07-25 Add aulos-web, aulos-api, and aulos-mcp sub-projects under aries-harness.
+
+### references/specs/SPEC-002-domain-runtime-listening-skills.md
+
+- role: spec-package
+- layer: MetaDefineLayer
+- effective status: active since 2026-07-25T16:19:58+00:00
+- content fingerprint: `sha256:4ad42dc388ac20702840f41bcc5286e7e6b8953b3a1cbe70b0f9bf07a8126901`
+- trace: filesystem-only / count=0 / sha=none
+- latest revision: no git history recorded
+- dirty: no
+
+### references/specs/SPEC-003-salon-codex-dossier.md
+
+- role: spec-package
+- layer: MetaDefineLayer
+- effective status: active since 2026-07-25T16:19:58+00:00
+- content fingerprint: `sha256:17454d9b6269cc93f00b555e5b65da1c3d4ab218b4504831461d74ab11968219`
+- trace: filesystem-only / count=0 / sha=none
+- latest revision: no git history recorded
+- dirty: no
+
+### references/specs/SPEC-004-listening-synthesize.md
+
+- role: spec-package
+- layer: MetaDefineLayer
+- effective status: active since 2026-07-25T16:19:58+00:00
+- content fingerprint: `sha256:604ea0556a66a9eda4abf01e635e00e0571912bad72dd5d5df8bbddf099220fe`
+- trace: filesystem-only / count=0 / sha=none
+- latest revision: no git history recorded
+- dirty: no
+
+### references/specs/SPEC-005-bilingual-salon-codex.md
+
+- role: spec-package
+- layer: MetaDefineLayer
+- effective status: active since 2026-07-25T16:19:58+00:00
+- content fingerprint: `sha256:3eb4d1bf5c421c566b36f4144dafca31819987cb50cffe3edb19130686b4e0ce`
+- trace: filesystem-only / count=0 / sha=none
+- latest revision: no git history recorded
+- dirty: no
+
+### references/specs/SPEC-006-ambient-media-and-identity.md
+
+- role: spec-package
+- layer: MetaDefineLayer
+- effective status: active since 2026-07-25T16:19:58+00:00
+- content fingerprint: `sha256:8e47b750aa0b4c594533609d4e8321c7947a482bc9fa1334ce1714e54c3e5120`
 - trace: filesystem-only / count=0 / sha=none
 - latest revision: no git history recorded
 - dirty: no
@@ -447,8 +750,11 @@ Generated at: `2026-07-25T11:36:53+00:00`
 - effective status: active since 2026-07-25T11:20:05Z
 - content fingerprint: `sha256:ce8025d72574111826c8cf374b9b6d30ab499deb60b7d92c41f0b34dd910222b`
 - trace: filesystem-only / count=0 / sha=none
-- latest revision: no git history recorded
+- latest revision: `93c0f6e` 2026-07-25 Add aulos-skills, aulos-ops, host deploy, and fleet operating defaults.
 - dirty: no
+- earlier revisions:
+  - `7632d9b` 2026-07-25 Add aulos-web, aulos-api, and aulos-mcp sub-projects under aries-harness.
+  - `0d5cb01` 2026-07-25 Initial commit: Aulos hackathon workspace with LangChain agent runtime.
 
 ### references/stories/STORY-PACK-001-bootstrap.md
 
@@ -457,8 +763,10 @@ Generated at: `2026-07-25T11:36:53+00:00`
 - effective status: active since 2026-07-25T11:22:04Z
 - content fingerprint: `sha256:602d10f826c8cdd7c41c26d90055ba3e081d6804b5182b7221af0e212e145bc3`
 - trace: filesystem-only / count=0 / sha=none
-- latest revision: no git history recorded
+- latest revision: `93c0f6e` 2026-07-25 Add aulos-skills, aulos-ops, host deploy, and fleet operating defaults.
 - dirty: no
+- earlier revisions:
+  - `7632d9b` 2026-07-25 Add aulos-web, aulos-api, and aulos-mcp sub-projects under aries-harness.
 
 ### references/tasks/EC-001-bootstrap-execution-card.md
 
@@ -467,8 +775,10 @@ Generated at: `2026-07-25T11:36:53+00:00`
 - effective status: active since 2026-07-25T11:22:04Z
 - content fingerprint: `sha256:a021cdf5e267c1541d399938b17c0a84d97128344b231ae2bf7b5229a44d6906`
 - trace: filesystem-only / count=0 / sha=none
-- latest revision: no git history recorded
+- latest revision: `93c0f6e` 2026-07-25 Add aulos-skills, aulos-ops, host deploy, and fleet operating defaults.
 - dirty: no
+- earlier revisions:
+  - `7632d9b` 2026-07-25 Add aulos-web, aulos-api, and aulos-mcp sub-projects under aries-harness.
 
 ### references/tasks/README.md
 
@@ -477,8 +787,11 @@ Generated at: `2026-07-25T11:36:53+00:00`
 - effective status: active since 2026-07-25T11:20:05Z
 - content fingerprint: `sha256:9064c926d18006de9002a41e503e0a52a9f85a6a1582b5a8010ec7154e63b1ee`
 - trace: filesystem-only / count=0 / sha=none
-- latest revision: no git history recorded
+- latest revision: `93c0f6e` 2026-07-25 Add aulos-skills, aulos-ops, host deploy, and fleet operating defaults.
 - dirty: no
+- earlier revisions:
+  - `7632d9b` 2026-07-25 Add aulos-web, aulos-api, and aulos-mcp sub-projects under aries-harness.
+  - `0d5cb01` 2026-07-25 Initial commit: Aulos hackathon workspace with LangChain agent runtime.
 
 ### runs/deployments/README.md
 
@@ -487,8 +800,10 @@ Generated at: `2026-07-25T11:36:53+00:00`
 - effective status: active since 2026-07-25T11:20:05Z
 - content fingerprint: `sha256:2f0758c941705a9fbfedac9e87fa5973221d205827f6e42de981bba0382b8e81`
 - trace: filesystem-only / count=0 / sha=none
-- latest revision: no git history recorded
+- latest revision: `93c0f6e` 2026-07-25 Add aulos-skills, aulos-ops, host deploy, and fleet operating defaults.
 - dirty: no
+- earlier revisions:
+  - `0d5cb01` 2026-07-25 Initial commit: Aulos hackathon workspace with LangChain agent runtime.
 
 ### runs/github/README.md
 
@@ -496,6 +811,19 @@ Generated at: `2026-07-25T11:36:53+00:00`
 - layer: RunCookingLayer
 - effective status: active since 2026-07-25T11:20:05Z
 - content fingerprint: `sha256:263fc8a48b29f6250bb3e02c731713e26e8335fa049104604a2765ceb46161da`
+- trace: filesystem-only / count=0 / sha=none
+- latest revision: `93c0f6e` 2026-07-25 Add aulos-skills, aulos-ops, host deploy, and fleet operating defaults.
+- dirty: no
+- earlier revisions:
+  - `7632d9b` 2026-07-25 Add aulos-web, aulos-api, and aulos-mcp sub-projects under aries-harness.
+  - `0d5cb01` 2026-07-25 Initial commit: Aulos hackathon workspace with LangChain agent runtime.
+
+### runs/reports/AUDIT-001-aries-harness-process-compliance.md
+
+- role: iteration-report
+- layer: RunCookingLayer
+- effective status: active since 2026-07-25T16:19:58+00:00
+- content fingerprint: `sha256:55a6743ca73ab597fb0ab8084d1aed9c3038cd974df9da8839fc7f6755a558b6`
 - trace: filesystem-only / count=0 / sha=none
 - latest revision: no git history recorded
 - dirty: no
@@ -507,8 +835,11 @@ Generated at: `2026-07-25T11:36:53+00:00`
 - effective status: active since 2026-07-25T11:20:05Z
 - content fingerprint: `sha256:3d2bf379cf2da695a334264acaba739c0a5a23edeb8274f221d7b85068d55442`
 - trace: filesystem-only / count=0 / sha=none
-- latest revision: no git history recorded
+- latest revision: `93c0f6e` 2026-07-25 Add aulos-skills, aulos-ops, host deploy, and fleet operating defaults.
 - dirty: no
+- earlier revisions:
+  - `7632d9b` 2026-07-25 Add aulos-web, aulos-api, and aulos-mcp sub-projects under aries-harness.
+  - `0d5cb01` 2026-07-25 Initial commit: Aulos hackathon workspace with LangChain agent runtime.
 
 ### runs/tests/README.md
 
@@ -517,8 +848,11 @@ Generated at: `2026-07-25T11:36:53+00:00`
 - effective status: active since 2026-07-25T11:20:05Z
 - content fingerprint: `sha256:08d43302238b00ea866afb16bae153c1f10deed1c80bc5ba510438c3cf5b7954`
 - trace: filesystem-only / count=0 / sha=none
-- latest revision: no git history recorded
+- latest revision: `93c0f6e` 2026-07-25 Add aulos-skills, aulos-ops, host deploy, and fleet operating defaults.
 - dirty: no
+- earlier revisions:
+  - `7632d9b` 2026-07-25 Add aulos-web, aulos-api, and aulos-mcp sub-projects under aries-harness.
+  - `0d5cb01` 2026-07-25 Initial commit: Aulos hackathon workspace with LangChain agent runtime.
 
 ### runs/tests/VR-001-story-001-bootstrap.md
 
@@ -526,6 +860,18 @@ Generated at: `2026-07-25T11:36:53+00:00`
 - layer: RunCookingLayer
 - effective status: active since 2026-07-25T11:22:04Z
 - content fingerprint: `sha256:12b5284fc8e18f2f5299fa520c1f99acc57bac6d33eff2e7354c73ee37c52823`
+- trace: filesystem-only / count=0 / sha=none
+- latest revision: `93c0f6e` 2026-07-25 Add aulos-skills, aulos-ops, host deploy, and fleet operating defaults.
+- dirty: no
+- earlier revisions:
+  - `7632d9b` 2026-07-25 Add aulos-web, aulos-api, and aulos-mcp sub-projects under aries-harness.
+
+### runs/tests/VR-005-ambient-identity-gates.md
+
+- role: test-execution
+- layer: RunCookingLayer
+- effective status: active since 2026-07-25T16:19:58+00:00
+- content fingerprint: `sha256:f27363a458eead9485f00da34157f13bd72077e429dfd231d7f92b81010f887e`
 - trace: filesystem-only / count=0 / sha=none
 - latest revision: no git history recorded
 - dirty: no

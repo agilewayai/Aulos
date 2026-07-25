@@ -1,0 +1,17 @@
+id: aulos-listening
+name: Aulos Listening (导赏) Router
+version: 0.2.0
+layer: domain-runtime
+runtime: agent
+summary: Umbrella router for classical listening-guide workflows — bilingual Salon Codex + ambient.
+triggers:
+  - listening.route
+depends_on:
+  - aulos-listening-intake
+  - aulos-listening-width
+  - aulos-listening-depth
+  - aulos-listening-corpus
+  - aulos-listening-synthesize
+  - aulos-listening-compose
+  - aulos-listening-eval
+observability_title: Plan listening atelier

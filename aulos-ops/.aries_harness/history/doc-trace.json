@@ -1,16 +1,16 @@
 {
   "summary": {
-    "document_count": 41,
+    "document_count": 48,
     "docs_with_issues": 0,
     "dirty_docs": 0,
     "by_layer": {
       "MetaDefineLayer": 24,
-      "SharedSupportSurface": 7,
+      "SharedSupportSurface": 14,
       "RunCookingLayer": 10
     },
     "by_effective_status": {
       "active": 39,
-      "generated": 2
+      "generated": 9
     }
   },
   "documents": [
@@ -39,8 +39,23 @@
         "trace_last_commit_at": "",
         "trace_revision_count": "0"
       },
-      "latest_commit": null,
-      "recent_updates": [],
+      "latest_commit": {
+        "sha": "93c0f6e",
+        "date": "2026-07-25",
+        "subject": "Add aulos-skills, aulos-ops, host deploy, and fleet operating defaults."
+      },
+      "recent_updates": [
+        {
+          "sha": "93c0f6e",
+          "date": "2026-07-25",
+          "subject": "Add aulos-skills, aulos-ops, host deploy, and fleet operating defaults."
+        },
+        {
+          "sha": "7632d9b",
+          "date": "2026-07-25",
+          "subject": "Add aulos-web, aulos-api, and aulos-mcp sub-projects under aries-harness."
+        }
+      ],
       "dirty": false,
       "issue_count": 0,
       "issues": []
@@ -70,8 +85,28 @@
         "trace_last_commit_at": "",
         "trace_revision_count": "0"
       },
-      "latest_commit": null,
-      "recent_updates": [],
+      "latest_commit": {
+        "sha": "93c0f6e",
+        "date": "2026-07-25",
+        "subject": "Add aulos-skills, aulos-ops, host deploy, and fleet operating defaults."
+      },
+      "recent_updates": [
+        {
+          "sha": "93c0f6e",
+          "date": "2026-07-25",
+          "subject": "Add aulos-skills, aulos-ops, host deploy, and fleet operating defaults."
+        },
+        {
+          "sha": "7632d9b",
+          "date": "2026-07-25",
+          "subject": "Add aulos-web, aulos-api, and aulos-mcp sub-projects under aries-harness."
+        },
+        {
+          "sha": "0d5cb01",
+          "date": "2026-07-25",
+          "subject": "Initial commit: Aulos hackathon workspace with LangChain agent runtime."
+        }
+      ],
       "dirty": false,
       "issue_count": 0,
       "issues": []
@@ -83,14 +118,14 @@
       "layer": "SharedSupportSurface",
       "declared_layer": "SharedSupportSurface",
       "effective_status": "generated",
-      "effective_since": "2026-07-25T11:22:04+00:00",
+      "effective_since": "2026-07-25T16:29:54+00:00",
       "managed_by": "aries-harness",
       "fingerprint": "aries-harness/bootstrap-doc/v1",
       "last_updated_at": "",
       "completed_at": "",
       "timebox_actual": "",
-      "content_fingerprint": "sha256:3647a0820496b9b78bb9b4366667319b875f4ae2106a45d22774eb3b76cbd2ea",
-      "observed_content_fingerprint": "sha256:3647a0820496b9b78bb9b4366667319b875f4ae2106a45d22774eb3b76cbd2ea",
+      "content_fingerprint": "sha256:d1684adf66c64626fa7fa95612e91ff7cd363a372c21ba7306c817207d406e96",
+      "observed_content_fingerprint": "sha256:d1684adf66c64626fa7fa95612e91ff7cd363a372c21ba7306c817207d406e96",
       "trace_history_source": "filesystem-only",
       "trace_last_commit_sha": "",
       "trace_last_commit_at": "",
@@ -101,8 +136,28 @@
         "trace_last_commit_at": "",
         "trace_revision_count": "0"
       },
-      "latest_commit": null,
-      "recent_updates": [],
+      "latest_commit": {
+        "sha": "93c0f6e",
+        "date": "2026-07-25",
+        "subject": "Add aulos-skills, aulos-ops, host deploy, and fleet operating defaults."
+      },
+      "recent_updates": [
+        {
+          "sha": "93c0f6e",
+          "date": "2026-07-25",
+          "subject": "Add aulos-skills, aulos-ops, host deploy, and fleet operating defaults."
+        },
+        {
+          "sha": "7632d9b",
+          "date": "2026-07-25",
+          "subject": "Add aulos-web, aulos-api, and aulos-mcp sub-projects under aries-harness."
+        },
+        {
+          "sha": "0d5cb01",
+          "date": "2026-07-25",
+          "subject": "Initial commit: Aulos hackathon workspace with LangChain agent runtime."
+        }
+      ],
       "dirty": false,
       "issue_count": 0,
       "issues": []
@@ -120,8 +175,8 @@
       "last_updated_at": "",
       "completed_at": "",
       "timebox_actual": "",
-      "content_fingerprint": "sha256:34347daa4029e661e729a73b07a3c71714e8fef989f4e3d869a38273b8876ea8",
-      "observed_content_fingerprint": "sha256:34347daa4029e661e729a73b07a3c71714e8fef989f4e3d869a38273b8876ea8",
+      "content_fingerprint": "sha256:ef349556784cde22720362ff0b02ef7e6479f608f48e6531b2234a7398275a7b",
+      "observed_content_fingerprint": "sha256:ef349556784cde22720362ff0b02ef7e6479f608f48e6531b2234a7398275a7b",
       "trace_history_source": "filesystem-only",
       "trace_last_commit_sha": "",
       "trace_last_commit_at": "",
@@ -132,8 +187,23 @@
         "trace_last_commit_at": "",
         "trace_revision_count": "0"
       },
-      "latest_commit": null,
-      "recent_updates": [],
+      "latest_commit": {
+        "sha": "93c0f6e",
+        "date": "2026-07-25",
+        "subject": "Add aulos-skills, aulos-ops, host deploy, and fleet operating defaults."
+      },
+      "recent_updates": [
+        {
+          "sha": "93c0f6e",
+          "date": "2026-07-25",
+          "subject": "Add aulos-skills, aulos-ops, host deploy, and fleet operating defaults."
+        },
+        {
+          "sha": "7632d9b",
+          "date": "2026-07-25",
+          "subject": "Add aulos-web, aulos-api, and aulos-mcp sub-projects under aries-harness."
+        }
+      ],
       "dirty": false,
       "issue_count": 0,
       "issues": []
@@ -151,8 +221,8 @@
       "last_updated_at": "",
       "completed_at": "",
       "timebox_actual": "",
-      "content_fingerprint": "sha256:3813f45e93d67f82b34c1da7b8a081fd1615c611ac6ead8fb2bf8514cb3dd70a",
-      "observed_content_fingerprint": "sha256:3813f45e93d67f82b34c1da7b8a081fd1615c611ac6ead8fb2bf8514cb3dd70a",
+      "content_fingerprint": "sha256:e6fa4aa609dceb09769b6f3c3e569e7a2ecfed1504f25cee4b788b2ea5a30583",
+      "observed_content_fingerprint": "sha256:e6fa4aa609dceb09769b6f3c3e569e7a2ecfed1504f25cee4b788b2ea5a30583",
       "trace_history_source": "filesystem-only",
       "trace_last_commit_sha": "",
       "trace_last_commit_at": "",
@@ -163,8 +233,28 @@
         "trace_last_commit_at": "",
         "trace_revision_count": "0"
       },
-      "latest_commit": null,
-      "recent_updates": [],
+      "latest_commit": {
+        "sha": "93c0f6e",
+        "date": "2026-07-25",
+        "subject": "Add aulos-skills, aulos-ops, host deploy, and fleet operating defaults."
+      },
+      "recent_updates": [
+        {
+          "sha": "93c0f6e",
+          "date": "2026-07-25",
+          "subject": "Add aulos-skills, aulos-ops, host deploy, and fleet operating defaults."
+        },
+        {
+          "sha": "7632d9b",
+          "date": "2026-07-25",
+          "subject": "Add aulos-web, aulos-api, and aulos-mcp sub-projects under aries-harness."
+        },
+        {
+          "sha": "0d5cb01",
+          "date": "2026-07-25",
+          "subject": "Initial commit: Aulos hackathon workspace with LangChain agent runtime."
+        }
+      ],
       "dirty": false,
       "issue_count": 0,
       "issues": []
@@ -194,8 +284,18 @@
         "trace_last_commit_at": "",
         "trace_revision_count": "0"
       },
-      "latest_commit": null,
-      "recent_updates": [],
+      "latest_commit": {
+        "sha": "93c0f6e",
+        "date": "2026-07-25",
+        "subject": "Add aulos-skills, aulos-ops, host deploy, and fleet operating defaults."
+      },
+      "recent_updates": [
+        {
+          "sha": "93c0f6e",
+          "date": "2026-07-25",
+          "subject": "Add aulos-skills, aulos-ops, host deploy, and fleet operating defaults."
+        }
+      ],
       "dirty": false,
       "issue_count": 0,
       "issues": []
@@ -225,8 +325,28 @@
         "trace_last_commit_at": "",
         "trace_revision_count": "0"
       },
-      "latest_commit": null,
-      "recent_updates": [],
+      "latest_commit": {
+        "sha": "93c0f6e",
+        "date": "2026-07-25",
+        "subject": "Add aulos-skills, aulos-ops, host deploy, and fleet operating defaults."
+      },
+      "recent_updates": [
+        {
+          "sha": "93c0f6e",
+          "date": "2026-07-25",
+          "subject": "Add aulos-skills, aulos-ops, host deploy, and fleet operating defaults."
+        },
+        {
+          "sha": "7632d9b",
+          "date": "2026-07-25",
+          "subject": "Add aulos-web, aulos-api, and aulos-mcp sub-projects under aries-harness."
+        },
+        {
+          "sha": "0d5cb01",
+          "date": "2026-07-25",
+          "subject": "Initial commit: Aulos hackathon workspace with LangChain agent runtime."
+        }
+      ],
       "dirty": false,
       "issue_count": 0,
       "issues": []
@@ -244,8 +364,8 @@
       "last_updated_at": "",
       "completed_at": "",
       "timebox_actual": "",
-      "content_fingerprint": "sha256:2eb8212a47d36a4e436b4693e0b0a6f6d76d8e8d366368bbe41a5d4319cf7dbc",
-      "observed_content_fingerprint": "sha256:2eb8212a47d36a4e436b4693e0b0a6f6d76d8e8d366368bbe41a5d4319cf7dbc",
+      "content_fingerprint": "sha256:5d9437aeead8bef59835d666e4fa114ba725e0d2ea105c8cc586a567500a982f",
+      "observed_content_fingerprint": "sha256:5d9437aeead8bef59835d666e4fa114ba725e0d2ea105c8cc586a567500a982f",
       "trace_history_source": "filesystem-only",
       "trace_last_commit_sha": "",
       "trace_last_commit_at": "",
@@ -256,8 +376,28 @@
         "trace_last_commit_at": "",
         "trace_revision_count": "0"
       },
-      "latest_commit": null,
-      "recent_updates": [],
+      "latest_commit": {
+        "sha": "93c0f6e",
+        "date": "2026-07-25",
+        "subject": "Add aulos-skills, aulos-ops, host deploy, and fleet operating defaults."
+      },
+      "recent_updates": [
+        {
+          "sha": "93c0f6e",
+          "date": "2026-07-25",
+          "subject": "Add aulos-skills, aulos-ops, host deploy, and fleet operating defaults."
+        },
+        {
+          "sha": "7632d9b",
+          "date": "2026-07-25",
+          "subject": "Add aulos-web, aulos-api, and aulos-mcp sub-projects under aries-harness."
+        },
+        {
+          "sha": "0d5cb01",
+          "date": "2026-07-25",
+          "subject": "Initial commit: Aulos hackathon workspace with LangChain agent runtime."
+        }
+      ],
       "dirty": false,
       "issue_count": 0,
       "issues": []
@@ -287,8 +427,28 @@
         "trace_last_commit_at": "",
         "trace_revision_count": "0"
       },
-      "latest_commit": null,
-      "recent_updates": [],
+      "latest_commit": {
+        "sha": "93c0f6e",
+        "date": "2026-07-25",
+        "subject": "Add aulos-skills, aulos-ops, host deploy, and fleet operating defaults."
+      },
+      "recent_updates": [
+        {
+          "sha": "93c0f6e",
+          "date": "2026-07-25",
+          "subject": "Add aulos-skills, aulos-ops, host deploy, and fleet operating defaults."
+        },
+        {
+          "sha": "7632d9b",
+          "date": "2026-07-25",
+          "subject": "Add aulos-web, aulos-api, and aulos-mcp sub-projects under aries-harness."
+        },
+        {
+          "sha": "0d5cb01",
+          "date": "2026-07-25",
+          "subject": "Initial commit: Aulos hackathon workspace with LangChain agent runtime."
+        }
+      ],
       "dirty": false,
       "issue_count": 0,
       "issues": []
@@ -318,8 +478,28 @@
         "trace_last_commit_at": "",
         "trace_revision_count": "0"
       },
-      "latest_commit": null,
-      "recent_updates": [],
+      "latest_commit": {
+        "sha": "93c0f6e",
+        "date": "2026-07-25",
+        "subject": "Add aulos-skills, aulos-ops, host deploy, and fleet operating defaults."
+      },
+      "recent_updates": [
+        {
+          "sha": "93c0f6e",
+          "date": "2026-07-25",
+          "subject": "Add aulos-skills, aulos-ops, host deploy, and fleet operating defaults."
+        },
+        {
+          "sha": "7632d9b",
+          "date": "2026-07-25",
+          "subject": "Add aulos-web, aulos-api, and aulos-mcp sub-projects under aries-harness."
+        },
+        {
+          "sha": "0d5cb01",
+          "date": "2026-07-25",
+          "subject": "Initial commit: Aulos hackathon workspace with LangChain agent runtime."
+        }
+      ],
       "dirty": false,
       "issue_count": 0,
       "issues": []
@@ -349,8 +529,23 @@
         "trace_last_commit_at": "",
         "trace_revision_count": "0"
       },
-      "latest_commit": null,
-      "recent_updates": [],
+      "latest_commit": {
+        "sha": "93c0f6e",
+        "date": "2026-07-25",
+        "subject": "Add aulos-skills, aulos-ops, host deploy, and fleet operating defaults."
+      },
+      "recent_updates": [
+        {
+          "sha": "93c0f6e",
+          "date": "2026-07-25",
+          "subject": "Add aulos-skills, aulos-ops, host deploy, and fleet operating defaults."
+        },
+        {
+          "sha": "7632d9b",
+          "date": "2026-07-25",
+          "subject": "Add aulos-web, aulos-api, and aulos-mcp sub-projects under aries-harness."
+        }
+      ],
       "dirty": false,
       "issue_count": 0,
       "issues": []
@@ -380,8 +575,23 @@
         "trace_last_commit_at": "",
         "trace_revision_count": "0"
       },
-      "latest_commit": null,
-      "recent_updates": [],
+      "latest_commit": {
+        "sha": "93c0f6e",
+        "date": "2026-07-25",
+        "subject": "Add aulos-skills, aulos-ops, host deploy, and fleet operating defaults."
+      },
+      "recent_updates": [
+        {
+          "sha": "93c0f6e",
+          "date": "2026-07-25",
+          "subject": "Add aulos-skills, aulos-ops, host deploy, and fleet operating defaults."
+        },
+        {
+          "sha": "7632d9b",
+          "date": "2026-07-25",
+          "subject": "Add aulos-web, aulos-api, and aulos-mcp sub-projects under aries-harness."
+        }
+      ],
       "dirty": false,
       "issue_count": 0,
       "issues": []
@@ -411,8 +621,23 @@
         "trace_last_commit_at": "",
         "trace_revision_count": "0"
       },
-      "latest_commit": null,
-      "recent_updates": [],
+      "latest_commit": {
+        "sha": "93c0f6e",
+        "date": "2026-07-25",
+        "subject": "Add aulos-skills, aulos-ops, host deploy, and fleet operating defaults."
+      },
+      "recent_updates": [
+        {
+          "sha": "93c0f6e",
+          "date": "2026-07-25",
+          "subject": "Add aulos-skills, aulos-ops, host deploy, and fleet operating defaults."
+        },
+        {
+          "sha": "7632d9b",
+          "date": "2026-07-25",
+          "subject": "Add aulos-web, aulos-api, and aulos-mcp sub-projects under aries-harness."
+        }
+      ],
       "dirty": false,
       "issue_count": 0,
       "issues": []
@@ -442,8 +667,28 @@
         "trace_last_commit_at": "",
         "trace_revision_count": "0"
       },
-      "latest_commit": null,
-      "recent_updates": [],
+      "latest_commit": {
+        "sha": "93c0f6e",
+        "date": "2026-07-25",
+        "subject": "Add aulos-skills, aulos-ops, host deploy, and fleet operating defaults."
+      },
+      "recent_updates": [
+        {
+          "sha": "93c0f6e",
+          "date": "2026-07-25",
+          "subject": "Add aulos-skills, aulos-ops, host deploy, and fleet operating defaults."
+        },
+        {
+          "sha": "7632d9b",
+          "date": "2026-07-25",
+          "subject": "Add aulos-web, aulos-api, and aulos-mcp sub-projects under aries-harness."
+        },
+        {
+          "sha": "0d5cb01",
+          "date": "2026-07-25",
+          "subject": "Initial commit: Aulos hackathon workspace with LangChain agent runtime."
+        }
+      ],
       "dirty": false,
       "issue_count": 0,
       "issues": []
@@ -461,8 +706,8 @@
       "last_updated_at": "",
       "completed_at": "",
       "timebox_actual": "",
-      "content_fingerprint": "sha256:dcf5e1974a4ddfb56c778329abdff630ece444fe54c824a48dc699993d00648a",
-      "observed_content_fingerprint": "sha256:dcf5e1974a4ddfb56c778329abdff630ece444fe54c824a48dc699993d00648a",
+      "content_fingerprint": "sha256:9231f8c95104da78b96408517d61f393d2611c06684680f9bd5ac42c6462ec62",
+      "observed_content_fingerprint": "sha256:9231f8c95104da78b96408517d61f393d2611c06684680f9bd5ac42c6462ec62",
       "trace_history_source": "filesystem-only",
       "trace_last_commit_sha": "",
       "trace_last_commit_at": "",
@@ -473,8 +718,23 @@
         "trace_last_commit_at": "",
         "trace_revision_count": "0"
       },
-      "latest_commit": null,
-      "recent_updates": [],
+      "latest_commit": {
+        "sha": "93c0f6e",
+        "date": "2026-07-25",
+        "subject": "Add aulos-skills, aulos-ops, host deploy, and fleet operating defaults."
+      },
+      "recent_updates": [
+        {
+          "sha": "93c0f6e",
+          "date": "2026-07-25",
+          "subject": "Add aulos-skills, aulos-ops, host deploy, and fleet operating defaults."
+        },
+        {
+          "sha": "7632d9b",
+          "date": "2026-07-25",
+          "subject": "Add aulos-web, aulos-api, and aulos-mcp sub-projects under aries-harness."
+        }
+      ],
       "dirty": false,
       "issue_count": 0,
       "issues": []
@@ -504,8 +764,130 @@
         "trace_last_commit_at": "",
         "trace_revision_count": "0"
       },
-      "latest_commit": null,
-      "recent_updates": [],
+      "latest_commit": {
+        "sha": "93c0f6e",
+        "date": "2026-07-25",
+        "subject": "Add aulos-skills, aulos-ops, host deploy, and fleet operating defaults."
+      },
+      "recent_updates": [
+        {
+          "sha": "93c0f6e",
+          "date": "2026-07-25",
+          "subject": "Add aulos-skills, aulos-ops, host deploy, and fleet operating defaults."
+        },
+        {
+          "sha": "7632d9b",
+          "date": "2026-07-25",
+          "subject": "Add aulos-web, aulos-api, and aulos-mcp sub-projects under aries-harness."
+        },
+        {
+          "sha": "0d5cb01",
+          "date": "2026-07-25",
+          "subject": "Initial commit: Aulos hackathon workspace with LangChain agent runtime."
+        }
+      ],
+      "dirty": false,
+      "issue_count": 0,
+      "issues": []
+    },
+    {
+      "path": "history/DAILY_SUMMARY_INDEX.md",
+      "repo_path": ".aries_harness/history/DAILY_SUMMARY_INDEX.md",
+      "doc_role": "history-daily-summary-index",
+      "layer": "SharedSupportSurface",
+      "declared_layer": "SharedSupportSurface",
+      "effective_status": "generated",
+      "effective_since": "2026-07-25T16:23:59+00:00",
+      "managed_by": "aries-harness",
+      "fingerprint": "aries-harness/history-doc/v1",
+      "last_updated_at": "",
+      "completed_at": "",
+      "timebox_actual": "",
+      "content_fingerprint": "sha256:33feab769892d0d96967de6a334707cf488aac574878b2324a6144452fdf4dc5",
+      "observed_content_fingerprint": "sha256:33feab769892d0d96967de6a334707cf488aac574878b2324a6144452fdf4dc5",
+      "trace_history_source": "filesystem-only",
+      "trace_last_commit_sha": "",
+      "trace_last_commit_at": "",
+      "trace_revision_count": "0",
+      "observed_trace": {
+        "trace_history_source": "filesystem-only",
+        "trace_last_commit_sha": "",
+        "trace_last_commit_at": "",
+        "trace_revision_count": "0"
+      },
+      "latest_commit": {
+        "sha": "93c0f6e",
+        "date": "2026-07-25",
+        "subject": "Add aulos-skills, aulos-ops, host deploy, and fleet operating defaults."
+      },
+      "recent_updates": [
+        {
+          "sha": "93c0f6e",
+          "date": "2026-07-25",
+          "subject": "Add aulos-skills, aulos-ops, host deploy, and fleet operating defaults."
+        },
+        {
+          "sha": "7632d9b",
+          "date": "2026-07-25",
+          "subject": "Add aulos-web, aulos-api, and aulos-mcp sub-projects under aries-harness."
+        },
+        {
+          "sha": "0d5cb01",
+          "date": "2026-07-25",
+          "subject": "Initial commit: Aulos hackathon workspace with LangChain agent runtime."
+        }
+      ],
+      "dirty": false,
+      "issue_count": 0,
+      "issues": []
+    },
+    {
+      "path": "history/DOC_TRACE.md",
+      "repo_path": ".aries_harness/history/DOC_TRACE.md",
+      "doc_role": "history-doc-trace",
+      "layer": "SharedSupportSurface",
+      "declared_layer": "SharedSupportSurface",
+      "effective_status": "generated",
+      "effective_since": "2026-07-25T16:23:59+00:00",
+      "managed_by": "aries-harness",
+      "fingerprint": "aries-harness/history-doc/v1",
+      "last_updated_at": "",
+      "completed_at": "",
+      "timebox_actual": "",
+      "content_fingerprint": "sha256:2e14d2c263c680a17b9206d43351e8b4c3023fcabc18afb9116795b132ea8d84",
+      "observed_content_fingerprint": "sha256:2e14d2c263c680a17b9206d43351e8b4c3023fcabc18afb9116795b132ea8d84",
+      "trace_history_source": "filesystem-only",
+      "trace_last_commit_sha": "",
+      "trace_last_commit_at": "",
+      "trace_revision_count": "0",
+      "observed_trace": {
+        "trace_history_source": "filesystem-only",
+        "trace_last_commit_sha": "",
+        "trace_last_commit_at": "",
+        "trace_revision_count": "0"
+      },
+      "latest_commit": {
+        "sha": "93c0f6e",
+        "date": "2026-07-25",
+        "subject": "Add aulos-skills, aulos-ops, host deploy, and fleet operating defaults."
+      },
+      "recent_updates": [
+        {
+          "sha": "93c0f6e",
+          "date": "2026-07-25",
+          "subject": "Add aulos-skills, aulos-ops, host deploy, and fleet operating defaults."
+        },
+        {
+          "sha": "7632d9b",
+          "date": "2026-07-25",
+          "subject": "Add aulos-web, aulos-api, and aulos-mcp sub-projects under aries-harness."
+        },
+        {
+          "sha": "0d5cb01",
+          "date": "2026-07-25",
+          "subject": "Initial commit: Aulos hackathon workspace with LangChain agent runtime."
+        }
+      ],
       "dirty": false,
       "issue_count": 0,
       "issues": []
@@ -517,14 +899,14 @@
       "layer": "SharedSupportSurface",
       "declared_layer": "SharedSupportSurface",
       "effective_status": "generated",
-      "effective_since": "2026-07-25T11:20:06Z",
+      "effective_since": "2026-07-25T16:23:59+00:00",
       "managed_by": "aries-harness",
       "fingerprint": "aries-harness/history-doc/v1",
       "last_updated_at": "",
       "completed_at": "",
       "timebox_actual": "",
-      "content_fingerprint": "sha256:209889dd41e0facec8ed5c873c3e137dd80a834ccdec58970285ce3e83a98f32",
-      "observed_content_fingerprint": "sha256:209889dd41e0facec8ed5c873c3e137dd80a834ccdec58970285ce3e83a98f32",
+      "content_fingerprint": "sha256:2d315c0cd829c510669906bd59bb25afe39b8d21621c132c7d018990f87ebfd1",
+      "observed_content_fingerprint": "sha256:2d315c0cd829c510669906bd59bb25afe39b8d21621c132c7d018990f87ebfd1",
       "trace_history_source": "filesystem-only",
       "trace_last_commit_sha": "",
       "trace_last_commit_at": "",
@@ -535,8 +917,258 @@
         "trace_last_commit_at": "",
         "trace_revision_count": "0"
       },
-      "latest_commit": null,
-      "recent_updates": [],
+      "latest_commit": {
+        "sha": "93c0f6e",
+        "date": "2026-07-25",
+        "subject": "Add aulos-skills, aulos-ops, host deploy, and fleet operating defaults."
+      },
+      "recent_updates": [
+        {
+          "sha": "93c0f6e",
+          "date": "2026-07-25",
+          "subject": "Add aulos-skills, aulos-ops, host deploy, and fleet operating defaults."
+        },
+        {
+          "sha": "7632d9b",
+          "date": "2026-07-25",
+          "subject": "Add aulos-web, aulos-api, and aulos-mcp sub-projects under aries-harness."
+        },
+        {
+          "sha": "0d5cb01",
+          "date": "2026-07-25",
+          "subject": "Initial commit: Aulos hackathon workspace with LangChain agent runtime."
+        }
+      ],
+      "dirty": false,
+      "issue_count": 0,
+      "issues": []
+    },
+    {
+      "path": "history/RETROSPECTIVE.md",
+      "repo_path": ".aries_harness/history/RETROSPECTIVE.md",
+      "doc_role": "history-retrospective",
+      "layer": "SharedSupportSurface",
+      "declared_layer": "SharedSupportSurface",
+      "effective_status": "generated",
+      "effective_since": "2026-07-25T16:23:59+00:00",
+      "managed_by": "aries-harness",
+      "fingerprint": "aries-harness/history-doc/v1",
+      "last_updated_at": "",
+      "completed_at": "",
+      "timebox_actual": "",
+      "content_fingerprint": "sha256:05213d018da80ad99b6832e5c1d438980067cbaa49da6e068157195e28e1a5eb",
+      "observed_content_fingerprint": "sha256:05213d018da80ad99b6832e5c1d438980067cbaa49da6e068157195e28e1a5eb",
+      "trace_history_source": "filesystem-only",
+      "trace_last_commit_sha": "",
+      "trace_last_commit_at": "",
+      "trace_revision_count": "0",
+      "observed_trace": {
+        "trace_history_source": "filesystem-only",
+        "trace_last_commit_sha": "",
+        "trace_last_commit_at": "",
+        "trace_revision_count": "0"
+      },
+      "latest_commit": {
+        "sha": "93c0f6e",
+        "date": "2026-07-25",
+        "subject": "Add aulos-skills, aulos-ops, host deploy, and fleet operating defaults."
+      },
+      "recent_updates": [
+        {
+          "sha": "93c0f6e",
+          "date": "2026-07-25",
+          "subject": "Add aulos-skills, aulos-ops, host deploy, and fleet operating defaults."
+        },
+        {
+          "sha": "7632d9b",
+          "date": "2026-07-25",
+          "subject": "Add aulos-web, aulos-api, and aulos-mcp sub-projects under aries-harness."
+        },
+        {
+          "sha": "0d5cb01",
+          "date": "2026-07-25",
+          "subject": "Initial commit: Aulos hackathon workspace with LangChain agent runtime."
+        }
+      ],
+      "dirty": false,
+      "issue_count": 0,
+      "issues": []
+    },
+    {
+      "path": "history/ROADMAP.md",
+      "repo_path": ".aries_harness/history/ROADMAP.md",
+      "doc_role": "history-roadmap",
+      "layer": "SharedSupportSurface",
+      "declared_layer": "SharedSupportSurface",
+      "effective_status": "generated",
+      "effective_since": "2026-07-25T16:23:59+00:00",
+      "managed_by": "aries-harness",
+      "fingerprint": "aries-harness/history-doc/v1",
+      "last_updated_at": "",
+      "completed_at": "",
+      "timebox_actual": "",
+      "content_fingerprint": "sha256:1d538e833f75f7ce51c69776086c2b1c41e8cd24e0a72034daab64b6b7775585",
+      "observed_content_fingerprint": "sha256:1d538e833f75f7ce51c69776086c2b1c41e8cd24e0a72034daab64b6b7775585",
+      "trace_history_source": "filesystem-only",
+      "trace_last_commit_sha": "",
+      "trace_last_commit_at": "",
+      "trace_revision_count": "0",
+      "observed_trace": {
+        "trace_history_source": "filesystem-only",
+        "trace_last_commit_sha": "",
+        "trace_last_commit_at": "",
+        "trace_revision_count": "0"
+      },
+      "latest_commit": {
+        "sha": "93c0f6e",
+        "date": "2026-07-25",
+        "subject": "Add aulos-skills, aulos-ops, host deploy, and fleet operating defaults."
+      },
+      "recent_updates": [
+        {
+          "sha": "93c0f6e",
+          "date": "2026-07-25",
+          "subject": "Add aulos-skills, aulos-ops, host deploy, and fleet operating defaults."
+        },
+        {
+          "sha": "7632d9b",
+          "date": "2026-07-25",
+          "subject": "Add aulos-web, aulos-api, and aulos-mcp sub-projects under aries-harness."
+        }
+      ],
+      "dirty": false,
+      "issue_count": 0,
+      "issues": []
+    },
+    {
+      "path": "history/STATUS.md",
+      "repo_path": ".aries_harness/history/STATUS.md",
+      "doc_role": "history-status",
+      "layer": "SharedSupportSurface",
+      "declared_layer": "SharedSupportSurface",
+      "effective_status": "generated",
+      "effective_since": "2026-07-25T16:23:59+00:00",
+      "managed_by": "aries-harness",
+      "fingerprint": "aries-harness/history-doc/v1",
+      "last_updated_at": "",
+      "completed_at": "",
+      "timebox_actual": "",
+      "content_fingerprint": "sha256:55dc686b5171116a68b2b7c216b657a46dd7f07fe3567ae187e6b0d248daa0d0",
+      "observed_content_fingerprint": "sha256:55dc686b5171116a68b2b7c216b657a46dd7f07fe3567ae187e6b0d248daa0d0",
+      "trace_history_source": "filesystem-only",
+      "trace_last_commit_sha": "",
+      "trace_last_commit_at": "",
+      "trace_revision_count": "0",
+      "observed_trace": {
+        "trace_history_source": "filesystem-only",
+        "trace_last_commit_sha": "",
+        "trace_last_commit_at": "",
+        "trace_revision_count": "0"
+      },
+      "latest_commit": {
+        "sha": "93c0f6e",
+        "date": "2026-07-25",
+        "subject": "Add aulos-skills, aulos-ops, host deploy, and fleet operating defaults."
+      },
+      "recent_updates": [
+        {
+          "sha": "93c0f6e",
+          "date": "2026-07-25",
+          "subject": "Add aulos-skills, aulos-ops, host deploy, and fleet operating defaults."
+        },
+        {
+          "sha": "7632d9b",
+          "date": "2026-07-25",
+          "subject": "Add aulos-web, aulos-api, and aulos-mcp sub-projects under aries-harness."
+        }
+      ],
+      "dirty": false,
+      "issue_count": 0,
+      "issues": []
+    },
+    {
+      "path": "history/TIMELINE.md",
+      "repo_path": ".aries_harness/history/TIMELINE.md",
+      "doc_role": "history-timeline",
+      "layer": "SharedSupportSurface",
+      "declared_layer": "SharedSupportSurface",
+      "effective_status": "generated",
+      "effective_since": "2026-07-25T16:23:59+00:00",
+      "managed_by": "aries-harness",
+      "fingerprint": "aries-harness/history-doc/v1",
+      "last_updated_at": "",
+      "completed_at": "",
+      "timebox_actual": "",
+      "content_fingerprint": "sha256:c0d1d54537ffe0dbc0db21d1c968cd05f2fa95ec703339f2ef46cd2059570c5d",
+      "observed_content_fingerprint": "sha256:c0d1d54537ffe0dbc0db21d1c968cd05f2fa95ec703339f2ef46cd2059570c5d",
+      "trace_history_source": "filesystem-only",
+      "trace_last_commit_sha": "",
+      "trace_last_commit_at": "",
+      "trace_revision_count": "0",
+      "observed_trace": {
+        "trace_history_source": "filesystem-only",
+        "trace_last_commit_sha": "",
+        "trace_last_commit_at": "",
+        "trace_revision_count": "0"
+      },
+      "latest_commit": {
+        "sha": "93c0f6e",
+        "date": "2026-07-25",
+        "subject": "Add aulos-skills, aulos-ops, host deploy, and fleet operating defaults."
+      },
+      "recent_updates": [
+        {
+          "sha": "93c0f6e",
+          "date": "2026-07-25",
+          "subject": "Add aulos-skills, aulos-ops, host deploy, and fleet operating defaults."
+        }
+      ],
+      "dirty": false,
+      "issue_count": 0,
+      "issues": []
+    },
+    {
+      "path": "history/daily/2026-07-25.md",
+      "repo_path": ".aries_harness/history/daily/2026-07-25.md",
+      "doc_role": "history-daily-summary",
+      "layer": "SharedSupportSurface",
+      "declared_layer": "SharedSupportSurface",
+      "effective_status": "generated",
+      "effective_since": "2026-07-25T16:23:59+00:00",
+      "managed_by": "aries-harness",
+      "fingerprint": "aries-harness/history-doc/v1",
+      "last_updated_at": "",
+      "completed_at": "",
+      "timebox_actual": "",
+      "content_fingerprint": "sha256:23020760251643216fd0c0a386e1c344712ec2c72521d52ffa5c08906b535ad8",
+      "observed_content_fingerprint": "sha256:23020760251643216fd0c0a386e1c344712ec2c72521d52ffa5c08906b535ad8",
+      "trace_history_source": "filesystem-only",
+      "trace_last_commit_sha": "",
+      "trace_last_commit_at": "",
+      "trace_revision_count": "0",
+      "observed_trace": {
+        "trace_history_source": "filesystem-only",
+        "trace_last_commit_sha": "",
+        "trace_last_commit_at": "",
+        "trace_revision_count": "0"
+      },
+      "latest_commit": {
+        "sha": "93c0f6e",
+        "date": "2026-07-25",
+        "subject": "Add aulos-skills, aulos-ops, host deploy, and fleet operating defaults."
+      },
+      "recent_updates": [
+        {
+          "sha": "93c0f6e",
+          "date": "2026-07-25",
+          "subject": "Add aulos-skills, aulos-ops, host deploy, and fleet operating defaults."
+        },
+        {
+          "sha": "7632d9b",
+          "date": "2026-07-25",
+          "subject": "Add aulos-web, aulos-api, and aulos-mcp sub-projects under aries-harness."
+        }
+      ],
       "dirty": false,
       "issue_count": 0,
       "issues": []
@@ -566,8 +1198,28 @@
         "trace_last_commit_at": "",
         "trace_revision_count": "0"
       },
-      "latest_commit": null,
-      "recent_updates": [],
+      "latest_commit": {
+        "sha": "93c0f6e",
+        "date": "2026-07-25",
+        "subject": "Add aulos-skills, aulos-ops, host deploy, and fleet operating defaults."
+      },
+      "recent_updates": [
+        {
+          "sha": "93c0f6e",
+          "date": "2026-07-25",
+          "subject": "Add aulos-skills, aulos-ops, host deploy, and fleet operating defaults."
+        },
+        {
+          "sha": "7632d9b",
+          "date": "2026-07-25",
+          "subject": "Add aulos-web, aulos-api, and aulos-mcp sub-projects under aries-harness."
+        },
+        {
+          "sha": "0d5cb01",
+          "date": "2026-07-25",
+          "subject": "Initial commit: Aulos hackathon workspace with LangChain agent runtime."
+        }
+      ],
       "dirty": false,
       "issue_count": 0,
       "issues": []
@@ -597,8 +1249,28 @@
         "trace_last_commit_at": "",
         "trace_revision_count": "0"
       },
-      "latest_commit": null,
-      "recent_updates": [],
+      "latest_commit": {
+        "sha": "93c0f6e",
+        "date": "2026-07-25",
+        "subject": "Add aulos-skills, aulos-ops, host deploy, and fleet operating defaults."
+      },
+      "recent_updates": [
+        {
+          "sha": "93c0f6e",
+          "date": "2026-07-25",
+          "subject": "Add aulos-skills, aulos-ops, host deploy, and fleet operating defaults."
+        },
+        {
+          "sha": "7632d9b",
+          "date": "2026-07-25",
+          "subject": "Add aulos-web, aulos-api, and aulos-mcp sub-projects under aries-harness."
+        },
+        {
+          "sha": "0d5cb01",
+          "date": "2026-07-25",
+          "subject": "Initial commit: Aulos hackathon workspace with LangChain agent runtime."
+        }
+      ],
       "dirty": false,
       "issue_count": 0,
       "issues": []
@@ -628,8 +1300,28 @@
         "trace_last_commit_at": "",
         "trace_revision_count": "0"
       },
-      "latest_commit": null,
-      "recent_updates": [],
+      "latest_commit": {
+        "sha": "93c0f6e",
+        "date": "2026-07-25",
+        "subject": "Add aulos-skills, aulos-ops, host deploy, and fleet operating defaults."
+      },
+      "recent_updates": [
+        {
+          "sha": "93c0f6e",
+          "date": "2026-07-25",
+          "subject": "Add aulos-skills, aulos-ops, host deploy, and fleet operating defaults."
+        },
+        {
+          "sha": "7632d9b",
+          "date": "2026-07-25",
+          "subject": "Add aulos-web, aulos-api, and aulos-mcp sub-projects under aries-harness."
+        },
+        {
+          "sha": "0d5cb01",
+          "date": "2026-07-25",
+          "subject": "Initial commit: Aulos hackathon workspace with LangChain agent runtime."
+        }
+      ],
       "dirty": false,
       "issue_count": 0,
       "issues": []
@@ -659,8 +1351,28 @@
         "trace_last_commit_at": "",
         "trace_revision_count": "0"
       },
-      "latest_commit": null,
-      "recent_updates": [],
+      "latest_commit": {
+        "sha": "93c0f6e",
+        "date": "2026-07-25",
+        "subject": "Add aulos-skills, aulos-ops, host deploy, and fleet operating defaults."
+      },
+      "recent_updates": [
+        {
+          "sha": "93c0f6e",
+          "date": "2026-07-25",
+          "subject": "Add aulos-skills, aulos-ops, host deploy, and fleet operating defaults."
+        },
+        {
+          "sha": "7632d9b",
+          "date": "2026-07-25",
+          "subject": "Add aulos-web, aulos-api, and aulos-mcp sub-projects under aries-harness."
+        },
+        {
+          "sha": "0d5cb01",
+          "date": "2026-07-25",
+          "subject": "Initial commit: Aulos hackathon workspace with LangChain agent runtime."
+        }
+      ],
       "dirty": false,
       "issue_count": 0,
       "issues": []
@@ -690,8 +1402,28 @@
         "trace_last_commit_at": "",
         "trace_revision_count": "0"
       },
-      "latest_commit": null,
-      "recent_updates": [],
+      "latest_commit": {
+        "sha": "93c0f6e",
+        "date": "2026-07-25",
+        "subject": "Add aulos-skills, aulos-ops, host deploy, and fleet operating defaults."
+      },
+      "recent_updates": [
+        {
+          "sha": "93c0f6e",
+          "date": "2026-07-25",
+          "subject": "Add aulos-skills, aulos-ops, host deploy, and fleet operating defaults."
+        },
+        {
+          "sha": "7632d9b",
+          "date": "2026-07-25",
+          "subject": "Add aulos-web, aulos-api, and aulos-mcp sub-projects under aries-harness."
+        },
+        {
+          "sha": "0d5cb01",
+          "date": "2026-07-25",
+          "subject": "Initial commit: Aulos hackathon workspace with LangChain agent runtime."
+        }
+      ],
       "dirty": false,
       "issue_count": 0,
       "issues": []
@@ -721,8 +1453,23 @@
         "trace_last_commit_at": "",
         "trace_revision_count": "0"
       },
-      "latest_commit": null,
-      "recent_updates": [],
+      "latest_commit": {
+        "sha": "93c0f6e",
+        "date": "2026-07-25",
+        "subject": "Add aulos-skills, aulos-ops, host deploy, and fleet operating defaults."
+      },
+      "recent_updates": [
+        {
+          "sha": "93c0f6e",
+          "date": "2026-07-25",
+          "subject": "Add aulos-skills, aulos-ops, host deploy, and fleet operating defaults."
+        },
+        {
+          "sha": "7632d9b",
+          "date": "2026-07-25",
+          "subject": "Add aulos-web, aulos-api, and aulos-mcp sub-projects under aries-harness."
+        }
+      ],
       "dirty": false,
       "issue_count": 0,
       "issues": []
@@ -752,8 +1499,23 @@
         "trace_last_commit_at": "",
         "trace_revision_count": "0"
       },
-      "latest_commit": null,
-      "recent_updates": [],
+      "latest_commit": {
+        "sha": "93c0f6e",
+        "date": "2026-07-25",
+        "subject": "Add aulos-skills, aulos-ops, host deploy, and fleet operating defaults."
+      },
+      "recent_updates": [
+        {
+          "sha": "93c0f6e",
+          "date": "2026-07-25",
+          "subject": "Add aulos-skills, aulos-ops, host deploy, and fleet operating defaults."
+        },
+        {
+          "sha": "7632d9b",
+          "date": "2026-07-25",
+          "subject": "Add aulos-web, aulos-api, and aulos-mcp sub-projects under aries-harness."
+        }
+      ],
       "dirty": false,
       "issue_count": 0,
       "issues": []
@@ -783,8 +1545,23 @@
         "trace_last_commit_at": "",
         "trace_revision_count": "0"
       },
-      "latest_commit": null,
-      "recent_updates": [],
+      "latest_commit": {
+        "sha": "93c0f6e",
+        "date": "2026-07-25",
+        "subject": "Add aulos-skills, aulos-ops, host deploy, and fleet operating defaults."
+      },
+      "recent_updates": [
+        {
+          "sha": "93c0f6e",
+          "date": "2026-07-25",
+          "subject": "Add aulos-skills, aulos-ops, host deploy, and fleet operating defaults."
+        },
+        {
+          "sha": "7632d9b",
+          "date": "2026-07-25",
+          "subject": "Add aulos-web, aulos-api, and aulos-mcp sub-projects under aries-harness."
+        }
+      ],
       "dirty": false,
       "issue_count": 0,
       "issues": []
@@ -814,8 +1591,28 @@
         "trace_last_commit_at": "",
         "trace_revision_count": "0"
       },
-      "latest_commit": null,
-      "recent_updates": [],
+      "latest_commit": {
+        "sha": "93c0f6e",
+        "date": "2026-07-25",
+        "subject": "Add aulos-skills, aulos-ops, host deploy, and fleet operating defaults."
+      },
+      "recent_updates": [
+        {
+          "sha": "93c0f6e",
+          "date": "2026-07-25",
+          "subject": "Add aulos-skills, aulos-ops, host deploy, and fleet operating defaults."
+        },
+        {
+          "sha": "7632d9b",
+          "date": "2026-07-25",
+          "subject": "Add aulos-web, aulos-api, and aulos-mcp sub-projects under aries-harness."
+        },
+        {
+          "sha": "0d5cb01",
+          "date": "2026-07-25",
+          "subject": "Initial commit: Aulos hackathon workspace with LangChain agent runtime."
+        }
+      ],
       "dirty": false,
       "issue_count": 0,
       "issues": []
@@ -845,8 +1642,28 @@
         "trace_last_commit_at": "",
         "trace_revision_count": "0"
       },
-      "latest_commit": null,
-      "recent_updates": [],
+      "latest_commit": {
+        "sha": "93c0f6e",
+        "date": "2026-07-25",
+        "subject": "Add aulos-skills, aulos-ops, host deploy, and fleet operating defaults."
+      },
+      "recent_updates": [
+        {
+          "sha": "93c0f6e",
+          "date": "2026-07-25",
+          "subject": "Add aulos-skills, aulos-ops, host deploy, and fleet operating defaults."
+        },
+        {
+          "sha": "7632d9b",
+          "date": "2026-07-25",
+          "subject": "Add aulos-web, aulos-api, and aulos-mcp sub-projects under aries-harness."
+        },
+        {
+          "sha": "0d5cb01",
+          "date": "2026-07-25",
+          "subject": "Initial commit: Aulos hackathon workspace with LangChain agent runtime."
+        }
+      ],
       "dirty": false,
       "issue_count": 0,
       "issues": []
@@ -876,8 +1693,28 @@
         "trace_last_commit_at": "",
         "trace_revision_count": "0"
       },
-      "latest_commit": null,
-      "recent_updates": [],
+      "latest_commit": {
+        "sha": "93c0f6e",
+        "date": "2026-07-25",
+        "subject": "Add aulos-skills, aulos-ops, host deploy, and fleet operating defaults."
+      },
+      "recent_updates": [
+        {
+          "sha": "93c0f6e",
+          "date": "2026-07-25",
+          "subject": "Add aulos-skills, aulos-ops, host deploy, and fleet operating defaults."
+        },
+        {
+          "sha": "7632d9b",
+          "date": "2026-07-25",
+          "subject": "Add aulos-web, aulos-api, and aulos-mcp sub-projects under aries-harness."
+        },
+        {
+          "sha": "0d5cb01",
+          "date": "2026-07-25",
+          "subject": "Initial commit: Aulos hackathon workspace with LangChain agent runtime."
+        }
+      ],
       "dirty": false,
       "issue_count": 0,
       "issues": []
@@ -907,8 +1744,18 @@
         "trace_last_commit_at": "",
         "trace_revision_count": "0"
       },
-      "latest_commit": null,
-      "recent_updates": [],
+      "latest_commit": {
+        "sha": "93c0f6e",
+        "date": "2026-07-25",
+        "subject": "Add aulos-skills, aulos-ops, host deploy, and fleet operating defaults."
+      },
+      "recent_updates": [
+        {
+          "sha": "93c0f6e",
+          "date": "2026-07-25",
+          "subject": "Add aulos-skills, aulos-ops, host deploy, and fleet operating defaults."
+        }
+      ],
       "dirty": false,
       "issue_count": 0,
       "issues": []
@@ -938,8 +1785,28 @@
         "trace_last_commit_at": "",
         "trace_revision_count": "0"
       },
-      "latest_commit": null,
-      "recent_updates": [],
+      "latest_commit": {
+        "sha": "93c0f6e",
+        "date": "2026-07-25",
+        "subject": "Add aulos-skills, aulos-ops, host deploy, and fleet operating defaults."
+      },
+      "recent_updates": [
+        {
+          "sha": "93c0f6e",
+          "date": "2026-07-25",
+          "subject": "Add aulos-skills, aulos-ops, host deploy, and fleet operating defaults."
+        },
+        {
+          "sha": "7632d9b",
+          "date": "2026-07-25",
+          "subject": "Add aulos-web, aulos-api, and aulos-mcp sub-projects under aries-harness."
+        },
+        {
+          "sha": "0d5cb01",
+          "date": "2026-07-25",
+          "subject": "Initial commit: Aulos hackathon workspace with LangChain agent runtime."
+        }
+      ],
       "dirty": false,
       "issue_count": 0,
       "issues": []
@@ -969,8 +1836,28 @@
         "trace_last_commit_at": "",
         "trace_revision_count": "0"
       },
-      "latest_commit": null,
-      "recent_updates": [],
+      "latest_commit": {
+        "sha": "93c0f6e",
+        "date": "2026-07-25",
+        "subject": "Add aulos-skills, aulos-ops, host deploy, and fleet operating defaults."
+      },
+      "recent_updates": [
+        {
+          "sha": "93c0f6e",
+          "date": "2026-07-25",
+          "subject": "Add aulos-skills, aulos-ops, host deploy, and fleet operating defaults."
+        },
+        {
+          "sha": "7632d9b",
+          "date": "2026-07-25",
+          "subject": "Add aulos-web, aulos-api, and aulos-mcp sub-projects under aries-harness."
+        },
+        {
+          "sha": "0d5cb01",
+          "date": "2026-07-25",
+          "subject": "Initial commit: Aulos hackathon workspace with LangChain agent runtime."
+        }
+      ],
       "dirty": false,
       "issue_count": 0,
       "issues": []
@@ -1000,8 +1887,23 @@
         "trace_last_commit_at": "",
         "trace_revision_count": "0"
       },
-      "latest_commit": null,
-      "recent_updates": [],
+      "latest_commit": {
+        "sha": "93c0f6e",
+        "date": "2026-07-25",
+        "subject": "Add aulos-skills, aulos-ops, host deploy, and fleet operating defaults."
+      },
+      "recent_updates": [
+        {
+          "sha": "93c0f6e",
+          "date": "2026-07-25",
+          "subject": "Add aulos-skills, aulos-ops, host deploy, and fleet operating defaults."
+        },
+        {
+          "sha": "7632d9b",
+          "date": "2026-07-25",
+          "subject": "Add aulos-web, aulos-api, and aulos-mcp sub-projects under aries-harness."
+        }
+      ],
       "dirty": false,
       "issue_count": 0,
       "issues": []
@@ -1031,8 +1933,28 @@
         "trace_last_commit_at": "",
         "trace_revision_count": "0"
       },
-      "latest_commit": null,
-      "recent_updates": [],
+      "latest_commit": {
+        "sha": "93c0f6e",
+        "date": "2026-07-25",
+        "subject": "Add aulos-skills, aulos-ops, host deploy, and fleet operating defaults."
+      },
+      "recent_updates": [
+        {
+          "sha": "93c0f6e",
+          "date": "2026-07-25",
+          "subject": "Add aulos-skills, aulos-ops, host deploy, and fleet operating defaults."
+        },
+        {
+          "sha": "7632d9b",
+          "date": "2026-07-25",
+          "subject": "Add aulos-web, aulos-api, and aulos-mcp sub-projects under aries-harness."
+        },
+        {
+          "sha": "0d5cb01",
+          "date": "2026-07-25",
+          "subject": "Initial commit: Aulos hackathon workspace with LangChain agent runtime."
+        }
+      ],
       "dirty": false,
       "issue_count": 0,
       "issues": []
@@ -1062,8 +1984,23 @@
         "trace_last_commit_at": "",
         "trace_revision_count": "0"
       },
-      "latest_commit": null,
-      "recent_updates": [],
+      "latest_commit": {
+        "sha": "93c0f6e",
+        "date": "2026-07-25",
+        "subject": "Add aulos-skills, aulos-ops, host deploy, and fleet operating defaults."
+      },
+      "recent_updates": [
+        {
+          "sha": "93c0f6e",
+          "date": "2026-07-25",
+          "subject": "Add aulos-skills, aulos-ops, host deploy, and fleet operating defaults."
+        },
+        {
+          "sha": "7632d9b",
+          "date": "2026-07-25",
+          "subject": "Add aulos-web, aulos-api, and aulos-mcp sub-projects under aries-harness."
+        }
+      ],
       "dirty": false,
       "issue_count": 0,
       "issues": []
@@ -1093,8 +2030,23 @@
         "trace_last_commit_at": "",
         "trace_revision_count": "0"
       },
-      "latest_commit": null,
-      "recent_updates": [],
+      "latest_commit": {
+        "sha": "93c0f6e",
+        "date": "2026-07-25",
+        "subject": "Add aulos-skills, aulos-ops, host deploy, and fleet operating defaults."
+      },
+      "recent_updates": [
+        {
+          "sha": "93c0f6e",
+          "date": "2026-07-25",
+          "subject": "Add aulos-skills, aulos-ops, host deploy, and fleet operating defaults."
+        },
+        {
+          "sha": "7632d9b",
+          "date": "2026-07-25",
+          "subject": "Add aulos-web, aulos-api, and aulos-mcp sub-projects under aries-harness."
+        }
+      ],
       "dirty": false,
       "issue_count": 0,
       "issues": []
@@ -1124,8 +2076,28 @@
         "trace_last_commit_at": "",
         "trace_revision_count": "0"
       },
-      "latest_commit": null,
-      "recent_updates": [],
+      "latest_commit": {
+        "sha": "93c0f6e",
+        "date": "2026-07-25",
+        "subject": "Add aulos-skills, aulos-ops, host deploy, and fleet operating defaults."
+      },
+      "recent_updates": [
+        {
+          "sha": "93c0f6e",
+          "date": "2026-07-25",
+          "subject": "Add aulos-skills, aulos-ops, host deploy, and fleet operating defaults."
+        },
+        {
+          "sha": "7632d9b",
+          "date": "2026-07-25",
+          "subject": "Add aulos-web, aulos-api, and aulos-mcp sub-projects under aries-harness."
+        },
+        {
+          "sha": "0d5cb01",
+          "date": "2026-07-25",
+          "subject": "Initial commit: Aulos hackathon workspace with LangChain agent runtime."
+        }
+      ],
       "dirty": false,
       "issue_count": 0,
       "issues": []
@@ -1155,8 +2127,28 @@
         "trace_last_commit_at": "",
         "trace_revision_count": "0"
       },
-      "latest_commit": null,
-      "recent_updates": [],
+      "latest_commit": {
+        "sha": "93c0f6e",
+        "date": "2026-07-25",
+        "subject": "Add aulos-skills, aulos-ops, host deploy, and fleet operating defaults."
+      },
+      "recent_updates": [
+        {
+          "sha": "93c0f6e",
+          "date": "2026-07-25",
+          "subject": "Add aulos-skills, aulos-ops, host deploy, and fleet operating defaults."
+        },
+        {
+          "sha": "7632d9b",
+          "date": "2026-07-25",
+          "subject": "Add aulos-web, aulos-api, and aulos-mcp sub-projects under aries-harness."
+        },
+        {
+          "sha": "0d5cb01",
+          "date": "2026-07-25",
+          "subject": "Initial commit: Aulos hackathon workspace with LangChain agent runtime."
+        }
+      ],
       "dirty": false,
       "issue_count": 0,
       "issues": []
@@ -1186,8 +2178,28 @@
         "trace_last_commit_at": "",
         "trace_revision_count": "0"
       },
-      "latest_commit": null,
-      "recent_updates": [],
+      "latest_commit": {
+        "sha": "93c0f6e",
+        "date": "2026-07-25",
+        "subject": "Add aulos-skills, aulos-ops, host deploy, and fleet operating defaults."
+      },
+      "recent_updates": [
+        {
+          "sha": "93c0f6e",
+          "date": "2026-07-25",
+          "subject": "Add aulos-skills, aulos-ops, host deploy, and fleet operating defaults."
+        },
+        {
+          "sha": "7632d9b",
+          "date": "2026-07-25",
+          "subject": "Add aulos-web, aulos-api, and aulos-mcp sub-projects under aries-harness."
+        },
+        {
+          "sha": "0d5cb01",
+          "date": "2026-07-25",
+          "subject": "Initial commit: Aulos hackathon workspace with LangChain agent runtime."
+        }
+      ],
       "dirty": false,
       "issue_count": 0,
       "issues": []
@@ -1217,8 +2229,28 @@
         "trace_last_commit_at": "",
         "trace_revision_count": "0"
       },
-      "latest_commit": null,
-      "recent_updates": [],
+      "latest_commit": {
+        "sha": "93c0f6e",
+        "date": "2026-07-25",
+        "subject": "Add aulos-skills, aulos-ops, host deploy, and fleet operating defaults."
+      },
+      "recent_updates": [
+        {
+          "sha": "93c0f6e",
+          "date": "2026-07-25",
+          "subject": "Add aulos-skills, aulos-ops, host deploy, and fleet operating defaults."
+        },
+        {
+          "sha": "7632d9b",
+          "date": "2026-07-25",
+          "subject": "Add aulos-web, aulos-api, and aulos-mcp sub-projects under aries-harness."
+        },
+        {
+          "sha": "0d5cb01",
+          "date": "2026-07-25",
+          "subject": "Initial commit: Aulos hackathon workspace with LangChain agent runtime."
+        }
+      ],
       "dirty": false,
       "issue_count": 0,
       "issues": []
@@ -1248,8 +2280,28 @@
         "trace_last_commit_at": "",
         "trace_revision_count": "0"
       },
-      "latest_commit": null,
-      "recent_updates": [],
+      "latest_commit": {
+        "sha": "93c0f6e",
+        "date": "2026-07-25",
+        "subject": "Add aulos-skills, aulos-ops, host deploy, and fleet operating defaults."
+      },
+      "recent_updates": [
+        {
+          "sha": "93c0f6e",
+          "date": "2026-07-25",
+          "subject": "Add aulos-skills, aulos-ops, host deploy, and fleet operating defaults."
+        },
+        {
+          "sha": "7632d9b",
+          "date": "2026-07-25",
+          "subject": "Add aulos-web, aulos-api, and aulos-mcp sub-projects under aries-harness."
+        },
+        {
+          "sha": "0d5cb01",
+          "date": "2026-07-25",
+          "subject": "Initial commit: Aulos hackathon workspace with LangChain agent runtime."
+        }
+      ],
       "dirty": false,
       "issue_count": 0,
       "issues": []
@@ -1279,8 +2331,23 @@
         "trace_last_commit_at": "",
         "trace_revision_count": "0"
       },
-      "latest_commit": null,
-      "recent_updates": [],
+      "latest_commit": {
+        "sha": "93c0f6e",
+        "date": "2026-07-25",
+        "subject": "Add aulos-skills, aulos-ops, host deploy, and fleet operating defaults."
+      },
+      "recent_updates": [
+        {
+          "sha": "93c0f6e",
+          "date": "2026-07-25",
+          "subject": "Add aulos-skills, aulos-ops, host deploy, and fleet operating defaults."
+        },
+        {
+          "sha": "7632d9b",
+          "date": "2026-07-25",
+          "subject": "Add aulos-web, aulos-api, and aulos-mcp sub-projects under aries-harness."
+        }
+      ],
       "dirty": false,
       "issue_count": 0,
       "issues": []

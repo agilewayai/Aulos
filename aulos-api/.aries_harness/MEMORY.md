@@ -10,7 +10,7 @@ generated_by: "/aries-harness init"
 initialized_at: "2026-07-25T11:07:43Z"
 effective_status: "active"
 effective_since: "2026-07-25T11:07:43Z"
-content_fingerprint: "sha256:3813f45e93d67f82b34c1da7b8a081fd1615c611ac6ead8fb2bf8514cb3dd70a"
+content_fingerprint: "sha256:e6fa4aa609dceb09769b6f3c3e569e7a2ecfed1504f25cee4b788b2ea5a30583"
 trace_history_source: "filesystem-only"
 trace_last_commit_sha: ""
 trace_last_commit_at: ""
@@ -36,6 +36,29 @@ trace_revision_count: "0"
 - local setup caveats:
 
 ### Workflow / operator preferences
+
+### Aries Harness (mandatory)
+
+### Canonical harness library
+
+- Source of truth: `git@github.com:agilewayai/aries-harness-skills.git` (not `AriesHarnessStudio` / `aries-studio`).
+- Local reference clone: `/home/ubuntu/studio/aries-harness-skills` (keep in sync with origin).
+
+
+### Timezone display
+
+- Store/API: UTC ISO with ``Z``. Display (web/ops): OS/browser timezone via ``src/time.ts`` ``formatDateTime`` / ``formatTime``.
+
+### Facility layout
+
+- Harness scripts/templates: `.aries_harness/scripts/` + `.aries_harness/templates/` (not project-root `scripts/`/`templates/`).
+- Invoke: `bash .aries_harness/scripts/aries-harness.sh <cmd> --project-root .`
+
+
+- Aries Harness is the **forced default** process for this project (not optional preference).
+- SPEC/REQ before broad coding; TDD; JOURNAL + history-refresh; chat-only incomplete.
+- Canonical: `aulos-skills/skills/aulos-operating-defaults/SKILL.md` and this project's `AGENTS.md` / `CLAUDE.md`.
+
 
 - aries-harness first for product design, architecture, spec, history-refresh, well-organized, devops
 - TDD coding loop (Red → Green → Refactor)

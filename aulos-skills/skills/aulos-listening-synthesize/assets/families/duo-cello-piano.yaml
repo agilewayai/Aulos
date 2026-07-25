@@ -1,0 +1,268 @@
+family_id: duo-cello-piano
+match:
+  instruments:
+  - cello
+  - violoncello
+  - 大提琴
+  - piano
+  - 钢琴
+  forms:
+  - sonata
+  - sonatas
+  - 奏鸣曲
+  - variation
+  - variations
+  - 变奏
+  - 变奏曲
+  composers:
+  - beethoven
+  - 贝多芬
+  - brahms
+  - 勃拉姆斯
+work_title_template: '{composer} — Cello Sonatas & Variations (with piano)'
+catalog: Beethoven set — Sonatas Opp. 5, 69, 102; Variations WoO 45–46 & Op. 66
+era: Classical → early Romantic (c. 1796–1815 for the Beethoven cello cycle)
+form: Duo sonatas and variation sets for cello and piano — conversational sonata rhetoric + variation
+  craft
+listening_thesis: 'Listen for equality of speech between cello and piano: who leads, who answers, and
+  how register and silence turn the duo into a single argument.'
+work_introduction: Beethoven’s cello-and-piano works are not “piano pieces with a singing guest.” They
+  are a lifelong experiment in duo citizenship — from the brilliant early Op. 5 sonatas and charming variation
+  sets, through the expansive middle-period Op. 69, to the concentrated late Op. 102 pair. A serious listening
+  path treats the sonatas and variations as one atelier of dialogue.
+genesis:
+  year: 1796–1815
+  place: Vienna (and Beethoven’s touring/publishing world)
+  publication: Sonatas Opp. 5 (1796), 69 (1808/09), 102 (1815); variations WoO 45–46, Op. 66
+  patronage: Early works linked to courtly and virtuoso cello culture (e.g. Duport circle) — verify specifics
+    per piece.
+  background: Across two decades Beethoven tests how a cello can claim sonata themes in high and low registers
+    while the piano refuses mere accompaniment. The variation sets keep courtly wit beside that architectural
+    ambition.
+  instrument_culture: Classical cello (gut strings, transitional bows) with fortepiano/early modern piano
+    — balance and articulation differ sharply from a modern steel-string cello against a concert grand.
+historical_stature:
+  reasons:
+  - Emancipates the cello as a sonata equal — especially Op. 69’s lyric architecture.
+  - Late Op. 102 compresses speech, silence, and motivic argument into duo form.
+  - Variation sets preserve Classical wit while training ear for character change on a ground.
+  - Becomes a measuring rod for later cello-piano literature (Brahms and after).
+  reception_arc: Virtuoso-cellist repertoire → core teaching & recital canon → HIP vs modern-instrument
+    debates on balance and tempo.
+width_points:
+- Span early brilliance (Op. 5), middle lyric breadth (Op. 69), and late concentration (Op. 102).
+- Variations (WoO 45–46, Op. 66) as character rooms beside the sonata arguments.
+- Duo balance is historical: fortepiano intimacy vs modern grand + steel-string cello.
+- Reception lives in recital pairing — sonata evening vs variations as encores/character studies.
+depth_points:
+- Lock ear on opening rhetoric — who states the motto, cello or piano?
+- Track register crossings where the cello climbs into “violin” space.
+- In variations, hold the theme’s gait before chasing figuration.
+- In Op. 102, notice speech-like pauses and compressed motivic returns.
+- Compare Op. 69’s singing middle-period space with Op. 5’s earlier virtuoso sparkle.
+listening_map:
+- label: Op. 5 Sonatas
+  cue: Early duo brilliance — piano often drives; hear the cello claiming themes.
+- label: Variations (WoO / Op. 66)
+  cue: Theme gait first; then character rooms — dance, lyric, bravura.
+- label: Op. 69
+  cue: Middle-period breadth — lyric cello citizenship and spacious dialogue.
+- label: Op. 102
+  cue: Late speech — silence, compression, motivic argument between equals.
+variation_deepdives:
+- title: Opening motto ownership
+  note: On first hearing, journal which instrument “owns” the first idea — and when it flips.
+- title: Variation theme return
+  note: After dazzle, can you still tap the theme’s pulse?
+- title: Late silence (Op. 102)
+  note: Treat rests as rhetoric, not empty gaps.
+sound_world:
+  original_instrument: Cello with Classical/early Romantic piano (fortepiano evolving toward modern grand)
+  ensemble_notes: Strict duo — no orchestra. Arrangements exist but the listening thesis is conversational
+    chamber balance.
+  modern_modes:
+  - Modern cello + concert grand — power and sustain; watch that the piano does not bury the cello.
+  - HIP / period instruments — lighter piano, gut cello colors, clearer speech.
+  - Comparative listening — same movement on HIP vs modern to hear what the dialogue still does.
+related_works:
+- title: Beethoven — Violin Sonatas (esp. “Spring”, “Kreutzer”)
+  why: Parallel duo rhetoric in another string register.
+- title: Beethoven — Piano Sonatas (middle & late)
+  why: The same motivic mind without a partner — useful contrast.
+- title: Brahms — Cello Sonatas Opp. 38 & 99
+  why: Later answer to Beethoven’s duo citizenship problem.
+- title: Bach — Solo Cello Suites BWV 1007–1012
+  why: Cello as complete speaker alone — reset the ear’s expectations.
+interpretations:
+- artist: Pierre Fournier & Friedrich Gulda / other Fournier cycles
+  year: mid-20th c.
+  instrument: Cello & piano
+  era_note: Mid-century cantabile cello aristocracy.
+  why_listen: A humane baseline for Op. 69 singing line.
+  discogs_url: https://www.discogs.com/search/?q=Fournier+Beethoven+Cello+Sonatas&type=master
+- artist: Mischa Maisky & Martha Argerich
+  year: 1990s–
+  instrument: Cello & piano
+  era_note: High-voltage modern duo chemistry.
+  why_listen: Hear argument and spark — especially in faster movements.
+  youtube_url: https://www.youtube.com/results?search_query=Maisky+Argerich+Beethoven+Cello+Sonata
+  discogs_url: https://www.discogs.com/search/?q=Maisky+Argerich+Beethoven+Cello&type=master
+- artist: Anner Bylsma & period-keyboard partners
+  year: HIP era
+  instrument: Period cello & fortepiano/early piano
+  era_note: Historically informed speech and balance.
+  why_listen: Reset modern-grand assumptions about who can whisper and still lead.
+  discogs_url: https://www.discogs.com/search/?q=Bylsma+Beethoven+Cello&type=master
+- artist: Steven Isserlis & period or modern partners
+  year: late 20th–21st c.
+  instrument: Cello & piano
+  era_note: Scholarly warmth; often thoughtful program notes in spirit.
+  why_listen: Clear structural narration for first full-cycle hearings.
+  youtube_url: https://www.youtube.com/results?search_query=Isserlis+Beethoven+Cello+Sonatas
+  discogs_url: https://www.discogs.com/search/?q=Isserlis+Beethoven+Cello+Sonatas&type=master
+appreciation_videos:
+- title: Search — Beethoven Cello Sonata Op. 69
+  url: https://www.youtube.com/results?search_query=Beethoven+Cello+Sonata+Op+69
+  why: Start with the middle-period citizenship statement.
+- title: Search — Beethoven Cello Sonata Op. 102
+  url: https://www.youtube.com/results?search_query=Beethoven+Cello+Sonata+Op+102
+  why: Then hear late compression and silence.
+- title: Search — Beethoven Cello Variations
+  url: https://www.youtube.com/results?search_query=Beethoven+Cello+Variations+piano
+  why: Character rooms beside the sonata arguments.
+vinyl_and_discography:
+- label: Discogs search — Beethoven Cello Sonatas
+  url: https://www.discogs.com/search/?q=Beethoven+Cello+Sonatas&type=master&format_exact=Vinyl
+  note: Browse mid-century and modern duo pressings.
+- label: Discogs search — Maisky Argerich Beethoven cello
+  url: https://www.discogs.com/search/?q=Maisky+Argerich+Beethoven+Cello&type=master
+  note: A widely circulated modern duo reference.
+practice_notes:
+- One evening — Op. 69 only; journal who leads each theme entry.
+- One evening — a variation set; tap the theme through every variation.
+- One evening — Op. 102; mark three silences that feel like grammar.
+- Compare one HIP and one modern recording of the same movement — balance only.
+- Sing (or hum) a cello theme while muting the track — test memory of the duo’s speech.
+myths_and_caveats:
+- Do not treat every anecdotal dedicatee story as proven without checking the specific opus.
+- “Authentic” balance depends on instruments; state the setup rather than absolute truth.
+# No Beethoven cello duo is CC0-complete in the open library yet — Bach Suite I Prelude
+# resets the ear to cello-as-speaker before the duo citizenship thesis.
+ambient_audio:
+  url: https://commons.wikimedia.org/wiki/Special:FilePath/Bach_-_Cello_Suite_no._1_in_G_major,_BWV_1007_-_I._Prélude.ogg
+  title: Bach — Cello Suite No. 1, BWV 1007 — I. Prélude
+  title_zh: 巴赫 — 无伴奏大提琴组曲第一号，BWV 1007 — 前奏曲
+  credit: Public-domain cello recording via Wikimedia Commons
+  credit_zh: 公有领域大提琴录音（Wikimedia Commons）
+  volume: 0.26
+  autoplay: true
+  loop: true
+  why: "No public Beethoven cello-duo recording is in the open library yet; Bach’s Suite I Prelude resets the ear to cello-as-complete-speaker before the duo citizenship thesis."
+  why_zh: "贝多芬大提琴二重奏尚无完整公开授权录音入库；先以巴赫无伴奏组曲第一号前奏曲，把耳朵重置为“大提琴可独自完成言说”，再进入二重公民权论题。"
+zh:
+  work_title: 路德维希·范·贝多芬 — 大提琴与钢琴奏鸣曲及变奏曲
+  composer: 路德维希·范·贝多芬
+  catalog: 贝多芬全集——奏鸣曲作品5、69、102；变奏曲 WoO 45–46 与作品66
+  era: 古典时期过渡至早期浪漫（贝多芬大提琴套曲约1796–1815）
+  form: 大提琴与钢琴的二重奏鸣曲与变奏套曲——交谈式奏鸣修辞与变奏工艺
+  listening_thesis: 听大提琴与钢琴之间的言说平等：谁引领、谁应答，音区与休止如何把二重奏变成同一次论辩。
+  work_introduction: 贝多芬的大提琴与钢琴作品，绝非“钢琴曲外加一位歌唱嘉宾”。它们是一场终其一生的二重公民权实验——自早期作品5的锋芒与动人的变奏套曲，经中期作品69的开阔，至于晚期作品102一对的凝练。认真的聆听路径，当把奏鸣曲与变奏曲视为同一座对话工坊。
+  genesis:
+    year: 1796–1815
+    place: 维也纳（及其巡回与出版世界）
+    publication: 奏鸣曲作品5（1796）、69（1808/09）、102（1815）；变奏曲 WoO 45–46、作品66
+    patronage: 早期作品与宫廷及炫技大提琴文化相关（如迪波尔圈子）——具体题献须按作品核对。
+    background: 二十年间，贝多芬试验大提琴如何在高低音区主张奏鸣主题，而钢琴拒绝沦为单纯伴奏。变奏套曲则在这一建筑雄心之旁，保存宫廷机智。
+    instrument_culture: 古典大提琴（肠弦、过渡期弓法）配合古钢琴／早期现代钢琴——其平衡与发音，远非今日钢弦大提琴对音乐会三角钢琴可比。
+  historical_stature:
+    reasons:
+    - 解放大提琴为奏鸣曲的平等伙伴——尤以作品69的抒情建筑为标志。
+    - 晚期作品102将言语、休止与动机论辩压缩进二重形式。
+    - 变奏套曲保存古典机智，并训练耳朵在同一主题上听性格变换。
+    - 成为后世大提琴—钢琴文献（勃拉姆斯以降）的测量准绳。
+    reception_arc: 炫技大提琴家曲目 → 教学与独奏会核心经典 → 历史演奏与现代乐器关于平衡与速度的争论。
+  width_points:
+  - 横跨早期锋芒（作品5）、中期抒情广度（作品69）与晚期凝练（作品102）。
+  - 变奏曲（WoO／作品66）是奏鸣论辩旁的性格之室。
+  - 二重平衡具有历史性：古钢琴的亲密，对抗现代三角钢琴＋钢弦大提琴。
+  - 接受史活在独奏会编排中——奏鸣之夜，与作为安可／性格小品的变奏。
+  depth_points:
+  - 锁定开篇修辞——座右铭由谁陈述，大提琴还是钢琴？
+  - 追踪音区穿越：大提琴攀入“小提琴”空间之时。
+  - 在变奏中，先守住主题步态，再追逐花纹。
+  - 在作品102中，注意如言语般的停顿与压缩的动机再现。
+  - 对照作品69中期歌唱空间与作品5更早的炫技火花。
+  listening_map:
+  - label: 作品5奏鸣曲
+    cue: 早期二重锋芒——钢琴常驱动；听大提琴如何认领主题。
+  - label: 变奏曲（WoO／作品66）
+    cue: 先主题步态；再进入性格之室——舞、歌、炫技。
+  - label: 作品69
+    cue: 中期广度——抒情的大提琴公民权与开阔对话。
+  - label: 作品102
+    cue: 晚期言语——休止、压缩、平等者之间的动机论辩。
+  variation_deepdives:
+  - title: 开篇座右铭的归属
+    note: 初听时记下：第一乐思由谁“拥有”——以及何时翻转。
+  - title: 变奏主题的归来
+    note: 眩目之后，你是否仍能敲出主题脉搏？
+  - title: 晚期休止（作品102）
+    note: 把休止当作语法，而非空白。
+  sound_world:
+    original_instrument: 大提琴与古典／早期浪漫钢琴（古钢琴演进中的现代钢琴）
+    ensemble_notes: 严格二重——无管弦。改编本存在，但聆听论题仍是交谈式的室内平衡。
+    modern_modes:
+    - 现代大提琴＋音乐会三角钢琴——力量与延音；警惕钢琴淹没大提琴。
+    - 历史演奏／时代乐器——更轻的钢琴、肠弦音色、更清晰的言说。
+    - 对照聆听——同一乐章历史版与现代版，只问对话仍做何事。
+  related_works:
+  - title: 贝多芬 — 小提琴奏鸣曲（尤以《春天》《克鲁采》）
+    why: 另一弦乐音区中的平行二重修辞。
+  - title: 贝多芬 — 钢琴奏鸣曲（中期与晚期）
+    why: 同一动机心灵，却无伙伴——有用的对照。
+  - title: 勃拉姆斯 — 大提琴奏鸣曲，作品38与99
+    why: 对贝多芬二重公民权问题的后世回答。
+  - title: 巴赫 — 无伴奏大提琴组曲，BWV 1007–1012
+    why: 大提琴独自作为完整言说者——重置耳朵的预期。
+  interpretations:
+  - artist: 皮埃尔·富尼埃等
+    year: 二十世纪中叶
+    instrument: 大提琴与钢琴
+    era_note: 世纪中叶如歌大提琴的贵族传统。
+    why_listen: 作品69歌唱线条的人性基线。
+  - artist: 米沙·麦斯基与玛尔塔·阿格里奇
+    year: 1990年代起
+    instrument: 大提琴与钢琴
+    era_note: 高电压的现代二重化学。
+    why_listen: 听论辩与火花——尤其在快速乐章。
+  - artist: 安纳·比尔斯马与时代键盘伙伴
+    year: 历史演奏时代
+    instrument: 时代大提琴与古钢琴／早期钢琴
+    era_note: 历史知情的言说与平衡。
+    why_listen: 重置现代三角钢琴关于“谁能低语而仍引领”的假设。
+  - artist: 史蒂文·伊瑟利斯等
+    year: 二十世纪末至二十一世纪
+    instrument: 大提琴与钢琴
+    era_note: 学者式的温暖；节目说明往往体贴。
+    why_listen: 首次听完整套曲时清晰的结构叙事。
+  appreciation_videos:
+  - title: 检索 — 贝多芬大提琴奏鸣曲作品69
+    why: 自中期公民权宣言开始。
+  - title: 检索 — 贝多芬大提琴奏鸣曲作品102
+    why: 继而听晚期压缩与休止。
+  - title: 检索 — 贝多芬大提琴变奏曲
+    why: 奏鸣论辩旁的性格之室。
+  vinyl_and_discography:
+  - label: Discogs 检索 — 贝多芬大提琴奏鸣曲
+    note: 浏览世纪中叶与现代二重压片。
+  - label: Discogs 检索 — 麦斯基／阿格里奇贝多芬大提琴
+    note: 流传甚广的现代二重参照。
+  practice_notes:
+  - 一晚只听作品69；记下每个主题进入由谁引领。
+  - 一晚听一套变奏；在每一变奏中敲打主题。
+  - 一晚听作品102；标出三处感觉像语法的休止。
+  - 同一乐章对照历史演奏与现代录音——只问平衡。
+  - 静音跟唱一条大提琴主题——检验对二重言说的记忆。
+  myths_and_caveats:
+  - 勿将每一则题献轶闻未经核对具体作品编号即当作史实。
+  - 所谓“本真”平衡取决于乐器配置；应陈述所用乐器，而非宣称绝对真理。

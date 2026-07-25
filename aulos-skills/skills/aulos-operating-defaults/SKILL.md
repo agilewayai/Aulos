@@ -1,29 +1,68 @@
 # Aulos Operating Defaults
 
-Canonical operator/agent preferences for all `aulos-*` work. Load this skill at session start.
+Canonical operator/agent preferences for all `aulos-*` work. **Load this skill at session start.**
 
-## Default: work under aries-harness
+## Aries Harness — mandatory default (forced)
 
-For these work types, follow the aries-harness guides and keep `.aries_harness/` current:
+**Aries Harness is not optional guidance.** It is the default forced process for product work, architecture, specs, coding slices, verification, history, and devops across the Aulos fleet.
+
+Skip or weaken harness steps **only** when the operator explicitly waives them in the current turn.
+
+### Non-negotiable loop
+
+1. **Inspect** — read this project’s `MISSION.md` / `STATE.md` / active SPEC (and workspace `AGENTS.md`).
+2. **Contract** — for behavior changes: REQ/SPEC (or SPEC delta) before broad coding; update `TASK_STACK`.
+3. **TDD** — Red → Green → Refactor (failing test or gate first).
+4. **Verify** — nearest pytest/build + harness acceptance in `EVAL.md` when relevant.
+5. **Summarize / promote** — `JOURNAL.md`, `history-refresh`, STATE/INDEX/REG as needed; insights when the lesson must change future runs.
+6. **Incomplete if chat-only** — shipping code without harness artifacts is an incomplete loop (see AUDIT-001).
+
+### Work-type → harness focus
 
 | Work type | Harness focus | Expected artifacts / commands |
 | --- | --- | --- |
 | Product design | request → architecture | REQ / STORY packs; outcome, non-goals, acceptance |
 | System architecture | ARCH / ADR | ARCH-*, ADR-*; boundaries and seams explicit |
-| Spec development | SPEC | SPEC-* behavior contracts before broad coding |
+| Spec development | SPEC | SPEC-* behavior contracts **before** broad coding |
+| Coding slice | coding-loop | TDD + VR notes; update EVAL when gates change |
 | Dev-history refresh | history | `aries-harness.sh history-refresh` / `history-status` |
 | Doc well-organized | well-organized | `aries-harness.sh well-organized`; keep INDEX/MISSION/STATE clean |
 | DevOps / deploy | devops + rollout | runbooks under `runs/deployments/`; smoke + rollback |
+| Self-evolution | promotion | insights + skill/SPEC/gate updates with measurable before/after |
 
-Repo-local command shape:
+Repo-local command shape (facility scripts live under `.aries_harness/scripts/`):
 
 ```bash
-bash scripts/aries-harness/aries-harness.sh well-organized --project-root .
-bash scripts/aries-harness/aries-harness.sh history-refresh --project-root .
-bash scripts/aries-harness/aries-harness.sh history-status --project-root .
+bash .aries_harness/scripts/aries-harness.sh well-organized --project-root .
+bash .aries_harness/scripts/aries-harness.sh history-refresh --project-root .
+bash .aries_harness/scripts/aries-harness.sh history-status --project-root .
 ```
 
-Do not treat design, architecture, spec, history, organization, or devops as ad-hoc side notes outside the harness.
+Do not treat design, architecture, spec, history, organization, devops, or product fixes as ad-hoc side notes outside the harness.
+
+## Facility layout + canonical library
+
+- **Facility assets** live only under `.aries_harness/scripts/` and `.aries_harness/templates/` — not project-root `scripts/` or `templates/`.
+- **Canonical harness library:** `git@github.com:agilewayai/aries-harness-skills.git`. Do **not** treat obsolete `AriesHarnessStudio` / `aries-studio` as source of truth.
+- Day/slice closeout: run `well-organized` then `history-refresh`; promote strategic lessons via self-evolution (`docs/insights.md` + evolution memo).
+
+## Timezone: store UTC, display OS local
+
+- **Storage / API wire:** UTC only (`timezone.utc`, ISO-8601 ending in `Z` via `aulos_api.timefmt.to_utc_iso`).
+- **Product UI (web/ops):** format with `formatDateTime` / `formatTime` in `src/time.ts` — uses `toLocaleString(undefined, …)` so the **OS / browser timezone** is used. Never force `timeZone: 'UTC'` for user-visible stamps.
+- **Out of scope:** `.aries_harness/` generated docs may keep UTC timestamps (shared operator surface).
+
+## Iteration → harness promotion (mandatory)
+
+Every product fix, playback fix, eval change, or cold-path parity improvement must land as:
+
+1. REQ/SPEC (or SPEC delta) when behavior changes
+2. Skill `SKILL.md` + `skill.yaml` version bump when `aulos-skills` behavior changes
+3. Measurable gate: pytest and/or `EVAL.md` command
+4. Journal memo + `history-refresh`
+5. Insight line in `.aries_harness/docs/insights.md` (or project equivalent) when the lesson should change future runs
+
+Chat-only repairs without harness promotion are incomplete loops.
 
 ## Coding loop: TDD
 

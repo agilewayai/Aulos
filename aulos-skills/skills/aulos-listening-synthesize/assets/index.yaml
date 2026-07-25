@@ -1,0 +1,21 @@
+composers:
+  - id: beethoven
+    path: beethoven.yaml
+    aliases:
+      - beethoven
+      - 贝多芬
+      - ludwig van beethoven
+  - id: bach-js
+    path: bach-js.yaml
+    aliases:
+      - bach
+      - j.s. bach
+      - johann sebastian bach
+      - 巴赫
+      - 约翰·塞巴斯蒂安·巴赫
+
+families:
+  - id: duo-cello-piano
+    path: duo-cello-piano.yaml
+  - id: keyboard-variations
+    path: keyboard-variations.yaml

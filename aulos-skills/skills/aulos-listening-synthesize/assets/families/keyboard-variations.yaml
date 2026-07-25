@@ -1,0 +1,78 @@
+family_id: keyboard-variations
+match:
+  instruments:
+  - keyboard
+  - piano
+  - harpsichord
+  - 钢琴
+  - 羽管键琴
+  forms:
+  - variation
+  - variations
+  - 变奏
+  - 变奏曲
+  - goldberg
+work_title_template: '{composer} — Keyboard Variations'
+era: Baroque / Classical keyboard variation practice
+form: Theme (or aria/bass) with a cycle of character and technical variations
+listening_thesis: Hold the ground (bass or theme gait) first; variations are rooms on that architecture,
+  not a parade of unrelated surfaces.
+width_points:
+- Variation cycles teach character change under unity of ground or theme.
+- Reception often turns specialist prints into cultural monuments via landmark recordings.
+depth_points:
+- Lock the theme/bass before chasing figuration.
+- Notice midpoint or mode-shift hinges.
+- Track how the close remembers the opening.
+listening_map:
+- label: Theme / Aria
+  cue: Memorize gait and harmonic ground.
+- label: Middle variations
+  cue: Character rooms and technical inventions.
+- label: Close
+  cue: Return, wit, or deepened memory of the opening.
+sound_world:
+  original_instrument: Period keyboard (harpsichord / fortepiano / modern piano depending on work)
+  ensemble_notes: Usually solo keyboard; later arrangements are receptions.
+  modern_modes:
+  - Period instrument intimacy
+  - Modern piano architecture
+  - Comparative listening across instruments
+practice_notes:
+- Bass/theme-only pass
+- One character-room journal
+- Compare two recordings with different instruments or tempo philosophies
+myths_and_caveats:
+- Label popular commission legends as reception lore until documented.
+zh:
+  work_title_template: '{composer} — 键盘变奏曲'
+  era: 巴洛克／古典键盘变奏传统
+  form: 主题（或咏叹／低音）与一系列性格与技术变奏
+  listening_thesis: 先把握地基（低音或主题步态）；变奏是这一建筑上的房间，而非互不相干的表面罗列。
+  width_points:
+  - 变奏套曲在统一地基上教授性格变换。
+  - 接受史常借里程碑录音使专门家印刷品化为文化纪念碑。
+  depth_points:
+  - 先锁定主题／低音，再追逐花纹。
+  - 注意中点或调式转折。
+  - 追踪收束如何记忆开篇。
+  listening_map:
+  - label: 主题／咏叹调
+    cue: 记住步态与和声地基。
+  - label: 中部变奏
+    cue: 性格之室与技术发明。
+  - label: 收束
+    cue: 回归、机智，或加深的开篇记忆。
+  sound_world:
+    original_instrument: 时代键盘（羽管键琴／古钢琴／现代钢琴，视作品而定）
+    ensemble_notes: 通常为独奏键盘；后世改编属接受史。
+    modern_modes:
+    - 时代乐器的亲密
+    - 现代钢琴的建筑感
+    - 跨乐器对照聆听
+  practice_notes:
+  - 只听低音／主题
+  - 一个性格之室日志
+  - 对照两版不同乐器或速度哲学的录音
+  myths_and_caveats:
+  - 将流行委约传说标为接受史传说，直至文献坐实。

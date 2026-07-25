@@ -31,3 +31,7 @@ node_modules/
 .langsmith/
 .run/
 
+aulos-api/data/
+
+# Runtime SQLite / local data
+data/

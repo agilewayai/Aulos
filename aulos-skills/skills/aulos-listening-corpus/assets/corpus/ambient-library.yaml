@@ -1,0 +1,184 @@
+# Adaptive ambient library — CC0 / public-domain recordings only (Wikimedia Commons).
+# Selection order (SkillRuntime ambient agent):
+#   1) curated ambient already on the work dossier / playlist_id
+#   2) related packs (same composer / era / form / peer)
+#   3) default pool (stable-random rotation per work title)
+
+base_url: https://commons.wikimedia.org/wiki/Special:FilePath/
+
+related:
+  - id: bach-open-goldberg-full
+    playlist_id: open-goldberg-ishizaka
+    composers: [bach, j.s. bach, johann sebastian bach, 巴赫]
+    eras: [baroque, 巴洛克]
+    forms: [variation, variations, 变奏, 变奏曲, keyboard, harpsichord, piano, 键盘]
+    weight: 12
+    why: "Open Goldberg Variations (CC0) — a complete public Bach keyboard cycle for variation/keyboard listening."
+    why_zh: "选用石坂木美子《Open Goldberg Variations》（CC0）完整套曲：同为巴赫键盘变奏宇宙的公开授权录音。"
+
+  - id: bach-keyboard-aria
+    file: Kimiko_Ishizaka_-_01_-_Aria.ogg
+    title: Aria — from Open Goldberg Variations
+    title_zh: 咏叹调 — 选自《Open Goldberg Variations》
+    credit: Kimiko Ishizaka — Open Goldberg Variations (CC0 via Wikimedia Commons)
+    credit_zh: 石坂木美子 — Open Goldberg Variations（CC0，Wikimedia Commons）
+    composers: [bach, j.s. bach, johann sebastian bach, 巴赫]
+    eras: [baroque, 巴洛克]
+    forms: [suite, allemande, gigue, 舞曲, 组曲, prelude, fugue, 赋格, 前奏]
+    weight: 8
+    why: "No complete public recording of this Bach work was available; using the Open Goldberg Aria as a period keyboard companion."
+    why_zh: "本巴赫作品暂无完整公开授权录音；选用《Open Goldberg》咏叹调作为同代键盘气质的关联背景。"
+
+  - id: beethoven-lyric-piano
+    file: Beethoven_Moonlight_1st_movement.ogg
+    title: Moonlight Sonata — I. Adagio sostenuto
+    title_zh: 《月光》奏鸣曲 — 第一乐章
+    credit: Public-domain piano recording via Wikimedia Commons (CC0 / PD)
+    credit_zh: 公有领域钢琴录音（Wikimedia Commons，CC0／公有领域）
+    composers: [beethoven, ludwig van beethoven, 贝多芬]
+    eras: [classical, romantic, 古典, 浪漫]
+    forms: [sonata, 奏鸣曲, piano, 钢琴]
+    weight: 9
+    why: "No public recording of this Beethoven work was located; using Moonlight Sonata I as a lyric Beethoven piano companion (Spring Sonata not yet in the open library)."
+    why_zh: "本贝多芬作品暂无公开授权录音；《春天奏鸣曲》亦尚未入库，故选用《月光》第一乐章作为其抒情器乐气质的关联背景。"
+
+  - id: cello-as-speaker-bach-suite1
+    file: Bach_-_Cello_Suite_no._1_in_G_major,_BWV_1007_-_I._Prélude.ogg
+    title: Bach — Cello Suite No. 1, BWV 1007 — I. Prélude
+    title_zh: 巴赫 — 无伴奏大提琴组曲第一号，BWV 1007 — 前奏曲
+    credit: Public-domain cello recording via Wikimedia Commons
+    credit_zh: 公有领域大提琴录音（Wikimedia Commons）
+    composers: [bach, j.s. bach, johann sebastian bach, 巴赫]
+    eras: [baroque, classical, romantic, 巴洛克, 古典, 浪漫]
+    forms: [cello, violoncello, 大提琴, suite, 组曲, chamber, 室内, sonata, 奏鸣曲]
+    peers: [beethoven, brahms, 贝多芬, 勃拉姆斯]
+    weight: 16
+    why: "Cello-forward companion from the open library — Suite I Prelude as cello-as-complete-speaker atmosphere."
+    why_zh: "选用巴赫无伴奏大提琴组曲第一号前奏曲（公开授权）：把耳朵置于“大提琴可独自完成言说”的氛围。"
+
+  - id: beethoven-fur-elise
+    file: Fur_Elise.ogg
+    title: Für Elise
+    title_zh: 《致爱丽丝》
+    credit: Public-domain piano recording via Wikimedia Commons
+    credit_zh: 公有领域钢琴录音（Wikimedia Commons）
+    composers: [beethoven, 贝多芬]
+    eras: [classical, 古典]
+    forms: [bagatelle, piano, 钢琴]
+    weight: 5
+    why: "Related Beethoven piano miniature from the open library while a work-specific recording is unavailable."
+    why_zh: "作品专属公开录音暂缺；选用贝多芬钢琴小品《致爱丽丝》作为同作曲家关联背景。"
+
+  - id: chopin-nocturne-op9-2
+    file: Chopin_Nocturne_No._2_in_E_Flat_Major,_Op._9.ogg
+    title: Nocturne Op. 9 No. 2 in E-flat major
+    title_zh: 夜曲 Op.9 No.2 降E大调
+    credit: Peter Johnston / Musopen — CC0 via Wikimedia Commons
+    credit_zh: Peter Johnston／Musopen — CC0（Wikimedia Commons）
+    composers: [chopin, frédéric chopin, frederic chopin, 肖邦]
+    eras: [romantic, 浪漫]
+    forms: [nocturne, 夜曲, piano, 钢琴]
+    weight: 10
+    why: "Chopin nocturne from the open library — same composer / lyric night-piece family."
+    why_zh: "选用肖邦《夜曲》Op.9 No.2（公开授权）：同作曲家、同属抒情夜曲语汇。"
+
+  - id: chopin-nocturne-op9-1
+    file: Chopin,_Nocturne_No._1_in_B_Flat_Minor,_Op._9.ogg
+    title: Nocturne Op. 9 No. 1 in B-flat minor
+    title_zh: 夜曲 Op.9 No.1 降b小调
+    credit: Vadim Chaimovich / Musopen — CC0 via Wikimedia Commons
+    credit_zh: Vadim Chaimovich／Musopen — CC0（Wikimedia Commons）
+    composers: [chopin, 肖邦]
+    eras: [romantic, 浪漫]
+    forms: [nocturne, 夜曲, piano, 钢琴]
+    weight: 8
+    why: "Alternate Chopin nocturne companion from the CC0 pool."
+    why_zh: "选用肖邦《夜曲》Op.9 No.1 作为同作曲家夜曲家族的关联背景。"
+
+  - id: romantic-piano-peer
+    file: Chopin_-_Nocturne_Op._15_no._1_in_F_major.ogg
+    title: Chopin — Nocturne Op. 15 No. 1
+    title_zh: 肖邦 — 夜曲 Op.15 No.1
+    credit: Luke Faulkner / Musopen — CC0 via Wikimedia Commons
+    credit_zh: Luke Faulkner／Musopen — CC0（Wikimedia Commons）
+    composers: []
+    eras: [romantic, 浪漫]
+    forms: [piano, 钢琴, nocturne, 夜曲, ballade, 叙事曲, prelude, 前奏曲]
+    peers: [schumann, liszt, mendelssohn, 舒曼, 李斯特, 门德尔松]
+    weight: 6
+    why: "No work-specific public recording; using a Romantic piano nocturne as a period peer atmosphere."
+    why_zh: "作品专属公开录音暂缺；选用浪漫主义钢琴夜曲作为同时期／同语汇的关联氛围。"
+
+  - id: baroque-peer-bach
+    file: Kimiko_Ishizaka_-_01_-_Aria.ogg
+    title: Bach — Goldberg Aria (peer keyboard)
+    title_zh: 巴赫 — 哥德堡咏叹调（同代键盘关联）
+    credit: Kimiko Ishizaka — Open Goldberg Variations (CC0)
+    credit_zh: 石坂木美子 — Open Goldberg Variations（CC0）
+    composers: []
+    eras: [baroque, 巴洛克]
+    forms: [keyboard, organ, 管风琴, suite, 组曲, fugue, 赋格]
+    peers: [handel, telemann, scarlatti, 亨德尔, 泰勒曼, 斯卡拉蒂, vivaldi, 维瓦尔第]
+    weight: 6
+    why: "No work-specific public recording; Bach's Open Goldberg Aria stands in as a High-Baroque keyboard peer."
+    why_zh: "作品专属公开录音暂缺；以巴赫《Open Goldberg》咏叹调作为盛期巴洛克键盘同代关联。"
+
+  - id: classical-peer-beethoven
+    file: Beethoven_Moonlight_1st_movement.ogg
+    title: Beethoven — Moonlight Sonata I (Classical peer)
+    title_zh: 贝多芬 — 《月光》第一乐章（古典同代关联）
+    credit: Public-domain recording via Wikimedia Commons
+    credit_zh: 公有领域录音（Wikimedia Commons）
+    composers: []
+    eras: [classical, 古典]
+    forms: [symphony, 交响, sonata, 奏鸣, concerto, 协奏, chamber, 室内]
+    peers: [mozart, haydn, 莫扎特, 海顿, schubert, 舒伯特]
+    weight: 6
+    why: "No work-specific public recording; Beethoven Moonlight I as a Classical-era lyric instrumental peer."
+    why_zh: "作品专属公开录音暂缺；选用贝多芬《月光》第一乐章作为古典时期抒情器乐的同代关联。"
+
+defaults:
+  - id: default-bach-aria
+    file: Kimiko_Ishizaka_-_01_-_Aria.ogg
+    title: Bach — Goldberg Aria
+    title_zh: 巴赫 — 哥德堡咏叹调
+    credit: Kimiko Ishizaka — Open Goldberg Variations (CC0 via Wikimedia Commons)
+    credit_zh: 石坂木美子 — Open Goldberg Variations（CC0，Wikimedia Commons）
+    why: "Fallback ambient from the Aulos default library (Bach keyboard)."
+    why_zh: "无法定位专属或强关联公开录音；从 Aulos 默认库轮换到巴赫键盘（哥德堡咏叹调）。"
+
+  - id: default-chopin-nocturne
+    file: Chopin_Nocturne_No._2_in_E_Flat_Major,_Op._9.ogg
+    title: Chopin — Nocturne Op. 9 No. 2
+    title_zh: 肖邦 — 夜曲 Op.9 No.2
+    credit: Peter Johnston / Musopen — CC0 via Wikimedia Commons
+    credit_zh: Peter Johnston／Musopen — CC0（Wikimedia Commons）
+    why: "Fallback ambient from the Aulos default library (Chopin nocturne)."
+    why_zh: "无法定位专属或强关联公开录音；从 Aulos 默认库轮换到肖邦夜曲。"
+
+  - id: default-beethoven-moonlight
+    file: Beethoven_Moonlight_1st_movement.ogg
+    title: Beethoven — Moonlight Sonata I
+    title_zh: 贝多芬 — 《月光》奏鸣曲第一乐章
+    credit: Public-domain recording via Wikimedia Commons
+    credit_zh: 公有领域录音（Wikimedia Commons）
+    why: "Fallback ambient from the Aulos default library (Beethoven lyric piano — stand-in while Spring Sonata joins the open set)."
+    why_zh: "无法定位专属或强关联公开录音；从默认库轮换到贝多芬抒情钢琴（《月光》；《春天奏鸣曲》待入库后替换）。"
+
+  - id: default-chopin-nocturne-15
+    file: Chopin_-_Nocturne_Op._15_no._1_in_F_major.ogg
+    title: Chopin — Nocturne Op. 15 No. 1
+    title_zh: 肖邦 — 夜曲 Op.15 No.1
+    credit: Luke Faulkner / Musopen — CC0 via Wikimedia Commons
+    credit_zh: Luke Faulkner／Musopen — CC0（Wikimedia Commons）
+    why: "Fallback ambient from the Aulos default library (Romantic piano)."
+    why_zh: "无法定位专属或强关联公开录音；从默认库轮换到浪漫主义钢琴夜曲。"
+
+  - id: default-beethoven-elise
+    file: Fur_Elise.ogg
+    title: Beethoven — Für Elise
+    title_zh: 贝多芬 — 《致爱丽丝》
+    credit: Public-domain recording via Wikimedia Commons
+    credit_zh: 公有领域录音（Wikimedia Commons）
+    why: "Fallback ambient from the Aulos default library (Beethoven piano miniature)."
+    why_zh: "无法定位专属或强关联公开录音；从默认库轮换到贝多芬钢琴小品《致爱丽丝》。"

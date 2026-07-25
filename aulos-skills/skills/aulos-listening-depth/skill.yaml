@@ -1,0 +1,13 @@
+id: aulos-listening-depth
+name: Listening Deep Research
+version: 0.2.0
+layer: domain-runtime
+runtime: agent
+summary: Deep Salon Codex — anatomy, deep dives, listening map, sound world, practice path.
+triggers:
+  - listening.depth
+depends_on:
+  - aulos-listening-width
+inputs: [work_title, width_dossier, corpus_dossier]
+outputs: [depth_dossier]
+observability_title: Deep research — form and ear cues

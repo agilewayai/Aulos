@@ -9,7 +9,7 @@ fingerprint: "aries-harness/bootstrap-doc/v1"
 initialized_at: "2026-07-25T10:58:13+00:00"
 effective_status: "active"
 effective_since: "2026-07-25T10:58:13+00:00"
-content_fingerprint: "sha256:34ddf87a35aba2f0fd5316da17e24789d4fbdaf70f107874856b31fa74cda89f"
+content_fingerprint: "sha256:980e08728ef52ce47b3af54b23aaa5169a0fed47ae907ad13f5ffb25696adcc0"
 trace_history_source: "filesystem-only"
 trace_last_commit_sha: ""
 trace_last_commit_at: ""
@@ -74,7 +74,7 @@ aulos-agent/
 │   ├── observability/       # tracing bootstrap
 │   └── cli.py               # operator entrypoint
 ├── tests/
-├── scripts/aries-harness/   # repo-local harness commands
+├── .aries_harness/scripts/   # repo-local harness commands
 └── pyproject.toml
 ```
 

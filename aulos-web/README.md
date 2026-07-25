@@ -36,7 +36,7 @@ Dev proxy forwards `/v1` and `/health` to `http://127.0.0.1:8000`.
 
 ```bash
 npm run build
-bash scripts/aries-harness/aries-harness.sh history-status --project-root .
+bash .aries_harness/scripts/aries-harness.sh history-status --project-root .
 ```
 
 ## Harness

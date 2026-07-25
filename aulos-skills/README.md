@@ -5,20 +5,24 @@ Main harness work package for the Aulos initiative — skill registry, playbooks
 ## Architecture
 
 ```text
-aulos-skills CLI
+aulos-skills CLI / SkillRuntime
    └─ registry.discover_skills(skills/*)
-         ├─ aulos-core
-         ├─ aulos-service-bootstrap
-         └─ aulos-ops-observability
+         ├─ operator: aulos-core, aulos-operating-defaults, …
+         └─ domain-runtime (导赏):
+              aulos-listening → intake → corpus → width → depth → compose → eval
 ```
 
 | Path | Role |
 | --- | --- |
 | `skills/` | Skill packs (`skill.yaml` + `SKILL.md`) |
+| `skills/aulos-listening*` | Classical listening-guide domain skills |
 | `src/aulos_skills/registry.py` | Manifest discovery |
 | `src/aulos_skills/cli.py` | `aulos-skills list\|show` |
 
-Design source of truth: `.aries_harness/decisions/architecture/ARCH-001-skills-harness-architecture.md`
+Design source of truth:
+
+- Operator harness: `ARCH-001`
+- Agent × skills 导赏: `ARCH-002` / `ADR-002` / `REQ-002` / `SPEC-002`
 
 ## Quick start
 
@@ -36,7 +40,7 @@ aulos-skills show aulos-core
 
 ```bash
 pytest -q
-bash scripts/aries-harness/aries-harness.sh history-status --project-root .
+bash .aries_harness/scripts/aries-harness.sh history-status --project-root .
 ```
 
 ## Harness

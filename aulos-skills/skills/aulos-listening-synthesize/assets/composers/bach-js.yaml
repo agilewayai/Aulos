@@ -1,0 +1,30 @@
+composer: Johann Sebastian Bach
+aliases:
+- bach
+- 巴赫
+- j.s. bach
+- Johann Sebastian Bach
+composer_portrait:
+  image_url: https://upload.wikimedia.org/wikipedia/commons/6/6a/Johann_Sebastian_Bach.jpg
+  credit: Elias Gottlob Haussmann — Portrait of J.S. Bach (public domain via Wikimedia Commons)
+  caption: Bach at sixty-one — the face of late Leipzig mastery.
+composer_profile:
+  lifespan: 1685–1750
+  summary: 'Johann Sebastian Bach stands as the summit of High Baroque contrapuntism: organist, Kapellmeister,
+    and encyclopedist of keyboard craft.'
+  temperament: Craftsman of order — dance, canon, and rhetoric braided until feeling arrives as structure.
+  place_in_oeuvre: Published keyboard cycles (Clavier-Übung and beyond) read like private universities
+    for hands and ear.
+  place_in_history: After relative 19th-c neglect, revival made Bach the measure of keyboard and contrapuntal
+    art.
+zh:
+  composer: 约翰·塞巴斯蒂安·巴赫
+  composer_portrait:
+    caption: 六十一岁的巴赫——莱比锡晚期大师风骨。
+    credit: 豪斯曼《巴赫肖像》（公有领域，经 Wikimedia Commons）
+  composer_profile:
+    lifespan: 1685–1750
+    summary: 约翰·塞巴斯蒂安·巴赫乃盛期巴洛克对位艺术的巅峰：管风琴家、乐长，亦是键盘技艺的百科全书式编纂者。
+    temperament: 秩序的工匠——舞曲、卡农与修辞相互编织，直至情感显现为结构。
+    place_in_oeuvre: 已刊键盘套曲（《键盘练习曲》等）如供手与耳共用的私人学府。
+    place_in_history: 历经十九世纪相对冷落，复兴之后，巴赫成为键盘与对位艺术的准绳。

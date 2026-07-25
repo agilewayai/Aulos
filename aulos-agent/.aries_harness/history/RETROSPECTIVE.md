@@ -8,10 +8,10 @@ managed_by: "aries-harness"
 fingerprint: "aries-harness/history-doc/v1"
 generated_by: "/aries-harness history-refresh"
 initialized_at: "2026-07-25T10:55:22Z"
-generated_at: "2026-07-25T10:58:33+00:00"
+generated_at: "2026-07-25T16:23:54+00:00"
 effective_status: "generated"
-effective_since: "2026-07-25T10:58:33+00:00"
-content_fingerprint: "sha256:032ccaafe7cc0338bfdf8c58be2c7d2ee1afe4a74ec5a90e652991b1004523af"
+effective_since: "2026-07-25T16:23:54+00:00"
+content_fingerprint: "sha256:0339619896fd887a382f544da92d5b0970e46025704751692c402f698ad5aa6b"
 trace_history_source: "filesystem-only"
 trace_last_commit_sha: ""
 trace_last_commit_at: ""
@@ -19,7 +19,7 @@ trace_revision_count: "0"
 ---
 # Retrospective Snapshot
 
-Generated at: `2026-07-25T10:58:33+00:00`
+Generated at: `2026-07-25T16:23:54+00:00`
 
 ## Recent changes
 
@@ -39,12 +39,17 @@ Generated at: `2026-07-25T10:58:33+00:00`
 
 ## What needs attention
 
-- working tree is dirty with 110 tracked or untracked change(s)
+- working tree is dirty with 681 tracked or untracked change(s)
 - no explicit next-up slice is recorded
 
 ## Durable reminders
 
-- promote only repeatable pitfalls, not one-off incidents
+- Source of truth: `git@github.com:agilewayai/aries-harness-skills.git` (not `AriesHarnessStudio` / `aries-studio`).
+- Local reference clone: `/home/ubuntu/studio/aries-harness-skills` (keep in sync with origin).
+- Harness scripts/templates: `.aries_harness/scripts/` + `.aries_harness/templates/` (not project-root `scripts/`/`templates/`).
+- Invoke: `bash .aries_harness/scripts/aries-harness.sh <cmd> --project-root .`
+- Aries Harness is the **forced default** process for this project (not optional preference).
+- SPEC/REQ before broad coding; TDD; JOURNAL + history-refresh; chat-only incomplete.
 
 ## Promotion rule
 

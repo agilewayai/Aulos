@@ -8,10 +8,10 @@ managed_by: "aries-harness"
 fingerprint: "aries-harness/bootstrap-doc/v1"
 generated_by: "/aries-harness well-organized"
 initialized_at: "2026-07-25T11:20:05Z"
-last_organized_at: "2026-07-25T11:36:52+00:00"
+last_organized_at: "2026-07-25T16:29:44+00:00"
 effective_status: "generated"
-effective_since: "2026-07-25T11:36:52+00:00"
-content_fingerprint: "sha256:7b956180e04db406131985edef02bc0dc2315d126650e30fb35b2bbf3dead848"
+effective_since: "2026-07-25T16:29:44+00:00"
+content_fingerprint: "sha256:224b3a18ea563ace94f7327a2475e62ffb52f86eb3ee335cdb3984c3c3db73bd"
 trace_history_source: "filesystem-only"
 trace_last_commit_sha: ""
 trace_last_commit_at: ""
@@ -19,7 +19,7 @@ trace_revision_count: "0"
 ---
 # Harness Index
 
-Last organized: `2026-07-25T11:36:52+00:00`
+Last organized: `2026-07-25T16:29:44+00:00`
 
 Canonical spelling: `/aries-harness well-organized`
 
@@ -63,11 +63,20 @@ Fingerprint marker: `aries-harness` / `aries-harness/bootstrap-doc/v1`
 - role: upstream request briefs and business intent anchors
 - [README.md](references/requests/README.md)
 - [REQ-001-aulos-skills-bootstrap.md](references/requests/REQ-001-aulos-skills-bootstrap.md)
+- [REQ-002-skill-powered-listening.md](references/requests/REQ-002-skill-powered-listening.md)
+- [REQ-003-salon-codex-listening-guide.md](references/requests/REQ-003-salon-codex-listening-guide.md)
+- [REQ-004-cold-path-salon-parity.md](references/requests/REQ-004-cold-path-salon-parity.md)
+- [REQ-005-ambient-media-identity.md](references/requests/REQ-005-ambient-media-identity.md)
 
 #### `references/specs/`
 - role: behavior and acceptance contracts derived from requests
 - [README.md](references/specs/README.md)
 - [SPEC-001-skills-harness.md](references/specs/SPEC-001-skills-harness.md)
+- [SPEC-002-domain-runtime-listening-skills.md](references/specs/SPEC-002-domain-runtime-listening-skills.md)
+- [SPEC-003-salon-codex-dossier.md](references/specs/SPEC-003-salon-codex-dossier.md)
+- [SPEC-004-listening-synthesize.md](references/specs/SPEC-004-listening-synthesize.md)
+- [SPEC-005-bilingual-salon-codex.md](references/specs/SPEC-005-bilingual-salon-codex.md)
+- [SPEC-006-ambient-media-and-identity.md](references/specs/SPEC-006-ambient-media-and-identity.md)
 
 #### `references/stories/`
 - role: sprintable slices linked to specs and verification
@@ -98,11 +107,15 @@ Fingerprint marker: `aries-harness` / `aries-harness/bootstrap-doc/v1`
 #### `decisions/architecture/`
 - role: system design and architecture packs
 - [ARCH-001-skills-harness-architecture.md](decisions/architecture/ARCH-001-skills-harness-architecture.md)
+- [ARCH-002-agent-skills-listening.md](decisions/architecture/ARCH-002-agent-skills-listening.md)
+- [ARCH-003-salon-codex-content-model.md](decisions/architecture/ARCH-003-salon-codex-content-model.md)
+- [ARCH-004-salon-synthesize-atelier.md](decisions/architecture/ARCH-004-salon-synthesize-atelier.md)
 - [README.md](decisions/architecture/README.md)
 
 #### `decisions/adrs/`
 - role: detailed ADR records linked from the root ADR index
 - [ADR-001-filesystem-skill-packs.md](decisions/adrs/ADR-001-filesystem-skill-packs.md)
+- [ADR-002-domain-runtime-listening-skills.md](decisions/adrs/ADR-002-domain-runtime-listening-skills.md)
 - [README.md](decisions/adrs/README.md)
 
 ## RunCookingLayer
@@ -121,7 +134,10 @@ Fingerprint marker: `aries-harness` / `aries-harness/bootstrap-doc/v1`
 
 #### `checkpoints/`
 - role: pause, resume, handoff, and checkpoint artifacts
-- none
+- [CKPT-002-skill-runtime-listening.md](checkpoints/CKPT-002-skill-runtime-listening.md)
+- [CKPT-003-salon-codex.md](checkpoints/CKPT-003-salon-codex.md)
+- [CKPT-004-salon-synthesize.md](checkpoints/CKPT-004-salon-synthesize.md)
+- [CKPT-005-ambient-identity-gates.md](checkpoints/CKPT-005-ambient-identity-gates.md)
 
 #### `runs/`
 - role: run summaries and execution evidence
@@ -131,9 +147,11 @@ Fingerprint marker: `aries-harness` / `aries-harness/bootstrap-doc/v1`
 - role: test execution and fix evidence
 - [README.md](runs/tests/README.md)
 - [VR-001-story-001-bootstrap.md](runs/tests/VR-001-story-001-bootstrap.md)
+- [VR-005-ambient-identity-gates.md](runs/tests/VR-005-ambient-identity-gates.md)
 
 #### `runs/reports/`
 - role: iteration reports and closeouts
+- [AUDIT-001-aries-harness-process-compliance.md](runs/reports/AUDIT-001-aries-harness-process-compliance.md)
 - [README.md](runs/reports/README.md)
 
 #### `runs/github/`

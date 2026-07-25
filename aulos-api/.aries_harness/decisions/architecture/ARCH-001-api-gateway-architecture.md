@@ -9,7 +9,7 @@ fingerprint: "aries-harness/bootstrap-doc/v1"
 initialized_at: "2026-07-25T11:10:22Z"
 effective_status: "active"
 effective_since: "2026-07-25T11:10:22Z"
-content_fingerprint: "sha256:e17bd1a1d33948b1dc8c319c4bc97501c04121d804fa3fdeeda40cdbf9c83457"
+content_fingerprint: "sha256:ba66a2a85f6d302b470c0821686a317ff9006b6b1bc2d3f019e3bacc96a4d8d8"
 trace_history_source: "filesystem-only"
 trace_last_commit_sha: ""
 trace_last_commit_at: ""
@@ -45,7 +45,7 @@ aulos-api/
 ├── .aries_harness/
 ├── src/aulos_api/{app,cli,config,routes,services}
 ├── tests/
-├── scripts/aries-harness/
+├── .aries_harness/scripts/
 └── pyproject.toml
 ```
 

@@ -2,13 +2,23 @@
 
 Hackathon monorepo for the Aulos initiative. Sub-projects each have their own `AGENTS.md` / `.aries_harness/`.
 
-## Operating defaults (fleet-wide)
+## Aries Harness (mandatory default)
 
-1. **Work under aries-harness** for product design, system architecture, spec development, dev-history refresh, doc well-organized, and devops.
-2. **TDD for the coding loop** — write/extend failing tests first (Red → Green → Refactor), then verify and summarize into harness state.
-3. **UI/UX** — when designing or changing UI/UX, apply the **`ui-ux-pro-max`** skill.
+**Aries Harness is the forced default process for all Aulos work.** Preferential language is not enough: agents must follow harness norms unless the operator explicitly waives them in the current turn.
 
-Canonical detail: [`aulos-skills/skills/aulos-operating-defaults/SKILL.md`](aulos-skills/skills/aulos-operating-defaults/SKILL.md)
+1. Work in the relevant sub-project root; keep that project’s `.aries_harness/` current.
+2. Before behavior changes: read `MISSION` / `STATE`; write or update REQ/SPEC; update `TASK_STACK`.
+3. Coding loop: **TDD** Red → Green → Refactor inside Inspect → Plan → Verify → Summarize.
+4. After the slice: `JOURNAL` + `history-refresh`; update `EVAL` / VR when gates change; promote insights when lessons must change future runs.
+5. **Chat-only fixes without harness artifacts are incomplete** (see `aulos-skills` AUDIT-001).
+
+Also:
+
+- **UI/UX** — apply the **`ui-ux-pro-max`** skill before visual/UX design changes.
+- **Listening-product changes** — promote into `aulos-skills` REQ/SPEC/SKILL/eval/tests + journal.
+- **Timestamps** — store UTC on the wire; display OS/browser local time in product UIs (`src/time.ts`).
+
+Canonical policy: [`aulos-skills/skills/aulos-operating-defaults/SKILL.md`](aulos-skills/skills/aulos-operating-defaults/SKILL.md)
 
 ## Sub-projects
 

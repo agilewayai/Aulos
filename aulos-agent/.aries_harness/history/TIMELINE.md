@@ -8,10 +8,10 @@ managed_by: "aries-harness"
 fingerprint: "aries-harness/history-doc/v1"
 generated_by: "/aries-harness history-refresh"
 initialized_at: "2026-07-25T10:55:22Z"
-generated_at: "2026-07-25T10:58:33+00:00"
+generated_at: "2026-07-25T16:23:54+00:00"
 effective_status: "generated"
-effective_since: "2026-07-25T10:58:33+00:00"
-content_fingerprint: "sha256:b48a187fe22ba13a0cff9efc3d75394d76bb3f59e5b9d41823e351057083a0c8"
+effective_since: "2026-07-25T16:23:54+00:00"
+content_fingerprint: "sha256:18e4ccd3e7ab2f9765ec293720378c77fe7f98e61fad294ea2d4dff077acf7a6"
 trace_history_source: "filesystem-only"
 trace_last_commit_sha: ""
 trace_last_commit_at: ""
@@ -19,7 +19,7 @@ trace_revision_count: "0"
 ---
 # Timeline
 
-Generated at: `2026-07-25T10:58:33+00:00`
+Generated at: `2026-07-25T16:23:54+00:00`
 
 ## Journal milestones
 
@@ -39,19 +39,21 @@ Generated at: `2026-07-25T10:58:33+00:00`
 
 ## Recent git commits
 
-- no git commit history available
+- `93c0f6e` 2026-07-25 Add aulos-skills, aulos-ops, host deploy, and fleet operating defaults.
+- `7632d9b` 2026-07-25 Add aulos-web, aulos-api, and aulos-mcp sub-projects under aries-harness.
+- `0d5cb01` 2026-07-25 Initial commit: Aulos hackathon workspace with LangChain agent runtime.
 
 ## Working tree snapshot
 
-- `??` `.aries_harness/ADR.md`
-- `??` `.aries_harness/ARIES_HARNESS_FINGERPRINT.json`
-- `??` `.aries_harness/EVAL.md`
-- `??` `.aries_harness/INDEX.md`
-- `??` `.aries_harness/JOURNAL.md`
-- `??` `.aries_harness/MEMORY.md`
-- `??` `.aries_harness/MISSION.md`
-- `??` `.aries_harness/PIPELINE.md`
-- `??` `.aries_harness/README.md`
-- `??` `.aries_harness/RISKS.md`
-- `??` `.aries_harness/RUNBOOK.md`
-- `??` `.aries_harness/STATE.md`
+- `M` `.gitignore`
+- `M` `AGENTS.md`
+- `M` `CLAUDE.md`
+- `M` `aulos-agent/.aries_harness/ARIES_HARNESS_FINGERPRINT.json`
+- `M` `aulos-agent/.aries_harness/INDEX.md`
+- `M` `aulos-agent/.aries_harness/MEMORY.md`
+- `M` `aulos-agent/.aries_harness/README.md`
+- `M` `aulos-agent/.aries_harness/decisions/architecture/ARCH-001-langchain-agent-architecture.md`
+- `M` `aulos-agent/.env.example`
+- `M` `aulos-agent/AGENTS.md`
+- `M` `aulos-agent/CLAUDE.md`
+- `M` `aulos-agent/README.md`

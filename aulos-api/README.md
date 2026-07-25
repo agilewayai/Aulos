@@ -37,7 +37,7 @@ aulos-api
 
 ```bash
 pytest -q
-bash scripts/aries-harness/aries-harness.sh history-status --project-root .
+bash .aries_harness/scripts/aries-harness.sh history-status --project-root .
 ```
 
 ## Harness
@@ -45,3 +45,17 @@ bash scripts/aries-harness/aries-harness.sh history-status --project-root .
 Canonical recovery docs live under `.aries_harness/` (`MISSION.md`, `TASK_STACK.md`, `STATE.md`, `INDEX.md`).
 
 Artifact ladder: `REQ-001` → `SPEC-001` → `STORY-001` → `ARCH-001` / `ADR-001`
+
+
+## Auth MVP
+
+| Endpoint | Notes |
+| --- | --- |
+| `POST /v1/auth/register` | Creates unverified `user`, sends verification email |
+| `POST /v1/auth/verify-email` | One-time token |
+| `POST /v1/auth/login` | JWT only after verification |
+| `GET /v1/auth/me` | Bearer identity + roles |
+| `GET/PUT /v1/ops/mailgun` | `superadmin` only |
+
+Bootstrap superadmin via `AULOS_BOOTSTRAP_SUPERADMIN_EMAIL` / `AULOS_BOOTSTRAP_SUPERADMIN_PASSWORD`.
+Set `AULOS_MAIL_PROVIDER=mailgun` after configuring Mailgun in ops (default `fake` for offline).

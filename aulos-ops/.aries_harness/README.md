@@ -10,7 +10,7 @@ generated_by: "/aries-harness init"
 initialized_at: "2026-07-25T11:20:06Z"
 effective_status: "active"
 effective_since: "2026-07-25T11:20:06Z"
-content_fingerprint: "sha256:2eb8212a47d36a4e436b4693e0b0a6f6d76d8e8d366368bbe41a5d4319cf7dbc"
+content_fingerprint: "sha256:5d9437aeead8bef59835d666e4fa114ba725e0d2ea105c8cc586a567500a982f"
 trace_history_source: "filesystem-only"
 trace_last_commit_sha: ""
 trace_last_commit_at: ""
@@ -108,3 +108,17 @@ Keep the root high-signal and clearly labeled.
 - use `/aries-harness history-refresh` to generate `history/DOC_TRACE.md` and `history/doc-trace.json`
 - the same refresh also regenerates `history/DAILY_SUMMARY_INDEX.md` and `history/daily/*.md` for per-day development memo and feature evolution
 - treat those outputs as trace surfaces, not as replacements for the underlying source docs
+
+## Facility assets
+
+Harness tooling stays inside this directory (not at the project root):
+
+- `scripts/` — `aries-harness.sh`, `ah.sh`, init / organize / history helpers
+- `templates/` — init skeletons (`*.tmpl`) used by `init`
+
+Canonical invoke:
+
+```bash
+bash .aries_harness/scripts/aries-harness.sh history-status --project-root .
+```
+

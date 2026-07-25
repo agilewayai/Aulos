@@ -1,33 +1,478 @@
 import { useCallback, useEffect, useState } from 'react'
-import { AULOS_SERVICES, fetchGatewayHealth, type HealthResponse } from './api'
+import type { FormEvent } from 'react'
+import {
+  AULOS_SERVICES,
+  fetchGatewayHealth,
+  fetchMailgun,
+  fetchMailgunDeliveries,
+  fetchMe,
+  fetchOpsRoles,
+  fetchOpsUsers,
+  fetchOverview,
+  getStoredToken,
+  login,
+  logout,
+  deleteOpsUser,
+  fetchLlmConfig,
+  fetchSkills,
+  fetchEmbedConfig,
+  fetchKnowledgeStats,
+  probeSkills,
+  resendUserVerification,
+  testLlmProvider,
+  testMailgun,
+  toggleSkill,
+  updateLlmConfig,
+  updateEmbedConfig,
+  updateMailgun,
+  updateOpsUser,
+  type DeliveryRow,
+  type EmbedConfig,
+  type HealthResponse,
+  type LlmConfig,
+  type MailgunConfig,
+  type OpsOverview,
+  type OpsRole,
+  type OpsUser,
+  type SkillProbe,
+  type SkillRow,
+  type User,
+} from './api'
+import { formatDateTime, formatTime } from './time'
 import './App.css'
 
+type TabId = 'overview' | 'users' | 'llm' | 'skills' | 'mail' | 'fleet'
+
 function App() {
+  const [user, setUser] = useState<User | null>(null)
+  const [tab, setTab] = useState<TabId>('overview')
   const [health, setHealth] = useState<HealthResponse | null>(null)
+  const [overview, setOverview] = useState<OpsOverview | null>(null)
+  const [opsUsers, setOpsUsers] = useState<OpsUser[]>([])
+  const [roles, setRoles] = useState<OpsRole[]>([])
+  const [userQuery, setUserQuery] = useState('')
+  const [roleFilter, setRoleFilter] = useState('')
+  const [activeFilter, setActiveFilter] = useState<'all' | 'true' | 'false'>('all')
+  const [verifiedFilter, setVerifiedFilter] = useState<'all' | 'true' | 'false'>('all')
+  const [mailgun, setMailgun] = useState<MailgunConfig | null>(null)
+  const [llm, setLlm] = useState<LlmConfig | null>(null)
+  const [llmActive, setLlmActive] = useState('fake')
+  const [deepseekKey, setDeepseekKey] = useState('')
+  const [deepseekModel, setDeepseekModel] = useState('deepseek-chat')
+  const [deepseekBase, setDeepseekBase] = useState('https://api.deepseek.com')
+  const [grokKey, setGrokKey] = useState('')
+  const [grokModel, setGrokModel] = useState('grok-3-mini')
+  const [grokBase, setGrokBase] = useState('https://api.x.ai/v1')
+  const [embed, setEmbed] = useState<EmbedConfig | null>(null)
+  const [embedProvider, setEmbedProvider] = useState('local')
+  const [embedKey, setEmbedKey] = useState('')
+  const [embedModel, setEmbedModel] = useState(
+    'sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2',
+  )
+  const [embedBase, setEmbedBase] = useState('https://api.openai.com/v1')
+  const [kbStats, setKbStats] = useState<{ documents: number; chunks: number; embed_ready: boolean } | null>(
+    null,
+  )
+  const [skills, setSkills] = useState<SkillRow[]>([])
+  const [skillProbe, setSkillProbe] = useState<SkillProbe | null>(null)
+  const [skillProbeMsg, setSkillProbeMsg] = useState(
+    "I'm listening to Bach Goldberg Variations — help me learn this masterwork",
+  )
+  const [deliveries, setDeliveries] = useState<DeliveryRow[]>([])
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const [apiKey, setApiKey] = useState('')
+  const [domain, setDomain] = useState('')
+  const [fromEmail, setFromEmail] = useState('')
+  const [region, setRegion] = useState('us')
+  const [enabled, setEnabled] = useState(false)
+  const [testToEmail, setTestToEmail] = useState('')
+  const [busy, setBusy] = useState(false)
   const [error, setError] = useState<string | null>(null)
-  const [loading, setLoading] = useState(true)
+  const [notice, setNotice] = useState<string | null>(null)
   const [updatedAt, setUpdatedAt] = useState<string | null>(null)
 
-  const refresh = useCallback(async () => {
-    setLoading(true)
-    setError(null)
+  const refreshHealth = useCallback(async () => {
     try {
       const data = await fetchGatewayHealth()
       setHealth(data)
-      setUpdatedAt(new Date().toLocaleTimeString())
+      setUpdatedAt(formatTime(new Date()))
     } catch (err) {
       setHealth(null)
       setError(err instanceof Error ? err.message : 'Health request failed')
-    } finally {
-      setLoading(false)
     }
   }, [])
 
+  const refreshDeliveries = useCallback(async () => {
+    const rows = await fetchMailgunDeliveries()
+    setDeliveries(rows)
+  }, [])
+
+  const refreshOverview = useCallback(async () => {
+    setOverview(await fetchOverview())
+  }, [])
+
+  const refreshUsers = useCallback(
+    async (overrides?: {
+      q?: string
+      role?: string
+      active?: 'all' | 'true' | 'false'
+      verified?: 'all' | 'true' | 'false'
+    }) => {
+      const q = overrides?.q ?? userQuery
+      const role = overrides?.role ?? roleFilter
+      const active = overrides?.active ?? activeFilter
+      const verified = overrides?.verified ?? verifiedFilter
+      const rows = await fetchOpsUsers({
+        q: q.trim() || undefined,
+        role: role || undefined,
+        active: active === 'all' ? undefined : active === 'true',
+        verified: verified === 'all' ? undefined : verified === 'true',
+      })
+      setOpsUsers(rows)
+      setRoles(await fetchOpsRoles())
+    },
+    [userQuery, roleFilter, activeFilter, verifiedFilter],
+  )
+
+  const loadOps = useCallback(async () => {
+    const me = await fetchMe()
+    if (!me.roles.includes('superadmin')) {
+      logout()
+      setUser(null)
+      throw new Error('Ops portal requires the superadmin role')
+    }
+    setUser(me)
+    const cfg = await fetchMailgun()
+    setMailgun(cfg)
+    setDomain(cfg.domain)
+    setFromEmail(cfg.from_email)
+    setEnabled(cfg.enabled)
+    setRegion(cfg.region || 'us')
+    setTestToEmail((prev) => prev || me.email)
+    setApiKey('')
+    const llmCfg = await fetchLlmConfig()
+    setLlm(llmCfg)
+    setLlmActive(llmCfg.active_provider)
+    setDeepseekModel(llmCfg.deepseek.model)
+    setDeepseekBase(llmCfg.deepseek.base_url)
+    setGrokModel(llmCfg.grok.model)
+    setGrokBase(llmCfg.grok.base_url)
+    setDeepseekKey('')
+    setGrokKey('')
+    try {
+      const emb = await fetchEmbedConfig()
+      setEmbed(emb)
+      setEmbedProvider(emb.provider || 'local')
+      setEmbedModel(emb.model)
+      setEmbedBase(emb.base_url)
+      setEmbedKey('')
+      setKbStats(await fetchKnowledgeStats())
+    } catch {
+      setEmbed(null)
+      setKbStats(null)
+    }
+    try {
+      setSkills(await fetchSkills())
+    } catch {
+      setSkills([])
+    }
+    await Promise.all([
+      refreshDeliveries(),
+      refreshOverview(),
+      fetchOpsUsers().then(setOpsUsers),
+      fetchOpsRoles().then(setRoles),
+    ])
+  }, [refreshDeliveries, refreshOverview])
+
   useEffect(() => {
-    void refresh()
-    const id = window.setInterval(() => void refresh(), 15000)
+    void refreshHealth()
+    const id = window.setInterval(() => void refreshHealth(), 15000)
     return () => window.clearInterval(id)
-  }, [refresh])
+  }, [refreshHealth])
+
+  useEffect(() => {
+    if (!getStoredToken()) return
+    setBusy(true)
+    loadOps()
+      .catch((err) => setError(err instanceof Error ? err.message : 'Session restore failed'))
+      .finally(() => setBusy(false))
+  }, [loadOps])
+
+  async function onLogin(event: FormEvent) {
+    event.preventDefault()
+    setBusy(true)
+    setError(null)
+    setNotice(null)
+    try {
+      const data = await login(email.trim(), password)
+      if (!data.user.roles.includes('superadmin')) {
+        logout()
+        throw new Error('Ops portal requires the superadmin role')
+      }
+      setUser(data.user)
+      await loadOps()
+      setPassword('')
+      setNotice('Signed in as superadmin.')
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Login failed')
+    } finally {
+      setBusy(false)
+    }
+  }
+
+  async function onSaveLlm(event: FormEvent) {
+    event.preventDefault()
+    setBusy(true)
+    setError(null)
+    setNotice(null)
+    try {
+      const cfg = await updateLlmConfig({
+        active_provider: llmActive,
+        deepseek_api_key: deepseekKey.trim() || undefined,
+        deepseek_model: deepseekModel.trim(),
+        deepseek_base_url: deepseekBase.trim(),
+        grok_api_key: grokKey.trim() || undefined,
+        grok_model: grokModel.trim(),
+        grok_base_url: grokBase.trim(),
+      })
+      setLlm(cfg)
+      setDeepseekKey('')
+      setGrokKey('')
+      setNotice(
+        cfg.ready_for_live
+          ? `LLM saved. Active provider: ${cfg.active_provider} (live chat ready).`
+          : `LLM saved. Active provider: ${cfg.active_provider}.`,
+      )
+      await refreshOverview()
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'LLM save failed')
+    } finally {
+      setBusy(false)
+    }
+  }
+
+  async function onSaveEmbed(event: FormEvent) {
+    event.preventDefault()
+    setBusy(true)
+    setError(null)
+    setNotice(null)
+    try {
+      const cfg = await updateEmbedConfig({
+        provider: embedProvider,
+        api_key: embedKey.trim() || undefined,
+        model: embedModel.trim(),
+        base_url: embedBase.trim(),
+      })
+      setEmbed(cfg)
+      setEmbedProvider(cfg.provider || 'local')
+      setEmbedKey('')
+      setKbStats(await fetchKnowledgeStats())
+      setNotice(
+        cfg.ready
+          ? `Embeddings saved — provider=${cfg.provider} (${cfg.model}).`
+          : 'Embeddings saved — not ready (install fastembed or complete remote key).',
+      )
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Embeddings save failed')
+    } finally {
+      setBusy(false)
+    }
+  }
+
+  async function onTestLlm(provider?: string) {
+    setBusy(true)
+    setError(null)
+    setNotice(null)
+    try {
+      await updateLlmConfig({
+        active_provider: llmActive,
+        deepseek_api_key: deepseekKey.trim() || undefined,
+        deepseek_model: deepseekModel.trim(),
+        deepseek_base_url: deepseekBase.trim(),
+        grok_api_key: grokKey.trim() || undefined,
+        grok_model: grokModel.trim(),
+        grok_base_url: grokBase.trim(),
+      })
+      const result = await testLlmProvider(provider)
+      setNotice(result.detail)
+      const cfg = await fetchLlmConfig()
+      setLlm(cfg)
+      setDeepseekKey('')
+      setGrokKey('')
+      await refreshOverview()
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'LLM test failed')
+    } finally {
+      setBusy(false)
+    }
+  }
+
+  async function onProbeSkills() {
+    setBusy(true)
+    setError(null)
+    setNotice(null)
+    try {
+      const result = await probeSkills(skillProbeMsg.trim())
+      setSkillProbe(result)
+      setNotice(
+        `Skill probe: ${result.work_title} · score ${result.eval_score} · pass=${result.eval_pass}`,
+      )
+      setSkills(await fetchSkills())
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Skill probe failed')
+    } finally {
+      setBusy(false)
+    }
+  }
+
+  async function onToggleSkill(row: SkillRow) {
+    setBusy(true)
+    setError(null)
+    try {
+      const updated = await toggleSkill(row.id, !row.enabled)
+      setSkills((prev) => prev.map((s) => (s.id === updated.id ? updated : s)))
+      setNotice(`${updated.id} ${updated.enabled ? 'enabled' : 'disabled'}`)
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Skill toggle failed')
+    } finally {
+      setBusy(false)
+    }
+  }
+
+  async function onSaveMailgun(event: FormEvent) {
+    event.preventDefault()
+    setBusy(true)
+    setError(null)
+    setNotice(null)
+    try {
+      const cfg = await updateMailgun({
+        api_key: apiKey.trim() || undefined,
+        domain: domain.trim(),
+        from_email: fromEmail.trim(),
+        enabled,
+        region,
+      })
+      setMailgun(cfg)
+      setApiKey('')
+      setNotice(
+        cfg.provider_mode === 'mailgun'
+          ? 'Mailgun settings saved. Live sending is active.'
+          : 'Mailgun settings saved. Provider is still fake — enable Mailgun and ensure AULOS_MAIL_PROVIDER=auto.',
+      )
+      await Promise.all([refreshDeliveries(), refreshOverview()])
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Save failed')
+    } finally {
+      setBusy(false)
+    }
+  }
+
+  async function onTestMailgun(event: FormEvent) {
+    event.preventDefault()
+    setBusy(true)
+    setError(null)
+    setNotice(null)
+    try {
+      await updateMailgun({
+        api_key: apiKey.trim() || undefined,
+        domain: domain.trim(),
+        from_email: fromEmail.trim(),
+        enabled,
+        region,
+      })
+      const result = await testMailgun(testToEmail.trim())
+      setNotice(result.detail)
+      const cfg = await fetchMailgun()
+      setMailgun(cfg)
+      setApiKey('')
+      await Promise.all([refreshDeliveries(), refreshOverview()])
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Mailgun test failed')
+      try {
+        await refreshDeliveries()
+      } catch {
+        /* ignore */
+      }
+    } finally {
+      setBusy(false)
+    }
+  }
+
+  async function onUserAction(
+    target: OpsUser,
+    action:
+      | 'verify'
+      | 'unverify'
+      | 'activate'
+      | 'deactivate'
+      | 'grant_admin'
+      | 'revoke_admin'
+      | 'resend'
+      | 'delete',
+  ) {
+    setBusy(true)
+    setError(null)
+    setNotice(null)
+    try {
+      if (action === 'delete') {
+        const typed = window.prompt(
+          `Permanently delete ${target.email}?\nType the email address to confirm.`,
+          '',
+        )
+        if (typed === null) {
+          setNotice('Delete cancelled.')
+          return
+        }
+        if (typed.trim().toLowerCase() !== target.email.toLowerCase()) {
+          throw new Error('Delete aborted — email confirmation did not match')
+        }
+        const result = await deleteOpsUser(target.id, target.email)
+        setNotice(result.detail)
+        await Promise.all([refreshUsers(), refreshOverview(), refreshDeliveries()])
+        return
+      }
+      if (action === 'resend') {
+        const result = await resendUserVerification(target.id)
+        setNotice(result.detail)
+        await Promise.all([refreshUsers(), refreshDeliveries(), refreshOverview()])
+        return
+      }
+      let payload: Parameters<typeof updateOpsUser>[1] = {}
+      if (action === 'verify') payload = { email_verified: true }
+      if (action === 'unverify') payload = { email_verified: false }
+      if (action === 'activate') payload = { is_active: true }
+      if (action === 'deactivate') payload = { is_active: false }
+      if (action === 'grant_admin') {
+        const rolesSet = new Set(target.roles)
+        rolesSet.add('user')
+        rolesSet.add('superadmin')
+        payload = { roles: [...rolesSet] }
+      }
+      if (action === 'revoke_admin') {
+        payload = { roles: target.roles.filter((r) => r !== 'superadmin') }
+        if (!payload.roles?.length) payload.roles = ['user']
+      }
+      const updated = await updateOpsUser(target.id, payload)
+      setNotice(`Updated ${updated.email}`)
+      await Promise.all([refreshUsers(), refreshOverview()])
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'User update failed')
+    } finally {
+      setBusy(false)
+    }
+  }
+
+  function onLogout() {
+    logout()
+    setUser(null)
+    setMailgun(null)
+    setLlm(null)
+    setDeliveries([])
+    setOpsUsers([])
+    setOverview(null)
+    setNotice('Signed out.')
+  }
 
   const gatewayOk = health?.status === 'ok'
 
@@ -37,55 +482,740 @@ function App() {
       <header className="top">
         <div>
           <p className="brand">Aulos Ops</p>
-          <p className="tagline">Admin and operations portal for the Aulos fleet</p>
+          <p className="tagline">
+            {user
+              ? `Superadmin · ${user.email}`
+              : 'Admin portal — superadmin sign-in required'}
+          </p>
         </div>
-        <button type="button" className="refresh" onClick={() => void refresh()} disabled={loading}>
-          {loading ? 'Refreshing…' : 'Refresh'}
-        </button>
+        <div className="top-actions">
+          <button type="button" className="refresh" onClick={() => void refreshHealth()} disabled={busy}>
+            Refresh health
+          </button>
+          {user ? (
+            <button type="button" className="refresh" onClick={onLogout}>
+              Sign out
+            </button>
+          ) : null}
+        </div>
       </header>
 
       <main className="stage">
-        <section className="health" aria-live="polite">
-          <h2>Gateway</h2>
-          <div className={`status-line ${gatewayOk ? 'ok' : 'down'}`}>
-            <span className="dot" />
-            <span>
-              {gatewayOk
-                ? `${health?.service} ${health?.version} — healthy`
-                : error ?? 'Gateway unreachable'}
-            </span>
-          </div>
-          {updatedAt ? <p className="meta">Last check {updatedAt}</p> : null}
-          {health?.backends ? (
-            <ul className="backends">
-              {Object.entries(health.backends).map(([name, state]) => (
-                <li key={name}>
-                  <code>{name}</code>
-                  <span>{state}</span>
-                </li>
-              ))}
-            </ul>
-          ) : null}
-        </section>
+        {notice ? <p className="notice" role="status">{notice}</p> : null}
+        {error ? <p className="error" role="alert">{error}</p> : null}
 
-        <section className="fleet">
-          <h2>Fleet</h2>
-          <ul className="service-list">
-            {AULOS_SERVICES.map((svc, index) => (
-              <li
-                key={svc.id}
-                className="service-row"
-                style={{ animationDelay: `${0.05 * index}s` }}
-              >
-                <div>
-                  <p className="svc-name">{svc.name}</p>
-                  <p className="svc-role">{svc.role}</p>
+        {!user ? (
+          <section className="auth-panel" aria-labelledby="ops-login-title">
+            <form className="auth-form" onSubmit={onLogin}>
+              <h1 id="ops-login-title">Superadmin sign in</h1>
+              <label htmlFor="ops-email">Email</label>
+              <input
+                id="ops-email"
+                type="email"
+                required
+                autoComplete="username"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+              />
+              <label htmlFor="ops-password">Password</label>
+              <input
+                id="ops-password"
+                type="password"
+                required
+                autoComplete="current-password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+              />
+              <button type="submit" disabled={busy}>
+                {busy ? 'Signing in…' : 'Sign in'}
+              </button>
+            </form>
+          </section>
+        ) : (
+          <>
+            <nav className="tabs" aria-label="Ops sections">
+              {(
+                [
+                  ['overview', 'Overview'],
+                  ['users', 'Users'],
+                  ['llm', 'LLM'],
+                  ['skills', 'Skills'],
+                  ['mail', 'Mail'],
+                  ['fleet', 'Fleet'],
+                ] as const
+              ).map(([id, label]) => (
+                <button
+                  key={id}
+                  type="button"
+                  className={tab === id ? 'tab active' : 'tab'}
+                  onClick={() => setTab(id)}
+                >
+                  {label}
+                </button>
+              ))}
+            </nav>
+
+            {tab === 'overview' ? (
+              <>
+                <section className="health" aria-live="polite">
+                  <h2>Gateway</h2>
+                  <div className={`status-line ${gatewayOk ? 'ok' : 'down'}`}>
+                    <span className="dot" />
+                    <span>
+                      {gatewayOk
+                        ? `${health?.service} ${health?.version} — healthy`
+                        : 'Gateway unreachable'}
+                    </span>
+                  </div>
+                  {updatedAt ? <p className="meta">Last check {updatedAt}</p> : null}
+                </section>
+
+                <section className="overview" aria-labelledby="overview-title">
+                  <div className="section-head">
+                    <h2 id="overview-title">Business overview</h2>
+                    <button
+                      type="button"
+                      className="refresh"
+                      disabled={busy}
+                      onClick={() => void refreshOverview()}
+                    >
+                      Refresh
+                    </button>
+                  </div>
+                  {overview ? (
+                    <>
+                      <div className="stat-grid">
+                        <div className="stat">
+                          <p className="stat-value">{overview.users_total}</p>
+                          <p className="stat-label">Users</p>
+                        </div>
+                        <div className="stat">
+                          <p className="stat-value">{overview.users_active}</p>
+                          <p className="stat-label">Active</p>
+                        </div>
+                        <div className="stat">
+                          <p className="stat-value">{overview.users_verified}</p>
+                          <p className="stat-label">Verified</p>
+                        </div>
+                        <div className="stat">
+                          <p className="stat-value">{overview.users_unverified}</p>
+                          <p className="stat-label">Unverified</p>
+                        </div>
+                        <div className="stat">
+                          <p className="stat-value">{overview.email_deliveries_total}</p>
+                          <p className="stat-label">Email sends</p>
+                        </div>
+                        <div className="stat">
+                          <p className="stat-value">{overview.email_deliveries_failed}</p>
+                          <p className="stat-label">Failed sends</p>
+                        </div>
+                      </div>
+                      <p className="settings-lead">
+                        Mail provider: <strong>{overview.mail_provider_mode}</strong>
+                        {' · '}
+                        live ready={overview.mail_ready_for_live_send ? 'yes' : 'no'}
+                        {' · '}
+                        LLM: <strong>{overview.llm_active_provider}</strong>
+                        {' · '}
+                        llm live={overview.llm_ready_for_live ? 'yes' : 'no'}
+                        {' · '}
+                        roles:{' '}
+                        {Object.entries(overview.roles)
+                          .map(([name, count]) => `${name}=${count}`)
+                          .join(', ') || 'none'}
+                      </p>
+                    </>
+                  ) : (
+                    <p className="settings-lead">Loading overview…</p>
+                  )}
+                </section>
+              </>
+            ) : null}
+
+            {tab === 'users' ? (
+              <section className="users" aria-labelledby="users-title">
+                <div className="section-head">
+                  <h2 id="users-title">Users</h2>
+                  <button
+                    type="button"
+                    className="refresh"
+                    disabled={busy}
+                    onClick={() => void refreshUsers()}
+                  >
+                    Refresh users
+                  </button>
                 </div>
-                <code className="svc-path">{svc.path}</code>
-              </li>
-            ))}
-          </ul>
-        </section>
+                <form
+                  className="filters"
+                  onSubmit={(e) => {
+                    e.preventDefault()
+                    void refreshUsers()
+                  }}
+                >
+                  <label htmlFor="user-q">Search</label>
+                  <input
+                    id="user-q"
+                    value={userQuery}
+                    onChange={(e) => setUserQuery(e.target.value)}
+                    placeholder="email or name"
+                  />
+                  <label htmlFor="user-role">Role</label>
+                  <select
+                    id="user-role"
+                    value={roleFilter}
+                    onChange={(e) => setRoleFilter(e.target.value)}
+                  >
+                    <option value="">All roles</option>
+                    {roles.map((r) => (
+                      <option key={r.id} value={r.name}>
+                        {r.name} ({r.user_count})
+                      </option>
+                    ))}
+                  </select>
+                  <label htmlFor="user-active">Active</label>
+                  <select
+                    id="user-active"
+                    value={activeFilter}
+                    onChange={(e) => setActiveFilter(e.target.value as 'all' | 'true' | 'false')}
+                  >
+                    <option value="all">All</option>
+                    <option value="true">Active</option>
+                    <option value="false">Inactive</option>
+                  </select>
+                  <label htmlFor="user-verified">Verified</label>
+                  <select
+                    id="user-verified"
+                    value={verifiedFilter}
+                    onChange={(e) => setVerifiedFilter(e.target.value as 'all' | 'true' | 'false')}
+                  >
+                    <option value="all">All</option>
+                    <option value="true">Verified</option>
+                    <option value="false">Unverified</option>
+                  </select>
+                  <button type="submit" className="refresh" disabled={busy}>
+                    Apply
+                  </button>
+                </form>
+
+                {opsUsers.length === 0 ? (
+                  <p className="settings-lead">No users match the current filters.</p>
+                ) : (
+                  <ul className="user-list">
+                    {opsUsers.map((row) => (
+                      <li key={row.id} className={`user-row ${row.is_active ? '' : 'inactive'}`}>
+                        <div className="user-main">
+                          <p className="svc-name">
+                            {row.display_name || row.email}
+                            <span className="user-id">#{row.id}</span>
+                          </p>
+                          <p className="svc-role">{row.email}</p>
+                          <p className="meta">
+                            {row.is_active ? 'active' : 'inactive'}
+                            {' · '}
+                            {row.email_verified ? 'verified' : 'unverified'}
+                            {' · '}
+                            {row.roles.join(', ') || 'no roles'}
+                            {' · '}
+                            joined {formatDateTime(row.created_at)}
+                          </p>
+                        </div>
+                        <div className="user-actions">
+                          {row.email_verified ? (
+                            <button
+                              type="button"
+                              className="refresh"
+                              disabled={busy}
+                              onClick={() => void onUserAction(row, 'unverify')}
+                            >
+                              Mark unverified
+                            </button>
+                          ) : (
+                            <>
+                              <button
+                                type="button"
+                                className="refresh"
+                                disabled={busy}
+                                onClick={() => void onUserAction(row, 'verify')}
+                              >
+                                Mark verified
+                              </button>
+                              <button
+                                type="button"
+                                className="refresh"
+                                disabled={busy}
+                                onClick={() => void onUserAction(row, 'resend')}
+                              >
+                                Resend verify
+                              </button>
+                            </>
+                          )}
+                          {row.is_active ? (
+                            <button
+                              type="button"
+                              className="refresh"
+                              disabled={busy || row.id === user.id}
+                              onClick={() => void onUserAction(row, 'deactivate')}
+                            >
+                              Deactivate
+                            </button>
+                          ) : (
+                            <button
+                              type="button"
+                              className="refresh"
+                              disabled={busy}
+                              onClick={() => void onUserAction(row, 'activate')}
+                            >
+                              Activate
+                            </button>
+                          )}
+                          {row.roles.includes('superadmin') ? (
+                            <button
+                              type="button"
+                              className="refresh"
+                              disabled={busy || row.id === user.id}
+                              onClick={() => void onUserAction(row, 'revoke_admin')}
+                            >
+                              Revoke admin
+                            </button>
+                          ) : (
+                            <button
+                              type="button"
+                              className="refresh"
+                              disabled={busy}
+                              onClick={() => void onUserAction(row, 'grant_admin')}
+                            >
+                              Grant admin
+                            </button>
+                          )}
+                          <button
+                            type="button"
+                            className="refresh danger"
+                            disabled={busy || row.id === user.id}
+                            onClick={() => void onUserAction(row, 'delete')}
+                          >
+                            Delete
+                          </button>
+                        </div>
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </section>
+            ) : null}
+
+            {tab === 'llm' ? (
+              <section className="settings llm" aria-labelledby="llm-title">
+                <h2 id="llm-title">LLM providers</h2>
+                <p className="settings-lead">
+                  Active: <strong>{llm?.active_provider ?? '…'}</strong>
+                  {' · '}
+                  live ready={llm?.ready_for_live ? 'yes' : 'no'}
+                  {' · '}
+                  DeepSeek {llm?.deepseek.api_key_set ? 'key set' : 'key missing'}
+                  {' · '}
+                  Grok {llm?.grok.api_key_set ? 'key set' : 'key missing'}
+                </p>
+                <form className="auth-form" onSubmit={onSaveLlm}>
+                  <label htmlFor="llm-active">Active provider</label>
+                  <select
+                    id="llm-active"
+                    value={llmActive}
+                    onChange={(e) => setLlmActive(e.target.value)}
+                  >
+                    <option value="fake">fake (echo / offline)</option>
+                    <option value="deepseek">DeepSeek</option>
+                    <option value="grok">Grok (xAI)</option>
+                  </select>
+
+                  <h3>DeepSeek</h3>
+                  <label htmlFor="ds-model">Model</label>
+                  <input
+                    id="ds-model"
+                    value={deepseekModel}
+                    onChange={(e) => setDeepseekModel(e.target.value)}
+                    placeholder="deepseek-chat"
+                  />
+                  <label htmlFor="ds-base">Base URL</label>
+                  <input
+                    id="ds-base"
+                    value={deepseekBase}
+                    onChange={(e) => setDeepseekBase(e.target.value)}
+                    placeholder="https://api.deepseek.com"
+                  />
+                  <label htmlFor="ds-key">API key</label>
+                  <input
+                    id="ds-key"
+                    type="password"
+                    autoComplete="off"
+                    value={deepseekKey}
+                    onChange={(e) => setDeepseekKey(e.target.value)}
+                    placeholder={
+                      llm?.deepseek.api_key_set ? '•••••••• (leave blank to keep)' : 'sk-...'
+                    }
+                  />
+
+                  <h3>Grok (xAI)</h3>
+                  <label htmlFor="gx-model">Model</label>
+                  <input
+                    id="gx-model"
+                    value={grokModel}
+                    onChange={(e) => setGrokModel(e.target.value)}
+                    placeholder="grok-3-mini"
+                  />
+                  <label htmlFor="gx-base">Base URL</label>
+                  <input
+                    id="gx-base"
+                    value={grokBase}
+                    onChange={(e) => setGrokBase(e.target.value)}
+                    placeholder="https://api.x.ai/v1"
+                  />
+                  <label htmlFor="gx-key">API key</label>
+                  <input
+                    id="gx-key"
+                    type="password"
+                    autoComplete="off"
+                    value={grokKey}
+                    onChange={(e) => setGrokKey(e.target.value)}
+                    placeholder={llm?.grok.api_key_set ? '•••••••• (leave blank to keep)' : 'xai-...'}
+                  />
+
+                  <button type="submit" disabled={busy}>
+                    {busy ? 'Saving…' : 'Save LLM settings'}
+                  </button>
+                </form>
+                <div className="llm-test-actions">
+                  <button
+                    type="button"
+                    className="refresh"
+                    disabled={busy}
+                    onClick={() => void onTestLlm(llmActive)}
+                  >
+                    Test active provider
+                  </button>
+                  <button
+                    type="button"
+                    className="refresh"
+                    disabled={busy}
+                    onClick={() => void onTestLlm('deepseek')}
+                  >
+                    Test DeepSeek
+                  </button>
+                  <button
+                    type="button"
+                    className="refresh"
+                    disabled={busy}
+                    onClick={() => void onTestLlm('grok')}
+                  >
+                    Test Grok
+                  </button>
+                </div>
+
+                <h2 id="embed-title" style={{ marginTop: '2rem' }}>
+                  Embeddings (RAG)
+                </h2>
+                <p className="settings-lead">
+                  provider=<strong>{embed?.provider ?? '…'}</strong>
+                  {' · '}
+                  ready={embed?.ready ? 'yes' : 'no'}
+                  {' · '}
+                  FastEmbed {embed?.fastembed_available ? 'installed' : 'missing'}
+                  {embed?.provider === 'openai_compatible'
+                    ? ` · ${embed?.api_key_set ? 'key set' : 'key missing'}`
+                    : ''}
+                  {kbStats
+                    ? ` · KB docs=${kbStats.documents} chunks=${kbStats.chunks}`
+                    : ''}
+                </p>
+                <form className="auth-form" onSubmit={onSaveEmbed}>
+                  <label htmlFor="emb-provider">Provider</label>
+                  <select
+                    id="emb-provider"
+                    value={embedProvider}
+                    onChange={(e) => {
+                      const next = e.target.value
+                      setEmbedProvider(next)
+                      if (next === 'local') {
+                        setEmbedModel(
+                          embed?.local_default_model ||
+                            'sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2',
+                        )
+                      } else if (embedModel.includes('sentence-transformers/') || embedModel.includes('BAAI/')) {
+                        setEmbedModel('text-embedding-3-small')
+                      }
+                    }}
+                  >
+                    <option value="local">local (FastEmbed)</option>
+                    <option value="openai_compatible">openai_compatible (remote)</option>
+                  </select>
+                  <label htmlFor="emb-model">Model</label>
+                  <input
+                    id="emb-model"
+                    value={embedModel}
+                    onChange={(e) => setEmbedModel(e.target.value)}
+                    placeholder={
+                      embedProvider === 'local'
+                        ? 'sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2'
+                        : 'text-embedding-3-small'
+                    }
+                  />
+                  {embedProvider === 'openai_compatible' ? (
+                    <>
+                      <label htmlFor="emb-base">Base URL (OpenAI-compatible)</label>
+                      <input
+                        id="emb-base"
+                        value={embedBase}
+                        onChange={(e) => setEmbedBase(e.target.value)}
+                        placeholder="https://api.openai.com/v1"
+                      />
+                      <label htmlFor="emb-key">API key</label>
+                      <input
+                        id="emb-key"
+                        type="password"
+                        autoComplete="off"
+                        value={embedKey}
+                        onChange={(e) => setEmbedKey(e.target.value)}
+                        placeholder={embed?.api_key_set ? '•••••••• (leave blank to keep)' : 'sk-...'}
+                      />
+                    </>
+                  ) : (
+                    <p className="settings-lead">
+                      Local ONNX via{' '}
+                      <a href="https://github.com/qdrant/fastembed" target="_blank" rel="noreferrer">
+                        qdrant/fastembed
+                      </a>
+                      . No API key. First run downloads the model.
+                    </p>
+                  )}
+                  <button type="submit" disabled={busy}>
+                    {busy ? 'Saving…' : 'Save embeddings'}
+                  </button>
+                </form>
+              </section>
+            ) : null}
+
+            {tab === 'skills' ? (
+              <section className="settings skills" aria-labelledby="skills-title">
+                <div className="section-head">
+                  <h2 id="skills-title">Aulos skills</h2>
+                  <button
+                    type="button"
+                    className="refresh"
+                    disabled={busy}
+                    onClick={() => void fetchSkills().then(setSkills)}
+                  >
+                    Refresh
+                  </button>
+                </div>
+                <p className="settings-lead">
+                  Domain-runtime packs power listening 导赏. Toggle availability and probe the full
+                  chain.
+                </p>
+                <ul className="user-list">
+                  {skills.map((row) => (
+                    <li key={row.id} className={`user-row ${row.enabled ? '' : 'inactive'}`}>
+                      <div className="user-main">
+                        <p className="svc-name">
+                          {row.name}
+                          <span className="user-id">
+                            {row.id}@{row.version}
+                          </span>
+                        </p>
+                        <p className="svc-role">
+                          {row.layer}
+                          {row.runtime ? ` · runtime=${row.runtime}` : ''}
+                        </p>
+                        <p className="meta">{row.summary}</p>
+                        {row.triggers.length ? (
+                          <p className="meta">triggers: {row.triggers.join(', ')}</p>
+                        ) : null}
+                      </div>
+                      <div className="user-actions">
+                        <button
+                          type="button"
+                          className="refresh"
+                          disabled={busy}
+                          onClick={() => void onToggleSkill(row)}
+                        >
+                          {row.enabled ? 'Disable' : 'Enable'}
+                        </button>
+                      </div>
+                    </li>
+                  ))}
+                </ul>
+                <form
+                  className="auth-form test-form"
+                  onSubmit={(e) => {
+                    e.preventDefault()
+                    void onProbeSkills()
+                  }}
+                >
+                  <h3>Probe listening chain</h3>
+                  <label htmlFor="skill-probe">Message</label>
+                  <input
+                    id="skill-probe"
+                    value={skillProbeMsg}
+                    onChange={(e) => setSkillProbeMsg(e.target.value)}
+                  />
+                  <button type="submit" disabled={busy || !skillProbeMsg.trim()}>
+                    {busy ? 'Probing…' : 'Run skill probe'}
+                  </button>
+                </form>
+                {skillProbe ? (
+                  <div className="delivery-row" style={{ marginTop: '0.85rem' }}>
+                    <p className="svc-name">
+                      {skillProbe.work_title} · score {skillProbe.eval_score} · pass=
+                      {String(skillProbe.eval_pass)}
+                    </p>
+                    <p className="svc-role">{skillProbe.summary}</p>
+                    <p className="meta">
+                      skills: {Object.keys(skillProbe.skill_versions).join(', ')}
+                    </p>
+                    <p className="delivery-detail">
+                      {skillProbe.steps
+                        .map((s) => `${String(s.id)}:${String(s.skill_id || '')}`)
+                        .join(' → ')}
+                    </p>
+                  </div>
+                ) : null}
+              </section>
+            ) : null}
+
+            {tab === 'mail' ? (
+              <>
+                <section className="settings" aria-labelledby="mailgun-title">
+                  <h2 id="mailgun-title">Mailgun</h2>
+                  <p className="settings-lead">
+                    Effective provider: <strong>{mailgun?.provider_mode ?? '…'}</strong>
+                    {' · '}
+                    env=<code>{mailgun?.env_mail_provider ?? '…'}</code>
+                    {' · '}
+                    live ready={mailgun?.ready_for_live_send ? 'yes' : 'no'}
+                    {mailgun?.api_key_set ? ' · API key set' : ' · API key missing'}
+                  </p>
+                  <form className="auth-form" onSubmit={onSaveMailgun}>
+                    <label htmlFor="mg-domain">Mailgun sending domain</label>
+                    <input
+                      id="mg-domain"
+                      value={domain}
+                      onChange={(e) => setDomain(e.target.value)}
+                      placeholder="mg.example.com"
+                    />
+                    <label htmlFor="mg-from">From email</label>
+                    <input
+                      id="mg-from"
+                      type="email"
+                      value={fromEmail}
+                      onChange={(e) => setFromEmail(e.target.value)}
+                      placeholder="noreply@example.com"
+                    />
+                    <label htmlFor="mg-region">API region</label>
+                    <select
+                      id="mg-region"
+                      value={region}
+                      onChange={(e) => setRegion(e.target.value)}
+                    >
+                      <option value="us">US (api.mailgun.net)</option>
+                      <option value="eu">EU (api.eu.mailgun.net)</option>
+                    </select>
+                    <label htmlFor="mg-key">API key</label>
+                    <input
+                      id="mg-key"
+                      type="password"
+                      autoComplete="off"
+                      value={apiKey}
+                      onChange={(e) => setApiKey(e.target.value)}
+                      placeholder={mailgun?.api_key_set ? '•••••••• (leave blank to keep)' : 'key-...'}
+                    />
+                    <label className="check" htmlFor="mg-enabled">
+                      <input
+                        id="mg-enabled"
+                        type="checkbox"
+                        checked={enabled}
+                        onChange={(e) => setEnabled(e.target.checked)}
+                      />
+                      Enable Mailgun sending
+                    </label>
+                    <button type="submit" disabled={busy}>
+                      {busy ? 'Saving…' : 'Save Mailgun settings'}
+                    </button>
+                  </form>
+                  <form className="auth-form test-form" onSubmit={onTestMailgun}>
+                    <h3>Test configuration</h3>
+                    <label htmlFor="mg-test-to">Send test email to</label>
+                    <input
+                      id="mg-test-to"
+                      type="email"
+                      required
+                      value={testToEmail}
+                      onChange={(e) => setTestToEmail(e.target.value)}
+                      placeholder="you@example.com"
+                    />
+                    <button type="submit" disabled={busy || !testToEmail.trim()}>
+                      {busy ? 'Testing…' : 'Test Mailgun'}
+                    </button>
+                  </form>
+                </section>
+
+                <section className="deliveries" aria-labelledby="deliveries-title">
+                  <div className="section-head">
+                    <h2 id="deliveries-title">Email delivery log</h2>
+                    <button
+                      type="button"
+                      className="refresh"
+                      onClick={() => void refreshDeliveries()}
+                      disabled={busy}
+                    >
+                      Refresh log
+                    </button>
+                  </div>
+                  {deliveries.length === 0 ? (
+                    <p className="settings-lead">No delivery attempts recorded yet.</p>
+                  ) : (
+                    <ul className="delivery-list">
+                      {deliveries.map((row) => (
+                        <li key={row.id} className={`delivery-row status-${row.status}`}>
+                          <div>
+                            <p className="svc-name">
+                              {row.kind} · {row.status} · {row.provider}
+                            </p>
+                            <p className="svc-role">
+                              to {row.to_email} · {formatDateTime(row.created_at)}
+                            </p>
+                            <p className="delivery-detail">{row.detail}</p>
+                            {row.provider_message_id ? (
+                              <p className="meta">msg id: {row.provider_message_id}</p>
+                            ) : null}
+                          </div>
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+                </section>
+              </>
+            ) : null}
+
+            {tab === 'fleet' ? (
+              <section className="fleet">
+                <h2>Fleet</h2>
+                <ul className="service-list">
+                  {AULOS_SERVICES.map((svc, index) => (
+                    <li
+                      key={svc.id}
+                      className="service-row"
+                      style={{ animationDelay: `${0.05 * index}s` }}
+                    >
+                      <div>
+                        <p className="svc-name">{svc.name}</p>
+                        <p className="svc-role">{svc.role}</p>
+                      </div>
+                      <code className="svc-path">{svc.path}</code>
+                    </li>
+                  ))}
+                </ul>
+              </section>
+            ) : null}
+          </>
+        )}
       </main>
     </div>
   )

@@ -25,6 +25,9 @@ def test_discover_bundled_skills() -> None:
     assert "aulos-service-bootstrap" in ids
     assert "aulos-ops-observability" in ids
     assert "aulos-operating-defaults" in ids
+    assert "aulos-listening" in ids
+    assert "aulos-listening-depth" in ids
+    assert "aulos-listening-corpus" in ids
 
 
 def test_settings_roots(tmp_path: Path) -> None:
