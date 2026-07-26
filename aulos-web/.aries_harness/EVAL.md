@@ -10,7 +10,7 @@ generated_by: "/aries-harness init"
 initialized_at: "2026-07-25T11:07:42Z"
 effective_status: "active"
 effective_since: "2026-07-25T11:07:42Z"
-content_fingerprint: "sha256:dc0bc27c7a69e26c3cb80a8ed90fec3ec7e5155fe46be8802518d2139bbd555a"
+content_fingerprint: "sha256:a928d325ff422bc2a0cd25cd283bef4aa134cc180652b7e5c6c07fa9b3ac008f"
 trace_history_source: "filesystem-only"
 trace_last_commit_sha: ""
 trace_last_commit_at: ""
@@ -21,12 +21,13 @@ trace_revision_count: "0"
 ## Verification commands
 
 - lint:
-- typecheck:
-- test:
+- typecheck: `npm run build`
+- test: upstream `aulos-api` `pytest tests/test_auth.py` (forgot/reset)
 
 ## Acceptance notes
 
-- define the minimum verification gate here
+- Sign in offers Forgot password; reset link `/?reset_token=` opens set-password form
+- Neutral success copy after forgot request (no account enumeration)
 
 ## Layer boundary
 

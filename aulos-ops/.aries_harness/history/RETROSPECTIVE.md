@@ -8,10 +8,10 @@ managed_by: "aries-harness"
 fingerprint: "aries-harness/history-doc/v1"
 generated_by: "/aries-harness history-refresh"
 initialized_at: "2026-07-25T11:20:06Z"
-generated_at: "2026-07-25T19:31:23+00:00"
+generated_at: "2026-07-26T16:28:21+00:00"
 effective_status: "generated"
-effective_since: "2026-07-25T19:31:23+00:00"
-content_fingerprint: "sha256:880f70a7a023ed6e85145f63f1e7ebfb25d92d7947cad4febe9303d93715fce9"
+effective_since: "2026-07-26T16:28:21+00:00"
+content_fingerprint: "sha256:61b68841bea311ad3bad68c206edb1c9809a0cf9518a1a64b3ee82769acd5240"
 trace_history_source: "filesystem-only"
 trace_last_commit_sha: ""
 trace_last_commit_at: ""
@@ -19,26 +19,27 @@ trace_revision_count: "0"
 ---
 # Retrospective Snapshot
 
-Generated at: `2026-07-25T19:31:23+00:00`
+Generated at: `2026-07-26T16:28:21+00:00`
 
 ## Recent changes
 
+- SPEC-002 / STORY-PACK-002: Ops **Dev Blog** tab — list/read/generate monorepo daily product blog
+- Evidence from git + harness; LLM via Ops providers (fake offline draft); three Chinese sections
+- Verify: `aulos-api` `pytest tests/test_dev_blog.py` 5 passed; `npm run build` green
 - SPEC-010: OPS Knowledge audit UI opened — Browse/proofread, Sources, Jobs & crawl, Retrieve lab
 - Knowledge APIs: document detail+body, publish restore, composers list, document filters
 - systemd `aulos-knowledge.service` on PG; API `AULOS_KNOWLEDGE_BASE_URL`; ops rebuilt to :5092 / aulos-ops.purezen.ai
-- STORY-PACK-007 S4: Knowledge tab plane up/down badge + empty-state when plane unreachable
-- Added ``src/time.ts``; users/deliveries/health refresh use OS-local timestamps
 
 ## What is working
 
+- SPEC-002 / STORY-PACK-002: Ops **Dev Blog** tab — list/read/generate monorepo daily product blog
+- Evidence from git + harness; LLM via Ops providers (fake offline draft); three Chinese sections
+- Verify: `aulos-api` `pytest tests/test_dev_blog.py` 5 passed; `npm run build` green
 - SPEC-010: OPS Knowledge audit UI opened — Browse/proofread, Sources, Jobs & crawl, Retrieve lab
-- Knowledge APIs: document detail+body, publish restore, composers list, document filters
-- systemd `aulos-knowledge.service` on PG; API `AULOS_KNOWLEDGE_BASE_URL`; ops rebuilt to :5092 / aulos-ops.purezen.ai
-- STORY-PACK-007 S4: Knowledge tab plane up/down badge + empty-state when plane unreachable
 
 ## What needs attention
 
-- working tree is dirty with 59 tracked or untracked change(s)
+- working tree is dirty with 78 tracked or untracked change(s)
 - no explicit next-up slice is recorded
 
 ## Durable reminders

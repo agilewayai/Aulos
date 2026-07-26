@@ -10,13 +10,25 @@ generated_by: "/aries-harness init"
 initialized_at: "2026-07-25T11:07:43Z"
 effective_status: "active"
 effective_since: "2026-07-25T11:07:43Z"
-content_fingerprint: "sha256:f9d3386b24489f08d04f40ff2dae3c780de46a43d00b84ab9d6ba2c02fbc54f5"
+content_fingerprint: "sha256:a66ebaa468bde16b97fbebd2963814cf3b855e11591d23b45fa280dd6991144f"
 trace_history_source: "filesystem-only"
 trace_last_commit_sha: ""
 trace_last_commit_at: ""
 trace_revision_count: "0"
 ---
 # Journal
+
+## 2026-07-26T16:50:00Z
+
+- SPEC-002: `POST /v1/auth/forgot-password` + `POST /v1/auth/reset-password`; Mailgun `reset_password` mail
+- Anti-enumeration; one-time `EmailToken` purpose=`reset_password`
+- Verify: `pytest tests/test_auth.py` 7 passed
+
+## 2026-07-26T16:30:00Z
+
+- SPEC-009: `/v1/ops/dev-blog` list/get/generate; `dev_blog_posts` table; `services/dev_blog.py`
+- Collect UTC-day git + harness excerpts; Ops LLM or fake template with product narrative headings
+- Verify: `pytest tests/test_dev_blog.py` 5 passed offline
 
 ## 2026-07-25T19:50:00Z
 

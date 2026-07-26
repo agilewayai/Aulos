@@ -9,7 +9,7 @@ fingerprint: "aries-harness/bootstrap-doc/v1"
 initialized_at: "2026-07-25T11:10:22Z"
 effective_status: "active"
 effective_since: "2026-07-25T11:10:22Z"
-content_fingerprint: "sha256:9c026be0bce78b08d23dfa81019f63941489119cb24430ac7c3bbefea8a17121"
+content_fingerprint: "sha256:c43ac6f5df9fa63aef9e0eca89d7c02481c750b627b131e0dbfc307b0efb0c3e"
 trace_history_source: "filesystem-only"
 trace_last_commit_sha: ""
 trace_last_commit_at: ""
@@ -19,15 +19,15 @@ trace_revision_count: "0"
 
 ## Current phase
 
-- STORY-PACK-008 `/discogs` release → listening guide (longrun RUN-008-DISCOG-001)
+- SPEC-009 Ops Dev Blog API shipped; Discogs longrun remains available for follow-up
 
 ## Current phase (prior)
 
-- Auth MVP + web research / locale closeout
+- STORY-PACK-008 `/discogs` release → listening guide (longrun RUN-008-DISCOG-001)
 
 ## Active run
 
-- RUN-008-DISCOG-001
+- RUN-DEV-BLOG-001 (API seam) / prior RUN-008-DISCOG-001
 
 ## Hot facts
 

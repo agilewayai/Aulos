@@ -8,10 +8,10 @@ managed_by: "aries-harness"
 fingerprint: "aries-harness/bootstrap-doc/v1"
 generated_by: "/aries-harness well-organized"
 initialized_at: "2026-07-25T11:07:43Z"
-last_organized_at: "2026-07-25T19:31:05+00:00"
+last_organized_at: "2026-07-26T16:28:21+00:00"
 effective_status: "generated"
-effective_since: "2026-07-25T19:31:05+00:00"
-content_fingerprint: "sha256:1945aac0ef863658edd96d5ef0b4cd8b16c6289dd618c9cbdc8f150f42edde71"
+effective_since: "2026-07-26T16:28:21+00:00"
+content_fingerprint: "sha256:0b0368a6b5d1963f51ed905d2788b94c93471c904961e1edd3adfeb912a32c2e"
 trace_history_source: "filesystem-only"
 trace_last_commit_sha: ""
 trace_last_commit_at: ""
@@ -19,7 +19,7 @@ trace_revision_count: "0"
 ---
 # Harness Index
 
-Last organized: `2026-07-25T19:31:05+00:00`
+Last organized: `2026-07-26T16:28:21+00:00`
 
 Canonical spelling: `/aries-harness well-organized`
 
@@ -77,6 +77,7 @@ Fingerprint marker: `aries-harness` / `aries-harness/bootstrap-doc/v1`
 - [SPEC-006-research-knowledge-rag.md](references/specs/SPEC-006-research-knowledge-rag.md)
 - [SPEC-007-timezone-utc-store-local-display.md](references/specs/SPEC-007-timezone-utc-store-local-display.md)
 - [SPEC-008-discog-release-guide.md](references/specs/SPEC-008-discog-release-guide.md)
+- [SPEC-009-ops-dev-blog.md](references/specs/SPEC-009-ops-dev-blog.md)
 
 #### `references/stories/`
 - role: sprintable slices linked to specs and verification

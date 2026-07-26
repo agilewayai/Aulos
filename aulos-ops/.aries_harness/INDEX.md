@@ -8,10 +8,10 @@ managed_by: "aries-harness"
 fingerprint: "aries-harness/bootstrap-doc/v1"
 generated_by: "/aries-harness well-organized"
 initialized_at: "2026-07-25T11:20:06Z"
-last_organized_at: "2026-07-25T19:31:23+00:00"
+last_organized_at: "2026-07-26T16:28:21+00:00"
 effective_status: "generated"
-effective_since: "2026-07-25T19:31:23+00:00"
-content_fingerprint: "sha256:80bbbd6dd068d9542f1b68205413c3bac40528ee5905c1e0223086c10dbc3513"
+effective_since: "2026-07-26T16:28:21+00:00"
+content_fingerprint: "sha256:663e165329280de9d005c84623026afd075106be93ddba2b93a427790833656f"
 trace_history_source: "filesystem-only"
 trace_last_commit_sha: ""
 trace_last_commit_at: ""
@@ -19,7 +19,7 @@ trace_revision_count: "0"
 ---
 # Harness Index
 
-Last organized: `2026-07-25T19:31:23+00:00`
+Last organized: `2026-07-26T16:28:21+00:00`
 
 Canonical spelling: `/aries-harness well-organized`
 
@@ -63,16 +63,19 @@ Fingerprint marker: `aries-harness` / `aries-harness/bootstrap-doc/v1`
 - role: upstream request briefs and business intent anchors
 - [README.md](references/requests/README.md)
 - [REQ-001-aulos-ops-bootstrap.md](references/requests/REQ-001-aulos-ops-bootstrap.md)
+- [REQ-002-daily-dev-blog.md](references/requests/REQ-002-daily-dev-blog.md)
 
 #### `references/specs/`
 - role: behavior and acceptance contracts derived from requests
 - [README.md](references/specs/README.md)
 - [SPEC-001-ops-portal.md](references/specs/SPEC-001-ops-portal.md)
+- [SPEC-002-daily-dev-blog.md](references/specs/SPEC-002-daily-dev-blog.md)
 
 #### `references/stories/`
 - role: sprintable slices linked to specs and verification
 - [README.md](references/stories/README.md)
 - [STORY-PACK-001-bootstrap.md](references/stories/STORY-PACK-001-bootstrap.md)
+- [STORY-PACK-002-daily-dev-blog.md](references/stories/STORY-PACK-002-daily-dev-blog.md)
 
 #### `references/domain/`
 - role: domain analysis and modeling artifacts
@@ -131,6 +134,7 @@ Fingerprint marker: `aries-harness` / `aries-harness/bootstrap-doc/v1`
 - role: test execution and fix evidence
 - [README.md](runs/tests/README.md)
 - [VR-001-story-001-bootstrap.md](runs/tests/VR-001-story-001-bootstrap.md)
+- [VR-002-daily-dev-blog.md](runs/tests/VR-002-daily-dev-blog.md)
 
 #### `runs/reports/`
 - role: iteration reports and closeouts

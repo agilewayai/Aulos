@@ -67,6 +67,9 @@ class Settings(BaseSettings):
         alias="AULOS_KNOWLEDGE_PLANE_ENABLED",
     )
 
+    # Monorepo root for Ops daily dev-blog evidence (git + harness)
+    repo_root: str = Field(default="", alias="AULOS_REPO_ROOT")
+
     @property
     def cors_origin_list(self) -> list[str]:
         return [o.strip() for o in self.cors_origins.split(",") if o.strip()]

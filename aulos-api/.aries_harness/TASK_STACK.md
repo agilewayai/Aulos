@@ -9,7 +9,7 @@ fingerprint: "aries-harness/bootstrap-doc/v1"
 initialized_at: "2026-07-25T11:10:22Z"
 effective_status: "active"
 effective_since: "2026-07-25T11:10:22Z"
-content_fingerprint: "sha256:0507928b6314eb888a8b73a2792c5243b4c21492d1db688212cb6bae1d0d8bf1"
+content_fingerprint: "sha256:116f9a4c9ad27e47964cbf42b93cbfb8046997058ca1aff6591aadeda691fc73"
 trace_history_source: "filesystem-only"
 trace_last_commit_sha: ""
 trace_last_commit_at: ""
@@ -19,7 +19,7 @@ trace_revision_count: "0"
 
 ## Now
 
-- STORY-PACK-008 `/discogs` — S2/S3 verify + closeout (CKPT-008)
+- SPEC-009 Dev Blog API shipped; keep Discogs closeout / host redeploy as needed
 
 ## Next
 

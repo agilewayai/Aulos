@@ -237,6 +237,7 @@ async def chat_with_ops_llm(
     db: Session,
     message: str,
     timeout: float = 60.0,
+    system_prompt: str = "You are Aulos, a helpful assistant.",
 ) -> tuple[str, str] | None:
     """Return (reply, provider) when ops has a live provider; else None."""
     cfg = load_llm_config(db)
@@ -249,6 +250,7 @@ async def chat_with_ops_llm(
         provider=cfg.active_provider,
         creds=creds,
         message=message,
+        system_prompt=system_prompt,
         timeout=timeout,
     )
     return reply, cfg.active_provider

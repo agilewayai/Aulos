@@ -125,6 +125,20 @@ export function verifyEmail(token: string) {
   })
 }
 
+export function forgotPassword(email: string) {
+  return request<{ ok: boolean; detail: string }>('/v1/auth/forgot-password', {
+    method: 'POST',
+    body: JSON.stringify({ email }),
+  })
+}
+
+export function resetPassword(token: string, password: string) {
+  return request<{ ok: boolean; detail: string }>('/v1/auth/reset-password', {
+    method: 'POST',
+    body: JSON.stringify({ token, password }),
+  })
+}
+
 export function fetchMe() {
   return request<User>('/v1/auth/me', {}, true)
 }

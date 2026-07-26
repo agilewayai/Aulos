@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-07-25T19:31:23+00:00",
+  "generated_at": "2026-07-26T16:28:21+00:00",
   "project_root": "/home/ubuntu/hackathon/aulos/aulos-ops",
   "harness_root": "/home/ubuntu/hackathon/aulos/aulos-ops/.aries_harness",
   "history_root": "/home/ubuntu/hackathon/aulos/aulos-ops/.aries_harness/history",
@@ -8,8 +8,16 @@
   "branch": "main",
   "working_tree": {
     "clean": false,
-    "change_count": 59,
+    "change_count": 78,
     "changes": [
+      {
+        "status": "M",
+        "path": "aulos-api/.aries_harness/ARIES_HARNESS_FINGERPRINT.json"
+      },
+      {
+        "status": "M",
+        "path": "aulos-api/.aries_harness/EVAL.md"
+      },
       {
         "status": "M",
         "path": "aulos-api/.aries_harness/INDEX.md"
@@ -72,7 +80,23 @@
       },
       {
         "status": "M",
-        "path": "aulos-api/src/aulos_api/routes/listening.py"
+        "path": "aulos-api/.aries_harness/references/REG-001-artifact-register.md"
+      },
+      {
+        "status": "M",
+        "path": "aulos-api/.aries_harness/references/specs/SPEC-002-users-roles-auth.md"
+      },
+      {
+        "status": "M",
+        "path": "aulos-api/src/aulos_api/config/settings.py"
+      },
+      {
+        "status": "M",
+        "path": "aulos-api/src/aulos_api/db/models.py"
+      },
+      {
+        "status": "M",
+        "path": "aulos-api/src/aulos_api/routes/auth.py"
       },
       {
         "status": "M",
@@ -80,7 +104,15 @@
       },
       {
         "status": "M",
-        "path": "aulos-api/src/aulos_api/services/listening_guide.py"
+        "path": "aulos-api/src/aulos_api/services/llm_providers.py"
+      },
+      {
+        "status": "M",
+        "path": "aulos-api/src/aulos_api/services/mailgun.py"
+      },
+      {
+        "status": "M",
+        "path": "aulos-api/tests/test_auth.py"
       },
       {
         "status": "M",
@@ -88,7 +120,75 @@
       },
       {
         "status": "M",
+        "path": "aulos-ops/.aries_harness/EVAL.md"
+      },
+      {
+        "status": "M",
         "path": "aulos-ops/.aries_harness/INDEX.md"
+      },
+      {
+        "status": "M",
+        "path": "aulos-ops/.aries_harness/JOURNAL.md"
+      },
+      {
+        "status": "M",
+        "path": "aulos-ops/.aries_harness/STATE.md"
+      },
+      {
+        "status": "M",
+        "path": "aulos-ops/.aries_harness/TASK_STACK.md"
+      },
+      {
+        "status": "M",
+        "path": "aulos-ops/.aries_harness/decisions/architecture/ARCH-001-ops-portal-architecture.md"
+      },
+      {
+        "status": "M",
+        "path": "aulos-ops/.aries_harness/history/DAILY_SUMMARY_INDEX.md"
+      },
+      {
+        "status": "M",
+        "path": "aulos-ops/.aries_harness/history/DOC_TRACE.md"
+      },
+      {
+        "status": "M",
+        "path": "aulos-ops/.aries_harness/history/README.md"
+      },
+      {
+        "status": "M",
+        "path": "aulos-ops/.aries_harness/history/RETROSPECTIVE.md"
+      },
+      {
+        "status": "M",
+        "path": "aulos-ops/.aries_harness/history/ROADMAP.md"
+      },
+      {
+        "status": "M",
+        "path": "aulos-ops/.aries_harness/history/STATUS.md"
+      },
+      {
+        "status": "M",
+        "path": "aulos-ops/.aries_harness/history/TIMELINE.md"
+      },
+      {
+        "status": "M",
+        "path": "aulos-ops/.aries_harness/history/daily/2026-07-25.md"
+      },
+      {
+        "status": "M",
+        "path": "aulos-ops/.aries_harness/history/daily/2026-07-26.md"
+      },
+      {
+        "status": "M",
+        "path": "aulos-ops/.aries_harness/history/doc-trace.json"
+      },
+      {
+        "status": "M",
+        "path": "aulos-ops/.aries_harness/history/summary.json"
+      },
+      {
+        "status": "M",
+        "path": "aulos-ops/.aries_harness/references/REG-001-artifact-register.md"
       },
       {
         "status": "M",
@@ -104,63 +204,27 @@
       },
       {
         "status": "M",
-        "path": "aulos-skills/.aries_harness/INDEX.md"
+        "path": "aulos-web/.aries_harness/ARIES_HARNESS_FINGERPRINT.json"
       },
       {
         "status": "M",
-        "path": "aulos-skills/.aries_harness/history/DAILY_SUMMARY_INDEX.md"
-      },
-      {
-        "status": "M",
-        "path": "aulos-skills/.aries_harness/history/DOC_TRACE.md"
-      },
-      {
-        "status": "M",
-        "path": "aulos-skills/.aries_harness/history/README.md"
-      },
-      {
-        "status": "M",
-        "path": "aulos-skills/.aries_harness/history/RETROSPECTIVE.md"
-      },
-      {
-        "status": "M",
-        "path": "aulos-skills/.aries_harness/history/ROADMAP.md"
-      },
-      {
-        "status": "M",
-        "path": "aulos-skills/.aries_harness/history/STATUS.md"
-      },
-      {
-        "status": "M",
-        "path": "aulos-skills/.aries_harness/history/TIMELINE.md"
-      },
-      {
-        "status": "M",
-        "path": "aulos-skills/.aries_harness/history/daily/2026-07-25.md"
-      },
-      {
-        "status": "M",
-        "path": "aulos-skills/.aries_harness/history/daily/2026-07-26.md"
-      },
-      {
-        "status": "M",
-        "path": "aulos-skills/.aries_harness/history/doc-trace.json"
-      },
-      {
-        "status": "M",
-        "path": "aulos-skills/.aries_harness/history/summary.json"
-      },
-      {
-        "status": "M",
-        "path": "aulos-skills/src/aulos_skills/intake_parse.py"
-      },
-      {
-        "status": "M",
-        "path": "aulos-skills/tests/test_intake_i18n.py"
+        "path": "aulos-web/.aries_harness/EVAL.md"
       },
       {
         "status": "M",
         "path": "aulos-web/.aries_harness/INDEX.md"
+      },
+      {
+        "status": "M",
+        "path": "aulos-web/.aries_harness/JOURNAL.md"
+      },
+      {
+        "status": "M",
+        "path": "aulos-web/.aries_harness/STATE.md"
+      },
+      {
+        "status": "M",
+        "path": "aulos-web/.aries_harness/TASK_STACK.md"
       },
       {
         "status": "M",
@@ -208,47 +272,59 @@
       },
       {
         "status": "M",
+        "path": "aulos-web/src/App.css"
+      },
+      {
+        "status": "M",
         "path": "aulos-web/src/App.tsx"
       },
       {
-        "status": "??",
-        "path": "aulos-api/.aries_harness/checkpoints/CKPT-008-discog-release-guide.md"
+        "status": "M",
+        "path": "aulos-web/src/api.ts"
       },
       {
         "status": "??",
-        "path": "aulos-api/.aries_harness/references/requests/REQ-008-discog-release-guide.md"
+        "path": "aulos-api/.aries_harness/references/specs/SPEC-009-ops-dev-blog.md"
       },
       {
         "status": "??",
-        "path": "aulos-api/.aries_harness/references/specs/SPEC-008-discog-release-guide.md"
+        "path": "aulos-api/src/aulos_api/services/dev_blog.py"
       },
       {
         "status": "??",
-        "path": "aulos-api/.aries_harness/references/stories/STORY-PACK-008-discog-release-guide.md"
+        "path": "aulos-api/tests/test_dev_blog.py"
       },
       {
         "status": "??",
-        "path": "aulos-api/.aries_harness/runs/notes/HOLD-008-discog-awaiting-acceptance.md"
+        "path": "aulos-ops/.aries_harness/references/requests/REQ-002-daily-dev-blog.md"
       },
       {
         "status": "??",
-        "path": "aulos-api/.aries_harness/runs/reviews/AUDIT-008-discogs-deep-review.md"
+        "path": "aulos-ops/.aries_harness/references/specs/SPEC-002-daily-dev-blog.md"
       },
       {
         "status": "??",
-        "path": "aulos-api/.aries_harness/runs/reviews/REVIEW-008-discogs-423-287-1-smoke.md"
+        "path": "aulos-ops/.aries_harness/references/stories/STORY-PACK-002-daily-dev-blog.md"
       },
       {
         "status": "??",
-        "path": "aulos-api/src/aulos_api/services/discogs.py"
+        "path": "aulos-ops/.aries_harness/runs/tests/VR-002-daily-dev-blog.md"
       },
       {
         "status": "??",
-        "path": "aulos-api/tests/test_discogs.py"
+        "path": "aulos-ops/src/DevBlogPanel.tsx"
+      },
+      {
+        "status": "??",
+        "path": "aulos-web/.aries_harness/references/specs/SPEC-002-forgot-password.md"
+      },
+      {
+        "status": "??",
+        "path": "aulos-web/.aries_harness/runs/tests/VR-002-forgot-password.md"
       }
     ]
   },
-  "current_phase": "Bootstrap STORY-001 in progress / ready for verify",
+  "current_phase": "STORY-PACK-002 daily Dev Blog shipped (verify/closeout)",
   "current_milestone": [
     "no current milestone recorded"
   ],
@@ -270,20 +346,21 @@
   },
   "retrospective": {
     "recent_changes": [
+      "SPEC-002 / STORY-PACK-002: Ops **Dev Blog** tab \u2014 list/read/generate monorepo daily product blog",
+      "Evidence from git + harness; LLM via Ops providers (fake offline draft); three Chinese sections",
+      "Verify: `aulos-api` `pytest tests/test_dev_blog.py` 5 passed; `npm run build` green",
       "SPEC-010: OPS Knowledge audit UI opened \u2014 Browse/proofread, Sources, Jobs & crawl, Retrieve lab",
       "Knowledge APIs: document detail+body, publish restore, composers list, document filters",
-      "systemd `aulos-knowledge.service` on PG; API `AULOS_KNOWLEDGE_BASE_URL`; ops rebuilt to :5092 / aulos-ops.purezen.ai",
-      "STORY-PACK-007 S4: Knowledge tab plane up/down badge + empty-state when plane unreachable",
-      "Added ``src/time.ts``; users/deliveries/health refresh use OS-local timestamps"
+      "systemd `aulos-knowledge.service` on PG; API `AULOS_KNOWLEDGE_BASE_URL`; ops rebuilt to :5092 / aulos-ops.purezen.ai"
     ],
     "wins": [
-      "SPEC-010: OPS Knowledge audit UI opened \u2014 Browse/proofread, Sources, Jobs & crawl, Retrieve lab",
-      "Knowledge APIs: document detail+body, publish restore, composers list, document filters",
-      "systemd `aulos-knowledge.service` on PG; API `AULOS_KNOWLEDGE_BASE_URL`; ops rebuilt to :5092 / aulos-ops.purezen.ai",
-      "STORY-PACK-007 S4: Knowledge tab plane up/down badge + empty-state when plane unreachable"
+      "SPEC-002 / STORY-PACK-002: Ops **Dev Blog** tab \u2014 list/read/generate monorepo daily product blog",
+      "Evidence from git + harness; LLM via Ops providers (fake offline draft); three Chinese sections",
+      "Verify: `aulos-api` `pytest tests/test_dev_blog.py` 5 passed; `npm run build` green",
+      "SPEC-010: OPS Knowledge audit UI opened \u2014 Browse/proofread, Sources, Jobs & crawl, Retrieve lab"
     ],
     "needs_attention": [
-      "working tree is dirty with 59 tracked or untracked change(s)",
+      "working tree is dirty with 78 tracked or untracked change(s)",
       "no explicit next-up slice is recorded"
     ],
     "durable_reminders": [
@@ -298,13 +375,28 @@
   "daily_summaries": [
     {
       "date": "2026-07-26",
-      "journal_headings": [],
-      "journal_items": [],
+      "journal_headings": [
+        "2026-07-26T16:30:00Z"
+      ],
+      "journal_items": [
+        "SPEC-002 / STORY-PACK-002: Ops **Dev Blog** tab \u2014 list/read/generate monorepo daily product blog",
+        "Evidence from git + harness; LLM via Ops providers (fake offline draft); three Chinese sections",
+        "Verify: `aulos-api` `pytest tests/test_dev_blog.py` 5 passed; `npm run build` green"
+      ],
       "feature_evolution": [
+        "SPEC-002 / STORY-PACK-002: Ops **Dev Blog** tab \u2014 list/read/generate monorepo daily product blog",
+        "Evidence from git + harness; LLM via Ops providers (fake offline draft); three Chinese sections",
+        "Verify: `aulos-api` `pytest tests/test_dev_blog.py` 5 passed; `npm run build` green",
+        "Ship /discogs release and catalog-number listening guides with OPS token UI.",
         "Ship identity catalog, Hans/Hant locales, web research, and knowledge plane.",
         "Ship listening product, mandatory harness, facility layout, and UTC/local time."
       ],
       "git_commits": [
+        {
+          "sha": "6ab1ea3",
+          "date": "2026-07-26",
+          "subject": "Ship /discogs release and catalog-number listening guides with OPS token UI."
+        },
         {
           "sha": "53e7437",
           "date": "2026-07-26",
@@ -316,7 +408,16 @@
           "subject": "Ship listening product, mandatory harness, facility layout, and UTC/local time."
         }
       ],
-      "working_tree_hints": []
+      "working_tree_hints": [
+        "M aulos-api/.aries_harness/ARIES_HARNESS_FINGERPRINT.json",
+        "M aulos-api/.aries_harness/EVAL.md",
+        "M aulos-api/.aries_harness/INDEX.md",
+        "M aulos-api/.aries_harness/JOURNAL.md",
+        "M aulos-api/.aries_harness/STATE.md",
+        "M aulos-api/.aries_harness/TASK_STACK.md",
+        "M aulos-api/.aries_harness/history/DAILY_SUMMARY_INDEX.md",
+        "M aulos-api/.aries_harness/history/DOC_TRACE.md"
+      ]
     },
     {
       "date": "2026-07-25",
@@ -366,29 +467,20 @@
           "subject": "Initial commit: Aulos hackathon workspace with LangChain agent runtime."
         }
       ],
-      "working_tree_hints": [
-        "M aulos-api/.aries_harness/INDEX.md",
-        "M aulos-api/.aries_harness/JOURNAL.md",
-        "M aulos-api/.aries_harness/STATE.md",
-        "M aulos-api/.aries_harness/TASK_STACK.md",
-        "M aulos-api/.aries_harness/history/DAILY_SUMMARY_INDEX.md",
-        "M aulos-api/.aries_harness/history/DOC_TRACE.md",
-        "M aulos-api/.aries_harness/history/README.md",
-        "M aulos-api/.aries_harness/history/RETROSPECTIVE.md"
-      ]
+      "working_tree_hints": []
     }
   ],
   "doc_trace_summary": {
-    "document_count": 49,
+    "document_count": 53,
     "docs_with_issues": 0,
     "dirty_docs": 0,
     "by_layer": {
-      "MetaDefineLayer": 24,
+      "MetaDefineLayer": 27,
       "SharedSupportSurface": 15,
-      "RunCookingLayer": 10
+      "RunCookingLayer": 11
     },
     "by_effective_status": {
-      "active": 39,
+      "active": 43,
       "generated": 10
     }
   },

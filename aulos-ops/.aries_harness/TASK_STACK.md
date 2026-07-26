@@ -9,7 +9,7 @@ fingerprint: "aries-harness/bootstrap-doc/v1"
 initialized_at: "2026-07-25T11:22:04Z"
 effective_status: "active"
 effective_since: "2026-07-25T11:22:04Z"
-content_fingerprint: "sha256:3c459dbdfbe5f3489fba31cd8489fbc2aa75f7d7bf90946f285d9f781fef4e40"
+content_fingerprint: "sha256:f0d60c009e83e161e8872259d76068532c6d7acd0450aac5248851743c6655f5"
 trace_history_source: "filesystem-only"
 trace_last_commit_sha: ""
 trace_last_commit_at: ""
@@ -19,15 +19,15 @@ trace_revision_count: "0"
 
 ## Now
 
-- Close STORY-001 bootstrap verification for `aulos-ops`
+- Redeploy API + Ops so live Dev Blog tab is visible (optional host closeout)
 
 ## Next
 
-- Deepen `aulos-ops` toward live multi-service operator workflows
+- Optional cron generation; optional export to harness history folder
 
 ## Later
 
-- Auth, richer observability, production rollout
+- Auth refinements, richer observability, production rollout
 
 ## Blocked
 

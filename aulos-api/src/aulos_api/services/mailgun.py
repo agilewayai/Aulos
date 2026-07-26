@@ -201,6 +201,25 @@ def send_verification_email(*, db: Session, to_email: str, raw_token: str) -> No
     )
 
 
+def send_password_reset_email(*, db: Session, to_email: str, raw_token: str) -> None:
+    settings = get_settings()
+    reset_url = f"{settings.web_base_url.rstrip('/')}/?reset_token={raw_token}"
+    subject = "Reset your Aulos password"
+    text = (
+        "We received a request to reset your Aulos password.\n\n"
+        f"Open this link to choose a new password:\n{reset_url}\n\n"
+        "If you did not ask for a reset, you can ignore this message.\n"
+    )
+    _send_message(
+        db=db,
+        to_email=to_email,
+        subject=subject,
+        text=text,
+        kind="reset_password",
+        extra={"reset_token": raw_token, "reset_url": reset_url},
+    )
+
+
 def test_mailgun_configuration(*, db: Session, to_email: str) -> dict:
     """Validate saved Mailgun settings and send a probe message."""
     cfg = load_mailgun_config(db)

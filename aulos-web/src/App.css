@@ -577,6 +577,32 @@ body {
   cursor: not-allowed;
 }
 
+.auth-hint {
+  margin: 0 0 0.35rem;
+  color: var(--muted, #5a6a78);
+  font-size: 0.92rem;
+  line-height: 1.45;
+}
+
+.auth-aside {
+  margin: 0.35rem 0 0;
+  text-align: center;
+}
+
+.auth-form button.linkish {
+  appearance: none;
+  border: none;
+  background: none;
+  color: var(--accent, #b45309);
+  font: inherit;
+  font-size: 0.9rem;
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 0.15em;
+  cursor: pointer;
+  padding: 0.25rem;
+}
+
 .hint {
   margin: 0.15rem 0 0;
   color: var(--ink-soft);

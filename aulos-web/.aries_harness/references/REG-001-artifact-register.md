@@ -9,7 +9,7 @@ fingerprint: "aries-harness/bootstrap-doc/v1"
 initialized_at: "2026-07-25T11:10:22Z"
 effective_status: "active"
 effective_since: "2026-07-25T11:10:22Z"
-content_fingerprint: "sha256:41165c279e018900fe1e37e6df455693b964c53f894895f80659fa259c6f2129"
+content_fingerprint: "sha256:e7b60d1d9eff35c24e63749e528708dc2f012dc563f914f2a79a8e72bdd3fe72"
 trace_history_source: "filesystem-only"
 trace_last_commit_sha: ""
 trace_last_commit_at: ""
@@ -27,6 +27,7 @@ trace_revision_count: "0"
 | --- | --- | --- | --- |
 | REQ-001 | request | references/requests/REQ-001-aulos-web-bootstrap.md | active |
 | SPEC-001 | spec | references/specs/SPEC-001-web-gui.md | active |
+| SPEC-002 | spec | references/specs/SPEC-002-forgot-password.md | active |
 | STORY-PACK-001 | story-pack | references/stories/STORY-PACK-001-bootstrap.md | active |
 | ARCH-001 | architecture | decisions/architecture/ARCH-001-web-gui-architecture.md | active |
 | ADR-001 | adr | decisions/adrs/ADR-001-vite-react-runtime.md | accepted |

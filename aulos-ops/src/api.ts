@@ -679,6 +679,44 @@ export function probeSkills(message: string) {
   )
 }
 
+export type DevBlogSummary = {
+  day: string
+  title: string
+  provider: string
+  generated_at: string
+  evidence?: {
+    day?: string
+    repo_root?: string
+    commit_count?: number
+    commits?: Array<{ sha: string; date: string; author: string; subject: string }>
+    harness_sources?: Array<{ project: string; path: string }>
+    changed_harness_paths?: string[]
+  }
+}
+
+export type DevBlogPost = DevBlogSummary & {
+  body_md: string
+}
+
+export function fetchDevBlogList() {
+  return request<DevBlogSummary[]>('/v1/ops/dev-blog', {}, true)
+}
+
+export function fetchDevBlog(day: string) {
+  return request<DevBlogPost>(`/v1/ops/dev-blog/${encodeURIComponent(day)}`, {}, true)
+}
+
+export function generateDevBlog(day: string, force = false) {
+  return request<DevBlogPost>(
+    `/v1/ops/dev-blog/${encodeURIComponent(day)}/generate`,
+    {
+      method: 'POST',
+      body: JSON.stringify({ force }),
+    },
+    true,
+  )
+}
+
 export function logout() {
   storeToken(null)
 }

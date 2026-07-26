@@ -9,7 +9,7 @@ fingerprint: "aries-harness/bootstrap-doc/v1"
 initialized_at: "2026-07-25T11:10:22Z"
 effective_status: "active"
 effective_since: "2026-07-25T11:10:22Z"
-content_fingerprint: "sha256:819d6f9462d6e9c958632f72211479c78d1c9a6668dd1077308dc2d74e99a61f"
+content_fingerprint: "sha256:3e3ce58d3da960e0b7e3ddca1b9a46080c7110c22c383bfbc029d12f4e0b6c77"
 trace_history_source: "filesystem-only"
 trace_last_commit_sha: ""
 trace_last_commit_at: ""
@@ -28,6 +28,7 @@ trace_revision_count: "0"
 | REQ-001 | request | references/requests/REQ-001-aulos-api-bootstrap.md | active |
 | REQ-006 | request | references/requests/REQ-006-rag-work-identity-catalog.md | active |
 | SPEC-001 | spec | references/specs/SPEC-001-api-gateway.md | active |
+| SPEC-009 | spec | references/specs/SPEC-009-ops-dev-blog.md | active |
 | STORY-PACK-001 | story-pack | references/stories/STORY-PACK-001-bootstrap.md | active |
 | ARCH-001 | architecture | decisions/architecture/ARCH-001-api-gateway-architecture.md | active |
 | ADR-001 | adr | decisions/adrs/ADR-001-fastapi-gateway.md | accepted |

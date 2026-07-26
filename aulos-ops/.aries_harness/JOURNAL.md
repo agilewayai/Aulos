@@ -10,13 +10,19 @@ generated_by: "/aries-harness init"
 initialized_at: "2026-07-25T11:20:06Z"
 effective_status: "active"
 effective_since: "2026-07-25T11:20:06Z"
-content_fingerprint: "sha256:988545d94c883bb883b89c8f415869bb5f5a6aa4b95d11755e4b5f1066be4ea0"
+content_fingerprint: "sha256:6de1b279f6e7bf9627f26bdcb91a2974078f6a726562eba0144ad01aa8040447"
 trace_history_source: "filesystem-only"
 trace_last_commit_sha: ""
 trace_last_commit_at: ""
 trace_revision_count: "0"
 ---
 # Journal
+
+## 2026-07-26T16:30:00Z
+
+- SPEC-002 / STORY-PACK-002: Ops **Dev Blog** tab — list/read/generate monorepo daily product blog
+- Evidence from git + harness; LLM via Ops providers (fake offline draft); three Chinese sections
+- Verify: `aulos-api` `pytest tests/test_dev_blog.py` 5 passed; `npm run build` green
 
 ## 2026-07-25T17:34:00Z
 

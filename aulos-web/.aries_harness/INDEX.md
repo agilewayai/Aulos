@@ -8,10 +8,10 @@ managed_by: "aries-harness"
 fingerprint: "aries-harness/bootstrap-doc/v1"
 generated_by: "/aries-harness well-organized"
 initialized_at: "2026-07-25T11:07:42Z"
-last_organized_at: "2026-07-25T19:31:19+00:00"
+last_organized_at: "2026-07-26T16:28:38+00:00"
 effective_status: "generated"
-effective_since: "2026-07-25T19:31:19+00:00"
-content_fingerprint: "sha256:afef4629ff651f1a6c433a50aed4a2ba28e03e12d9f64c8c132f71c90488bc3b"
+effective_since: "2026-07-26T16:28:38+00:00"
+content_fingerprint: "sha256:ae80924fd126780c821fda1dd138550b4fa565d89a13f3081bebf26f254454ab"
 trace_history_source: "filesystem-only"
 trace_last_commit_sha: ""
 trace_last_commit_at: ""
@@ -19,7 +19,7 @@ trace_revision_count: "0"
 ---
 # Harness Index
 
-Last organized: `2026-07-25T19:31:19+00:00`
+Last organized: `2026-07-26T16:28:38+00:00`
 
 Canonical spelling: `/aries-harness well-organized`
 
@@ -68,6 +68,7 @@ Fingerprint marker: `aries-harness` / `aries-harness/bootstrap-doc/v1`
 - role: behavior and acceptance contracts derived from requests
 - [README.md](references/specs/README.md)
 - [SPEC-001-web-gui.md](references/specs/SPEC-001-web-gui.md)
+- [SPEC-002-forgot-password.md](references/specs/SPEC-002-forgot-password.md)
 
 #### `references/stories/`
 - role: sprintable slices linked to specs and verification
@@ -131,6 +132,7 @@ Fingerprint marker: `aries-harness` / `aries-harness/bootstrap-doc/v1`
 - role: test execution and fix evidence
 - [README.md](runs/tests/README.md)
 - [VR-001-story-001-bootstrap.md](runs/tests/VR-001-story-001-bootstrap.md)
+- [VR-002-forgot-password.md](runs/tests/VR-002-forgot-password.md)
 
 #### `runs/reports/`
 - role: iteration reports and closeouts

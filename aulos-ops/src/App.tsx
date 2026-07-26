@@ -46,10 +46,11 @@ import {
 } from './api'
 import { KnowledgePanel } from './KnowledgePanel'
 import { DbHaPanel } from './DbHaPanel'
+import { DevBlogPanel } from './DevBlogPanel'
 import { formatDateTime, formatTime } from './time'
 import './App.css'
 
-type TabId = 'overview' | 'users' | 'llm' | 'skills' | 'mail' | 'fleet' | 'knowledge' | 'discogs'
+type TabId = 'overview' | 'users' | 'llm' | 'skills' | 'mail' | 'fleet' | 'knowledge' | 'discogs' | 'blog'
 
 function App() {
   const [user, setUser] = useState<User | null>(null)
@@ -649,6 +650,7 @@ function App() {
                   ['skills', 'Skills'],
                   ['mail', 'Mail'],
                   ['fleet', 'Fleet'],
+                  ['blog', 'Dev Blog'],
                 ] as const
               ).map(([id, label]) => (
                 <button
@@ -1312,6 +1314,15 @@ function App() {
                 setNotice={setNotice}
                 planeEnabled={kbStats?.plane_enabled}
                 planeUrl={kbStats?.plane_url}
+              />
+            ) : null}
+
+            {tab === 'blog' ? (
+              <DevBlogPanel
+                busy={busy}
+                setBusy={setBusy}
+                setError={setError}
+                setNotice={setNotice}
               />
             ) : null}
 

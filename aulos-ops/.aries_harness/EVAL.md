@@ -10,7 +10,7 @@ generated_by: "/aries-harness init"
 initialized_at: "2026-07-25T11:20:06Z"
 effective_status: "active"
 effective_since: "2026-07-25T11:20:06Z"
-content_fingerprint: "sha256:dc0bc27c7a69e26c3cb80a8ed90fec3ec7e5155fe46be8802518d2139bbd555a"
+content_fingerprint: "sha256:59555ef52e3f292b29e472778444dd6daa476f122bff416508f8d78f9c08154c"
 trace_history_source: "filesystem-only"
 trace_last_commit_sha: ""
 trace_last_commit_at: ""
@@ -21,12 +21,13 @@ trace_revision_count: "0"
 ## Verification commands
 
 - lint:
-- typecheck:
-- test:
+- typecheck: `npm run build`
+- test: upstream `aulos-api` `pytest tests/test_dev_blog.py` (SPEC-002 / SPEC-009)
 
 ## Acceptance notes
 
-- define the minimum verification gate here
+- Dev Blog tab lists/reads posts; generate yields three Chinese section headings
+- Fake LLM path works without live keys
 
 ## Layer boundary
 

@@ -151,3 +151,21 @@ class KnowledgeChunk(Base):
     dims: Mapped[int] = mapped_column(Integer, default=0)
     model: Mapped[str] = mapped_column(String(128), default="")
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=utcnow)
+
+
+class DevBlogPost(Base):
+    """Cached daily product-development blog (Ops SPEC-009)."""
+
+    __tablename__ = "dev_blog_posts"
+
+    id: Mapped[int] = mapped_column(Integer, primary_key=True)
+    day: Mapped[str] = mapped_column(String(10), unique=True, nullable=False, index=True)
+    title: Mapped[str] = mapped_column(String(255), default="")
+    body_md: Mapped[str] = mapped_column(Text, default="")
+    evidence_json: Mapped[str] = mapped_column(Text, default="{}")
+    provider: Mapped[str] = mapped_column(String(32), default="fake")
+    generated_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True),
+        default=utcnow,
+        index=True,
+    )

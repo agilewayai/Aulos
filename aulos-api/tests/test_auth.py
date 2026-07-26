@@ -146,3 +146,70 @@ def test_duplicate_register_rejected(client: TestClient) -> None:
     assert client.post("/v1/auth/register", json=payload).status_code == 201
     again = client.post("/v1/auth/register", json=payload)
     assert again.status_code == 409
+
+
+def test_forgot_password_unknown_email_still_ok(client: TestClient) -> None:
+    from aulos_api.services.mailgun import get_fake_mailbox
+
+    before = len(get_fake_mailbox())
+    resp = client.post(
+        "/v1/auth/forgot-password",
+        json={"email": "nobody@example.com"},
+    )
+    assert resp.status_code == 200
+    assert resp.json()["ok"] is True
+    assert len(get_fake_mailbox()) == before
+
+
+def test_forgot_and_reset_password_flow(client: TestClient) -> None:
+    from aulos_api.services.mailgun import get_fake_mailbox
+
+    client.post(
+        "/v1/auth/register",
+        json={"email": "resetme@example.com", "password": "OldPass123!"},
+    )
+    verify_token = get_fake_mailbox()[-1]["verification_token"]
+    client.post("/v1/auth/verify-email", json={"token": verify_token})
+
+    forgot = client.post(
+        "/v1/auth/forgot-password",
+        json={"email": "resetme@example.com"},
+    )
+    assert forgot.status_code == 200
+    mailbox = get_fake_mailbox()
+    assert mailbox[-1]["kind"] == "reset_password"
+    assert "reset_token" in mailbox[-1]
+    reset_token = mailbox[-1]["reset_token"]
+    assert "reset_token=" in mailbox[-1].get("reset_url", "")
+
+    bad = client.post(
+        "/v1/auth/reset-password",
+        json={"token": "not-a-real-token-xxxxxx", "password": "NewPass123!"},
+    )
+    assert bad.status_code == 400
+
+    reset = client.post(
+        "/v1/auth/reset-password",
+        json={"token": reset_token, "password": "NewPass123!"},
+    )
+    assert reset.status_code == 200
+    assert reset.json()["ok"] is True
+
+    reuse = client.post(
+        "/v1/auth/reset-password",
+        json={"token": reset_token, "password": "AnotherPass123!"},
+    )
+    assert reuse.status_code == 400
+
+    old_login = client.post(
+        "/v1/auth/login",
+        json={"email": "resetme@example.com", "password": "OldPass123!"},
+    )
+    assert old_login.status_code == 401
+
+    new_login = client.post(
+        "/v1/auth/login",
+        json={"email": "resetme@example.com", "password": "NewPass123!"},
+    )
+    assert new_login.status_code == 200
+    assert new_login.json()["access_token"]

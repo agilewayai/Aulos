@@ -8,10 +8,10 @@ managed_by: "aries-harness"
 fingerprint: "aries-harness/history-doc/v1"
 generated_by: "/aries-harness history-refresh"
 initialized_at: "2026-07-25T11:20:06Z"
-generated_at: "2026-07-25T19:31:23+00:00"
+generated_at: "2026-07-26T16:28:21+00:00"
 effective_status: "generated"
-effective_since: "2026-07-25T19:31:23+00:00"
-content_fingerprint: "sha256:0e85eba826f923cb403d4bf00ac5ca324a6026901c0beaf03c0bdd66c36a9e81"
+effective_since: "2026-07-26T16:28:21+00:00"
+content_fingerprint: "sha256:b20590a6f5fda8fbdac66945da0530452408dd8811b1475d7a9e0676c4c25c79"
 trace_history_source: "filesystem-only"
 trace_last_commit_sha: ""
 trace_last_commit_at: ""
@@ -19,9 +19,15 @@ trace_revision_count: "0"
 ---
 # Timeline
 
-Generated at: `2026-07-25T19:31:23+00:00`
+Generated at: `2026-07-26T16:28:21+00:00`
 
 ## Journal milestones
+
+### 2026-07-26T16:30:00Z
+
+- SPEC-002 / STORY-PACK-002: Ops **Dev Blog** tab — list/read/generate monorepo daily product blog
+- Evidence from git + harness; LLM via Ops providers (fake offline draft); three Chinese sections
+- Verify: `aulos-api` `pytest tests/test_dev_blog.py` 5 passed; `npm run build` green
 
 ### 2026-07-25T17:34:00Z
 
@@ -45,6 +51,7 @@ Generated at: `2026-07-25T19:31:23+00:00`
 
 ## Recent git commits
 
+- `6ab1ea3` 2026-07-26 Ship /discogs release and catalog-number listening guides with OPS token UI.
 - `53e7437` 2026-07-26 Ship identity catalog, Hans/Hant locales, web research, and knowledge plane.
 - `555cf53` 2026-07-26 Ship listening product, mandatory harness, facility layout, and UTC/local time.
 - `93c0f6e` 2026-07-25 Add aulos-skills, aulos-ops, host deploy, and fleet operating defaults.
@@ -53,6 +60,8 @@ Generated at: `2026-07-25T19:31:23+00:00`
 
 ## Working tree snapshot
 
+- `M` `aulos-api/.aries_harness/ARIES_HARNESS_FINGERPRINT.json`
+- `M` `aulos-api/.aries_harness/EVAL.md`
 - `M` `aulos-api/.aries_harness/INDEX.md`
 - `M` `aulos-api/.aries_harness/JOURNAL.md`
 - `M` `aulos-api/.aries_harness/STATE.md`
@@ -63,5 +72,3 @@ Generated at: `2026-07-25T19:31:23+00:00`
 - `M` `aulos-api/.aries_harness/history/RETROSPECTIVE.md`
 - `M` `aulos-api/.aries_harness/history/ROADMAP.md`
 - `M` `aulos-api/.aries_harness/history/STATUS.md`
-- `M` `aulos-api/.aries_harness/history/TIMELINE.md`
-- `M` `aulos-api/.aries_harness/history/daily/2026-07-25.md`

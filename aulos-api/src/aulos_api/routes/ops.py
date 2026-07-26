@@ -881,3 +881,68 @@ def ops_db_role(body: DbRoleIn, _: User = Depends(require_roles("superadmin"))) 
     except ValueError as exc:
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=str(exc)) from exc
     return {"ok": True, "active_role": role, "status": db_ha.ha_status()}
+
+
+# --- Daily product development blog (SPEC-009) ---
+
+
+class DevBlogSummaryOut(BaseModel):
+    day: str
+    title: str
+    provider: str
+    generated_at: str
+    evidence: dict = Field(default_factory=dict)
+
+
+class DevBlogPostOut(DevBlogSummaryOut):
+    body_md: str
+
+
+class DevBlogGenerateIn(BaseModel):
+    force: bool = False
+
+
+@router.get("/dev-blog", response_model=list[DevBlogSummaryOut])
+def list_dev_blog(
+    _: User = Depends(require_roles("superadmin")),
+    db: Session = Depends(get_db),
+) -> list[DevBlogSummaryOut]:
+    from aulos_api.services import dev_blog as blog
+
+    return [DevBlogSummaryOut(**row) for row in blog.list_posts(db)]
+
+
+@router.get("/dev-blog/{day}", response_model=DevBlogPostOut)
+def get_dev_blog(
+    day: str,
+    _: User = Depends(require_roles("superadmin")),
+    db: Session = Depends(get_db),
+) -> DevBlogPostOut:
+    from aulos_api.services import dev_blog as blog
+
+    try:
+        row = blog.get_post(db, day)
+    except ValueError as exc:
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=str(exc)) from exc
+    if row is None:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="No blog for that day")
+    return DevBlogPostOut(**blog.post_to_dict(row, include_body=True))
+
+
+@router.post("/dev-blog/{day}/generate", response_model=DevBlogPostOut)
+async def generate_dev_blog(
+    day: str,
+    body: DevBlogGenerateIn | None = None,
+    _: User = Depends(require_roles("superadmin")),
+    db: Session = Depends(get_db),
+) -> DevBlogPostOut:
+    from aulos_api.services import dev_blog as blog
+
+    force = bool(body.force) if body else False
+    try:
+        row = await blog.generate_or_load(db, day, force=force)
+    except ValueError as exc:
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=str(exc)) from exc
+    except FileNotFoundError as exc:
+        raise HTTPException(status_code=status.HTTP_503_SERVICE_UNAVAILABLE, detail=str(exc)) from exc
+    return DevBlogPostOut(**blog.post_to_dict(row, include_body=True))

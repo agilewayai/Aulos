@@ -2,12 +2,14 @@ import { useEffect, useMemo, useRef, useState } from 'react'
 import type { FormEvent } from 'react'
 import {
   fetchMe,
+  forgotPassword,
   getStoredToken,
   listListeningGuides,
   login,
   logout,
   publishListeningGuide,
   register,
+  resetPassword,
   shareGuideUrl,
   streamListeningGuide,
   streamRecomposeGuide,
@@ -21,7 +23,7 @@ import {
 import { formatDateTime } from './time'
 import './App.css'
 
-type Mode = 'login' | 'register' | 'verify' | 'studio'
+type Mode = 'login' | 'register' | 'verify' | 'forgot' | 'reset' | 'studio'
 
 const EXAMPLE =
   "I'm beginning to listen to Bach's Goldberg Variations — I want to learn this masterwork while I listen."
@@ -51,7 +53,16 @@ function App() {
     return new URLSearchParams(window.location.search).get('token')
   }, [])
 
-  const [mode, setMode] = useState<Mode>(initialToken ? 'verify' : 'login')
+  const initialResetToken = useMemo(() => {
+    if (typeof window === 'undefined') return null
+    return new URLSearchParams(window.location.search).get('reset_token')
+  }, [])
+
+  const [mode, setMode] = useState<Mode>(() => {
+    if (initialResetToken) return 'reset'
+    if (initialToken) return 'verify'
+    return 'login'
+  })
   const [user, setUser] = useState<User | null>(null)
   const [busy, setBusy] = useState(false)
   const [error, setError] = useState<string | null>(null)
@@ -59,8 +70,10 @@ function App() {
 
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  const [passwordConfirm, setPasswordConfirm] = useState('')
   const [displayName, setDisplayName] = useState('')
   const [verifyToken, setVerifyToken] = useState(initialToken ?? '')
+  const [resetToken, setResetToken] = useState(initialResetToken ?? '')
 
   const [draft, setDraft] = useState(EXAMPLE)
   const [guide, setGuide] = useState<ListeningGuide | null>(null)
@@ -75,7 +88,7 @@ function App() {
 
   useEffect(() => {
     const token = getStoredToken()
-    if (!token || initialToken) return
+    if (!token || initialToken || initialResetToken) return
     setBusy(true)
     fetchMe()
       .then(async (me) => {
@@ -89,7 +102,7 @@ function App() {
       })
       .catch(() => logout())
       .finally(() => setBusy(false))
-  }, [initialToken])
+  }, [initialToken, initialResetToken])
 
   async function onRegister(event: FormEvent) {
     event.preventDefault()
@@ -142,6 +155,49 @@ function App() {
       }
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Verification failed')
+    } finally {
+      setBusy(false)
+    }
+  }
+
+  async function onForgot(event: FormEvent) {
+    event.preventDefault()
+    setBusy(true)
+    setError(null)
+    setNotice(null)
+    try {
+      const data = await forgotPassword(email.trim())
+      setNotice(data.detail)
+      setMode('login')
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Could not send reset email')
+    } finally {
+      setBusy(false)
+    }
+  }
+
+  async function onReset(event: FormEvent) {
+    event.preventDefault()
+    if (password !== passwordConfirm) {
+      setError('Passwords do not match')
+      return
+    }
+    setBusy(true)
+    setError(null)
+    setNotice(null)
+    try {
+      const data = await resetPassword(resetToken.trim(), password)
+      setNotice(data.detail)
+      setPassword('')
+      setPasswordConfirm('')
+      setMode('login')
+      if (typeof window !== 'undefined') {
+        const url = new URL(window.location.href)
+        url.searchParams.delete('reset_token')
+        window.history.replaceState({}, '', url.pathname + url.search)
+      }
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Password reset failed')
     } finally {
       setBusy(false)
     }
@@ -420,6 +476,100 @@ function App() {
                 <button type="submit" disabled={busy}>
                   {busy ? 'Signing in…' : 'Sign in'}
                 </button>
+                <p className="auth-aside">
+                  <button
+                    type="button"
+                    className="linkish"
+                    onClick={() => {
+                      setError(null)
+                      setNotice(null)
+                      setMode('forgot')
+                    }}
+                  >
+                    Forgot password?
+                  </button>
+                </p>
+              </form>
+            ) : null}
+
+            {mode === 'forgot' ? (
+              <form className="auth-form" onSubmit={(e) => void onForgot(e)}>
+                <h1 id="auth-title">Forgot password</h1>
+                <p className="auth-hint">
+                  Enter your account email. If it exists, we will send a reset link.
+                </p>
+                <label htmlFor="forgot-email">Email</label>
+                <input
+                  id="forgot-email"
+                  type="email"
+                  required
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                />
+                <button type="submit" disabled={busy}>
+                  {busy ? 'Sending…' : 'Send reset link'}
+                </button>
+                <p className="auth-aside">
+                  <button
+                    type="button"
+                    className="linkish"
+                    onClick={() => {
+                      setError(null)
+                      setMode('login')
+                    }}
+                  >
+                    Back to sign in
+                  </button>
+                </p>
+              </form>
+            ) : null}
+
+            {mode === 'reset' ? (
+              <form className="auth-form" onSubmit={(e) => void onReset(e)}>
+                <h1 id="auth-title">Set new password</h1>
+                <label htmlFor="reset-token">Reset token</label>
+                <input
+                  id="reset-token"
+                  required
+                  value={resetToken}
+                  onChange={(e) => setResetToken(e.target.value)}
+                  autoComplete="off"
+                />
+                <label htmlFor="reset-password">New password</label>
+                <input
+                  id="reset-password"
+                  type="password"
+                  required
+                  minLength={8}
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  autoComplete="new-password"
+                />
+                <label htmlFor="reset-password-confirm">Confirm password</label>
+                <input
+                  id="reset-password-confirm"
+                  type="password"
+                  required
+                  minLength={8}
+                  value={passwordConfirm}
+                  onChange={(e) => setPasswordConfirm(e.target.value)}
+                  autoComplete="new-password"
+                />
+                <button type="submit" disabled={busy}>
+                  {busy ? 'Updating…' : 'Update password'}
+                </button>
+                <p className="auth-aside">
+                  <button
+                    type="button"
+                    className="linkish"
+                    onClick={() => {
+                      setError(null)
+                      setMode('login')
+                    }}
+                  >
+                    Back to sign in
+                  </button>
+                </p>
               </form>
             ) : null}
 

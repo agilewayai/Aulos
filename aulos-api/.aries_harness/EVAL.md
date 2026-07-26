@@ -10,7 +10,7 @@ generated_by: "/aries-harness init"
 initialized_at: "2026-07-25T11:07:43Z"
 effective_status: "active"
 effective_since: "2026-07-25T11:07:43Z"
-content_fingerprint: "sha256:dc0bc27c7a69e26c3cb80a8ed90fec3ec7e5155fe46be8802518d2139bbd555a"
+content_fingerprint: "sha256:9f634d0f3def10b13955825dfa909c73e35e140ad65bdceb67ed49326acc1ead"
 trace_history_source: "filesystem-only"
 trace_last_commit_sha: ""
 trace_last_commit_at: ""
@@ -22,11 +22,13 @@ trace_revision_count: "0"
 
 - lint:
 - typecheck:
-- test:
+- test: `pytest tests/test_dev_blog.py` (SPEC-009); `pytest tests/test_auth.py` (SPEC-002 incl. forgot/reset)
 
 ## Acceptance notes
 
-- define the minimum verification gate here
+- `/v1/ops/dev-blog*` list/get/generate offline green with fake provider
+- Generated body contains the three product section headings
+- Forgot/reset password: anti-enumeration + token reset green offline
 
 ## Layer boundary
 

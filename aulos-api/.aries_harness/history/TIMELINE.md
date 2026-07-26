@@ -8,10 +8,10 @@ managed_by: "aries-harness"
 fingerprint: "aries-harness/history-doc/v1"
 generated_by: "/aries-harness history-refresh"
 initialized_at: "2026-07-25T11:07:43Z"
-generated_at: "2026-07-25T19:31:05+00:00"
+generated_at: "2026-07-26T16:28:21+00:00"
 effective_status: "generated"
-effective_since: "2026-07-25T19:31:05+00:00"
-content_fingerprint: "sha256:8d7fb89be47e04764142799a55cdd6f0f9af88bd20b4c53a015ffce2a027e167"
+effective_since: "2026-07-26T16:28:21+00:00"
+content_fingerprint: "sha256:74a3bfd08e0aded52b0d324b6c3813884b413426e9b7d97afcae9733c2e30ff4"
 trace_history_source: "filesystem-only"
 trace_last_commit_sha: ""
 trace_last_commit_at: ""
@@ -19,9 +19,21 @@ trace_revision_count: "0"
 ---
 # Timeline
 
-Generated at: `2026-07-25T19:31:05+00:00`
+Generated at: `2026-07-26T16:28:21+00:00`
 
 ## Journal milestones
+
+### 2026-07-26T16:50:00Z
+
+- SPEC-002: `POST /v1/auth/forgot-password` + `POST /v1/auth/reset-password`; Mailgun `reset_password` mail
+- Anti-enumeration; one-time `EmailToken` purpose=`reset_password`
+- Verify: `pytest tests/test_auth.py` 7 passed
+
+### 2026-07-26T16:30:00Z
+
+- SPEC-009: `/v1/ops/dev-blog` list/get/generate; `dev_blog_posts` table; `services/dev_blog.py`
+- Collect UTC-day git + harness excerpts; Ops LLM or fake template with product narrative headings
+- Verify: `pytest tests/test_dev_blog.py` 5 passed offline
 
 ### 2026-07-25T19:50:00Z
 
@@ -52,19 +64,9 @@ Generated at: `2026-07-25T19:31:05+00:00`
 - Implemented `services/discogs.py` + `parse_discogs_command`; wired `_run_chain_core` seed vinyl/interpretations
 - Studio hint for `/discogs #release-id`; tests: `test_discogs.py` 4 passed; listening-guide regression green
 
-### 2026-07-25T18:25:45Z
-
-- Web research loop: thin RAG → Wikipedia/DDG (+ optional Brave) → LLM verify → KB upsert (user + global)
-- Ops `/v1/ops/web-research` + LLM tab controls; query variants for opus-specific titles
-- Verified: `tests/test_web_research.py` 5 passed; live Dvořák Dumky `rag_mode=no_match+web-research`, persisted docs 12/13, next search 6 hits
-
-### 2026-07-25T17:22:35Z
-
-- STORY-PACK-007 S2: `_rag_context` resolves Catalog work_id for knowledge-plane retrieve
-- Client-side drop of mismatched `aulos_work_id` hits; `tests/test_knowledge_plane_rag.py` green
-
 ## Recent git commits
 
+- `6ab1ea3` 2026-07-26 Ship /discogs release and catalog-number listening guides with OPS token UI.
 - `53e7437` 2026-07-26 Ship identity catalog, Hans/Hant locales, web research, and knowledge plane.
 - `555cf53` 2026-07-26 Ship listening product, mandatory harness, facility layout, and UTC/local time.
 - `93c0f6e` 2026-07-25 Add aulos-skills, aulos-ops, host deploy, and fleet operating defaults.
@@ -74,6 +76,7 @@ Generated at: `2026-07-25T19:31:05+00:00`
 ## Working tree snapshot
 
 - `M` `aulos-api/.aries_harness/ARIES_HARNESS_FINGERPRINT.json`
+- `M` `aulos-api/.aries_harness/EVAL.md`
 - `M` `aulos-api/.aries_harness/INDEX.md`
 - `M` `aulos-api/.aries_harness/JOURNAL.md`
 - `M` `aulos-api/.aries_harness/STATE.md`
@@ -84,4 +87,3 @@ Generated at: `2026-07-25T19:31:05+00:00`
 - `M` `aulos-api/.aries_harness/history/RETROSPECTIVE.md`
 - `M` `aulos-api/.aries_harness/history/ROADMAP.md`
 - `M` `aulos-api/.aries_harness/history/STATUS.md`
-- `M` `aulos-api/.aries_harness/history/TIMELINE.md`
