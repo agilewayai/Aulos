@@ -38,6 +38,8 @@ class Settings(BaseSettings):
     db_sync_redis_url: str = Field(default="", alias="AULOS_DB_SYNC_REDIS_URL")  # empty → use redis_url
     mail_queue_enabled: bool = Field(default=True, alias="AULOS_MAIL_QUEUE_ENABLED")
     mail_queue_redis_url: str = Field(default="", alias="AULOS_MAIL_QUEUE_REDIS_URL")  # empty → redis_url
+    task_queue_enabled: bool = Field(default=True, alias="AULOS_TASK_QUEUE_ENABLED")
+    task_queue_sync: bool = Field(default=False, alias="AULOS_TASK_QUEUE_SYNC")
 
     jwt_secret: str = Field(default="dev-only-change-me", alias="AULOS_JWT_SECRET")
     jwt_expire_minutes: int = Field(default=60 * 24, alias="AULOS_JWT_EXPIRE_MINUTES")

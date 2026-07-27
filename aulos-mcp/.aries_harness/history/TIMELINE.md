@@ -8,10 +8,10 @@ managed_by: "aries-harness"
 fingerprint: "aries-harness/history-doc/v1"
 generated_by: "/aries-harness history-refresh"
 initialized_at: "2026-07-25T11:07:44Z"
-generated_at: "2026-07-27T09:44:55+00:00"
+generated_at: "2026-07-27T10:25:32+00:00"
 effective_status: "generated"
-effective_since: "2026-07-27T09:44:55+00:00"
-content_fingerprint: "sha256:56e6e95ef1589d7e1b1f7faecab5732a3b60c68f263a4687be20ddef2a9db58a"
+effective_since: "2026-07-27T10:25:32+00:00"
+content_fingerprint: "sha256:1ca4ddb704b57950973cfb03f57ec63e5ac400d7adeea38e97c86d85da511afb"
 trace_history_source: "filesystem-only"
 trace_last_commit_sha: ""
 trace_last_commit_at: ""
@@ -19,7 +19,7 @@ trace_revision_count: "0"
 ---
 # Timeline
 
-Generated at: `2026-07-27T09:44:55+00:00`
+Generated at: `2026-07-27T10:25:32+00:00`
 
 ## Journal milestones
 
@@ -31,6 +31,7 @@ Generated at: `2026-07-27T09:44:55+00:00`
 
 ## Recent git commits
 
+- `c3009d2` 2026-07-27 Harden platform security, ship fleet DevOps control, and refresh harness honeycomb.
 - `0c8a847` 2026-07-27 Ship Ops daily Dev Blog and web forgot-password reset.
 - `6ab1ea3` 2026-07-26 Ship /discogs release and catalog-number listening guides with OPS token UI.
 - `53e7437` 2026-07-26 Ship identity catalog, Hans/Hant locales, web research, and knowledge plane.
@@ -43,7 +44,6 @@ Generated at: `2026-07-27T09:44:55+00:00`
 
 - `M` `AGENTS.md`
 - `M` `CLAUDE.md`
-- `M` `README.md`
 - `M` `aulos-agent/.aries_harness/INDEX.md`
 - `M` `aulos-agent/.aries_harness/history/DAILY_SUMMARY_INDEX.md`
 - `M` `aulos-agent/.aries_harness/history/DOC_TRACE.md`
@@ -53,3 +53,4 @@ Generated at: `2026-07-27T09:44:55+00:00`
 - `M` `aulos-agent/.aries_harness/history/STATUS.md`
 - `M` `aulos-agent/.aries_harness/history/TIMELINE.md`
 - `M` `aulos-agent/.aries_harness/history/daily/2026-07-25.md`
+- `M` `aulos-agent/.aries_harness/history/daily/2026-07-26.md`

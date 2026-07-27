@@ -21,24 +21,13 @@ logger = logging.getLogger("aulos_api.dev_blog")
 
 DAY_RE = re.compile(r"^\d{4}-\d{2}-\d{2}$")
 
-SECTION_FEATURES = "## 今天产品多了什么"
-SECTION_STORIES = "## 谁因此更好用了"
-SECTION_ARCHITECTURE = "## 系统怎么搭起来的"
-
-SYSTEM_PROMPT = """你是 Aulos 产品编辑，把一天的开发证据写成普通人能读懂的中文博客。
-
-硬性要求：
-1. 只用简体中文。
-2. 正文必须恰好包含这三个二级标题（顺序固定、措辞一字不差）：
-   ## 今天产品多了什么
-   ## 谁因此更好用了
-   ## 系统怎么搭起来的
-3. 从「产品特性 / 用户故事 / 产品架构」角度写，不要堆文件路径、命令、内部代号。
-4. 首次不得不提到内部词时，用一句话解释它是干什么的。
-5. 没有证据时如实说「这一天没有可确认的产品变化」，不要编造。
-6. 开头用一行 `# 标题`，标题要像日报标题，不要写成「Git 日志」。
-7. 每节 2–5 段短文即可，便于略读。
-"""
+from aulos_api.services.dev_blog_contract import (
+    SECTION_ARCHITECTURE,
+    SECTION_FEATURES,
+    SECTION_STORIES,
+    SYSTEM_PROMPT,
+    validate_dev_blog_body,
+)
 
 MAX_COMMIT_LINES = 40
 MAX_HARNESS_CHARS = 6000
@@ -253,31 +242,35 @@ def _journal_slice_for_day(text: str, day: str) -> str:
 
 
 def render_fake_draft(evidence: DayEvidence) -> tuple[str, str]:
-    title = f"# Aulos 开发日志 · {evidence.day}"
+    title = f"Aulos 开发轨迹 · {evidence.day}"
     commit_bits = [c.get("subject", "").strip() for c in evidence.commits if c.get("subject")]
-    if commit_bits:
-        feature_body = (
-            "根据当天提交，产品侧大致推进了这些方向：\n\n"
-            + "\n".join(f"- {s}" for s in commit_bits[:8])
-            + "\n\n（这是离线草稿，配置真实 LLM 后可重新生成更顺的叙述。）"
-        )
+    harness_projects = sorted({h.get("project", "") for h in evidence.harness_excerpts if h.get("project")})
+
+    if commit_bits or harness_projects:
+        feature_lines = [f"- Git：{s}" for s in commit_bits[:8]]
+        if harness_projects:
+            feature_lines.append(f"- Harness 涉及子项目：{', '.join(harness_projects)}")
+        if evidence.changed_harness_paths:
+            feature_lines.append(
+                f"- 当日变更 REQ/SPEC/故事 {len(evidence.changed_harness_paths)} 处（见 evidence）"
+            )
+        feature_body = "当日可核对变更：\n\n" + "\n".join(feature_lines)
         story_body = (
-            "这些改动主要让运维与听赏相关用户更省事："
-            "例如配置集中到 Ops、听赏流程更稳、知识检索更准。"
-            "若某条提交只是内部整理，对用户几乎无感，也会在此如实说明。"
+            "影响范围需结合上表判断：若仅为测试、Harness 整理或内部重构，"
+            "则终端用户无可见变化；若涉及门户、导赏、鉴权或 Ops 配置，则对应角色可见。"
         )
         arch_body = (
-            "系统层面，当天工作落在网关、Ops 门户、技能包或知识面之间的衔接上。"
-            "证据来自整仓 Git 与各子项目的 harness 日记，而不是口头转述。"
+            "证据来源为整仓 Git log 与各子项目 Harness JOURNAL / history daily。"
+            "具体模块边界以提交说明与 SPEC 为准；离线 fake 草稿不做推断。"
         )
     else:
-        feature_body = "这一天没有可确认的产品代码提交。若 harness 日记有备忘，也尚未形成可对外讲的功能点。"
-        story_body = "对用户而言，这一天没有可验证的体验变化。"
-        arch_body = "架构故事空缺——等待有证据的一天再写。"
+        feature_body = "当日无可确认的 Git 提交或 Harness 摘录。"
+        story_body = "无终端用户可见变化。"
+        arch_body = "无架构层变更记录。"
 
     body = "\n\n".join(
         [
-            title,
+            f"# {title}",
             SECTION_FEATURES,
             feature_body,
             SECTION_STORIES,
@@ -286,7 +279,7 @@ def render_fake_draft(evidence: DayEvidence) -> tuple[str, str]:
             arch_body,
         ]
     )
-    return f"Aulos 开发日志 · {evidence.day}", body
+    return title, body
 
 
 def parse_title_from_markdown(body: str, day: str) -> str:
@@ -324,6 +317,9 @@ async def draft_body(db: Session, evidence: DayEvidence) -> tuple[str, str, str]
         return title, body, "fake"
     reply, provider = live
     body = ensure_sections(reply.strip())
+    warnings = validate_dev_blog_body(body)
+    if warnings:
+        logger.warning("dev_blog_contract_warnings day=%s %s", evidence.day, "; ".join(warnings))
     title = parse_title_from_markdown(body, evidence.day)
     return title, body, provider or cfg.active_provider
 
@@ -337,6 +333,7 @@ def post_to_dict(row: DevBlogPost, *, include_body: bool = True) -> dict[str, An
     except json.JSONDecodeError:
         evidence = {}
     out: dict[str, Any] = {
+        "id": row.id,
         "day": row.day,
         "title": row.title,
         "provider": row.provider,
@@ -348,14 +345,98 @@ def post_to_dict(row: DevBlogPost, *, include_body: bool = True) -> dict[str, An
     return out
 
 
-def list_posts(db: Session) -> list[dict[str, Any]]:
-    rows = db.query(DevBlogPost).order_by(DevBlogPost.day.desc()).all()
+def list_posts(
+    db: Session,
+    *,
+    day: str | None = None,
+    day_from: str | None = None,
+    day_to: str | None = None,
+    q: str | None = None,
+    limit: int = 100,
+) -> list[dict[str, Any]]:
+    query = db.query(DevBlogPost)
+    if day:
+        day = validate_day(day)
+        query = query.filter(DevBlogPost.day == day)
+    if day_from:
+        day_from = validate_day(day_from)
+        query = query.filter(DevBlogPost.day >= day_from)
+    if day_to:
+        day_to = validate_day(day_to)
+        query = query.filter(DevBlogPost.day <= day_to)
+    needle = (q or "").strip()
+    if needle:
+        like = f"%{needle}%"
+        query = query.filter(
+            (DevBlogPost.title.ilike(like)) | (DevBlogPost.body_md.ilike(like))
+        )
+    rows = (
+        query.order_by(DevBlogPost.generated_at.desc(), DevBlogPost.id.desc())
+        .limit(max(1, min(limit, 200)))
+        .all()
+    )
     return [post_to_dict(r, include_body=False) for r in rows]
 
 
-def get_post(db: Session, day: str) -> DevBlogPost | None:
+def get_post_by_id(db: Session, post_id: int) -> DevBlogPost | None:
+    if post_id < 1:
+        return None
+    return db.query(DevBlogPost).filter(DevBlogPost.id == post_id).one_or_none()
+
+
+def get_latest_post_for_day(db: Session, day: str) -> DevBlogPost | None:
     day = validate_day(day)
-    return db.query(DevBlogPost).filter(DevBlogPost.day == day).one_or_none()
+    return (
+        db.query(DevBlogPost)
+        .filter(DevBlogPost.day == day)
+        .order_by(DevBlogPost.generated_at.desc(), DevBlogPost.id.desc())
+        .first()
+    )
+
+
+async def generate_post(
+    db: Session,
+    day: str,
+    *,
+    post_id: int | None = None,
+    repo_root: Path | None = None,
+) -> DevBlogPost:
+    """Create a new post, or rewrite an existing one when post_id is set."""
+    day = validate_day(day)
+    evidence = collect_day_evidence(day, repo_root=repo_root)
+    title, body, provider = await draft_body(db, evidence)
+    payload = json.dumps(evidence.to_public(), ensure_ascii=False)
+    now = utcnow()
+
+    if post_id is not None:
+        existing = get_post_by_id(db, post_id)
+        if existing is None:
+            raise ValueError(f"post_id {post_id} not found")
+        existing.day = day
+        existing.title = title
+        existing.body_md = body
+        existing.evidence_json = payload
+        existing.provider = provider
+        existing.generated_at = now
+        row = existing
+    else:
+        row = DevBlogPost(
+            day=day,
+            title=title,
+            body_md=body,
+            evidence_json=payload,
+            provider=provider,
+            generated_at=now,
+        )
+        db.add(row)
+    db.commit()
+    db.refresh(row)
+    return row
+
+
+# Back-compat aliases
+def get_post(db: Session, day: str) -> DevBlogPost | None:
+    return get_latest_post_for_day(db, day)
 
 
 async def generate_or_load(
@@ -363,34 +444,14 @@ async def generate_or_load(
     day: str,
     *,
     force: bool = False,
+    post_id: int | None = None,
     repo_root: Path | None = None,
 ) -> DevBlogPost:
-    day = validate_day(day)
-    existing = get_post(db, day)
-    if existing is not None and not force:
-        return existing
-
-    evidence = collect_day_evidence(day, repo_root=repo_root)
-    title, body, provider = await draft_body(db, evidence)
-    payload = json.dumps(evidence.to_public(), ensure_ascii=False)
-
-    if existing is None:
-        row = DevBlogPost(
-            day=day,
-            title=title,
-            body_md=body,
-            evidence_json=payload,
-            provider=provider,
-            generated_at=utcnow(),
-        )
-        db.add(row)
-    else:
-        existing.title = title
-        existing.body_md = body
-        existing.evidence_json = payload
-        existing.provider = provider
-        existing.generated_at = utcnow()
-        row = existing
-    db.commit()
-    db.refresh(row)
-    return row
+    """Legacy entry: force+post_id rewrites; otherwise always creates a new post."""
+    if force and post_id is not None:
+        return await generate_post(db, day, post_id=post_id, repo_root=repo_root)
+    if force and post_id is None:
+        existing = get_latest_post_for_day(db, day)
+        if existing is not None:
+            return await generate_post(db, day, post_id=existing.id, repo_root=repo_root)
+    return await generate_post(db, day, repo_root=repo_root)

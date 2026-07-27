@@ -1,13 +1,16 @@
 import { useCallback, useEffect, useState } from 'react'
 import type { FormEvent } from 'react'
 import {
-  fetchDevBlog,
   fetchDevBlogList,
+  fetchDevBlogPost,
   generateDevBlog,
+  waitForOpsTask,
+  type DevBlogListFilters,
   type DevBlogPost,
   type DevBlogSummary,
 } from './api'
 import { formatDateTime } from './time'
+import { DevBlogMarkdown } from './devBlogMarkdown'
 
 type Props = {
   busy: boolean
@@ -20,74 +23,45 @@ function utcToday(): string {
   return new Date().toISOString().slice(0, 10)
 }
 
-/** Lightweight markdown → React for blog reading (no extra deps). */
-function BlogMarkdown({ source }: { source: string }) {
-  const blocks = source.replace(/\r\n/g, '\n').split(/\n\n+/)
-  return (
-    <div className="dev-blog-prose">
-      {blocks.map((block, i) => {
-        const lines = block.split('\n')
-        const first = lines[0]?.trim() ?? ''
-        if (first.startsWith('# ')) {
-          return (
-            <h3 key={i} className="dev-blog-h1">
-              {first.slice(2)}
-            </h3>
-          )
-        }
-        if (first.startsWith('## ')) {
-          return (
-            <h4 key={i} className="dev-blog-h2">
-              {first.slice(3)}
-            </h4>
-          )
-        }
-        if (lines.every((l) => l.trim().startsWith('- ') || l.trim() === '')) {
-          return (
-            <ul key={i} className="dev-blog-list">
-              {lines
-                .filter((l) => l.trim().startsWith('- '))
-                .map((l, j) => (
-                  <li key={j}>{l.trim().slice(2)}</li>
-                ))}
-            </ul>
-          )
-        }
-        return (
-          <p key={i} className="dev-blog-p">
-            {lines.join(' ')}
-          </p>
-        )
-      })}
-    </div>
-  )
-}
-
 export function DevBlogPanel({ busy, setBusy, setError, setNotice }: Props) {
   const [rows, setRows] = useState<DevBlogSummary[]>([])
-  const [selectedDay, setSelectedDay] = useState<string>(utcToday())
-  const [dayInput, setDayInput] = useState(utcToday())
+  const [selectedId, setSelectedId] = useState<number | null>(null)
+  const [evidenceDay, setEvidenceDay] = useState(utcToday())
+  const [filterDay, setFilterDay] = useState('')
+  const [filterFrom, setFilterFrom] = useState('')
+  const [filterTo, setFilterTo] = useState('')
+  const [keyword, setKeyword] = useState('')
   const [post, setPost] = useState<DevBlogPost | null>(null)
   const [showEvidence, setShowEvidence] = useState(false)
 
-  const refreshList = useCallback(async () => {
-    const list = await fetchDevBlogList()
-    setRows(list)
-  }, [])
+  const listFilters = useCallback((): DevBlogListFilters => {
+    const f: DevBlogListFilters = { limit: 100 }
+    if (filterDay.trim()) f.day = filterDay.trim()
+    if (filterFrom.trim()) f.dayFrom = filterFrom.trim()
+    if (filterTo.trim()) f.dayTo = filterTo.trim()
+    if (keyword.trim()) f.q = keyword.trim()
+    return f
+  }, [filterDay, filterFrom, filterTo, keyword])
 
-  const loadDay = useCallback(
-    async (day: string) => {
-      setSelectedDay(day)
-      setDayInput(day)
-      try {
-        const data = await fetchDevBlog(day)
-        setPost(data)
-      } catch {
-        setPost(null)
-      }
+  const applyFilters = useCallback(
+    async (overrides?: Partial<DevBlogListFilters>) => {
+      const f: DevBlogListFilters = { limit: 100, ...listFilters(), ...overrides }
+      const list = await fetchDevBlogList(f)
+      setRows(list)
+      if (overrides?.day) setFilterDay(overrides.day)
+      return list
     },
-    [],
+    [listFilters],
   )
+
+  const refreshList = useCallback(async () => applyFilters(), [applyFilters])
+
+  const loadPost = useCallback(async (postId: number) => {
+    setSelectedId(postId)
+    const data = await fetchDevBlogPost(postId)
+    setPost(data)
+    setEvidenceDay(data.day)
+  }, [])
 
   useEffect(() => {
     void (async () => {
@@ -103,21 +77,78 @@ export function DevBlogPanel({ busy, setBusy, setError, setNotice }: Props) {
     })()
   }, [refreshList, setBusy, setError])
 
-  const onGenerate = async (force: boolean) => {
-    const day = dayInput.trim() || utcToday()
+  const onApplyFilters = async (event: FormEvent) => {
+    event.preventDefault()
+    setBusy(true)
+    setError(null)
+    try {
+      const list = await refreshList()
+      if (list.length === 0) {
+        setPost(null)
+        setSelectedId(null)
+      }
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Filter failed')
+    } finally {
+      setBusy(false)
+    }
+  }
+
+  const onClearFilters = () => {
+    setFilterDay('')
+    setFilterFrom('')
+    setFilterTo('')
+    setKeyword('')
+    setBusy(true)
+    setError(null)
+    void fetchDevBlogList({ limit: 100 })
+      .then((list) => setRows(list))
+      .catch((err) => setError(err instanceof Error ? err.message : 'Clear failed'))
+      .finally(() => setBusy(false))
+  }
+
+  const onFilterByRowDay = (day: string) => {
+    setFilterDay(day)
+    setFilterFrom('')
+    setFilterTo('')
+    void applyFilters({ day, dayFrom: undefined, dayTo: undefined }).catch((err) =>
+      setError(err instanceof Error ? err.message : 'Filter failed'),
+    )
+  }
+
+  const resolvePostFromTask = async (taskId: number, immediatePostId?: number | null) => {
+    if (immediatePostId) {
+      await loadPost(immediatePostId)
+      return
+    }
+    const done = await waitForOpsTask(taskId)
+    if (done.status === 'failed') {
+      throw new Error(done.error_detail || `Task ${taskId} failed`)
+    }
+    const postId = done.result?.post_id
+    if (typeof postId === 'number') {
+      await loadPost(postId)
+    }
+  }
+
+  const onGenerate = async () => {
+    const day = evidenceDay.trim() || utcToday()
+    if (!/^\d{4}-\d{2}-\d{2}$/.test(day)) {
+      setError('Evidence day must be YYYY-MM-DD (UTC)')
+      return
+    }
     setBusy(true)
     setError(null)
     setNotice(null)
     try {
-      const data = await generateDevBlog(day, force)
-      setPost(data)
-      setSelectedDay(data.day)
-      setDayInput(data.day)
+      const accepted = await generateDevBlog(day)
+      await resolvePostFromTask(accepted.task_id, accepted.post_id)
+      setEvidenceDay(day)
       await refreshList()
       setNotice(
-        data.provider === 'fake'
-          ? `Draft for ${data.day} ready (fake LLM — configure a live provider under LLM for richer prose).`
-          : `Blog for ${data.day} generated via ${data.provider}.`,
+        accepted.status === 'completed'
+          ? `Blog task #${accepted.task_id} completed.`
+          : `Blog task #${accepted.task_id} queued — refresh or open Tasks tab.`,
       )
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Generate failed')
@@ -126,19 +157,19 @@ export function DevBlogPanel({ busy, setBusy, setError, setNotice }: Props) {
     }
   }
 
-  const onPickDay = async (event: FormEvent) => {
-    event.preventDefault()
-    const day = dayInput.trim()
-    if (!/^\d{4}-\d{2}-\d{2}$/.test(day)) {
-      setError('Day must be YYYY-MM-DD (UTC)')
-      return
-    }
+  const onRegenerate = async () => {
+    if (!post) return
+    const day = evidenceDay.trim() || post.day
     setBusy(true)
     setError(null)
+    setNotice(null)
     try {
-      await loadDay(day)
+      const accepted = await generateDevBlog(day, { force: true, postId: post.id })
+      await resolvePostFromTask(accepted.task_id, accepted.post_id)
+      await refreshList()
+      setNotice(`Regenerated via task #${accepted.task_id}.`)
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Load failed')
+      setError(err instanceof Error ? err.message : 'Regenerate failed')
     } finally {
       setBusy(false)
     }
@@ -162,49 +193,92 @@ export function DevBlogPanel({ busy, setBusy, setError, setNotice }: Props) {
         </button>
       </div>
       <p className="settings-lead">
-        One monorepo story per UTC day — product features, who it helps, and how the system
-        changed. Written for humans from git + harness evidence.
+        Internal development trace — factual summaries from git + harness evidence. On-demand
+        generation; not for external publish. See SPEC-017 writing contract.
       </p>
 
-      <form className="dev-blog-toolbar" onSubmit={(e) => void onPickDay(e)}>
+      <form className="dev-blog-toolbar dev-blog-filters" onSubmit={(e) => void onApplyFilters(e)}>
         <label>
-          Day (UTC)
+          Evidence day (generate)
           <input
             type="date"
-            value={dayInput}
-            onChange={(e) => setDayInput(e.target.value)}
+            value={evidenceDay}
+            onChange={(e) => setEvidenceDay(e.target.value)}
             disabled={busy}
           />
         </label>
-        <button type="submit" disabled={busy}>
-          Open
-        </button>
-        <button type="button" disabled={busy} onClick={() => void onGenerate(false)}>
-          {busy ? 'Working…' : 'Generate'}
+        <button type="button" disabled={busy} onClick={() => void onGenerate()}>
+          {busy ? 'Working…' : 'Generate new'}
         </button>
         <button
           type="button"
           className="ghost"
           disabled={busy || !post}
-          onClick={() => void onGenerate(true)}
+          onClick={() => void onRegenerate()}
         >
-          Regenerate
+          Regenerate selected
+        </button>
+      </form>
+
+      <form className="dev-blog-toolbar dev-blog-filters" onSubmit={(e) => void onApplyFilters(e)}>
+        <label>
+          Exact day
+          <input
+            type="date"
+            value={filterDay}
+            onChange={(e) => setFilterDay(e.target.value)}
+            disabled={busy}
+          />
+        </label>
+        <label>
+          From
+          <input
+            type="date"
+            value={filterFrom}
+            onChange={(e) => setFilterFrom(e.target.value)}
+            disabled={busy}
+          />
+        </label>
+        <label>
+          To
+          <input
+            type="date"
+            value={filterTo}
+            onChange={(e) => setFilterTo(e.target.value)}
+            disabled={busy}
+          />
+        </label>
+        <label className="dev-blog-keyword">
+          Keyword
+          <input
+            type="search"
+            placeholder="标题或正文关键词"
+            value={keyword}
+            onChange={(e) => setKeyword(e.target.value)}
+            disabled={busy}
+          />
+        </label>
+        <button type="submit" disabled={busy}>
+          Search
+        </button>
+        <button type="button" className="ghost" disabled={busy} onClick={onClearFilters}>
+          Clear
         </button>
       </form>
 
       <div className="dev-blog-layout">
-        <aside className="dev-blog-days" aria-label="Cached blog days">
-          <h3 className="dev-blog-aside-title">Saved days</h3>
+        <aside className="dev-blog-days" aria-label="Saved posts">
+          <h3 className="dev-blog-aside-title">Posts ({rows.length})</h3>
           {rows.length === 0 ? (
-            <p className="meta">No posts yet — pick a day and generate.</p>
+            <p className="meta">No posts match — generate one or clear filters.</p>
           ) : (
             <ul className="dev-blog-day-list">
               {rows.map((row) => (
-                <li key={row.day}>
+                <li key={row.id}>
                   <button
                     type="button"
                     className={
-                      row.day === selectedDay ? 'dev-blog-day active' : 'dev-blog-day'
+                      row.id === selectedId ? 'dev-blog-day active' : 'dev-blog-day'
                     }
                     disabled={busy}
                     onClick={() =>
@@ -212,7 +286,7 @@ export function DevBlogPanel({ busy, setBusy, setError, setNotice }: Props) {
                         setBusy(true)
                         setError(null)
                         try {
-                          await loadDay(row.day)
+                          await loadPost(row.id)
                         } catch (err) {
                           setError(err instanceof Error ? err.message : 'Load failed')
                         } finally {
@@ -221,10 +295,30 @@ export function DevBlogPanel({ busy, setBusy, setError, setNotice }: Props) {
                       })()
                     }
                   >
-                    <span className="dev-blog-day-date">{row.day}</span>
+                    <span className="dev-blog-day-date">
+                      {row.day}
+                      <span className="dev-blog-post-id">#{row.id}</span>
+                    </span>
                     <span className="dev-blog-day-title">{row.title || 'Untitled'}</span>
                     <span className="dev-blog-day-meta">
                       {row.provider} · {formatDateTime(row.generated_at)}
+                    </span>
+                    <span
+                      role="link"
+                      className="dev-blog-filter-day"
+                      onClick={(e) => {
+                        e.stopPropagation()
+                        onFilterByRowDay(row.day)
+                      }}
+                      onKeyDown={(e) => {
+                        if (e.key === 'Enter') {
+                          e.stopPropagation()
+                          onFilterByRowDay(row.day)
+                        }
+                      }}
+                      tabIndex={0}
+                    >
+                      Filter {row.day}
                     </span>
                   </button>
                 </li>
@@ -236,14 +330,14 @@ export function DevBlogPanel({ busy, setBusy, setError, setNotice }: Props) {
         <article className="dev-blog-article" aria-live="polite">
           {!post ? (
             <p className="meta">
-              No cached post for {selectedDay}. Generate one from today&apos;s git + harness
-              evidence.
+              Select a post from the list, or generate a new story from an evidence day.
             </p>
           ) : (
             <>
               <header className="dev-blog-article-head">
                 <p className="meta">
-                  {post.day} · {post.provider} · {formatDateTime(post.generated_at)}
+                  #{post.id} · evidence {post.day} · {post.provider} ·{' '}
+                  {formatDateTime(post.generated_at)}
                 </p>
                 <button
                   type="button"
@@ -253,7 +347,7 @@ export function DevBlogPanel({ busy, setBusy, setError, setNotice }: Props) {
                   {showEvidence ? 'Hide evidence' : 'Show evidence'}
                 </button>
               </header>
-              <BlogMarkdown source={post.body_md} />
+              <DevBlogMarkdown source={post.body_md} />
               {showEvidence && post.evidence ? (
                 <div className="dev-blog-evidence">
                   <h4>Evidence</h4>

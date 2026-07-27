@@ -8,10 +8,10 @@ managed_by: "aries-harness"
 fingerprint: "aries-harness/bootstrap-doc/v1"
 generated_by: "/aries-harness well-organized"
 initialized_at: "2026-07-25T11:20:05Z"
-last_organized_at: "2026-07-27T09:44:25+00:00"
+last_organized_at: "2026-07-27T10:24:56+00:00"
 effective_status: "generated"
-effective_since: "2026-07-27T09:44:25+00:00"
-content_fingerprint: "sha256:cd21791737792eec3d232707b51eed814d331dbf212a3927da93b578a06b1888"
+effective_since: "2026-07-27T10:24:56+00:00"
+content_fingerprint: "sha256:6badbd2bfbad3707e41025d8992b48a0950f54a04f4e8e4f26b5852a474abd00"
 trace_history_source: "filesystem-only"
 trace_last_commit_sha: ""
 trace_last_commit_at: ""
@@ -19,7 +19,7 @@ trace_revision_count: "0"
 ---
 # Harness Index
 
-Last organized: `2026-07-27T09:44:25+00:00`
+Last organized: `2026-07-27T10:24:56+00:00`
 
 Canonical spelling: `/aries-harness well-organized`
 
@@ -82,6 +82,7 @@ Fingerprint marker: `aries-harness` / `aries-harness/bootstrap-doc/v1`
 - [SPEC-008-work-identity-and-resolver.md](references/specs/SPEC-008-work-identity-and-resolver.md)
 - [SPEC-009-node-decontam-rework.md](references/specs/SPEC-009-node-decontam-rework.md)
 - [SPEC-016-module-split-seams.md](references/specs/SPEC-016-module-split-seams.md)
+- [SPEC-017-dev-blog-writing-contract.md](references/specs/SPEC-017-dev-blog-writing-contract.md)
 
 #### `references/stories/`
 - role: sprintable slices linked to specs and verification

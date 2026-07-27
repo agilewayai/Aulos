@@ -8,10 +8,10 @@ managed_by: "aries-harness"
 fingerprint: "aries-harness/history-doc/v1"
 generated_by: "/aries-harness history-refresh"
 initialized_at: "2026-07-25T11:07:42Z"
-generated_at: "2026-07-27T09:44:38+00:00"
+generated_at: "2026-07-27T10:25:13+00:00"
 effective_status: "generated"
-effective_since: "2026-07-27T09:44:38+00:00"
-content_fingerprint: "sha256:54c7c1580e467b6ff8121eb0eaf2c1722fc996264faad0fbbb8abdbcf05d5375"
+effective_since: "2026-07-27T10:25:13+00:00"
+content_fingerprint: "sha256:e0e49e8576c1087a622b6908ece915ae2b5710ef125aa479b7d0fd34cad9fd41"
 trace_history_source: "filesystem-only"
 trace_last_commit_sha: ""
 trace_last_commit_at: ""
@@ -19,7 +19,7 @@ trace_revision_count: "0"
 ---
 # Timeline
 
-Generated at: `2026-07-27T09:44:38+00:00`
+Generated at: `2026-07-27T10:25:13+00:00`
 
 ## Journal milestones
 
@@ -72,6 +72,7 @@ Generated at: `2026-07-27T09:44:38+00:00`
 
 ## Recent git commits
 
+- `c3009d2` 2026-07-27 Harden platform security, ship fleet DevOps control, and refresh harness honeycomb.
 - `0c8a847` 2026-07-27 Ship Ops daily Dev Blog and web forgot-password reset.
 - `6ab1ea3` 2026-07-26 Ship /discogs release and catalog-number listening guides with OPS token UI.
 - `53e7437` 2026-07-26 Ship identity catalog, Hans/Hant locales, web research, and knowledge plane.
@@ -84,13 +85,13 @@ Generated at: `2026-07-27T09:44:38+00:00`
 
 - `M` `AGENTS.md`
 - `M` `CLAUDE.md`
-- `M` `README.md`
-- `M` `aulos-api/.aries_harness/EVAL.md`
 - `M` `aulos-api/.aries_harness/INDEX.md`
 - `M` `aulos-api/.aries_harness/JOURNAL.md`
 - `M` `aulos-api/.aries_harness/STATE.md`
-- `M` `aulos-api/.aries_harness/TASK_STACK.md`
 - `M` `aulos-api/.aries_harness/history/DAILY_SUMMARY_INDEX.md`
 - `M` `aulos-api/.aries_harness/history/DOC_TRACE.md`
 - `M` `aulos-api/.aries_harness/history/README.md`
 - `M` `aulos-api/.aries_harness/history/RETROSPECTIVE.md`
+- `M` `aulos-api/.aries_harness/history/ROADMAP.md`
+- `M` `aulos-api/.aries_harness/history/STATUS.md`
+- `M` `aulos-api/.aries_harness/history/TIMELINE.md`

@@ -9,7 +9,7 @@ Hackathon monorepo for the Aulos initiative. Sub-projects each have their own `A
 1. Work in the relevant sub-project root; keep that project’s `.aries_harness/` current.
 2. Before behavior changes: read `MISSION` / `STATE`; write or update REQ/SPEC; update `TASK_STACK`.
 3. Coding loop: **TDD** Red → Green → Refactor inside Inspect → Plan → Verify → Summarize.
-4. After the slice: `JOURNAL` + `history-refresh`; update `EVAL` / VR when gates change; promote insights when lessons must change future runs.
+4. After the slice: `JOURNAL` + **Honeycomb** (`well-organized` + `history-refresh`); update `EVAL` / VR when gates change; promote insights when lessons must change future runs.
 5. **Chat-only fixes without harness artifacts are incomplete** (see `aulos-skills` AUDIT-001).
 
 Also:
@@ -20,6 +20,7 @@ Also:
 - **Chinese UI** — 简体 (`zh-Hans`) / 繁体 (`zh-Hant`) only; no regional locale codes in OSS source.
 - **Listening identity** — Catalog + IdentityResolver; no composer/work hardcoding in Python.
 - **DB closeout** — Postgres is hot; after model changes, ship `schema_patches` + verify PG columns (SQLite pilot ≠ production).
+- **Honeycomb** — fleet harness closeout: `bash deploy/honeycomb.sh` (= `well-organized` + `history-refresh` per project). See `aulos-operating-defaults`.
 
 Canonical policy: [`aulos-skills/skills/aulos-operating-defaults/SKILL.md`](aulos-skills/skills/aulos-operating-defaults/SKILL.md)
 
@@ -52,6 +53,7 @@ Work inside the relevant sub-project root unless the task is explicitly workspac
 | Preflight | `bash deploy/aulos-ctl.sh doctor` |
 | Post-deploy smoke | `bash deploy/aulos-ctl.sh smoke` |
 | First-time secrets | `bash deploy/aulos-ctl.sh secrets init` → edit `.run/host.env` |
+| Harness Honeycomb | `bash deploy/honeycomb.sh` |
 
 Runbook: [`deploy/OPS.md`](deploy/OPS.md). Quick reference: [`deploy/README.md`](deploy/README.md).
 

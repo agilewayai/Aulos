@@ -168,7 +168,7 @@ class DevBlogPost(Base):
     __tablename__ = "dev_blog_posts"
 
     id: Mapped[int] = mapped_column(Integer, primary_key=True)
-    day: Mapped[str] = mapped_column(String(10), unique=True, nullable=False, index=True)
+    day: Mapped[str] = mapped_column(String(10), nullable=False, index=True)
     title: Mapped[str] = mapped_column(String(255), default="")
     body_md: Mapped[str] = mapped_column(Text, default="")
     evidence_json: Mapped[str] = mapped_column(Text, default="{}")
@@ -178,3 +178,25 @@ class DevBlogPost(Base):
         default=utcnow,
         index=True,
     )
+
+
+class OpsTask(Base):
+    """Durable Ops background task (SPEC-018) — dev blog, future slow jobs."""
+
+    __tablename__ = "ops_tasks"
+
+    id: Mapped[int] = mapped_column(Integer, primary_key=True)
+    task_type: Mapped[str] = mapped_column(String(64), nullable=False, index=True)
+    source: Mapped[str] = mapped_column(String(64), nullable=False, index=True)
+    status: Mapped[str] = mapped_column(String(16), default="queued", index=True)
+    payload_json: Mapped[str] = mapped_column(Text, default="{}")
+    result_json: Mapped[str] = mapped_column(Text, default="{}")
+    error_detail: Mapped[str] = mapped_column(Text, default="")
+    created_by_user_id: Mapped[int | None] = mapped_column(
+        ForeignKey("users.id", ondelete="SET NULL"),
+        nullable=True,
+        index=True,
+    )
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=utcnow, index=True)
+    started_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True), nullable=True)
+    finished_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True), nullable=True)

@@ -101,6 +101,124 @@ def apply_listening_guide_patches(engine: Engine) -> list[str]:
     return applied
 
 
+def apply_dev_blog_patches(engine: Engine) -> list[str]:
+    """Allow multiple posts per evidence day; index for list/search."""
+    applied: list[str] = []
+    dialect = engine.dialect.name
+    with engine.begin() as conn:
+        insp = inspect(conn)
+        if not insp.has_table("dev_blog_posts"):
+            return applied
+
+        if dialect == "postgresql":
+            for stmt, change_id in (
+                (
+                    "ALTER TABLE dev_blog_posts DROP CONSTRAINT IF EXISTS dev_blog_posts_day_key",
+                    "dev_blog_posts.drop_day_unique",
+                ),
+                (
+                    "DROP INDEX IF EXISTS ix_dev_blog_posts_day_unique",
+                    "dev_blog_posts.drop_day_unique_idx",
+                ),
+                (
+                    "DROP INDEX IF EXISTS ix_dev_blog_posts_day",
+                    "dev_blog_posts.drop_day_unique_ix",
+                ),
+            ):
+                try:
+                    conn.execute(text(stmt))
+                    applied.append(change_id)
+                except Exception as exc:  # noqa: BLE001
+                    logger.warning("schema_patch_skip change=%s err=%s", change_id, exc)
+
+        for idx_sql, change_id in (
+            (
+                "CREATE INDEX IF NOT EXISTS ix_dev_blog_posts_day "
+                "ON dev_blog_posts (day)",
+                "dev_blog_posts.ix_day",
+            ),
+            (
+                "CREATE INDEX IF NOT EXISTS ix_dev_blog_posts_generated_at "
+                "ON dev_blog_posts (generated_at)",
+                "dev_blog_posts.ix_generated_at",
+            ),
+        ):
+            try:
+                conn.execute(text(idx_sql))
+                if change_id not in applied:
+                    applied.append(change_id)
+            except Exception as exc:  # noqa: BLE001
+                logger.warning("schema_index_skip change=%s err=%s", change_id, exc)
+
+    return applied
+
+
+def apply_ops_tasks_patches(engine: Engine) -> list[str]:
+    """Create ops_tasks table for durable background jobs."""
+    applied: list[str] = []
+    dialect = engine.dialect.name
+    with engine.begin() as conn:
+        insp = inspect(conn)
+        if insp.has_table("ops_tasks"):
+            return applied
+        if dialect == "postgresql":
+            conn.execute(
+                text(
+                    """
+                    CREATE TABLE ops_tasks (
+                        id SERIAL PRIMARY KEY,
+                        task_type VARCHAR(64) NOT NULL,
+                        source VARCHAR(64) NOT NULL,
+                        status VARCHAR(16) NOT NULL DEFAULT 'queued',
+                        payload_json TEXT NOT NULL DEFAULT '{}',
+                        result_json TEXT NOT NULL DEFAULT '{}',
+                        error_detail TEXT NOT NULL DEFAULT '',
+                        created_by_user_id INTEGER REFERENCES users(id) ON DELETE SET NULL,
+                        created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+                        started_at TIMESTAMPTZ,
+                        finished_at TIMESTAMPTZ
+                    )
+                    """
+                )
+            )
+        else:
+            conn.execute(
+                text(
+                    """
+                    CREATE TABLE ops_tasks (
+                        id INTEGER PRIMARY KEY AUTOINCREMENT,
+                        task_type VARCHAR(64) NOT NULL,
+                        source VARCHAR(64) NOT NULL,
+                        status VARCHAR(16) NOT NULL DEFAULT 'queued',
+                        payload_json TEXT NOT NULL DEFAULT '{}',
+                        result_json TEXT NOT NULL DEFAULT '{}',
+                        error_detail TEXT NOT NULL DEFAULT '',
+                        created_by_user_id INTEGER REFERENCES users(id),
+                        created_at DATETIME NOT NULL,
+                        started_at DATETIME,
+                        finished_at DATETIME
+                    )
+                    """
+                )
+            )
+        applied.append("ops_tasks.create")
+        for idx_sql, change_id in (
+            ("CREATE INDEX IF NOT EXISTS ix_ops_tasks_task_type ON ops_tasks (task_type)", "ops_tasks.ix_task_type"),
+            ("CREATE INDEX IF NOT EXISTS ix_ops_tasks_source ON ops_tasks (source)", "ops_tasks.ix_source"),
+            ("CREATE INDEX IF NOT EXISTS ix_ops_tasks_status ON ops_tasks (status)", "ops_tasks.ix_status"),
+            ("CREATE INDEX IF NOT EXISTS ix_ops_tasks_created_at ON ops_tasks (created_at)", "ops_tasks.ix_created_at"),
+        ):
+            try:
+                conn.execute(text(idx_sql))
+                applied.append(change_id)
+            except Exception as exc:  # noqa: BLE001
+                logger.warning("schema_index_skip change=%s err=%s", change_id, exc)
+    return applied
+
+
 def apply_all_schema_patches(engine: Engine) -> list[str]:
     """Run every registered business-schema patch against one engine."""
-    return apply_listening_guide_patches(engine)
+    out = apply_listening_guide_patches(engine)
+    out.extend(apply_dev_blog_patches(engine))
+    out.extend(apply_ops_tasks_patches(engine))
+    return out

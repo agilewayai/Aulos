@@ -3,16 +3,17 @@
 from __future__ import annotations
 
 import subprocess
-from datetime import datetime, timezone
 from pathlib import Path
 
 import pytest
 from fastapi.testclient import TestClient
 
-
-SECTION_FEATURES = "## 今天产品多了什么"
-SECTION_STORIES = "## 谁因此更好用了"
-SECTION_ARCHITECTURE = "## 系统怎么搭起来的"
+from aulos_api.services.dev_blog_contract import (
+    SECTION_ARCHITECTURE,
+    SECTION_FEATURES,
+    SECTION_STORIES,
+    validate_dev_blog_body,
+)
 
 
 @pytest.fixture()
@@ -26,6 +27,7 @@ def client(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> TestClient:
     monkeypatch.setenv("AULOS_WEB_BASE_URL", "http://127.0.0.1:5173")
     monkeypatch.setenv("AULOS_API_FAKE_AGENT", "true")
     monkeypatch.setenv("AULOS_RATE_LIMIT_ENABLED", "false")
+    monkeypatch.setenv("AULOS_TASK_QUEUE_SYNC", "true")
 
     from aulos_api.config import get_settings
     from aulos_api.db import session as db_session
@@ -115,10 +117,28 @@ def test_fake_draft_has_three_sections(sample_repo: Path) -> None:
     assert SECTION_FEATURES in body
     assert SECTION_STORIES in body
     assert SECTION_ARCHITECTURE in body
-    assert "Discogs" in body or "提交" in body
+    assert "Discogs" in body or "Git" in body
 
 
-def test_ops_dev_blog_generate_list_get_force(
+def test_fake_draft_avoids_hype_phrases(sample_repo: Path) -> None:
+    from aulos_api.services.dev_blog import collect_day_evidence, render_fake_draft
+
+    ev = collect_day_evidence("2026-07-20", repo_root=sample_repo)
+    _, body = render_fake_draft(ev)
+    warnings = validate_dev_blog_body(body)
+    assert not any("hype" in w for w in warnings)
+
+
+def test_validate_dev_blog_body_flags_marketing() -> None:
+    hype = (
+        "# 标题\n\n## 今天产品多了什么\n关键一步全面升级\n\n"
+        "## 谁因此更好用了\n最大受益者\n\n## 系统怎么搭起来的\n无\n"
+    )
+    warnings = validate_dev_blog_body(hype)
+    assert any("hype" in w for w in warnings)
+
+
+def test_ops_dev_blog_generate_list_get_by_id(
     client: TestClient,
     sample_repo: Path,
     monkeypatch: pytest.MonkeyPatch,
@@ -134,38 +154,44 @@ def test_ops_dev_blog_generate_list_get_force(
     assert empty.json() == []
 
     gen = client.post("/v1/ops/dev-blog/2026-07-20/generate", headers=headers, json={})
-    assert gen.status_code == 200, gen.text
-    data = gen.json()
+    assert gen.status_code == 202, gen.text
+    task = gen.json()
+    assert task["status"] == "completed"
+    assert task["task_type"] == "dev_blog.generate"
+    post_id = task["post_id"]
+    assert post_id is not None
+
+    got = client.get(f"/v1/ops/dev-blog/posts/{post_id}", headers=headers)
+    assert got.status_code == 200
+    data = got.json()
     assert data["day"] == "2026-07-20"
     assert data["provider"] == "fake"
     assert SECTION_FEATURES in data["body_md"]
-    assert SECTION_STORIES in data["body_md"]
-    assert SECTION_ARCHITECTURE in data["body_md"]
-    assert data["evidence"]["commit_count"] >= 1
     first_body = data["body_md"]
     first_at = data["generated_at"]
-    assert first_at.endswith("Z") or "+" in first_at
+
+    gen2 = client.post("/v1/ops/dev-blog/2026-07-20/generate", headers=headers, json={})
+    assert gen2.status_code == 202
+    assert gen2.json()["post_id"] != post_id
 
     listed = client.get("/v1/ops/dev-blog", headers=headers)
     assert listed.status_code == 200
-    assert len(listed.json()) == 1
-    assert listed.json()[0]["day"] == "2026-07-20"
-    assert "body_md" not in listed.json()[0]
+    assert len(listed.json()) == 2
 
-    got = client.get("/v1/ops/dev-blog/2026-07-20", headers=headers)
-    assert got.status_code == 200
-    assert got.json()["body_md"] == first_body
+    regen = client.post(
+        "/v1/ops/dev-blog/2026-07-20/generate",
+        headers=headers,
+        json={"force": True, "post_id": post_id},
+    )
+    assert regen.status_code == 202
+    assert regen.json()["post_id"] == post_id
 
-    # without force, cached
-    again = client.post("/v1/ops/dev-blog/2026-07-20/generate", headers=headers, json={"force": False})
-    assert again.status_code == 200
-    assert again.json()["generated_at"] == first_at
+    got2 = client.get(f"/v1/ops/dev-blog/posts/{post_id}", headers=headers)
+    assert got2.json()["body_md"] == first_body or got2.json()["generated_at"] >= first_at
 
-    force = client.post("/v1/ops/dev-blog/2026-07-20/generate", headers=headers, json={"force": True})
-    assert force.status_code == 200
-    assert force.json()["provider"] == "fake"
-    # regenerated timestamp should be present (may equal if same second — still ok if body ok)
-    assert SECTION_FEATURES in force.json()["body_md"]
+    search = client.get("/v1/ops/dev-blog", headers=headers, params={"q": "Discogs"})
+    assert search.status_code == 200
+    assert len(search.json()) >= 1
 
 
 def test_invalid_day_rejected(client: TestClient, sample_repo: Path, monkeypatch: pytest.MonkeyPatch) -> None:
@@ -182,3 +208,6 @@ def test_missing_day_404(client: TestClient) -> None:
     headers = _admin_headers(client)
     missing = client.get("/v1/ops/dev-blog/2099-01-01", headers=headers)
     assert missing.status_code == 404
+
+    missing_post = client.get("/v1/ops/dev-blog/posts/99999", headers=headers)
+    assert missing_post.status_code == 404

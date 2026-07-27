@@ -8,10 +8,10 @@ managed_by: "aries-harness"
 fingerprint: "aries-harness/history-doc/v1"
 generated_by: "/aries-harness history-refresh"
 initialized_at: "2026-07-25T11:20:05Z"
-generated_at: "2026-07-27T09:46:13+00:00"
+generated_at: "2026-07-27T10:24:56+00:00"
 effective_status: "generated"
-effective_since: "2026-07-27T09:46:13+00:00"
-content_fingerprint: "sha256:14dd78126d8c6a5bd66799a3ab9d17ea800a6a7d5af19adf99a5ee6f2d90e5cc"
+effective_since: "2026-07-27T10:24:56+00:00"
+content_fingerprint: "sha256:e5ffcfe516310789fbd8c0e19dc0ce556df7dc71ab0dda70a3315f81ff1d00f2"
 trace_history_source: "filesystem-only"
 trace_last_commit_sha: ""
 trace_last_commit_at: ""
@@ -19,7 +19,7 @@ trace_revision_count: "0"
 ---
 # Current Status
 
-Generated at: `2026-07-27T09:46:13+00:00`
+Generated at: `2026-07-27T10:24:56+00:00`
 
 ## Current phase
 
@@ -29,16 +29,16 @@ Generated at: `2026-07-27T09:46:13+00:00`
 
 - no branch or workspace details recorded
 - git branch: main
-- HEAD: `0c8a847` Ship Ops daily Dev Blog and web forgot-password reset.
+- HEAD: `c3009d2` Harden platform security, ship fleet DevOps control, and refresh harness honeycomb.
 - working tree: dirty
 - change: `M` `AGENTS.md`
 - change: `M` `CLAUDE.md`
-- change: `M` `README.md`
-- change: `M` `aulos-agent/.aries_harness/INDEX.md`
-- change: `M` `aulos-agent/.aries_harness/history/DAILY_SUMMARY_INDEX.md`
-- change: `M` `aulos-agent/.aries_harness/history/DOC_TRACE.md`
-- change: `M` `aulos-agent/.aries_harness/history/README.md`
-- change: `M` `aulos-agent/.aries_harness/history/RETROSPECTIVE.md`
+- change: `M` `aulos-api/.aries_harness/JOURNAL.md`
+- change: `M` `aulos-api/.aries_harness/STATE.md`
+- change: `M` `aulos-api/.aries_harness/references/REG-001-artifact-register.md`
+- change: `M` `aulos-api/.aries_harness/references/specs/SPEC-009-ops-dev-blog.md`
+- change: `M` `aulos-api/src/aulos_api/app.py`
+- change: `M` `aulos-api/src/aulos_api/config/settings.py`
 
 ## Current milestone
 

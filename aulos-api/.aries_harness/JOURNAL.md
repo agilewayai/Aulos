@@ -10,13 +10,27 @@ generated_by: "/aries-harness init"
 initialized_at: "2026-07-25T11:07:43Z"
 effective_status: "active"
 effective_since: "2026-07-25T11:07:43Z"
-content_fingerprint: "sha256:750a1ab6737a6302c44e4e820f4fc2a9e8f656490c784009cf1ecf156431c310"
+content_fingerprint: "sha256:b2bc0482712fad70fc036f435ec7b46347b944816fb9d1ef9e78b34284c78116"
 trace_history_source: "filesystem-only"
 trace_last_commit_sha: ""
 trace_last_commit_at: ""
 trace_revision_count: "0"
 ---
 # Journal
+
+## 2026-07-27T10:30:00Z
+
+- SPEC-018: Ops background task queue — `ops_tasks` table, Redis `aulos:ops:tasks:queue`, worker in lifespan.
+- Dev blog generate/regenerate → **202** enqueue `dev_blog.generate`; sync mode for tests (`AULOS_TASK_QUEUE_SYNC`).
+- API: `GET /v1/ops/tasks/dashboard`, `/tasks`, `/tasks/{id}`; dashboard aggregates mail + listening + ops.
+- Ops UI: **Tasks** tab (`TaskQueuePanel`), Dev Blog panel polls task completion.
+- Gates: `tests/test_task_queue.py`, `tests/test_dev_blog.py` (8 passed).
+
+## 2026-07-27T10:15:00Z
+
+- SPEC-017: Dev Blog **internal writing contract** — evidence-only, factual dev trace; no hype/emotion/external marketing.
+- `dev_blog_contract.py`: SYSTEM_PROMPT rewrite + `validate_dev_blog_body()` soft lint; fake draft aligned.
+- Promoted into SPEC-009, ops SPEC-002, REQ-002, `aulos-operating-defaults`, Ops UI lead copy.
 
 ## 2026-07-26T19:20:00Z
 

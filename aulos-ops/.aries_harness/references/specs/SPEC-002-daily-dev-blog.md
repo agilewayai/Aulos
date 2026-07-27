@@ -9,7 +9,7 @@ fingerprint: "aries-harness/feature-doc/v1"
 initialized_at: "2026-07-26T16:20:00Z"
 effective_status: "active"
 effective_since: "2026-07-26T16:20:00Z"
-content_fingerprint: "sha256:9f3a861e47b6bb7c8bd1a4a358bcdddae410468d45f12cc4ab4b305615d6c504"
+content_fingerprint: "sha256:e011b9aa62f299034044f197a12acb5108a181fade805f1ee220da11eb60eb5d"
 trace_history_source: "filesystem-only"
 trace_last_commit_sha: ""
 trace_last_commit_at: ""
@@ -29,17 +29,18 @@ trace_revision_count: "0"
 ## Behaviors
 
 1. Ops shows a **Dev Blog** tab for superadmin operators.
-2. Operator can list cached posts by UTC calendar day and open one post.
-3. Operator can generate (or force-regenerate) a post for a chosen day.
-4. Generated body is Simplified Chinese markdown with exactly these section headings:
+2. Operator can list cached posts (newest first) and open one by **post id**.
+3. Operator can **generate on demand** for any evidence UTC day — creates a **new** post each time (zero or many per day allowed).
+4. **Regenerate selected** rewrites the current post in place (`force` + `post_id`).
+5. List supports filters: exact `day`, `day_from`/`day_to` range, keyword `q` (title + body).
+6. Generated body follows **SPEC-017** internal writing contract (factual dev trace; three section headings):
    - `## 今天产品多了什么`
    - `## 谁因此更好用了`
    - `## 系统怎么搭起来的`
-5. Voice is product-facing plain language; no unexplained internal jargon or file-path walls.
-6. Evidence comes from monorepo git commits that day plus harness JOURNAL / history daily / changed REQ|SPEC|STORY paths.
-7. Posts persist via API; reopening a day does not re-call LLM unless `force=true`.
-8. When Ops LLM is `fake` or not live-ready, generate still succeeds with a deterministic template draft and `provider=fake`.
-9. Timestamps on the wire are UTC (`Z`); UI displays via `src/time.ts` OS/browser local time.
+7. Voice: engineer-to-colleague summary; no hype, emotion, or external marketing tone.
+8. Evidence comes from monorepo git commits that day plus harness JOURNAL / history daily / changed REQ|SPEC|STORY paths.
+9. When Ops LLM is `fake` or not live-ready, generate still succeeds with a deterministic factual draft and `provider=fake`.
+10. Timestamps on the wire are UTC (`Z`); UI displays via `src/time.ts` OS/browser local time.
 
 ## Acceptance heuristics
 

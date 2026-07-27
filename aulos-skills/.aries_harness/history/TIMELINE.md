@@ -8,10 +8,10 @@ managed_by: "aries-harness"
 fingerprint: "aries-harness/history-doc/v1"
 generated_by: "/aries-harness history-refresh"
 initialized_at: "2026-07-25T11:20:05Z"
-generated_at: "2026-07-27T09:46:13+00:00"
+generated_at: "2026-07-27T10:24:56+00:00"
 effective_status: "generated"
-effective_since: "2026-07-27T09:46:13+00:00"
-content_fingerprint: "sha256:1384f6a171802178788dfef7eda3234aec3f08e2b07d3a7d9458782952f5edb8"
+effective_since: "2026-07-27T10:24:56+00:00"
+content_fingerprint: "sha256:a07fa8c2b905c381217d616ae7b3ebeaa7de794ea242179cd6eb29bbd644e7db"
 trace_history_source: "filesystem-only"
 trace_last_commit_sha: ""
 trace_last_commit_at: ""
@@ -19,7 +19,7 @@ trace_revision_count: "0"
 ---
 # Timeline
 
-Generated at: `2026-07-27T09:46:13+00:00`
+Generated at: `2026-07-27T10:24:56+00:00`
 
 ## Journal milestones
 
@@ -85,6 +85,7 @@ Generated at: `2026-07-27T09:46:13+00:00`
 
 ## Recent git commits
 
+- `c3009d2` 2026-07-27 Harden platform security, ship fleet DevOps control, and refresh harness honeycomb.
 - `0c8a847` 2026-07-27 Ship Ops daily Dev Blog and web forgot-password reset.
 - `6ab1ea3` 2026-07-26 Ship /discogs release and catalog-number listening guides with OPS token UI.
 - `53e7437` 2026-07-26 Ship identity catalog, Hans/Hant locales, web research, and knowledge plane.
@@ -97,13 +98,13 @@ Generated at: `2026-07-27T09:46:13+00:00`
 
 - `M` `AGENTS.md`
 - `M` `CLAUDE.md`
-- `M` `README.md`
-- `M` `aulos-agent/.aries_harness/INDEX.md`
-- `M` `aulos-agent/.aries_harness/history/DAILY_SUMMARY_INDEX.md`
-- `M` `aulos-agent/.aries_harness/history/DOC_TRACE.md`
-- `M` `aulos-agent/.aries_harness/history/README.md`
-- `M` `aulos-agent/.aries_harness/history/RETROSPECTIVE.md`
-- `M` `aulos-agent/.aries_harness/history/ROADMAP.md`
-- `M` `aulos-agent/.aries_harness/history/STATUS.md`
-- `M` `aulos-agent/.aries_harness/history/TIMELINE.md`
-- `M` `aulos-agent/.aries_harness/history/daily/2026-07-25.md`
+- `M` `aulos-api/.aries_harness/JOURNAL.md`
+- `M` `aulos-api/.aries_harness/STATE.md`
+- `M` `aulos-api/.aries_harness/references/REG-001-artifact-register.md`
+- `M` `aulos-api/.aries_harness/references/specs/SPEC-009-ops-dev-blog.md`
+- `M` `aulos-api/src/aulos_api/app.py`
+- `M` `aulos-api/src/aulos_api/config/settings.py`
+- `M` `aulos-api/src/aulos_api/db/models.py`
+- `M` `aulos-api/src/aulos_api/db/schema_patches.py`
+- `M` `aulos-api/src/aulos_api/routes/ops.py`
+- `M` `aulos-api/src/aulos_api/services/dev_blog.py`

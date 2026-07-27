@@ -160,8 +160,10 @@ DevOps slices close in **aulos-skills** harness:
 
 1. Update this runbook or `deploy/README.md` when topology/commands change
 2. `JOURNAL.md` entry for production deploys / incidents
-3. `history-refresh` when the slice closes a milestone
+3. **Honeycomb** (`bash deploy/honeycomb.sh`) when the slice closes a milestone
 4. Optional deployment memo under `.aries_harness/runs/deployments/` for high-risk releases
+
+**Honeycomb** = fleet `well-organized` + `history-refresh` on every `aulos-*` harness project. See `aulos-operating-defaults`.
 
 ## Related docs
 

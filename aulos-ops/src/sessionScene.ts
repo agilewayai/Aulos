@@ -11,6 +11,7 @@ export type OpsTabId =
   | 'knowledge'
   | 'discogs'
   | 'blog'
+  | 'tasks'
 
 export type OpsSessionScene = {
   v: 1

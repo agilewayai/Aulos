@@ -44,6 +44,7 @@ import { KnowledgePanel } from './KnowledgePanel'
 import { SkillsPanel } from './SkillsPanel'
 import { DbHaPanel } from './DbHaPanel'
 import { DevBlogPanel } from './DevBlogPanel'
+import { TaskQueuePanel } from './TaskQueuePanel'
 import { PasswordField } from './PasswordField'
 import { formatDateTime, formatTime } from './time'
 import {
@@ -54,7 +55,7 @@ import {
 } from './sessionScene'
 import './App.css'
 
-type TabId = 'overview' | 'users' | 'llm' | 'skills' | 'mail' | 'fleet' | 'knowledge' | 'discogs' | 'blog'
+type TabId = 'overview' | 'users' | 'llm' | 'skills' | 'mail' | 'fleet' | 'knowledge' | 'discogs' | 'blog' | 'tasks'
 
 const PENDING_SCENE: OpsSessionScene | null =
   typeof window === 'undefined' ? null : consumeOpsScene()
@@ -657,6 +658,7 @@ function App() {
                   ['skills', 'Skills'],
                   ['mail', 'Mail'],
                   ['fleet', 'Fleet'],
+                  ['tasks', 'Tasks'],
                   ['blog', 'Dev Blog'],
                 ] as const
               ).map(([id, label]) => (
@@ -1322,6 +1324,10 @@ function App() {
                 planeEnabled={kbStats?.plane_enabled}
                 planeUrl={kbStats?.plane_url}
               />
+            ) : null}
+
+            {tab === 'tasks' ? (
+              <TaskQueuePanel busy={busy} setBusy={setBusy} setError={setError} />
             ) : null}
 
             {tab === 'blog' ? (

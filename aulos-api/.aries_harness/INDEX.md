@@ -8,10 +8,10 @@ managed_by: "aries-harness"
 fingerprint: "aries-harness/bootstrap-doc/v1"
 generated_by: "/aries-harness well-organized"
 initialized_at: "2026-07-25T11:07:43Z"
-last_organized_at: "2026-07-27T09:44:33+00:00"
+last_organized_at: "2026-07-27T10:25:06+00:00"
 effective_status: "generated"
-effective_since: "2026-07-27T09:44:33+00:00"
-content_fingerprint: "sha256:dbee20724c21223140d883f2576dfb778e5b204d6843aea29fcb0a56ef47c47e"
+effective_since: "2026-07-27T10:25:06+00:00"
+content_fingerprint: "sha256:331ad2b4b105b55afba86584968d3b8c894423098ade44afc3a1998a5fcc52d9"
 trace_history_source: "filesystem-only"
 trace_last_commit_sha: ""
 trace_last_commit_at: ""
@@ -19,7 +19,7 @@ trace_revision_count: "0"
 ---
 # Harness Index
 
-Last organized: `2026-07-27T09:44:33+00:00`
+Last organized: `2026-07-27T10:25:06+00:00`
 
 Canonical spelling: `/aries-harness well-organized`
 
@@ -85,6 +85,8 @@ Fingerprint marker: `aries-harness` / `aries-harness/bootstrap-doc/v1`
 - [SPEC-013-listening-guide-jobs-library.md](references/specs/SPEC-013-listening-guide-jobs-library.md)
 - [SPEC-014-session-cookie-auth.md](references/specs/SPEC-014-session-cookie-auth.md)
 - [SPEC-015-guide-html-security.md](references/specs/SPEC-015-guide-html-security.md)
+- [SPEC-017-dev-blog-writing-contract.md](references/specs/SPEC-017-dev-blog-writing-contract.md)
+- [SPEC-018-ops-task-queue.md](references/specs/SPEC-018-ops-task-queue.md)
 
 #### `references/stories/`
 - role: sprintable slices linked to specs and verification

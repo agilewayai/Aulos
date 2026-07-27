@@ -64,6 +64,12 @@ async def lifespan(_app: FastAPI):
         start_listening_worker()
     except Exception as exc:  # noqa: BLE001
         logging.getLogger("aulos_api.listening_queue").warning("listening_worker_skip err=%s", exc)
+    try:
+        from aulos_api.services.task_queue import start_task_worker
+
+        start_task_worker()
+    except Exception as exc:  # noqa: BLE001
+        logging.getLogger("aulos_api.task_queue").warning("task_worker_skip err=%s", exc)
     threading.Thread(target=_warm_media_cache, name="aulos-media-prefetch", daemon=True).start()
     yield
     try:

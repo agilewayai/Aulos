@@ -8,10 +8,10 @@ managed_by: "aries-harness"
 fingerprint: "aries-harness/bootstrap-doc/v1"
 generated_by: "/aries-harness well-organized"
 initialized_at: "2026-07-25T17:25:00+00:00"
-last_organized_at: "2026-07-27T09:44:49+00:00"
+last_organized_at: "2026-07-27T10:25:25+00:00"
 effective_status: "generated"
-effective_since: "2026-07-27T09:44:49+00:00"
-content_fingerprint: "sha256:5eb2ed3ed277b89f2598e3665fe8a8306ec930ee59ae13a877235978ef34bada"
+effective_since: "2026-07-27T10:25:25+00:00"
+content_fingerprint: "sha256:f9496fe46a5b87c011215a9d7ffa327a67b3b6919734cbf894d0b77c020f091a"
 trace_history_source: "filesystem-only"
 trace_last_commit_sha: ""
 trace_last_commit_at: ""
@@ -19,7 +19,7 @@ trace_revision_count: "0"
 ---
 # Harness Index
 
-Last organized: `2026-07-27T09:44:49+00:00`
+Last organized: `2026-07-27T10:25:25+00:00`
 
 Canonical spelling: `/aries-harness well-organized`
 

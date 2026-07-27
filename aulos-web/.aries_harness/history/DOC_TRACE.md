@@ -8,10 +8,10 @@ managed_by: "aries-harness"
 fingerprint: "aries-harness/history-doc/v1"
 generated_by: "/aries-harness history-refresh"
 initialized_at: "2026-07-25T11:07:42Z"
-generated_at: "2026-07-27T09:44:38+00:00"
+generated_at: "2026-07-27T10:25:13+00:00"
 effective_status: "generated"
-effective_since: "2026-07-27T09:44:38+00:00"
-content_fingerprint: "sha256:e92dfa547442bce7d6b10533ff092c56fd758c3cdbee5aced0e337d85df57cc0"
+effective_since: "2026-07-27T10:25:13+00:00"
+content_fingerprint: "sha256:174696a9d59fc546eff4fe8dcba7f95f38d3f348c741fa827635607699017db9"
 trace_history_source: "filesystem-only"
 trace_last_commit_sha: ""
 trace_last_commit_at: ""
@@ -19,7 +19,7 @@ trace_revision_count: "0"
 ---
 # Document Trace
 
-Generated at: `2026-07-27T09:44:38+00:00`
+Generated at: `2026-07-27T10:25:13+00:00`
 
 ## Summary
 
@@ -67,14 +67,14 @@ Generated at: `2026-07-27T09:44:38+00:00`
 
 - role: harness-index
 - layer: SharedSupportSurface
-- effective status: generated since 2026-07-27T09:44:38+00:00
-- content fingerprint: `sha256:53dc7db8866a3f93e5d454853ace442df633958dc1db6e06f39995a64cd7dfe8`
+- effective status: generated since 2026-07-27T10:25:13+00:00
+- content fingerprint: `sha256:99e907a71b94490f89db782fb3f119569641ca6c03aac0175c69a43da9240a45`
 - trace: filesystem-only / count=0 / sha=none
-- latest revision: `0c8a847` 2026-07-27 Ship Ops daily Dev Blog and web forgot-password reset.
+- latest revision: `c3009d2` 2026-07-27 Harden platform security, ship fleet DevOps control, and refresh harness honeycomb.
 - dirty: no
 - earlier revisions:
+  - `0c8a847` 2026-07-27 Ship Ops daily Dev Blog and web forgot-password reset.
   - `6ab1ea3` 2026-07-26 Ship /discogs release and catalog-number listening guides with OPS token UI.
-  - `53e7437` 2026-07-26 Ship identity catalog, Hans/Hant locales, web research, and knowledge plane.
 
 ### JOURNAL.md
 
@@ -83,11 +83,11 @@ Generated at: `2026-07-27T09:44:38+00:00`
 - effective status: active since 2026-07-25T11:07:42Z
 - content fingerprint: `sha256:4c412daaf20158baefc44d8ff1dc421c9c4cb6e7f8e36b4189f7ac7d4d2abcbc`
 - trace: filesystem-only / count=0 / sha=none
-- latest revision: `0c8a847` 2026-07-27 Ship Ops daily Dev Blog and web forgot-password reset.
+- latest revision: `c3009d2` 2026-07-27 Harden platform security, ship fleet DevOps control, and refresh harness honeycomb.
 - dirty: no
 - earlier revisions:
+  - `0c8a847` 2026-07-27 Ship Ops daily Dev Blog and web forgot-password reset.
   - `555cf53` 2026-07-26 Ship listening product, mandatory harness, facility layout, and UTC/local time.
-  - `7632d9b` 2026-07-25 Add aulos-web, aulos-api, and aulos-mcp sub-projects under aries-harness.
 
 ### MEMORY.md
 
@@ -168,9 +168,10 @@ Generated at: `2026-07-27T09:44:38+00:00`
 - effective status: active since 2026-07-25T11:10:22Z
 - content fingerprint: `sha256:c10caeec7c4dc7a0d3a58bf6eb8158b2805d27850466e66ecced73dff9e6ad18`
 - trace: filesystem-only / count=0 / sha=none
-- latest revision: `0c8a847` 2026-07-27 Ship Ops daily Dev Blog and web forgot-password reset.
+- latest revision: `c3009d2` 2026-07-27 Harden platform security, ship fleet DevOps control, and refresh harness honeycomb.
 - dirty: no
 - earlier revisions:
+  - `0c8a847` 2026-07-27 Ship Ops daily Dev Blog and web forgot-password reset.
   - `7632d9b` 2026-07-25 Add aulos-web, aulos-api, and aulos-mcp sub-projects under aries-harness.
 
 ### TASK_STACK.md
@@ -180,9 +181,10 @@ Generated at: `2026-07-27T09:44:38+00:00`
 - effective status: active since 2026-07-25T11:10:22Z
 - content fingerprint: `sha256:ddb8bdad4444c8ec736961a93b2170bb193822eaaa67f3537a6de615ea65515b`
 - trace: filesystem-only / count=0 / sha=none
-- latest revision: `0c8a847` 2026-07-27 Ship Ops daily Dev Blog and web forgot-password reset.
+- latest revision: `c3009d2` 2026-07-27 Harden platform security, ship fleet DevOps control, and refresh harness honeycomb.
 - dirty: no
 - earlier revisions:
+  - `0c8a847` 2026-07-27 Ship Ops daily Dev Blog and web forgot-password reset.
   - `7632d9b` 2026-07-25 Add aulos-web, aulos-api, and aulos-mcp sub-projects under aries-harness.
 
 ### decisions/adrs/ADR-001-vite-react-runtime.md
@@ -235,127 +237,127 @@ Generated at: `2026-07-27T09:44:38+00:00`
 
 - role: history-daily-summary-index
 - layer: SharedSupportSurface
-- effective status: generated since 2026-07-26T19:06:36+00:00
-- content fingerprint: `sha256:a45d35cc8c702d92a21a3c34b16a9b6c9c67424465350658c1227f9d95ee53b8`
+- effective status: generated since 2026-07-27T09:44:38+00:00
+- content fingerprint: `sha256:817f8c1d6608affc625ffe56b994c067ad57e771a46dace6862f0f90a8fba2e9`
 - trace: filesystem-only / count=0 / sha=none
-- latest revision: `0c8a847` 2026-07-27 Ship Ops daily Dev Blog and web forgot-password reset.
+- latest revision: `c3009d2` 2026-07-27 Harden platform security, ship fleet DevOps control, and refresh harness honeycomb.
 - dirty: no
 - earlier revisions:
+  - `0c8a847` 2026-07-27 Ship Ops daily Dev Blog and web forgot-password reset.
   - `6ab1ea3` 2026-07-26 Ship /discogs release and catalog-number listening guides with OPS token UI.
-  - `53e7437` 2026-07-26 Ship identity catalog, Hans/Hant locales, web research, and knowledge plane.
 
 ### history/DOC_TRACE.md
 
 - role: history-doc-trace
 - layer: SharedSupportSurface
-- effective status: generated since 2026-07-26T19:06:36+00:00
-- content fingerprint: `sha256:194fff316528df1b4239e23a381a8471a0b0a8fa89b40c5ae354708af5735781`
+- effective status: generated since 2026-07-27T09:44:38+00:00
+- content fingerprint: `sha256:e92dfa547442bce7d6b10533ff092c56fd758c3cdbee5aced0e337d85df57cc0`
 - trace: filesystem-only / count=0 / sha=none
-- latest revision: `0c8a847` 2026-07-27 Ship Ops daily Dev Blog and web forgot-password reset.
+- latest revision: `c3009d2` 2026-07-27 Harden platform security, ship fleet DevOps control, and refresh harness honeycomb.
 - dirty: no
 - earlier revisions:
+  - `0c8a847` 2026-07-27 Ship Ops daily Dev Blog and web forgot-password reset.
   - `6ab1ea3` 2026-07-26 Ship /discogs release and catalog-number listening guides with OPS token UI.
-  - `53e7437` 2026-07-26 Ship identity catalog, Hans/Hant locales, web research, and knowledge plane.
 
 ### history/README.md
 
 - role: history-readme
 - layer: SharedSupportSurface
-- effective status: generated since 2026-07-26T19:06:36+00:00
-- content fingerprint: `sha256:0df763760cde940627975d96ad47bcf68aa7ee0fbe32bd659614aca3c5e3a162`
+- effective status: generated since 2026-07-27T09:44:38+00:00
+- content fingerprint: `sha256:a502804f6fd8110277e18176d263a555915c60bfd291145b0c2bce5ce2031c4b`
 - trace: filesystem-only / count=0 / sha=none
-- latest revision: `0c8a847` 2026-07-27 Ship Ops daily Dev Blog and web forgot-password reset.
+- latest revision: `c3009d2` 2026-07-27 Harden platform security, ship fleet DevOps control, and refresh harness honeycomb.
 - dirty: no
 - earlier revisions:
+  - `0c8a847` 2026-07-27 Ship Ops daily Dev Blog and web forgot-password reset.
   - `6ab1ea3` 2026-07-26 Ship /discogs release and catalog-number listening guides with OPS token UI.
-  - `53e7437` 2026-07-26 Ship identity catalog, Hans/Hant locales, web research, and knowledge plane.
 
 ### history/RETROSPECTIVE.md
 
 - role: history-retrospective
 - layer: SharedSupportSurface
-- effective status: generated since 2026-07-26T19:06:36+00:00
-- content fingerprint: `sha256:3a71c809bca737b91b1d423e6d9ee24865c6565f9b0aa45b035dac0d17cc77a1`
+- effective status: generated since 2026-07-27T09:44:38+00:00
+- content fingerprint: `sha256:8201a07203db6541f43d83efefba6216ff4cd1fd5b5dd273b7e63a81dba08d44`
 - trace: filesystem-only / count=0 / sha=none
-- latest revision: `0c8a847` 2026-07-27 Ship Ops daily Dev Blog and web forgot-password reset.
+- latest revision: `c3009d2` 2026-07-27 Harden platform security, ship fleet DevOps control, and refresh harness honeycomb.
 - dirty: no
 - earlier revisions:
+  - `0c8a847` 2026-07-27 Ship Ops daily Dev Blog and web forgot-password reset.
   - `6ab1ea3` 2026-07-26 Ship /discogs release and catalog-number listening guides with OPS token UI.
-  - `53e7437` 2026-07-26 Ship identity catalog, Hans/Hant locales, web research, and knowledge plane.
 
 ### history/ROADMAP.md
 
 - role: history-roadmap
 - layer: SharedSupportSurface
-- effective status: generated since 2026-07-26T19:06:36+00:00
-- content fingerprint: `sha256:028da836609117a4403cc7ae0d48a05a10123e12e74e746dbba1d9eb170f82f1`
+- effective status: generated since 2026-07-27T09:44:38+00:00
+- content fingerprint: `sha256:1e6e69b71a6cf979cd342aa506185b1410d1b105f63cf8722e7a1043f9164c15`
 - trace: filesystem-only / count=0 / sha=none
-- latest revision: `0c8a847` 2026-07-27 Ship Ops daily Dev Blog and web forgot-password reset.
+- latest revision: `c3009d2` 2026-07-27 Harden platform security, ship fleet DevOps control, and refresh harness honeycomb.
 - dirty: no
 - earlier revisions:
+  - `0c8a847` 2026-07-27 Ship Ops daily Dev Blog and web forgot-password reset.
   - `6ab1ea3` 2026-07-26 Ship /discogs release and catalog-number listening guides with OPS token UI.
-  - `53e7437` 2026-07-26 Ship identity catalog, Hans/Hant locales, web research, and knowledge plane.
 
 ### history/STATUS.md
 
 - role: history-status
 - layer: SharedSupportSurface
-- effective status: generated since 2026-07-26T19:06:36+00:00
-- content fingerprint: `sha256:043049c359ba3b2e861013c66ef72c100b29d4c422788bfde7dc3450edd3ddc4`
+- effective status: generated since 2026-07-27T09:44:38+00:00
+- content fingerprint: `sha256:4ec9946ca8bbd4d4f46bea5e0a6b1607f419c872f62791d1329f513851a32c33`
 - trace: filesystem-only / count=0 / sha=none
-- latest revision: `0c8a847` 2026-07-27 Ship Ops daily Dev Blog and web forgot-password reset.
+- latest revision: `c3009d2` 2026-07-27 Harden platform security, ship fleet DevOps control, and refresh harness honeycomb.
 - dirty: no
 - earlier revisions:
+  - `0c8a847` 2026-07-27 Ship Ops daily Dev Blog and web forgot-password reset.
   - `6ab1ea3` 2026-07-26 Ship /discogs release and catalog-number listening guides with OPS token UI.
-  - `53e7437` 2026-07-26 Ship identity catalog, Hans/Hant locales, web research, and knowledge plane.
 
 ### history/TIMELINE.md
 
 - role: history-timeline
 - layer: SharedSupportSurface
-- effective status: generated since 2026-07-26T19:06:36+00:00
-- content fingerprint: `sha256:81030187033c129acc873ba75ab83f4d9340ade2af24a35657b8787b18f21a72`
+- effective status: generated since 2026-07-27T09:44:38+00:00
+- content fingerprint: `sha256:54c7c1580e467b6ff8121eb0eaf2c1722fc996264faad0fbbb8abdbcf05d5375`
 - trace: filesystem-only / count=0 / sha=none
-- latest revision: `0c8a847` 2026-07-27 Ship Ops daily Dev Blog and web forgot-password reset.
+- latest revision: `c3009d2` 2026-07-27 Harden platform security, ship fleet DevOps control, and refresh harness honeycomb.
 - dirty: no
 - earlier revisions:
+  - `0c8a847` 2026-07-27 Ship Ops daily Dev Blog and web forgot-password reset.
   - `6ab1ea3` 2026-07-26 Ship /discogs release and catalog-number listening guides with OPS token UI.
-  - `53e7437` 2026-07-26 Ship identity catalog, Hans/Hant locales, web research, and knowledge plane.
 
 ### history/daily/2026-07-25.md
 
 - role: history-daily-summary
 - layer: SharedSupportSurface
-- effective status: generated since 2026-07-26T19:06:36+00:00
-- content fingerprint: `sha256:c9b04f72a1e41ceea717e57d94c9faa1c2e851808b62220f434caa33deabadbb`
+- effective status: generated since 2026-07-27T09:44:38+00:00
+- content fingerprint: `sha256:2d37fc8ff4f9c74b2026eeec52116065efc21ac0c15c9bcf5b265b9492d585c8`
 - trace: filesystem-only / count=0 / sha=none
-- latest revision: `0c8a847` 2026-07-27 Ship Ops daily Dev Blog and web forgot-password reset.
+- latest revision: `c3009d2` 2026-07-27 Harden platform security, ship fleet DevOps control, and refresh harness honeycomb.
 - dirty: no
 - earlier revisions:
+  - `0c8a847` 2026-07-27 Ship Ops daily Dev Blog and web forgot-password reset.
   - `6ab1ea3` 2026-07-26 Ship /discogs release and catalog-number listening guides with OPS token UI.
-  - `53e7437` 2026-07-26 Ship identity catalog, Hans/Hant locales, web research, and knowledge plane.
 
 ### history/daily/2026-07-26.md
 
 - role: history-daily-summary
 - layer: SharedSupportSurface
-- effective status: generated since 2026-07-26T19:06:36+00:00
-- content fingerprint: `sha256:b6a0a018a8adf70cb5da81d301b4f80010aec25fd96db6b63dc01c50038ebafe`
+- effective status: generated since 2026-07-27T09:44:38+00:00
+- content fingerprint: `sha256:1a2fe33c4274382d38ec442ba7c76897d2e896eeca275bcedab0506663f1fb99`
 - trace: filesystem-only / count=0 / sha=none
-- latest revision: `0c8a847` 2026-07-27 Ship Ops daily Dev Blog and web forgot-password reset.
+- latest revision: `c3009d2` 2026-07-27 Harden platform security, ship fleet DevOps control, and refresh harness honeycomb.
 - dirty: no
 - earlier revisions:
+  - `0c8a847` 2026-07-27 Ship Ops daily Dev Blog and web forgot-password reset.
   - `6ab1ea3` 2026-07-26 Ship /discogs release and catalog-number listening guides with OPS token UI.
-  - `53e7437` 2026-07-26 Ship identity catalog, Hans/Hant locales, web research, and knowledge plane.
 
 ### history/daily/2026-07-27.md
 
 - role: history-daily-summary
 - layer: SharedSupportSurface
-- effective status: generated since 2026-07-26T19:06:36+00:00
-- content fingerprint: `sha256:15ea92655a4b6e36660282ec828d483b489d40f07a6e45b9023249b36dcef2ff`
+- effective status: generated since 2026-07-27T09:44:38+00:00
+- content fingerprint: `sha256:fbfc19708a50cf86da4091c50d1488edd750c03275838f6d57537f856f5b1643`
 - trace: filesystem-only / count=0 / sha=none
-- latest revision: no git history recorded
+- latest revision: `c3009d2` 2026-07-27 Harden platform security, ship fleet DevOps control, and refresh harness honeycomb.
 - dirty: no
 
 ### layers/MetaDefineLayer/README.md
@@ -435,9 +437,10 @@ Generated at: `2026-07-27T09:44:38+00:00`
 - effective status: active since 2026-07-25T11:10:22Z
 - content fingerprint: `sha256:20c155409694e59aa3cc75a6e41e33cf288536e14eacec203af5a66ae431624a`
 - trace: filesystem-only / count=0 / sha=none
-- latest revision: `0c8a847` 2026-07-27 Ship Ops daily Dev Blog and web forgot-password reset.
+- latest revision: `c3009d2` 2026-07-27 Harden platform security, ship fleet DevOps control, and refresh harness honeycomb.
 - dirty: no
 - earlier revisions:
+  - `0c8a847` 2026-07-27 Ship Ops daily Dev Blog and web forgot-password reset.
   - `7632d9b` 2026-07-25 Add aulos-web, aulos-api, and aulos-mcp sub-projects under aries-harness.
 
 ### references/TRACE-001-value-traceability.md
@@ -547,7 +550,7 @@ Generated at: `2026-07-27T09:44:38+00:00`
 - effective status: active since 2026-07-26T16:55:00Z
 - content fingerprint: `sha256:dcaf75dea5daf4b2caced2fec9fc4d55a773c54cea906c6cf0dbe4fcd020e24a`
 - trace: filesystem-only / count=0 / sha=none
-- latest revision: no git history recorded
+- latest revision: `c3009d2` 2026-07-27 Harden platform security, ship fleet DevOps control, and refresh harness honeycomb.
 - dirty: no
 
 ### references/specs/SPEC-004-chain-trace-viewer.md
@@ -557,7 +560,7 @@ Generated at: `2026-07-27T09:44:38+00:00`
 - effective status: active since 2026-07-26T17:20:00Z
 - content fingerprint: `sha256:947c69a12a93da56a1c917f28ac4b2b21c87f5088bb0c80553654cc2a275855f`
 - trace: filesystem-only / count=0 / sha=none
-- latest revision: no git history recorded
+- latest revision: `c3009d2` 2026-07-27 Harden platform security, ship fleet DevOps control, and refresh harness honeycomb.
 - dirty: no
 
 ### references/specs/SPEC-005-portal-ux-polish.md
@@ -567,7 +570,7 @@ Generated at: `2026-07-27T09:44:38+00:00`
 - effective status: active since 2026-07-26T17:40:00Z
 - content fingerprint: `sha256:3b3e0477e79e50ba51f7876438a4dd5ee52d7d7f957913fb2c724ed15c6ead52`
 - trace: filesystem-only / count=0 / sha=none
-- latest revision: no git history recorded
+- latest revision: `c3009d2` 2026-07-27 Harden platform security, ship fleet DevOps control, and refresh harness honeycomb.
 - dirty: no
 
 ### references/specs/SPEC-006-library-jobs-ux.md
@@ -577,7 +580,7 @@ Generated at: `2026-07-27T09:44:38+00:00`
 - effective status: active since 2026-07-26T18:00:00Z
 - content fingerprint: `sha256:9d62b2ece9da889b163ce285def557c936ffc08f688e3f2b0d49b0e6567189e0`
 - trace: filesystem-only / count=0 / sha=none
-- latest revision: no git history recorded
+- latest revision: `c3009d2` 2026-07-27 Harden platform security, ship fleet DevOps control, and refresh harness honeycomb.
 - dirty: no
 
 ### references/specs/SPEC-007-single-pane-studio.md
@@ -587,7 +590,7 @@ Generated at: `2026-07-27T09:44:38+00:00`
 - effective status: active since 2026-07-26T18:35:00Z
 - content fingerprint: `sha256:a0f6936df8ffe5ade9fbb8d733c83a3eb2b3ba132e1a39e166a2035481a7ac4a`
 - trace: filesystem-only / count=0 / sha=none
-- latest revision: no git history recorded
+- latest revision: `c3009d2` 2026-07-27 Harden platform security, ship fleet DevOps control, and refresh harness honeycomb.
 - dirty: no
 
 ### references/specs/SPEC-008-session-scene-restore.md
@@ -597,7 +600,7 @@ Generated at: `2026-07-27T09:44:38+00:00`
 - effective status: active since 2026-07-27T09:44:37+00:00
 - content fingerprint: `sha256:adb78fad26e24211a7cb0cc7dacd8cb622ee16e63888e7fe12716fa960810f9c`
 - trace: filesystem-only / count=0 / sha=none
-- latest revision: no git history recorded
+- latest revision: `c3009d2` 2026-07-27 Harden platform security, ship fleet DevOps control, and refresh harness honeycomb.
 - dirty: no
 
 ### references/stories/README.md
@@ -719,7 +722,7 @@ Generated at: `2026-07-27T09:44:38+00:00`
 - effective status: active since 2026-07-26T17:55:00Z
 - content fingerprint: `sha256:e4bc6377694595e6a1d1045b12df913c68b602ca2161b7ecd7d7e53f27e3db1d`
 - trace: filesystem-only / count=0 / sha=none
-- latest revision: no git history recorded
+- latest revision: `c3009d2` 2026-07-27 Harden platform security, ship fleet DevOps control, and refresh harness honeycomb.
 - dirty: no
 
 ### runs/tests/VR-006-library-jobs-ux.md
@@ -729,5 +732,5 @@ Generated at: `2026-07-27T09:44:38+00:00`
 - effective status: active since 2026-07-26T18:15:00Z
 - content fingerprint: `sha256:b8667243d234fd94fb6950413db60cfb9a21266ae41e79dcf19b76cd2d37ff13`
 - trace: filesystem-only / count=0 / sha=none
-- latest revision: no git history recorded
+- latest revision: `c3009d2` 2026-07-27 Harden platform security, ship fleet DevOps control, and refresh harness honeycomb.
 - dirty: no

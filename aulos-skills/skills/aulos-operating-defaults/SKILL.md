@@ -26,6 +26,7 @@ Skip or weaken harness steps **only** when the operator explicitly waives them i
 | Spec development | SPEC | SPEC-* behavior contracts **before** broad coding |
 | Coding slice | coding-loop | TDD + VR notes; update EVAL when gates change |
 | Dev-history refresh | history | `aries-harness.sh history-refresh` / `history-status` |
+| **Honeycomb** | well-organized + history | fleet `deploy/honeycomb.sh` or per-project commands below |
 | Doc well-organized | well-organized | `aries-harness.sh well-organized`; keep INDEX/MISSION/STATE clean |
 | DevOps / deploy | devops + rollout | `deploy/OPS.md` + `deploy/aulos-ctl.sh`; smoke + rollback |
 | Self-evolution | promotion | insights + skill/SPEC/gate updates with measurable before/after |
@@ -40,11 +41,33 @@ bash .aries_harness/scripts/aries-harness.sh history-status --project-root .
 
 Do not treat design, architecture, spec, history, organization, devops, or product fixes as ad-hoc side notes outside the harness.
 
+## Honeycomb (fleet harness hygiene)
+
+**Honeycomb** is the Aulos fleet name for closing a slice with harness files tidy and history evidence regenerated. It is **not** a separate tool — it means:
+
+1. **`well-organized`** — move stray `.aries_harness/` Markdown into managed collections; refresh `INDEX.md` layer topology.
+2. **`history-refresh`** — regenerate `history/` projections (STATUS, ROADMAP, TIMELINE, RETROSPECTIVE, `daily/*.md`, doc-trace).
+
+Run **per project** (from that sub-project root):
+
+```bash
+bash .aries_harness/scripts/aries-harness.sh well-organized --project-root .
+bash .aries_harness/scripts/aries-harness.sh history-refresh --project-root .
+```
+
+Run **fleet-wide** (all `aulos-*` harness projects):
+
+```bash
+bash deploy/honeycomb.sh
+```
+
+Typical closeout: finish `JOURNAL.md` → **Honeycomb** → optional Dev Blog generate (**SPEC-017** factual voice) → git commit. Operators may say “做一次 Honeycomb” to mean this pair, workspace-wide or for named projects.
+
 ## Facility layout + canonical library
 
 - **Facility assets** live only under `.aries_harness/scripts/` and `.aries_harness/templates/` — not project-root `scripts/` or `templates/`.
 - **Canonical harness library:** `git@github.com:agilewayai/aries-harness-skills.git`. Do **not** treat obsolete `AriesHarnessStudio` / `aries-studio` as source of truth.
-- Day/slice closeout: run `well-organized` then `history-refresh`; promote strategic lessons via self-evolution (`docs/insights.md` + evolution memo).
+- Day/slice closeout: run **Honeycomb** (`well-organized` then `history-refresh`); promote strategic lessons via self-evolution (`docs/insights.md` + evolution memo).
 
 ## Timezone: store UTC, display OS local
 

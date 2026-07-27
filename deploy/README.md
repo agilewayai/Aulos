@@ -19,7 +19,7 @@ bash deploy/aulos-ctl.sh deploy
 bash deploy/start-host.sh
 ```
 
-Other common commands: `doctor`, `smoke`, `status`, `logs api`, `secrets check`, `test`.
+Other common commands: `doctor`, `smoke`, `status`, `logs api`, `secrets check`, `test`, `honeycomb` (see below).
 
 ## Persistence
 

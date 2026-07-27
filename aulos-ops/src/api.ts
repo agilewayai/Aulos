@@ -689,7 +689,16 @@ export function fetchOpsGuideTrace(guideId: number) {
   }>(`/v1/ops/listening-guides/${guideId}/trace`, {}, true)
 }
 
+export type DevBlogListFilters = {
+  day?: string
+  dayFrom?: string
+  dayTo?: string
+  q?: string
+  limit?: number
+}
+
 export type DevBlogSummary = {
+  id: number
   day: string
   title: string
   provider: string
@@ -708,23 +717,123 @@ export type DevBlogPost = DevBlogSummary & {
   body_md: string
 }
 
-export function fetchDevBlogList() {
-  return request<DevBlogSummary[]>('/v1/ops/dev-blog', {}, true)
+function devBlogQuery(filters?: DevBlogListFilters): string {
+  if (!filters) return ''
+  const params = new URLSearchParams()
+  if (filters.day) params.set('day', filters.day)
+  if (filters.dayFrom) params.set('day_from', filters.dayFrom)
+  if (filters.dayTo) params.set('day_to', filters.dayTo)
+  if (filters.q) params.set('q', filters.q)
+  if (filters.limit) params.set('limit', String(filters.limit))
+  const qs = params.toString()
+  return qs ? `?${qs}` : ''
+}
+
+export function fetchDevBlogList(filters?: DevBlogListFilters) {
+  return request<DevBlogSummary[]>(`/v1/ops/dev-blog${devBlogQuery(filters)}`, {}, true)
+}
+
+export function fetchDevBlogPost(postId: number) {
+  return request<DevBlogPost>(`/v1/ops/dev-blog/posts/${postId}`, {}, true)
 }
 
 export function fetchDevBlog(day: string) {
   return request<DevBlogPost>(`/v1/ops/dev-blog/${encodeURIComponent(day)}`, {}, true)
 }
 
-export function generateDevBlog(day: string, force = false) {
-  return request<DevBlogPost>(
+export function generateDevBlog(day: string, options?: { force?: boolean; postId?: number }) {
+  const force = options?.force ?? false
+  const postId = options?.postId
+  return request<DevBlogTaskAccepted>(
     `/v1/ops/dev-blog/${encodeURIComponent(day)}/generate`,
     {
       method: 'POST',
-      body: JSON.stringify({ force }),
+      body: JSON.stringify({ force, post_id: postId ?? null }),
     },
     true,
   )
+}
+
+export type DevBlogTaskAccepted = {
+  task_id: number
+  status: string
+  task_type: string
+  source: string
+  post_id?: number | null
+  error_detail?: string
+}
+
+export type OpsTaskRow = {
+  id: number
+  task_type: string
+  source: string
+  status: string
+  payload: Record<string, unknown>
+  result: Record<string, unknown>
+  error_detail: string
+  created_by_user_id?: number | null
+  created_at: string
+  started_at?: string | null
+  finished_at?: string | null
+}
+
+export type OpsTaskDashboard = {
+  queues: Array<{
+    source: string
+    task_type: string
+    label: string
+    depth?: number | null
+    worker_started?: boolean
+    enabled?: boolean
+    active_jobs?: number
+    queue?: string
+    task_types?: string[]
+  }>
+  recent_tasks: OpsTaskRow[]
+  counts_by_status: Record<string, number>
+  counts_by_type: Record<string, number>
+}
+
+export function fetchOpsTaskDashboard() {
+  return request<OpsTaskDashboard>('/v1/ops/tasks/dashboard', {}, true)
+}
+
+export function fetchOpsTasks(filters?: {
+  status?: string
+  task_type?: string
+  source?: string
+  limit?: number
+}) {
+  const params = new URLSearchParams()
+  if (filters?.status) params.set('status', filters.status)
+  if (filters?.task_type) params.set('task_type', filters.task_type)
+  if (filters?.source) params.set('source', filters.source)
+  if (filters?.limit) params.set('limit', String(filters.limit))
+  const qs = params.toString()
+  return request<OpsTaskRow[]>(`/v1/ops/tasks${qs ? `?${qs}` : ''}`, {}, true)
+}
+
+export function fetchOpsTask(taskId: number) {
+  return request<OpsTaskRow>(`/v1/ops/tasks/${taskId}`, {}, true)
+}
+
+export async function waitForOpsTask(
+  taskId: number,
+  opts?: { intervalMs?: number; timeoutMs?: number },
+): Promise<OpsTaskRow> {
+  const intervalMs = opts?.intervalMs ?? 800
+  const timeoutMs = opts?.timeoutMs ?? 120_000
+  const start = Date.now()
+  for (;;) {
+    const row = await fetchOpsTask(taskId)
+    if (row.status === 'completed' || row.status === 'failed') {
+      return row
+    }
+    if (Date.now() - start > timeoutMs) {
+      throw new Error(`Task ${taskId} timed out (${row.status})`)
+    }
+    await new Promise((r) => setTimeout(r, intervalMs))
+  }
 }
 
 export async function logout() {

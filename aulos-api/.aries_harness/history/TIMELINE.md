@@ -8,10 +8,10 @@ managed_by: "aries-harness"
 fingerprint: "aries-harness/history-doc/v1"
 generated_by: "/aries-harness history-refresh"
 initialized_at: "2026-07-25T11:07:43Z"
-generated_at: "2026-07-27T09:44:33+00:00"
+generated_at: "2026-07-27T10:25:06+00:00"
 effective_status: "generated"
-effective_since: "2026-07-27T09:44:33+00:00"
-content_fingerprint: "sha256:d730fb1602a2f43fdc00e5e06725b634ba49101d536b82f2cd8fa24bae0f0365"
+effective_since: "2026-07-27T10:25:06+00:00"
+content_fingerprint: "sha256:12ceba28b3e908d2c819ff6fe64d91a5f461b11ef67578109e688d65beeac2ad"
 trace_history_source: "filesystem-only"
 trace_last_commit_sha: ""
 trace_last_commit_at: ""
@@ -19,9 +19,23 @@ trace_revision_count: "0"
 ---
 # Timeline
 
-Generated at: `2026-07-27T09:44:33+00:00`
+Generated at: `2026-07-27T10:25:06+00:00`
 
 ## Journal milestones
+
+### 2026-07-27T10:30:00Z
+
+- SPEC-018: Ops background task queue — `ops_tasks` table, Redis `aulos:ops:tasks:queue`, worker in lifespan.
+- Dev blog generate/regenerate → **202** enqueue `dev_blog.generate`; sync mode for tests (`AULOS_TASK_QUEUE_SYNC`).
+- API: `GET /v1/ops/tasks/dashboard`, `/tasks`, `/tasks/{id}`; dashboard aggregates mail + listening + ops.
+- Ops UI: **Tasks** tab (`TaskQueuePanel`), Dev Blog panel polls task completion.
+- Gates: `tests/test_task_queue.py`, `tests/test_dev_blog.py` (8 passed).
+
+### 2026-07-27T10:15:00Z
+
+- SPEC-017: Dev Blog **internal writing contract** — evidence-only, factual dev trace; no hype/emotion/external marketing.
+- `dev_blog_contract.py`: SYSTEM_PROMPT rewrite + `validate_dev_blog_body()` soft lint; fake draft aligned.
+- Promoted into SPEC-009, ops SPEC-002, REQ-002, `aulos-operating-defaults`, Ops UI lead copy.
 
 ### 2026-07-26T19:20:00Z
 
@@ -61,20 +75,9 @@ Generated at: `2026-07-27T09:44:33+00:00`
 - Companion fix in aulos-skills family composer gate (Mozart K.488 no longer inherits Beethoven cello pack)
 - Verify: `pytest tests/test_discogs.py` 8 passed; live `/discogs #6280908` synthesize=`kb-rag` only
 
-### 2026-07-26T17:00:00Z
-
-- SPEC-008 delta: `suggest_discogs_releases` + authenticated `GET /v1/discogs/search` AJAX autocomplete
-- Classical-first hit ranking; catno + free-text search; no full release fetch until compose
-- Verify: `.venv/bin/pytest tests/test_discogs.py` 8 passed
-
-### 2026-07-26T17:05:00Z
-
-- SPEC-011: Redis mail queue `aulos:mail:queue` + background worker; live verify/reset async
-- Fake mail stays sync; Mailgun probe stays sync; Redis fail → daemon thread fallback
-- Ops `GET /v1/ops/mail/queue`; verify: `pytest tests/test_mail_queue.py` (+ auth/mailgun) 18 passed
-
 ## Recent git commits
 
+- `c3009d2` 2026-07-27 Harden platform security, ship fleet DevOps control, and refresh harness honeycomb.
 - `0c8a847` 2026-07-27 Ship Ops daily Dev Blog and web forgot-password reset.
 - `6ab1ea3` 2026-07-26 Ship /discogs release and catalog-number listening guides with OPS token UI.
 - `53e7437` 2026-07-26 Ship identity catalog, Hans/Hant locales, web research, and knowledge plane.
@@ -87,13 +90,13 @@ Generated at: `2026-07-27T09:44:33+00:00`
 
 - `M` `AGENTS.md`
 - `M` `CLAUDE.md`
-- `M` `README.md`
 - `M` `aulos-api/.aries_harness/ARIES_HARNESS_FINGERPRINT.json`
-- `M` `aulos-api/.aries_harness/EVAL.md`
 - `M` `aulos-api/.aries_harness/INDEX.md`
 - `M` `aulos-api/.aries_harness/JOURNAL.md`
 - `M` `aulos-api/.aries_harness/STATE.md`
-- `M` `aulos-api/.aries_harness/TASK_STACK.md`
-- `M` `aulos-api/.aries_harness/history/DAILY_SUMMARY_INDEX.md`
-- `M` `aulos-api/.aries_harness/history/DOC_TRACE.md`
-- `M` `aulos-api/.aries_harness/history/README.md`
+- `M` `aulos-api/.aries_harness/references/REG-001-artifact-register.md`
+- `M` `aulos-api/.aries_harness/references/specs/SPEC-008-discog-release-guide.md`
+- `M` `aulos-api/.aries_harness/references/specs/SPEC-009-ops-dev-blog.md`
+- `M` `aulos-api/src/aulos_api/app.py`
+- `M` `aulos-api/src/aulos_api/config/settings.py`
+- `M` `aulos-api/src/aulos_api/db/models.py`

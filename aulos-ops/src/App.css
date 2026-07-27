@@ -903,6 +903,34 @@ button.linkish:hover {
   font-family: var(--font-mono);
   font-size: 0.82rem;
   font-weight: 700;
+  display: flex;
+  gap: 0.35rem;
+  align-items: center;
+}
+
+.dev-blog-post-id {
+  font-weight: 600;
+  color: var(--accent);
+}
+
+.dev-blog-filter-day {
+  font-size: 0.72rem;
+  color: var(--accent);
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.dev-blog-keyword {
+  flex: 1 1 12rem;
+  min-width: 10rem;
+}
+
+.dev-blog-toolbar input[type='search'] {
+  font: inherit;
+  padding: 0.45rem 0.55rem;
+  border: 1px solid var(--line);
+  background: #fff;
+  min-width: 10rem;
 }
 
 .dev-blog-day-title {
@@ -950,6 +978,21 @@ button.linkish:hover {
   color: var(--ink);
 }
 
+.dev-blog-p strong,
+.dev-blog-list strong {
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.dev-blog-p code,
+.dev-blog-list code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 0.9em;
+  padding: 0.1em 0.35em;
+  border-radius: 4px;
+  background: color-mix(in srgb, var(--ink) 8%, transparent);
+}
+
 .dev-blog-list {
   margin: 0;
   padding-left: 1.2rem;
@@ -965,6 +1008,87 @@ button.linkish:hover {
 .dev-blog-evidence h4 {
   margin: 0 0 0.4rem;
   font-size: 0.95rem;
+}
+
+.task-queue-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.task-queue-card {
+  padding: 0.85rem 1rem;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: var(--panel);
+}
+
+.task-queue-card h3 {
+  margin: 0 0 0.25rem;
+  font-size: 0.95rem;
+}
+
+.task-queue-layout {
+  display: grid;
+  grid-template-columns: minmax(220px, 1fr) minmax(280px, 1.2fr);
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.task-queue-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.task-row {
+  width: 100%;
+  text-align: left;
+  padding: 0.65rem 0.75rem;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--panel);
+  cursor: pointer;
+}
+
+.task-row:hover {
+  border-color: var(--accent);
+}
+
+.task-row.active {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 1px var(--accent);
+}
+
+.task-row-head {
+  display: block;
+  font-size: 0.9rem;
+}
+
+.task-queue-detail {
+  padding: 0.85rem 1rem;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: var(--panel);
+}
+
+.task-json {
+  margin: 0.35rem 0 0.85rem;
+  padding: 0.65rem;
+  border-radius: 8px;
+  background: var(--bg);
+  font-size: 0.78rem;
+  overflow: auto;
+  max-height: 220px;
+}
+
+.error-inline {
+  color: var(--danger, #c44);
+  margin: 0.5rem 0;
 }
 
 @media (max-width: 640px) {

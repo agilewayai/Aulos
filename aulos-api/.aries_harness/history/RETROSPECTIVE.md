@@ -8,10 +8,10 @@ managed_by: "aries-harness"
 fingerprint: "aries-harness/history-doc/v1"
 generated_by: "/aries-harness history-refresh"
 initialized_at: "2026-07-25T11:07:43Z"
-generated_at: "2026-07-27T09:44:33+00:00"
+generated_at: "2026-07-27T10:25:06+00:00"
 effective_status: "generated"
-effective_since: "2026-07-27T09:44:33+00:00"
-content_fingerprint: "sha256:4ee1be15cdea141bb2e091a68cb7e26dbee6a5b08ae281aec0357b2e9758004e"
+effective_since: "2026-07-27T10:25:06+00:00"
+content_fingerprint: "sha256:1f59bfc56433867ee61161c4f3afe041ec9be12fc214efb3eb48e454d1dc2940"
 trace_history_source: "filesystem-only"
 trace_last_commit_sha: ""
 trace_last_commit_at: ""
@@ -19,27 +19,27 @@ trace_revision_count: "0"
 ---
 # Retrospective Snapshot
 
-Generated at: `2026-07-27T09:44:33+00:00`
+Generated at: `2026-07-27T10:25:06+00:00`
 
 ## Recent changes
 
-- Root cause: `merge_dossiers` called bare `dict(zh_hans)` when LLM/web returned prose/list →
-- Fix: `coerce_dict()` + harden merge/parse/runtime/KB; gate `tests/test_salon_codex_merge.py`.
-- SPEC-013 delta: countable listening-chain plan (15 stages) seeded in `steps_json`; gateway emits live stage updates; SSE `progress` snapshots for reconnect.
-- Robust recovery: client SSE reconnect + hydrate; `POST /{id}/retry` for failed/stale jobs; Atelier progress bar + Retry chain.
-- Gates: `tests/test_listening_plan.py`, `tests/test_listening_jobs.py`; web `npm run build`.
-- Operating rule: every model-shape slice must close with dual-dialect `schema_patches` + PG verify (SQLite pilot ≠ production).
+- SPEC-018: Ops background task queue — `ops_tasks` table, Redis `aulos:ops:tasks:queue`, worker in lifespan.
+- Dev blog generate/regenerate → **202** enqueue `dev_blog.generate`; sync mode for tests (`AULOS_TASK_QUEUE_SYNC`).
+- API: `GET /v1/ops/tasks/dashboard`, `/tasks`, `/tasks/{id}`; dashboard aggregates mail + listening + ops.
+- SPEC-017: Dev Blog **internal writing contract** — evidence-only, factual dev trace; no hype/emotion/external marketing.
+- `dev_blog_contract.py`: SYSTEM_PROMPT rewrite + `validate_dev_blog_body()` soft lint; fake draft aligned.
+- Promoted into SPEC-009, ops SPEC-002, REQ-002, `aulos-operating-defaults`, Ops UI lead copy.
 
 ## What is working
 
-- Root cause: `merge_dossiers` called bare `dict(zh_hans)` when LLM/web returned prose/list →
-- Fix: `coerce_dict()` + harden merge/parse/runtime/KB; gate `tests/test_salon_codex_merge.py`.
-- SPEC-013 delta: countable listening-chain plan (15 stages) seeded in `steps_json`; gateway emits live stage updates; SSE `progress` snapshots for reconnect.
-- Robust recovery: client SSE reconnect + hydrate; `POST /{id}/retry` for failed/stale jobs; Atelier progress bar + Retry chain.
+- SPEC-018: Ops background task queue — `ops_tasks` table, Redis `aulos:ops:tasks:queue`, worker in lifespan.
+- Dev blog generate/regenerate → **202** enqueue `dev_blog.generate`; sync mode for tests (`AULOS_TASK_QUEUE_SYNC`).
+- API: `GET /v1/ops/tasks/dashboard`, `/tasks`, `/tasks/{id}`; dashboard aggregates mail + listening + ops.
+- SPEC-017: Dev Blog **internal writing contract** — evidence-only, factual dev trace; no hype/emotion/external marketing.
 
 ## What needs attention
 
-- working tree is dirty with 187 tracked or untracked change(s)
+- working tree is dirty with 51 tracked or untracked change(s)
 - no explicit next-up slice is recorded
 
 ## Durable reminders

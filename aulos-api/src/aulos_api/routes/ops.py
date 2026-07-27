@@ -27,9 +27,11 @@ router = APIRouter(prefix="/v1/ops", tags=["ops"])
 
 from aulos_api.routes.ops_mail import router as _ops_mail_router
 from aulos_api.routes.ops_integrations import router as _ops_integrations_router
+from aulos_api.routes.ops_tasks import router as _ops_tasks_router
 
 router.include_router(_ops_mail_router)
 router.include_router(_ops_integrations_router)
+router.include_router(_ops_tasks_router)
 
 
 class OpsUserOut(BaseModel):
@@ -560,6 +562,7 @@ def ops_db_role(body: DbRoleIn, _: User = Depends(require_roles("superadmin"))) 
 
 
 class DevBlogSummaryOut(BaseModel):
+    id: int
     day: str
     title: str
     provider: str
@@ -572,17 +575,97 @@ class DevBlogPostOut(DevBlogSummaryOut):
 
 
 class DevBlogGenerateIn(BaseModel):
+    day: str
     force: bool = False
+    post_id: int | None = None
+
+
+class DevBlogTaskAcceptedOut(BaseModel):
+    task_id: int
+    status: str
+    task_type: str
+    source: str
+    post_id: int | None = None
+    error_detail: str = ""
+
+
+def _enqueue_dev_blog_generate(
+    db: Session,
+    *,
+    day: str,
+    force: bool,
+    post_id: int | None,
+    user_id: int,
+) -> DevBlogTaskAcceptedOut:
+    from aulos_api.services import dev_blog as blog
+    from aulos_api.services.task_queue import SOURCE_OPS_DEV_BLOG, TASK_DEV_BLOG_GENERATE, enqueue_task
+
+    day = blog.validate_day(day)
+    row = enqueue_task(
+        db,
+        task_type=TASK_DEV_BLOG_GENERATE,
+        source=SOURCE_OPS_DEV_BLOG,
+        payload={"day": day, "force": force, "post_id": post_id},
+        created_by_user_id=user_id,
+    )
+    post_id_out = None
+    if row.status == "completed":
+        try:
+            import json
+
+            result = json.loads(row.result_json or "{}")
+            if isinstance(result, dict) and result.get("post_id"):
+                post_id_out = int(result["post_id"])
+        except (TypeError, ValueError, json.JSONDecodeError):
+            pass
+    return DevBlogTaskAcceptedOut(
+        task_id=row.id,
+        status=row.status,
+        task_type=row.task_type,
+        source=row.source,
+        post_id=post_id_out,
+        error_detail=row.error_detail or "",
+    )
 
 
 @router.get("/dev-blog", response_model=list[DevBlogSummaryOut])
 def list_dev_blog(
+    day: str | None = None,
+    day_from: str | None = None,
+    day_to: str | None = None,
+    q: str | None = None,
+    limit: int = 100,
     _: User = Depends(require_roles("superadmin")),
     db: Session = Depends(get_db),
 ) -> list[DevBlogSummaryOut]:
     from aulos_api.services import dev_blog as blog
 
-    return [DevBlogSummaryOut(**row) for row in blog.list_posts(db)]
+    try:
+        rows = blog.list_posts(
+            db,
+            day=day,
+            day_from=day_from,
+            day_to=day_to,
+            q=q,
+            limit=limit,
+        )
+    except ValueError as exc:
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=str(exc)) from exc
+    return [DevBlogSummaryOut(**row) for row in rows]
+
+
+@router.get("/dev-blog/posts/{post_id}", response_model=DevBlogPostOut)
+def get_dev_blog_post(
+    post_id: int,
+    _: User = Depends(require_roles("superadmin")),
+    db: Session = Depends(get_db),
+) -> DevBlogPostOut:
+    from aulos_api.services import dev_blog as blog
+
+    row = blog.get_post_by_id(db, post_id)
+    if row is None:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Post not found")
+    return DevBlogPostOut(**blog.post_to_dict(row, include_body=True))
 
 
 @router.get("/dev-blog/{day}", response_model=DevBlogPostOut)
@@ -594,7 +677,7 @@ def get_dev_blog(
     from aulos_api.services import dev_blog as blog
 
     try:
-        row = blog.get_post(db, day)
+        row = blog.get_latest_post_for_day(db, day)
     except ValueError as exc:
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=str(exc)) from exc
     if row is None:
@@ -602,20 +685,47 @@ def get_dev_blog(
     return DevBlogPostOut(**blog.post_to_dict(row, include_body=True))
 
 
-@router.post("/dev-blog/{day}/generate", response_model=DevBlogPostOut)
-async def generate_dev_blog(
-    day: str,
-    body: DevBlogGenerateIn | None = None,
-    _: User = Depends(require_roles("superadmin")),
+@router.post("/dev-blog/generate", response_model=DevBlogTaskAcceptedOut, status_code=status.HTTP_202_ACCEPTED)
+def generate_dev_blog_body(
+    body: DevBlogGenerateIn,
+    user: User = Depends(require_roles("superadmin")),
     db: Session = Depends(get_db),
-) -> DevBlogPostOut:
-    from aulos_api.services import dev_blog as blog
-
-    force = bool(body.force) if body else False
+) -> DevBlogTaskAcceptedOut:
+    if not body.day:
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="day is required")
     try:
-        row = await blog.generate_or_load(db, day, force=force)
+        return _enqueue_dev_blog_generate(
+            db,
+            day=body.day,
+            force=body.force,
+            post_id=body.post_id,
+            user_id=user.id,
+        )
     except ValueError as exc:
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=str(exc)) from exc
-    except FileNotFoundError as exc:
-        raise HTTPException(status_code=status.HTTP_503_SERVICE_UNAVAILABLE, detail=str(exc)) from exc
-    return DevBlogPostOut(**blog.post_to_dict(row, include_body=True))
+
+
+class DevBlogGenerateDayIn(BaseModel):
+    force: bool = False
+    post_id: int | None = None
+
+
+@router.post("/dev-blog/{day}/generate", response_model=DevBlogTaskAcceptedOut, status_code=status.HTTP_202_ACCEPTED)
+def generate_dev_blog(
+    day: str,
+    body: DevBlogGenerateDayIn | None = None,
+    user: User = Depends(require_roles("superadmin")),
+    db: Session = Depends(get_db),
+) -> DevBlogTaskAcceptedOut:
+    force = bool(body.force) if body else False
+    post_id = body.post_id if body else None
+    try:
+        return _enqueue_dev_blog_generate(
+            db,
+            day=day,
+            force=force,
+            post_id=post_id,
+            user_id=user.id,
+        )
+    except ValueError as exc:
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=str(exc)) from exc

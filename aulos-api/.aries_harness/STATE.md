@@ -9,7 +9,7 @@ fingerprint: "aries-harness/bootstrap-doc/v1"
 initialized_at: "2026-07-25T11:10:22Z"
 effective_status: "active"
 effective_since: "2026-07-25T11:10:22Z"
-content_fingerprint: "sha256:144bb5e5a0d6a2b2c1e08224c2526289ca88a267fb6967e1ad7e303e4f5086e8"
+content_fingerprint: "sha256:950eafdcfd79106b2a7ea49288c3c05169e99aa3b4c6992d0c58da94240cccfd"
 trace_history_source: "filesystem-only"
 trace_last_commit_sha: ""
 trace_last_commit_at: ""
@@ -18,6 +18,10 @@ trace_revision_count: "0"
 # State
 
 ## Current phase
+
+- SPEC-018 Ops task queue + dashboard shipped (pytest green; Ops Tasks tab)
+
+## Current phase (prior)
 
 - SPEC-013 durable jobs + library shipped (pytest green)
 
