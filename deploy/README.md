@@ -2,6 +2,8 @@
 
 Persistent host daemons + k3s Ingress for public HTTPS.
 
+**Control plane:** `bash deploy/aulos-ctl.sh` — see [`OPS.md`](OPS.md) for the full runbook.
+
 | URL | Backend |
 | --- | --- |
 | https://aulos.purezen.ai | `aulos-web.service` → `:5091` |
@@ -12,9 +14,12 @@ Persistent host daemons + k3s Ingress for public HTTPS.
 ## One-shot deploy / restart
 
 ```bash
-export XDG_RUNTIME_DIR=/run/user/$(id -u)
+bash deploy/aulos-ctl.sh deploy
+# equivalent:
 bash deploy/start-host.sh
 ```
+
+Other common commands: `doctor`, `smoke`, `status`, `logs api`, `secrets check`, `test`.
 
 ## Persistence
 
@@ -25,9 +30,8 @@ bash deploy/start-host.sh
 ## Status
 
 ```bash
-systemctl --user status aulos-host.target aulos-api aulos-web aulos-ops aulos-knowledge
-curl -fsS https://aulos.purezen.ai/health
-curl -fsS https://aulos-ops.purezen.ai/health
+bash deploy/aulos-ctl.sh status
+bash deploy/aulos-ctl.sh smoke
 ```
 
 ## Asset versioning
@@ -55,10 +59,25 @@ Hosts are allowlisted (Wikimedia / archive.org / purezen). Cache dir: `AULOS_MED
 
 ## Auth bootstrap
 
-Default host unit boots a superadmin from env (override in `.run/host.env`):
+Host deploy requires operator secrets in `.run/host.env` (not tracked). `deploy/start-host.sh` refuses tracked defaults.
 
-- `AULOS_BOOTSTRAP_SUPERADMIN_EMAIL`
-- `AULOS_BOOTSTRAP_SUPERADMIN_PASSWORD`
+Required keys:
+
+- `AULOS_JWT_SECRET` — unique JWT signing secret (32+ bytes recommended)
+- `AULOS_BOOTSTRAP_SUPERADMIN_EMAIL` — first-time superadmin email (create-only on boot)
+- `AULOS_BOOTSTRAP_SUPERADMIN_PASSWORD` — bootstrap password (used only when the account is first created)
+- `AULOS_KNOWLEDGE_ADMIN_TOKEN` — shared bearer token for `aulos-knowledge` `/v1/admin/*` (API proxy attaches it)
+
+Example:
+
+```bash
+cat >> .run/host.env <<'EOF'
+AULOS_JWT_SECRET=replace-with-long-random-secret
+AULOS_BOOTSTRAP_SUPERADMIN_EMAIL=you@example.com
+AULOS_BOOTSTRAP_SUPERADMIN_PASSWORD=replace-with-strong-password
+AULOS_KNOWLEDGE_ADMIN_TOKEN=replace-with-plane-admin-token
+EOF
+```
 
 Ops portal (https://aulos-ops.purezen.ai) requires the `superadmin` role. Configure Mailgun there (domain, API key, from, region). With `AULOS_MAIL_PROVIDER=auto` (default), live sends start as soon as Mailgun is enabled and complete in ops — no API restart required. Use the Test Mailgun button and the delivery log panel to confirm sends; API logs under `.run/api.log` include `mail_send_*` lines.
 

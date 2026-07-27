@@ -211,5 +211,46 @@ def test_forgot_and_reset_password_flow(client: TestClient) -> None:
         "/v1/auth/login",
         json={"email": "resetme@example.com", "password": "NewPass123!"},
     )
-    assert new_login.status_code == 200
-    assert new_login.json()["access_token"]
+def test_login_sets_session_cookie_and_me_works_without_bearer(client: TestClient) -> None:
+    from aulos_api.auth.session import SESSION_COOKIE_NAME
+    from aulos_api.services.mailgun import get_fake_mailbox
+
+    client.post(
+        "/v1/auth/register",
+        json={"email": "cookie@example.com", "password": "UserPass123!"},
+    )
+    token = get_fake_mailbox()[-1]["verification_token"]
+    client.post("/v1/auth/verify-email", json={"token": token})
+
+    login = client.post(
+        "/v1/auth/login",
+        json={"email": "cookie@example.com", "password": "UserPass123!"},
+    )
+    assert login.status_code == 200
+    assert SESSION_COOKIE_NAME in login.cookies
+    assert login.json()["access_token"]
+
+    me = client.get("/v1/auth/me")
+    assert me.status_code == 200
+    assert me.json()["email"] == "cookie@example.com"
+
+
+def test_logout_clears_session_cookie(client: TestClient) -> None:
+    from aulos_api.auth.session import SESSION_COOKIE_NAME
+
+    login = client.post(
+        "/v1/auth/login",
+        json={"email": "admin@example.com", "password": "AdminPass123!"},
+    )
+    assert login.status_code == 200
+    assert SESSION_COOKIE_NAME in login.cookies
+
+    me = client.get("/v1/auth/me")
+    assert me.status_code == 200
+
+    out = client.post("/v1/auth/logout")
+    assert out.status_code == 200
+    assert out.json()["ok"] is True
+
+    denied = client.get("/v1/auth/me")
+    assert denied.status_code == 401

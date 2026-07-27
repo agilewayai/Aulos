@@ -8,10 +8,10 @@ managed_by: "aries-harness"
 fingerprint: "aries-harness/history-doc/v1"
 generated_by: "/aries-harness history-refresh"
 initialized_at: "2026-07-25T11:07:43Z"
-generated_at: "2026-07-26T16:28:21+00:00"
+generated_at: "2026-07-27T09:44:33+00:00"
 effective_status: "generated"
-effective_since: "2026-07-26T16:28:21+00:00"
-content_fingerprint: "sha256:74a3bfd08e0aded52b0d324b6c3813884b413426e9b7d97afcae9733c2e30ff4"
+effective_since: "2026-07-27T09:44:33+00:00"
+content_fingerprint: "sha256:d730fb1602a2f43fdc00e5e06725b634ba49101d536b82f2cd8fa24bae0f0365"
 trace_history_source: "filesystem-only"
 trace_last_commit_sha: ""
 trace_last_commit_at: ""
@@ -19,53 +19,63 @@ trace_revision_count: "0"
 ---
 # Timeline
 
-Generated at: `2026-07-26T16:28:21+00:00`
+Generated at: `2026-07-27T09:44:33+00:00`
 
 ## Journal milestones
 
-### 2026-07-26T16:50:00Z
+### 2026-07-26T19:20:00Z
 
-- SPEC-002: `POST /v1/auth/forgot-password` + `POST /v1/auth/reset-password`; Mailgun `reset_password` mail
-- Anti-enumeration; one-time `EmailToken` purpose=`reset_password`
-- Verify: `pytest tests/test_auth.py` 7 passed
+- Root cause: `merge_dossiers` called bare `dict(zh_hans)` when LLM/web returned prose/list →
+- Fix: `coerce_dict()` + harden merge/parse/runtime/KB; gate `tests/test_salon_codex_merge.py`.
 
-### 2026-07-26T16:30:00Z
+### 2026-07-26T19:10:00Z
 
-- SPEC-009: `/v1/ops/dev-blog` list/get/generate; `dev_blog_posts` table; `services/dev_blog.py`
-- Collect UTC-day git + harness excerpts; Ops LLM or fake template with product narrative headings
-- Verify: `pytest tests/test_dev_blog.py` 5 passed offline
+- SPEC-013 delta: countable listening-chain plan (15 stages) seeded in `steps_json`; gateway emits live stage updates; SSE `progress` snapshots for reconnect.
+- Robust recovery: client SSE reconnect + hydrate; `POST /{id}/retry` for failed/stale jobs; Atelier progress bar + Retry chain.
+- Gates: `tests/test_listening_plan.py`, `tests/test_listening_jobs.py`; web `npm run build`.
 
-### 2026-07-25T19:50:00Z
+### 2026-07-26T18:20:00Z
 
-- REVIEW-008 smoke `423-287-1`: was truncating to release 423; now catno search → Mozart/Horowitz
-- Fixes: parse catno, Discogs search, exclude composer from performers, workish titles
-- Verify: `test_discogs.py` 6 passed; live `resolve_discogs_message("/discogs #423-287-1")` SMOKE_OK
+- Operating rule: every model-shape slice must close with dual-dialect `schema_patches` + PG verify (SQLite pilot ≠ production).
+- Added `aulos_api.db.schema_patches`; HA/init apply on Postgres+SQLite. Migrated live PG SPEC-013 columns (`message`, `tags_json`, `favorited_at`, …).
+- Gate: `tests/test_schema_patches.py`; promoted insight + `aulos-operating-defaults` section.
 
-### 2026-07-25T19:40:00Z
+### 2026-07-26T18:15:00Z
 
-- Root cause of “no Discogs token UI”: local-only; live OPS/API not redeployed
-- Deployed host: OPS nav **Discogs** tab + `/v1/ops/discogs` (401 without auth = route live)
+- SPEC-013: durable listening-guide jobs (`queued`→`running`→`completed|failed`), Redis/`thread` worker (`listening_queue.py`), reconnect-safe `GET …/events`.
+- Library: DELETE, list `q`/`status`/`published`/`favorited`/`tag`, favorite + tags.
+- Legacy `/stream` and recompose/stream enqueue then attach to job events (no long-held DB session).
+- Verify: `pytest tests/test_listening_jobs.py` + stream/recompose SSE green.
 
-### 2026-07-25T19:35:00Z
+### 2026-07-26T17:20:00Z
 
-- OPS GUI: dedicated **Integrations** tab for Discogs token (status + enable + save/clear); Overview link
+- SPEC-012: per-run `chain_trace` (aulos.chain_trace/v1) in research_json for 复盘
+- Milestones: discogs → identity → lock → rag → web → llm → skill.intake/synthesize → persist
+- Auto deviations: composer/title drift, family_without_work_id
+- Routes: owner `GET /v1/listening-guides/{id}/trace`, ops `GET /v1/ops/listening-guides/{id}/trace`
+- Verify: `pytest tests/test_chain_trace.py` 4 passed
 
-### 2026-07-25T19:30:00Z
+### 2026-07-26T17:10:00Z
 
-- OPS office: `/v1/ops/discogs` + LLM tab form to store Discogs personal user token (overrides env)
+- Discogs intent rewrite avoids `I'm listening to…` intake trap; Discogs title/composer always win over weak Catalog
+- Companion fix in aulos-skills family composer gate (Mozart K.488 no longer inherits Beethoven cello pack)
+- Verify: `pytest tests/test_discogs.py` 8 passed; live `/discogs #6280908` synthesize=`kb-rag` only
 
-### 2026-07-25T19:20:00Z
+### 2026-07-26T17:00:00Z
 
-- Renamed slash command `/discog` → `/discogs` (parser only accepts `/discogs`)
+- SPEC-008 delta: `suggest_discogs_releases` + authenticated `GET /v1/discogs/search` AJAX autocomplete
+- Classical-first hit ranking; catno + free-text search; no full release fetch until compose
+- Verify: `.venv/bin/pytest tests/test_discogs.py` 8 passed
 
-### 2026-07-25T19:15:00Z
+### 2026-07-26T17:05:00Z
 
-- STORY-PACK-008 `/discogs`: REQ/SPEC/STORY/CKPT authored; id = Discogs **release** (master fallback)
-- Implemented `services/discogs.py` + `parse_discogs_command`; wired `_run_chain_core` seed vinyl/interpretations
-- Studio hint for `/discogs #release-id`; tests: `test_discogs.py` 4 passed; listening-guide regression green
+- SPEC-011: Redis mail queue `aulos:mail:queue` + background worker; live verify/reset async
+- Fake mail stays sync; Mailgun probe stays sync; Redis fail → daemon thread fallback
+- Ops `GET /v1/ops/mail/queue`; verify: `pytest tests/test_mail_queue.py` (+ auth/mailgun) 18 passed
 
 ## Recent git commits
 
+- `0c8a847` 2026-07-27 Ship Ops daily Dev Blog and web forgot-password reset.
 - `6ab1ea3` 2026-07-26 Ship /discogs release and catalog-number listening guides with OPS token UI.
 - `53e7437` 2026-07-26 Ship identity catalog, Hans/Hant locales, web research, and knowledge plane.
 - `555cf53` 2026-07-26 Ship listening product, mandatory harness, facility layout, and UTC/local time.
@@ -75,6 +85,9 @@ Generated at: `2026-07-26T16:28:21+00:00`
 
 ## Working tree snapshot
 
+- `M` `AGENTS.md`
+- `M` `CLAUDE.md`
+- `M` `README.md`
 - `M` `aulos-api/.aries_harness/ARIES_HARNESS_FINGERPRINT.json`
 - `M` `aulos-api/.aries_harness/EVAL.md`
 - `M` `aulos-api/.aries_harness/INDEX.md`
@@ -84,6 +97,3 @@ Generated at: `2026-07-26T16:28:21+00:00`
 - `M` `aulos-api/.aries_harness/history/DAILY_SUMMARY_INDEX.md`
 - `M` `aulos-api/.aries_harness/history/DOC_TRACE.md`
 - `M` `aulos-api/.aries_harness/history/README.md`
-- `M` `aulos-api/.aries_harness/history/RETROSPECTIVE.md`
-- `M` `aulos-api/.aries_harness/history/ROADMAP.md`
-- `M` `aulos-api/.aries_harness/history/STATUS.md`

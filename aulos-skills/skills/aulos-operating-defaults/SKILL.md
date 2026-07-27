@@ -27,7 +27,7 @@ Skip or weaken harness steps **only** when the operator explicitly waives them i
 | Coding slice | coding-loop | TDD + VR notes; update EVAL when gates change |
 | Dev-history refresh | history | `aries-harness.sh history-refresh` / `history-status` |
 | Doc well-organized | well-organized | `aries-harness.sh well-organized`; keep INDEX/MISSION/STATE clean |
-| DevOps / deploy | devops + rollout | runbooks under `runs/deployments/`; smoke + rollback |
+| DevOps / deploy | devops + rollout | `deploy/OPS.md` + `deploy/aulos-ctl.sh`; smoke + rollback |
 | Self-evolution | promotion | insights + skill/SPEC/gate updates with measurable before/after |
 
 Repo-local command shape (facility scripts live under `.aries_harness/scripts/`):
@@ -105,8 +105,45 @@ Whenever the work includes UI structure, visual design, interaction patterns, or
 
 Applies to: new pages, component redesigns, color/typography/layout choices, dashboards, admin portals, responsive/accessibility passes.
 
+## Database migration closeout (forced)
+
+Production hot store is **PostgreSQL** (`AULOS_DB_URL`); SQLite is **failover cold mirror** only (`AULOS_DB_FAILOVER_URL`, ADR-007).
+
+Every slice that changes ORM models / table shape must close with:
+
+1. **Schema patch** in `aulos-api` `db/schema_patches.py` (idempotent `ALTER` + indexes) — `create_all` does **not** add columns to existing PG tables.
+2. **Apply on both dialects** at boot / HA `configure_engines` (primary Postgres + SQLite failover).
+3. **Verify production PG** after deploy: columns/constraints present; smoke one write path that uses the new fields.
+4. **Optional HA sync** so the cold SQLite mirror catches up (OPS Fleet → Business DB HA).
+5. Offline pytest may keep temp SQLite — that is **not** production migration.
+
+Incomplete if code ships with model fields that exist only on a local SQLite pilot DB.
+
+## DevOps / host production (forced)
+
+Production runs on the `ubuntu` host via **systemd user units** + **k3s Ingress**. Single entry:
+
+```bash
+bash deploy/aulos-ctl.sh deploy    # build + secrets + units + ingress + smoke
+bash deploy/aulos-ctl.sh doctor    # preflight before first deploy
+bash deploy/aulos-ctl.sh smoke     # verify local + public health
+```
+
+Canonical runbook: [`deploy/OPS.md`](../../../deploy/OPS.md). Secrets live in **gitignored** `.run/host.env` only (`aulos-ctl secrets init`).
+
+Deploy closeout (mandatory):
+
+1. Sub-project tests green for changed code (`aulos-api` pytest, portal build/lint as applicable)
+2. `bash deploy/aulos-ctl.sh test` when deploy layer changes
+3. `bash deploy/aulos-ctl.sh smoke` after production deploy
+4. Harness `JOURNAL` + `history-refresh` for operator-visible releases
+
+Rollback: checkout known-good git SHA → `aulos-ctl deploy`. No blue/green — document incident in JOURNAL.
+
+Agents **must ask** before `aulos-ctl deploy` unless the operator explicitly requested deploy in the current turn.
+
 ## Guardrails
 
-- Never commit secrets or `.env`
+- Never commit secrets or `.env` / `.run/host.env`
 - Ask before live external side effects or production deploy mutations
 - Prefer sibling contracts through `aulos-api` and documented MCP tools

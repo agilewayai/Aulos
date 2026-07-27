@@ -11,6 +11,7 @@ Hackathon workspace for the Aulos initiative.
 | [`aulos-web/`](aulos-web/) | Operator web GUI (Vite / React) |
 | [`aulos-mcp/`](aulos-mcp/) | MCP server for agents integration |
 | [`aulos-skills/`](aulos-skills/) | Main harness skills pack + CLI |
+| [`aulos-knowledge/`](aulos-knowledge/) | Professional music knowledge plane (Postgres/Redis/artifacts) |
 | [`aulos-ops/`](aulos-ops/) | Admin and ops portal dashboard |
 
 All sub-projects are governed by aries-harness (`.aries_harness/`).
@@ -22,7 +23,13 @@ All sub-projects are governed by aries-harness (`.aries_harness/`).
 | Web GUI | https://aulos.purezen.ai |
 | Ops portal | https://aulos-ops.purezen.ai |
 
-Host daemons + k3s Ingress: see [`deploy/README.md`](deploy/README.md). Re-deploy with `bash deploy/start-host.sh`.
+Host daemons + k3s Ingress: see [`deploy/OPS.md`](deploy/OPS.md) (runbook) and [`deploy/README.md`](deploy/README.md) (quick ref).
+
+```bash
+bash deploy/aulos-ctl.sh deploy    # full production deploy
+bash deploy/aulos-ctl.sh smoke     # health checks
+bash deploy/aulos-ctl.sh doctor    # preflight
+```
 
 ## Suggested local topology
 

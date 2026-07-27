@@ -463,6 +463,58 @@ body,
   padding: 0.65rem 0.75rem;
 }
 
+.password-field {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: stretch;
+  border: 1px solid var(--line);
+  background: #fff;
+}
+
+.password-field input {
+  width: 100%;
+  min-height: 48px;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  padding: 0.65rem 0.75rem;
+}
+
+.password-field input:focus {
+  outline: none;
+}
+
+.password-field:focus-within {
+  outline: 2px solid var(--accent);
+  outline-offset: 1px;
+}
+
+.password-toggle {
+  appearance: none;
+  border: 0;
+  border-left: 1px solid var(--line);
+  background: rgba(16, 24, 32, 0.04);
+  color: var(--ink-soft);
+  font: inherit;
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  padding: 0 0.85rem;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.password-toggle:hover:not(:disabled) {
+  background: rgba(16, 24, 32, 0.08);
+  color: var(--ink);
+}
+
+.password-toggle:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
 .auth-form .check {
   display: flex;
   align-items: center;

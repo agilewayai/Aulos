@@ -9,7 +9,7 @@ fingerprint: "aries-harness/bootstrap-doc/v1"
 initialized_at: "2026-07-25T11:10:22Z"
 effective_status: "active"
 effective_since: "2026-07-25T11:10:22Z"
-content_fingerprint: "sha256:3e3ce58d3da960e0b7e3ddca1b9a46080c7110c22c383bfbc029d12f4e0b6c77"
+content_fingerprint: "sha256:974e5d4d848c86eb924f10f25bd523e3c75f36e1c7fd56cda7afe267d4f5d5a4"
 trace_history_source: "filesystem-only"
 trace_last_commit_sha: ""
 trace_last_commit_at: ""
@@ -29,6 +29,10 @@ trace_revision_count: "0"
 | REQ-006 | request | references/requests/REQ-006-rag-work-identity-catalog.md | active |
 | SPEC-001 | spec | references/specs/SPEC-001-api-gateway.md | active |
 | SPEC-009 | spec | references/specs/SPEC-009-ops-dev-blog.md | active |
+| SPEC-010 | spec | references/specs/SPEC-010-salon-email-craft.md | active |
+| SPEC-011 | spec | references/specs/SPEC-011-mail-queue.md | active |
+| REQ-009 | request | references/requests/REQ-009-durable-guide-jobs-library.md | active |
+| SPEC-013 | spec | references/specs/SPEC-013-listening-guide-jobs-library.md | active |
 | STORY-PACK-001 | story-pack | references/stories/STORY-PACK-001-bootstrap.md | active |
 | ARCH-001 | architecture | decisions/architecture/ARCH-001-api-gateway-architecture.md | active |
 | ADR-001 | adr | decisions/adrs/ADR-001-fastapi-gateway.md | accepted |

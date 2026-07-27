@@ -8,10 +8,10 @@ managed_by: "aries-harness"
 fingerprint: "aries-harness/bootstrap-doc/v1"
 generated_by: "/aries-harness well-organized"
 initialized_at: "2026-07-25T11:20:05Z"
-last_organized_at: "2026-07-25T19:31:11+00:00"
+last_organized_at: "2026-07-27T09:44:25+00:00"
 effective_status: "generated"
-effective_since: "2026-07-25T19:31:11+00:00"
-content_fingerprint: "sha256:2fc53b751cad8633784d30a783f2fab4b75a99f8a2ef0e054883f8cd137be273"
+effective_since: "2026-07-27T09:44:25+00:00"
+content_fingerprint: "sha256:cd21791737792eec3d232707b51eed814d331dbf212a3927da93b578a06b1888"
 trace_history_source: "filesystem-only"
 trace_last_commit_sha: ""
 trace_last_commit_at: ""
@@ -19,7 +19,7 @@ trace_revision_count: "0"
 ---
 # Harness Index
 
-Last organized: `2026-07-25T19:31:11+00:00`
+Last organized: `2026-07-27T09:44:25+00:00`
 
 Canonical spelling: `/aries-harness well-organized`
 
@@ -68,6 +68,7 @@ Fingerprint marker: `aries-harness` / `aries-harness/bootstrap-doc/v1`
 - [REQ-004-cold-path-salon-parity.md](references/requests/REQ-004-cold-path-salon-parity.md)
 - [REQ-005-ambient-media-identity.md](references/requests/REQ-005-ambient-media-identity.md)
 - [REQ-006-work-identity-catalog.md](references/requests/REQ-006-work-identity-catalog.md)
+- [REQ-007-node-decontam-rework.md](references/requests/REQ-007-node-decontam-rework.md)
 
 #### `references/specs/`
 - role: behavior and acceptance contracts derived from requests
@@ -79,6 +80,8 @@ Fingerprint marker: `aries-harness` / `aries-harness/bootstrap-doc/v1`
 - [SPEC-005-bilingual-salon-codex.md](references/specs/SPEC-005-bilingual-salon-codex.md)
 - [SPEC-006-ambient-media-and-identity.md](references/specs/SPEC-006-ambient-media-and-identity.md)
 - [SPEC-008-work-identity-and-resolver.md](references/specs/SPEC-008-work-identity-and-resolver.md)
+- [SPEC-009-node-decontam-rework.md](references/specs/SPEC-009-node-decontam-rework.md)
+- [SPEC-016-module-split-seams.md](references/specs/SPEC-016-module-split-seams.md)
 
 #### `references/stories/`
 - role: sprintable slices linked to specs and verification
@@ -152,6 +155,7 @@ Fingerprint marker: `aries-harness` / `aries-harness/bootstrap-doc/v1`
 - [README.md](runs/tests/README.md)
 - [VR-001-story-001-bootstrap.md](runs/tests/VR-001-story-001-bootstrap.md)
 - [VR-005-ambient-identity-gates.md](runs/tests/VR-005-ambient-identity-gates.md)
+- [VR-006-node-decontam-rework.md](runs/tests/VR-006-node-decontam-rework.md)
 
 #### `runs/reports/`
 - role: iteration reports and closeouts

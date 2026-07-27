@@ -13,4 +13,6 @@ Mirror of workspace `AGENTS.md` for Claude-compatible agents.
 
 Also: UI/UX → `ui-ux-pro-max`; listening-product → promote into `aulos-skills` harness assets; timestamps → store UTC / display OS local.
 
+**DevOps:** `bash deploy/aulos-ctl.sh` — runbook `deploy/OPS.md`. Ask before production deploy.
+
 Canonical policy: `aulos-skills/skills/aulos-operating-defaults/SKILL.md`

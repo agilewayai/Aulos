@@ -52,14 +52,8 @@ def ensure_bootstrap_superadmin(db: Session, roles: dict[str, Role]) -> User | N
         if roles["user"] not in user.roles:
             user.roles.append(roles["user"])
         db.add(user)
-    else:
-        names = {r.name for r in user.roles}
-        if "superadmin" not in names:
-            user.roles.append(roles["superadmin"])
-        user.email_verified = True
-        user.is_active = True
-    db.commit()
-    db.refresh(user)
+        db.commit()
+        db.refresh(user)
     return user
 
 

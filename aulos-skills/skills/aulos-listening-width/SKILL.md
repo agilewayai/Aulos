@@ -12,7 +12,7 @@ After intake (and after corpus load if any). Build the cultural and historical f
 4. How did reception change (neglect, revival, landmark recordings)?
 5. Which popular stories are **legend** vs documented?
 6. What kindred works and famous interpretations (multi-era) should the listener know?
-7. Which YouTube appreciation paths and Discogs vinyl/masters are curated?
+7. Which YouTube / 哔哩哔哩 appreciation search paths and Discogs vinyl/masters are curated?
 
 ## Procedure
 
@@ -20,16 +20,17 @@ After intake (and after corpus load if any). Build the cultural and historical f
 2. Separate **facts**, **scholarly consensus**, and **reception lore**.
 3. Produce width points a curious listener can hold — dense, not encyclopedic.
 4. Pass through portrait, genesis, stature, related works, interpretations, and media shelf.
+5. For videos: YouTube `url` search links; always pair with `bilibili_url` search links (renderer fills if omitted).
 
 ## Output schema
 
 - `era`, `composer_profile`, `composer_portrait`, `genesis`
 - `width_points[]`, `historical_reasons[]`, `reception_arc`
 - `myths_and_caveats[]`, `related_works[{title,why}]`
-- `interpretations[]`, `appreciation_videos[]`, `vinyl_and_discography[]`
+- `interpretations[]`, `appreciation_videos[]` (`title`, `url`, `bilibili_url?`, `why`), `vinyl_and_discography[]`
 
 ## Anti-patterns
 
 - Presenting the Goldberg night-music story as proven biography
 - Name-dropping without saying what the listener should do with the name
-- Fabricating Discogs masters or YouTube IDs
+- Fabricating Discogs masters or YouTube / Bilibili item IDs

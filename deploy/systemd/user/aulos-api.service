@@ -20,11 +20,8 @@ Environment=AULOS_DB_AUTO_FAILBACK=false
 Environment=AULOS_REDIS_URL=redis://127.0.0.1:6379/0
 Environment=AULOS_KNOWLEDGE_BASE_URL=http://127.0.0.1:5095
 Environment=AULOS_KNOWLEDGE_PLANE_ENABLED=true
-Environment=AULOS_JWT_SECRET=aulos-dev-jwt-secret-change-me-32b
 Environment=AULOS_MAIL_PROVIDER=auto
 Environment=AULOS_WEB_BASE_URL=https://aulos.purezen.ai
-Environment=AULOS_BOOTSTRAP_SUPERADMIN_EMAIL=admin@agileway.ai
-Environment=AULOS_BOOTSTRAP_SUPERADMIN_PASSWORD=ChangeMeAdmin123!
 EnvironmentFile=-/home/ubuntu/hackathon/aulos/.run/host.env
 ExecStart=/home/ubuntu/hackathon/aulos/aulos-api/.venv/bin/aulos-api --host 127.0.0.1 --port 5090
 Restart=always

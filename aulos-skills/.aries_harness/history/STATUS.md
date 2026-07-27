@@ -8,10 +8,10 @@ managed_by: "aries-harness"
 fingerprint: "aries-harness/history-doc/v1"
 generated_by: "/aries-harness history-refresh"
 initialized_at: "2026-07-25T11:20:05Z"
-generated_at: "2026-07-25T19:31:11+00:00"
+generated_at: "2026-07-27T09:46:13+00:00"
 effective_status: "generated"
-effective_since: "2026-07-25T19:31:11+00:00"
-content_fingerprint: "sha256:f5b8d59a2492ab8729240fa1e2c9c4031e9eac5fde7ffe3516cc629691c48b31"
+effective_since: "2026-07-27T09:46:13+00:00"
+content_fingerprint: "sha256:14dd78126d8c6a5bd66799a3ab9d17ea800a6a7d5af19adf99a5ee6f2d90e5cc"
 trace_history_source: "filesystem-only"
 trace_last_commit_sha: ""
 trace_last_commit_at: ""
@@ -19,26 +19,26 @@ trace_revision_count: "0"
 ---
 # Current Status
 
-Generated at: `2026-07-25T19:31:11+00:00`
+Generated at: `2026-07-27T09:46:13+00:00`
 
 ## Current phase
 
-- Listening product gates active (CKPT-005 ambient + identity hygiene)
+- AUDIT-009 F2/F10/F11 closed: guide HTML security contract + sanitizer, module splits, plaintext-secrets ADR.
 
 ## Branch and workspace
 
 - no branch or workspace details recorded
 - git branch: main
-- HEAD: `53e7437` Ship identity catalog, Hans/Hant locales, web research, and knowledge plane.
+- HEAD: `0c8a847` Ship Ops daily Dev Blog and web forgot-password reset.
 - working tree: dirty
-- change: `M` `aulos-api/.aries_harness/INDEX.md`
-- change: `M` `aulos-api/.aries_harness/JOURNAL.md`
-- change: `M` `aulos-api/.aries_harness/STATE.md`
-- change: `M` `aulos-api/.aries_harness/TASK_STACK.md`
-- change: `M` `aulos-api/.aries_harness/history/DAILY_SUMMARY_INDEX.md`
-- change: `M` `aulos-api/.aries_harness/history/DOC_TRACE.md`
-- change: `M` `aulos-api/.aries_harness/history/README.md`
-- change: `M` `aulos-api/.aries_harness/history/RETROSPECTIVE.md`
+- change: `M` `AGENTS.md`
+- change: `M` `CLAUDE.md`
+- change: `M` `README.md`
+- change: `M` `aulos-agent/.aries_harness/INDEX.md`
+- change: `M` `aulos-agent/.aries_harness/history/DAILY_SUMMARY_INDEX.md`
+- change: `M` `aulos-agent/.aries_harness/history/DOC_TRACE.md`
+- change: `M` `aulos-agent/.aries_harness/history/README.md`
+- change: `M` `aulos-agent/.aries_harness/history/RETROSPECTIVE.md`
 
 ## Current milestone
 
@@ -60,4 +60,5 @@ Generated at: `2026-07-25T19:31:11+00:00`
 
 ## Next action
 
-- no next action recorded
+- Optional operator: rotate live secrets in `.run/host.env` when ready to redeploy (F1 deferred).
+- Later: deeper F10 splits (`listening_guide.py` / `runtime.py`) when product work touches those files.

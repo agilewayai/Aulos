@@ -8,10 +8,10 @@ managed_by: "aries-harness"
 fingerprint: "aries-harness/bootstrap-doc/v1"
 generated_by: "/aries-harness well-organized"
 initialized_at: "2026-07-25T11:07:42Z"
-last_organized_at: "2026-07-26T16:28:38+00:00"
+last_organized_at: "2026-07-27T09:44:38+00:00"
 effective_status: "generated"
-effective_since: "2026-07-26T16:28:38+00:00"
-content_fingerprint: "sha256:ae80924fd126780c821fda1dd138550b4fa565d89a13f3081bebf26f254454ab"
+effective_since: "2026-07-27T09:44:38+00:00"
+content_fingerprint: "sha256:53dc7db8866a3f93e5d454853ace442df633958dc1db6e06f39995a64cd7dfe8"
 trace_history_source: "filesystem-only"
 trace_last_commit_sha: ""
 trace_last_commit_at: ""
@@ -19,7 +19,7 @@ trace_revision_count: "0"
 ---
 # Harness Index
 
-Last organized: `2026-07-26T16:28:38+00:00`
+Last organized: `2026-07-27T09:44:38+00:00`
 
 Canonical spelling: `/aries-harness well-organized`
 
@@ -69,6 +69,12 @@ Fingerprint marker: `aries-harness` / `aries-harness/bootstrap-doc/v1`
 - [README.md](references/specs/README.md)
 - [SPEC-001-web-gui.md](references/specs/SPEC-001-web-gui.md)
 - [SPEC-002-forgot-password.md](references/specs/SPEC-002-forgot-password.md)
+- [SPEC-003-discogs-picker.md](references/specs/SPEC-003-discogs-picker.md)
+- [SPEC-004-chain-trace-viewer.md](references/specs/SPEC-004-chain-trace-viewer.md)
+- [SPEC-005-portal-ux-polish.md](references/specs/SPEC-005-portal-ux-polish.md)
+- [SPEC-006-library-jobs-ux.md](references/specs/SPEC-006-library-jobs-ux.md)
+- [SPEC-007-single-pane-studio.md](references/specs/SPEC-007-single-pane-studio.md)
+- [SPEC-008-session-scene-restore.md](references/specs/SPEC-008-session-scene-restore.md)
 
 #### `references/stories/`
 - role: sprintable slices linked to specs and verification
@@ -133,6 +139,8 @@ Fingerprint marker: `aries-harness` / `aries-harness/bootstrap-doc/v1`
 - [README.md](runs/tests/README.md)
 - [VR-001-story-001-bootstrap.md](runs/tests/VR-001-story-001-bootstrap.md)
 - [VR-002-forgot-password.md](runs/tests/VR-002-forgot-password.md)
+- [VR-005-portal-ux-polish.md](runs/tests/VR-005-portal-ux-polish.md)
+- [VR-006-library-jobs-ux.md](runs/tests/VR-006-library-jobs-ux.md)
 
 #### `runs/reports/`
 - role: iteration reports and closeouts

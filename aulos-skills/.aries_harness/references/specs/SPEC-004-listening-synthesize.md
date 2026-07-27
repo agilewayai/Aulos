@@ -9,7 +9,7 @@ fingerprint: "aries-harness/bootstrap-doc/v1"
 initialized_at: "2026-07-25T16:19:58+00:00"
 effective_status: "active"
 effective_since: "2026-07-25T16:19:58+00:00"
-content_fingerprint: "sha256:604ea0556a66a9eda4abf01e635e00e0571912bad72dd5d5df8bbddf099220fe"
+content_fingerprint: "sha256:3d78d549093d2c5891d28ae78182a7777f9cad293e1db9e112c3eef8228dd36e"
 trace_history_source: "filesystem-only"
 trace_last_commit_sha: ""
 trace_last_commit_at: ""
@@ -34,6 +34,9 @@ Required: `family_id`, `match` (composers/instruments/forms hints), `form`, `sou
 `listening_map`, `depth_points`, `practice_notes`, `width_points`
 Optional: `related_works`, `interpretations`, `appreciation_videos`, `vinyl_and_discography`,
 `historical_stature`, `work_title_template`, `catalog`
+
+**Match rule (SPEC-009):** when `match.composers` is non-empty, require ≥1 instrument or form
+token hit in the title/message blob — composer surname alone must not unlock the pack.
 
 ### LLM dossier JSON
 

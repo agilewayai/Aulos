@@ -306,6 +306,141 @@ def test_mazurka_chain_approaches_goldberg_atelier_coverage() -> None:
     assert "月光" not in html
 
 
+def test_mozart_piano_concerto_discogs_path_not_beethoven_cello_family() -> None:
+    """Discogs Mozart piano release must not inherit duo-cello-piano (Beethoven) chambers.
+
+    Regression: family match scored piano+sonata=2 without composer gate → whole
+    Beethoven cello pack polluted Mozart K.488/K.333 guides.
+    """
+    root = Path(__file__).resolve().parents[1]
+    runtime = SkillRuntime(roots=[root / "skills"])
+    intent = (
+        "I'm listening to Wolfgang Amadeus Mozart — Piano Concerto No. 23 K. 488 "
+        "• Piano Sonata K. 333 performed by Vladimir Horowitz, "
+        "Orchestra Del Teatro Alla Scala, Carlo Maria Giulini "
+        "(Discogs release 6280908). Write a professional listening guide."
+    )
+    hint = "Wolfgang Amadeus Mozart Piano Concerto No. 23 K. 488 • Piano Sonata K. 333"
+    seed = {
+        "work_title": "Piano Concerto No. 23 K. 488 • Piano Sonata K. 333",
+        "composer": "Wolfgang Amadeus Mozart",
+        "interpretations": [
+            {
+                "artist": "Vladimir Horowitz, Carlo Maria Giulini",
+                "year": "1987",
+                "why_listen": "Primary Discogs pressing",
+                "discogs_url": "https://www.discogs.com/release/6280908",
+            }
+        ],
+        "vinyl_and_discography": [
+            {
+                "label": "Deutsche Grammophon · 423 287-1 · 1987",
+                "url": "https://www.discogs.com/release/6280908",
+                "note": "Source release #6280908",
+            }
+        ],
+        "_provenance": {"source": "discogs", "discogs": {"release_id": 6280908}},
+    }
+    report = runtime.run_listening_chain(
+        message=intent,
+        work_hint=hint,
+        kb_dossier=seed,
+        rag_hits=[
+            "Discogs release #6280908: Horowitz Plays Mozart",
+            "Composer credits: Wolfgang Amadeus Mozart",
+            "Performers: Vladimir Horowitz, Carlo Maria Giulini",
+        ],
+        rag_mode="discogs",
+    )
+    assert "Mozart" in (report.composer or "") or "Mozart" in report.work_title
+    assert "Beethoven" not in (report.composer or "")
+    html = report.guide_html
+    for banned in (
+        "Op. 69",
+        "Op. 102",
+        "Fournier",
+        "Maisky",
+        "大提琴与钢琴奏鸣曲",
+        "duo citizenship",
+        "Cello Sonatas & Variations",
+    ):
+        assert banned not in html, f"pollution marker present: {banned}"
+    assert "Mozart" in html or "莫扎特" in html
+    synth = next(s for s in report.steps if s.id == "synthesize")
+    assert "duo-cello-piano" not in (synth.detail or "")
+    assert "family:duo-cello-piano" not in str(report.context.get("synthesize_source") or "")
+
+
+def test_brahms_violin_concerto_not_duo_cello_family() -> None:
+    """Discogs Brahms Violin Concerto Op.77 must not inherit Beethoven cello-duo pack.
+
+    Regression (guide #44): family match scored composer brahms=+2 with zero
+    instrument/form evidence → family:duo-cello-piano + Bach Suite ambient pollution.
+    """
+    root = Path(__file__).resolve().parents[1]
+    runtime = SkillRuntime(roots=[root / "skills"])
+    intent = (
+        "I'm listening to Johannes Brahms — Concerto En Ré Majeur Pour Violon Et "
+        "Orchestre, Op. 77 performed by Leonide Kogan "
+        "(Discogs release 1830948). Write a professional listening guide."
+    )
+    hint = "Johannes Brahms Concerto En Ré Majeur Pour Violon Et Orchestre, Op. 77"
+    seed = {
+        "work_title": "Concerto En Ré Majeur Pour Violon Et Orchestre, Op. 77",
+        "composer": "Johannes Brahms",
+        "interpretations": [
+            {
+                "artist": "Leonide Kogan",
+                "year": "1950s",
+                "why_listen": "Primary Discogs pressing",
+                "discogs_url": "https://www.discogs.com/release/1830948",
+            }
+        ],
+        "vinyl_and_discography": [
+            {
+                "label": "Discogs · 1830948",
+                "url": "https://www.discogs.com/release/1830948",
+                "note": "Source release #1830948",
+            }
+        ],
+        "_provenance": {"source": "discogs", "discogs": {"release_id": 1830948}},
+    }
+    report = runtime.run_listening_chain(
+        message=intent,
+        work_hint=hint,
+        kb_dossier=seed,
+        rag_hits=[
+            "Discogs release #1830948: Brahms Violin Concerto Op.77",
+            "Composer credits: Johannes Brahms",
+            "Performers: Leonide Kogan",
+        ],
+        rag_mode="discogs",
+    )
+    assert "Brahms" in (report.composer or "") or "Brahms" in report.work_title
+    assert "Beethoven" not in (report.composer or "")
+    html = report.guide_html
+    for banned in (
+        "Op. 69",
+        "Op. 102",
+        "Fournier",
+        "Maisky",
+        "duo citizenship",
+        "Cello Sonatas & Variations",
+        "BWV 1007",
+        "Cello Suite No. 1",
+        "无伴奏大提琴组曲第一号",
+        "大提琴与钢琴奏鸣曲",
+        "Moonlight",
+        "月光",
+    ):
+        assert banned not in html, f"pollution marker present: {banned}"
+    # Bare "Beethoven" may appear only as Classical peer ambient for Mozart — not for Brahms.
+    assert "Beethoven" not in html and "贝多芬" not in html
+    synth = next(s for s in report.steps if s.id == "synthesize")
+    assert "duo-cello-piano" not in (synth.detail or "")
+    assert "family:duo-cello-piano" not in str(report.context.get("synthesize_source") or "")
+
+
 def test_listening_chain_does_not_collapse_to_goldberg() -> None:
     """Regression: wrong RAG/corpus must not rename unrelated works to Goldberg."""
     root = Path(__file__).resolve().parents[1]

@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from sqlalchemy import create_engine, inspect, text
+from sqlalchemy import create_engine
 from sqlalchemy.engine import Engine
 from sqlalchemy.orm import DeclarativeBase, Session, sessionmaker
 
@@ -64,6 +64,7 @@ def reset_engine() -> None:
 
 def init_db() -> None:
     from aulos_api.db import models  # noqa: F401
+    from aulos_api.db.schema_patches import apply_all_schema_patches
 
     settings = get_settings()
     if (settings.db_failover_url or "").strip():
@@ -75,29 +76,7 @@ def init_db() -> None:
 
     engine = get_engine()
     Base.metadata.create_all(bind=engine)
-    if engine.dialect.name == "sqlite":
-        with engine.begin() as conn:
-            cols = (
-                {c["name"] for c in inspect(conn).get_columns("listening_guides")}
-                if inspect(conn).has_table("listening_guides")
-                else set()
-            )
-            if cols and "skill_versions_json" not in cols:
-                conn.execute(text("ALTER TABLE listening_guides ADD COLUMN skill_versions_json TEXT DEFAULT '{}'"))
-            if cols and "share_slug" not in cols:
-                conn.execute(text("ALTER TABLE listening_guides ADD COLUMN share_slug VARCHAR(64)"))
-            if cols and "published_at" not in cols:
-                conn.execute(text("ALTER TABLE listening_guides ADD COLUMN published_at DATETIME"))
-            if cols or inspect(conn).has_table("listening_guides"):
-                try:
-                    conn.execute(
-                        text(
-                            "CREATE UNIQUE INDEX IF NOT EXISTS ix_listening_guides_share_slug "
-                            "ON listening_guides (share_slug)"
-                        )
-                    )
-                except Exception:  # noqa: BLE001
-                    pass
+    apply_all_schema_patches(engine)
 
 
 def get_db():

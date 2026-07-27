@@ -118,11 +118,54 @@ def _merge_list(a: list[Any], b: list[Any]) -> list[Any]:
     return out
 
 
+def coerce_dict(val: Any) -> dict[str, Any]:
+    """Safe dict coercion — never call bare dict(str/list) (raises ValueError).
+
+    LLM / web-research layers often put prose or a list into `zh_hans` / nested
+    chambers. Bare `dict("中文")` yields:
+      ValueError: dictionary update sequence element #0 has length 1; 2 is required
+    """
+    if val is None or val == "" or val == [] or val == {}:
+        return {}
+    if isinstance(val, dict):
+        return dict(val)
+    if isinstance(val, str):
+        text = val.strip()
+        if not text:
+            return {}
+        if text.startswith("{"):
+            try:
+                data = json.loads(text)
+                if isinstance(data, dict):
+                    return data
+            except json.JSONDecodeError:
+                pass
+        return {"listening_thesis": text, "work_introduction": text}
+    if isinstance(val, (list, tuple)):
+        out: dict[str, Any] = {}
+        prose_bits: list[str] = []
+        for item in val:
+            if isinstance(item, dict):
+                out = _merge_dict(out, item)
+            elif isinstance(item, (list, tuple)) and len(item) == 2:
+                out[str(item[0])] = item[1]
+            elif isinstance(item, str) and item.strip():
+                prose_bits.append(item.strip())
+        if prose_bits:
+            joined = " ".join(prose_bits)
+            out.setdefault("listening_thesis", joined)
+            out.setdefault("work_introduction", joined)
+        return out
+    return {}
+
+
 def merge_dossiers(*layers: dict[str, Any] | None) -> dict[str, Any]:
     """Merge Salon Codex layers; later layers override scalars and nested dict values."""
     out = empty_dossier()
     for layer in layers:
         if not layer:
+            continue
+        if not isinstance(layer, dict):
             continue
         for key in SALON_SCALAR_KEYS:
             val = layer.get(key)
@@ -133,32 +176,32 @@ def merge_dossiers(*layers: dict[str, Any] | None) -> dict[str, Any]:
         for key in SALON_DICT_KEYS:
             if key in {"zh", "zh_hans", "zh_hant"}:
                 continue
-            if layer.get(key):
+            if layer.get(key) not in (None, "", [], {}):
                 if key == "historical_stature":
-                    cur = dict(out.get("historical_stature") or {})
-                    nxt = dict(layer.get("historical_stature") or {})
+                    cur = coerce_dict(out.get("historical_stature"))
+                    nxt = coerce_dict(layer.get("historical_stature"))
                     reasons = _merge_list(list(cur.get("reasons") or []), list(nxt.get("reasons") or []))
                     merged = _merge_dict(cur, nxt)
                     merged["reasons"] = reasons
                     out["historical_stature"] = merged
                 else:
-                    out[key] = _merge_dict(dict(out.get(key) or {}), dict(layer.get(key) or {}))
+                    out[key] = _merge_dict(coerce_dict(out.get(key)), coerce_dict(layer.get(key)))
         for zh_key in ("zh", "zh_hans", "zh_hant"):
-            if layer.get(zh_key):
-                zh_layer = dict(layer.get(zh_key) or {})
+            if layer.get(zh_key) not in (None, "", [], {}):
+                zh_layer = coerce_dict(layer.get(zh_key))
                 for nested in ("zh", "zh_hans", "zh_hant"):
                     zh_layer.pop(nested, None)
-                out[zh_key] = merge_dossiers(dict(out.get(zh_key) or {}), zh_layer)
+                out[zh_key] = merge_dossiers(coerce_dict(out.get(zh_key)), zh_layer)
         # Keep simplified slots synced
-        hans = out.get("zh_hans") or out.get("zh")
+        hans = coerce_dict(out.get("zh_hans") or out.get("zh"))
         if hans:
             out["zh"] = dict(hans)
             out["zh_hans"] = dict(hans)
-        hant = out.get("zh_hant")
+        hant = coerce_dict(out.get("zh_hant"))
         if hant:
-            out["zh_hant"] = dict(hant)
+            out["zh_hant"] = hant
         for key in SALON_LIST_KEYS:
-            if layer.get(key):
+            if layer.get(key) not in (None, "", [], {}):
                 out[key] = _merge_list(_coerce_list(out.get(key)), _coerce_list(layer.get(key)))
         # pass through misc flags
         for key in ("raw_format", "dossier_id"):
@@ -214,18 +257,25 @@ def parse_llm_dossier_json(text: str) -> dict[str, Any]:
     for key in SALON_LIST_KEYS:
         if key in data:
             data[key] = _coerce_list(data.get(key))
+    for key in SALON_DICT_KEYS:
+        if key in data and data.get(key) not in (None, ""):
+            data[key] = coerce_dict(data.get(key))
     for zh_key in ("zh", "zh_hans", "zh_hant"):
-        if isinstance(data.get(zh_key), dict):
+        zh = coerce_dict(data.get(zh_key))
+        if zh:
             for key in SALON_LIST_KEYS:
-                if key in data[zh_key]:
-                    data[zh_key][key] = _coerce_list(data[zh_key].get(key))
-    hans = data.get("zh_hans") or data.get("zh")
-    if isinstance(hans, dict):
+                if key in zh:
+                    zh[key] = _coerce_list(zh.get(key))
+            data[zh_key] = zh
+        elif zh_key in data and not zh:
+            data.pop(zh_key, None)
+    hans = coerce_dict(data.get("zh_hans") or data.get("zh"))
+    if hans:
         data["zh"] = dict(hans)
         data["zh_hans"] = dict(hans)
-    hant = data.get("zh_hant")
-    if isinstance(hant, dict):
-        data["zh_hant"] = dict(hant)
+    hant = coerce_dict(data.get("zh_hant"))
+    if hant:
+        data["zh_hant"] = hant
     return data
 
 

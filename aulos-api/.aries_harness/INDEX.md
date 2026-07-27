@@ -8,10 +8,10 @@ managed_by: "aries-harness"
 fingerprint: "aries-harness/bootstrap-doc/v1"
 generated_by: "/aries-harness well-organized"
 initialized_at: "2026-07-25T11:07:43Z"
-last_organized_at: "2026-07-26T16:28:21+00:00"
+last_organized_at: "2026-07-27T09:44:33+00:00"
 effective_status: "generated"
-effective_since: "2026-07-26T16:28:21+00:00"
-content_fingerprint: "sha256:0b0368a6b5d1963f51ed905d2788b94c93471c904961e1edd3adfeb912a32c2e"
+effective_since: "2026-07-27T09:44:33+00:00"
+content_fingerprint: "sha256:dbee20724c21223140d883f2576dfb778e5b204d6843aea29fcb0a56ef47c47e"
 trace_history_source: "filesystem-only"
 trace_last_commit_sha: ""
 trace_last_commit_at: ""
@@ -19,7 +19,7 @@ trace_revision_count: "0"
 ---
 # Harness Index
 
-Last organized: `2026-07-26T16:28:21+00:00`
+Last organized: `2026-07-27T09:44:33+00:00`
 
 Canonical spelling: `/aries-harness well-organized`
 
@@ -67,6 +67,7 @@ Fingerprint marker: `aries-harness` / `aries-harness/bootstrap-doc/v1`
 - [REQ-003-classical-listening-guide-mvp.md](references/requests/REQ-003-classical-listening-guide-mvp.md)
 - [REQ-006-rag-work-identity-catalog.md](references/requests/REQ-006-rag-work-identity-catalog.md)
 - [REQ-008-discog-release-guide.md](references/requests/REQ-008-discog-release-guide.md)
+- [REQ-009-durable-guide-jobs-library.md](references/requests/REQ-009-durable-guide-jobs-library.md)
 
 #### `references/specs/`
 - role: behavior and acceptance contracts derived from requests
@@ -78,6 +79,12 @@ Fingerprint marker: `aries-harness` / `aries-harness/bootstrap-doc/v1`
 - [SPEC-007-timezone-utc-store-local-display.md](references/specs/SPEC-007-timezone-utc-store-local-display.md)
 - [SPEC-008-discog-release-guide.md](references/specs/SPEC-008-discog-release-guide.md)
 - [SPEC-009-ops-dev-blog.md](references/specs/SPEC-009-ops-dev-blog.md)
+- [SPEC-010-salon-email-craft.md](references/specs/SPEC-010-salon-email-craft.md)
+- [SPEC-011-mail-queue.md](references/specs/SPEC-011-mail-queue.md)
+- [SPEC-012-chain-trace.md](references/specs/SPEC-012-chain-trace.md)
+- [SPEC-013-listening-guide-jobs-library.md](references/specs/SPEC-013-listening-guide-jobs-library.md)
+- [SPEC-014-session-cookie-auth.md](references/specs/SPEC-014-session-cookie-auth.md)
+- [SPEC-015-guide-html-security.md](references/specs/SPEC-015-guide-html-security.md)
 
 #### `references/stories/`
 - role: sprintable slices linked to specs and verification
@@ -118,6 +125,7 @@ Fingerprint marker: `aries-harness` / `aries-harness/bootstrap-doc/v1`
 - [ADR-001-fastapi-gateway.md](decisions/adrs/ADR-001-fastapi-gateway.md)
 - [ADR-002-sqlite-jwt-mailgun.md](decisions/adrs/ADR-002-sqlite-jwt-mailgun.md)
 - [ADR-007-business-pg-sqlite-failover.md](decisions/adrs/ADR-007-business-pg-sqlite-failover.md)
+- [ADR-008-plaintext-systemsetting-secrets-sprint1.md](decisions/adrs/ADR-008-plaintext-systemsetting-secrets-sprint1.md)
 - [README.md](decisions/adrs/README.md)
 
 ## RunCookingLayer
@@ -147,6 +155,7 @@ Fingerprint marker: `aries-harness` / `aries-harness/bootstrap-doc/v1`
 - [README.md](runs/tests/README.md)
 - [VR-001-story-001-bootstrap.md](runs/tests/VR-001-story-001-bootstrap.md)
 - [VR-002-auth-mvp.md](runs/tests/VR-002-auth-mvp.md)
+- [VR-013-listening-guide-jobs-library.md](runs/tests/VR-013-listening-guide-jobs-library.md)
 
 #### `runs/reports/`
 - role: iteration reports and closeouts

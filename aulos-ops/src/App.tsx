@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import type { FormEvent } from 'react'
 import {
   AULOS_SERVICES,
@@ -9,7 +9,6 @@ import {
   fetchOpsRoles,
   fetchOpsUsers,
   fetchOverview,
-  getStoredToken,
   login,
   logout,
   deleteOpsUser,
@@ -19,11 +18,9 @@ import {
   fetchWebResearchConfig,
   fetchDiscogsConfig,
   fetchKnowledgeStats,
-  probeSkills,
   resendUserVerification,
   testLlmProvider,
   testMailgun,
-  toggleSkill,
   updateLlmConfig,
   updateEmbedConfig,
   updateWebResearchConfig,
@@ -39,30 +36,44 @@ import {
   type OpsOverview,
   type OpsRole,
   type OpsUser,
-  type SkillProbe,
   type SkillRow,
   type User,
   type WebResearchConfig,
 } from './api'
 import { KnowledgePanel } from './KnowledgePanel'
+import { SkillsPanel } from './SkillsPanel'
 import { DbHaPanel } from './DbHaPanel'
 import { DevBlogPanel } from './DevBlogPanel'
+import { PasswordField } from './PasswordField'
 import { formatDateTime, formatTime } from './time'
+import {
+  consumeOpsScene,
+  registerSceneCapture,
+  saveOpsScene,
+  type OpsSessionScene,
+} from './sessionScene'
 import './App.css'
 
 type TabId = 'overview' | 'users' | 'llm' | 'skills' | 'mail' | 'fleet' | 'knowledge' | 'discogs' | 'blog'
 
+const PENDING_SCENE: OpsSessionScene | null =
+  typeof window === 'undefined' ? null : consumeOpsScene()
+
 function App() {
   const [user, setUser] = useState<User | null>(null)
-  const [tab, setTab] = useState<TabId>('overview')
+  const [tab, setTab] = useState<TabId>(() => PENDING_SCENE?.tab ?? 'overview')
   const [health, setHealth] = useState<HealthResponse | null>(null)
   const [overview, setOverview] = useState<OpsOverview | null>(null)
   const [opsUsers, setOpsUsers] = useState<OpsUser[]>([])
   const [roles, setRoles] = useState<OpsRole[]>([])
-  const [userQuery, setUserQuery] = useState('')
-  const [roleFilter, setRoleFilter] = useState('')
-  const [activeFilter, setActiveFilter] = useState<'all' | 'true' | 'false'>('all')
-  const [verifiedFilter, setVerifiedFilter] = useState<'all' | 'true' | 'false'>('all')
+  const [userQuery, setUserQuery] = useState(() => PENDING_SCENE?.userQuery ?? '')
+  const [roleFilter, setRoleFilter] = useState(() => PENDING_SCENE?.roleFilter ?? '')
+  const [activeFilter, setActiveFilter] = useState<'all' | 'true' | 'false'>(
+    () => PENDING_SCENE?.activeFilter ?? 'all',
+  )
+  const [verifiedFilter, setVerifiedFilter] = useState<'all' | 'true' | 'false'>(
+    () => PENDING_SCENE?.verifiedFilter ?? 'all',
+  )
   const [mailgun, setMailgun] = useState<MailgunConfig | null>(null)
   const [llm, setLlm] = useState<LlmConfig | null>(null)
   const [llmActive, setLlmActive] = useState('fake')
@@ -99,10 +110,6 @@ function App() {
     plane_url?: string
   } | null>(null)
   const [skills, setSkills] = useState<SkillRow[]>([])
-  const [skillProbe, setSkillProbe] = useState<SkillProbe | null>(null)
-  const [skillProbeMsg, setSkillProbeMsg] = useState(
-    "I'm listening to Bach Goldberg Variations — help me learn this masterwork",
-  )
   const [deliveries, setDeliveries] = useState<DeliveryRow[]>([])
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
@@ -116,6 +123,37 @@ function App() {
   const [error, setError] = useState<string | null>(null)
   const [notice, setNotice] = useState<string | null>(null)
   const [updatedAt, setUpdatedAt] = useState<string | null>(null)
+  const sceneSnapshotRef = useRef({
+    tab: 'overview' as TabId,
+    userQuery: '',
+    roleFilter: '',
+    activeFilter: 'all' as 'all' | 'true' | 'false',
+    verifiedFilter: 'all' as 'all' | 'true' | 'false',
+  })
+  sceneSnapshotRef.current = { tab, userQuery, roleFilter, activeFilter, verifiedFilter }
+
+  useEffect(() => {
+    return registerSceneCapture(() => {
+      const snap = sceneSnapshotRef.current
+      saveOpsScene({
+        v: 1,
+        tab: snap.tab,
+        userQuery: snap.userQuery,
+        roleFilter: snap.roleFilter,
+        activeFilter: snap.activeFilter,
+        verifiedFilter: snap.verifiedFilter,
+        scrollY: window.scrollY,
+      })
+    })
+  }, [])
+
+  useEffect(() => {
+    if (!PENDING_SCENE || !user) return
+    if (typeof PENDING_SCENE.scrollY === 'number') {
+      window.requestAnimationFrame(() => window.scrollTo(0, PENDING_SCENE.scrollY ?? 0))
+    }
+    setNotice('Restored your place after update')
+  }, [user])
 
   const refreshHealth = useCallback(async () => {
     try {
@@ -163,7 +201,7 @@ function App() {
   const loadOps = useCallback(async () => {
     const me = await fetchMe()
     if (!me.roles.includes('superadmin')) {
-      logout()
+      void logout()
       setUser(null)
       throw new Error('Ops portal requires the superadmin role')
     }
@@ -236,10 +274,12 @@ function App() {
   }, [refreshHealth])
 
   useEffect(() => {
-    if (!getStoredToken()) return
     setBusy(true)
     loadOps()
-      .catch((err) => setError(err instanceof Error ? err.message : 'Session restore failed'))
+      .catch((err) => {
+        const msg = err instanceof Error ? err.message : 'Session restore failed'
+        if (!/not authenticated|401/i.test(msg)) setError(msg)
+      })
       .finally(() => setBusy(false))
   }, [loadOps])
 
@@ -251,7 +291,7 @@ function App() {
     try {
       const data = await login(email.trim(), password)
       if (!data.user.roles.includes('superadmin')) {
-        logout()
+        void logout()
         throw new Error('Ops portal requires the superadmin role')
       }
       setUser(data.user)
@@ -414,38 +454,6 @@ function App() {
     }
   }
 
-  async function onProbeSkills() {
-    setBusy(true)
-    setError(null)
-    setNotice(null)
-    try {
-      const result = await probeSkills(skillProbeMsg.trim())
-      setSkillProbe(result)
-      setNotice(
-        `Skill probe: ${result.work_title} · score ${result.eval_score} · pass=${result.eval_pass}`,
-      )
-      setSkills(await fetchSkills())
-    } catch (err) {
-      setError(err instanceof Error ? err.message : 'Skill probe failed')
-    } finally {
-      setBusy(false)
-    }
-  }
-
-  async function onToggleSkill(row: SkillRow) {
-    setBusy(true)
-    setError(null)
-    try {
-      const updated = await toggleSkill(row.id, !row.enabled)
-      setSkills((prev) => prev.map((s) => (s.id === updated.id ? updated : s)))
-      setNotice(`${updated.id} ${updated.enabled ? 'enabled' : 'disabled'}`)
-    } catch (err) {
-      setError(err instanceof Error ? err.message : 'Skill toggle failed')
-    } finally {
-      setBusy(false)
-    }
-  }
-
   async function onSaveMailgun(event: FormEvent) {
     event.preventDefault()
     setBusy(true)
@@ -570,7 +578,7 @@ function App() {
   }
 
   function onLogout() {
-    logout()
+    void logout()
     setUser(null)
     setMailgun(null)
     setLlm(null)
@@ -624,9 +632,8 @@ function App() {
                 onChange={(e) => setEmail(e.target.value)}
               />
               <label htmlFor="ops-password">Password</label>
-              <input
+              <PasswordField
                 id="ops-password"
-                type="password"
                 required
                 autoComplete="current-password"
                 value={password}
@@ -974,10 +981,10 @@ function App() {
                     placeholder="https://api.deepseek.com"
                   />
                   <label htmlFor="ds-key">API key</label>
-                  <input
+                  <PasswordField
                     id="ds-key"
-                    type="password"
                     autoComplete="off"
+                    secretLabel="API key"
                     value={deepseekKey}
                     onChange={(e) => setDeepseekKey(e.target.value)}
                     placeholder={
@@ -1001,10 +1008,10 @@ function App() {
                     placeholder="https://api.x.ai/v1"
                   />
                   <label htmlFor="gx-key">API key</label>
-                  <input
+                  <PasswordField
                     id="gx-key"
-                    type="password"
                     autoComplete="off"
+                    secretLabel="API key"
                     value={grokKey}
                     onChange={(e) => setGrokKey(e.target.value)}
                     placeholder={llm?.grok.api_key_set ? '•••••••• (leave blank to keep)' : 'xai-...'}
@@ -1099,10 +1106,10 @@ function App() {
                         placeholder="https://api.openai.com/v1"
                       />
                       <label htmlFor="emb-key">API key</label>
-                      <input
+                      <PasswordField
                         id="emb-key"
-                        type="password"
                         autoComplete="off"
+                        secretLabel="API key"
                         value={embedKey}
                         onChange={(e) => setEmbedKey(e.target.value)}
                         placeholder={embed?.api_key_set ? '•••••••• (leave blank to keep)' : 'sk-...'}
@@ -1178,10 +1185,10 @@ function App() {
                     onChange={(e) => setWebRefreshHours(Number(e.target.value) || 0)}
                   />
                   <label htmlFor="web-brave">Brave API key (optional)</label>
-                  <input
+                  <PasswordField
                     id="web-brave"
-                    type="password"
                     autoComplete="off"
+                    secretLabel="API key"
                     value={webBraveKey}
                     onChange={(e) => setWebBraveKey(e.target.value)}
                     placeholder={
@@ -1277,10 +1284,10 @@ function App() {
                     Enable Discogs connector
                   </label>
                   <label htmlFor="discogs-token">Personal user token</label>
-                  <input
+                  <PasswordField
                     id="discogs-token"
-                    type="password"
                     autoComplete="off"
+                    secretLabel="token"
                     value={discogsToken}
                     disabled={discogsClearToken || !discogsEnabled}
                     onChange={(e) => setDiscogsToken(e.target.value)}
@@ -1327,90 +1334,14 @@ function App() {
             ) : null}
 
             {tab === 'skills' ? (
-              <section className="settings skills" aria-labelledby="skills-title">
-                <div className="section-head">
-                  <h2 id="skills-title">Aulos skills</h2>
-                  <button
-                    type="button"
-                    className="refresh"
-                    disabled={busy}
-                    onClick={() => void fetchSkills().then(setSkills)}
-                  >
-                    Refresh
-                  </button>
-                </div>
-                <p className="settings-lead">
-                  Domain-runtime packs power listening 导赏. Toggle availability and probe the full
-                  chain.
-                </p>
-                <ul className="user-list">
-                  {skills.map((row) => (
-                    <li key={row.id} className={`user-row ${row.enabled ? '' : 'inactive'}`}>
-                      <div className="user-main">
-                        <p className="svc-name">
-                          {row.name}
-                          <span className="user-id">
-                            {row.id}@{row.version}
-                          </span>
-                        </p>
-                        <p className="svc-role">
-                          {row.layer}
-                          {row.runtime ? ` · runtime=${row.runtime}` : ''}
-                        </p>
-                        <p className="meta">{row.summary}</p>
-                        {row.triggers.length ? (
-                          <p className="meta">triggers: {row.triggers.join(', ')}</p>
-                        ) : null}
-                      </div>
-                      <div className="user-actions">
-                        <button
-                          type="button"
-                          className="refresh"
-                          disabled={busy}
-                          onClick={() => void onToggleSkill(row)}
-                        >
-                          {row.enabled ? 'Disable' : 'Enable'}
-                        </button>
-                      </div>
-                    </li>
-                  ))}
-                </ul>
-                <form
-                  className="auth-form test-form"
-                  onSubmit={(e) => {
-                    e.preventDefault()
-                    void onProbeSkills()
-                  }}
-                >
-                  <h3>Probe listening chain</h3>
-                  <label htmlFor="skill-probe">Message</label>
-                  <input
-                    id="skill-probe"
-                    value={skillProbeMsg}
-                    onChange={(e) => setSkillProbeMsg(e.target.value)}
-                  />
-                  <button type="submit" disabled={busy || !skillProbeMsg.trim()}>
-                    {busy ? 'Probing…' : 'Run skill probe'}
-                  </button>
-                </form>
-                {skillProbe ? (
-                  <div className="delivery-row" style={{ marginTop: '0.85rem' }}>
-                    <p className="svc-name">
-                      {skillProbe.work_title} · score {skillProbe.eval_score} · pass=
-                      {String(skillProbe.eval_pass)}
-                    </p>
-                    <p className="svc-role">{skillProbe.summary}</p>
-                    <p className="meta">
-                      skills: {Object.keys(skillProbe.skill_versions).join(', ')}
-                    </p>
-                    <p className="delivery-detail">
-                      {skillProbe.steps
-                        .map((s) => `${String(s.id)}:${String(s.skill_id || '')}`)
-                        .join(' → ')}
-                    </p>
-                  </div>
-                ) : null}
-              </section>
+              <SkillsPanel
+                busy={busy}
+                setBusy={setBusy}
+                setError={setError}
+                setNotice={setNotice}
+                skills={skills}
+                setSkills={setSkills}
+              />
             ) : null}
 
             {tab === 'mail' ? (
@@ -1451,10 +1382,10 @@ function App() {
                       <option value="eu">EU (api.eu.mailgun.net)</option>
                     </select>
                     <label htmlFor="mg-key">API key</label>
-                    <input
+                    <PasswordField
                       id="mg-key"
-                      type="password"
                       autoComplete="off"
+                      secretLabel="API key"
                       value={apiKey}
                       onChange={(e) => setApiKey(e.target.value)}
                       placeholder={mailgun?.api_key_set ? '•••••••• (leave blank to keep)' : 'key-...'}

@@ -8,10 +8,10 @@ managed_by: "aries-harness"
 fingerprint: "aries-harness/history-doc/v1"
 generated_by: "/aries-harness history-refresh"
 initialized_at: "2026-07-25T17:25:00+00:00"
-generated_at: "2026-07-25T19:31:29+00:00"
+generated_at: "2026-07-27T09:44:49+00:00"
 effective_status: "generated"
-effective_since: "2026-07-25T19:31:29+00:00"
-content_fingerprint: "sha256:9aeb09154ed3655a5b01842ba544c568ad1bcf32cb1e142d7931a465c4eafe21"
+effective_since: "2026-07-27T09:44:49+00:00"
+content_fingerprint: "sha256:efdc6ad084b8efab4daed220949f1e7c26f6f25eaa4a57a737c6400c4866904e"
 trace_history_source: "filesystem-only"
 trace_last_commit_sha: ""
 trace_last_commit_at: ""
@@ -19,23 +19,23 @@ trace_revision_count: "0"
 ---
 # Document Trace
 
-Generated at: `2026-07-25T19:31:29+00:00`
+Generated at: `2026-07-27T09:44:49+00:00`
 
 ## Summary
 
-- managed Markdown docs: 27
+- managed Markdown docs: 29
 - docs with governance gaps: 0
 - dirty docs: 0
 
 ## By layer
 
-- MetaDefineLayer: 10
+- MetaDefineLayer: 12
 - RunCookingLayer: 6
 - SharedSupportSurface: 11
 
 ## By effective status
 
-- active: 17
+- active: 19
 - generated: 10
 
 ## Managed docs
@@ -50,18 +50,28 @@ Generated at: `2026-07-25T19:31:29+00:00`
 - latest revision: `53e7437` 2026-07-26 Ship identity catalog, Hans/Hant locales, web research, and knowledge plane.
 - dirty: no
 
+### EVAL.md
+
+- role: eval
+- layer: MetaDefineLayer
+- effective status: active since 2026-07-27T08:45:00Z
+- content fingerprint: `sha256:e5c9ce39e242e0297b048dddb21013b3e9ad1656859017d6e6b2a1de4e6a0c51`
+- trace: filesystem-only / count=0 / sha=none
+- latest revision: no git history recorded
+- dirty: no
+
 ### INDEX.md
 
 - role: harness-index
 - layer: SharedSupportSurface
-- effective status: generated since 2026-07-25T19:31:29+00:00
-- content fingerprint: `sha256:fe48d8f759ca9748a868748375e25725a1320b2ee40210293745410837f2c2e9`
+- effective status: generated since 2026-07-27T09:44:49+00:00
+- content fingerprint: `sha256:5eb2ed3ed277b89f2598e3665fe8a8306ec930ee59ae13a877235978ef34bada`
 - trace: filesystem-only / count=0 / sha=none
-- latest revision: `53e7437` 2026-07-26 Ship identity catalog, Hans/Hant locales, web research, and knowledge plane.
+- latest revision: `6ab1ea3` 2026-07-26 Ship /discogs release and catalog-number listening guides with OPS token UI.
 - dirty: no
 - earlier revisions:
+  - `53e7437` 2026-07-26 Ship identity catalog, Hans/Hant locales, web research, and knowledge plane.
   - `555cf53` 2026-07-26 Ship listening product, mandatory harness, facility layout, and UTC/local time.
-  - `7632d9b` 2026-07-25 Add aulos-web, aulos-api, and aulos-mcp sub-projects under aries-harness.
 
 ### JOURNAL.md
 
@@ -81,6 +91,16 @@ Generated at: `2026-07-25T19:31:29+00:00`
 - content fingerprint: `sha256:7aebec7c88f73a036865beb09feb580e825636f70b289ae11b6917ffefacf472`
 - trace: filesystem-only / count=0 / sha=none
 - latest revision: `53e7437` 2026-07-26 Ship identity catalog, Hans/Hant locales, web research, and knowledge plane.
+- dirty: no
+
+### MISSION.md
+
+- role: mission
+- layer: MetaDefineLayer
+- effective status: active since 2026-07-27T08:45:00Z
+- content fingerprint: `sha256:fcc075153d2982e4d51c24ae29cd6149c827b0257aa880cb359077c6b454cf7d`
+- trace: filesystem-only / count=0 / sha=none
+- latest revision: no git history recorded
 - dirty: no
 
 ### STATE.md
@@ -147,100 +167,112 @@ Generated at: `2026-07-25T19:31:29+00:00`
 
 - role: history-daily-summary-index
 - layer: SharedSupportSurface
-- effective status: generated since 2026-07-25T18:52:29+00:00
-- content fingerprint: `sha256:f1981d769dffcf37220f520d12d0ba4eebe5aaed3d32212ed2b1be8f92c84ffe`
+- effective status: generated since 2026-07-25T19:31:29+00:00
+- content fingerprint: `sha256:f47b145d8b1c40d32d35f3e59e30ff8934275fd25d68ddc5a0ffe236bf1fd42b`
 - trace: filesystem-only / count=0 / sha=none
-- latest revision: `53e7437` 2026-07-26 Ship identity catalog, Hans/Hant locales, web research, and knowledge plane.
+- latest revision: `6ab1ea3` 2026-07-26 Ship /discogs release and catalog-number listening guides with OPS token UI.
 - dirty: no
 - earlier revisions:
+  - `53e7437` 2026-07-26 Ship identity catalog, Hans/Hant locales, web research, and knowledge plane.
   - `555cf53` 2026-07-26 Ship listening product, mandatory harness, facility layout, and UTC/local time.
-  - `0d5cb01` 2026-07-25 Initial commit: Aulos hackathon workspace with LangChain agent runtime.
 
 ### history/DOC_TRACE.md
 
 - role: history-doc-trace
 - layer: SharedSupportSurface
-- effective status: generated since 2026-07-25T18:52:29+00:00
-- content fingerprint: `sha256:616187b08a9ba55b4c1d10ad9ecf1b711f9bd03626f425716c5e4cb2bde87f9c`
+- effective status: generated since 2026-07-25T19:31:29+00:00
+- content fingerprint: `sha256:9aeb09154ed3655a5b01842ba544c568ad1bcf32cb1e142d7931a465c4eafe21`
 - trace: filesystem-only / count=0 / sha=none
-- latest revision: `53e7437` 2026-07-26 Ship identity catalog, Hans/Hant locales, web research, and knowledge plane.
+- latest revision: `6ab1ea3` 2026-07-26 Ship /discogs release and catalog-number listening guides with OPS token UI.
 - dirty: no
+- earlier revisions:
+  - `53e7437` 2026-07-26 Ship identity catalog, Hans/Hant locales, web research, and knowledge plane.
 
 ### history/README.md
 
 - role: history-readme
 - layer: SharedSupportSurface
-- effective status: generated since 2026-07-25T18:52:29+00:00
-- content fingerprint: `sha256:d324e46028b67613fb73c15a2d0fdc6b7a121d2cce7dfdf0c0d8b6b2c649a434`
+- effective status: generated since 2026-07-25T19:31:29+00:00
+- content fingerprint: `sha256:3d81566bf713448e99106f216790bb6206be717b86f16fabd7242df403800629`
 - trace: filesystem-only / count=0 / sha=none
-- latest revision: `53e7437` 2026-07-26 Ship identity catalog, Hans/Hant locales, web research, and knowledge plane.
+- latest revision: `6ab1ea3` 2026-07-26 Ship /discogs release and catalog-number listening guides with OPS token UI.
 - dirty: no
 - earlier revisions:
+  - `53e7437` 2026-07-26 Ship identity catalog, Hans/Hant locales, web research, and knowledge plane.
   - `555cf53` 2026-07-26 Ship listening product, mandatory harness, facility layout, and UTC/local time.
-  - `7632d9b` 2026-07-25 Add aulos-web, aulos-api, and aulos-mcp sub-projects under aries-harness.
 
 ### history/RETROSPECTIVE.md
 
 - role: history-retrospective
 - layer: SharedSupportSurface
-- effective status: generated since 2026-07-25T18:52:29+00:00
-- content fingerprint: `sha256:9ae9da54180008e67eb3dc27940c93b501965b49d58271728e41162397cd2880`
+- effective status: generated since 2026-07-25T19:31:29+00:00
+- content fingerprint: `sha256:e12b98de8a755662ca8c8c29dc65622c7618b5adc03433b72584e7cf43d74d54`
 - trace: filesystem-only / count=0 / sha=none
-- latest revision: `53e7437` 2026-07-26 Ship identity catalog, Hans/Hant locales, web research, and knowledge plane.
+- latest revision: `6ab1ea3` 2026-07-26 Ship /discogs release and catalog-number listening guides with OPS token UI.
 - dirty: no
+- earlier revisions:
+  - `53e7437` 2026-07-26 Ship identity catalog, Hans/Hant locales, web research, and knowledge plane.
 
 ### history/ROADMAP.md
 
 - role: history-roadmap
 - layer: SharedSupportSurface
-- effective status: generated since 2026-07-25T18:52:29+00:00
-- content fingerprint: `sha256:30ba52a40e37265c5eab2f6c83d97ad330dd1695a7435f59d29911e1067dfe99`
+- effective status: generated since 2026-07-25T19:31:29+00:00
+- content fingerprint: `sha256:bad36723598880abf2d6f36b799b20961e2d0cde631cdac2ea24b1e0ea1a06cf`
 - trace: filesystem-only / count=0 / sha=none
-- latest revision: `53e7437` 2026-07-26 Ship identity catalog, Hans/Hant locales, web research, and knowledge plane.
+- latest revision: `6ab1ea3` 2026-07-26 Ship /discogs release and catalog-number listening guides with OPS token UI.
 - dirty: no
+- earlier revisions:
+  - `53e7437` 2026-07-26 Ship identity catalog, Hans/Hant locales, web research, and knowledge plane.
 
 ### history/STATUS.md
 
 - role: history-status
 - layer: SharedSupportSurface
-- effective status: generated since 2026-07-25T18:52:29+00:00
-- content fingerprint: `sha256:2efce0dfd1573b9c047f33ebfdb5b4ed91c6b598e9860d63439af751f97dd827`
+- effective status: generated since 2026-07-25T19:31:29+00:00
+- content fingerprint: `sha256:ac50d7263254512d1b59da9024644d33860f1cd94cfc8bdbe402ca1fe4081f97`
 - trace: filesystem-only / count=0 / sha=none
-- latest revision: `53e7437` 2026-07-26 Ship identity catalog, Hans/Hant locales, web research, and knowledge plane.
+- latest revision: `6ab1ea3` 2026-07-26 Ship /discogs release and catalog-number listening guides with OPS token UI.
 - dirty: no
 - earlier revisions:
+  - `53e7437` 2026-07-26 Ship identity catalog, Hans/Hant locales, web research, and knowledge plane.
   - `555cf53` 2026-07-26 Ship listening product, mandatory harness, facility layout, and UTC/local time.
-  - `7632d9b` 2026-07-25 Add aulos-web, aulos-api, and aulos-mcp sub-projects under aries-harness.
 
 ### history/TIMELINE.md
 
 - role: history-timeline
 - layer: SharedSupportSurface
-- effective status: generated since 2026-07-25T18:52:29+00:00
-- content fingerprint: `sha256:3858ed00836d7432e3297570638b7b5feb2ed6c42ee41378041f4f5ae9dd3238`
+- effective status: generated since 2026-07-25T19:31:29+00:00
+- content fingerprint: `sha256:a40d1e52809dc1a1ecb1c1d05971a92bafb61f5cce19b82cc2cd25d4006e4d93`
 - trace: filesystem-only / count=0 / sha=none
-- latest revision: `53e7437` 2026-07-26 Ship identity catalog, Hans/Hant locales, web research, and knowledge plane.
+- latest revision: `6ab1ea3` 2026-07-26 Ship /discogs release and catalog-number listening guides with OPS token UI.
 - dirty: no
+- earlier revisions:
+  - `53e7437` 2026-07-26 Ship identity catalog, Hans/Hant locales, web research, and knowledge plane.
 
 ### history/daily/2026-07-25.md
 
 - role: history-daily-summary
 - layer: SharedSupportSurface
-- effective status: generated since 2026-07-25T18:52:29+00:00
-- content fingerprint: `sha256:8b67d8e3515240c1bcc1b087ae8254404586c931357f5619d587afe6f8457ec0`
+- effective status: generated since 2026-07-25T19:31:29+00:00
+- content fingerprint: `sha256:e8ba28f2c1ed6ab33ebebe247562fbc0da23a6b5e4d7811359fa0072ce5210c0`
 - trace: filesystem-only / count=0 / sha=none
-- latest revision: `53e7437` 2026-07-26 Ship identity catalog, Hans/Hant locales, web research, and knowledge plane.
+- latest revision: `6ab1ea3` 2026-07-26 Ship /discogs release and catalog-number listening guides with OPS token UI.
 - dirty: no
+- earlier revisions:
+  - `53e7437` 2026-07-26 Ship identity catalog, Hans/Hant locales, web research, and knowledge plane.
 
 ### history/daily/2026-07-26.md
 
 - role: history-daily-summary
 - layer: SharedSupportSurface
-- effective status: generated since 2026-07-25T18:52:29+00:00
-- content fingerprint: `sha256:5f2c7195e624d5c5eab67452dcf273e69fd7ad454c46fd519c1cebc0c853bff3`
+- effective status: generated since 2026-07-25T19:31:29+00:00
+- content fingerprint: `sha256:c1963a2ec27ab768418c6b218fc709486013c6d5106b5878c0218493e0c210fa`
 - trace: filesystem-only / count=0 / sha=none
-- latest revision: `53e7437` 2026-07-26 Ship identity catalog, Hans/Hant locales, web research, and knowledge plane.
+- latest revision: `6ab1ea3` 2026-07-26 Ship /discogs release and catalog-number listening guides with OPS token UI.
 - dirty: no
+- earlier revisions:
+  - `53e7437` 2026-07-26 Ship identity catalog, Hans/Hant locales, web research, and knowledge plane.
 
 ### references/REG-001-artifact-register.md
 

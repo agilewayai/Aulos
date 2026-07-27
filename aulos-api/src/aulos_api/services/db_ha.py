@@ -33,6 +33,7 @@ _primary_ok: bool | None = None
 _failover_ok: bool | None = None
 _stop = threading.Event()
 _worker_started = False
+_worker_thread: threading.Thread | None = None
 
 
 def _ensure_sqlite_parent(url: str) -> None:
@@ -62,7 +63,9 @@ def configure_engines() -> tuple[Engine, Engine | None]:
             from aulos_api.db import models  # noqa: F401
 
             Base.metadata.create_all(bind=_primary_engine)
-            _patch_sqlite_columns(_primary_engine)
+            from aulos_api.db.schema_patches import apply_all_schema_patches
+
+            apply_all_schema_patches(_primary_engine)
 
         fo = (settings.db_failover_url or "").strip()
         if fo and _failover_engine is None:
@@ -73,7 +76,9 @@ def configure_engines() -> tuple[Engine, Engine | None]:
                 from aulos_api.db import models  # noqa: F401
 
                 Base.metadata.create_all(bind=_failover_engine)
-                _patch_sqlite_columns(_failover_engine)
+                from aulos_api.db.schema_patches import apply_all_schema_patches
+
+                apply_all_schema_patches(_failover_engine)
 
         if first:
             role = (settings.db_active_role or "primary").strip().lower()
@@ -83,31 +88,6 @@ def configure_engines() -> tuple[Engine, Engine | None]:
                 role = "primary"
             _active_role = role
         return _primary_engine, _failover_engine
-
-
-def _patch_sqlite_columns(engine: Engine) -> None:
-    if engine.dialect.name != "sqlite":
-        return
-    with engine.begin() as conn:
-        insp = inspect(conn)
-        if not insp.has_table("listening_guides"):
-            return
-        cols = {c["name"] for c in insp.get_columns("listening_guides")}
-        if "skill_versions_json" not in cols:
-            conn.execute(text("ALTER TABLE listening_guides ADD COLUMN skill_versions_json TEXT DEFAULT '{}'"))
-        if "share_slug" not in cols:
-            conn.execute(text("ALTER TABLE listening_guides ADD COLUMN share_slug VARCHAR(64)"))
-        if "published_at" not in cols:
-            conn.execute(text("ALTER TABLE listening_guides ADD COLUMN published_at DATETIME"))
-        try:
-            conn.execute(
-                text(
-                    "CREATE UNIQUE INDEX IF NOT EXISTS ix_listening_guides_share_slug "
-                    "ON listening_guides (share_slug)"
-                )
-            )
-        except Exception:  # noqa: BLE001
-            pass
 
 
 def reset_ha_engines() -> None:
@@ -344,19 +324,38 @@ def _worker_loop() -> None:
 
 
 def start_ha_worker() -> None:
-    global _worker_started
+    global _worker_started, _worker_thread
     with _lock:
         if _worker_started:
             return
+        _stop.clear()
         _worker_started = True
     configure_engines()
     from aulos_api.db import session as sess
 
     sess.bind_session_factory(active_engine())
     t = threading.Thread(target=_worker_loop, name="aulos-db-ha", daemon=True)
+    with _lock:
+        _worker_thread = t
     t.start()
     logger.info("db_ha_worker_started role=%s", get_active_role())
 
 
 def stop_ha_worker() -> None:
-    _stop.set()
+    global _worker_started, _worker_thread
+    with _lock:
+        if not _worker_started:
+            return
+        _stop.set()
+        t = _worker_thread
+    if t is not None and t.is_alive():
+        t.join(timeout=5.0)
+    with _lock:
+        _worker_started = False
+        _worker_thread = None
+        _stop.clear()
+
+
+def reset_ha_worker_for_tests() -> None:
+    """Test helper: stop worker and clear started flag without touching engines."""
+    stop_ha_worker()

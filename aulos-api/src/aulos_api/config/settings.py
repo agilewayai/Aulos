@@ -36,6 +36,8 @@ class Settings(BaseSettings):
     db_auto_failback: bool = Field(default=False, alias="AULOS_DB_AUTO_FAILBACK")
     redis_url: str = Field(default="redis://127.0.0.1:6379/0", alias="AULOS_REDIS_URL")
     db_sync_redis_url: str = Field(default="", alias="AULOS_DB_SYNC_REDIS_URL")  # empty → use redis_url
+    mail_queue_enabled: bool = Field(default=True, alias="AULOS_MAIL_QUEUE_ENABLED")
+    mail_queue_redis_url: str = Field(default="", alias="AULOS_MAIL_QUEUE_REDIS_URL")  # empty → redis_url
 
     jwt_secret: str = Field(default="dev-only-change-me", alias="AULOS_JWT_SECRET")
     jwt_expire_minutes: int = Field(default=60 * 24, alias="AULOS_JWT_EXPIRE_MINUTES")
@@ -66,6 +68,12 @@ class Settings(BaseSettings):
         default=False,
         alias="AULOS_KNOWLEDGE_PLANE_ENABLED",
     )
+    knowledge_admin_token: str = Field(
+        default="",
+        alias="AULOS_KNOWLEDGE_ADMIN_TOKEN",
+    )
+    session_cookie_secure: bool = Field(default=False, alias="AULOS_SESSION_COOKIE_SECURE")
+    session_cookie_samesite: str = Field(default="lax", alias="AULOS_SESSION_COOKIE_SAMESITE")
 
     # Monorepo root for Ops daily dev-blog evidence (git + harness)
     repo_root: str = Field(default="", alias="AULOS_REPO_ROOT")

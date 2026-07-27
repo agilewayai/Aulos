@@ -8,13 +8,56 @@ fingerprint: "aries-harness/bootstrap-doc/v1"
 initialized_at: "2026-07-25T16:19:58+00:00"
 effective_status: "active"
 effective_since: "2026-07-25T16:19:58+00:00"
-content_fingerprint: "sha256:d4a394100c09e953a6f5b5ca83c561ee1f37627d2c33ae99725f3fea1746bac6"
+content_fingerprint: "sha256:f60e49b1e672ded519ea273d000a9ecc3334b756359f7696aa817a358e2122fe"
 trace_history_source: "filesystem-only"
 trace_last_commit_sha: ""
 trace_last_commit_at: ""
 trace_revision_count: "0"
 ---
 # Insights — aulos-skills durable baseline
+
+## 2026-07-26 — Family evidence + per-node decontam (promoted)
+
+- **Root cause (guide #44):** composer-scoped family packs scored `+2` on surname alone
+  (`brahms` → `duo-cello-piano`) with **zero** instrument/form evidence. Scrub only ran
+  once at synthesize; unknown Discogs works had empty `conflict_markers`, so Beethoven
+  cello chambers and Bach Suite peer ambient shipped as the Brahms violin shelf.
+- **Rules:** (1) `match.composers` families require evidence ≥1 from instruments∪forms;
+  (2) after synthesize/width/depth/compose, decontam validate → scrub + one rework
+  (`refuse_families` / expanded markers); (3) ambient related packs must not unlock on
+  bare form when composers[] is set to another name; era-peer packs with peers[] require
+  peer hit; (4) do not put intentional peer tokens (`无伴奏`) on conflict_markers when
+  related_works/ambient legally use them.
+- Gate: `test_brahms_violin_concerto_not_duo_cello_family` (SPEC-009).
+
+## 2026-07-26 — Never bare-dict LLM zh layers (promoted)
+
+- **Root cause:** `merge_dossiers` used `dict(layer["zh_hans"])` when DeepSeek returned
+  Chinese prose (or a list) instead of an object →
+  `ValueError: dictionary update sequence element #0 has length 1; 2 is required`.
+- Hit Mozart piano-concerto jobs in `listening.synthesize` (hard fail) and web-research merge (soft warn).
+- **Rule:** always `coerce_dict()` / `_as_dict()` before treating dossier chambers as mappings.
+- Gate: `tests/test_salon_codex_merge.py`.
+
+## 2026-07-26 — PG schema patch on every model change (promoted)
+
+- Production hot DB is Postgres; SQLite is failover mirror only.
+- `Base.metadata.create_all` does not ADD columns on existing PG tables.
+- Closeout rule: extend `aulos_api.db.schema_patches`, apply on primary+failover, verify PG columns after restart.
+- Incident: SPEC-013 fields (`message`, `tags_json`, `favorited_at`, …) landed in SQLite ALTER path only → PG missing until dual-dialect patches.
+
+## 2026-07-26 — Family pack composer gate (promoted)
+
+- **Root cause:** `_match_family` unlocked `duo-cello-piano` on bare `piano`+`sonata`
+  (score≥2) with **no composer hit** → Beethoven cello chambers polluted Discogs Mozart
+  piano concerto/sonata guides (K.488 / K.333).
+- **Rule:** when a family YAML lists `match.composers`, require a composer token match
+  (blob or `composer_guess`) unless `family_hints` explicitly forces the family.
+- Discogs `/` cold path: intake prefers `kb_dossier` provenance seed; do not invent
+  Catalog work_id/family from form overlap alone.
+- Intake: strip leading prepositions (`to`/`by`/…) and `performed by…` tails from
+  composer/title guesses — no per-composer branches.
+- Gate: `test_mozart_piano_concerto_discogs_path_not_beethoven_cello_family`.
 
 ## 2026-07-26 — Locale script tags only (promoted)
 

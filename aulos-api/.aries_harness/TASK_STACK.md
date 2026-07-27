@@ -9,7 +9,7 @@ fingerprint: "aries-harness/bootstrap-doc/v1"
 initialized_at: "2026-07-25T11:10:22Z"
 effective_status: "active"
 effective_since: "2026-07-25T11:10:22Z"
-content_fingerprint: "sha256:116f9a4c9ad27e47964cbf42b93cbfb8046997058ca1aff6591aadeda691fc73"
+content_fingerprint: "sha256:5ef5751fa7c675266da534c0351dfd84ea21021b58d71de95ebeda444ff199bf"
 trace_history_source: "filesystem-only"
 trace_last_commit_sha: ""
 trace_last_commit_at: ""
@@ -19,7 +19,7 @@ trace_revision_count: "0"
 
 ## Now
 
-- SPEC-009 Dev Blog API shipped; keep Discogs closeout / host redeploy as needed
+- none (SPEC-013 verified)
 
 ## Next
 

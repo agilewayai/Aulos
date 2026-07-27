@@ -9,7 +9,7 @@ fingerprint: "aries-harness/bootstrap-doc/v1"
 initialized_at: "2026-07-25T11:10:22Z"
 effective_status: "active"
 effective_since: "2026-07-25T11:10:22Z"
-content_fingerprint: "sha256:c43ac6f5df9fa63aef9e0eca89d7c02481c750b627b131e0dbfc307b0efb0c3e"
+content_fingerprint: "sha256:144bb5e5a0d6a2b2c1e08224c2526289ca88a267fb6967e1ad7e303e4f5086e8"
 trace_history_source: "filesystem-only"
 trace_last_commit_sha: ""
 trace_last_commit_at: ""
@@ -19,19 +19,21 @@ trace_revision_count: "0"
 
 ## Current phase
 
-- SPEC-009 Ops Dev Blog API shipped; Discogs longrun remains available for follow-up
+- SPEC-013 durable jobs + library shipped (pytest green)
 
 ## Current phase (prior)
 
-- STORY-PACK-008 `/discogs` release → listening guide (longrun RUN-008-DISCOG-001)
+- SPEC-008 Discogs identity lock + family pollution fix
 
 ## Active run
 
-- RUN-DEV-BLOG-001 (API seam) / prior RUN-008-DISCOG-001
+- RUN-GUIDE-JOBS-013 (closing)
+
 
 ## Hot facts
 
 - `/discogs #release-id` parses in skills; API fetches Discogs release (master fallback), analyzes credits, seeds vinyl/interpretations, runs full 导赏 chain
+- Studio picker: `GET /v1/discogs/search?q=` autocomplete (auth)
 - Env: optional `AULOS_DISCOGS_TOKEN` or `AULOS_DISCOGS_KEY`+`SECRET`
 - Live: https://aulos.purezen.ai · https://aulos-ops.purezen.ai
 

@@ -8,6 +8,7 @@ from unittest.mock import MagicMock
 import pytest
 from fastapi.testclient import TestClient
 
+from conftest import AUTH_HEADERS
 from aulos_knowledge.artifacts import write_media_file
 from aulos_knowledge.media_fetch import _host_allowed
 
@@ -53,7 +54,7 @@ def client(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> TestClient:
 
 
 def test_media_list_endpoint_empty(client: TestClient) -> None:
-    r = client.get("/v1/admin/media")
+    r = client.get("/v1/admin/media", headers=AUTH_HEADERS)
     assert r.status_code == 200
     assert r.json() == []
     stats = client.get("/v1/kb/stats").json()

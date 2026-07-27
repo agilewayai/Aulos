@@ -29,8 +29,6 @@ identity:
   distinctive_tokens:
     - cello
     - 大提琴
-    - piano
-    - 钢琴
     - "69"
     - "102"
     - duo
@@ -42,8 +40,6 @@ identity:
     - 哥德堡
     - aria bass
     - ishizaka
-    - unaccompanied
-    - 无伴奏
 provenance:
   authority: Beethoven Werke — sonatas Opp. 5, 69, 102; variations WoO 45–46 & Op. 66
-  notes: Duo citizenship shelf — not unaccompanied Bach suites.
+  notes: Duo citizenship shelf — Bach solo suites may appear as intentional peers, not as primary shelf.

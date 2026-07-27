@@ -8,10 +8,10 @@ managed_by: "aries-harness"
 fingerprint: "aries-harness/history-doc/v1"
 generated_by: "/aries-harness history-refresh"
 initialized_at: "2026-07-25T11:07:42Z"
-generated_at: "2026-07-26T16:28:38+00:00"
+generated_at: "2026-07-27T09:44:38+00:00"
 effective_status: "generated"
-effective_since: "2026-07-26T16:28:38+00:00"
-content_fingerprint: "sha256:2b83858956609e8080da5c0c499891dd52250f01f0267bcf1f6cba486ca94e44"
+effective_since: "2026-07-27T09:44:38+00:00"
+content_fingerprint: "sha256:8201a07203db6541f43d83efefba6216ff4cd1fd5b5dd273b7e63a81dba08d44"
 trace_history_source: "filesystem-only"
 trace_last_commit_sha: ""
 trace_last_commit_at: ""
@@ -19,27 +19,27 @@ trace_revision_count: "0"
 ---
 # Retrospective Snapshot
 
-Generated at: `2026-07-26T16:28:38+00:00`
+Generated at: `2026-07-27T09:44:38+00:00`
 
 ## Recent changes
 
-- SPEC-002: Forgot password + reset UI (`forgot` / `reset` modes, `/?reset_token=`)
-- API clients: `forgotPassword` / `resetPassword`
-- Verify: `npm run build` green; upstream `pytest tests/test_auth.py` 7 passed
-- Added ``src/time.ts``; guide history/meta show OS-local timestamps
-- initialized `.aries_harness/`
-- wrote `ARIES_HARNESS_FINGERPRINT.json`
+- Atelier: countable chain progress (N/M) + stage list; SSE reconnect; Retry chain for failed/interrupted jobs (pairs with API SPEC-013 delta).
+- Verify: `npm run build`.
+- SPEC-007: move Guide | Atelier | Library tabs from mobile bottom bar to sticky top (under topbar) for easier reach.
+- Verify: `npm run build`.
+- SPEC-008: before asset auto-reload, capture UI scene (tab, draft, guide id, library filters, scroll); restore once after reload with notice.
+- Same pattern on aulos-ops (tab + user filters + scroll). Passwords never persisted.
 
 ## What is working
 
-- SPEC-002: Forgot password + reset UI (`forgot` / `reset` modes, `/?reset_token=`)
-- API clients: `forgotPassword` / `resetPassword`
-- Verify: `npm run build` green; upstream `pytest tests/test_auth.py` 7 passed
-- Added ``src/time.ts``; guide history/meta show OS-local timestamps
+- Atelier: countable chain progress (N/M) + stage list; SSE reconnect; Retry chain for failed/interrupted jobs (pairs with API SPEC-013 delta).
+- Verify: `npm run build`.
+- SPEC-007: move Guide | Atelier | Library tabs from mobile bottom bar to sticky top (under topbar) for easier reach.
+- Verify: `npm run build`.
 
 ## What needs attention
 
-- working tree is dirty with 77 tracked or untracked change(s)
+- working tree is dirty with 187 tracked or untracked change(s)
 - no explicit next-up slice is recorded
 
 ## Durable reminders

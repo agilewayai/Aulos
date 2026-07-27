@@ -9,7 +9,7 @@ fingerprint: "aries-harness/bootstrap-doc/v1"
 initialized_at: "2026-07-25T11:10:22Z"
 effective_status: "active"
 effective_since: "2026-07-25T11:10:22Z"
-content_fingerprint: "sha256:0f2500637117e760195db9bac238a467652af2aebea40744d41ff56a7f7df45d"
+content_fingerprint: "sha256:ddb8bdad4444c8ec736961a93b2170bb193822eaaa67f3537a6de615ea65515b"
 trace_history_source: "filesystem-only"
 trace_last_commit_sha: ""
 trace_last_commit_at: ""
@@ -19,7 +19,7 @@ trace_revision_count: "0"
 
 ## Now
 
-- Optional host redeploy for forgot/reset password
+- none (SPEC-006 verified)
 
 ## Next
 

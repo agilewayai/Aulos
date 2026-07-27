@@ -8,10 +8,10 @@ managed_by: "aries-harness"
 fingerprint: "aries-harness/history-doc/v1"
 generated_by: "/aries-harness history-refresh"
 initialized_at: "2026-07-25T11:20:05Z"
-generated_at: "2026-07-25T19:31:11+00:00"
+generated_at: "2026-07-27T09:46:13+00:00"
 effective_status: "generated"
-effective_since: "2026-07-25T19:31:11+00:00"
-content_fingerprint: "sha256:1e43b9047a4b1ab0abb5dee8c670fecb78ddb7b662a882e7cf38bd3161d13e5d"
+effective_since: "2026-07-27T09:46:13+00:00"
+content_fingerprint: "sha256:4f13d85884d57c6fde1cd2a6f9ce5afc8af408209834a070bbfc8bdd81d90d74"
 trace_history_source: "filesystem-only"
 trace_last_commit_sha: ""
 trace_last_commit_at: ""
@@ -19,27 +19,27 @@ trace_revision_count: "0"
 ---
 # Retrospective Snapshot
 
-Generated at: `2026-07-25T19:31:11+00:00`
+Generated at: `2026-07-27T09:46:13+00:00`
 
 ## Recent changes
 
-- Fixed Unknown composer: Chinese 《》 title parse + catalog soft aliases (CJK len≥2); added Dvořák Dumky catalog shelf
-- Chinese locales: **简体 (zh-Hans)** + **繁体 (zh-Hant)** — script tags only
-- Guide switcher: 简体 | 繁体 | English
-- External skill intake: **Agent Reach** (`Panniantong/Agent-Reach` @ `b4d52c46…`)
-- Security audit → conditional allow as **search enabler only**
-- Installed `skills/enabler-agent-reach/` (policy fence; social/cookie/CLI-install denied)
+- Fleet DevOps control plane:
+- `deploy/aulos-ctl.sh` — unified commands: `deploy`, `build`, `restart`, `status`, `smoke`, `logs`, `doctor`, `secrets {init|check}`, `units install`, `ingress apply`, `test`.
+- Shared libs under `deploy/lib/`; `start-host.sh` → thin `aulos-ctl deploy` wrapper.
+- AUDIT-009 continuation — F2 / F10 / F11 (F1 deferred per operator):
+- F11: `ADR-008-plaintext-systemsetting-secrets-sprint1.md` accepts Sprint-1 plaintext secrets with compensating controls.
+- F2: `SPEC-015` guide HTML security; `guide_html_security.sanitize_guide_html` + public CSP tests; web `guideHtml.ts` sandbox selftest (no `allow-same-origin`).
 
 ## What is working
 
-- Fixed Unknown composer: Chinese 《》 title parse + catalog soft aliases (CJK len≥2); added Dvořák Dumky catalog shelf
-- Chinese locales: **简体 (zh-Hans)** + **繁体 (zh-Hant)** — script tags only
-- Guide switcher: 简体 | 繁体 | English
-- External skill intake: **Agent Reach** (`Panniantong/Agent-Reach` @ `b4d52c46…`)
+- Fleet DevOps control plane:
+- `deploy/aulos-ctl.sh` — unified commands: `deploy`, `build`, `restart`, `status`, `smoke`, `logs`, `doctor`, `secrets {init|check}`, `units install`, `ingress apply`, `test`.
+- Shared libs under `deploy/lib/`; `start-host.sh` → thin `aulos-ctl deploy` wrapper.
+- AUDIT-009 continuation — F2 / F10 / F11 (F1 deferred per operator):
 
 ## What needs attention
 
-- working tree is dirty with 57 tracked or untracked change(s)
+- working tree is dirty with 238 tracked or untracked change(s)
 - no explicit next-up slice is recorded
 
 ## Durable reminders

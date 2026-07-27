@@ -8,6 +8,7 @@ from fastapi import APIRouter, Depends, HTTPException
 from pydantic import BaseModel, Field
 from sqlalchemy.orm import Session
 
+from aulos_knowledge.auth import require_admin_token
 from aulos_knowledge.config import get_settings
 from aulos_knowledge.db import (
     ComposerEntity,
@@ -23,6 +24,7 @@ from aulos_knowledge.jobs import enqueue_and_maybe_run
 from aulos_knowledge.retrieve import retrieve as kb_retrieve
 
 router = APIRouter()
+admin_router = APIRouter(prefix="/v1/admin", dependencies=[Depends(require_admin_token)])
 
 
 class SourceIn(BaseModel):
@@ -93,7 +95,7 @@ def retrieve(body: RetrieveIn, db: Session = Depends(_db)) -> dict[str, Any]:
     )
 
 
-@router.get("/v1/admin/sources")
+@admin_router.get("/sources")
 def list_sources(db: Session = Depends(_db)) -> list[dict[str, Any]]:
     rows = db.query(SourceAuthority).order_by(SourceAuthority.id).all()
     out = []
@@ -114,7 +116,7 @@ def list_sources(db: Session = Depends(_db)) -> list[dict[str, Any]]:
     return out
 
 
-@router.post("/v1/admin/sources")
+@admin_router.post("/sources")
 def create_source(body: SourceIn, db: Session = Depends(_db)) -> dict[str, Any]:
     if db.get(SourceAuthority, body.id):
         raise HTTPException(400, f"source exists: {body.id}")
@@ -134,7 +136,7 @@ def create_source(body: SourceIn, db: Session = Depends(_db)) -> dict[str, Any]:
     return {"ok": True, "id": row.id}
 
 
-@router.patch("/v1/admin/sources/{source_id}")
+@admin_router.patch("/sources/{source_id}")
 def patch_source(source_id: str, body: dict[str, Any], db: Session = Depends(_db)) -> dict[str, Any]:
     row = db.get(SourceAuthority, source_id)
     if not row:
@@ -149,7 +151,7 @@ def patch_source(source_id: str, body: dict[str, Any], db: Session = Depends(_db
     return {"ok": True, "id": source_id, "enabled": row.enabled}
 
 
-@router.get("/v1/admin/jobs")
+@admin_router.get("/jobs")
 def list_jobs(db: Session = Depends(_db), limit: int = 50) -> list[dict[str, Any]]:
     rows = db.query(FetchJob).order_by(FetchJob.id.desc()).limit(limit).all()
     return [
@@ -166,7 +168,7 @@ def list_jobs(db: Session = Depends(_db), limit: int = 50) -> list[dict[str, Any
     ]
 
 
-@router.post("/v1/admin/jobs")
+@admin_router.post("/jobs")
 def create_job(body: JobIn, db: Session = Depends(_db)) -> dict[str, Any]:
     settings = get_settings()
     try:
@@ -186,7 +188,7 @@ def create_job(body: JobIn, db: Session = Depends(_db)) -> dict[str, Any]:
     }
 
 
-@router.get("/v1/admin/jobs/{job_id}")
+@admin_router.get("/jobs/{job_id}")
 def get_job(job_id: int, db: Session = Depends(_db)) -> dict[str, Any]:
     job = db.get(FetchJob, job_id)
     if not job:
@@ -220,7 +222,7 @@ def _doc_summary(d: KnowledgeDocument) -> dict[str, Any]:
     }
 
 
-@router.get("/v1/admin/composers")
+@admin_router.get("/composers")
 def list_composers(db: Session = Depends(_db), limit: int = 100) -> list[dict[str, Any]]:
     rows = db.query(ComposerEntity).order_by(ComposerEntity.name_en, ComposerEntity.id).limit(limit).all()
     return [
@@ -235,7 +237,7 @@ def list_composers(db: Session = Depends(_db), limit: int = 100) -> list[dict[st
     ]
 
 
-@router.get("/v1/admin/documents")
+@admin_router.get("/documents")
 def list_documents(
     db: Session = Depends(_db),
     status: str = "",
@@ -263,7 +265,7 @@ def list_documents(
     return [_doc_summary(d) for d in rows]
 
 
-@router.get("/v1/admin/documents/{doc_id}")
+@admin_router.get("/documents/{doc_id}")
 def get_document(doc_id: int, db: Session = Depends(_db)) -> dict[str, Any]:
     doc = db.get(KnowledgeDocument, doc_id)
     if not doc:
@@ -273,7 +275,7 @@ def get_document(doc_id: int, db: Session = Depends(_db)) -> dict[str, Any]:
     return out
 
 
-@router.post("/v1/admin/documents/{doc_id}/quarantine")
+@admin_router.post("/documents/{doc_id}/quarantine")
 def quarantine_doc(doc_id: int, db: Session = Depends(_db)) -> dict[str, Any]:
     doc = db.get(KnowledgeDocument, doc_id)
     if not doc:
@@ -283,7 +285,7 @@ def quarantine_doc(doc_id: int, db: Session = Depends(_db)) -> dict[str, Any]:
     return {"ok": True, "id": doc_id, "status": "quarantine"}
 
 
-@router.post("/v1/admin/documents/{doc_id}/publish")
+@admin_router.post("/documents/{doc_id}/publish")
 def publish_doc(doc_id: int, db: Session = Depends(_db)) -> dict[str, Any]:
     """Restore a quarantined (or draft) document to published — proofreading accept."""
     doc = db.get(KnowledgeDocument, doc_id)
@@ -294,7 +296,7 @@ def publish_doc(doc_id: int, db: Session = Depends(_db)) -> dict[str, Any]:
     return {"ok": True, "id": doc_id, "status": "published"}
 
 
-@router.get("/v1/admin/provenance/{document_id}")
+@admin_router.get("/provenance/{document_id}")
 def provenance(document_id: int, db: Session = Depends(_db)) -> dict[str, Any]:
     doc = db.get(KnowledgeDocument, document_id)
     if not doc:
@@ -345,7 +347,7 @@ def provenance(document_id: int, db: Session = Depends(_db)) -> dict[str, Any]:
     }
 
 
-@router.get("/v1/admin/artifacts/{artifact_id}")
+@admin_router.get("/artifacts/{artifact_id}")
 def get_artifact(artifact_id: int, db: Session = Depends(_db)) -> dict[str, Any]:
     art = db.get(FetchArtifact, artifact_id)
     if not art:
@@ -368,7 +370,7 @@ def get_artifact(artifact_id: int, db: Session = Depends(_db)) -> dict[str, Any]
     }
 
 
-@router.get("/v1/admin/media")
+@admin_router.get("/media")
 def list_media(
     db: Session = Depends(_db),
     kind: str = "",

@@ -6,25 +6,69 @@ import json
 import logging
 import secrets
 import sys
+import time
 from collections.abc import AsyncIterator, Callable
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
+from sqlalchemy import or_
 from sqlalchemy.orm import Session
 
 from aulos_api.config import get_settings
 from aulos_api.db.models import ListeningGuide
 from aulos_api.services.agent_proxy import AgentProxy
+from aulos_api.services.chain_trace import ChainTraceBuilder, extract_chain_trace
 from aulos_api.services.discogs import DiscogsError, resolve_discogs_message
 from aulos_api.services.knowledge_base import retrieve as kb_retrieve
 from aulos_api.services.knowledge_base import upsert_from_report
 from aulos_api.services.llm_providers import chat_with_ops_llm, load_llm_config
 from aulos_api.services.skills_ops import _load_disabled
+from aulos_api.services.listening_plan import (
+    initial_plan_steps,
+    mark_stage,
+    progress_counts,
+    upsert_step,
+)
 from aulos_api.timefmt import to_utc_iso_optional
 
 logger = logging.getLogger("aulos_api.listening")
 
+MAX_TAGS = 12
+MAX_TAG_LEN = 32
+STALE_RUNNING_SECONDS = 20 * 60
+
+
+class _ChainProgress:
+    """Emit countable plan updates through on_step during the gateway + agent run."""
+
+    def __init__(self, on_step: Callable[[dict[str, Any]], None] | None) -> None:
+        self.on_step = on_step
+        self.steps = initial_plan_steps()
+        # Do not blast every pending row — jobs already seed the plan in steps_json.
+
+    def mark(self, sid: str, status: str, detail: str = "", thinking: str | None = None) -> None:
+        self.steps = mark_stage(self.steps, sid, status=status, detail=detail, thinking=thinking)
+        if self.on_step is None:
+            return
+        for step in self.steps:
+            if step.get("id") == sid:
+                self.on_step(dict(step))
+                break
+
+    def ingest_agent_step(self, step: dict[str, Any]) -> None:
+        payload = dict(step)
+        # Normalize skill completion statuses for the progress counter.
+        status = str(payload.get("status") or "").lower()
+        if status in {"ok", "success", "completed"}:
+            payload["status"] = "done"
+        self.steps = upsert_step(self.steps, payload)
+        if self.on_step is not None:
+            for row in self.steps:
+                if row.get("id") == payload.get("id"):
+                    self.on_step(dict(row))
+                    return
+            self.on_step(payload)
 
 def utcnow() -> datetime:
     return datetime.now(timezone.utc)
@@ -61,8 +105,26 @@ def _research_payload(report: Any) -> dict[str, Any]:
     }
     if ctx.get("discogs"):
         payload["discogs"] = ctx.get("discogs")
+    if isinstance(ctx.get("chain_trace"), dict):
+        payload["chain_trace"] = ctx["chain_trace"]
     return payload
 
+
+def guide_trace_dict(row: ListeningGuide) -> dict[str, Any]:
+    """Owner/ops diagnostic payload (SPEC-012)."""
+    try:
+        research = json.loads(row.research_json or "{}")
+    except json.JSONDecodeError:
+        research = {}
+    return {
+        "guide_id": row.id,
+        "work_title": row.work_title,
+        "composer": row.composer,
+        "status": row.status,
+        "source": row.source,
+        "created_at": _iso(row.created_at),
+        "chain_trace": extract_chain_trace(research),
+    }
 
 async def _optional_llm_dossier(
     db: Session,
@@ -104,9 +166,12 @@ async def _optional_llm_dossier(
         "sound_world {{original_instrument, ensemble_notes, modern_modes: []}},\n"
         "related_works ([{{title,why}}]),\n"
         "interpretations ([{{artist,year,instrument,era_note,why_listen}}] — named traditions OK; "
-        "youtube_url/discogs_url only as https://www.youtube.com/results?search_query=... or "
+        "youtube_url/bilibili_url/discogs_url only as "
+        "https://www.youtube.com/results?search_query=... or "
+        "https://search.bilibili.com/all?keyword=... or "
         "https://www.discogs.com/search/?q=... search links),\n"
-        "appreciation_videos ([{{title,url,why}}] search links only),\n"
+        "appreciation_videos ([{{title,url,bilibili_url,why}}] — url=YouTube search; "
+        "bilibili_url=哔哩哔哩 search; search links only),\n"
         "vinyl_and_discography ([{{label,url,note}}] Discogs search links only),\n"
         "practice_notes, myths_and_caveats,\n"
         "and nested zh_hans with the SAME chambers in Simplified Chinese 导赏 prose "
@@ -114,7 +179,7 @@ async def _optional_llm_dossier(
         "and nested zh_hant with the SAME chambers in Traditional Chinese "
         "(繁体：蕭邦/德弗札克/導賞/錄音; 繁体字形与用词).\n"
         "Also include legacy nested zh equal to zh_hans for compatibility.\n"
-        "Rules: ear-actionable; label legends; no invented Discogs/YouTube item IDs; "
+        "Rules: ear-actionable; label legends; no invented Discogs/YouTube/Bilibili item IDs; "
         "no copying unrelated flagship works; keep JSON under 2200 words.\n"
         "CRITICAL: zh_hans and zh_hant required — omit neither English nor Chinese layers."
     )
@@ -178,6 +243,8 @@ def _apply_report_to_row(row: ListeningGuide, *, report: Any, source: str) -> Li
     row.steps_json = json.dumps(steps)
     row.research_json = json.dumps(_research_payload(report), ensure_ascii=False)
     row.skill_versions_json = json.dumps(report.skill_versions)
+    row.error_detail = ""
+    row.updated_at = utcnow()
     return row
 
 
@@ -289,19 +356,69 @@ async def _run_chain_core(
 ) -> AsyncIterator[dict[str, Any] | Any]:
     """Gateway: identity → RAG/KB → generic LLM enrich → skill tools (no composer branches)."""
     disabled = _load_disabled(db)
+    original_message = message
+    original_hint = (work_hint or "").strip()
+    trace = ChainTraceBuilder(message=original_message, work_hint=original_hint)
+    progress = _ChainProgress(on_step)
 
     # SPEC-008: /discogs #release-id → fetch Discogs → rewrite intent + seed dossier
     discog: dict[str, Any] | None = None
+    progress.mark("g.discogs", "running", "Resolving Discogs intent…")
     try:
         discog = resolve_discogs_message(message, db=db)
     except DiscogsError:
+        progress.mark("g.discogs", "failed", "Discogs resolve failed")
         raise
     except Exception as exc:  # noqa: BLE001
         logger.warning("discogs_resolve_failed err=%s", exc)
         discog = None
+        trace.milestone(
+            "discogs.resolve",
+            status="fail",
+            summary=f"Discogs resolve error: {exc}",
+            signals=["discogs_error"],
+        )
+        progress.mark("g.discogs", "failed", str(exc)[:240])
     if discog:
         message = str(discog.get("listening_intent") or message)
         work_hint = str(discog.get("work_hint") or work_hint or "")
+        trace.milestone(
+            "discogs.resolve",
+            status="ok",
+            summary=(
+                f"Discogs #{discog.get('release_id')} → "
+                f"{discog.get('composer') or '?'} — {str(discog.get('work_title') or '')[:80]}"
+            ),
+            facts={
+                "release_id": discog.get("release_id"),
+                "master_id": discog.get("master_id"),
+                "composer": discog.get("composer"),
+                "work_title": discog.get("work_title"),
+                "catno_query": discog.get("catno_query"),
+                "uri": discog.get("uri"),
+                "performers": list(discog.get("performers") or [])[:6],
+            },
+        )
+        trace.note_identity(
+            stage="discogs",
+            composer=str(discog.get("composer") or ""),
+            work_title=str(discog.get("work_title") or ""),
+            extra={"release_id": discog.get("release_id")},
+        )
+        progress.mark(
+            "g.discogs",
+            "done",
+            f"#{discog.get('release_id')} · {discog.get('composer') or '?'} — {str(discog.get('work_title') or '')[:80]}",
+        )
+    else:
+        if not any(m["id"] == "discogs.resolve" for m in trace.milestones):
+            trace.milestone(
+                "discogs.resolve",
+                status="skip",
+                summary="No /discogs command in message",
+            )
+        if progress.steps[0].get("status") == "running":
+            progress.mark("g.discogs", "skip", "No /discogs command")
 
     work_guess = (work_hint or message)[:120]
     # Identity first so KB + copilot enrich the resolved shelf, not the raw utterance.
@@ -310,10 +427,15 @@ async def _run_chain_core(
     family_id: str | None = None
     work_id = ""
     facets: dict[str, Any] = {}
+    ident_status = "unknown"
+    ident_reason = ""
+    progress.mark("g.identity", "running", "Resolving catalog identity…")
     try:
         from aulos_skills.identity import resolve_identity
 
         ident = resolve_identity(message, work_hint=work_hint or "")
+        ident_status = ident.status
+        ident_reason = ident.reason
         if ident.work_title:
             work_title = ident.work_title
         if ident.composer_name:
@@ -321,18 +443,99 @@ async def _run_chain_core(
         family_id = ident.family_id
         work_id = str(ident.work_id or "")
         facets = dict(ident.facets or {})
+        trace.milestone(
+            "identity.resolve",
+            status="ok" if ident.status == "work" else ("warn" if ident.status != "unknown" else "skip"),
+            summary=f"Catalog identity={ident.status} work_id={work_id or 'none'} ({ident.reason})",
+            facts={
+                "status": ident.status,
+                "work_id": work_id or None,
+                "composer_id": ident.composer_id,
+                "composer": composer_name,
+                "work_title": work_title,
+                "family_id": family_id,
+                "score": ident.score,
+                "confidence": ident.confidence,
+                "reason": ident.reason,
+            },
+        )
+        trace.note_identity(
+            stage="catalog",
+            composer=composer_name,
+            work_title=work_title,
+            work_id=work_id or None,
+            extra={"status": ident.status, "reason": ident.reason},
+        )
+        progress.mark(
+            "g.identity",
+            "done" if ident.status == "work" else "skip",
+            f"{ident.status}: {composer_name or '?'} — {work_title[:80]}",
+        )
     except Exception as exc:  # noqa: BLE001
         logger.warning("identity_resolve_for_enrich_failed err=%s", exc)
+        trace.milestone(
+            "identity.resolve",
+            status="fail",
+            summary=f"Identity resolve error: {exc}",
+            signals=["identity_error"],
+        )
+        progress.mark("g.identity", "failed", str(exc)[:240])
 
-    # Prefer Discogs-derived composer/title when Catalog did not confirm a work.
+    # Discogs seed is listener-authoritative for this request: never let a weak
+    # Catalog miss-match rename the pressing to another shelf (e.g. Beethoven cello).
+    cleared_catalog = False
     if discog:
-        if not composer_name and discog.get("composer"):
+        if discog.get("composer"):
             composer_name = str(discog["composer"])
-        if discog.get("work_title") and (not work_id or work_title == work_guess):
-            # Keep Catalog canonical title when work_id resolved; else use Discogs guess.
-            if not work_id:
-                work_title = str(discog["work_title"])
+        if discog.get("work_title"):
+            work_title = str(discog["work_title"])
+        # Drop Catalog work lock when Discogs disagrees — cold path + Discogs seed.
+        if work_id:
+            try:
+                from aulos_skills.identity import load_catalog
 
+                cat_work = load_catalog().works.get(work_id)
+                cat_title = (cat_work.canonical_title if cat_work else "") or ""
+                if cat_title and work_title and cat_title.lower() not in work_title.lower() and work_title.lower() not in cat_title.lower():
+                    work_id = ""
+                    family_id = None
+                    facets = {}
+                    cleared_catalog = True
+            except Exception:  # noqa: BLE001
+                work_id = ""
+                family_id = None
+                facets = {}
+                cleared_catalog = True
+        # Keep work_hint aligned with Discogs so agent intake does not re-guess.
+        work_hint = str(discog.get("work_hint") or f"{composer_name} {work_title}".strip())
+        message = str(discog.get("listening_intent") or message)
+        trace.milestone(
+            "identity.lock",
+            status="ok",
+            summary=(
+                "Discogs title/composer locked"
+                + (" (cleared conflicting Catalog work_id)" if cleared_catalog else "")
+            ),
+            facts={
+                "composer": composer_name,
+                "work_title": work_title,
+                "work_id": work_id or None,
+                "cleared_catalog_work": cleared_catalog,
+            },
+            signals=["discogs_authoritative"] + (["cleared_catalog_work"] if cleared_catalog else []),
+        )
+        trace.note_identity(
+            stage="locked",
+            composer=composer_name,
+            work_title=work_title,
+            work_id=work_id or None,
+        )
+        progress.mark(
+            "g.identity",
+            "done",
+            f"Discogs lock: {composer_name or '?'} — {work_title[:80]}",
+        )
+    progress.mark("g.rag", "running", "Retrieving knowledge…")
     rag = _rag_context(
         db,
         message=message,
@@ -360,8 +563,26 @@ async def _run_chain_core(
             rag["rag_hits"] = [t for t in rag["rag_hits"] if t][:16]
             rag["rag_mode"] = f"{rag.get('rag_mode') or 'none'}+discogs"
 
+    trace.milestone(
+        "rag",
+        status="ok",
+        summary=f"RAG mode={rag.get('rag_mode') or 'none'} hits={len(rag.get('rag_hits') or [])}",
+        facts={
+            "rag_mode": rag.get("rag_mode"),
+            "hit_count": len(rag.get("rag_hits") or []),
+            "kb_dossier_keys": list((rag.get("kb_dossier") or {}).keys())[:20],
+            "knowledge_work_id": rag.get("knowledge_work_id"),
+        },
+    )
+    progress.mark(
+        "g.rag",
+        "done",
+        f"mode={rag.get('rag_mode') or 'none'} · hits={len(rag.get('rag_hits') or [])}",
+    )
+
     # Cold KB → open-web gather → LLM verify → persist so next RAG is stronger
     web_meta: dict[str, Any] = {}
+    progress.mark("g.web", "running", "Web research…")
     try:
         from aulos_api.services.web_research import run_web_research
 
@@ -400,10 +621,37 @@ async def _run_chain_core(
                 "action": web.get("action"),
                 "decision": web.get("decision"),
             }
+            trace.milestone(
+                "web_research",
+                status="ok",
+                summary=f"Web research action={web.get('action')} sources={len(web.get('sources') or [])}",
+                facts=web_meta,
+            )
+            progress.mark(
+                "g.web",
+                "done",
+                f"action={web.get('action')} · sources={len(web.get('sources') or [])}",
+            )
+        else:
+            trace.milestone(
+                "web_research",
+                status="skip",
+                summary=f"Web research skipped: {web.get('reason') or 'n/a'}",
+                facts=web_meta,
+            )
+            progress.mark("g.web", "skip", str(web.get("reason") or "skipped")[:240])
     except Exception as exc:  # noqa: BLE001
         logger.warning("web_research_failed work=%s err=%s", work_title, exc)
         web_meta = {"skipped": True, "reason": f"error:{exc}"}
+        trace.milestone(
+            "web_research",
+            status="fail",
+            summary=f"Web research error: {exc}",
+            signals=["web_research_error"],
+        )
+        progress.mark("g.web", "failed", str(exc)[:240])
 
+    progress.mark("g.llm", "running", "LLM dossier enrichment…")
     llm_dossier, enrichment, source = await _optional_llm_dossier(
         db,
         work_title,
@@ -414,26 +662,50 @@ async def _run_chain_core(
     )
     if llm_dossier is None and enrichment is None:
         enrichment, source = await _optional_llm_note(db, work_title)
+    trace.milestone(
+        "llm_enrich",
+        status="ok" if (llm_dossier or enrichment) else "skip",
+        summary=f"LLM enrich source={source}",
+        facts={
+            "source": source,
+            "has_dossier": bool(llm_dossier),
+            "has_note": bool(enrichment),
+            "family_id": family_id,
+            "identity_status": ident_status,
+            "identity_reason": ident_reason,
+        },
+    )
+    progress.mark(
+        "g.llm",
+        "done" if (llm_dossier or enrichment) else "skip",
+        f"source={source}",
+    )
 
     emitted: list[dict[str, Any]] = []
 
     def _capture(step: dict[str, Any]) -> None:
         emitted.append(step)
-        if on_step is not None:
-            on_step(step)
+        progress.ingest_agent_step(step)
 
+    progress.mark("g.agent", "running", "Agent skill playbook…")
     proxy = AgentProxy(get_settings())
-    report = proxy.run_listening(
-        message=message,
-        work_hint=work_hint,
-        llm_enrichment=enrichment,
-        llm_dossier=llm_dossier,
-        kb_dossier=dict(rag.get("kb_dossier") or {}),
-        rag_hits=list(rag.get("rag_hits") or []),
-        rag_mode=str(rag.get("rag_mode") or ""),
-        disabled_skill_ids=disabled,
-        on_step=_capture if (yield_steps or on_step) else None,
-    )
+    try:
+        report = proxy.run_listening(
+            message=message,
+            work_hint=work_hint,
+            llm_enrichment=enrichment,
+            llm_dossier=llm_dossier,
+            kb_dossier=dict(rag.get("kb_dossier") or {}),
+            rag_hits=list(rag.get("rag_hits") or []),
+            rag_mode=str(rag.get("rag_mode") or ""),
+            disabled_skill_ids=disabled,
+            on_step=_capture if (yield_steps or on_step) else None,
+        )
+    except Exception as exc:  # noqa: BLE001
+        progress.mark("g.agent", "failed", str(exc)[:240])
+        raise
+    progress.mark("g.agent", "done", f"skills={len(emitted or report.steps or [])}")
+    progress.mark("g.persist", "running", "Persisting guide…")
     if source != "agent-skills":
         report.source = source
     report.context["rag_mode"] = rag.get("rag_mode")
@@ -454,6 +726,27 @@ async def _run_chain_core(
             "catno_query": discog.get("catno_query"),
             "command": discog.get("command"),
         }
+
+    # Skill-side diagnostics + identity arc close
+    skill_ctx = dict(report.context or {})
+    if not skill_ctx.get("work_id") and work_id:
+        skill_ctx["work_id"] = work_id
+    trace.ingest_skill_context(skill_ctx)
+    # Prefer skill-reported shelf for final, fall back to gateway lock
+    final_composer = str(report.composer or composer_name or "")
+    final_title = str(report.work_title or work_title or "")
+    final_work_id = str(skill_ctx.get("work_id") or work_id or "") or None
+    report.context["chain_trace"] = trace.finalize(
+        work_title=final_title,
+        composer=final_composer,
+        work_id=final_work_id,
+        eval_pass=getattr(report, "eval_pass", None),
+        eval_score=getattr(report, "eval_score", None),
+    )
+    # Prefer countable plan steps for persistence when progress was tracked.
+    if progress.steps and (on_step is not None or yield_steps):
+        report.steps = list(progress.steps)
+    progress.mark("g.persist", "done", "Guide ready to save")
 
     if yield_steps:
         for step in report.steps or emitted:
@@ -571,9 +864,16 @@ def guide_to_dict(row: ListeningGuide) -> dict:
         research = json.loads(row.research_json or "{}")
     except json.JSONDecodeError:
         research = {}
+    try:
+        tags = json.loads(row.tags_json or "[]")
+        if not isinstance(tags, list):
+            tags = []
+    except json.JSONDecodeError:
+        tags = []
     published = bool(row.share_slug and row.published_at)
     html = row.guide_html or ""
     html = html.replace('loading="lazy"', 'loading="eager"')
+    favorited_at = getattr(row, "favorited_at", None)
     return {
         "id": row.id,
         "work_title": row.work_title,
@@ -587,11 +887,123 @@ def guide_to_dict(row: ListeningGuide) -> dict:
         "eval_pass": research.get("eval_pass"),
         "eval_score": research.get("eval_score"),
         "created_at": _iso(row.created_at),
+        "updated_at": _iso(getattr(row, "updated_at", None) or row.created_at),
         "published": published,
         "share_slug": row.share_slug if published else None,
         "share_path": f"/g/{row.share_slug}" if published and row.share_slug else None,
         "published_at": _iso(row.published_at) if published else None,
+        "message": getattr(row, "message", "") or "",
+        "error_detail": getattr(row, "error_detail", "") or "",
+        "favorited": bool(favorited_at),
+        "favorited_at": _iso(favorited_at) if favorited_at else None,
+        "tags": [str(t) for t in tags if str(t).strip()],
     }
+
+
+def normalize_tags(raw: list[str] | None) -> list[str]:
+    seen: set[str] = set()
+    out: list[str] = []
+    for item in raw or []:
+        tag = " ".join(str(item).strip().lower().split())
+        if not tag or tag in seen:
+            continue
+        if len(tag) > MAX_TAG_LEN:
+            tag = tag[:MAX_TAG_LEN]
+        seen.add(tag)
+        out.append(tag)
+        if len(out) >= MAX_TAGS:
+            break
+    return out
+
+
+def list_owned_guides(
+    db: Session,
+    *,
+    user_id: int,
+    q: str | None = None,
+    status: str | None = None,
+    published: bool | None = None,
+    favorited: bool | None = None,
+    tag: str | None = None,
+    limit: int = 50,
+    offset: int = 0,
+) -> list[ListeningGuide]:
+    query = db.query(ListeningGuide).filter(ListeningGuide.user_id == user_id)
+    needle = (q or "").strip()
+    if needle:
+        like = f"%{needle}%"
+        query = query.filter(
+            or_(
+                ListeningGuide.work_title.ilike(like),
+                ListeningGuide.composer.ilike(like),
+                ListeningGuide.summary.ilike(like),
+                ListeningGuide.message.ilike(like),
+            )
+        )
+    if status:
+        query = query.filter(ListeningGuide.status == status.strip())
+    if published is True:
+        query = query.filter(
+            ListeningGuide.published_at.isnot(None),
+            ListeningGuide.share_slug.isnot(None),
+        )
+    elif published is False:
+        query = query.filter(
+            or_(ListeningGuide.published_at.is_(None), ListeningGuide.share_slug.is_(None))
+        )
+    if favorited is True:
+        query = query.filter(ListeningGuide.favorited_at.isnot(None))
+    elif favorited is False:
+        query = query.filter(ListeningGuide.favorited_at.is_(None))
+    tag_n = (tag or "").strip().lower()
+    if tag_n:
+        # SQLite/JSON text: match normalized quoted token
+        query = query.filter(ListeningGuide.tags_json.ilike(f'%"{tag_n}"%'))
+    limit = max(1, min(int(limit or 50), 100))
+    offset = max(0, int(offset or 0))
+    return query.order_by(ListeningGuide.id.desc()).offset(offset).limit(limit).all()
+
+
+def delete_owned_guide(db: Session, *, user_id: int, guide_id: int) -> bool:
+    row = get_owned_guide(db, user_id=user_id, guide_id=guide_id)
+    if row is None:
+        return False
+    db.delete(row)
+    db.commit()
+    return True
+
+
+def set_guide_favorite(db: Session, *, user_id: int, guide_id: int, favorited: bool) -> ListeningGuide | None:
+    row = get_owned_guide(db, user_id=user_id, guide_id=guide_id)
+    if row is None:
+        return None
+    row.favorited_at = utcnow() if favorited else None
+    row.updated_at = utcnow()
+    db.add(row)
+    db.commit()
+    db.refresh(row)
+    return row
+
+
+def set_guide_tags(db: Session, *, user_id: int, guide_id: int, tags: list[str]) -> ListeningGuide | None:
+    row = get_owned_guide(db, user_id=user_id, guide_id=guide_id)
+    if row is None:
+        return None
+    row.tags_json = json.dumps(normalize_tags(tags), ensure_ascii=False)
+    row.updated_at = utcnow()
+    db.add(row)
+    db.commit()
+    db.refresh(row)
+    return row
+
+
+def placeholder_title(message: str) -> str:
+    text = " ".join((message or "").strip().split())
+    if not text:
+        return "Composing…"
+    if len(text) > 72:
+        return text[:69] + "…"
+    return text
 
 
 def get_owned_guide(db: Session, *, user_id: int, guide_id: int) -> ListeningGuide | None:
@@ -670,3 +1082,200 @@ def get_published_guide_by_slug(db: Session, slug: str) -> ListeningGuide | None
         )
         .one_or_none()
     )
+
+
+def create_queued_guide(
+    db: Session,
+    *,
+    user_id: int,
+    message: str,
+    work_hint: str | None = None,
+) -> ListeningGuide:
+    text = (message or "").strip()
+    row = ListeningGuide(
+        user_id=user_id,
+        work_title=placeholder_title(text),
+        composer="",
+        status="queued",
+        source="pending",
+        summary="",
+        guide_html="",
+        steps_json=json.dumps(initial_plan_steps(), ensure_ascii=False),
+        research_json="{}",
+        skill_versions_json="{}",
+        message=text,
+        error_detail="",
+        tags_json="[]",
+    )
+    db.add(row)
+    db.commit()
+    db.refresh(row)
+    from aulos_api.services.listening_queue import enqueue_listening_job
+
+    enqueue_listening_job(
+        guide_id=row.id,
+        user_id=user_id,
+        kind="compose",
+        work_hint=work_hint,
+    )
+    return row
+
+
+def enqueue_recompose_guide(
+    db: Session,
+    *,
+    user_id: int,
+    guide_id: int,
+    message: str | None = None,
+    work_hint: str | None = None,
+) -> ListeningGuide | None:
+    row = get_owned_guide(db, user_id=user_id, guide_id=guide_id)
+    if row is None:
+        return None
+    text = (message or "").strip() or (row.message or "").strip() or f"Listening guide for {row.work_title}"
+    row.message = text
+    row.status = "queued"
+    row.error_detail = ""
+    row.steps_json = json.dumps(initial_plan_steps(), ensure_ascii=False)
+    row.updated_at = utcnow()
+    if row.work_title.startswith("Composing") or not row.guide_html:
+        row.work_title = placeholder_title(text)
+    db.add(row)
+    db.commit()
+    db.refresh(row)
+    from aulos_api.services.listening_queue import enqueue_listening_job
+
+    enqueue_listening_job(
+        guide_id=row.id,
+        user_id=user_id,
+        kind="recompose",
+        work_hint=work_hint or row.work_title,
+    )
+    return row
+
+
+def retry_listening_guide_job(
+    db: Session,
+    *,
+    user_id: int,
+    guide_id: int,
+) -> ListeningGuide | None:
+    """Re-queue a failed or stale-running job with a fresh countable plan."""
+    row = get_owned_guide(db, user_id=user_id, guide_id=guide_id)
+    if row is None:
+        return None
+    status = (row.status or "").strip()
+    stale = False
+    if status == "running" and row.updated_at is not None:
+        updated = row.updated_at
+        if updated.tzinfo is None:
+            updated = updated.replace(tzinfo=timezone.utc)
+        age = (utcnow() - updated).total_seconds()
+        stale = age >= STALE_RUNNING_SECONDS
+    if status == "completed":
+        return None
+    if status == "running" and not stale:
+        return row  # still working — client should keep watching
+    if status not in {"failed", "queued"} and not stale:
+        return None
+    return enqueue_recompose_guide(
+        db,
+        user_id=user_id,
+        guide_id=guide_id,
+        message=row.message or None,
+        work_hint=row.work_title or None,
+    )
+
+
+async def iter_guide_job_events(
+    *,
+    user_id: int,
+    guide_id: int,
+    poll_seconds: float = 0.35,
+    timeout_seconds: float = 900.0,
+    db: Session | None = None,
+) -> AsyncIterator[dict[str, Any]]:
+    """Reconnect-safe SSE: poll persisted steps/status until terminal.
+
+    Emits `progress` snapshots whenever steps/status change so in-place stage
+    updates (pending→running→done) are visible after reconnect.
+    """
+    import asyncio
+
+    from aulos_api.db import session as db_session
+
+    last_sig = ""
+    started = time.monotonic()
+    while True:
+        own_session = db is None
+        session = db
+        if session is None:
+            db_session.get_engine()
+            if db_session.SessionLocal is None:
+                yield {"event": "error", "data": {"detail": "Database unavailable"}}
+                return
+            session = db_session.SessionLocal()
+        try:
+            row = get_owned_guide(session, user_id=user_id, guide_id=guide_id)
+            if row is None:
+                yield {"event": "error", "data": {"detail": "Guide not found"}}
+                return
+            try:
+                steps = json.loads(row.steps_json or "[]")
+                if not isinstance(steps, list):
+                    steps = []
+            except json.JSONDecodeError:
+                steps = []
+            counts = progress_counts([s for s in steps if isinstance(s, dict)])
+            sig = json.dumps(
+                {"status": row.status, "steps": steps, "error": row.error_detail or ""},
+                ensure_ascii=False,
+                sort_keys=True,
+            )
+            if sig != last_sig:
+                last_sig = sig
+                yield {
+                    "event": "progress",
+                    "data": {
+                        "guide_id": row.id,
+                        "status": row.status,
+                        "done": counts["done"],
+                        "total": counts["total"],
+                        "steps": steps,
+                        "error_detail": row.error_detail or "",
+                    },
+                }
+                for step in steps:
+                    if isinstance(step, dict):
+                        yield {"event": "step", "data": step}
+            if row.status == "completed":
+                yield {"event": "done", "data": guide_to_dict(row)}
+                return
+            if row.status == "failed":
+                yield {
+                    "event": "error",
+                    "data": {
+                        "detail": row.error_detail or "Guide job failed",
+                        "guide_id": row.id,
+                        "status": "failed",
+                        "retryable": True,
+                    },
+                }
+                return
+        finally:
+            if own_session and session is not None:
+                session.close()
+            elif session is not None:
+                session.expire_all()
+
+        if time.monotonic() - started > timeout_seconds:
+            yield {
+                "event": "error",
+                "data": {
+                    "detail": "Timed out waiting for guide job",
+                    "guide_id": guide_id,
+                    "retryable": True,
+                },
+            }
+            return
+        await asyncio.sleep(poll_seconds)

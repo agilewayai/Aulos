@@ -114,6 +114,9 @@ def test_mailgun_configuration_test_succeeds_when_configured(client: TestClient)
 
     mailbox = get_fake_mailbox()
     assert any(m.get("to") == "probe@example.com" and m.get("kind") == "config_test" for m in mailbox)
+    probe = next(m for m in mailbox if m.get("kind") == "config_test")
+    assert "Salon Codex" in (probe.get("html") or "")
+    assert "#c9a66b" in (probe.get("html") or "")
 
     deliveries = client.get("/v1/ops/mailgun/deliveries", headers=headers)
     assert deliveries.status_code == 200
@@ -196,6 +199,11 @@ def test_auto_provider_sends_live_mailgun_when_enabled(auto_client: TestClient) 
         args, kwargs = mocked.call_args
         assert args[0] == "https://api.eu.mailgun.net/v3/mg.example.com/messages"
         assert kwargs["auth"] == ("api", "key-live")
+        payload = kwargs["data"]
+        assert "html" in payload
+        assert "Salon Codex" in payload["html"]
+        assert "#0c1216" in payload["html"]
+        assert "#c9a66b" in payload["html"]
 
     deliveries = auto_client.get("/v1/ops/mailgun/deliveries", headers=headers)
     assert deliveries.status_code == 200

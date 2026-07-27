@@ -8,7 +8,7 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from aulos_knowledge.config import get_settings
 from aulos_knowledge import db as db_mod
-from aulos_knowledge.routes import router
+from aulos_knowledge.routes import admin_router, router
 from aulos_knowledge.seed import seed_default_sources
 
 
@@ -34,12 +34,19 @@ def create_app() -> FastAPI:
     app = FastAPI(title=settings.app_name, version=settings.app_version, lifespan=lifespan)
     app.add_middleware(
         CORSMiddleware,
-        allow_origins=["*"],
+        allow_origins=[
+            "http://127.0.0.1:5090",
+            "http://127.0.0.1:5091",
+            "http://127.0.0.1:5092",
+            "https://aulos.purezen.ai",
+            "https://aulos-ops.purezen.ai",
+        ],
         allow_credentials=True,
         allow_methods=["*"],
         allow_headers=["*"],
     )
     app.include_router(router)
+    app.include_router(admin_router)
     return app
 
 

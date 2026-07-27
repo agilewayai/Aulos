@@ -10,13 +10,71 @@ generated_by: "/aries-harness init"
 initialized_at: "2026-07-25T11:07:43Z"
 effective_status: "active"
 effective_since: "2026-07-25T11:07:43Z"
-content_fingerprint: "sha256:a66ebaa468bde16b97fbebd2963814cf3b855e11591d23b45fa280dd6991144f"
+content_fingerprint: "sha256:750a1ab6737a6302c44e4e820f4fc2a9e8f656490c784009cf1ecf156431c310"
 trace_history_source: "filesystem-only"
 trace_last_commit_sha: ""
 trace_last_commit_at: ""
 trace_revision_count: "0"
 ---
 # Journal
+
+## 2026-07-26T19:20:00Z
+
+- Root cause: `merge_dossiers` called bare `dict(zh_hans)` when LLM/web returned prose/list →
+  `ValueError: dictionary update sequence element #0 has length 1; 2 is required`
+  (Mozart piano concerto guide=43 failed in `listening.synthesize`; same error in web_research).
+- Fix: `coerce_dict()` + harden merge/parse/runtime/KB; gate `tests/test_salon_codex_merge.py`.
+
+## 2026-07-26T19:10:00Z
+
+- SPEC-013 delta: countable listening-chain plan (15 stages) seeded in `steps_json`; gateway emits live stage updates; SSE `progress` snapshots for reconnect.
+- Robust recovery: client SSE reconnect + hydrate; `POST /{id}/retry` for failed/stale jobs; Atelier progress bar + Retry chain.
+- Gates: `tests/test_listening_plan.py`, `tests/test_listening_jobs.py`; web `npm run build`.
+
+## 2026-07-26T18:20:00Z
+
+- Operating rule: every model-shape slice must close with dual-dialect `schema_patches` + PG verify (SQLite pilot ≠ production).
+- Added `aulos_api.db.schema_patches`; HA/init apply on Postgres+SQLite. Migrated live PG SPEC-013 columns (`message`, `tags_json`, `favorited_at`, …).
+- Gate: `tests/test_schema_patches.py`; promoted insight + `aulos-operating-defaults` section.
+
+## 2026-07-26T18:15:00Z
+
+- SPEC-013: durable listening-guide jobs (`queued`→`running`→`completed|failed`), Redis/`thread` worker (`listening_queue.py`), reconnect-safe `GET …/events`.
+- Library: DELETE, list `q`/`status`/`published`/`favorited`/`tag`, favorite + tags.
+- Legacy `/stream` and recompose/stream enqueue then attach to job events (no long-held DB session).
+- Verify: `pytest tests/test_listening_jobs.py` + stream/recompose SSE green.
+
+## 2026-07-26T17:20:00Z
+
+- SPEC-012: per-run `chain_trace` (aulos.chain_trace/v1) in research_json for 复盘
+- Milestones: discogs → identity → lock → rag → web → llm → skill.intake/synthesize → persist
+- Auto deviations: composer/title drift, family_without_work_id
+- Routes: owner `GET /v1/listening-guides/{id}/trace`, ops `GET /v1/ops/listening-guides/{id}/trace`
+- Verify: `pytest tests/test_chain_trace.py` 4 passed
+
+## 2026-07-26T17:10:00Z
+
+- Discogs intent rewrite avoids `I'm listening to…` intake trap; Discogs title/composer always win over weak Catalog
+- Companion fix in aulos-skills family composer gate (Mozart K.488 no longer inherits Beethoven cello pack)
+- Verify: `pytest tests/test_discogs.py` 8 passed; live `/discogs #6280908` synthesize=`kb-rag` only
+
+## 2026-07-26T17:00:00Z
+
+- SPEC-008 delta: `suggest_discogs_releases` + authenticated `GET /v1/discogs/search` AJAX autocomplete
+- Classical-first hit ranking; catno + free-text search; no full release fetch until compose
+- Verify: `.venv/bin/pytest tests/test_discogs.py` 8 passed
+
+## 2026-07-26T17:05:00Z
+
+- SPEC-011: Redis mail queue `aulos:mail:queue` + background worker; live verify/reset async
+- Fake mail stays sync; Mailgun probe stays sync; Redis fail → daemon thread fallback
+- Ops `GET /v1/ops/mail/queue`; verify: `pytest tests/test_mail_queue.py` (+ auth/mailgun) 18 passed
+
+## 2026-07-26T16:55:00Z
+
+- SPEC-010: Salon Codex email craft for verify / reset / Mailgun probe (HTML + text)
+- Tokens: stage `#0c1216`, parchment `#c9a66b`, Fraunces display; Mailgun sends `html`
+- Verify: `pytest tests/test_email_templates.py tests/test_mailgun.py tests/test_auth.py` 14 passed
 
 ## 2026-07-26T16:50:00Z
 

@@ -52,8 +52,26 @@ async def lifespan(_app: FastAPI):
         start_ha_worker()
     except Exception as exc:  # noqa: BLE001
         logging.getLogger("aulos_api.db_ha").warning("db_ha_worker_skip err=%s", exc)
+    try:
+        from aulos_api.services.mail_queue import start_mail_worker
+
+        start_mail_worker()
+    except Exception as exc:  # noqa: BLE001
+        logging.getLogger("aulos_api.mail_queue").warning("mail_worker_skip err=%s", exc)
+    try:
+        from aulos_api.services.listening_queue import start_listening_worker
+
+        start_listening_worker()
+    except Exception as exc:  # noqa: BLE001
+        logging.getLogger("aulos_api.listening_queue").warning("listening_worker_skip err=%s", exc)
     threading.Thread(target=_warm_media_cache, name="aulos-media-prefetch", daemon=True).start()
     yield
+    try:
+        from aulos_api.services.worker_lifecycle import shutdown_workers
+
+        shutdown_workers()
+    except Exception as exc:  # noqa: BLE001
+        logging.getLogger("aulos_api.app").warning("worker_shutdown_skip err=%s", exc)
 
 
 def create_app() -> FastAPI:

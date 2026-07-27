@@ -8,10 +8,10 @@ managed_by: "aries-harness"
 fingerprint: "aries-harness/history-doc/v1"
 generated_by: "/aries-harness history-refresh"
 initialized_at: "2026-07-25T11:07:42Z"
-generated_at: "2026-07-26T16:28:38+00:00"
+generated_at: "2026-07-27T09:44:38+00:00"
 effective_status: "generated"
-effective_since: "2026-07-26T16:28:38+00:00"
-content_fingerprint: "sha256:72f1bb214c575e87399809779433611a243a816f5ae8eaf60862cd0d4a685c46"
+effective_since: "2026-07-27T09:44:38+00:00"
+content_fingerprint: "sha256:e92dfa547442bce7d6b10533ff092c56fd758c3cdbee5aced0e337d85df57cc0"
 trace_history_source: "filesystem-only"
 trace_last_commit_sha: ""
 trace_last_commit_at: ""
@@ -19,24 +19,24 @@ trace_revision_count: "0"
 ---
 # Document Trace
 
-Generated at: `2026-07-26T16:28:38+00:00`
+Generated at: `2026-07-27T09:44:38+00:00`
 
 ## Summary
 
-- managed Markdown docs: 51
+- managed Markdown docs: 60
 - docs with governance gaps: 0
 - dirty docs: 0
 
 ## By layer
 
-- MetaDefineLayer: 25
-- RunCookingLayer: 11
-- SharedSupportSurface: 15
+- MetaDefineLayer: 31
+- RunCookingLayer: 13
+- SharedSupportSurface: 16
 
 ## By effective status
 
-- active: 41
-- generated: 10
+- active: 49
+- generated: 11
 
 ## Managed docs
 
@@ -57,34 +57,36 @@ Generated at: `2026-07-26T16:28:38+00:00`
 - effective status: active since 2026-07-25T11:07:42Z
 - content fingerprint: `sha256:a928d325ff422bc2a0cd25cd283bef4aa134cc180652b7e5c6c07fa9b3ac008f`
 - trace: filesystem-only / count=0 / sha=none
-- latest revision: `7632d9b` 2026-07-25 Add aulos-web, aulos-api, and aulos-mcp sub-projects under aries-harness.
+- latest revision: `0c8a847` 2026-07-27 Ship Ops daily Dev Blog and web forgot-password reset.
 - dirty: no
 - earlier revisions:
+  - `7632d9b` 2026-07-25 Add aulos-web, aulos-api, and aulos-mcp sub-projects under aries-harness.
   - `0d5cb01` 2026-07-25 Initial commit: Aulos hackathon workspace with LangChain agent runtime.
 
 ### INDEX.md
 
 - role: harness-index
 - layer: SharedSupportSurface
-- effective status: generated since 2026-07-26T16:28:38+00:00
-- content fingerprint: `sha256:ae80924fd126780c821fda1dd138550b4fa565d89a13f3081bebf26f254454ab`
+- effective status: generated since 2026-07-27T09:44:38+00:00
+- content fingerprint: `sha256:53dc7db8866a3f93e5d454853ace442df633958dc1db6e06f39995a64cd7dfe8`
 - trace: filesystem-only / count=0 / sha=none
-- latest revision: `6ab1ea3` 2026-07-26 Ship /discogs release and catalog-number listening guides with OPS token UI.
+- latest revision: `0c8a847` 2026-07-27 Ship Ops daily Dev Blog and web forgot-password reset.
 - dirty: no
 - earlier revisions:
+  - `6ab1ea3` 2026-07-26 Ship /discogs release and catalog-number listening guides with OPS token UI.
   - `53e7437` 2026-07-26 Ship identity catalog, Hans/Hant locales, web research, and knowledge plane.
-  - `555cf53` 2026-07-26 Ship listening product, mandatory harness, facility layout, and UTC/local time.
 
 ### JOURNAL.md
 
 - role: journal
 - layer: RunCookingLayer
 - effective status: active since 2026-07-25T11:07:42Z
-- content fingerprint: `sha256:3b6c0356b2839af42f74423aaf12a3f73f57c78b012da07283678d1c3c72180c`
+- content fingerprint: `sha256:4c412daaf20158baefc44d8ff1dc421c9c4cb6e7f8e36b4189f7ac7d4d2abcbc`
 - trace: filesystem-only / count=0 / sha=none
-- latest revision: `555cf53` 2026-07-26 Ship listening product, mandatory harness, facility layout, and UTC/local time.
+- latest revision: `0c8a847` 2026-07-27 Ship Ops daily Dev Blog and web forgot-password reset.
 - dirty: no
 - earlier revisions:
+  - `555cf53` 2026-07-26 Ship listening product, mandatory harness, facility layout, and UTC/local time.
   - `7632d9b` 2026-07-25 Add aulos-web, aulos-api, and aulos-mcp sub-projects under aries-harness.
 
 ### MEMORY.md
@@ -164,20 +166,24 @@ Generated at: `2026-07-26T16:28:38+00:00`
 - role: state
 - layer: RunCookingLayer
 - effective status: active since 2026-07-25T11:10:22Z
-- content fingerprint: `sha256:d43f94ccb325978c54d11bc0117c67e3c021d2c0b1bd4f7318f77e41c14e8595`
+- content fingerprint: `sha256:c10caeec7c4dc7a0d3a58bf6eb8158b2805d27850466e66ecced73dff9e6ad18`
 - trace: filesystem-only / count=0 / sha=none
-- latest revision: `7632d9b` 2026-07-25 Add aulos-web, aulos-api, and aulos-mcp sub-projects under aries-harness.
+- latest revision: `0c8a847` 2026-07-27 Ship Ops daily Dev Blog and web forgot-password reset.
 - dirty: no
+- earlier revisions:
+  - `7632d9b` 2026-07-25 Add aulos-web, aulos-api, and aulos-mcp sub-projects under aries-harness.
 
 ### TASK_STACK.md
 
 - role: task-stack
 - layer: RunCookingLayer
 - effective status: active since 2026-07-25T11:10:22Z
-- content fingerprint: `sha256:0f2500637117e760195db9bac238a467652af2aebea40744d41ff56a7f7df45d`
+- content fingerprint: `sha256:ddb8bdad4444c8ec736961a93b2170bb193822eaaa67f3537a6de615ea65515b`
 - trace: filesystem-only / count=0 / sha=none
-- latest revision: `7632d9b` 2026-07-25 Add aulos-web, aulos-api, and aulos-mcp sub-projects under aries-harness.
+- latest revision: `0c8a847` 2026-07-27 Ship Ops daily Dev Blog and web forgot-password reset.
 - dirty: no
+- earlier revisions:
+  - `7632d9b` 2026-07-25 Add aulos-web, aulos-api, and aulos-mcp sub-projects under aries-harness.
 
 ### decisions/adrs/ADR-001-vite-react-runtime.md
 
@@ -229,117 +235,128 @@ Generated at: `2026-07-26T16:28:38+00:00`
 
 - role: history-daily-summary-index
 - layer: SharedSupportSurface
-- effective status: generated since 2026-07-26T16:28:21+00:00
-- content fingerprint: `sha256:677b3689bbcf606ab7f44df813b0112dd42e5b2affbe3f64a4df2c2427639eba`
+- effective status: generated since 2026-07-26T19:06:36+00:00
+- content fingerprint: `sha256:a45d35cc8c702d92a21a3c34b16a9b6c9c67424465350658c1227f9d95ee53b8`
 - trace: filesystem-only / count=0 / sha=none
-- latest revision: `6ab1ea3` 2026-07-26 Ship /discogs release and catalog-number listening guides with OPS token UI.
+- latest revision: `0c8a847` 2026-07-27 Ship Ops daily Dev Blog and web forgot-password reset.
 - dirty: no
 - earlier revisions:
+  - `6ab1ea3` 2026-07-26 Ship /discogs release and catalog-number listening guides with OPS token UI.
   - `53e7437` 2026-07-26 Ship identity catalog, Hans/Hant locales, web research, and knowledge plane.
-  - `555cf53` 2026-07-26 Ship listening product, mandatory harness, facility layout, and UTC/local time.
 
 ### history/DOC_TRACE.md
 
 - role: history-doc-trace
 - layer: SharedSupportSurface
-- effective status: generated since 2026-07-26T16:28:21+00:00
-- content fingerprint: `sha256:e0ccbf850f22ec25cd7d76321a94a7fb70b005a1a0a3ce0f2c608118e5414ce1`
+- effective status: generated since 2026-07-26T19:06:36+00:00
+- content fingerprint: `sha256:194fff316528df1b4239e23a381a8471a0b0a8fa89b40c5ae354708af5735781`
 - trace: filesystem-only / count=0 / sha=none
-- latest revision: `6ab1ea3` 2026-07-26 Ship /discogs release and catalog-number listening guides with OPS token UI.
+- latest revision: `0c8a847` 2026-07-27 Ship Ops daily Dev Blog and web forgot-password reset.
 - dirty: no
 - earlier revisions:
+  - `6ab1ea3` 2026-07-26 Ship /discogs release and catalog-number listening guides with OPS token UI.
   - `53e7437` 2026-07-26 Ship identity catalog, Hans/Hant locales, web research, and knowledge plane.
-  - `555cf53` 2026-07-26 Ship listening product, mandatory harness, facility layout, and UTC/local time.
 
 ### history/README.md
 
 - role: history-readme
 - layer: SharedSupportSurface
-- effective status: generated since 2026-07-26T16:28:21+00:00
-- content fingerprint: `sha256:965b8d0c5f3ae3cb13090703596c6ceb9fc17bef50c7616039610492114f6f5f`
+- effective status: generated since 2026-07-26T19:06:36+00:00
+- content fingerprint: `sha256:0df763760cde940627975d96ad47bcf68aa7ee0fbe32bd659614aca3c5e3a162`
 - trace: filesystem-only / count=0 / sha=none
-- latest revision: `6ab1ea3` 2026-07-26 Ship /discogs release and catalog-number listening guides with OPS token UI.
+- latest revision: `0c8a847` 2026-07-27 Ship Ops daily Dev Blog and web forgot-password reset.
 - dirty: no
 - earlier revisions:
+  - `6ab1ea3` 2026-07-26 Ship /discogs release and catalog-number listening guides with OPS token UI.
   - `53e7437` 2026-07-26 Ship identity catalog, Hans/Hant locales, web research, and knowledge plane.
-  - `555cf53` 2026-07-26 Ship listening product, mandatory harness, facility layout, and UTC/local time.
 
 ### history/RETROSPECTIVE.md
 
 - role: history-retrospective
 - layer: SharedSupportSurface
-- effective status: generated since 2026-07-26T16:28:21+00:00
-- content fingerprint: `sha256:f29e41899e0ac4be20f8cb95bb6b7875cad85d837dc7dffd601b66a4b8baf564`
+- effective status: generated since 2026-07-26T19:06:36+00:00
+- content fingerprint: `sha256:3a71c809bca737b91b1d423e6d9ee24865c6565f9b0aa45b035dac0d17cc77a1`
 - trace: filesystem-only / count=0 / sha=none
-- latest revision: `6ab1ea3` 2026-07-26 Ship /discogs release and catalog-number listening guides with OPS token UI.
+- latest revision: `0c8a847` 2026-07-27 Ship Ops daily Dev Blog and web forgot-password reset.
 - dirty: no
 - earlier revisions:
+  - `6ab1ea3` 2026-07-26 Ship /discogs release and catalog-number listening guides with OPS token UI.
   - `53e7437` 2026-07-26 Ship identity catalog, Hans/Hant locales, web research, and knowledge plane.
-  - `555cf53` 2026-07-26 Ship listening product, mandatory harness, facility layout, and UTC/local time.
 
 ### history/ROADMAP.md
 
 - role: history-roadmap
 - layer: SharedSupportSurface
-- effective status: generated since 2026-07-26T16:28:21+00:00
-- content fingerprint: `sha256:0f42fa0849ee1e756aff95ec10ad12509afef2b5ca7b92411a952ccd652c643b`
+- effective status: generated since 2026-07-26T19:06:36+00:00
+- content fingerprint: `sha256:028da836609117a4403cc7ae0d48a05a10123e12e74e746dbba1d9eb170f82f1`
 - trace: filesystem-only / count=0 / sha=none
-- latest revision: `6ab1ea3` 2026-07-26 Ship /discogs release and catalog-number listening guides with OPS token UI.
+- latest revision: `0c8a847` 2026-07-27 Ship Ops daily Dev Blog and web forgot-password reset.
 - dirty: no
 - earlier revisions:
+  - `6ab1ea3` 2026-07-26 Ship /discogs release and catalog-number listening guides with OPS token UI.
   - `53e7437` 2026-07-26 Ship identity catalog, Hans/Hant locales, web research, and knowledge plane.
-  - `555cf53` 2026-07-26 Ship listening product, mandatory harness, facility layout, and UTC/local time.
 
 ### history/STATUS.md
 
 - role: history-status
 - layer: SharedSupportSurface
-- effective status: generated since 2026-07-26T16:28:21+00:00
-- content fingerprint: `sha256:39aee088d3add4bd8a7612fd70a00d83e2372c6e23fb49ab462068a580b6221c`
+- effective status: generated since 2026-07-26T19:06:36+00:00
+- content fingerprint: `sha256:043049c359ba3b2e861013c66ef72c100b29d4c422788bfde7dc3450edd3ddc4`
 - trace: filesystem-only / count=0 / sha=none
-- latest revision: `6ab1ea3` 2026-07-26 Ship /discogs release and catalog-number listening guides with OPS token UI.
+- latest revision: `0c8a847` 2026-07-27 Ship Ops daily Dev Blog and web forgot-password reset.
 - dirty: no
 - earlier revisions:
+  - `6ab1ea3` 2026-07-26 Ship /discogs release and catalog-number listening guides with OPS token UI.
   - `53e7437` 2026-07-26 Ship identity catalog, Hans/Hant locales, web research, and knowledge plane.
-  - `555cf53` 2026-07-26 Ship listening product, mandatory harness, facility layout, and UTC/local time.
 
 ### history/TIMELINE.md
 
 - role: history-timeline
 - layer: SharedSupportSurface
-- effective status: generated since 2026-07-26T16:28:21+00:00
-- content fingerprint: `sha256:473e1ecc1730b7d1e55483177f06ae306d67bcc5605e2a7318ea8c39f37d2631`
+- effective status: generated since 2026-07-26T19:06:36+00:00
+- content fingerprint: `sha256:81030187033c129acc873ba75ab83f4d9340ade2af24a35657b8787b18f21a72`
 - trace: filesystem-only / count=0 / sha=none
-- latest revision: `6ab1ea3` 2026-07-26 Ship /discogs release and catalog-number listening guides with OPS token UI.
+- latest revision: `0c8a847` 2026-07-27 Ship Ops daily Dev Blog and web forgot-password reset.
 - dirty: no
 - earlier revisions:
+  - `6ab1ea3` 2026-07-26 Ship /discogs release and catalog-number listening guides with OPS token UI.
   - `53e7437` 2026-07-26 Ship identity catalog, Hans/Hant locales, web research, and knowledge plane.
-  - `555cf53` 2026-07-26 Ship listening product, mandatory harness, facility layout, and UTC/local time.
 
 ### history/daily/2026-07-25.md
 
 - role: history-daily-summary
 - layer: SharedSupportSurface
-- effective status: generated since 2026-07-26T16:28:21+00:00
-- content fingerprint: `sha256:7d0d32c3e0550aafea807adc78bfa0d19f5f0e5d61ec19d452a213582d8b7baf`
+- effective status: generated since 2026-07-26T19:06:36+00:00
+- content fingerprint: `sha256:c9b04f72a1e41ceea717e57d94c9faa1c2e851808b62220f434caa33deabadbb`
 - trace: filesystem-only / count=0 / sha=none
-- latest revision: `6ab1ea3` 2026-07-26 Ship /discogs release and catalog-number listening guides with OPS token UI.
+- latest revision: `0c8a847` 2026-07-27 Ship Ops daily Dev Blog and web forgot-password reset.
 - dirty: no
 - earlier revisions:
+  - `6ab1ea3` 2026-07-26 Ship /discogs release and catalog-number listening guides with OPS token UI.
   - `53e7437` 2026-07-26 Ship identity catalog, Hans/Hant locales, web research, and knowledge plane.
-  - `555cf53` 2026-07-26 Ship listening product, mandatory harness, facility layout, and UTC/local time.
 
 ### history/daily/2026-07-26.md
 
 - role: history-daily-summary
 - layer: SharedSupportSurface
-- effective status: generated since 2026-07-26T16:28:21+00:00
-- content fingerprint: `sha256:09122e46c7a0fac3a4e2afe8a811951b7f16538ddf32eda9852106145b3de156`
+- effective status: generated since 2026-07-26T19:06:36+00:00
+- content fingerprint: `sha256:b6a0a018a8adf70cb5da81d301b4f80010aec25fd96db6b63dc01c50038ebafe`
 - trace: filesystem-only / count=0 / sha=none
-- latest revision: `6ab1ea3` 2026-07-26 Ship /discogs release and catalog-number listening guides with OPS token UI.
+- latest revision: `0c8a847` 2026-07-27 Ship Ops daily Dev Blog and web forgot-password reset.
 - dirty: no
 - earlier revisions:
+  - `6ab1ea3` 2026-07-26 Ship /discogs release and catalog-number listening guides with OPS token UI.
   - `53e7437` 2026-07-26 Ship identity catalog, Hans/Hant locales, web research, and knowledge plane.
+
+### history/daily/2026-07-27.md
+
+- role: history-daily-summary
+- layer: SharedSupportSurface
+- effective status: generated since 2026-07-26T19:06:36+00:00
+- content fingerprint: `sha256:15ea92655a4b6e36660282ec828d483b489d40f07a6e45b9023249b36dcef2ff`
+- trace: filesystem-only / count=0 / sha=none
+- latest revision: no git history recorded
+- dirty: no
 
 ### layers/MetaDefineLayer/README.md
 
@@ -416,10 +433,12 @@ Generated at: `2026-07-26T16:28:38+00:00`
 - role: managed-doc
 - layer: MetaDefineLayer
 - effective status: active since 2026-07-25T11:10:22Z
-- content fingerprint: `sha256:e7b60d1d9eff35c24e63749e528708dc2f012dc563f914f2a79a8e72bdd3fe72`
+- content fingerprint: `sha256:20c155409694e59aa3cc75a6e41e33cf288536e14eacec203af5a66ae431624a`
 - trace: filesystem-only / count=0 / sha=none
-- latest revision: `7632d9b` 2026-07-25 Add aulos-web, aulos-api, and aulos-mcp sub-projects under aries-harness.
+- latest revision: `0c8a847` 2026-07-27 Ship Ops daily Dev Blog and web forgot-password reset.
 - dirty: no
+- earlier revisions:
+  - `7632d9b` 2026-07-25 Add aulos-web, aulos-api, and aulos-mcp sub-projects under aries-harness.
 
 ### references/TRACE-001-value-traceability.md
 
@@ -517,6 +536,66 @@ Generated at: `2026-07-26T16:28:38+00:00`
 - layer: MetaDefineLayer
 - effective status: active since 2026-07-26T16:45:00Z
 - content fingerprint: `sha256:6071c84c69608f2dd5464ad092653c539ed3e40896c0e5c4e84fc2fc64bb174e`
+- trace: filesystem-only / count=0 / sha=none
+- latest revision: `0c8a847` 2026-07-27 Ship Ops daily Dev Blog and web forgot-password reset.
+- dirty: no
+
+### references/specs/SPEC-003-discogs-picker.md
+
+- role: behavior-spec
+- layer: MetaDefineLayer
+- effective status: active since 2026-07-26T16:55:00Z
+- content fingerprint: `sha256:dcaf75dea5daf4b2caced2fec9fc4d55a773c54cea906c6cf0dbe4fcd020e24a`
+- trace: filesystem-only / count=0 / sha=none
+- latest revision: no git history recorded
+- dirty: no
+
+### references/specs/SPEC-004-chain-trace-viewer.md
+
+- role: behavior-spec
+- layer: MetaDefineLayer
+- effective status: active since 2026-07-26T17:20:00Z
+- content fingerprint: `sha256:947c69a12a93da56a1c917f28ac4b2b21c87f5088bb0c80553654cc2a275855f`
+- trace: filesystem-only / count=0 / sha=none
+- latest revision: no git history recorded
+- dirty: no
+
+### references/specs/SPEC-005-portal-ux-polish.md
+
+- role: behavior-spec
+- layer: MetaDefineLayer
+- effective status: active since 2026-07-26T17:40:00Z
+- content fingerprint: `sha256:3b3e0477e79e50ba51f7876438a4dd5ee52d7d7f957913fb2c724ed15c6ead52`
+- trace: filesystem-only / count=0 / sha=none
+- latest revision: no git history recorded
+- dirty: no
+
+### references/specs/SPEC-006-library-jobs-ux.md
+
+- role: behavior-spec
+- layer: MetaDefineLayer
+- effective status: active since 2026-07-26T18:00:00Z
+- content fingerprint: `sha256:9d62b2ece9da889b163ce285def557c936ffc08f688e3f2b0d49b0e6567189e0`
+- trace: filesystem-only / count=0 / sha=none
+- latest revision: no git history recorded
+- dirty: no
+
+### references/specs/SPEC-007-single-pane-studio.md
+
+- role: behavior-spec
+- layer: MetaDefineLayer
+- effective status: active since 2026-07-26T18:35:00Z
+- content fingerprint: `sha256:a0f6936df8ffe5ade9fbb8d733c83a3eb2b3ba132e1a39e166a2035481a7ac4a`
+- trace: filesystem-only / count=0 / sha=none
+- latest revision: no git history recorded
+- dirty: no
+
+### references/specs/SPEC-008-session-scene-restore.md
+
+- role: spec-package
+- layer: MetaDefineLayer
+- effective status: active since 2026-07-27T09:44:37+00:00
+- content fingerprint: `sha256:adb78fad26e24211a7cb0cc7dacd8cb622ee16e63888e7fe12716fa960810f9c`
 - trace: filesystem-only / count=0 / sha=none
 - latest revision: no git history recorded
 - dirty: no
@@ -629,6 +708,26 @@ Generated at: `2026-07-26T16:28:38+00:00`
 - layer: RunCookingLayer
 - effective status: active since 2026-07-26T16:50:00Z
 - content fingerprint: `sha256:301a6bea27ff742827bb80d3f239a999ed3e4a3956b428dc2718e4fd0bf82d0a`
+- trace: filesystem-only / count=0 / sha=none
+- latest revision: `0c8a847` 2026-07-27 Ship Ops daily Dev Blog and web forgot-password reset.
+- dirty: no
+
+### runs/tests/VR-005-portal-ux-polish.md
+
+- role: verification-record
+- layer: RunCookingLayer
+- effective status: active since 2026-07-26T17:55:00Z
+- content fingerprint: `sha256:e4bc6377694595e6a1d1045b12df913c68b602ca2161b7ecd7d7e53f27e3db1d`
+- trace: filesystem-only / count=0 / sha=none
+- latest revision: no git history recorded
+- dirty: no
+
+### runs/tests/VR-006-library-jobs-ux.md
+
+- role: verification-record
+- layer: RunCookingLayer
+- effective status: active since 2026-07-26T18:15:00Z
+- content fingerprint: `sha256:b8667243d234fd94fb6950413db60cfb9a21266ae41e79dcf19b76cd2d37ff13`
 - trace: filesystem-only / count=0 / sha=none
 - latest revision: no git history recorded
 - dirty: no

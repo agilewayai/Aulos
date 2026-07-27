@@ -8,10 +8,10 @@ managed_by: "aries-harness"
 fingerprint: "aries-harness/history-doc/v1"
 generated_by: "/aries-harness history-refresh"
 initialized_at: "2026-07-25T10:55:22Z"
-generated_at: "2026-07-25T18:52:18+00:00"
+generated_at: "2026-07-27T09:44:53+00:00"
 effective_status: "generated"
-effective_since: "2026-07-25T18:52:18+00:00"
-content_fingerprint: "sha256:77ce310aa4e5c68dc9703fd651e35c126b7794a9565f08448b10994d09bd8610"
+effective_since: "2026-07-27T09:44:53+00:00"
+content_fingerprint: "sha256:a10ef6eaa5ae82bc7e8d2fb431696e7c4d7a1b229db91971c036d6da30d1f00f"
 trace_history_source: "filesystem-only"
 trace_last_commit_sha: ""
 trace_last_commit_at: ""
@@ -19,7 +19,7 @@ trace_revision_count: "0"
 ---
 # Document Trace
 
-Generated at: `2026-07-25T18:52:18+00:00`
+Generated at: `2026-07-27T09:44:53+00:00`
 
 ## Summary
 
@@ -64,12 +64,13 @@ Generated at: `2026-07-25T18:52:18+00:00`
 
 - role: harness-index
 - layer: SharedSupportSurface
-- effective status: generated since 2026-07-25T18:52:17+00:00
-- content fingerprint: `sha256:f70c6cce4eb8bba57d59d6e8483a95e6b138734e01fb496a113d0742b6dc2ede`
+- effective status: generated since 2026-07-27T09:44:53+00:00
+- content fingerprint: `sha256:87a67816f16970915ed3b14b82e2f5af7e7aad554a0c1d343d6ecbdbf90b55de`
 - trace: filesystem-only / count=0 / sha=none
-- latest revision: `555cf53` 2026-07-26 Ship listening product, mandatory harness, facility layout, and UTC/local time.
+- latest revision: `53e7437` 2026-07-26 Ship identity catalog, Hans/Hant locales, web research, and knowledge plane.
 - dirty: no
 - earlier revisions:
+  - `555cf53` 2026-07-26 Ship listening product, mandatory harness, facility layout, and UTC/local time.
   - `0d5cb01` 2026-07-25 Initial commit: Aulos hackathon workspace with LangChain agent runtime.
 
 ### JOURNAL.md
@@ -79,8 +80,10 @@ Generated at: `2026-07-25T18:52:18+00:00`
 - effective status: active since 2026-07-25T10:55:22Z
 - content fingerprint: `sha256:0f4326c4a9dcacee31696a05dfe7195438cb98bb24e65cc7fba5a3f234467ba6`
 - trace: filesystem-only / count=0 / sha=none
-- latest revision: `0d5cb01` 2026-07-25 Initial commit: Aulos hackathon workspace with LangChain agent runtime.
+- latest revision: `53e7437` 2026-07-26 Ship identity catalog, Hans/Hant locales, web research, and knowledge plane.
 - dirty: no
+- earlier revisions:
+  - `0d5cb01` 2026-07-25 Initial commit: Aulos hackathon workspace with LangChain agent runtime.
 
 ### MEMORY.md
 
@@ -89,11 +92,11 @@ Generated at: `2026-07-25T18:52:18+00:00`
 - effective status: active since 2026-07-25T10:55:22Z
 - content fingerprint: `sha256:f5665dcc6fd34ec007858cc0f33fe9b884f0dea7210190d79f361565ea586c61`
 - trace: filesystem-only / count=0 / sha=none
-- latest revision: `555cf53` 2026-07-26 Ship listening product, mandatory harness, facility layout, and UTC/local time.
+- latest revision: `53e7437` 2026-07-26 Ship identity catalog, Hans/Hant locales, web research, and knowledge plane.
 - dirty: no
 - earlier revisions:
+  - `555cf53` 2026-07-26 Ship listening product, mandatory harness, facility layout, and UTC/local time.
   - `93c0f6e` 2026-07-25 Add aulos-skills, aulos-ops, host deploy, and fleet operating defaults.
-  - `0d5cb01` 2026-07-25 Initial commit: Aulos hackathon workspace with LangChain agent runtime.
 
 ### MISSION.md
 
@@ -184,7 +187,7 @@ Generated at: `2026-07-25T18:52:18+00:00`
 - effective status: active since 2026-07-25T17:10:00Z
 - content fingerprint: `sha256:4f540710adb9426133410b7cfb75fb5ec41b273b68e37f5ba9a3fdca71f8ab85`
 - trace: filesystem-only / count=0 / sha=none
-- latest revision: no git history recorded
+- latest revision: `53e7437` 2026-07-26 Ship identity catalog, Hans/Hant locales, web research, and knowledge plane.
 - dirty: no
 
 ### decisions/adrs/README.md
@@ -216,7 +219,7 @@ Generated at: `2026-07-25T18:52:18+00:00`
 - effective status: active since 2026-07-25T17:10:00Z
 - content fingerprint: `sha256:eaeca628220c9e1c56450c4f99fe9a965edd76a84da2f4fac79a467213e128c3`
 - trace: filesystem-only / count=0 / sha=none
-- latest revision: no git history recorded
+- latest revision: `53e7437` 2026-07-26 Ship identity catalog, Hans/Hant locales, web research, and knowledge plane.
 - dirty: no
 
 ### decisions/architecture/README.md
@@ -233,106 +236,114 @@ Generated at: `2026-07-25T18:52:18+00:00`
 
 - role: history-daily-summary-index
 - layer: SharedSupportSurface
-- effective status: generated since 2026-07-25T16:42:04+00:00
-- content fingerprint: `sha256:5472f0fbd7b338638072f83c78426d75e6d828f52a83427186dfb0d4d11644c9`
+- effective status: generated since 2026-07-25T18:52:18+00:00
+- content fingerprint: `sha256:65a3d312d0b0b0de24b19a9d650e6aad1324cbc8dafb5b6fd24b10e47127a7bb`
 - trace: filesystem-only / count=0 / sha=none
-- latest revision: `555cf53` 2026-07-26 Ship listening product, mandatory harness, facility layout, and UTC/local time.
+- latest revision: `53e7437` 2026-07-26 Ship identity catalog, Hans/Hant locales, web research, and knowledge plane.
 - dirty: no
 - earlier revisions:
+  - `555cf53` 2026-07-26 Ship listening product, mandatory harness, facility layout, and UTC/local time.
   - `0d5cb01` 2026-07-25 Initial commit: Aulos hackathon workspace with LangChain agent runtime.
 
 ### history/DOC_TRACE.md
 
 - role: history-doc-trace
 - layer: SharedSupportSurface
-- effective status: generated since 2026-07-25T16:42:04+00:00
-- content fingerprint: `sha256:01693d6bee51a4efc240c7707f4c28f003bf2ecfb75769c017cd1ee51f24949e`
+- effective status: generated since 2026-07-25T18:52:18+00:00
+- content fingerprint: `sha256:77ce310aa4e5c68dc9703fd651e35c126b7794a9565f08448b10994d09bd8610`
 - trace: filesystem-only / count=0 / sha=none
-- latest revision: `555cf53` 2026-07-26 Ship listening product, mandatory harness, facility layout, and UTC/local time.
+- latest revision: `53e7437` 2026-07-26 Ship identity catalog, Hans/Hant locales, web research, and knowledge plane.
 - dirty: no
 - earlier revisions:
+  - `555cf53` 2026-07-26 Ship listening product, mandatory harness, facility layout, and UTC/local time.
   - `0d5cb01` 2026-07-25 Initial commit: Aulos hackathon workspace with LangChain agent runtime.
 
 ### history/README.md
 
 - role: history-readme
 - layer: SharedSupportSurface
-- effective status: generated since 2026-07-25T16:42:04+00:00
-- content fingerprint: `sha256:b7e6d866928652ad47233e697aaea848b0fc0e94dfcd13af1da8d1a6534a50c9`
+- effective status: generated since 2026-07-25T18:52:18+00:00
+- content fingerprint: `sha256:a4988976ca49a84ff2cab45aa739305024be56d54fc94f677a395642cf2a7e89`
 - trace: filesystem-only / count=0 / sha=none
-- latest revision: `555cf53` 2026-07-26 Ship listening product, mandatory harness, facility layout, and UTC/local time.
+- latest revision: `53e7437` 2026-07-26 Ship identity catalog, Hans/Hant locales, web research, and knowledge plane.
 - dirty: no
 - earlier revisions:
+  - `555cf53` 2026-07-26 Ship listening product, mandatory harness, facility layout, and UTC/local time.
   - `0d5cb01` 2026-07-25 Initial commit: Aulos hackathon workspace with LangChain agent runtime.
 
 ### history/RETROSPECTIVE.md
 
 - role: history-retrospective
 - layer: SharedSupportSurface
-- effective status: generated since 2026-07-25T16:42:04+00:00
-- content fingerprint: `sha256:c60cf2b933f0906ee18e964a1c71ce420d77f93ea6f7c65d784cd0ae3b06bdb9`
+- effective status: generated since 2026-07-25T18:52:18+00:00
+- content fingerprint: `sha256:7f89ce7db6aba55ea4a582f699dbab5547d170ee07a4cbedc52fd3f85d2db00b`
 - trace: filesystem-only / count=0 / sha=none
-- latest revision: `555cf53` 2026-07-26 Ship listening product, mandatory harness, facility layout, and UTC/local time.
+- latest revision: `53e7437` 2026-07-26 Ship identity catalog, Hans/Hant locales, web research, and knowledge plane.
 - dirty: no
 - earlier revisions:
+  - `555cf53` 2026-07-26 Ship listening product, mandatory harness, facility layout, and UTC/local time.
   - `0d5cb01` 2026-07-25 Initial commit: Aulos hackathon workspace with LangChain agent runtime.
 
 ### history/ROADMAP.md
 
 - role: history-roadmap
 - layer: SharedSupportSurface
-- effective status: generated since 2026-07-25T16:42:04+00:00
-- content fingerprint: `sha256:da207433931209308c7e130c6c8a3e10d0a387f716d7858a74971cdc54a897c1`
+- effective status: generated since 2026-07-25T18:52:18+00:00
+- content fingerprint: `sha256:7537f09c80dd88379be68128083717b3d720ae87ae1fe81c5912200daaad871f`
 - trace: filesystem-only / count=0 / sha=none
-- latest revision: `555cf53` 2026-07-26 Ship listening product, mandatory harness, facility layout, and UTC/local time.
+- latest revision: `53e7437` 2026-07-26 Ship identity catalog, Hans/Hant locales, web research, and knowledge plane.
 - dirty: no
 - earlier revisions:
+  - `555cf53` 2026-07-26 Ship listening product, mandatory harness, facility layout, and UTC/local time.
   - `0d5cb01` 2026-07-25 Initial commit: Aulos hackathon workspace with LangChain agent runtime.
 
 ### history/STATUS.md
 
 - role: history-status
 - layer: SharedSupportSurface
-- effective status: generated since 2026-07-25T16:42:04+00:00
-- content fingerprint: `sha256:ca25b6c51704ea0d15e7014ee4bd28e33844e090773dd13cbb34bdfa8233191f`
+- effective status: generated since 2026-07-25T18:52:18+00:00
+- content fingerprint: `sha256:d8e5f716f1bc23b8cc9f9262c01256cef2255cb419a0130db0a214ba1b6cd040`
 - trace: filesystem-only / count=0 / sha=none
-- latest revision: `555cf53` 2026-07-26 Ship listening product, mandatory harness, facility layout, and UTC/local time.
+- latest revision: `53e7437` 2026-07-26 Ship identity catalog, Hans/Hant locales, web research, and knowledge plane.
 - dirty: no
 - earlier revisions:
+  - `555cf53` 2026-07-26 Ship listening product, mandatory harness, facility layout, and UTC/local time.
   - `0d5cb01` 2026-07-25 Initial commit: Aulos hackathon workspace with LangChain agent runtime.
 
 ### history/TIMELINE.md
 
 - role: history-timeline
 - layer: SharedSupportSurface
-- effective status: generated since 2026-07-25T16:42:04+00:00
-- content fingerprint: `sha256:7a7d70c0dfe6a4e74f1d934d1761b10123fba265d632586064faceac957369fe`
+- effective status: generated since 2026-07-25T18:52:18+00:00
+- content fingerprint: `sha256:9b2a75250af84a793d508956dfa3bf1be0d0b06ba8def9c696a25f57dde5f6c6`
 - trace: filesystem-only / count=0 / sha=none
-- latest revision: `555cf53` 2026-07-26 Ship listening product, mandatory harness, facility layout, and UTC/local time.
+- latest revision: `53e7437` 2026-07-26 Ship identity catalog, Hans/Hant locales, web research, and knowledge plane.
 - dirty: no
 - earlier revisions:
+  - `555cf53` 2026-07-26 Ship listening product, mandatory harness, facility layout, and UTC/local time.
   - `0d5cb01` 2026-07-25 Initial commit: Aulos hackathon workspace with LangChain agent runtime.
 
 ### history/daily/2026-07-25.md
 
 - role: history-daily-summary
 - layer: SharedSupportSurface
-- effective status: generated since 2026-07-25T16:42:04+00:00
-- content fingerprint: `sha256:944112f37ef6d8d370b8e61607eab37e850aeaef4b4259826cf1fb7a63c92eac`
+- effective status: generated since 2026-07-25T18:52:18+00:00
+- content fingerprint: `sha256:02cfcff4d4fed66a11649a44392980a4ed7093c8477b7eda22fa239beb2216ec`
 - trace: filesystem-only / count=0 / sha=none
-- latest revision: `555cf53` 2026-07-26 Ship listening product, mandatory harness, facility layout, and UTC/local time.
+- latest revision: `53e7437` 2026-07-26 Ship identity catalog, Hans/Hant locales, web research, and knowledge plane.
 - dirty: no
 - earlier revisions:
+  - `555cf53` 2026-07-26 Ship listening product, mandatory harness, facility layout, and UTC/local time.
   - `0d5cb01` 2026-07-25 Initial commit: Aulos hackathon workspace with LangChain agent runtime.
 
 ### history/daily/2026-07-26.md
 
 - role: history-daily-summary
 - layer: SharedSupportSurface
-- effective status: generated since 2026-07-25T16:42:04+00:00
-- content fingerprint: `sha256:73d0a0188568f387f4d1bcc4d348baf3dc9ad14fdc9d319821e53473a941bc06`
+- effective status: generated since 2026-07-25T18:52:18+00:00
+- content fingerprint: `sha256:74cd8b19faaaf55e03d81b4670284fea66a1063e1779f0384a89d1c08707270a`
 - trace: filesystem-only / count=0 / sha=none
-- latest revision: no git history recorded
+- latest revision: `53e7437` 2026-07-26 Ship identity catalog, Hans/Hant locales, web research, and knowledge plane.
 - dirty: no
 
 ### layers/MetaDefineLayer/README.md
@@ -492,7 +503,7 @@ Generated at: `2026-07-25T18:52:18+00:00`
 - effective status: active since 2026-07-25T17:10:00Z
 - content fingerprint: `sha256:700ab4d1a49654e44f84a5c31de447a3e4cd94a891f7c8af8fe2871e2ee44ae1`
 - trace: filesystem-only / count=0 / sha=none
-- latest revision: no git history recorded
+- latest revision: `53e7437` 2026-07-26 Ship identity catalog, Hans/Hant locales, web research, and knowledge plane.
 - dirty: no
 
 ### references/stories/README.md

@@ -19,6 +19,7 @@ Also:
 - **Timestamps** — store UTC on the wire; display OS/browser local time in product UIs (`src/time.ts`).
 - **Chinese UI** — 简体 (`zh-Hans`) / 繁体 (`zh-Hant`) only; no regional locale codes in OSS source.
 - **Listening identity** — Catalog + IdentityResolver; no composer/work hardcoding in Python.
+- **DB closeout** — Postgres is hot; after model changes, ship `schema_patches` + verify PG columns (SQLite pilot ≠ production).
 
 Canonical policy: [`aulos-skills/skills/aulos-operating-defaults/SKILL.md`](aulos-skills/skills/aulos-operating-defaults/SKILL.md)
 
@@ -31,6 +32,7 @@ Canonical policy: [`aulos-skills/skills/aulos-operating-defaults/SKILL.md`](aulo
 | `aulos-web/` | Operator web GUI |
 | `aulos-mcp/` | MCP integrations |
 | `aulos-skills/` | Main harness skills pack |
+| `aulos-knowledge/` | Professional music knowledge plane |
 | `aulos-ops/` | Admin / ops portal |
 
 Work inside the relevant sub-project root unless the task is explicitly workspace-wide.
@@ -40,4 +42,17 @@ Work inside the relevant sub-project root unless the task is explicitly workspac
 - https://aulos.purezen.ai
 - https://aulos-ops.purezen.ai
 
-Host daemons: `bash deploy/start-host.sh` (see `deploy/README.md`).
+## DevOps (host production)
+
+**Canonical entry:** `bash deploy/aulos-ctl.sh` — full control plane for build, deploy, smoke, status, logs, secrets.
+
+| Task | Command |
+| --- | --- |
+| Production deploy | `bash deploy/aulos-ctl.sh deploy` |
+| Preflight | `bash deploy/aulos-ctl.sh doctor` |
+| Post-deploy smoke | `bash deploy/aulos-ctl.sh smoke` |
+| First-time secrets | `bash deploy/aulos-ctl.sh secrets init` → edit `.run/host.env` |
+
+Runbook: [`deploy/OPS.md`](deploy/OPS.md). Quick reference: [`deploy/README.md`](deploy/README.md).
+
+`deploy/start-host.sh` is a thin alias for `aulos-ctl deploy`. Agents need **explicit operator approval** before production deploy unless requested in the current turn.

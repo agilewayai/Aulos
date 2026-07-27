@@ -17,6 +17,7 @@ if str(_DEPLOY_DIR) not in sys.path:
     sys.path.insert(0, str(_DEPLOY_DIR))
 
 from rate_gate import RateGate, client_ip, rule_for  # noqa: E402
+from security_headers import SECURITY_HEADERS  # noqa: E402
 
 NO_CACHE = "no-cache, no-store, must-revalidate"
 IMMUTABLE_ASSET = "public, max-age=31536000, immutable"
@@ -63,6 +64,8 @@ class AulosHandler(SimpleHTTPRequestHandler):
 
     def end_headers(self) -> None:
         self.send_header("Cache-Control", cache_control_for(self.path))
+        for key, value in SECURITY_HEADERS.items():
+            self.send_header(key, value)
         super().end_headers()
 
     def log_message(self, fmt: str, *args) -> None:  # noqa: A003

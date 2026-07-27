@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-07-26T16:28:21+00:00",
+  "generated_at": "2026-07-27T09:44:33+00:00",
   "project_root": "/home/ubuntu/hackathon/aulos/aulos-api",
   "harness_root": "/home/ubuntu/hackathon/aulos/aulos-api/.aries_harness",
   "history_root": "/home/ubuntu/hackathon/aulos/aulos-api/.aries_harness/history",
@@ -8,8 +8,20 @@
   "branch": "main",
   "working_tree": {
     "clean": false,
-    "change_count": 78,
+    "change_count": 187,
     "changes": [
+      {
+        "status": "M",
+        "path": "AGENTS.md"
+      },
+      {
+        "status": "M",
+        "path": "CLAUDE.md"
+      },
+      {
+        "status": "M",
+        "path": "README.md"
+      },
       {
         "status": "M",
         "path": "aulos-api/.aries_harness/ARIES_HARNESS_FINGERPRINT.json"
@@ -88,6 +100,18 @@
       },
       {
         "status": "M",
+        "path": "aulos-api/.aries_harness/references/specs/SPEC-008-discog-release-guide.md"
+      },
+      {
+        "status": "M",
+        "path": "aulos-api/src/aulos_api/app.py"
+      },
+      {
+        "status": "M",
+        "path": "aulos-api/src/aulos_api/auth/deps.py"
+      },
+      {
+        "status": "M",
         "path": "aulos-api/src/aulos_api/config/settings.py"
       },
       {
@@ -96,7 +120,15 @@
       },
       {
         "status": "M",
+        "path": "aulos-api/src/aulos_api/db/session.py"
+      },
+      {
+        "status": "M",
         "path": "aulos-api/src/aulos_api/routes/auth.py"
+      },
+      {
+        "status": "M",
+        "path": "aulos-api/src/aulos_api/routes/listening.py"
       },
       {
         "status": "M",
@@ -104,7 +136,27 @@
       },
       {
         "status": "M",
-        "path": "aulos-api/src/aulos_api/services/llm_providers.py"
+        "path": "aulos-api/src/aulos_api/services/bootstrap.py"
+      },
+      {
+        "status": "M",
+        "path": "aulos-api/src/aulos_api/services/db_ha.py"
+      },
+      {
+        "status": "M",
+        "path": "aulos-api/src/aulos_api/services/discogs.py"
+      },
+      {
+        "status": "M",
+        "path": "aulos-api/src/aulos_api/services/knowledge_base.py"
+      },
+      {
+        "status": "M",
+        "path": "aulos-api/src/aulos_api/services/knowledge_proxy.py"
+      },
+      {
+        "status": "M",
+        "path": "aulos-api/src/aulos_api/services/listening_guide.py"
       },
       {
         "status": "M",
@@ -112,83 +164,55 @@
       },
       {
         "status": "M",
+        "path": "aulos-api/src/aulos_api/services/web_research.py"
+      },
+      {
+        "status": "M",
         "path": "aulos-api/tests/test_auth.py"
       },
       {
         "status": "M",
-        "path": "aulos-ops/.aries_harness/ARIES_HARNESS_FINGERPRINT.json"
+        "path": "aulos-api/tests/test_discogs.py"
       },
       {
         "status": "M",
-        "path": "aulos-ops/.aries_harness/EVAL.md"
+        "path": "aulos-api/tests/test_listening_guide.py"
       },
       {
         "status": "M",
-        "path": "aulos-ops/.aries_harness/INDEX.md"
+        "path": "aulos-api/tests/test_mailgun.py"
+      },
+      {
+        "status": "M",
+        "path": "aulos-knowledge/src/aulos_knowledge/app.py"
+      },
+      {
+        "status": "M",
+        "path": "aulos-knowledge/src/aulos_knowledge/routes.py"
+      },
+      {
+        "status": "M",
+        "path": "aulos-knowledge/tests/test_audit_api.py"
+      },
+      {
+        "status": "M",
+        "path": "aulos-knowledge/tests/test_job_failures.py"
+      },
+      {
+        "status": "M",
+        "path": "aulos-knowledge/tests/test_knowledge_api.py"
+      },
+      {
+        "status": "M",
+        "path": "aulos-knowledge/tests/test_media_persist.py"
+      },
+      {
+        "status": "M",
+        "path": "aulos-knowledge/tests/test_work_id_rag.py"
       },
       {
         "status": "M",
         "path": "aulos-ops/.aries_harness/JOURNAL.md"
-      },
-      {
-        "status": "M",
-        "path": "aulos-ops/.aries_harness/STATE.md"
-      },
-      {
-        "status": "M",
-        "path": "aulos-ops/.aries_harness/TASK_STACK.md"
-      },
-      {
-        "status": "M",
-        "path": "aulos-ops/.aries_harness/decisions/architecture/ARCH-001-ops-portal-architecture.md"
-      },
-      {
-        "status": "M",
-        "path": "aulos-ops/.aries_harness/history/DAILY_SUMMARY_INDEX.md"
-      },
-      {
-        "status": "M",
-        "path": "aulos-ops/.aries_harness/history/DOC_TRACE.md"
-      },
-      {
-        "status": "M",
-        "path": "aulos-ops/.aries_harness/history/README.md"
-      },
-      {
-        "status": "M",
-        "path": "aulos-ops/.aries_harness/history/RETROSPECTIVE.md"
-      },
-      {
-        "status": "M",
-        "path": "aulos-ops/.aries_harness/history/ROADMAP.md"
-      },
-      {
-        "status": "M",
-        "path": "aulos-ops/.aries_harness/history/STATUS.md"
-      },
-      {
-        "status": "M",
-        "path": "aulos-ops/.aries_harness/history/TIMELINE.md"
-      },
-      {
-        "status": "M",
-        "path": "aulos-ops/.aries_harness/history/daily/2026-07-25.md"
-      },
-      {
-        "status": "M",
-        "path": "aulos-ops/.aries_harness/history/daily/2026-07-26.md"
-      },
-      {
-        "status": "M",
-        "path": "aulos-ops/.aries_harness/history/doc-trace.json"
-      },
-      {
-        "status": "M",
-        "path": "aulos-ops/.aries_harness/history/summary.json"
-      },
-      {
-        "status": "M",
-        "path": "aulos-ops/.aries_harness/references/REG-001-artifact-register.md"
       },
       {
         "status": "M",
@@ -200,15 +224,135 @@
       },
       {
         "status": "M",
+        "path": "aulos-ops/src/AssetUpdateToast.tsx"
+      },
+      {
+        "status": "M",
         "path": "aulos-ops/src/api.ts"
       },
       {
         "status": "M",
-        "path": "aulos-web/.aries_harness/ARIES_HARNESS_FINGERPRINT.json"
+        "path": "aulos-ops/src/assetVersion.ts"
       },
       {
         "status": "M",
-        "path": "aulos-web/.aries_harness/EVAL.md"
+        "path": "aulos-ops/src/index.css"
+      },
+      {
+        "status": "M",
+        "path": "aulos-skills/.aries_harness/INDEX.md"
+      },
+      {
+        "status": "M",
+        "path": "aulos-skills/.aries_harness/JOURNAL.md"
+      },
+      {
+        "status": "M",
+        "path": "aulos-skills/.aries_harness/STATE.md"
+      },
+      {
+        "status": "M",
+        "path": "aulos-skills/.aries_harness/TASK_STACK.md"
+      },
+      {
+        "status": "M",
+        "path": "aulos-skills/.aries_harness/docs/insights.md"
+      },
+      {
+        "status": "M",
+        "path": "aulos-skills/.aries_harness/history/DAILY_SUMMARY_INDEX.md"
+      },
+      {
+        "status": "M",
+        "path": "aulos-skills/.aries_harness/history/DOC_TRACE.md"
+      },
+      {
+        "status": "M",
+        "path": "aulos-skills/.aries_harness/history/README.md"
+      },
+      {
+        "status": "M",
+        "path": "aulos-skills/.aries_harness/history/RETROSPECTIVE.md"
+      },
+      {
+        "status": "M",
+        "path": "aulos-skills/.aries_harness/history/ROADMAP.md"
+      },
+      {
+        "status": "M",
+        "path": "aulos-skills/.aries_harness/history/STATUS.md"
+      },
+      {
+        "status": "M",
+        "path": "aulos-skills/.aries_harness/history/TIMELINE.md"
+      },
+      {
+        "status": "M",
+        "path": "aulos-skills/.aries_harness/history/daily/2026-07-25.md"
+      },
+      {
+        "status": "M",
+        "path": "aulos-skills/.aries_harness/history/daily/2026-07-26.md"
+      },
+      {
+        "status": "M",
+        "path": "aulos-skills/.aries_harness/history/doc-trace.json"
+      },
+      {
+        "status": "M",
+        "path": "aulos-skills/.aries_harness/history/summary.json"
+      },
+      {
+        "status": "M",
+        "path": "aulos-skills/.aries_harness/references/REG-001-artifact-register.md"
+      },
+      {
+        "status": "M",
+        "path": "aulos-skills/.aries_harness/references/specs/SPEC-003-salon-codex-dossier.md"
+      },
+      {
+        "status": "M",
+        "path": "aulos-skills/.aries_harness/references/specs/SPEC-004-listening-synthesize.md"
+      },
+      {
+        "status": "M",
+        "path": "aulos-skills/skills/aulos-listening-corpus/assets/catalog/works/beethoven.cello-sonatas-variations.yaml"
+      },
+      {
+        "status": "M",
+        "path": "aulos-skills/skills/aulos-listening-width/SKILL.md"
+      },
+      {
+        "status": "M",
+        "path": "aulos-skills/skills/aulos-operating-defaults/SKILL.md"
+      },
+      {
+        "status": "M",
+        "path": "aulos-skills/src/aulos_skills/ambient_agent.py"
+      },
+      {
+        "status": "M",
+        "path": "aulos-skills/src/aulos_skills/guide_render.py"
+      },
+      {
+        "status": "M",
+        "path": "aulos-skills/src/aulos_skills/i18n.py"
+      },
+      {
+        "status": "M",
+        "path": "aulos-skills/src/aulos_skills/intake_parse.py"
+      },
+      {
+        "status": "M",
+        "path": "aulos-skills/src/aulos_skills/runtime.py"
+      },
+      {
+        "status": "M",
+        "path": "aulos-skills/src/aulos_skills/salon_codex.py"
+      },
+      {
+        "status": "M",
+        "path": "aulos-skills/tests/test_runtime.py"
       },
       {
         "status": "M",
@@ -272,6 +416,10 @@
       },
       {
         "status": "M",
+        "path": "aulos-web/.aries_harness/references/REG-001-artifact-register.md"
+      },
+      {
+        "status": "M",
         "path": "aulos-web/src/App.css"
       },
       {
@@ -280,51 +428,339 @@
       },
       {
         "status": "M",
+        "path": "aulos-web/src/AssetUpdateToast.tsx"
+      },
+      {
+        "status": "M",
         "path": "aulos-web/src/api.ts"
       },
       {
-        "status": "??",
-        "path": "aulos-api/.aries_harness/references/specs/SPEC-009-ops-dev-blog.md"
+        "status": "M",
+        "path": "aulos-web/src/assetVersion.ts"
+      },
+      {
+        "status": "M",
+        "path": "aulos-web/src/index.css"
+      },
+      {
+        "status": "M",
+        "path": "deploy/README.md"
+      },
+      {
+        "status": "M",
+        "path": "deploy/serve.py"
+      },
+      {
+        "status": "M",
+        "path": "deploy/start-host.sh"
+      },
+      {
+        "status": "M",
+        "path": "deploy/systemd/user/aulos-api.service"
+      },
+      {
+        "status": "M",
+        "path": "deploy/vite-asset-version.mjs"
       },
       {
         "status": "??",
-        "path": "aulos-api/src/aulos_api/services/dev_blog.py"
+        "path": "aulos-api/.aries_harness/decisions/adrs/ADR-008-plaintext-systemsetting-secrets-sprint1.md"
       },
       {
         "status": "??",
-        "path": "aulos-api/tests/test_dev_blog.py"
+        "path": "aulos-api/.aries_harness/history/daily/2026-07-27.md"
       },
       {
         "status": "??",
-        "path": "aulos-ops/.aries_harness/references/requests/REQ-002-daily-dev-blog.md"
+        "path": "aulos-api/.aries_harness/references/requests/REQ-009-durable-guide-jobs-library.md"
       },
       {
         "status": "??",
-        "path": "aulos-ops/.aries_harness/references/specs/SPEC-002-daily-dev-blog.md"
+        "path": "aulos-api/.aries_harness/references/specs/SPEC-010-salon-email-craft.md"
       },
       {
         "status": "??",
-        "path": "aulos-ops/.aries_harness/references/stories/STORY-PACK-002-daily-dev-blog.md"
+        "path": "aulos-api/.aries_harness/references/specs/SPEC-011-mail-queue.md"
       },
       {
         "status": "??",
-        "path": "aulos-ops/.aries_harness/runs/tests/VR-002-daily-dev-blog.md"
+        "path": "aulos-api/.aries_harness/references/specs/SPEC-012-chain-trace.md"
       },
       {
         "status": "??",
-        "path": "aulos-ops/src/DevBlogPanel.tsx"
+        "path": "aulos-api/.aries_harness/references/specs/SPEC-013-listening-guide-jobs-library.md"
       },
       {
         "status": "??",
-        "path": "aulos-web/.aries_harness/references/specs/SPEC-002-forgot-password.md"
+        "path": "aulos-api/.aries_harness/references/specs/SPEC-014-session-cookie-auth.md"
       },
       {
         "status": "??",
-        "path": "aulos-web/.aries_harness/runs/tests/VR-002-forgot-password.md"
+        "path": "aulos-api/.aries_harness/references/specs/SPEC-015-guide-html-security.md"
+      },
+      {
+        "status": "??",
+        "path": "aulos-api/.aries_harness/runs/tests/VR-013-listening-guide-jobs-library.md"
+      },
+      {
+        "status": "??",
+        "path": "aulos-api/src/aulos_api/auth/session.py"
+      },
+      {
+        "status": "??",
+        "path": "aulos-api/src/aulos_api/db/schema_patches.py"
+      },
+      {
+        "status": "??",
+        "path": "aulos-api/src/aulos_api/routes/ops_integrations.py"
+      },
+      {
+        "status": "??",
+        "path": "aulos-api/src/aulos_api/routes/ops_mail.py"
+      },
+      {
+        "status": "??",
+        "path": "aulos-api/src/aulos_api/security_headers.py"
+      },
+      {
+        "status": "??",
+        "path": "aulos-api/src/aulos_api/services/chain_trace.py"
+      },
+      {
+        "status": "??",
+        "path": "aulos-api/src/aulos_api/services/email_templates.py"
+      },
+      {
+        "status": "??",
+        "path": "aulos-api/src/aulos_api/services/guide_html_security.py"
+      },
+      {
+        "status": "??",
+        "path": "aulos-api/src/aulos_api/services/listening_plan.py"
+      },
+      {
+        "status": "??",
+        "path": "aulos-api/src/aulos_api/services/listening_queue.py"
+      },
+      {
+        "status": "??",
+        "path": "aulos-api/src/aulos_api/services/mail_queue.py"
+      },
+      {
+        "status": "??",
+        "path": "aulos-api/src/aulos_api/services/worker_lifecycle.py"
+      },
+      {
+        "status": "??",
+        "path": "aulos-api/tests/conftest.py"
+      },
+      {
+        "status": "??",
+        "path": "aulos-api/tests/test_chain_trace.py"
+      },
+      {
+        "status": "??",
+        "path": "aulos-api/tests/test_email_templates.py"
+      },
+      {
+        "status": "??",
+        "path": "aulos-api/tests/test_guide_html_sanitize.py"
+      },
+      {
+        "status": "??",
+        "path": "aulos-api/tests/test_guide_security.py"
+      },
+      {
+        "status": "??",
+        "path": "aulos-api/tests/test_listening_jobs.py"
+      },
+      {
+        "status": "??",
+        "path": "aulos-api/tests/test_listening_plan.py"
+      },
+      {
+        "status": "??",
+        "path": "aulos-api/tests/test_mail_queue.py"
+      },
+      {
+        "status": "??",
+        "path": "aulos-api/tests/test_schema_patches.py"
+      },
+      {
+        "status": "??",
+        "path": "aulos-knowledge/.aries_harness/EVAL.md"
+      },
+      {
+        "status": "??",
+        "path": "aulos-knowledge/.aries_harness/MISSION.md"
+      },
+      {
+        "status": "??",
+        "path": "aulos-knowledge/AGENTS.md"
+      },
+      {
+        "status": "??",
+        "path": "aulos-knowledge/CLAUDE.md"
+      },
+      {
+        "status": "??",
+        "path": "aulos-knowledge/src/aulos_knowledge/auth.py"
+      },
+      {
+        "status": "??",
+        "path": "aulos-knowledge/tests/conftest.py"
+      },
+      {
+        "status": "??",
+        "path": "aulos-knowledge/tests/test_admin_auth.py"
+      },
+      {
+        "status": "??",
+        "path": "aulos-ops/src/PasswordField.tsx"
+      },
+      {
+        "status": "??",
+        "path": "aulos-ops/src/SkillsPanel.tsx"
+      },
+      {
+        "status": "??",
+        "path": "aulos-ops/src/sessionScene.ts"
+      },
+      {
+        "status": "??",
+        "path": "aulos-skills/.aries_harness/history/daily/2026-07-27.md"
+      },
+      {
+        "status": "??",
+        "path": "aulos-skills/.aries_harness/references/requests/REQ-007-node-decontam-rework.md"
+      },
+      {
+        "status": "??",
+        "path": "aulos-skills/.aries_harness/references/specs/SPEC-009-node-decontam-rework.md"
+      },
+      {
+        "status": "??",
+        "path": "aulos-skills/.aries_harness/references/specs/SPEC-016-module-split-seams.md"
+      },
+      {
+        "status": "??",
+        "path": "aulos-skills/.aries_harness/runs/reviews/AUDIT-009-workspace-architecture-code-review-20260727T083335Z.md"
+      },
+      {
+        "status": "??",
+        "path": "aulos-skills/.aries_harness/runs/tests/VR-006-node-decontam-rework.md"
+      },
+      {
+        "status": "??",
+        "path": "aulos-skills/src/aulos_skills/decontam.py"
+      },
+      {
+        "status": "??",
+        "path": "aulos-skills/src/aulos_skills/media_search.py"
+      },
+      {
+        "status": "??",
+        "path": "aulos-skills/tests/test_media_search.py"
+      },
+      {
+        "status": "??",
+        "path": "aulos-skills/tests/test_salon_codex_merge.py"
+      },
+      {
+        "status": "??",
+        "path": "aulos-web/.aries_harness/history/daily/2026-07-27.md"
+      },
+      {
+        "status": "??",
+        "path": "aulos-web/.aries_harness/references/specs/SPEC-003-discogs-picker.md"
+      },
+      {
+        "status": "??",
+        "path": "aulos-web/.aries_harness/references/specs/SPEC-004-chain-trace-viewer.md"
+      },
+      {
+        "status": "??",
+        "path": "aulos-web/.aries_harness/references/specs/SPEC-005-portal-ux-polish.md"
+      },
+      {
+        "status": "??",
+        "path": "aulos-web/.aries_harness/references/specs/SPEC-006-library-jobs-ux.md"
+      },
+      {
+        "status": "??",
+        "path": "aulos-web/.aries_harness/references/specs/SPEC-007-single-pane-studio.md"
+      },
+      {
+        "status": "??",
+        "path": "aulos-web/.aries_harness/references/specs/SPEC-008-session-scene-restore.md"
+      },
+      {
+        "status": "??",
+        "path": "aulos-web/.aries_harness/runs/tests/VR-005-portal-ux-polish.md"
+      },
+      {
+        "status": "??",
+        "path": "aulos-web/.aries_harness/runs/tests/VR-006-library-jobs-ux.md"
+      },
+      {
+        "status": "??",
+        "path": "aulos-web/src/PasswordField.tsx"
+      },
+      {
+        "status": "??",
+        "path": "aulos-web/src/guideHtml.selftest.ts"
+      },
+      {
+        "status": "??",
+        "path": "aulos-web/src/guideHtml.ts"
+      },
+      {
+        "status": "??",
+        "path": "aulos-web/src/sessionScene.selftest.ts"
+      },
+      {
+        "status": "??",
+        "path": "aulos-web/src/sessionScene.ts"
+      },
+      {
+        "status": "??",
+        "path": "deploy/OPS.md"
+      },
+      {
+        "status": "??",
+        "path": "deploy/aulos-ctl.sh"
+      },
+      {
+        "status": "??",
+        "path": "deploy/host.env.example"
+      },
+      {
+        "status": "??",
+        "path": "deploy/lib/build.sh"
+      },
+      {
+        "status": "??",
+        "path": "deploy/lib/common.sh"
+      },
+      {
+        "status": "??",
+        "path": "deploy/lib/secrets.sh"
+      },
+      {
+        "status": "??",
+        "path": "deploy/lib/smoke.sh"
+      },
+      {
+        "status": "??",
+        "path": "deploy/security_headers.py"
+      },
+      {
+        "status": "??",
+        "path": "deploy/test_security_headers.py"
       }
     ]
   },
-  "current_phase": "SPEC-009 Ops Dev Blog API shipped; Discogs longrun remains available for follow-up",
+  "current_phase": "SPEC-013 durable jobs + library shipped (pytest green)",
   "current_milestone": [
     "no current milestone recorded"
   ],
@@ -346,21 +782,21 @@
   },
   "retrospective": {
     "recent_changes": [
-      "SPEC-002: `POST /v1/auth/forgot-password` + `POST /v1/auth/reset-password`; Mailgun `reset_password` mail",
-      "Anti-enumeration; one-time `EmailToken` purpose=`reset_password`",
-      "Verify: `pytest tests/test_auth.py` 7 passed",
-      "SPEC-009: `/v1/ops/dev-blog` list/get/generate; `dev_blog_posts` table; `services/dev_blog.py`",
-      "Collect UTC-day git + harness excerpts; Ops LLM or fake template with product narrative headings",
-      "Verify: `pytest tests/test_dev_blog.py` 5 passed offline"
+      "Root cause: `merge_dossiers` called bare `dict(zh_hans)` when LLM/web returned prose/list \u2192",
+      "Fix: `coerce_dict()` + harden merge/parse/runtime/KB; gate `tests/test_salon_codex_merge.py`.",
+      "SPEC-013 delta: countable listening-chain plan (15 stages) seeded in `steps_json`; gateway emits live stage updates; SSE `progress` snapshots for reconnect.",
+      "Robust recovery: client SSE reconnect + hydrate; `POST /{id}/retry` for failed/stale jobs; Atelier progress bar + Retry chain.",
+      "Gates: `tests/test_listening_plan.py`, `tests/test_listening_jobs.py`; web `npm run build`.",
+      "Operating rule: every model-shape slice must close with dual-dialect `schema_patches` + PG verify (SQLite pilot \u2260 production)."
     ],
     "wins": [
-      "SPEC-002: `POST /v1/auth/forgot-password` + `POST /v1/auth/reset-password`; Mailgun `reset_password` mail",
-      "Anti-enumeration; one-time `EmailToken` purpose=`reset_password`",
-      "Verify: `pytest tests/test_auth.py` 7 passed",
-      "SPEC-009: `/v1/ops/dev-blog` list/get/generate; `dev_blog_posts` table; `services/dev_blog.py`"
+      "Root cause: `merge_dossiers` called bare `dict(zh_hans)` when LLM/web returned prose/list \u2192",
+      "Fix: `coerce_dict()` + harden merge/parse/runtime/KB; gate `tests/test_salon_codex_merge.py`.",
+      "SPEC-013 delta: countable listening-chain plan (15 stages) seeded in `steps_json`; gateway emits live stage updates; SSE `progress` snapshots for reconnect.",
+      "Robust recovery: client SSE reconnect + hydrate; `POST /{id}/retry` for failed/stale jobs; Atelier progress bar + Retry chain."
     ],
     "needs_attention": [
-      "working tree is dirty with 78 tracked or untracked change(s)",
+      "working tree is dirty with 187 tracked or untracked change(s)",
       "no explicit next-up slice is recorded"
     ],
     "durable_reminders": [
@@ -374,36 +810,65 @@
   },
   "daily_summaries": [
     {
+      "date": "2026-07-27",
+      "journal_headings": [],
+      "journal_items": [],
+      "feature_evolution": [
+        "Ship Ops daily Dev Blog and web forgot-password reset."
+      ],
+      "git_commits": [
+        {
+          "sha": "0c8a847",
+          "date": "2026-07-27",
+          "subject": "Ship Ops daily Dev Blog and web forgot-password reset."
+        }
+      ],
+      "working_tree_hints": [
+        "M AGENTS.md",
+        "M CLAUDE.md",
+        "M README.md",
+        "M aulos-api/.aries_harness/ARIES_HARNESS_FINGERPRINT.json",
+        "M aulos-api/.aries_harness/EVAL.md",
+        "M aulos-api/.aries_harness/INDEX.md",
+        "M aulos-api/.aries_harness/JOURNAL.md",
+        "M aulos-api/.aries_harness/STATE.md"
+      ]
+    },
+    {
       "date": "2026-07-26",
       "journal_headings": [
-        "2026-07-26T16:50:00Z",
-        "2026-07-26T16:30:00Z",
-        "2026-07-26T01:15:00Z",
-        "2026-07-26T00:55:00Z"
+        "2026-07-26T19:20:00Z",
+        "2026-07-26T19:10:00Z",
+        "2026-07-26T18:20:00Z",
+        "2026-07-26T18:15:00Z",
+        "2026-07-26T17:20:00Z",
+        "2026-07-26T17:10:00Z",
+        "2026-07-26T17:00:00Z",
+        "2026-07-26T17:05:00Z"
       ],
       "journal_items": [
-        "SPEC-002: `POST /v1/auth/forgot-password` + `POST /v1/auth/reset-password`; Mailgun `reset_password` mail",
-        "Anti-enumeration; one-time `EmailToken` purpose=`reset_password`",
-        "Verify: `pytest tests/test_auth.py` 7 passed",
-        "SPEC-009: `/v1/ops/dev-blog` list/get/generate; `dev_blog_posts` table; `services/dev_blog.py`",
-        "Collect UTC-day git + harness excerpts; Ops LLM or fake template with product narrative headings",
-        "Verify: `pytest tests/test_dev_blog.py` 5 passed offline",
-        "RAG aligned to Work Identity Catalog (REQ-006): seed identity cards; weak tokens from policy",
-        "works_compatible respects work_id; identity_only cards never replace full dossiers"
+        "Root cause: `merge_dossiers` called bare `dict(zh_hans)` when LLM/web returned prose/list \u2192",
+        "Fix: `coerce_dict()` + harden merge/parse/runtime/KB; gate `tests/test_salon_codex_merge.py`.",
+        "SPEC-013 delta: countable listening-chain plan (15 stages) seeded in `steps_json`; gateway emits live stage updates; SSE `progress` snapshots for reconnect.",
+        "Robust recovery: client SSE reconnect + hydrate; `POST /{id}/retry` for failed/stale jobs; Atelier progress bar + Retry chain.",
+        "Gates: `tests/test_listening_plan.py`, `tests/test_listening_jobs.py`; web `npm run build`.",
+        "Operating rule: every model-shape slice must close with dual-dialect `schema_patches` + PG verify (SQLite pilot \u2260 production).",
+        "Added `aulos_api.db.schema_patches`; HA/init apply on Postgres+SQLite. Migrated live PG SPEC-013 columns (`message`, `tags_json`, `favorited_at`, \u2026).",
+        "Gate: `tests/test_schema_patches.py`; promoted insight + `aulos-operating-defaults` section."
       ],
       "feature_evolution": [
-        "SPEC-002: `POST /v1/auth/forgot-password` + `POST /v1/auth/reset-password`; Mailgun `reset_password` mail",
-        "Anti-enumeration; one-time `EmailToken` purpose=`reset_password`",
-        "Verify: `pytest tests/test_auth.py` 7 passed",
-        "SPEC-009: `/v1/ops/dev-blog` list/get/generate; `dev_blog_posts` table; `services/dev_blog.py`",
-        "Collect UTC-day git + harness excerpts; Ops LLM or fake template with product narrative headings",
-        "Verify: `pytest tests/test_dev_blog.py` 5 passed offline",
-        "RAG aligned to Work Identity Catalog (REQ-006): seed identity cards; weak tokens from policy",
-        "works_compatible respects work_id; identity_only cards never replace full dossiers",
-        "RAG identity gate: `bwv`/form words are weak tokens; soft-filter requires distinctive overlap",
-        "Retrieve must not attach Goldberg `kb_dossier` to Bach cello suites / \u5927\u63d0\u7434\u65e0\u4f34\u594f\u7ec4\u66f2",
-        "SPEC-006 identity hard-gate + regression tests",
-        "Ship /discogs release and catalog-number listening guides with OPS token UI."
+        "Root cause: `merge_dossiers` called bare `dict(zh_hans)` when LLM/web returned prose/list \u2192",
+        "Fix: `coerce_dict()` + harden merge/parse/runtime/KB; gate `tests/test_salon_codex_merge.py`.",
+        "SPEC-013 delta: countable listening-chain plan (15 stages) seeded in `steps_json`; gateway emits live stage updates; SSE `progress` snapshots for reconnect.",
+        "Robust recovery: client SSE reconnect + hydrate; `POST /{id}/retry` for failed/stale jobs; Atelier progress bar + Retry chain.",
+        "Gates: `tests/test_listening_plan.py`, `tests/test_listening_jobs.py`; web `npm run build`.",
+        "Operating rule: every model-shape slice must close with dual-dialect `schema_patches` + PG verify (SQLite pilot \u2260 production).",
+        "Added `aulos_api.db.schema_patches`; HA/init apply on Postgres+SQLite. Migrated live PG SPEC-013 columns (`message`, `tags_json`, `favorited_at`, \u2026).",
+        "Gate: `tests/test_schema_patches.py`; promoted insight + `aulos-operating-defaults` section.",
+        "SPEC-013: durable listening-guide jobs (`queued`\u2192`running`\u2192`completed|failed`), Redis/`thread` worker (`listening_queue.py`), reconnect-safe `GET \u2026/events`.",
+        "Library: DELETE, list `q`/`status`/`published`/`favorited`/`tag`, favorite + tags.",
+        "Legacy `/stream` and recompose/stream enqueue then attach to job events (no long-held DB session).",
+        "Verify: `pytest tests/test_listening_jobs.py` + stream/recompose SSE green."
       ],
       "git_commits": [
         {
@@ -422,16 +887,7 @@
           "subject": "Ship listening product, mandatory harness, facility layout, and UTC/local time."
         }
       ],
-      "working_tree_hints": [
-        "M aulos-api/.aries_harness/ARIES_HARNESS_FINGERPRINT.json",
-        "M aulos-api/.aries_harness/EVAL.md",
-        "M aulos-api/.aries_harness/INDEX.md",
-        "M aulos-api/.aries_harness/JOURNAL.md",
-        "M aulos-api/.aries_harness/STATE.md",
-        "M aulos-api/.aries_harness/TASK_STACK.md",
-        "M aulos-api/.aries_harness/history/DAILY_SUMMARY_INDEX.md",
-        "M aulos-api/.aries_harness/history/DOC_TRACE.md"
-      ]
+      "working_tree_hints": []
     },
     {
       "date": "2026-07-25",
@@ -490,17 +946,17 @@
     }
   ],
   "doc_trace_summary": {
-    "document_count": 69,
-    "docs_with_issues": 0,
+    "document_count": 79,
+    "docs_with_issues": 1,
     "dirty_docs": 0,
     "by_layer": {
-      "MetaDefineLayer": 39,
-      "SharedSupportSurface": 15,
-      "RunCookingLayer": 15
+      "MetaDefineLayer": 47,
+      "SharedSupportSurface": 16,
+      "RunCookingLayer": 16
     },
     "by_effective_status": {
-      "active": 59,
-      "generated": 10
+      "active": 68,
+      "generated": 11
     }
   },
   "evidence_sources": [

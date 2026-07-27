@@ -15,9 +15,17 @@ import yaml
 from aulos_skills.ambient_agent import select_ambient
 from aulos_skills.ambient_playlist import resolve_ambient_audio
 from aulos_skills.config import get_settings
+from aulos_skills.decontam import (
+    DECONTAM_TRIGGERS,
+    apply_rework_hints,
+    record_decontam_event,
+    resolve_scrub_markers,
+    validate_node_outputs,
+)
 from aulos_skills.identity import resolve_identity
 from aulos_skills.registry import SkillManifest, discover_skills, skill_body
 from aulos_skills.salon_codex import (
+    coerce_dict,
     composer_to_dossier,
     dossier_richness,
     empty_dossier,
@@ -25,6 +33,8 @@ from aulos_skills.salon_codex import (
     merge_dossiers,
     parse_llm_dossier_json,
 )
+
+_DECONTAM_MAX_REWORK = 1
 
 
 def _utcnow() -> str:
@@ -141,6 +151,8 @@ class SkillRuntime:
         thinking = self._thinking_from_skill(skill)
         outputs = self._dispatch(trigger, skill, context)
         detail = self._detail_from_outputs(trigger, outputs)
+        if trigger in DECONTAM_TRIGGERS:
+            outputs, detail = self._decontam_gate(trigger, skill, context, outputs, detail)
         context.update(outputs)
         return SkillStepResult(
             id=step_id,
@@ -154,6 +166,133 @@ class SkillRuntime:
             finished_at=_utcnow(),
             outputs=outputs,
         )
+
+    def _decontam_gate(
+        self,
+        trigger: str,
+        skill: SkillManifest,
+        context: dict[str, Any],
+        outputs: dict[str, Any],
+        detail: str,
+    ) -> tuple[dict[str, Any], str]:
+        """Validate node outputs; scrub + rework once when polluted (SPEC-009)."""
+        family_snap = dict(context.get("_last_matched_family") or {})
+        for attempt in range(_DECONTAM_MAX_REWORK + 1):
+            report = validate_node_outputs(
+                trigger, context, outputs, family=family_snap or None
+            )
+            if report.ok:
+                if attempt > 0:
+                    record_decontam_event(
+                        context,
+                        trigger=trigger,
+                        attempt=attempt,
+                        report=report,
+                        repaired=True,
+                    )
+                    detail = f"{detail} | decontam-rework ok"
+                return outputs, detail
+
+            if attempt >= _DECONTAM_MAX_REWORK:
+                record_decontam_event(
+                    context,
+                    trigger=trigger,
+                    attempt=attempt,
+                    report=report,
+                    repaired=False,
+                )
+                # Last-chance scrub of dossier / HTML context fields
+                self._apply_decontam_scrub(trigger, context, outputs, report.markers_used)
+                detail = (
+                    f"{detail} | decontam-fail "
+                    f"({', '.join(f.marker for f in report.findings[:4])})"
+                )
+                return outputs, detail
+
+            apply_rework_hints(context, report)
+            self._apply_decontam_scrub(trigger, context, outputs, report.markers_used)
+            # Re-run node with refuse_families / expanded markers
+            outputs = self._dispatch(trigger, skill, context)
+            family_snap = dict(context.get("_last_matched_family") or {})
+            detail = self._detail_from_outputs(trigger, outputs)
+        return outputs, detail
+
+    def _apply_decontam_scrub(
+        self,
+        trigger: str,
+        context: dict[str, Any],
+        outputs: dict[str, Any],
+        markers: list[str],
+    ) -> None:
+        markers = markers or resolve_scrub_markers(context)
+        context["conflict_markers"] = list(
+            dict.fromkeys(
+                list(context.get("conflict_markers") or []) + list(markers)
+            )
+        )
+        work_title = str(
+            outputs.get("work_title")
+            or context.get("work_title")
+            or ""
+        )
+        if trigger == "listening.synthesize":
+            dossier = dict(outputs.get("corpus_dossier") or context.get("corpus_dossier") or {})
+            if dossier:
+                cleaned = self._scrub_foreign_chambers(
+                    dossier,
+                    work_title=work_title or str(dossier.get("work_title") or ""),
+                    conflict_markers=list(context.get("conflict_markers") or []),
+                    force_ambient_scrub=True,
+                )
+                outputs["corpus_dossier"] = cleaned
+                context["corpus_dossier"] = cleaned
+        elif trigger == "listening.width":
+            width = dict(outputs.get("width_dossier") or context.get("width_dossier") or {})
+            salon = dict(width.get("salon_dossier") or context.get("corpus_dossier") or {})
+            if salon:
+                cleaned = self._scrub_foreign_chambers(
+                    salon,
+                    work_title=work_title or str(salon.get("work_title") or ""),
+                    conflict_markers=list(context.get("conflict_markers") or []),
+                    force_ambient_scrub=True,
+                )
+                width["salon_dossier"] = cleaned
+                outputs["width_dossier"] = width
+                context["width_dossier"] = width
+                context["corpus_dossier"] = cleaned
+        elif trigger == "listening.depth":
+            depth = dict(outputs.get("depth_dossier") or context.get("depth_dossier") or {})
+            # depth points live as lists — scrub via a thin dossier shell
+            shell = {
+                "depth_points": list(depth.get("depth_points") or []),
+                "listening_map": list(depth.get("listening_map") or []),
+                "practice_notes": list(depth.get("practice_notes") or []),
+                "variation_deepdives": list(depth.get("variation_deepdives") or []),
+                "sound_world": dict(depth.get("sound_world") or {}),
+            }
+            cleaned = self._scrub_foreign_chambers(
+                shell,
+                work_title=work_title,
+                conflict_markers=list(context.get("conflict_markers") or []),
+                force_ambient_scrub=True,
+            )
+            depth.update({k: cleaned[k] for k in shell if k in cleaned})
+            outputs["depth_dossier"] = depth
+            context["depth_dossier"] = depth
+        elif trigger == "listening.compose":
+            dossier = dict(context.get("corpus_dossier") or {})
+            if dossier:
+                cleaned = self._scrub_foreign_chambers(
+                    dossier,
+                    work_title=work_title or str(dossier.get("work_title") or ""),
+                    conflict_markers=list(context.get("conflict_markers") or []),
+                    force_ambient_scrub=True,
+                )
+                context["corpus_dossier"] = cleaned
+                width = dict(context.get("width_dossier") or {})
+                if width.get("salon_dossier"):
+                    width["salon_dossier"] = cleaned
+                    context["width_dossier"] = width
 
     def iter_listening_chain(
         self,
@@ -349,9 +488,24 @@ class SkillRuntime:
             composer = identity.composer_name or guessed["composer"]
             if guessed.get("composer_id") and not out.get("composer_id"):
                 out["composer_id"] = guessed["composer_id"]
-            # Prefer catalog canonical title when soft-guess only got composer_only
+            # Prefer catalog work_title when soft-guess only got composer_only
             if identity.status == "composer_only" and not guessed["work_title"]:
                 work_title = f"{composer} — unspecified work" if composer else work_title
+
+        # Prefer Discogs / KB seed title+composer when Catalog did not lock a work.
+        kb = dict(context.get("kb_dossier") or {})
+        prov = dict(kb.get("_provenance") or {})
+        if prov.get("source") == "discogs" or (kb.get("_provenance") or {}).get("discogs"):
+            if kb.get("composer"):
+                composer = str(kb["composer"])
+            if kb.get("work_title"):
+                work_title = str(kb["work_title"])
+            # Discogs path is not a Catalog work — clear wrong family hints.
+            if identity.status != "work":
+                out["family_hints"] = []
+                out["corpus_keys"] = []
+                out["work_id"] = None
+                out["ambient_ref"] = None
 
         goal = "structural_learning"
         if any(w in lowered for w in ("first time", "first hearing", "beginner")) or "入门" in text:
@@ -392,10 +546,17 @@ class SkillRuntime:
                     return yaml.safe_load(path.read_text(encoding="utf-8")) or {}
         return {}
 
-    def _match_family(self, skill: SkillManifest, text: str, family_hints: list[str]) -> dict[str, Any]:
+    def _match_family(
+        self,
+        skill: SkillManifest,
+        text: str,
+        family_hints: list[str],
+        composer_guess: str = "",
+    ) -> dict[str, Any]:
         index = self._load_synthesize_index(skill)
         blob = text.lower()
-        # Prefer explicit hints
+        composer_l = (composer_guess or "").lower()
+        # Prefer explicit hints (catalog family_id) — still verify path exists.
         for hint in family_hints:
             for entry in index.get("families") or []:
                 if str(entry.get("id") or "") == hint:
@@ -411,11 +572,27 @@ class SkillRuntime:
             family = yaml.safe_load(path.read_text(encoding="utf-8")) or {}
             match = dict(family.get("match") or {})
             score = 0
-            for bucket in ("instruments", "forms", "composers"):
+            evidence = 0
+            for bucket in ("instruments", "forms"):
                 for token in match.get(bucket) or []:
                     t = str(token).lower()
                     if t and t in blob:
                         score += 1
+                        evidence += 1
+            composer_tokens = [str(t).lower() for t in (match.get("composers") or []) if t]
+            if composer_tokens:
+                # Composer-scoped family packs must not unlock on bare form/instrument
+                # overlap (e.g. Mozart piano sonata ≠ Beethoven cello-piano duo pack).
+                # SPEC-009: composer alone is also insufficient — need instrument/form evidence
+                # (Brahms violin concerto must not unlock duo-cello-piano).
+                composer_hit = any(
+                    t and (t in blob or t in composer_l) for t in composer_tokens
+                )
+                if not composer_hit:
+                    continue
+                if evidence < 1:
+                    continue
+                score += 2
             if score > best_score:
                 best_score = score
                 best = family
@@ -436,7 +613,15 @@ class SkillRuntime:
         composer_guess = str(context.get("composer_guess") or existing.get("composer") or "")
         family_hints = list(context.get("family_hints") or [])
         card = self._match_composer_card(skill, text, composer_guess)
-        family = self._match_family(skill, text, family_hints)
+        refuse_families = bool(context.get("refuse_families"))
+        refuse_ids = {str(x) for x in (context.get("refuse_family_ids") or []) if x}
+        family: dict[str, Any] = {}
+        if not refuse_families:
+            family = self._match_family(skill, text, family_hints, composer_guess=composer_guess)
+            fid = str(family.get("family_id") or "")
+            if fid and fid in refuse_ids:
+                family = {}
+        context["_last_matched_family"] = dict(family) if family else {}
         composer_name = (
             str(card.get("composer") or "")
             or composer_guess
@@ -573,8 +758,8 @@ class SkillRuntime:
                 if family.get(key) and not str(merged.get(key) or "").strip():
                     merged[key] = family[key]
             if family.get("zh"):
-                zh_fam = dict(family.get("zh") or {})
-                zh_merged = merge_dossiers(dict(merged.get("zh") or {}), zh_fam)
+                zh_fam = coerce_dict(family.get("zh") or family.get("zh_hans"))
+                zh_merged = merge_dossiers(coerce_dict(merged.get("zh") or merged.get("zh_hans")), zh_fam)
                 # Gap-fill zh lists the same way
                 for key in SALON_LIST_KEYS:
                     fam_list = _coerce_list(zh_fam.get(key))
@@ -598,7 +783,14 @@ class SkillRuntime:
         merged = self._scrub_foreign_chambers(
             merged,
             work_title=str(merged.get("work_title") or work_title),
-            conflict_markers=list(context.get("conflict_markers") or []),
+            conflict_markers=resolve_scrub_markers(
+                {
+                    **context,
+                    "work_title": merged.get("work_title") or work_title,
+                    "composer": merged.get("composer") or composer_name,
+                }
+            ),
+            force_ambient_scrub=bool(context.get("decontam_rework") or context.get("refuse_families")),
         )
 
         return {
@@ -618,6 +810,7 @@ class SkillRuntime:
         *,
         work_title: str,
         conflict_markers: list[str] | None = None,
+        force_ambient_scrub: bool = False,
     ) -> dict[str, Any]:
         """Drop list items AND scalars that belong to conflict works (catalog-derived)."""
         active = [m.lower() for m in (conflict_markers or []) if m and len(str(m)) >= 3]
@@ -661,6 +854,7 @@ class SkillRuntime:
                 out[key] = ""
 
         amb = dict(out.get("ambient_audio") or {})
+        peerish = False
         if amb:
             amb_blob = json.dumps(amb, ensure_ascii=False).lower()
             why_blob = f"{amb.get('why') or ''} {amb.get('why_zh') or ''}".lower()
@@ -677,11 +871,17 @@ class SkillRuntime:
                     "公开授权库",
                 )
             )
-            # Keep catalog/family peer atmosphere; scrub only alien flagship audio
-            if polluted(amb_blob) and not peerish and amb.get("selection_source") != "catalog-ref":
-                out["ambient_audio"] = {}
+            # Polluted ambient: drop unless honest peer/catalog-ref and not force-scrubbing.
+            # Wrong-family peerish text must not shield pollution (SPEC-009 / guide #44).
+            if polluted(amb_blob):
+                if force_ambient_scrub:
+                    out["ambient_audio"] = {}
+                elif amb.get("selection_source") == "catalog-ref" or peerish:
+                    pass
+                else:
+                    out["ambient_audio"] = {}
 
-        zh = dict(out.get("zh") or {})
+        zh = coerce_dict(out.get("zh") or out.get("zh_hans"))
         if zh:
             for key in (
                 "depth_points",
@@ -697,10 +897,22 @@ class SkillRuntime:
             ):
                 if zh.get(key):
                     zh[key] = cleanse(list(zh.get(key) or []))
-            for key in ("listening_thesis", "work_introduction", "form", "catalog", "era"):
+            for key in (
+                "listening_thesis",
+                "work_introduction",
+                "form",
+                "catalog",
+                "era",
+                "work_title",
+                "composer",
+            ):
                 val = zh.get(key)
                 if isinstance(val, str) and polluted(val.lower()):
                     zh[key] = ""
+            zh_amb = dict(zh.get("ambient_audio") or {})
+            if zh_amb and polluted(json.dumps(zh_amb, ensure_ascii=False).lower()):
+                if force_ambient_scrub or not peerish:
+                    zh["ambient_audio"] = {}
             out["zh"] = zh
         return out
 
@@ -842,7 +1054,7 @@ class SkillRuntime:
             "appreciation_videos": list(data.get("appreciation_videos") or []),
             "vinyl_and_discography": list(data.get("vinyl_and_discography") or []),
             "practice_notes": list(data.get("practice_notes") or []),
-            "zh": dict(data.get("zh") or {}),
+            "zh": coerce_dict(data.get("zh") or data.get("zh_hans")),
             "raw_format": "yaml",
         }
 
@@ -969,7 +1181,7 @@ class SkillRuntime:
             "interpretations": list(corpus.get("interpretations") or []),
             "appreciation_videos": list(corpus.get("appreciation_videos") or []),
             "vinyl_and_discography": list(corpus.get("vinyl_and_discography") or []),
-            "zh": dict(corpus.get("zh") or {}),
+            "zh": coerce_dict(corpus.get("zh") or corpus.get("zh_hans")),
             "salon_dossier": corpus,
         }
         return {
@@ -1108,7 +1320,7 @@ class SkillRuntime:
         if ambient:
             dossier["ambient_audio"] = ambient
             # Keep zh layer from inheriting a conflicting empty ambient
-            zh = dict(dossier.get("zh") or {})
+            zh = coerce_dict(dossier.get("zh") or dossier.get("zh_hans"))
             if zh and not (zh.get("ambient_audio") or {}).get("url"):
                 zh_ambient = dict(ambient)
                 zh["ambient_audio"] = zh_ambient
@@ -1297,6 +1509,10 @@ class SkillRuntime:
             passed = False
         else:
             passed = score >= 8
+        if context.get("decontam_failed"):
+            notes.append("Decontam gate failed — foreign chambers remain")
+            score = min(score, 7)
+            passed = False
         return {
             "eval_score": score,
             "pass": passed,

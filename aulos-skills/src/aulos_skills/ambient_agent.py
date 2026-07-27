@@ -126,31 +126,68 @@ def _score_related(
     if entry_instruments and work_instruments and entry_instruments.isdisjoint(work_instruments):
         return 0
     if entry_instruments and not work_instruments:
-        # Entry is instrument-locked but work has no instrument facet — allow only soft form match later
-        pass
-    if entry_instruments and not work_instruments:
         # Prefer not attaching cello-only packs to non-cello works without instrument signal
         if any(i in entry_instruments for i in ("cello", "violoncello", "大提琴")) and "cello" not in blob and "大提琴" not in blob:
             return 0
 
     composer_hit = any(c and c in composer for c in composers) or any(c and c in blob for c in composers)
+    peer_hit = any(p and p in peers_blob for p in peers) or any(p and p in blob for p in peers)
+    era_hit = any(e and e in blob for e in eras)
+    form_hit = any(f and f in blob for f in forms)
+    instrument_hit = bool(entry_instruments & work_instruments) or any(i and i in blob for i in instruments)
+
+    # Composer-scoped packs must not unlock on bare form/era (Mozart piano ≠ Beethoven Für Elise).
+    if composers and not composer_hit:
+        # Intentional cross-composer peer (e.g. Bach cello suite for Beethoven duo) needs peer + timbre
+        if not (peer_hit and (instrument_hit or form_hit)):
+            return 0
+
+    # Era/form "classical peer" packs with empty composers[] must name the shelf composer in peers[]
+    if peers and not composers and not peer_hit:
+        return 0
+
     if composer_hit:
         score += 40
-    era_hit = any(e and e in blob for e in eras)
     if era_hit:
         score += 12
-    form_hit = any(f and f in blob for f in forms)
     if form_hit:
         score += 14
-    instrument_hit = bool(entry_instruments & work_instruments) or any(i and i in blob for i in instruments)
     if instrument_hit:
         score += 22
-    peer_hit = any(p and p in peers_blob for p in peers) or any(p and p in blob for p in peers)
     if peer_hit and not composer_hit:
         score += 18
     if score <= 0:
         return 0
     return score + weight
+
+
+def _entry_names_foreign_composer(entry: dict[str, Any], composer_l: str) -> bool:
+    """True when entry is clearly another composer's recording and shelf composer is known."""
+    if not composer_l or len(composer_l) < 4:
+        return False
+    composers = [str(x).lower() for x in (entry.get("composers") or []) if x]
+    if composers and not any(c and c in composer_l for c in composers):
+        return True
+    title = str(entry.get("title") or "").lower()
+    # Bare title prefixes used in defaults / peers
+    foreign_prefixes = (
+        "beethoven",
+        "bach",
+        "chopin",
+        "mozart",
+        "goldberg",
+        "贝多芬",
+        "巴赫",
+        "肖邦",
+        "莫扎特",
+    )
+    for pref in foreign_prefixes:
+        if pref in title and pref not in composer_l:
+            # Allow when composers list explicitly includes shelf composer
+            if composers and any(c in composer_l for c in composers):
+                return False
+            return True
+    return False
 
 
 def select_ambient(
@@ -236,10 +273,19 @@ def select_ambient(
         best["_source"] = "related"
         return _entry_to_ambient(best, base_url=base_url, corpus_dir=corpus_dir)
 
-    # 4) Defaults — skip conflict-marked entries
+    # 4) Defaults — skip conflict-marked and foreign-composer entries when shelf is known
     defaults = [e for e in (lib.get("defaults") or []) if isinstance(e, dict)]
-    safe = [e for e in defaults if not ambient_conflicts_markers(ambient=e, conflict_markers=markers)]
-    pool = safe or defaults
+    safe = [
+        e
+        for e in defaults
+        if not ambient_conflicts_markers(ambient=e, conflict_markers=markers)
+        and not _entry_names_foreign_composer(e, composer_l)
+    ]
+    pool = safe or [
+        e
+        for e in defaults
+        if not ambient_conflicts_markers(ambient=e, conflict_markers=markers)
+    ] or defaults
     if not pool:
         return {}
     digest = hashlib.sha256(f"{composer}|{work_title}".encode("utf-8")).hexdigest()

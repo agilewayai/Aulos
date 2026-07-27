@@ -216,11 +216,6 @@ def _kb_freshness_ts(
         key=lambda d: (0 if user_id is not None and d.user_id == user_id else (1 if d.user_id is None else 2)),
     )
     for doc in docs[:3]:
-        if doc.updated_at:
-            dt = doc.updated_at
-            if dt.tzinfo is None:
-                dt = dt.replace(tzinfo=timezone.utc)
-            candidates.append(dt.astimezone(timezone.utc))
         try:
             meta = json.loads(doc.dossier_json or "{}")
         except json.JSONDecodeError:

@@ -9,7 +9,7 @@ fingerprint: "aries-harness/bootstrap-doc/v1"
 initialized_at: "2026-07-25T11:22:04Z"
 effective_status: "active"
 effective_since: "2026-07-25T11:22:04Z"
-content_fingerprint: "sha256:8661324a5112a0ffd0df50fd6df4dc311286a23e556262e201543210a2e23561"
+content_fingerprint: "sha256:fb7004e6913750939c1f127b70f92315940f361fcbcc2ee3856892a6bd029f8a"
 trace_history_source: "filesystem-only"
 trace_last_commit_sha: ""
 trace_last_commit_at: ""
@@ -42,6 +42,7 @@ trace_revision_count: "0"
 | CKPT-005 | checkpoint | checkpoints/CKPT-005-ambient-identity-gates.md | complete |
 | VR-005 | verification | runs/tests/VR-005-ambient-identity-gates.md | complete |
 | AUDIT-001 | audit | runs/reports/AUDIT-001-aries-harness-process-compliance.md | complete |
+| AUDIT-009 | audit | runs/reviews/AUDIT-009-workspace-architecture-code-review-20260727T083335Z.md | complete |
 | EVO-001 | evolution | docs/evolution-cycle-2026-07-25-ambient-identity.md | complete |
 | EVO-002 | evolution | docs/evolution-cycle-2026-07-25-harness-process-facility.md | complete |
 | INSIGHTS | insights | docs/insights.md | active |

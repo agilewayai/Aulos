@@ -19,14 +19,17 @@ def client(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> TestClient:
     monkeypatch.setenv("AULOS_WEB_BASE_URL", "http://127.0.0.1:5173")
     monkeypatch.setenv("AULOS_API_FAKE_AGENT", "true")
     monkeypatch.setenv("AULOS_RATE_LIMIT_ENABLED", "false")
+    monkeypatch.setenv("AULOS_REDIS_URL", "")
 
     from aulos_api.config import get_settings
     from aulos_api.db import session as db_session
-    from aulos_api.services.mailgun import clear_fake_mailbox, get_fake_mailbox
+    from aulos_api.services.mailgun import clear_fake_mailbox
+    from aulos_api.services.listening_queue import reset_listening_worker_for_tests
 
     get_settings.cache_clear()
     db_session.reset_engine()
     clear_fake_mailbox()
+    reset_listening_worker_for_tests()
 
     from aulos_api.app import create_app
 
@@ -37,6 +40,7 @@ def client(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> TestClient:
     clear_fake_mailbox()
     get_settings.cache_clear()
     db_session.reset_engine()
+    reset_listening_worker_for_tests()
 
 
 def _user_headers(client: TestClient) -> dict[str, str]:

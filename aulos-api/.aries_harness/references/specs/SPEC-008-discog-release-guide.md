@@ -9,7 +9,7 @@ fingerprint: "aries-harness/bootstrap-doc/v1"
 initialized_at: "2026-07-25T19:00:00+00:00"
 effective_status: "active"
 effective_since: "2026-07-25T19:00:00+00:00"
-content_fingerprint: "sha256:5a9620670b9b3434011176535728c7c01936dc91d1c198c0ea1af909da7da5a2"
+content_fingerprint: "sha256:0c314c8e2c6e52117183cdf170802bd8d15f14de48e0acb72875bf9c3864a47f"
 trace_history_source: "filesystem-only"
 trace_last_commit_sha: ""
 trace_last_commit_at: ""
@@ -59,6 +59,28 @@ When `POST /v1/listening-guides` (or stream) receives a matching message:
    - `_provenance.discogs` `{ release_id, master_id?, uri, fetched_at }`
 7. Continue existing chain: identity → RAG → web research → LLM dossier → agent skills → HTML.
 
+## AJAX autocomplete (studio picker)
+
+`GET /v1/discogs/search?q=&limit=` (authenticated):
+
+1. Requires ≥2 characters; returns `{ query, results[] }` without fetching full release bodies.
+2. Prefer catalog (`catno=`) when the query looks like a label/catno; also run free-text `q=`.
+3. Deduplicate by release id; Classical genre hits sort first.
+4. Each hit: `id`, `title`, `catno`, `year`, `label`, `country`, `thumb`, `genres`, `uri`.
+5. Selecting a hit in the web GUI submits `/discogs #{id}` through the existing listening stream.
+
+## Identity lock (anti-pollution)
+
+When Discogs resolves successfully:
+
+1. `listening_intent` must not use shapes that confuse intake dash-parsing
+   (`Listening guide for {composer} — {work}. Performers: …`).
+2. Gateway **always** prefers Discogs `composer` / `work_title` over a weak Catalog match.
+3. If Catalog `work_id` canonical title disagrees with Discogs title, clear `work_id` /
+   `family_id` and stay on cold path + Discogs seed.
+4. Skill synthesize must not attach composer-scoped family packs without a composer hit
+   (see aulos-skills family composer gate).
+
 ## Errors
 
 | Case | User-visible |
@@ -67,6 +89,7 @@ When `POST /v1/listening-guides` (or stream) receives a matching message:
 | Discogs 404 after release+master | 404 `Discogs release not found` |
 | Rate limit / network | 502 `Discogs unavailable` with retry hint |
 | Analyze succeeds but identity unknown | Still compose guide using Discogs-derived title/composer strings (no invented work_id) |
+| Search with Discogs disabled in OPS | 503 connector disabled |
 
 ## Acceptance
 
@@ -76,9 +99,12 @@ When `POST /v1/listening-guides` (or stream) receives a matching message:
    research/context mentions Discogs release URL and recovered work title.
 4. Regression: free-text Goldberg / Dumky intake unchanged.
 5. No new composer `if/elif` trees in Python.
+6. Unit: `suggest_discogs_releases` returns Classical-first hits from mocked search (no live network).
+7. Integration: `GET /v1/discogs/search` requires auth and returns mocked suggestion rows.
 
 ## Non-goals
 
 - Marketplace, collection, wantlist
 - Image download pipeline
 - Full knowledge-plane Discogs ingest job
+- In-picker full release dossier preview (compose starts after pick)

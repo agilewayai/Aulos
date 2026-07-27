@@ -371,6 +371,120 @@ def search_discogs_by_catno(
             http.close()
 
 
+def _normalize_search_hit(row: dict[str, Any]) -> dict[str, Any] | None:
+    rid = row.get("id")
+    if rid is None:
+        return None
+    try:
+        release_id = int(rid)
+    except (TypeError, ValueError):
+        return None
+    labels = row.get("label") or []
+    if isinstance(labels, str):
+        label = labels
+    elif isinstance(labels, list) and labels:
+        label = str(labels[0])
+    else:
+        label = ""
+    genres = [str(g) for g in (row.get("genre") or []) if g][:4]
+    return {
+        "id": release_id,
+        "title": str(row.get("title") or "").strip(),
+        "catno": str(row.get("catno") or "").strip(),
+        "year": str(row.get("year") or "").strip(),
+        "label": label.strip(),
+        "country": str(row.get("country") or "").strip(),
+        "thumb": str(row.get("thumb") or row.get("cover_image") or "").strip(),
+        "genres": genres,
+        "resource_url": str(row.get("resource_url") or "").strip(),
+        "uri": (
+            f"https://www.discogs.com{row['uri']}"
+            if str(row.get("uri") or "").startswith("/")
+            else str(row.get("uri") or "")
+        ),
+    }
+
+
+def suggest_discogs_releases(
+    query: str,
+    *,
+    client: httpx.Client | None = None,
+    db: Session | None = None,
+    limit: int = 10,
+) -> list[dict[str, Any]]:
+    """AJAX autocomplete: catalog / free-text → release suggestions (no full fetch)."""
+    q = re.sub(r"\s+", " ", (query or "").strip())
+    if len(q) < 2:
+        return []
+    limit = max(1, min(int(limit or 10), 25))
+
+    if db is not None:
+        try:
+            if not load_discogs_config(db).get("enabled", True):
+                raise DiscogsError(
+                    "Discogs connector disabled in OPS — enable under Discogs tab",
+                    status_code=503,
+                )
+        except DiscogsError:
+            raise
+        except Exception:  # noqa: BLE001
+            pass
+
+    own = client is None
+    http = client or httpx.Client(timeout=15.0, headers={"User-Agent": _UA}, follow_redirects=True)
+    auth = _auth_params(db)
+    try:
+        raw_hits: list[dict[str, Any]] = []
+        # Catalog-number first when the query looks like a label/catno.
+        looks_catno = bool(re.search(r"\d", q)) and (
+            bool(re.search(r"[-–—./\s]", q)) or len(re.sub(r"\D", "", q)) >= 4
+        )
+        if looks_catno:
+            for variant in _catno_variants(q)[:4]:
+                data = _get_json(
+                    http,
+                    f"{_API}/database/search",
+                    params={**auth, "type": "release", "catno": variant, "per_page": str(limit)},
+                )
+                for row in (data or {}).get("results") or []:
+                    if isinstance(row, dict):
+                        raw_hits.append(row)
+                if raw_hits:
+                    break
+
+        data = _get_json(
+            http,
+            f"{_API}/database/search",
+            params={**auth, "type": "release", "q": q, "per_page": str(limit)},
+        )
+        for row in (data or {}).get("results") or []:
+            if isinstance(row, dict):
+                raw_hits.append(row)
+
+        seen: set[int] = set()
+        classical: list[dict[str, Any]] = []
+        other: list[dict[str, Any]] = []
+        for row in raw_hits:
+            hit = _normalize_search_hit(row)
+            if hit is None or hit["id"] in seen:
+                continue
+            seen.add(hit["id"])
+            if "Classical" in (hit.get("genres") or []):
+                classical.append(hit)
+            else:
+                other.append(hit)
+        out = classical + other
+        return out[:limit]
+    except DiscogsError:
+        raise
+    except httpx.HTTPError as exc:
+        logger.warning("discogs_suggest_failed q=%s err=%s", q, exc)
+        raise DiscogsError("Discogs unavailable", status_code=502) from exc
+    finally:
+        if own:
+            http.close()
+
+
 def analyze_discogs_release(payload: dict[str, Any]) -> dict[str, Any]:
     """Turn Discogs JSON into listening-intent fields + dossier seeds."""
     raw = dict(payload.get("raw") or {})
@@ -422,11 +536,14 @@ def analyze_discogs_release(payload: dict[str, Any]) -> dict[str, Any]:
     catno_note = ""
     if payload.get("catno_query"):
         catno_note = f", catno {payload.get('catno_match') or payload.get('catno_query')}"
+    # Avoid "I'm listening to Composer — …" shapes that confuse intake dash-parsing
+    # into composer="to Wolfgang…" and titles that swallow "performed by …".
+    title_bit = f"{composer} — {work_title}" if composer else work_title
     intent = (
-        f"I'm listening to {composer + ' — ' if composer else ''}{work_title}"
-        f"{f' performed by {performer_line}' if performer_line else ''}"
-        f" (Discogs release {release_id}{catno_note}"
-        f"{f', {year}' if year else ''}). "
+        f"Listening guide for {title_bit}. "
+        f"{f'Performers: {performer_line}. ' if performer_line else ''}"
+        f"Discogs release {release_id}{catno_note}"
+        f"{f', {year}' if year else ''}. "
         "Write a professional listening guide for this work, "
         "highlighting this recording's performers and sound."
     ).strip()

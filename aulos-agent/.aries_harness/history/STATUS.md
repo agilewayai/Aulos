@@ -8,10 +8,10 @@ managed_by: "aries-harness"
 fingerprint: "aries-harness/history-doc/v1"
 generated_by: "/aries-harness history-refresh"
 initialized_at: "2026-07-25T10:55:22Z"
-generated_at: "2026-07-25T18:52:18+00:00"
+generated_at: "2026-07-27T09:44:53+00:00"
 effective_status: "generated"
-effective_since: "2026-07-25T18:52:18+00:00"
-content_fingerprint: "sha256:d8e5f716f1bc23b8cc9f9262c01256cef2255cb419a0130db0a214ba1b6cd040"
+effective_since: "2026-07-27T09:44:53+00:00"
+content_fingerprint: "sha256:121dc602ca1f1091bcff4b1a456c9500ec0a2724ba714bcdb23d191139979c2d"
 trace_history_source: "filesystem-only"
 trace_last_commit_sha: ""
 trace_last_commit_at: ""
@@ -19,7 +19,7 @@ trace_revision_count: "0"
 ---
 # Current Status
 
-Generated at: `2026-07-25T18:52:18+00:00`
+Generated at: `2026-07-27T09:44:53+00:00`
 
 ## Current phase
 
@@ -29,16 +29,16 @@ Generated at: `2026-07-25T18:52:18+00:00`
 
 - no branch or workspace details recorded
 - git branch: main
-- HEAD: `555cf53` Ship listening product, mandatory harness, facility layout, and UTC/local time.
+- HEAD: `0c8a847` Ship Ops daily Dev Blog and web forgot-password reset.
 - working tree: dirty
+- change: `M` `AGENTS.md`
+- change: `M` `CLAUDE.md`
+- change: `M` `README.md`
 - change: `M` `aulos-agent/.aries_harness/ARIES_HARNESS_FINGERPRINT.json`
 - change: `M` `aulos-agent/.aries_harness/INDEX.md`
-- change: `M` `aulos-agent/.aries_harness/JOURNAL.md`
-- change: `M` `aulos-agent/.aries_harness/MEMORY.md`
-- change: `M` `aulos-agent/.aries_harness/history/DAILY_SUMMARY_INDEX.md`
-- change: `M` `aulos-agent/.aries_harness/history/DOC_TRACE.md`
-- change: `M` `aulos-agent/.aries_harness/history/README.md`
-- change: `M` `aulos-agent/.aries_harness/history/RETROSPECTIVE.md`
+- change: `M` `aulos-api/.aries_harness/EVAL.md`
+- change: `M` `aulos-api/.aries_harness/INDEX.md`
+- change: `M` `aulos-api/.aries_harness/JOURNAL.md`
 
 ## Current milestone
 

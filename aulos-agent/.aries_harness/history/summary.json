@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-07-25T18:52:18+00:00",
+  "generated_at": "2026-07-27T09:44:53+00:00",
   "project_root": "/home/ubuntu/hackathon/aulos/aulos-agent",
   "harness_root": "/home/ubuntu/hackathon/aulos/aulos-agent/.aries_harness",
   "history_root": "/home/ubuntu/hackathon/aulos/aulos-agent/.aries_harness/history",
@@ -8,8 +8,20 @@
   "branch": "main",
   "working_tree": {
     "clean": false,
-    "change_count": 242,
+    "change_count": 214,
     "changes": [
+      {
+        "status": "M",
+        "path": "AGENTS.md"
+      },
+      {
+        "status": "M",
+        "path": "CLAUDE.md"
+      },
+      {
+        "status": "M",
+        "path": "README.md"
+      },
       {
         "status": "M",
         "path": "aulos-agent/.aries_harness/ARIES_HARNESS_FINGERPRINT.json"
@@ -20,75 +32,7 @@
       },
       {
         "status": "M",
-        "path": "aulos-agent/.aries_harness/JOURNAL.md"
-      },
-      {
-        "status": "M",
-        "path": "aulos-agent/.aries_harness/MEMORY.md"
-      },
-      {
-        "status": "M",
-        "path": "aulos-agent/.aries_harness/history/DAILY_SUMMARY_INDEX.md"
-      },
-      {
-        "status": "M",
-        "path": "aulos-agent/.aries_harness/history/DOC_TRACE.md"
-      },
-      {
-        "status": "M",
-        "path": "aulos-agent/.aries_harness/history/README.md"
-      },
-      {
-        "status": "M",
-        "path": "aulos-agent/.aries_harness/history/RETROSPECTIVE.md"
-      },
-      {
-        "status": "M",
-        "path": "aulos-agent/.aries_harness/history/ROADMAP.md"
-      },
-      {
-        "status": "M",
-        "path": "aulos-agent/.aries_harness/history/STATUS.md"
-      },
-      {
-        "status": "M",
-        "path": "aulos-agent/.aries_harness/history/TIMELINE.md"
-      },
-      {
-        "status": "M",
-        "path": "aulos-agent/.aries_harness/history/daily/2026-07-25.md"
-      },
-      {
-        "status": "M",
-        "path": "aulos-agent/.aries_harness/history/doc-trace.json"
-      },
-      {
-        "status": "M",
-        "path": "aulos-agent/.aries_harness/history/summary.json"
-      },
-      {
-        "status": "M",
-        "path": "aulos-agent/AGENTS.md"
-      },
-      {
-        "status": "M",
-        "path": "aulos-agent/pyproject.toml"
-      },
-      {
-        "status": "M",
-        "path": "aulos-agent/src/aulos_agent/prompts/templates.py"
-      },
-      {
-        "status": "M",
-        "path": "aulos-agent/src/aulos_agent/tools/registry.py"
-      },
-      {
-        "status": "M",
-        "path": "aulos-agent/src/aulos_agent/tools/skills.py"
-      },
-      {
-        "status": "M",
-        "path": "aulos-agent/tests/test_tools.py"
+        "path": "aulos-api/.aries_harness/EVAL.md"
       },
       {
         "status": "M",
@@ -100,7 +44,11 @@
       },
       {
         "status": "M",
-        "path": "aulos-api/.aries_harness/MEMORY.md"
+        "path": "aulos-api/.aries_harness/STATE.md"
+      },
+      {
+        "status": "M",
+        "path": "aulos-api/.aries_harness/TASK_STACK.md"
       },
       {
         "status": "M",
@@ -136,6 +84,10 @@
       },
       {
         "status": "M",
+        "path": "aulos-api/.aries_harness/history/daily/2026-07-26.md"
+      },
+      {
+        "status": "M",
         "path": "aulos-api/.aries_harness/history/doc-trace.json"
       },
       {
@@ -148,19 +100,11 @@
       },
       {
         "status": "M",
-        "path": "aulos-api/.aries_harness/references/specs/SPEC-003-listening-guide-workflow.md"
+        "path": "aulos-api/.aries_harness/references/specs/SPEC-002-users-roles-auth.md"
       },
       {
         "status": "M",
-        "path": "aulos-api/.aries_harness/references/specs/SPEC-006-research-knowledge-rag.md"
-      },
-      {
-        "status": "M",
-        "path": "aulos-api/AGENTS.md"
-      },
-      {
-        "status": "M",
-        "path": "aulos-api/pyproject.toml"
+        "path": "aulos-api/.aries_harness/references/specs/SPEC-008-discog-release-guide.md"
       },
       {
         "status": "M",
@@ -168,7 +112,15 @@
       },
       {
         "status": "M",
+        "path": "aulos-api/src/aulos_api/auth/deps.py"
+      },
+      {
+        "status": "M",
         "path": "aulos-api/src/aulos_api/config/settings.py"
+      },
+      {
+        "status": "M",
+        "path": "aulos-api/src/aulos_api/db/models.py"
       },
       {
         "status": "M",
@@ -176,7 +128,7 @@
       },
       {
         "status": "M",
-        "path": "aulos-api/src/aulos_api/routes/health.py"
+        "path": "aulos-api/src/aulos_api/routes/auth.py"
       },
       {
         "status": "M",
@@ -188,7 +140,15 @@
       },
       {
         "status": "M",
-        "path": "aulos-api/src/aulos_api/services/agent_proxy.py"
+        "path": "aulos-api/src/aulos_api/services/bootstrap.py"
+      },
+      {
+        "status": "M",
+        "path": "aulos-api/src/aulos_api/services/db_ha.py"
+      },
+      {
+        "status": "M",
+        "path": "aulos-api/src/aulos_api/services/discogs.py"
       },
       {
         "status": "M",
@@ -196,15 +156,115 @@
       },
       {
         "status": "M",
+        "path": "aulos-api/src/aulos_api/services/knowledge_proxy.py"
+      },
+      {
+        "status": "M",
         "path": "aulos-api/src/aulos_api/services/listening_guide.py"
       },
       {
         "status": "M",
-        "path": "aulos-api/tests/test_knowledge_retrieve.py"
+        "path": "aulos-api/src/aulos_api/services/mailgun.py"
+      },
+      {
+        "status": "M",
+        "path": "aulos-api/src/aulos_api/services/web_research.py"
+      },
+      {
+        "status": "M",
+        "path": "aulos-api/tests/test_auth.py"
+      },
+      {
+        "status": "M",
+        "path": "aulos-api/tests/test_discogs.py"
       },
       {
         "status": "M",
         "path": "aulos-api/tests/test_listening_guide.py"
+      },
+      {
+        "status": "M",
+        "path": "aulos-api/tests/test_mailgun.py"
+      },
+      {
+        "status": "M",
+        "path": "aulos-knowledge/.aries_harness/INDEX.md"
+      },
+      {
+        "status": "M",
+        "path": "aulos-knowledge/.aries_harness/history/DAILY_SUMMARY_INDEX.md"
+      },
+      {
+        "status": "M",
+        "path": "aulos-knowledge/.aries_harness/history/DOC_TRACE.md"
+      },
+      {
+        "status": "M",
+        "path": "aulos-knowledge/.aries_harness/history/README.md"
+      },
+      {
+        "status": "M",
+        "path": "aulos-knowledge/.aries_harness/history/RETROSPECTIVE.md"
+      },
+      {
+        "status": "M",
+        "path": "aulos-knowledge/.aries_harness/history/ROADMAP.md"
+      },
+      {
+        "status": "M",
+        "path": "aulos-knowledge/.aries_harness/history/STATUS.md"
+      },
+      {
+        "status": "M",
+        "path": "aulos-knowledge/.aries_harness/history/TIMELINE.md"
+      },
+      {
+        "status": "M",
+        "path": "aulos-knowledge/.aries_harness/history/daily/2026-07-25.md"
+      },
+      {
+        "status": "M",
+        "path": "aulos-knowledge/.aries_harness/history/daily/2026-07-26.md"
+      },
+      {
+        "status": "M",
+        "path": "aulos-knowledge/.aries_harness/history/doc-trace.json"
+      },
+      {
+        "status": "M",
+        "path": "aulos-knowledge/.aries_harness/history/summary.json"
+      },
+      {
+        "status": "M",
+        "path": "aulos-knowledge/src/aulos_knowledge/app.py"
+      },
+      {
+        "status": "M",
+        "path": "aulos-knowledge/src/aulos_knowledge/routes.py"
+      },
+      {
+        "status": "M",
+        "path": "aulos-knowledge/tests/test_audit_api.py"
+      },
+      {
+        "status": "M",
+        "path": "aulos-knowledge/tests/test_job_failures.py"
+      },
+      {
+        "status": "M",
+        "path": "aulos-knowledge/tests/test_knowledge_api.py"
+      },
+      {
+        "status": "M",
+        "path": "aulos-knowledge/tests/test_media_persist.py"
+      },
+      {
+        "status": "M",
+        "path": "aulos-knowledge/tests/test_work_id_rag.py"
+      },
+      {
+        "status": "M",
+        "path": "aulos-ops/.aries_harness/INDEX.md"
       },
       {
         "status": "M",
@@ -244,6 +304,10 @@
       },
       {
         "status": "M",
+        "path": "aulos-ops/.aries_harness/history/daily/2026-07-26.md"
+      },
+      {
+        "status": "M",
         "path": "aulos-ops/.aries_harness/history/doc-trace.json"
       },
       {
@@ -260,11 +324,19 @@
       },
       {
         "status": "M",
+        "path": "aulos-ops/src/AssetUpdateToast.tsx"
+      },
+      {
+        "status": "M",
         "path": "aulos-ops/src/api.ts"
       },
       {
         "status": "M",
-        "path": "aulos-skills/.aries_harness/ADR.md"
+        "path": "aulos-ops/src/assetVersion.ts"
+      },
+      {
+        "status": "M",
+        "path": "aulos-ops/src/index.css"
       },
       {
         "status": "M",
@@ -276,11 +348,11 @@
       },
       {
         "status": "M",
-        "path": "aulos-skills/.aries_harness/MEMORY.md"
+        "path": "aulos-skills/.aries_harness/STATE.md"
       },
       {
         "status": "M",
-        "path": "aulos-skills/.aries_harness/decisions/adrs/ADR-002-domain-runtime-listening-skills.md"
+        "path": "aulos-skills/.aries_harness/TASK_STACK.md"
       },
       {
         "status": "M",
@@ -320,6 +392,10 @@
       },
       {
         "status": "M",
+        "path": "aulos-skills/.aries_harness/history/daily/2026-07-26.md"
+      },
+      {
+        "status": "M",
         "path": "aulos-skills/.aries_harness/history/doc-trace.json"
       },
       {
@@ -332,39 +408,23 @@
       },
       {
         "status": "M",
-        "path": "aulos-skills/.aries_harness/references/specs/SPEC-006-ambient-media-and-identity.md"
+        "path": "aulos-skills/.aries_harness/references/specs/SPEC-003-salon-codex-dossier.md"
       },
       {
         "status": "M",
-        "path": "aulos-skills/pyproject.toml"
+        "path": "aulos-skills/.aries_harness/references/specs/SPEC-004-listening-synthesize.md"
       },
       {
         "status": "M",
-        "path": "aulos-skills/skills/aulos-listening-corpus/assets/corpus/ambient-library.yaml"
+        "path": "aulos-skills/skills/aulos-listening-corpus/assets/catalog/works/beethoven.cello-sonatas-variations.yaml"
       },
       {
         "status": "M",
-        "path": "aulos-skills/skills/aulos-listening-corpus/assets/corpus/bwv-988-goldberg.yaml"
-      },
-      {
-        "status": "M",
-        "path": "aulos-skills/skills/aulos-listening-eval/SKILL.md"
-      },
-      {
-        "status": "M",
-        "path": "aulos-skills/skills/aulos-listening-intake/skill.yaml"
-      },
-      {
-        "status": "M",
-        "path": "aulos-skills/skills/aulos-listening-synthesize/assets/index.yaml"
+        "path": "aulos-skills/skills/aulos-listening-width/SKILL.md"
       },
       {
         "status": "M",
         "path": "aulos-skills/skills/aulos-operating-defaults/SKILL.md"
-      },
-      {
-        "status": "M",
-        "path": "aulos-skills/skills/aulos-operating-defaults/skill.yaml"
       },
       {
         "status": "M",
@@ -380,6 +440,10 @@
       },
       {
         "status": "M",
+        "path": "aulos-skills/src/aulos_skills/intake_parse.py"
+      },
+      {
+        "status": "M",
         "path": "aulos-skills/src/aulos_skills/runtime.py"
       },
       {
@@ -388,19 +452,103 @@
       },
       {
         "status": "M",
-        "path": "aulos-skills/tests/test_ambient_agent.py"
-      },
-      {
-        "status": "M",
-        "path": "aulos-skills/tests/test_registry.py"
-      },
-      {
-        "status": "M",
         "path": "aulos-skills/tests/test_runtime.py"
       },
       {
         "status": "M",
+        "path": "aulos-web/.aries_harness/INDEX.md"
+      },
+      {
+        "status": "M",
+        "path": "aulos-web/.aries_harness/JOURNAL.md"
+      },
+      {
+        "status": "M",
+        "path": "aulos-web/.aries_harness/STATE.md"
+      },
+      {
+        "status": "M",
+        "path": "aulos-web/.aries_harness/TASK_STACK.md"
+      },
+      {
+        "status": "M",
+        "path": "aulos-web/.aries_harness/history/DAILY_SUMMARY_INDEX.md"
+      },
+      {
+        "status": "M",
+        "path": "aulos-web/.aries_harness/history/DOC_TRACE.md"
+      },
+      {
+        "status": "M",
+        "path": "aulos-web/.aries_harness/history/README.md"
+      },
+      {
+        "status": "M",
+        "path": "aulos-web/.aries_harness/history/RETROSPECTIVE.md"
+      },
+      {
+        "status": "M",
+        "path": "aulos-web/.aries_harness/history/ROADMAP.md"
+      },
+      {
+        "status": "M",
+        "path": "aulos-web/.aries_harness/history/STATUS.md"
+      },
+      {
+        "status": "M",
+        "path": "aulos-web/.aries_harness/history/TIMELINE.md"
+      },
+      {
+        "status": "M",
+        "path": "aulos-web/.aries_harness/history/daily/2026-07-25.md"
+      },
+      {
+        "status": "M",
+        "path": "aulos-web/.aries_harness/history/daily/2026-07-26.md"
+      },
+      {
+        "status": "M",
+        "path": "aulos-web/.aries_harness/history/doc-trace.json"
+      },
+      {
+        "status": "M",
+        "path": "aulos-web/.aries_harness/history/summary.json"
+      },
+      {
+        "status": "M",
+        "path": "aulos-web/.aries_harness/references/REG-001-artifact-register.md"
+      },
+      {
+        "status": "M",
+        "path": "aulos-web/src/App.css"
+      },
+      {
+        "status": "M",
+        "path": "aulos-web/src/App.tsx"
+      },
+      {
+        "status": "M",
+        "path": "aulos-web/src/AssetUpdateToast.tsx"
+      },
+      {
+        "status": "M",
+        "path": "aulos-web/src/api.ts"
+      },
+      {
+        "status": "M",
+        "path": "aulos-web/src/assetVersion.ts"
+      },
+      {
+        "status": "M",
+        "path": "aulos-web/src/index.css"
+      },
+      {
+        "status": "M",
         "path": "deploy/README.md"
+      },
+      {
+        "status": "M",
+        "path": "deploy/serve.py"
       },
       {
         "status": "M",
@@ -412,571 +560,311 @@
       },
       {
         "status": "M",
-        "path": "deploy/systemd/user/aulos-host.target"
+        "path": "deploy/vite-asset-version.mjs"
       },
       {
         "status": "??",
-        "path": "aulos-agent/.aries_harness/decisions/adrs/ADR-003-listening-via-agent-tools.md"
+        "path": "aulos-api/.aries_harness/decisions/adrs/ADR-008-plaintext-systemsetting-secrets-sprint1.md"
       },
       {
         "status": "??",
-        "path": "aulos-agent/.aries_harness/decisions/architecture/ARCH-002-agent-orchestrated-listening.md"
+        "path": "aulos-api/.aries_harness/history/daily/2026-07-27.md"
       },
       {
         "status": "??",
-        "path": "aulos-agent/.aries_harness/history/daily/2026-07-26.md"
+        "path": "aulos-api/.aries_harness/references/requests/REQ-009-durable-guide-jobs-library.md"
       },
       {
         "status": "??",
-        "path": "aulos-agent/.aries_harness/references/specs/SPEC-002-agent-orchestrated-listening.md"
+        "path": "aulos-api/.aries_harness/references/specs/SPEC-010-salon-email-craft.md"
       },
       {
         "status": "??",
-        "path": "aulos-agent/src/aulos_agent/http_app.py"
+        "path": "aulos-api/.aries_harness/references/specs/SPEC-011-mail-queue.md"
       },
       {
         "status": "??",
-        "path": "aulos-agent/src/aulos_agent/listening/__init__.py"
+        "path": "aulos-api/.aries_harness/references/specs/SPEC-012-chain-trace.md"
       },
       {
         "status": "??",
-        "path": "aulos-agent/src/aulos_agent/listening/service.py"
+        "path": "aulos-api/.aries_harness/references/specs/SPEC-013-listening-guide-jobs-library.md"
       },
       {
         "status": "??",
-        "path": "aulos-agent/src/aulos_agent/llm/listening_fake.py"
+        "path": "aulos-api/.aries_harness/references/specs/SPEC-014-session-cookie-auth.md"
       },
       {
         "status": "??",
-        "path": "aulos-agent/tests/test_listening_agent.py"
+        "path": "aulos-api/.aries_harness/references/specs/SPEC-015-guide-html-security.md"
       },
       {
         "status": "??",
-        "path": "aulos-api/.aries_harness/decisions/adrs/ADR-007-business-pg-sqlite-failover.md"
+        "path": "aulos-api/.aries_harness/runs/tests/VR-013-listening-guide-jobs-library.md"
       },
       {
         "status": "??",
-        "path": "aulos-api/.aries_harness/history/daily/2026-07-26.md"
+        "path": "aulos-api/src/aulos_api/auth/session.py"
       },
       {
         "status": "??",
-        "path": "aulos-api/.aries_harness/references/requests/REQ-006-rag-work-identity-catalog.md"
+        "path": "aulos-api/src/aulos_api/db/schema_patches.py"
       },
       {
         "status": "??",
-        "path": "aulos-api/scripts/migrate_sqlite_to_pg.py"
+        "path": "aulos-api/src/aulos_api/routes/ops_integrations.py"
       },
       {
         "status": "??",
-        "path": "aulos-api/src/aulos_api/services/db_ha.py"
+        "path": "aulos-api/src/aulos_api/routes/ops_mail.py"
       },
       {
         "status": "??",
-        "path": "aulos-api/src/aulos_api/services/knowledge_proxy.py"
+        "path": "aulos-api/src/aulos_api/security_headers.py"
       },
       {
         "status": "??",
-        "path": "aulos-api/src/aulos_api/services/web_research.py"
+        "path": "aulos-api/src/aulos_api/services/chain_trace.py"
       },
       {
         "status": "??",
-        "path": "aulos-api/src/aulos_api/services/web_search.py"
+        "path": "aulos-api/src/aulos_api/services/email_templates.py"
       },
       {
         "status": "??",
-        "path": "aulos-api/tests/test_db_ha.py"
+        "path": "aulos-api/src/aulos_api/services/guide_html_security.py"
       },
       {
         "status": "??",
-        "path": "aulos-api/tests/test_knowledge_plane_rag.py"
+        "path": "aulos-api/src/aulos_api/services/listening_plan.py"
       },
       {
         "status": "??",
-        "path": "aulos-api/tests/test_web_research.py"
+        "path": "aulos-api/src/aulos_api/services/listening_queue.py"
       },
       {
         "status": "??",
-        "path": "aulos-knowledge/.aries_harness/ADR.md"
+        "path": "aulos-api/src/aulos_api/services/mail_queue.py"
       },
       {
         "status": "??",
-        "path": "aulos-knowledge/.aries_harness/ARIES_HARNESS_FINGERPRINT.json"
+        "path": "aulos-api/src/aulos_api/services/worker_lifecycle.py"
       },
       {
         "status": "??",
-        "path": "aulos-knowledge/.aries_harness/JOURNAL.md"
+        "path": "aulos-api/tests/conftest.py"
       },
       {
         "status": "??",
-        "path": "aulos-knowledge/.aries_harness/MEMORY.md"
+        "path": "aulos-api/tests/test_chain_trace.py"
       },
       {
         "status": "??",
-        "path": "aulos-knowledge/.aries_harness/STATE.md"
+        "path": "aulos-api/tests/test_email_templates.py"
       },
       {
         "status": "??",
-        "path": "aulos-knowledge/.aries_harness/TASK_STACK.md"
+        "path": "aulos-api/tests/test_guide_html_sanitize.py"
       },
       {
         "status": "??",
-        "path": "aulos-knowledge/.aries_harness/checkpoints/CKPT-007-music-knowledge-longrun.md"
+        "path": "aulos-api/tests/test_guide_security.py"
       },
       {
         "status": "??",
-        "path": "aulos-knowledge/.aries_harness/decisions/adrs/ADR-005-dedicated-knowledge-db.md"
+        "path": "aulos-api/tests/test_listening_jobs.py"
       },
       {
         "status": "??",
-        "path": "aulos-knowledge/.aries_harness/decisions/adrs/ADR-006-allowlisted-sources-provenance.md"
+        "path": "aulos-api/tests/test_listening_plan.py"
       },
       {
         "status": "??",
-        "path": "aulos-knowledge/.aries_harness/decisions/architecture/ARCH-005-knowledge-plane.md"
+        "path": "aulos-api/tests/test_mail_queue.py"
       },
       {
         "status": "??",
-        "path": "aulos-knowledge/.aries_harness/history/.gitkeep"
+        "path": "aulos-api/tests/test_schema_patches.py"
       },
       {
         "status": "??",
-        "path": "aulos-knowledge/.aries_harness/history/DAILY_SUMMARY_INDEX.md"
+        "path": "aulos-knowledge/.aries_harness/EVAL.md"
       },
       {
         "status": "??",
-        "path": "aulos-knowledge/.aries_harness/history/DOC_TRACE.md"
+        "path": "aulos-knowledge/.aries_harness/MISSION.md"
       },
       {
         "status": "??",
-        "path": "aulos-knowledge/.aries_harness/history/README.md"
+        "path": "aulos-knowledge/.aries_harness/history/daily/2026-07-27.md"
       },
       {
         "status": "??",
-        "path": "aulos-knowledge/.aries_harness/history/RETROSPECTIVE.md"
+        "path": "aulos-knowledge/AGENTS.md"
       },
       {
         "status": "??",
-        "path": "aulos-knowledge/.aries_harness/history/ROADMAP.md"
+        "path": "aulos-knowledge/CLAUDE.md"
       },
       {
         "status": "??",
-        "path": "aulos-knowledge/.aries_harness/history/STATUS.md"
+        "path": "aulos-knowledge/src/aulos_knowledge/auth.py"
       },
       {
         "status": "??",
-        "path": "aulos-knowledge/.aries_harness/history/TIMELINE.md"
+        "path": "aulos-knowledge/tests/conftest.py"
       },
       {
         "status": "??",
-        "path": "aulos-knowledge/.aries_harness/history/daily/.gitkeep"
+        "path": "aulos-knowledge/tests/test_admin_auth.py"
       },
       {
         "status": "??",
-        "path": "aulos-knowledge/.aries_harness/history/daily/2026-07-25.md"
+        "path": "aulos-ops/.aries_harness/history/daily/2026-07-27.md"
       },
       {
         "status": "??",
-        "path": "aulos-knowledge/.aries_harness/history/daily/2026-07-26.md"
+        "path": "aulos-ops/src/PasswordField.tsx"
       },
       {
         "status": "??",
-        "path": "aulos-knowledge/.aries_harness/history/doc-trace.json"
+        "path": "aulos-ops/src/SkillsPanel.tsx"
       },
       {
         "status": "??",
-        "path": "aulos-knowledge/.aries_harness/history/summary.json"
+        "path": "aulos-ops/src/sessionScene.ts"
       },
       {
         "status": "??",
-        "path": "aulos-knowledge/.aries_harness/references/REG-001-artifact-register.md"
+        "path": "aulos-skills/.aries_harness/history/daily/2026-07-27.md"
       },
       {
         "status": "??",
-        "path": "aulos-knowledge/.aries_harness/references/domain/DOM-003-music-knowledge.md"
+        "path": "aulos-skills/.aries_harness/references/requests/REQ-007-node-decontam-rework.md"
       },
       {
         "status": "??",
-        "path": "aulos-knowledge/.aries_harness/references/requests/REQ-007-music-knowledge-platform.md"
+        "path": "aulos-skills/.aries_harness/references/specs/SPEC-009-node-decontam-rework.md"
       },
       {
         "status": "??",
-        "path": "aulos-knowledge/.aries_harness/references/specs/SPEC-009-knowledge-api-and-data.md"
+        "path": "aulos-skills/.aries_harness/references/specs/SPEC-016-module-split-seams.md"
       },
       {
         "status": "??",
-        "path": "aulos-knowledge/.aries_harness/references/specs/SPEC-010-ops-knowledge-audit-ui.md"
+        "path": "aulos-skills/.aries_harness/runs/reviews/AUDIT-009-workspace-architecture-code-review-20260727T083335Z.md"
       },
       {
         "status": "??",
-        "path": "aulos-knowledge/.aries_harness/references/stories/STORY-PACK-007-music-knowledge-plane.md"
+        "path": "aulos-skills/.aries_harness/runs/tests/VR-006-node-decontam-rework.md"
       },
       {
         "status": "??",
-        "path": "aulos-knowledge/.aries_harness/runs/reports/SUM-007-music-knowledge-longrun.md"
+        "path": "aulos-skills/src/aulos_skills/decontam.py"
       },
       {
         "status": "??",
-        "path": "aulos-knowledge/.aries_harness/runs/reports/VR-007-music-knowledge-longrun.md"
+        "path": "aulos-skills/src/aulos_skills/media_search.py"
       },
       {
         "status": "??",
-        "path": "aulos-knowledge/.aries_harness/scripts/ah.sh"
+        "path": "aulos-skills/tests/test_media_search.py"
       },
       {
         "status": "??",
-        "path": "aulos-knowledge/.aries_harness/scripts/aries-harness.sh"
+        "path": "aulos-skills/tests/test_salon_codex_merge.py"
       },
       {
         "status": "??",
-        "path": "aulos-knowledge/.aries_harness/scripts/dev-history.py"
+        "path": "aulos-web/.aries_harness/history/daily/2026-07-27.md"
       },
       {
         "status": "??",
-        "path": "aulos-knowledge/.aries_harness/scripts/init-project.sh"
+        "path": "aulos-web/.aries_harness/references/specs/SPEC-003-discogs-picker.md"
       },
       {
         "status": "??",
-        "path": "aulos-knowledge/.aries_harness/scripts/memory-inspect.py"
+        "path": "aulos-web/.aries_harness/references/specs/SPEC-004-chain-trace-viewer.md"
       },
       {
         "status": "??",
-        "path": "aulos-knowledge/.aries_harness/scripts/pipeline-inspect.py"
+        "path": "aulos-web/.aries_harness/references/specs/SPEC-005-portal-ux-polish.md"
       },
       {
         "status": "??",
-        "path": "aulos-knowledge/.aries_harness/scripts/runs-inspect.py"
+        "path": "aulos-web/.aries_harness/references/specs/SPEC-006-library-jobs-ux.md"
       },
       {
         "status": "??",
-        "path": "aulos-knowledge/.aries_harness/scripts/well-organized.py"
+        "path": "aulos-web/.aries_harness/references/specs/SPEC-007-single-pane-studio.md"
       },
       {
         "status": "??",
-        "path": "aulos-knowledge/.gitignore"
+        "path": "aulos-web/.aries_harness/references/specs/SPEC-008-session-scene-restore.md"
       },
       {
         "status": "??",
-        "path": "aulos-knowledge/README.md"
+        "path": "aulos-web/.aries_harness/runs/tests/VR-005-portal-ux-polish.md"
       },
       {
         "status": "??",
-        "path": "aulos-knowledge/deploy/.env.example"
+        "path": "aulos-web/.aries_harness/runs/tests/VR-006-library-jobs-ux.md"
       },
       {
         "status": "??",
-        "path": "aulos-knowledge/deploy/IMAGE_DIGESTS.md"
+        "path": "aulos-web/src/PasswordField.tsx"
       },
       {
         "status": "??",
-        "path": "aulos-knowledge/deploy/PERSISTENCE.md"
+        "path": "aulos-web/src/guideHtml.selftest.ts"
       },
       {
         "status": "??",
-        "path": "aulos-knowledge/deploy/backup_persist.sh"
+        "path": "aulos-web/src/guideHtml.ts"
       },
       {
         "status": "??",
-        "path": "aulos-knowledge/deploy/crawl_famous_composers.sh"
+        "path": "aulos-web/src/sessionScene.selftest.ts"
       },
       {
         "status": "??",
-        "path": "aulos-knowledge/deploy/docker-compose.knowledge.yml"
+        "path": "aulos-web/src/sessionScene.ts"
       },
       {
         "status": "??",
-        "path": "aulos-knowledge/deploy/persist_smoke.sh"
+        "path": "deploy/OPS.md"
       },
       {
         "status": "??",
-        "path": "aulos-knowledge/deploy/pg_smoke.sh"
+        "path": "deploy/aulos-ctl.sh"
       },
       {
         "status": "??",
-        "path": "aulos-knowledge/docs/worker.md"
+        "path": "deploy/host.env.example"
       },
       {
         "status": "??",
-        "path": "aulos-knowledge/pyproject.toml"
+        "path": "deploy/lib/build.sh"
       },
       {
         "status": "??",
-        "path": "aulos-knowledge/src/aulos_knowledge/__init__.py"
+        "path": "deploy/lib/common.sh"
       },
       {
         "status": "??",
-        "path": "aulos-knowledge/src/aulos_knowledge/app.py"
+        "path": "deploy/lib/secrets.sh"
       },
       {
         "status": "??",
-        "path": "aulos-knowledge/src/aulos_knowledge/artifacts.py"
+        "path": "deploy/lib/smoke.sh"
       },
       {
         "status": "??",
-        "path": "aulos-knowledge/src/aulos_knowledge/cli.py"
+        "path": "deploy/security_headers.py"
       },
       {
         "status": "??",
-        "path": "aulos-knowledge/src/aulos_knowledge/config.py"
-      },
-      {
-        "status": "??",
-        "path": "aulos-knowledge/src/aulos_knowledge/connectors/__init__.py"
-      },
-      {
-        "status": "??",
-        "path": "aulos-knowledge/src/aulos_knowledge/connectors/catalog_import.py"
-      },
-      {
-        "status": "??",
-        "path": "aulos-knowledge/src/aulos_knowledge/connectors/musicbrainz.py"
-      },
-      {
-        "status": "??",
-        "path": "aulos-knowledge/src/aulos_knowledge/connectors/wikidata.py"
-      },
-      {
-        "status": "??",
-        "path": "aulos-knowledge/src/aulos_knowledge/db.py"
-      },
-      {
-        "status": "??",
-        "path": "aulos-knowledge/src/aulos_knowledge/famous_composers.py"
-      },
-      {
-        "status": "??",
-        "path": "aulos-knowledge/src/aulos_knowledge/jobs.py"
-      },
-      {
-        "status": "??",
-        "path": "aulos-knowledge/src/aulos_knowledge/media_fetch.py"
-      },
-      {
-        "status": "??",
-        "path": "aulos-knowledge/src/aulos_knowledge/retrieve.py"
-      },
-      {
-        "status": "??",
-        "path": "aulos-knowledge/src/aulos_knowledge/routes.py"
-      },
-      {
-        "status": "??",
-        "path": "aulos-knowledge/src/aulos_knowledge/seed.py"
-      },
-      {
-        "status": "??",
-        "path": "aulos-knowledge/tests/test_audit_api.py"
-      },
-      {
-        "status": "??",
-        "path": "aulos-knowledge/tests/test_job_failures.py"
-      },
-      {
-        "status": "??",
-        "path": "aulos-knowledge/tests/test_knowledge_api.py"
-      },
-      {
-        "status": "??",
-        "path": "aulos-knowledge/tests/test_media_persist.py"
-      },
-      {
-        "status": "??",
-        "path": "aulos-knowledge/tests/test_work_id_rag.py"
-      },
-      {
-        "status": "??",
-        "path": "aulos-ops/.aries_harness/history/daily/2026-07-26.md"
-      },
-      {
-        "status": "??",
-        "path": "aulos-ops/src/DbHaPanel.tsx"
-      },
-      {
-        "status": "??",
-        "path": "aulos-ops/src/KnowledgePanel.tsx"
-      },
-      {
-        "status": "??",
-        "path": "aulos-skills/.aries_harness/decisions/adrs/ADR-004-catalog-over-heuristics.md"
-      },
-      {
-        "status": "??",
-        "path": "aulos-skills/.aries_harness/history/daily/2026-07-26.md"
-      },
-      {
-        "status": "??",
-        "path": "aulos-skills/.aries_harness/references/domain/DOM-002-listening-identity.md"
-      },
-      {
-        "status": "??",
-        "path": "aulos-skills/.aries_harness/references/requests/REQ-006-work-identity-catalog.md"
-      },
-      {
-        "status": "??",
-        "path": "aulos-skills/.aries_harness/references/specs/SPEC-008-work-identity-and-resolver.md"
-      },
-      {
-        "status": "??",
-        "path": "aulos-skills/skills/aulos-listening-corpus/assets/catalog/composers/antonin-dvorak.yaml"
-      },
-      {
-        "status": "??",
-        "path": "aulos-skills/skills/aulos-listening-corpus/assets/catalog/composers/frederic-chopin.yaml"
-      },
-      {
-        "status": "??",
-        "path": "aulos-skills/skills/aulos-listening-corpus/assets/catalog/composers/gustav-mahler.yaml"
-      },
-      {
-        "status": "??",
-        "path": "aulos-skills/skills/aulos-listening-corpus/assets/catalog/composers/johann-sebastian-bach.yaml"
-      },
-      {
-        "status": "??",
-        "path": "aulos-skills/skills/aulos-listening-corpus/assets/catalog/composers/ludwig-van-beethoven.yaml"
-      },
-      {
-        "status": "??",
-        "path": "aulos-skills/skills/aulos-listening-corpus/assets/catalog/index.yaml"
-      },
-      {
-        "status": "??",
-        "path": "aulos-skills/skills/aulos-listening-corpus/assets/catalog/policies/weak_tokens.yaml"
-      },
-      {
-        "status": "??",
-        "path": "aulos-skills/skills/aulos-listening-corpus/assets/catalog/works/bach.cello-suites.bwv-1007-1012.yaml"
-      },
-      {
-        "status": "??",
-        "path": "aulos-skills/skills/aulos-listening-corpus/assets/catalog/works/bach.goldberg.bwv-988.yaml"
-      },
-      {
-        "status": "??",
-        "path": "aulos-skills/skills/aulos-listening-corpus/assets/catalog/works/beethoven.cello-sonatas-variations.yaml"
-      },
-      {
-        "status": "??",
-        "path": "aulos-skills/skills/aulos-listening-corpus/assets/catalog/works/chopin.mazurkas.yaml"
-      },
-      {
-        "status": "??",
-        "path": "aulos-skills/skills/aulos-listening-corpus/assets/catalog/works/chopin.nocturne-op9-no2.yaml"
-      },
-      {
-        "status": "??",
-        "path": "aulos-skills/skills/aulos-listening-corpus/assets/catalog/works/dvorak.dumky-trio.yaml"
-      },
-      {
-        "status": "??",
-        "path": "aulos-skills/skills/aulos-listening-corpus/assets/catalog/works/mahler.symphony-5.yaml"
-      },
-      {
-        "status": "??",
-        "path": "aulos-skills/skills/aulos-listening-synthesize/assets/composers/frederic-chopin.yaml"
-      },
-      {
-        "status": "??",
-        "path": "aulos-skills/skills/aulos-listening-synthesize/assets/families/character-dance-piano.yaml"
-      },
-      {
-        "status": "??",
-        "path": "aulos-skills/skills/aulos-listening-synthesize/assets/families/solo-cello-suites.yaml"
-      },
-      {
-        "status": "??",
-        "path": "aulos-skills/skills/enabler-agent-reach/PIN.json"
-      },
-      {
-        "status": "??",
-        "path": "aulos-skills/skills/enabler-agent-reach/SKILL.md"
-      },
-      {
-        "status": "??",
-        "path": "aulos-skills/skills/enabler-agent-reach/docs/COOKBOOK.md"
-      },
-      {
-        "status": "??",
-        "path": "aulos-skills/skills/enabler-agent-reach/docs/INTAKE.md"
-      },
-      {
-        "status": "??",
-        "path": "aulos-skills/skills/enabler-agent-reach/docs/SECURITY_AUDIT.md"
-      },
-      {
-        "status": "??",
-        "path": "aulos-skills/skills/enabler-agent-reach/policy.yaml"
-      },
-      {
-        "status": "??",
-        "path": "aulos-skills/skills/enabler-agent-reach/skill.yaml"
-      },
-      {
-        "status": "??",
-        "path": "aulos-skills/skills/enabler-agent-reach/vendor/README.md"
-      },
-      {
-        "status": "??",
-        "path": "aulos-skills/skills/enabler-agent-reach/vendor/upstream/LICENSE"
-      },
-      {
-        "status": "??",
-        "path": "aulos-skills/skills/enabler-agent-reach/vendor/upstream/SECURITY.md"
-      },
-      {
-        "status": "??",
-        "path": "aulos-skills/skills/enabler-agent-reach/vendor/upstream/SKILL.md"
-      },
-      {
-        "status": "??",
-        "path": "aulos-skills/skills/enabler-agent-reach/vendor/upstream/SKILL_en.md"
-      },
-      {
-        "status": "??",
-        "path": "aulos-skills/skills/enabler-agent-reach/vendor/upstream/references/career.md"
-      },
-      {
-        "status": "??",
-        "path": "aulos-skills/skills/enabler-agent-reach/vendor/upstream/references/dev.md"
-      },
-      {
-        "status": "??",
-        "path": "aulos-skills/skills/enabler-agent-reach/vendor/upstream/references/search.md"
-      },
-      {
-        "status": "??",
-        "path": "aulos-skills/skills/enabler-agent-reach/vendor/upstream/references/social.md"
-      },
-      {
-        "status": "??",
-        "path": "aulos-skills/skills/enabler-agent-reach/vendor/upstream/references/video.md"
-      },
-      {
-        "status": "??",
-        "path": "aulos-skills/skills/enabler-agent-reach/vendor/upstream/references/web.md"
-      },
-      {
-        "status": "??",
-        "path": "aulos-skills/src/aulos_skills/identity.py"
-      },
-      {
-        "status": "??",
-        "path": "aulos-skills/src/aulos_skills/intake_parse.py"
-      },
-      {
-        "status": "??",
-        "path": "aulos-skills/tests/test_identity.py"
-      },
-      {
-        "status": "??",
-        "path": "aulos-skills/tests/test_intake_i18n.py"
-      },
-      {
-        "status": "??",
-        "path": "aulos-skills/tests/test_no_composer_branches.py"
-      },
-      {
-        "status": "??",
-        "path": "deploy/systemd/user/aulos-knowledge.service"
+        "path": "deploy/test_security_headers.py"
       }
     ]
   },
@@ -1016,7 +904,7 @@
       "Scaffolded LangChain/LangGraph package: config, llm, prompts, tools, memory, graph, observability, cli"
     ],
     "needs_attention": [
-      "working tree is dirty with 242 tracked or untracked change(s)",
+      "working tree is dirty with 214 tracked or untracked change(s)",
       "no explicit next-up slice is recorded"
     ],
     "durable_reminders": [
@@ -1030,13 +918,50 @@
   },
   "daily_summaries": [
     {
+      "date": "2026-07-27",
+      "journal_headings": [],
+      "journal_items": [],
+      "feature_evolution": [
+        "Ship Ops daily Dev Blog and web forgot-password reset."
+      ],
+      "git_commits": [
+        {
+          "sha": "0c8a847",
+          "date": "2026-07-27",
+          "subject": "Ship Ops daily Dev Blog and web forgot-password reset."
+        }
+      ],
+      "working_tree_hints": [
+        "M AGENTS.md",
+        "M CLAUDE.md",
+        "M README.md",
+        "M aulos-agent/.aries_harness/ARIES_HARNESS_FINGERPRINT.json",
+        "M aulos-agent/.aries_harness/INDEX.md",
+        "M aulos-api/.aries_harness/EVAL.md",
+        "M aulos-api/.aries_harness/INDEX.md",
+        "M aulos-api/.aries_harness/JOURNAL.md"
+      ]
+    },
+    {
       "date": "2026-07-26",
       "journal_headings": [],
       "journal_items": [],
       "feature_evolution": [
+        "Ship /discogs release and catalog-number listening guides with OPS token UI.",
+        "Ship identity catalog, Hans/Hant locales, web research, and knowledge plane.",
         "Ship listening product, mandatory harness, facility layout, and UTC/local time."
       ],
       "git_commits": [
+        {
+          "sha": "6ab1ea3",
+          "date": "2026-07-26",
+          "subject": "Ship /discogs release and catalog-number listening guides with OPS token UI."
+        },
+        {
+          "sha": "53e7437",
+          "date": "2026-07-26",
+          "subject": "Ship identity catalog, Hans/Hant locales, web research, and knowledge plane."
+        },
         {
           "sha": "555cf53",
           "date": "2026-07-26",
@@ -1092,16 +1017,7 @@
           "subject": "Initial commit: Aulos hackathon workspace with LangChain agent runtime."
         }
       ],
-      "working_tree_hints": [
-        "M aulos-agent/.aries_harness/ARIES_HARNESS_FINGERPRINT.json",
-        "M aulos-agent/.aries_harness/INDEX.md",
-        "M aulos-agent/.aries_harness/JOURNAL.md",
-        "M aulos-agent/.aries_harness/MEMORY.md",
-        "M aulos-agent/.aries_harness/history/DAILY_SUMMARY_INDEX.md",
-        "M aulos-agent/.aries_harness/history/DOC_TRACE.md",
-        "M aulos-agent/.aries_harness/history/README.md",
-        "M aulos-agent/.aries_harness/history/RETROSPECTIVE.md"
-      ]
+      "working_tree_hints": []
     }
   ],
   "doc_trace_summary": {

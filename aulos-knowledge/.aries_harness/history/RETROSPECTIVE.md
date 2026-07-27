@@ -8,10 +8,10 @@ managed_by: "aries-harness"
 fingerprint: "aries-harness/history-doc/v1"
 generated_by: "/aries-harness history-refresh"
 initialized_at: "2026-07-25T17:25:00+00:00"
-generated_at: "2026-07-25T19:31:29+00:00"
+generated_at: "2026-07-27T09:44:49+00:00"
 effective_status: "generated"
-effective_since: "2026-07-25T19:31:29+00:00"
-content_fingerprint: "sha256:e12b98de8a755662ca8c8c29dc65622c7618b5adc03433b72584e7cf43d74d54"
+effective_since: "2026-07-27T09:44:49+00:00"
+content_fingerprint: "sha256:ad30bc8fa93abd8373899c7f671c964cd37ae51b670f26533865170f1c99e464"
 trace_history_source: "filesystem-only"
 trace_last_commit_sha: ""
 trace_last_commit_at: ""
@@ -19,7 +19,7 @@ trace_revision_count: "0"
 ---
 # Retrospective Snapshot
 
-Generated at: `2026-07-25T19:31:29+00:00`
+Generated at: `2026-07-27T09:44:49+00:00`
 
 ## Recent changes
 
@@ -39,7 +39,7 @@ Generated at: `2026-07-25T19:31:29+00:00`
 
 ## What needs attention
 
-- working tree is dirty with 71 tracked or untracked change(s)
+- working tree is dirty with 201 tracked or untracked change(s)
 - verification gates are not documented yet in EVAL.md
 - no explicit next-up slice is recorded
 

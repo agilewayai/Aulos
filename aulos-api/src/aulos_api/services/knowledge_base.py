@@ -21,6 +21,14 @@ from aulos_api.services.embeddings import (
 
 logger = logging.getLogger("aulos_api.knowledge")
 
+
+def _as_dict(val: Any) -> dict[str, Any]:
+    """Avoid bare dict(str) ValueError from malformed dossier chambers."""
+    if isinstance(val, dict):
+        return dict(val)
+    return {}
+
+
 _WORK_KEY_RE = re.compile(r"[^a-z0-9\u4e00-\u9fff]+", re.I)
 _TOKEN_RE = re.compile(r"[a-z0-9\u4e00-\u9fff]{2,}", re.I)
 _SEED_FLAG = False
@@ -228,13 +236,13 @@ def flatten_dossier_chunks(dossier: dict[str, Any], *, max_chars: int = 700) -> 
     add("listening_thesis", str(dossier.get("listening_thesis") or ""))
     add("work_introduction", str(dossier.get("work_introduction") or ""))
     add("era_form", f"Era: {dossier.get('era', '')}. Form: {dossier.get('form', '')}".strip())
-    profile = dict(dossier.get("composer_profile") or {})
+    profile = _as_dict(dossier.get("composer_profile"))
     for k in ("summary", "temperament", "place_in_oeuvre", "place_in_history"):
         add(f"composer_profile.{k}", str(profile.get(k) or ""))
-    genesis = dict(dossier.get("genesis") or {})
+    genesis = _as_dict(dossier.get("genesis"))
     for k, v in genesis.items():
         add(f"genesis.{k}", str(v or ""))
-    stature = dict(dossier.get("historical_stature") or {})
+    stature = _as_dict(dossier.get("historical_stature"))
     add("reception_arc", str(stature.get("reception_arc") or ""))
     for reason in stature.get("reasons") or []:
         add("stature", str(reason))
@@ -250,7 +258,7 @@ def flatten_dossier_chunks(dossier: dict[str, Any], *, max_chars: int = 700) -> 
     for row in dossier.get("variation_deepdives") or []:
         if isinstance(row, dict):
             add("deepdive", f"{row.get('title', '')}: {row.get('note', '')}")
-    sound = dict(dossier.get("sound_world") or {})
+    sound = _as_dict(dossier.get("sound_world"))
     for k, v in sound.items():
         if isinstance(v, list):
             add(f"sound.{k}", "; ".join(str(x) for x in v))
@@ -266,7 +274,7 @@ def flatten_dossier_chunks(dossier: dict[str, Any], *, max_chars: int = 700) -> 
         add("practice", str(p))
     for p in dossier.get("myths_and_caveats") or []:
         add("caveat", str(p))
-    zh = dict(dossier.get("zh") or {})
+    zh = _as_dict(dossier.get("zh") or dossier.get("zh_hans"))
     if zh:
         add("zh.listening_thesis", str(zh.get("listening_thesis") or ""))
         add("zh.work_introduction", str(zh.get("work_introduction") or ""))

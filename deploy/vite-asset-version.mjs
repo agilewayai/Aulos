@@ -1,6 +1,6 @@
 /**
  * Vite plugin: inject build id into the client bundle and emit dist/version.json.
- * Clients poll /version.json (no-cache) and prompt a soft reload when it differs.
+ * Clients poll /version.json (no-cache) and auto-reload when it differs.
  */
 import { execSync } from 'node:child_process'
 import { writeFileSync } from 'node:fs'

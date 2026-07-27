@@ -111,9 +111,18 @@ class ListeningGuide(Base):
     steps_json: Mapped[str] = mapped_column(Text, default="[]")
     research_json: Mapped[str] = mapped_column(Text, default="{}")
     skill_versions_json: Mapped[str] = mapped_column(Text, default="{}")
+    message: Mapped[str] = mapped_column(Text, default="")
+    error_detail: Mapped[str] = mapped_column(Text, default="")
+    tags_json: Mapped[str] = mapped_column(Text, default="[]")
+    favorited_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True), nullable=True, index=True)
     share_slug: Mapped[str | None] = mapped_column(String(64), unique=True, nullable=True, index=True)
     published_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True), nullable=True, index=True)
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=utcnow, index=True)
+    updated_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True),
+        default=utcnow,
+        onupdate=utcnow,
+    )
 
 
 class KnowledgeDocument(Base):

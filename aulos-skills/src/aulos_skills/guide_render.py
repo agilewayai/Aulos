@@ -18,6 +18,8 @@ from aulos_skills.i18n import (
     normalize_lang,
     strip_tech_leaks_zh,
 )
+from aulos_skills.media_search import enrich_appreciation_video, enrich_interpretation_links
+
 
 def _li(items: list[Any]) -> str:
     out = []
@@ -74,8 +76,16 @@ def _render_lang_article(
     myths = list(dossier.get("myths_and_caveats") or [])
     related = list(dossier.get("related_works") or [])
     deepdives = [d for d in list(dossier.get("variation_deepdives") or []) if isinstance(d, dict)]
-    interpretations = [i for i in list(dossier.get("interpretations") or []) if isinstance(i, dict)]
-    videos = [v for v in list(dossier.get("appreciation_videos") or []) if isinstance(v, dict)]
+    interpretations = [
+        enrich_interpretation_links(i, work_title=work_title, composer=composer)
+        for i in list(dossier.get("interpretations") or [])
+        if isinstance(i, dict)
+    ]
+    videos = [
+        enrich_appreciation_video(v, work_title=work_title, composer=composer)
+        for v in list(dossier.get("appreciation_videos") or [])
+        if isinstance(v, dict)
+    ]
     vinyl = [v for v in list(dossier.get("vinyl_and_discography") or []) if isinstance(v, dict)]
     portrait = dict(dossier.get("composer_portrait") or {}) if isinstance(dossier.get("composer_portrait"), dict) else {}
     profile = dict(dossier.get("composer_profile") or {}) if isinstance(dossier.get("composer_profile"), dict) else {}
@@ -138,7 +148,18 @@ def _render_lang_article(
         if i.get("youtube_url"):
             block += (
                 f"<p class='links'><a href=\"{escape(str(i['youtube_url']))}\" "
-                f"target=\"_blank\" rel=\"noopener\">{escape(ui['youtube'])}</a></p>"
+                f"target=\"_blank\" rel=\"noopener\">{escape(ui['youtube'])}</a>"
+            )
+            if i.get("bilibili_url"):
+                block += (
+                    f" · <a href=\"{escape(str(i['bilibili_url']))}\" "
+                    f"target=\"_blank\" rel=\"noopener\">{escape(ui['bilibili'])}</a>"
+                )
+            block += "</p>"
+        elif i.get("bilibili_url"):
+            block += (
+                f"<p class='links'><a href=\"{escape(str(i['bilibili_url']))}\" "
+                f"target=\"_blank\" rel=\"noopener\">{escape(ui['bilibili'])}</a></p>"
             )
         if i.get("discogs_url"):
             block += (
@@ -149,13 +170,34 @@ def _render_lang_article(
         interp_blocks.append(block)
     interp_html = "".join(interp_blocks)
 
-    video_blocks = "".join(
-        f"<article class='media'><h3><a href=\"{escape(str(v.get('url', '')))}\" target=\"_blank\" rel=\"noopener\">"
-        f"{escape(_pick(v, 'title', lang) or str(v.get('title') or ''))}</a></h3>"
-        f"{_p(_pick(v, 'why', lang), zh=zh)}</article>"
-        for v in videos
-        if isinstance(v, dict) and v.get("url")
-    )
+    video_blocks = []
+    for v in videos:
+        if not isinstance(v, dict):
+            continue
+        title = _pick(v, "title", lang) or str(v.get("title") or "")
+        if not title and not v.get("url") and not v.get("bilibili_url"):
+            continue
+        yt = str(v.get("url") or "").strip()
+        bili = str(v.get("bilibili_url") or "").strip()
+        if not yt and not bili:
+            continue
+        links: list[str] = []
+        if yt:
+            links.append(
+                f"<a href=\"{escape(yt)}\" target=\"_blank\" rel=\"noopener\">{escape(ui['youtube'])}</a>"
+            )
+        if bili:
+            links.append(
+                f"<a href=\"{escape(bili)}\" target=\"_blank\" rel=\"noopener\">{escape(ui['bilibili'])}</a>"
+            )
+        video_blocks.append(
+            "<article class='media'>"
+            f"<h3>{escape(title)}</h3>"
+            f"{_p(_pick(v, 'why', lang), zh=zh)}"
+            f"<p class='links'>{' · '.join(links)}</p>"
+            "</article>"
+        )
+    video_html = "".join(video_blocks)
     vinyl_blocks = "".join(
         f"<article class='media'><h3><a href=\"{escape(str(v.get('url', '')))}\" target=\"_blank\" rel=\"noopener\">"
         f"{escape(_pick(v, 'label', lang) or str(v.get('label') or ''))}</a></h3>"
@@ -270,8 +312,8 @@ def _render_lang_article(
             f"<div class='interps'>{interp_html}</div></section>"
         )
     media_inner = ""
-    if video_blocks:
-        media_inner += f"<h3>{escape(ui['videos'])}</h3><div class='medias'>{video_blocks}</div>"
+    if video_html:
+        media_inner += f"<h3>{escape(ui['videos'])}</h3><div class='medias'>{video_html}</div>"
     if vinyl_blocks:
         media_inner += f"<h3>{escape(ui['vinyl'])}</h3><div class='medias'>{vinyl_blocks}</div>"
     if media_inner:

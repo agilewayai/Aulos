@@ -3,11 +3,13 @@ from __future__ import annotations
 from datetime import datetime, timezone
 
 from fastapi import APIRouter, Depends, HTTPException, status
+from fastapi.responses import JSONResponse
 from pydantic import BaseModel, EmailStr, Field
 from sqlalchemy.orm import Session, joinedload
 
 from aulos_api.auth.deps import get_current_user
 from aulos_api.auth.passwords import hash_password, verify_password
+from aulos_api.auth.session import attach_session_cookie, clear_session_cookie
 from aulos_api.auth.tokens import create_access_token
 from aulos_api.db.models import EmailToken, Role, User
 from aulos_api.db.session import get_db
@@ -160,8 +162,8 @@ def verify_email(body: VerifyRequest, db: Session = Depends(get_db)) -> UserOut:
     return _user_out(user)
 
 
-@router.post("/login", response_model=TokenOut)
-def login(body: LoginRequest, db: Session = Depends(get_db)) -> TokenOut:
+@router.post("/login")
+def login(body: LoginRequest, db: Session = Depends(get_db)) -> JSONResponse:
     email = body.email.lower().strip()
     user = (
         db.query(User)
@@ -178,7 +180,17 @@ def login(body: LoginRequest, db: Session = Depends(get_db)) -> TokenOut:
 
     roles = sorted({r.name for r in user.roles})
     token = create_access_token(subject=user.email, roles=roles)
-    return TokenOut(access_token=token, user=_user_out(user))
+    payload = TokenOut(access_token=token, user=_user_out(user)).model_dump()
+    response = JSONResponse(content=payload)
+    attach_session_cookie(response, token)
+    return response
+
+
+@router.post("/logout")
+def logout() -> JSONResponse:
+    response = JSONResponse(content={"ok": True})
+    clear_session_cookie(response)
+    return response
 
 
 @router.post("/forgot-password", response_model=ForgotPasswordOut)

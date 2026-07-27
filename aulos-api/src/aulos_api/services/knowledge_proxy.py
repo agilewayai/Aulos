@@ -31,9 +31,19 @@ async def proxy_knowledge(
     timeout: float = 60.0,
 ) -> tuple[int, Any]:
     url = f"{knowledge_base_url()}{path}"
+    headers: dict[str, str] = {}
+    token = (get_settings().knowledge_admin_token or "").strip()
+    if token:
+        headers["Authorization"] = f"Bearer {token}"
     try:
         async with httpx.AsyncClient(timeout=timeout) as client:
-            resp = await client.request(method.upper(), url, json=json_body, params=params)
+            resp = await client.request(
+                method.upper(),
+                url,
+                json=json_body,
+                params=params,
+                headers=headers,
+            )
             try:
                 data = resp.json()
             except Exception:  # noqa: BLE001

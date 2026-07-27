@@ -159,15 +159,10 @@ export const AULOS_SERVICES: ServiceCard[] = [
 ]
 
 const apiBase = import.meta.env.VITE_AULOS_API_BASE ?? ''
-const TOKEN_KEY = 'aulos_ops_access_token'
 
+/** Session is HttpOnly cookie-based (SPEC-014); no JS-readable token. */
 export function getStoredToken(): string | null {
-  return localStorage.getItem(TOKEN_KEY)
-}
-
-export function storeToken(token: string | null) {
-  if (!token) localStorage.removeItem(TOKEN_KEY)
-  else localStorage.setItem(TOKEN_KEY, token)
+  return null
 }
 
 async function request<T>(path: string, init: RequestInit = {}, auth = false): Promise<T> {
@@ -175,11 +170,12 @@ async function request<T>(path: string, init: RequestInit = {}, auth = false): P
   if (!headers.has('Content-Type') && init.body) {
     headers.set('Content-Type', 'application/json')
   }
-  if (auth) {
-    const token = getStoredToken()
-    if (token) headers.set('Authorization', `Bearer ${token}`)
-  }
-  const response = await fetch(`${apiBase}${path}`, { ...init, headers })
+  void auth
+  const response = await fetch(`${apiBase}${path}`, {
+    ...init,
+    headers,
+    credentials: 'include',
+  })
   if (!response.ok) {
     let detail = `Request failed (${response.status})`
     try {
@@ -194,12 +190,10 @@ async function request<T>(path: string, init: RequestInit = {}, auth = false): P
 }
 
 export async function login(email: string, password: string) {
-  const data = await request<TokenResponse>('/v1/auth/login', {
+  return request<TokenResponse>('/v1/auth/login', {
     method: 'POST',
     body: JSON.stringify({ email, password }),
   })
-  storeToken(data.access_token)
-  return data
 }
 
 export function fetchMe() {
@@ -679,6 +673,22 @@ export function probeSkills(message: string) {
   )
 }
 
+export function fetchOpsGuideTrace(guideId: number) {
+  return request<{
+    guide_id: number
+    work_title: string
+    composer: string
+    created_at?: string | null
+    chain_trace: {
+      schema: string
+      trace_id: string
+      milestones?: Array<{ id: string; status: string; summary: string; signals?: string[] }>
+      deviations?: Array<{ code: string; summary: string; at_milestone?: string }>
+      identity_arc?: Array<{ stage: string; composer?: string; work_title?: string }>
+    } | null
+  }>(`/v1/ops/listening-guides/${guideId}/trace`, {}, true)
+}
+
 export type DevBlogSummary = {
   day: string
   title: string
@@ -717,6 +727,10 @@ export function generateDevBlog(day: string, force = false) {
   )
 }
 
-export function logout() {
-  storeToken(null)
+export async function logout() {
+  try {
+    await request('/v1/auth/logout', { method: 'POST' })
+  } catch {
+    /* best-effort */
+  }
 }

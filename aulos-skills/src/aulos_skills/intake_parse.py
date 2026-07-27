@@ -58,6 +58,12 @@ _EN_COMPOSER_DASH_RE = re.compile(
     r"(?i)\b([A-ZÀ-ÖØ-Þ][\wÀ-öø-ÿ'.\-]+(?:\s+[A-ZÀ-ÖØ-Þ][\wÀ-öø-ÿ'.\-]+){0,3})"
     r"\s*[—–\-:]\s*([^\n]{2,80})"
 )
+_LEADING_PREPOSITIONS = re.compile(
+    r"(?i)^(i('m| am)?\s+)?(listening\s+to\s+|to|by|of|for|on|about|with|from|the)\s+"
+)
+_PERFORMER_TAIL_RE = re.compile(
+    r"(?i)\s+(performed by|featuring|with performers?)\b.+$"
+)
 
 
 def strip_listening_boilerplate(text: str) -> str:
@@ -142,6 +148,11 @@ def guess_composer_and_title(text: str, *, catalog_composers: dict[str, Any] | N
             composer = en_dash.group(1).strip()
         work_title = en_dash.group(2).strip(" .,!?:;-")
         work_title = strip_listening_boilerplate(work_title)
+
+    composer = _LEADING_PREPOSITIONS.sub("", (composer or "").strip()).strip(" .,!?:;-")
+    if work_title:
+        work_title = _PERFORMER_TAIL_RE.sub("", work_title).strip(" .,!?:;-")
+        work_title = _LEADING_PREPOSITIONS.sub("", work_title).strip(" .,!?:;-")
 
     if not work_title:
         cleaned = strip_listening_boilerplate(raw)

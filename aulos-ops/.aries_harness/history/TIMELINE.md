@@ -8,10 +8,10 @@ managed_by: "aries-harness"
 fingerprint: "aries-harness/history-doc/v1"
 generated_by: "/aries-harness history-refresh"
 initialized_at: "2026-07-25T11:20:06Z"
-generated_at: "2026-07-26T16:28:21+00:00"
+generated_at: "2026-07-27T09:44:43+00:00"
 effective_status: "generated"
-effective_since: "2026-07-26T16:28:21+00:00"
-content_fingerprint: "sha256:b20590a6f5fda8fbdac66945da0530452408dd8811b1475d7a9e0676c4c25c79"
+effective_since: "2026-07-27T09:44:43+00:00"
+content_fingerprint: "sha256:d70b9a01222cb18d630274ed5b417d53a9ec60bfa98657e431cd2c6d9190b2a4"
 trace_history_source: "filesystem-only"
 trace_last_commit_sha: ""
 trace_last_commit_at: ""
@@ -19,9 +19,13 @@ trace_revision_count: "0"
 ---
 # Timeline
 
-Generated at: `2026-07-26T16:28:21+00:00`
+Generated at: `2026-07-27T09:44:43+00:00`
 
 ## Journal milestones
+
+### 2026-07-26T16:45:00Z
+
+- UX: `PasswordField` Show/Hide on login password + all API key / token fields
 
 ### 2026-07-26T16:30:00Z
 
@@ -51,6 +55,7 @@ Generated at: `2026-07-26T16:28:21+00:00`
 
 ## Recent git commits
 
+- `0c8a847` 2026-07-27 Ship Ops daily Dev Blog and web forgot-password reset.
 - `6ab1ea3` 2026-07-26 Ship /discogs release and catalog-number listening guides with OPS token UI.
 - `53e7437` 2026-07-26 Ship identity catalog, Hans/Hant locales, web research, and knowledge plane.
 - `555cf53` 2026-07-26 Ship listening product, mandatory harness, facility layout, and UTC/local time.
@@ -60,7 +65,9 @@ Generated at: `2026-07-26T16:28:21+00:00`
 
 ## Working tree snapshot
 
-- `M` `aulos-api/.aries_harness/ARIES_HARNESS_FINGERPRINT.json`
+- `M` `AGENTS.md`
+- `M` `CLAUDE.md`
+- `M` `README.md`
 - `M` `aulos-api/.aries_harness/EVAL.md`
 - `M` `aulos-api/.aries_harness/INDEX.md`
 - `M` `aulos-api/.aries_harness/JOURNAL.md`
@@ -70,5 +77,3 @@ Generated at: `2026-07-26T16:28:21+00:00`
 - `M` `aulos-api/.aries_harness/history/DOC_TRACE.md`
 - `M` `aulos-api/.aries_harness/history/README.md`
 - `M` `aulos-api/.aries_harness/history/RETROSPECTIVE.md`
-- `M` `aulos-api/.aries_harness/history/ROADMAP.md`
-- `M` `aulos-api/.aries_harness/history/STATUS.md`

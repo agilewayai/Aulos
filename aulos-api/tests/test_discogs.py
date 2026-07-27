@@ -250,6 +250,92 @@ def test_listening_guide_from_discogs_command(client: TestClient, monkeypatch: p
     assert "discogs.com" in str(research.get("discogs", {}).get("uri") or "")
 
 
+def test_suggest_discogs_releases_autocomplete(monkeypatch: pytest.MonkeyPatch) -> None:
+    from aulos_api.services.discogs import suggest_discogs_releases
+
+    search_calls: list[dict[str, str]] = []
+
+    def handler(request: httpx.Request) -> httpx.Response:
+        if request.url.path.endswith("/database/search"):
+            params = dict(request.url.params)
+            search_calls.append(params)
+            return httpx.Response(
+                200,
+                json={
+                    "results": [
+                        {
+                            "id": 4084139,
+                            "title": "Vladimir Horowitz - Horowitz Plays Mozart",
+                            "catno": "423 287-1",
+                            "year": "1987",
+                            "label": ["Deutsche Grammophon"],
+                            "genre": ["Classical"],
+                            "country": "Germany",
+                            "thumb": "https://example.com/t.jpg",
+                            "uri": "/release/4084139",
+                        },
+                        {
+                            "id": 99,
+                            "title": "Some Pop Album",
+                            "catno": "POP-1",
+                            "year": "2000",
+                            "label": ["Other"],
+                            "genre": ["Pop"],
+                            "uri": "/release/99",
+                        },
+                    ]
+                },
+            )
+        return httpx.Response(404, json={})
+
+    with httpx.Client(transport=httpx.MockTransport(handler)) as http:
+        short = suggest_discogs_releases("a", client=http)
+        assert short == []
+
+        hits = suggest_discogs_releases("423-287-1", client=http, limit=10)
+    assert len(hits) >= 1
+    assert hits[0]["id"] == 4084139  # Classical first
+    assert hits[0]["catno"] == "423 287-1"
+    assert hits[0]["label"] == "Deutsche Grammophon"
+    assert any(c.get("catno") for c in search_calls)
+    assert any(c.get("q") == "423-287-1" for c in search_calls)
+
+
+def test_discogs_search_endpoint(client: TestClient, monkeypatch: pytest.MonkeyPatch) -> None:
+    from aulos_api.services import discogs as discogs_mod
+
+    def fake_suggest(query: str, *, client=None, db=None, limit: int = 10):  # noqa: ANN001
+        assert "423" in query
+        return [
+            {
+                "id": 4084139,
+                "title": "Horowitz Plays Mozart",
+                "catno": "423 287-1",
+                "year": "1987",
+                "label": "Deutsche Grammophon",
+                "country": "Germany",
+                "thumb": "",
+                "genres": ["Classical"],
+                "resource_url": "",
+                "uri": "https://www.discogs.com/release/4084139",
+            }
+        ]
+
+    monkeypatch.setattr(discogs_mod, "suggest_discogs_releases", fake_suggest)
+
+    unauth = client.get("/v1/discogs/search", params={"q": "423-287-1"})
+    assert unauth.status_code == 401
+
+    headers = _user_headers(client)
+
+    res = client.get("/v1/discogs/search", headers=headers, params={"q": "423-287-1", "limit": 5})
+    assert res.status_code == 200, res.text
+    body = res.json()
+    assert body["query"] == "423-287-1"
+    assert body["results"][0]["id"] == 4084139
+    assert "Mozart" in body["results"][0]["title"]
+
+
 def test_ops_discogs_token_config(client: TestClient) -> None:
     login = client.post(
         "/v1/auth/login",

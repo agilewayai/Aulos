@@ -182,46 +182,44 @@ def list_recent_deliveries(db: Session, *, limit: int = 50) -> list[EmailDeliver
     )
 
 
-def send_verification_email(*, db: Session, to_email: str, raw_token: str) -> None:
+def send_verification_email(*, db: Session, to_email: str, raw_token: str) -> dict:
+    from aulos_api.services.email_templates import verification_message
+
     settings = get_settings()
     verify_url = f"{settings.web_base_url.rstrip('/')}/verify?token={raw_token}"
-    subject = "Verify your Aulos account"
-    text = (
-        "Welcome to Aulos.\n\n"
-        f"Verify your email by opening:\n{verify_url}\n\n"
-        "If you did not register, ignore this message.\n"
-    )
-    _send_message(
+    subject, text, html = verification_message(verify_url=verify_url)
+    return dispatch_mail(
         db=db,
         to_email=to_email,
         subject=subject,
         text=text,
+        html=html,
         kind="verify_email",
         extra={"verification_token": raw_token, "verify_url": verify_url},
     )
 
 
-def send_password_reset_email(*, db: Session, to_email: str, raw_token: str) -> None:
+def send_password_reset_email(*, db: Session, to_email: str, raw_token: str) -> dict:
+    from aulos_api.services.email_templates import password_reset_message
+
     settings = get_settings()
     reset_url = f"{settings.web_base_url.rstrip('/')}/?reset_token={raw_token}"
-    subject = "Reset your Aulos password"
-    text = (
-        "We received a request to reset your Aulos password.\n\n"
-        f"Open this link to choose a new password:\n{reset_url}\n\n"
-        "If you did not ask for a reset, you can ignore this message.\n"
-    )
-    _send_message(
+    subject, text, html = password_reset_message(reset_url=reset_url)
+    return dispatch_mail(
         db=db,
         to_email=to_email,
         subject=subject,
         text=text,
+        html=html,
         kind="reset_password",
         extra={"reset_token": raw_token, "reset_url": reset_url},
     )
 
 
 def test_mailgun_configuration(*, db: Session, to_email: str) -> dict:
-    """Validate saved Mailgun settings and send a probe message."""
+    """Validate saved Mailgun settings and send a probe message (always synchronous)."""
+    from aulos_api.services.email_templates import config_test_message
+
     cfg = load_mailgun_config(db)
     provider = effective_mail_provider(db)
     missing = [
@@ -237,16 +235,13 @@ def test_mailgun_configuration(*, db: Session, to_email: str) -> dict:
     if missing:
         raise ValueError("Mailgun is not fully configured: missing " + ", ".join(missing))
 
-    subject = "Aulos Mailgun configuration test"
-    text = (
-        "This is a test message from Aulos Ops.\n\n"
-        "If you received it, Mailgun configuration is working.\n"
-    )
-    result = _send_message(
+    subject, text, html = config_test_message()
+    result = deliver_message(
         db=db,
         to_email=to_email,
         subject=subject,
         text=text,
+        html=html,
         kind="config_test",
         extra={"domain": cfg.domain, "from_email": cfg.from_email},
     )
@@ -267,6 +262,64 @@ def test_mailgun_configuration(*, db: Session, to_email: str) -> dict:
     }
 
 
+def dispatch_mail(
+    *,
+    db: Session,
+    to_email: str,
+    subject: str,
+    text: str,
+    kind: str,
+    extra: dict | None = None,
+    html: str | None = None,
+) -> dict:
+    """Enqueue live mail; send fake/sync immediately so tests and probes stay deterministic."""
+    settings = get_settings()
+    provider = effective_mail_provider(db)
+    use_queue = bool(settings.mail_queue_enabled) and provider != "fake"
+    if use_queue:
+        from aulos_api.services.mail_queue import enqueue_mail_job
+
+        return enqueue_mail_job(
+            kind=kind,
+            to_email=to_email,
+            subject=subject,
+            text=text,
+            html=html or "",
+            extra=extra,
+        )
+    return deliver_message(
+        db=db,
+        to_email=to_email,
+        subject=subject,
+        text=text,
+        html=html,
+        kind=kind,
+        extra=extra,
+    )
+
+
+def deliver_message(
+    *,
+    db: Session,
+    to_email: str,
+    subject: str,
+    text: str,
+    kind: str,
+    extra: dict | None = None,
+    html: str | None = None,
+) -> dict:
+    """Actually send (or fake-store) one message. Used by sync path and queue worker."""
+    return _send_message(
+        db=db,
+        to_email=to_email,
+        subject=subject,
+        text=text,
+        kind=kind,
+        extra=extra,
+        html=html,
+    )
+
+
 def _send_message(
     *,
     db: Session,
@@ -275,13 +328,15 @@ def _send_message(
     text: str,
     kind: str,
     extra: dict | None = None,
+    html: str | None = None,
 ) -> dict:
     provider = effective_mail_provider(db)
     logger.info(
-        "mail_send_start kind=%s to=%s provider=%s",
+        "mail_send_start kind=%s to=%s provider=%s html=%s",
         kind,
         to_email,
         provider,
+        bool(html),
     )
 
     if provider == "fake":
@@ -289,6 +344,7 @@ def _send_message(
             "to": to_email,
             "subject": subject,
             "text": text,
+            "html": html or "",
             "kind": kind,
             "sent_at": to_utc_iso(datetime.now(timezone.utc)),
         }
@@ -323,16 +379,19 @@ def _send_message(
 
     base = MAILGUN_API_BASE.get(cfg.region, MAILGUN_API_BASE["us"])
     url = f"{base}/v3/{cfg.domain}/messages"
+    data: dict[str, object] = {
+        "from": cfg.from_email,
+        "to": [to_email],
+        "subject": subject,
+        "text": text,
+    }
+    if html:
+        data["html"] = html
     try:
         response = httpx.post(
             url,
             auth=("api", cfg.api_key),
-            data={
-                "from": cfg.from_email,
-                "to": [to_email],
-                "subject": subject,
-                "text": text,
-            },
+            data=data,
             timeout=30.0,
         )
         body_text = response.text

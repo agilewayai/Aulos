@@ -10,13 +10,17 @@ generated_by: "/aries-harness init"
 initialized_at: "2026-07-25T11:20:06Z"
 effective_status: "active"
 effective_since: "2026-07-25T11:20:06Z"
-content_fingerprint: "sha256:6de1b279f6e7bf9627f26bdcb91a2974078f6a726562eba0144ad01aa8040447"
+content_fingerprint: "sha256:38a535eff6359f5f079c5019e623dee0c1bd2e086d69a7aa8172bcd82440f812"
 trace_history_source: "filesystem-only"
 trace_last_commit_sha: ""
 trace_last_commit_at: ""
 trace_revision_count: "0"
 ---
 # Journal
+
+## 2026-07-26T16:45:00Z
+
+- UX: `PasswordField` Show/Hide on login password + all API key / token fields
 
 ## 2026-07-26T16:30:00Z
 
