@@ -8,10 +8,10 @@ managed_by: "aries-harness"
 fingerprint: "aries-harness/bootstrap-doc/v1"
 generated_by: "/aries-harness well-organized"
 initialized_at: "2026-07-25T11:20:05Z"
-last_organized_at: "2026-07-27T10:24:56+00:00"
+last_organized_at: "2026-07-27T11:49:07+00:00"
 effective_status: "generated"
-effective_since: "2026-07-27T10:24:56+00:00"
-content_fingerprint: "sha256:6badbd2bfbad3707e41025d8992b48a0950f54a04f4e8e4f26b5852a474abd00"
+effective_since: "2026-07-27T11:49:07+00:00"
+content_fingerprint: "sha256:28a8a29029b91e0c8fe85ec8c76dc33f811ab87747c2b70db50c11996548da0c"
 trace_history_source: "filesystem-only"
 trace_last_commit_sha: ""
 trace_last_commit_at: ""
@@ -19,7 +19,7 @@ trace_revision_count: "0"
 ---
 # Harness Index
 
-Last organized: `2026-07-27T10:24:56+00:00`
+Last organized: `2026-07-27T11:49:07+00:00`
 
 Canonical spelling: `/aries-harness well-organized`
 
@@ -56,6 +56,7 @@ Fingerprint marker: `aries-harness` / `aries-harness/bootstrap-doc/v1`
 #### `references/`
 - role: meta-definition collections and reference packs
 - [HDM-001-harness-design-memo.md](references/HDM-001-harness-design-memo.md)
+- [META-001-meta-principles.md](references/META-001-meta-principles.md)
 - [REG-001-artifact-register.md](references/REG-001-artifact-register.md)
 - [TRACE-001-value-traceability.md](references/TRACE-001-value-traceability.md)
 

@@ -8,10 +8,10 @@ managed_by: "aries-harness"
 fingerprint: "aries-harness/history-doc/v1"
 generated_by: "/aries-harness history-refresh"
 initialized_at: "2026-07-25T11:20:06Z"
-generated_at: "2026-07-27T10:25:19+00:00"
+generated_at: "2026-07-27T11:49:30+00:00"
 effective_status: "generated"
-effective_since: "2026-07-27T10:25:19+00:00"
-content_fingerprint: "sha256:423a303929e29b5eab76a33f37b91b7263fc15baaf831045234e558b219fa060"
+effective_since: "2026-07-27T11:49:30+00:00"
+content_fingerprint: "sha256:bebedb6d1d53b9bbc3bbdb60bf183168727baf0f47252b64161ce9af93e6abce"
 trace_history_source: "filesystem-only"
 trace_last_commit_sha: ""
 trace_last_commit_at: ""
@@ -19,7 +19,7 @@ trace_revision_count: "0"
 ---
 # Harness History Surface
 
-Last refreshed: `2026-07-27T10:25:19+00:00`
+Last refreshed: `2026-07-27T11:49:30+00:00`
 
 This directory holds generated development-history views derived from harness facts and repo evidence.
 

@@ -39,6 +39,7 @@ import {
   saveWebScene,
   type WebSessionScene,
 } from './sessionScene'
+import { requestAssetVersionCheck } from './assetVersion'
 import './App.css'
 
 type Mode = 'login' | 'register' | 'verify' | 'forgot' | 'reset' | 'studio'
@@ -142,6 +143,10 @@ function App() {
     libraryFilter,
     tagFilter,
   }
+
+  useEffect(() => {
+    requestAssetVersionCheck()
+  }, [studioTab])
 
   useEffect(() => {
     return registerSceneCapture(() => {

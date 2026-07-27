@@ -174,7 +174,19 @@ def collect_day_evidence(day: str, *, repo_root: Path | None = None) -> DayEvide
             continue
         lower = path.lower()
         if ".aries_harness/" in lower and any(
-            tok in lower for tok in ("/requests/", "/specs/", "/stories/", "req-", "spec-", "story-")
+            tok in lower
+            for tok in (
+                "/requests/",
+                "/specs/",
+                "/stories/",
+                "/runs/reviews/",
+                "/decisions/",
+                "req-",
+                "spec-",
+                "story-",
+                "audit-",
+                "adr-",
+            )
         ):
             changed.append(path)
     # unique preserve order
@@ -204,8 +216,7 @@ def collect_day_evidence(day: str, *, repo_root: Path | None = None) -> DayEvide
                 continue
             # Prefer journal entries that mention the day
             if path.name == "JOURNAL.md" and day not in text and f"T" not in text[:200]:
-                # still include a short tail of recent journal
-                text = text[-MAX_FILE_SNIPPET:]
+                text = _strip_frontmatter(text)[:MAX_FILE_SNIPPET]
             elif path.name == "JOURNAL.md":
                 text = _journal_slice_for_day(text, day)
             evidence.harness_excerpts.append(
@@ -219,8 +230,16 @@ def collect_day_evidence(day: str, *, repo_root: Path | None = None) -> DayEvide
     return evidence
 
 
+def _strip_frontmatter(text: str) -> str:
+    if text.startswith("---"):
+        end = text.find("\n---", 3)
+        if end != -1:
+            return text[end + 4 :]
+    return text
+
+
 def _journal_slice_for_day(text: str, day: str) -> str:
-    """Keep headings/paragraphs that look related to the UTC day."""
+    """Keep headings/paragraphs that look related to the UTC day (newest-first in JOURNAL)."""
     chunks: list[str] = []
     current: list[str] = []
     keep = False
@@ -237,8 +256,10 @@ def _journal_slice_for_day(text: str, day: str) -> str:
     if keep and current:
         chunks.append("\n".join(current))
     if chunks:
-        return "\n\n".join(chunks)[-MAX_FILE_SNIPPET:]
-    return text[-MAX_FILE_SNIPPET:]
+        # JOURNAL is reverse-chronological — keep the start of the joined slice (newest entries).
+        return "\n\n".join(chunks)[:MAX_FILE_SNIPPET]
+    # No dated headings matched: take the top of the file (recent entries), skip YAML frontmatter.
+    return _strip_frontmatter(text)[:MAX_FILE_SNIPPET]
 
 
 def render_fake_draft(evidence: DayEvidence) -> tuple[str, str]:

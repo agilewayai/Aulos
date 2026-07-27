@@ -103,14 +103,14 @@
       "layer": "SharedSupportSurface",
       "declared_layer": "SharedSupportSurface",
       "effective_status": "generated",
-      "effective_since": "2026-07-27T10:25:30+00:00",
+      "effective_since": "2026-07-27T11:49:41+00:00",
       "managed_by": "aries-harness",
       "fingerprint": "aries-harness/bootstrap-doc/v1",
       "last_updated_at": "",
       "completed_at": "",
       "timebox_actual": "",
-      "content_fingerprint": "sha256:0cab45fffd5d65e76fa0a15a62ba828c19ceeb1a19fa597185732aa11672cba6",
-      "observed_content_fingerprint": "sha256:0cab45fffd5d65e76fa0a15a62ba828c19ceeb1a19fa597185732aa11672cba6",
+      "content_fingerprint": "sha256:2fab44fd18c0662dfc20b03b800f8ec0fdfb573e8e22b0b404f2813190bb913d",
+      "observed_content_fingerprint": "sha256:2fab44fd18c0662dfc20b03b800f8ec0fdfb573e8e22b0b404f2813190bb913d",
       "trace_history_source": "filesystem-only",
       "trace_last_commit_sha": "",
       "trace_last_commit_at": "",
@@ -122,11 +122,16 @@
         "trace_revision_count": "0"
       },
       "latest_commit": {
-        "sha": "c3009d2",
+        "sha": "5633e94",
         "date": "2026-07-27",
-        "subject": "Harden platform security, ship fleet DevOps control, and refresh harness honeycomb."
+        "subject": "Ship Ops task queue, dev blog v2, and refresh fleet honeycomb."
       },
       "recent_updates": [
+        {
+          "sha": "5633e94",
+          "date": "2026-07-27",
+          "subject": "Ship Ops task queue, dev blog v2, and refresh fleet honeycomb."
+        },
         {
           "sha": "c3009d2",
           "date": "2026-07-27",
@@ -136,11 +141,6 @@
           "sha": "53e7437",
           "date": "2026-07-26",
           "subject": "Ship identity catalog, Hans/Hant locales, web research, and knowledge plane."
-        },
-        {
-          "sha": "555cf53",
-          "date": "2026-07-26",
-          "subject": "Ship listening product, mandatory harness, facility layout, and UTC/local time."
         }
       ],
       "dirty": false,
@@ -794,14 +794,14 @@
       "layer": "SharedSupportSurface",
       "declared_layer": "SharedSupportSurface",
       "effective_status": "generated",
-      "effective_since": "2026-07-27T09:44:53+00:00",
+      "effective_since": "2026-07-27T10:25:30+00:00",
       "managed_by": "aries-harness",
       "fingerprint": "aries-harness/history-doc/v1",
       "last_updated_at": "",
       "completed_at": "",
       "timebox_actual": "",
-      "content_fingerprint": "sha256:d8b3f6fcd3571bbef4d5da9d18122b3dc5a669ffe7d187aa5e98e7abb7a16a5b",
-      "observed_content_fingerprint": "sha256:d8b3f6fcd3571bbef4d5da9d18122b3dc5a669ffe7d187aa5e98e7abb7a16a5b",
+      "content_fingerprint": "sha256:dc78c7b91d0d95c4c060cd8a1021b8e975bbb00dd6c90ecb9d174780e78c06af",
+      "observed_content_fingerprint": "sha256:dc78c7b91d0d95c4c060cd8a1021b8e975bbb00dd6c90ecb9d174780e78c06af",
       "trace_history_source": "filesystem-only",
       "trace_last_commit_sha": "",
       "trace_last_commit_at": "",
@@ -813,11 +813,16 @@
         "trace_revision_count": "0"
       },
       "latest_commit": {
-        "sha": "c3009d2",
+        "sha": "5633e94",
         "date": "2026-07-27",
-        "subject": "Harden platform security, ship fleet DevOps control, and refresh harness honeycomb."
+        "subject": "Ship Ops task queue, dev blog v2, and refresh fleet honeycomb."
       },
       "recent_updates": [
+        {
+          "sha": "5633e94",
+          "date": "2026-07-27",
+          "subject": "Ship Ops task queue, dev blog v2, and refresh fleet honeycomb."
+        },
         {
           "sha": "c3009d2",
           "date": "2026-07-27",
@@ -827,11 +832,6 @@
           "sha": "53e7437",
           "date": "2026-07-26",
           "subject": "Ship identity catalog, Hans/Hant locales, web research, and knowledge plane."
-        },
-        {
-          "sha": "555cf53",
-          "date": "2026-07-26",
-          "subject": "Ship listening product, mandatory harness, facility layout, and UTC/local time."
         }
       ],
       "dirty": false,
@@ -845,14 +845,14 @@
       "layer": "SharedSupportSurface",
       "declared_layer": "SharedSupportSurface",
       "effective_status": "generated",
-      "effective_since": "2026-07-27T09:44:53+00:00",
+      "effective_since": "2026-07-27T10:25:30+00:00",
       "managed_by": "aries-harness",
       "fingerprint": "aries-harness/history-doc/v1",
       "last_updated_at": "",
       "completed_at": "",
       "timebox_actual": "",
-      "content_fingerprint": "sha256:a10ef6eaa5ae82bc7e8d2fb431696e7c4d7a1b229db91971c036d6da30d1f00f",
-      "observed_content_fingerprint": "sha256:a10ef6eaa5ae82bc7e8d2fb431696e7c4d7a1b229db91971c036d6da30d1f00f",
+      "content_fingerprint": "sha256:8c8d6ad8b36af66311efd77f38c7d0162e82e0db7419b793f79256ebf890f086",
+      "observed_content_fingerprint": "sha256:8c8d6ad8b36af66311efd77f38c7d0162e82e0db7419b793f79256ebf890f086",
       "trace_history_source": "filesystem-only",
       "trace_last_commit_sha": "",
       "trace_last_commit_at": "",
@@ -864,11 +864,16 @@
         "trace_revision_count": "0"
       },
       "latest_commit": {
-        "sha": "c3009d2",
+        "sha": "5633e94",
         "date": "2026-07-27",
-        "subject": "Harden platform security, ship fleet DevOps control, and refresh harness honeycomb."
+        "subject": "Ship Ops task queue, dev blog v2, and refresh fleet honeycomb."
       },
       "recent_updates": [
+        {
+          "sha": "5633e94",
+          "date": "2026-07-27",
+          "subject": "Ship Ops task queue, dev blog v2, and refresh fleet honeycomb."
+        },
         {
           "sha": "c3009d2",
           "date": "2026-07-27",
@@ -878,11 +883,6 @@
           "sha": "53e7437",
           "date": "2026-07-26",
           "subject": "Ship identity catalog, Hans/Hant locales, web research, and knowledge plane."
-        },
-        {
-          "sha": "555cf53",
-          "date": "2026-07-26",
-          "subject": "Ship listening product, mandatory harness, facility layout, and UTC/local time."
         }
       ],
       "dirty": false,
@@ -896,14 +896,14 @@
       "layer": "SharedSupportSurface",
       "declared_layer": "SharedSupportSurface",
       "effective_status": "generated",
-      "effective_since": "2026-07-27T09:44:53+00:00",
+      "effective_since": "2026-07-27T10:25:30+00:00",
       "managed_by": "aries-harness",
       "fingerprint": "aries-harness/history-doc/v1",
       "last_updated_at": "",
       "completed_at": "",
       "timebox_actual": "",
-      "content_fingerprint": "sha256:f46a067033566cd08c79d5f76c4758ea5b1342f06294f335368ae87b82465486",
-      "observed_content_fingerprint": "sha256:f46a067033566cd08c79d5f76c4758ea5b1342f06294f335368ae87b82465486",
+      "content_fingerprint": "sha256:22062a3b88b73aa944d1386d2b5eb56899049093e7856f018d0b95c14f394484",
+      "observed_content_fingerprint": "sha256:22062a3b88b73aa944d1386d2b5eb56899049093e7856f018d0b95c14f394484",
       "trace_history_source": "filesystem-only",
       "trace_last_commit_sha": "",
       "trace_last_commit_at": "",
@@ -915,11 +915,16 @@
         "trace_revision_count": "0"
       },
       "latest_commit": {
-        "sha": "c3009d2",
+        "sha": "5633e94",
         "date": "2026-07-27",
-        "subject": "Harden platform security, ship fleet DevOps control, and refresh harness honeycomb."
+        "subject": "Ship Ops task queue, dev blog v2, and refresh fleet honeycomb."
       },
       "recent_updates": [
+        {
+          "sha": "5633e94",
+          "date": "2026-07-27",
+          "subject": "Ship Ops task queue, dev blog v2, and refresh fleet honeycomb."
+        },
         {
           "sha": "c3009d2",
           "date": "2026-07-27",
@@ -929,11 +934,6 @@
           "sha": "53e7437",
           "date": "2026-07-26",
           "subject": "Ship identity catalog, Hans/Hant locales, web research, and knowledge plane."
-        },
-        {
-          "sha": "555cf53",
-          "date": "2026-07-26",
-          "subject": "Ship listening product, mandatory harness, facility layout, and UTC/local time."
         }
       ],
       "dirty": false,
@@ -947,14 +947,14 @@
       "layer": "SharedSupportSurface",
       "declared_layer": "SharedSupportSurface",
       "effective_status": "generated",
-      "effective_since": "2026-07-27T09:44:53+00:00",
+      "effective_since": "2026-07-27T10:25:30+00:00",
       "managed_by": "aries-harness",
       "fingerprint": "aries-harness/history-doc/v1",
       "last_updated_at": "",
       "completed_at": "",
       "timebox_actual": "",
-      "content_fingerprint": "sha256:20d1654da2c233e73108605cc879296a94e2f19e5de3433e381522306ae4fd82",
-      "observed_content_fingerprint": "sha256:20d1654da2c233e73108605cc879296a94e2f19e5de3433e381522306ae4fd82",
+      "content_fingerprint": "sha256:41bbf3f17a6fc9767e20ffe7ff07380cee58c18d72373ce8f6f7a4ce68a189f0",
+      "observed_content_fingerprint": "sha256:41bbf3f17a6fc9767e20ffe7ff07380cee58c18d72373ce8f6f7a4ce68a189f0",
       "trace_history_source": "filesystem-only",
       "trace_last_commit_sha": "",
       "trace_last_commit_at": "",
@@ -966,11 +966,16 @@
         "trace_revision_count": "0"
       },
       "latest_commit": {
-        "sha": "c3009d2",
+        "sha": "5633e94",
         "date": "2026-07-27",
-        "subject": "Harden platform security, ship fleet DevOps control, and refresh harness honeycomb."
+        "subject": "Ship Ops task queue, dev blog v2, and refresh fleet honeycomb."
       },
       "recent_updates": [
+        {
+          "sha": "5633e94",
+          "date": "2026-07-27",
+          "subject": "Ship Ops task queue, dev blog v2, and refresh fleet honeycomb."
+        },
         {
           "sha": "c3009d2",
           "date": "2026-07-27",
@@ -980,11 +985,6 @@
           "sha": "53e7437",
           "date": "2026-07-26",
           "subject": "Ship identity catalog, Hans/Hant locales, web research, and knowledge plane."
-        },
-        {
-          "sha": "555cf53",
-          "date": "2026-07-26",
-          "subject": "Ship listening product, mandatory harness, facility layout, and UTC/local time."
         }
       ],
       "dirty": false,
@@ -998,14 +998,14 @@
       "layer": "SharedSupportSurface",
       "declared_layer": "SharedSupportSurface",
       "effective_status": "generated",
-      "effective_since": "2026-07-27T09:44:53+00:00",
+      "effective_since": "2026-07-27T10:25:30+00:00",
       "managed_by": "aries-harness",
       "fingerprint": "aries-harness/history-doc/v1",
       "last_updated_at": "",
       "completed_at": "",
       "timebox_actual": "",
-      "content_fingerprint": "sha256:a608c5f19f8d4ef65c65bd05bb1a133fd9c797e8296c8e75ad3c899a90cb6d11",
-      "observed_content_fingerprint": "sha256:a608c5f19f8d4ef65c65bd05bb1a133fd9c797e8296c8e75ad3c899a90cb6d11",
+      "content_fingerprint": "sha256:a0d8a7340b1452e0495a8ae8dc1937801ca05dea56af0bf9d395f1a0d9a62693",
+      "observed_content_fingerprint": "sha256:a0d8a7340b1452e0495a8ae8dc1937801ca05dea56af0bf9d395f1a0d9a62693",
       "trace_history_source": "filesystem-only",
       "trace_last_commit_sha": "",
       "trace_last_commit_at": "",
@@ -1017,11 +1017,16 @@
         "trace_revision_count": "0"
       },
       "latest_commit": {
-        "sha": "c3009d2",
+        "sha": "5633e94",
         "date": "2026-07-27",
-        "subject": "Harden platform security, ship fleet DevOps control, and refresh harness honeycomb."
+        "subject": "Ship Ops task queue, dev blog v2, and refresh fleet honeycomb."
       },
       "recent_updates": [
+        {
+          "sha": "5633e94",
+          "date": "2026-07-27",
+          "subject": "Ship Ops task queue, dev blog v2, and refresh fleet honeycomb."
+        },
         {
           "sha": "c3009d2",
           "date": "2026-07-27",
@@ -1031,11 +1036,6 @@
           "sha": "53e7437",
           "date": "2026-07-26",
           "subject": "Ship identity catalog, Hans/Hant locales, web research, and knowledge plane."
-        },
-        {
-          "sha": "555cf53",
-          "date": "2026-07-26",
-          "subject": "Ship listening product, mandatory harness, facility layout, and UTC/local time."
         }
       ],
       "dirty": false,
@@ -1049,14 +1049,14 @@
       "layer": "SharedSupportSurface",
       "declared_layer": "SharedSupportSurface",
       "effective_status": "generated",
-      "effective_since": "2026-07-27T09:44:53+00:00",
+      "effective_since": "2026-07-27T10:25:30+00:00",
       "managed_by": "aries-harness",
       "fingerprint": "aries-harness/history-doc/v1",
       "last_updated_at": "",
       "completed_at": "",
       "timebox_actual": "",
-      "content_fingerprint": "sha256:121dc602ca1f1091bcff4b1a456c9500ec0a2724ba714bcdb23d191139979c2d",
-      "observed_content_fingerprint": "sha256:121dc602ca1f1091bcff4b1a456c9500ec0a2724ba714bcdb23d191139979c2d",
+      "content_fingerprint": "sha256:b8d5232b796b7591b8a36747abc553e66ecee4561a4bdd06470abc93bfbb2e9b",
+      "observed_content_fingerprint": "sha256:b8d5232b796b7591b8a36747abc553e66ecee4561a4bdd06470abc93bfbb2e9b",
       "trace_history_source": "filesystem-only",
       "trace_last_commit_sha": "",
       "trace_last_commit_at": "",
@@ -1068,11 +1068,16 @@
         "trace_revision_count": "0"
       },
       "latest_commit": {
-        "sha": "c3009d2",
+        "sha": "5633e94",
         "date": "2026-07-27",
-        "subject": "Harden platform security, ship fleet DevOps control, and refresh harness honeycomb."
+        "subject": "Ship Ops task queue, dev blog v2, and refresh fleet honeycomb."
       },
       "recent_updates": [
+        {
+          "sha": "5633e94",
+          "date": "2026-07-27",
+          "subject": "Ship Ops task queue, dev blog v2, and refresh fleet honeycomb."
+        },
         {
           "sha": "c3009d2",
           "date": "2026-07-27",
@@ -1082,11 +1087,6 @@
           "sha": "53e7437",
           "date": "2026-07-26",
           "subject": "Ship identity catalog, Hans/Hant locales, web research, and knowledge plane."
-        },
-        {
-          "sha": "555cf53",
-          "date": "2026-07-26",
-          "subject": "Ship listening product, mandatory harness, facility layout, and UTC/local time."
         }
       ],
       "dirty": false,
@@ -1100,14 +1100,14 @@
       "layer": "SharedSupportSurface",
       "declared_layer": "SharedSupportSurface",
       "effective_status": "generated",
-      "effective_since": "2026-07-27T09:44:53+00:00",
+      "effective_since": "2026-07-27T10:25:30+00:00",
       "managed_by": "aries-harness",
       "fingerprint": "aries-harness/history-doc/v1",
       "last_updated_at": "",
       "completed_at": "",
       "timebox_actual": "",
-      "content_fingerprint": "sha256:fb9788c1abe9278b4464b304189f7c66b4ab5c3d3a9477b62bfcea6ced09c5a5",
-      "observed_content_fingerprint": "sha256:fb9788c1abe9278b4464b304189f7c66b4ab5c3d3a9477b62bfcea6ced09c5a5",
+      "content_fingerprint": "sha256:c2b0fa998b718b54ff4df85d01968c81ba725afd6dbf730b6091d388c7063ce0",
+      "observed_content_fingerprint": "sha256:c2b0fa998b718b54ff4df85d01968c81ba725afd6dbf730b6091d388c7063ce0",
       "trace_history_source": "filesystem-only",
       "trace_last_commit_sha": "",
       "trace_last_commit_at": "",
@@ -1119,11 +1119,16 @@
         "trace_revision_count": "0"
       },
       "latest_commit": {
-        "sha": "c3009d2",
+        "sha": "5633e94",
         "date": "2026-07-27",
-        "subject": "Harden platform security, ship fleet DevOps control, and refresh harness honeycomb."
+        "subject": "Ship Ops task queue, dev blog v2, and refresh fleet honeycomb."
       },
       "recent_updates": [
+        {
+          "sha": "5633e94",
+          "date": "2026-07-27",
+          "subject": "Ship Ops task queue, dev blog v2, and refresh fleet honeycomb."
+        },
         {
           "sha": "c3009d2",
           "date": "2026-07-27",
@@ -1133,11 +1138,6 @@
           "sha": "53e7437",
           "date": "2026-07-26",
           "subject": "Ship identity catalog, Hans/Hant locales, web research, and knowledge plane."
-        },
-        {
-          "sha": "555cf53",
-          "date": "2026-07-26",
-          "subject": "Ship listening product, mandatory harness, facility layout, and UTC/local time."
         }
       ],
       "dirty": false,
@@ -1151,14 +1151,14 @@
       "layer": "SharedSupportSurface",
       "declared_layer": "SharedSupportSurface",
       "effective_status": "generated",
-      "effective_since": "2026-07-27T09:44:53+00:00",
+      "effective_since": "2026-07-27T10:25:30+00:00",
       "managed_by": "aries-harness",
       "fingerprint": "aries-harness/history-doc/v1",
       "last_updated_at": "",
       "completed_at": "",
       "timebox_actual": "",
-      "content_fingerprint": "sha256:428e72004f74bfbe5a6f59f5da00ad03b507f5b0d5a6636db082df09f845916f",
-      "observed_content_fingerprint": "sha256:428e72004f74bfbe5a6f59f5da00ad03b507f5b0d5a6636db082df09f845916f",
+      "content_fingerprint": "sha256:a813b5ce499746379c0f580420fbabb7a57422070700175ecaec54abdf717c1a",
+      "observed_content_fingerprint": "sha256:a813b5ce499746379c0f580420fbabb7a57422070700175ecaec54abdf717c1a",
       "trace_history_source": "filesystem-only",
       "trace_last_commit_sha": "",
       "trace_last_commit_at": "",
@@ -1170,11 +1170,16 @@
         "trace_revision_count": "0"
       },
       "latest_commit": {
-        "sha": "c3009d2",
+        "sha": "5633e94",
         "date": "2026-07-27",
-        "subject": "Harden platform security, ship fleet DevOps control, and refresh harness honeycomb."
+        "subject": "Ship Ops task queue, dev blog v2, and refresh fleet honeycomb."
       },
       "recent_updates": [
+        {
+          "sha": "5633e94",
+          "date": "2026-07-27",
+          "subject": "Ship Ops task queue, dev blog v2, and refresh fleet honeycomb."
+        },
         {
           "sha": "c3009d2",
           "date": "2026-07-27",
@@ -1184,11 +1189,6 @@
           "sha": "53e7437",
           "date": "2026-07-26",
           "subject": "Ship identity catalog, Hans/Hant locales, web research, and knowledge plane."
-        },
-        {
-          "sha": "555cf53",
-          "date": "2026-07-26",
-          "subject": "Ship listening product, mandatory harness, facility layout, and UTC/local time."
         }
       ],
       "dirty": false,
@@ -1202,14 +1202,14 @@
       "layer": "SharedSupportSurface",
       "declared_layer": "SharedSupportSurface",
       "effective_status": "generated",
-      "effective_since": "2026-07-27T09:44:53+00:00",
+      "effective_since": "2026-07-27T10:25:30+00:00",
       "managed_by": "aries-harness",
       "fingerprint": "aries-harness/history-doc/v1",
       "last_updated_at": "",
       "completed_at": "",
       "timebox_actual": "",
-      "content_fingerprint": "sha256:760706a6a91b8b166a28be778eba0b9503d43720315e7c73d8e7e96864313fb3",
-      "observed_content_fingerprint": "sha256:760706a6a91b8b166a28be778eba0b9503d43720315e7c73d8e7e96864313fb3",
+      "content_fingerprint": "sha256:70a49a1bd951b573e61698e5cddd8a2cb9e8baba1e5def764e125da18dea0b88",
+      "observed_content_fingerprint": "sha256:70a49a1bd951b573e61698e5cddd8a2cb9e8baba1e5def764e125da18dea0b88",
       "trace_history_source": "filesystem-only",
       "trace_last_commit_sha": "",
       "trace_last_commit_at": "",
@@ -1221,11 +1221,16 @@
         "trace_revision_count": "0"
       },
       "latest_commit": {
-        "sha": "c3009d2",
+        "sha": "5633e94",
         "date": "2026-07-27",
-        "subject": "Harden platform security, ship fleet DevOps control, and refresh harness honeycomb."
+        "subject": "Ship Ops task queue, dev blog v2, and refresh fleet honeycomb."
       },
       "recent_updates": [
+        {
+          "sha": "5633e94",
+          "date": "2026-07-27",
+          "subject": "Ship Ops task queue, dev blog v2, and refresh fleet honeycomb."
+        },
         {
           "sha": "c3009d2",
           "date": "2026-07-27",
@@ -1248,14 +1253,14 @@
       "layer": "SharedSupportSurface",
       "declared_layer": "SharedSupportSurface",
       "effective_status": "generated",
-      "effective_since": "2026-07-27T09:44:53+00:00",
+      "effective_since": "2026-07-27T10:25:30+00:00",
       "managed_by": "aries-harness",
       "fingerprint": "aries-harness/history-doc/v1",
       "last_updated_at": "",
       "completed_at": "",
       "timebox_actual": "",
-      "content_fingerprint": "sha256:36618f9e55a5d44fbc8c50ed7852dde3ce12dbcb1bc233c7c154eaa42ea0ba0c",
-      "observed_content_fingerprint": "sha256:36618f9e55a5d44fbc8c50ed7852dde3ce12dbcb1bc233c7c154eaa42ea0ba0c",
+      "content_fingerprint": "sha256:c621cd4abdec56f8014378ffd3eab9052e86d81e6f23dd4b2210e1cd4c777010",
+      "observed_content_fingerprint": "sha256:c621cd4abdec56f8014378ffd3eab9052e86d81e6f23dd4b2210e1cd4c777010",
       "trace_history_source": "filesystem-only",
       "trace_last_commit_sha": "",
       "trace_last_commit_at": "",
@@ -1267,11 +1272,16 @@
         "trace_revision_count": "0"
       },
       "latest_commit": {
-        "sha": "c3009d2",
+        "sha": "5633e94",
         "date": "2026-07-27",
-        "subject": "Harden platform security, ship fleet DevOps control, and refresh harness honeycomb."
+        "subject": "Ship Ops task queue, dev blog v2, and refresh fleet honeycomb."
       },
       "recent_updates": [
+        {
+          "sha": "5633e94",
+          "date": "2026-07-27",
+          "subject": "Ship Ops task queue, dev blog v2, and refresh fleet honeycomb."
+        },
         {
           "sha": "c3009d2",
           "date": "2026-07-27",

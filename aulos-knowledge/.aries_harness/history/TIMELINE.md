@@ -8,10 +8,10 @@ managed_by: "aries-harness"
 fingerprint: "aries-harness/history-doc/v1"
 generated_by: "/aries-harness history-refresh"
 initialized_at: "2026-07-25T17:25:00+00:00"
-generated_at: "2026-07-27T10:25:25+00:00"
+generated_at: "2026-07-27T11:49:37+00:00"
 effective_status: "generated"
-effective_since: "2026-07-27T10:25:25+00:00"
-content_fingerprint: "sha256:0d87f9f969caabff8e7a52f9fba0dee9a219f5928ab904aa3e707dda9f8e3ed8"
+effective_since: "2026-07-27T11:49:37+00:00"
+content_fingerprint: "sha256:878c6c995f3b394a387fe701fe7e229cd8f0499420a3ffb676812af541c6ae0d"
 trace_history_source: "filesystem-only"
 trace_last_commit_sha: ""
 trace_last_commit_at: ""
@@ -19,9 +19,25 @@ trace_revision_count: "0"
 ---
 # Timeline
 
-Generated at: `2026-07-27T10:25:25+00:00`
+Generated at: `2026-07-27T11:49:37+00:00`
 
 ## Journal milestones
+
+### 2026-07-27T11:55:00Z
+
+- **OPS Knowledge console:** modular UI (overview / source registry / documents / jobs / RAG simulate / media);
+- SPEC-010 rewritten; stats API adds `chunks` + `sources_verified`.
+
+### 2026-07-27T11:40:09Z
+
+- **REQ-008 S2/S3:** Wikipedia + IMSLP + RISM connectors registered; registry revision
+- Chunk provenance: `GET /v1/admin/chunks/{id}/provenance` + chunks on document detail/provenance;
+- Gates: `tests/test_s2_s3_connectors.py` + registry assertions (23 pytest passed).
+
+### 2026-07-27T11:20:00Z
+
+- **REQ-008 Authority Source Registry (S1):** versioned `data/registry/sources.yaml` (REG-SRC-001);
+- ADR-006 revised; SPEC-009/010 deltas; gates `tests/test_source_registry.py` (pytest green).
 
 ### 2026-07-25T17:42:00Z
 
@@ -61,6 +77,7 @@ Generated at: `2026-07-27T10:25:25+00:00`
 
 ## Recent git commits
 
+- `5633e94` 2026-07-27 Ship Ops task queue, dev blog v2, and refresh fleet honeycomb.
 - `c3009d2` 2026-07-27 Harden platform security, ship fleet DevOps control, and refresh harness honeycomb.
 - `0c8a847` 2026-07-27 Ship Ops daily Dev Blog and web forgot-password reset.
 - `6ab1ea3` 2026-07-26 Ship /discogs release and catalog-number listening guides with OPS token UI.
@@ -76,7 +93,6 @@ Generated at: `2026-07-27T10:25:25+00:00`
 - `M` `CLAUDE.md`
 - `M` `aulos-api/.aries_harness/INDEX.md`
 - `M` `aulos-api/.aries_harness/JOURNAL.md`
-- `M` `aulos-api/.aries_harness/STATE.md`
 - `M` `aulos-api/.aries_harness/history/DAILY_SUMMARY_INDEX.md`
 - `M` `aulos-api/.aries_harness/history/DOC_TRACE.md`
 - `M` `aulos-api/.aries_harness/history/README.md`
@@ -84,3 +100,4 @@ Generated at: `2026-07-27T10:25:25+00:00`
 - `M` `aulos-api/.aries_harness/history/ROADMAP.md`
 - `M` `aulos-api/.aries_harness/history/STATUS.md`
 - `M` `aulos-api/.aries_harness/history/TIMELINE.md`
+- `M` `aulos-api/.aries_harness/history/daily/2026-07-25.md`

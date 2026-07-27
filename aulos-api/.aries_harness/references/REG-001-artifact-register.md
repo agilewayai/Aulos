@@ -9,7 +9,7 @@ fingerprint: "aries-harness/bootstrap-doc/v1"
 initialized_at: "2026-07-25T11:10:22Z"
 effective_status: "active"
 effective_since: "2026-07-25T11:10:22Z"
-content_fingerprint: "sha256:42341f89bf211fe21cbd0ad44f1a9818439523877eb74a16edfef98b2ea295c6"
+content_fingerprint: "sha256:b767f5a571452ababcc49ab6cab5c52008388df1cf90dff069d7f72d054c61f0"
 trace_history_source: "filesystem-only"
 trace_last_commit_sha: ""
 trace_last_commit_at: ""
@@ -39,3 +39,9 @@ trace_revision_count: "0"
 | ADR-001 | adr | decisions/adrs/ADR-001-fastapi-gateway.md | accepted |
 | TRACE-001 | traceability | references/TRACE-001-value-traceability.md | active |
 | EC-001 | execution-card | references/tasks/EC-001-bootstrap-execution-card.md | active |
+
+## Fleet纲领 (canonical in aulos-skills)
+
+| Artifact ID | Type | Canonical path | Status |
+| --- | --- | --- | --- |
+| META-001 | meta-principles | `../aulos-skills/.aries_harness/references/META-001-meta-principles.md` | active |

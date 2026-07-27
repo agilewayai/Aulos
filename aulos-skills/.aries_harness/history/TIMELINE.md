@@ -8,10 +8,10 @@ managed_by: "aries-harness"
 fingerprint: "aries-harness/history-doc/v1"
 generated_by: "/aries-harness history-refresh"
 initialized_at: "2026-07-25T11:20:05Z"
-generated_at: "2026-07-27T10:24:56+00:00"
+generated_at: "2026-07-27T11:49:07+00:00"
 effective_status: "generated"
-effective_since: "2026-07-27T10:24:56+00:00"
-content_fingerprint: "sha256:a07fa8c2b905c381217d616ae7b3ebeaa7de794ea242179cd6eb29bbd644e7db"
+effective_since: "2026-07-27T11:49:07+00:00"
+content_fingerprint: "sha256:fa193aa44b50f016d7edfe200b71aea6e7b39caf6eb40545d949173a4d2cfb2a"
 trace_history_source: "filesystem-only"
 trace_last_commit_sha: ""
 trace_last_commit_at: ""
@@ -19,9 +19,23 @@ trace_revision_count: "0"
 ---
 # Timeline
 
-Generated at: `2026-07-27T10:24:56+00:00`
+Generated at: `2026-07-27T11:49:07+00:00`
 
 ## Journal milestones
+
+### 2026-07-27T11:20:00Z
+
+- Promoted **Authority Source Registry** into META-001 §4 + insights (aulos-knowledge REQ-008 / ADR-006 / REG-SRC-001).
+
+### 2026-07-27T10:50:00Z
+
+- **META-001 v2** — promoted insights →纲领: data-over-heuristics, multi-stage validate, harness forced + facility, deploy-in-delivery, LLM coerce, hard-fail gates, architecture boundaries (agent / knowledge / identity→RAG).
+- `docs/insights.md` entries tagged `↑ META-001 §…` or `→ operating-defaults/SPEC` (domain stays out of META).
+
+### 2026-07-27T10:45:00Z
+
+- **META-001** Meta Principles (纲领层): root-cause thinking, asset synchronization, engineering craft / anti-smells.
+- Registered in REG-001; MetaDefineLayer manifest; promoted to workspace `AGENTS.md`, `CLAUDE.md`, `aulos-operating-defaults`.
 
 ### 2026-07-27T09:45:00Z
 
@@ -65,26 +79,9 @@ Generated at: `2026-07-27T10:24:56+00:00`
 - Verdict: not ready for production signoff; F1 fixed deploy JWT/bootstrap defaults, F2/F3 guide HTML + browser token exposure, F4 red API suite, and F5 knowledge-plane direct admin auth are the priority blockers.
 - Verification snapshot: API full suite red (`87 passed, 1 failed, 1 error`); skills/agent/MCP/knowledge/deploy tests and web/ops builds passed; ops lint still has one hook dependency warning.
 
-### 2026-07-26T19:25:00Z
-
-- Root-cause guide #44 (Brahms Violin Concerto Op.77): `duo-cello-piano` unlocked on
-- SPEC-009 / REQ-007: family evidence gate + per-node decontam validate/rework.
-- Ambient related packs: foreign-composer / empty-composers peer gates; defaults skip
-- Gate: `test_brahms_violin_concerto_not_duo_cello_family` + runtime/ambient/identity 29 passed.
-
-### 2026-07-26T19:20:00Z
-
-- Harden `salon_codex.merge_dossiers` / `coerce_dict` against LLM `zh_hans` prose/list (Mozart piano concerto crash: dictionary update sequence element).
-- Gate: `tests/test_salon_codex_merge.py` + runtime Mozart path; insight promoted.
-
-### 2026-07-26T19:05:00Z
-
-- Media shelf: appreciation videos + interpretation YouTube rows now also get 哔哩哔哩 search links (`search.bilibili.com`).
-- `media_search.enrich_*` derives keyword from existing YouTube `search_query` or title; renderer shows YouTube · 哔哩哔哩.
-- SPEC-003 / listening-width skill + LLM dossier prompt updated; gate `tests/test_media_search.py`.
-
 ## Recent git commits
 
+- `5633e94` 2026-07-27 Ship Ops task queue, dev blog v2, and refresh fleet honeycomb.
 - `c3009d2` 2026-07-27 Harden platform security, ship fleet DevOps control, and refresh harness honeycomb.
 - `0c8a847` 2026-07-27 Ship Ops daily Dev Blog and web forgot-password reset.
 - `6ab1ea3` 2026-07-26 Ship /discogs release and catalog-number listening guides with OPS token UI.
@@ -99,12 +96,12 @@ Generated at: `2026-07-27T10:24:56+00:00`
 - `M` `AGENTS.md`
 - `M` `CLAUDE.md`
 - `M` `aulos-api/.aries_harness/JOURNAL.md`
-- `M` `aulos-api/.aries_harness/STATE.md`
 - `M` `aulos-api/.aries_harness/references/REG-001-artifact-register.md`
-- `M` `aulos-api/.aries_harness/references/specs/SPEC-009-ops-dev-blog.md`
-- `M` `aulos-api/src/aulos_api/app.py`
-- `M` `aulos-api/src/aulos_api/config/settings.py`
-- `M` `aulos-api/src/aulos_api/db/models.py`
-- `M` `aulos-api/src/aulos_api/db/schema_patches.py`
-- `M` `aulos-api/src/aulos_api/routes/ops.py`
 - `M` `aulos-api/src/aulos_api/services/dev_blog.py`
+- `M` `aulos-api/tests/test_dev_blog.py`
+- `M` `aulos-knowledge/.aries_harness/EVAL.md`
+- `M` `aulos-knowledge/.aries_harness/JOURNAL.md`
+- `M` `aulos-knowledge/.aries_harness/STATE.md`
+- `M` `aulos-knowledge/.aries_harness/TASK_STACK.md`
+- `M` `aulos-knowledge/.aries_harness/decisions/adrs/ADR-006-allowlisted-sources-provenance.md`
+- `M` `aulos-knowledge/.aries_harness/history/DAILY_SUMMARY_INDEX.md`

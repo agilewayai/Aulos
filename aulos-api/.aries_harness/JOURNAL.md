@@ -10,13 +10,20 @@ generated_by: "/aries-harness init"
 initialized_at: "2026-07-25T11:07:43Z"
 effective_status: "active"
 effective_since: "2026-07-25T11:07:43Z"
-content_fingerprint: "sha256:b2bc0482712fad70fc036f435ec7b46347b944816fb9d1ef9e78b34284c78116"
+content_fingerprint: "sha256:bb20e5a08d74767bf9b8dcf39712d03f646f07d13e47de583a26bc0443664a3b"
 trace_history_source: "filesystem-only"
 trace_last_commit_sha: ""
 trace_last_commit_at: ""
 trace_revision_count: "0"
 ---
 # Journal
+
+## 2026-07-27T10:45:00Z
+
+- Cross-ref **AUDIT-009** remediation (primary journal: `aulos-skills/.aries_harness/JOURNAL.md`, review `runs/reviews/AUDIT-009-…`):
+  - F3 SPEC-014 HttpOnly session cookie; F2 SPEC-015 guide HTML security + sanitizer; F10 SPEC-016 module splits; F11 ADR-008 plaintext secrets accepted for Sprint-1.
+  - Fleet DevOps: `deploy/aulos-ctl.sh`, `deploy/OPS.md`, `deploy/honeycomb.sh` (commit `c3009d2`).
+- Dev-blog evidence fix: `_journal_slice_for_day` now keeps **newest** day entries (was truncating tail → dropped AUDIT slices).
 
 ## 2026-07-27T10:30:00Z
 

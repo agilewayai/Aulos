@@ -14,17 +14,44 @@ from aulos_knowledge.db import (
     ComposerEntity,
     FetchArtifact,
     FetchJob,
+    KnowledgeChunk,
     KnowledgeDocument,
     MediaAsset,
     SourceAuthority,
     WorkEntity,
     get_session,
+    utcnow,
 )
+from aulos_knowledge.connectors import connector_registered
 from aulos_knowledge.jobs import enqueue_and_maybe_run
 from aulos_knowledge.retrieve import retrieve as kb_retrieve
 
 router = APIRouter()
 admin_router = APIRouter(prefix="/v1/admin", dependencies=[Depends(require_admin_token)])
+
+
+def _source_dict(r: SourceAuthority) -> dict[str, Any]:
+    return {
+        "id": r.id,
+        "name": r.name,
+        "tier": r.tier,
+        "connector": r.connector,
+        "base_urls": json.loads(r.base_urls_json or "[]"),
+        "license_class": r.license_class,
+        "rate_limit_qps": r.rate_limit_qps,
+        "enabled": r.enabled,
+        "notes": r.notes,
+        "verification_status": r.verification_status or "candidate",
+        "verified_by": r.verified_by or "",
+        "verified_at": r.verified_at.isoformat() if r.verified_at else None,
+        "tos_notes": r.tos_notes or "",
+        "attribution_template": r.attribution_template or "",
+        "allowed_path_prefixes": json.loads(r.allowed_path_prefixes_json or "[]"),
+        "connector_semver": r.connector_semver or "",
+        "origin_class": r.origin_class or "encyclopedia",
+        "registry_revision": r.registry_revision or "",
+        "connector_registered": connector_registered(r.connector or ""),
+    }
 
 
 class SourceIn(BaseModel):
@@ -35,8 +62,17 @@ class SourceIn(BaseModel):
     base_urls: list[str] = Field(default_factory=list)
     license_class: str = "unknown"
     rate_limit_qps: float = 1.0
-    enabled: bool = True
+    enabled: bool = False
     notes: str = ""
+    origin_class: str = "encyclopedia"
+    tos_notes: str = ""
+    attribution_template: str = ""
+    allowed_path_prefixes: list[str] = Field(default_factory=list)
+    connector_semver: str = ""
+
+
+class VerifyIn(BaseModel):
+    by: str = "ops"
 
 
 class JobIn(BaseModel):
@@ -66,8 +102,12 @@ def stats(db: Session = Depends(_db)) -> dict[str, Any]:
     return {
         "sources": db.query(SourceAuthority).count(),
         "sources_enabled": db.query(SourceAuthority).filter(SourceAuthority.enabled.is_(True)).count(),
+        "sources_verified": db.query(SourceAuthority)
+        .filter(SourceAuthority.verification_status == "verified")
+        .count(),
         "jobs": db.query(FetchJob).count(),
         "artifacts": db.query(FetchArtifact).count(),
+        "chunks": db.query(KnowledgeChunk).count(),
         "composers": db.query(ComposerEntity).count(),
         "works": db.query(WorkEntity).count(),
         "documents": db.query(KnowledgeDocument).count(),
@@ -98,22 +138,7 @@ def retrieve(body: RetrieveIn, db: Session = Depends(_db)) -> dict[str, Any]:
 @admin_router.get("/sources")
 def list_sources(db: Session = Depends(_db)) -> list[dict[str, Any]]:
     rows = db.query(SourceAuthority).order_by(SourceAuthority.id).all()
-    out = []
-    for r in rows:
-        out.append(
-            {
-                "id": r.id,
-                "name": r.name,
-                "tier": r.tier,
-                "connector": r.connector,
-                "base_urls": json.loads(r.base_urls_json or "[]"),
-                "license_class": r.license_class,
-                "rate_limit_qps": r.rate_limit_qps,
-                "enabled": r.enabled,
-                "notes": r.notes,
-            }
-        )
-    return out
+    return [_source_dict(r) for r in rows]
 
 
 @admin_router.post("/sources")
@@ -128,12 +153,20 @@ def create_source(body: SourceIn, db: Session = Depends(_db)) -> dict[str, Any]:
         base_urls_json=json.dumps(body.base_urls, ensure_ascii=False),
         license_class=body.license_class,
         rate_limit_qps=body.rate_limit_qps,
-        enabled=body.enabled,
+        enabled=False if body.enabled and not connector_registered(body.connector) else body.enabled,
         notes=body.notes,
+        verification_status="candidate",
+        origin_class=body.origin_class or "encyclopedia",
+        tos_notes=body.tos_notes,
+        attribution_template=body.attribution_template,
+        allowed_path_prefixes_json=json.dumps(body.allowed_path_prefixes, ensure_ascii=False),
+        connector_semver=body.connector_semver,
     )
+    if row.enabled and row.verification_status != "verified":
+        row.enabled = False
     db.add(row)
     db.commit()
-    return {"ok": True, "id": row.id}
+    return {"ok": True, "id": row.id, **_source_dict(row)}
 
 
 @admin_router.patch("/sources/{source_id}")
@@ -142,13 +175,60 @@ def patch_source(source_id: str, body: dict[str, Any], db: Session = Depends(_db
     if not row:
         raise HTTPException(404, "source not found")
     if "enabled" in body:
-        row.enabled = bool(body["enabled"])
+        want = bool(body["enabled"])
+        if want:
+            if (row.verification_status or "") != "verified":
+                raise HTTPException(400, "cannot enable: source not verified")
+            if not connector_registered(row.connector or ""):
+                raise HTTPException(400, "cannot enable: connector not registered")
+        row.enabled = want
     if "notes" in body:
         row.notes = str(body["notes"])
     if "rate_limit_qps" in body:
         row.rate_limit_qps = float(body["rate_limit_qps"])
+    if "tos_notes" in body:
+        row.tos_notes = str(body["tos_notes"])
+    if "attribution_template" in body:
+        row.attribution_template = str(body["attribution_template"])
     db.commit()
-    return {"ok": True, "id": source_id, "enabled": row.enabled}
+    return {"ok": True, **_source_dict(row)}
+
+
+@admin_router.post("/sources/{source_id}/verify")
+def verify_source(source_id: str, body: VerifyIn | None = None, db: Session = Depends(_db)) -> dict[str, Any]:
+    row = db.get(SourceAuthority, source_id)
+    if not row:
+        raise HTTPException(404, "source not found")
+    if not connector_registered(row.connector or ""):
+        raise HTTPException(400, "cannot verify: connector not registered")
+    by = (body.by if body else "ops") or "ops"
+    row.verification_status = "verified"
+    row.verified_by = by
+    row.verified_at = utcnow()
+    db.commit()
+    return {"ok": True, **_source_dict(row)}
+
+
+@admin_router.post("/sources/{source_id}/reject")
+def reject_source(source_id: str, db: Session = Depends(_db)) -> dict[str, Any]:
+    row = db.get(SourceAuthority, source_id)
+    if not row:
+        raise HTTPException(404, "source not found")
+    row.verification_status = "rejected"
+    row.enabled = False
+    db.commit()
+    return {"ok": True, **_source_dict(row)}
+
+
+@admin_router.post("/sources/{source_id}/suspend")
+def suspend_source(source_id: str, db: Session = Depends(_db)) -> dict[str, Any]:
+    row = db.get(SourceAuthority, source_id)
+    if not row:
+        raise HTTPException(404, "source not found")
+    row.verification_status = "suspended"
+    row.enabled = False
+    db.commit()
+    return {"ok": True, **_source_dict(row)}
 
 
 @admin_router.get("/jobs")
@@ -265,6 +345,91 @@ def list_documents(
     return [_doc_summary(d) for d in rows]
 
 
+def _chunk_summary(c: KnowledgeChunk) -> dict[str, Any]:
+    text = c.text or ""
+    return {
+        "id": c.id,
+        "document_id": c.document_id,
+        "section": c.section,
+        "aulos_work_id": c.aulos_work_id,
+        "text_preview": text[:240],
+        "text_len": len(text),
+        "created_at": c.created_at.isoformat() if c.created_at else None,
+    }
+
+
+def _provenance_bundle(
+    db: Session,
+    *,
+    doc: KnowledgeDocument,
+    chunk: KnowledgeChunk | None = None,
+) -> dict[str, Any]:
+    src = db.get(SourceAuthority, doc.source_id) if doc.source_id else None
+    art = db.get(FetchArtifact, doc.artifact_id) if doc.artifact_id else None
+    job = db.get(FetchJob, doc.job_id) if doc.job_id else None
+    chunks = (
+        db.query(KnowledgeChunk)
+        .filter(KnowledgeChunk.document_id == doc.id)
+        .order_by(KnowledgeChunk.id.asc())
+        .all()
+    )
+    out: dict[str, Any] = {
+        "document": {
+            "id": doc.id,
+            "title": doc.title,
+            "entity_type": doc.entity_type,
+            "entity_id": doc.entity_id,
+            "aulos_work_id": doc.aulos_work_id,
+            "status": doc.status,
+            "body": doc.body or "",
+            "extractor_version": doc.extractor_version,
+            "license_class": doc.license_class,
+        },
+        "chunks": [_chunk_summary(c) for c in chunks],
+        "source": None
+        if not src
+        else {
+            "id": src.id,
+            "name": src.name,
+            "tier": src.tier,
+            "connector": src.connector,
+            "license_class": src.license_class,
+            "verification_status": src.verification_status,
+            "origin_class": src.origin_class,
+            "attribution_template": src.attribution_template,
+        },
+        "artifact": None
+        if not art
+        else {
+            "id": art.id,
+            "content_hash": art.content_hash,
+            "storage_path": art.storage_path,
+            "source_url": art.source_url,
+            "byte_size": art.byte_size,
+            "fetched_at": art.fetched_at.isoformat() if art.fetched_at else None,
+        },
+        "job": None
+        if not job
+        else {
+            "id": job.id,
+            "status": job.status,
+            "error": job.error,
+            "created_at": job.created_at.isoformat() if job.created_at else None,
+            "finished_at": job.finished_at.isoformat() if job.finished_at else None,
+        },
+    }
+    if chunk is not None:
+        out["chunk"] = {
+            "id": chunk.id,
+            "document_id": chunk.document_id,
+            "section": chunk.section,
+            "aulos_work_id": chunk.aulos_work_id,
+            "text": chunk.text or "",
+            "created_at": chunk.created_at.isoformat() if chunk.created_at else None,
+        }
+    return out
+
+
 @admin_router.get("/documents/{doc_id}")
 def get_document(doc_id: int, db: Session = Depends(_db)) -> dict[str, Any]:
     doc = db.get(KnowledgeDocument, doc_id)
@@ -272,6 +437,13 @@ def get_document(doc_id: int, db: Session = Depends(_db)) -> dict[str, Any]:
         raise HTTPException(404, "document not found")
     out = _doc_summary(doc)
     out["body"] = doc.body or ""
+    chunks = (
+        db.query(KnowledgeChunk)
+        .filter(KnowledgeChunk.document_id == doc.id)
+        .order_by(KnowledgeChunk.id.asc())
+        .all()
+    )
+    out["chunks"] = [_chunk_summary(c) for c in chunks]
     return out
 
 
@@ -301,50 +473,19 @@ def provenance(document_id: int, db: Session = Depends(_db)) -> dict[str, Any]:
     doc = db.get(KnowledgeDocument, document_id)
     if not doc:
         raise HTTPException(404, "document not found")
-    src = db.get(SourceAuthority, doc.source_id) if doc.source_id else None
-    art = db.get(FetchArtifact, doc.artifact_id) if doc.artifact_id else None
-    job = db.get(FetchJob, doc.job_id) if doc.job_id else None
-    return {
-        "document": {
-            "id": doc.id,
-            "title": doc.title,
-            "entity_type": doc.entity_type,
-            "entity_id": doc.entity_id,
-            "aulos_work_id": doc.aulos_work_id,
-            "status": doc.status,
-            "body": doc.body or "",
-            "extractor_version": doc.extractor_version,
-            "license_class": doc.license_class,
-        },
-        "source": None
-        if not src
-        else {
-            "id": src.id,
-            "name": src.name,
-            "tier": src.tier,
-            "connector": src.connector,
-            "license_class": src.license_class,
-        },
-        "artifact": None
-        if not art
-        else {
-            "id": art.id,
-            "content_hash": art.content_hash,
-            "storage_path": art.storage_path,
-            "source_url": art.source_url,
-            "byte_size": art.byte_size,
-            "fetched_at": art.fetched_at.isoformat() if art.fetched_at else None,
-        },
-        "job": None
-        if not job
-        else {
-            "id": job.id,
-            "status": job.status,
-            "error": job.error,
-            "created_at": job.created_at.isoformat() if job.created_at else None,
-            "finished_at": job.finished_at.isoformat() if job.finished_at else None,
-        },
-    }
+    return _provenance_bundle(db, doc=doc)
+
+
+@admin_router.get("/chunks/{chunk_id}/provenance")
+def chunk_provenance(chunk_id: int, db: Session = Depends(_db)) -> dict[str, Any]:
+    """Chunk-level provenance: chunk → document → source + artifact + job (REQ-008 S2)."""
+    chunk = db.get(KnowledgeChunk, chunk_id)
+    if not chunk:
+        raise HTTPException(404, "chunk not found")
+    doc = db.get(KnowledgeDocument, chunk.document_id)
+    if not doc:
+        raise HTTPException(404, "document not found for chunk")
+    return _provenance_bundle(db, doc=doc, chunk=chunk)
 
 
 @admin_router.get("/artifacts/{artifact_id}")

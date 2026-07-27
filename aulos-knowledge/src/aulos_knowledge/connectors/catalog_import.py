@@ -9,6 +9,7 @@ from typing import Any
 from sqlalchemy.orm import Session
 
 from aulos_knowledge.artifacts import write_artifact
+from aulos_knowledge.publish_policy import document_status_for_source
 from aulos_knowledge.config import get_settings
 from aulos_knowledge.db import (
     ComposerEntity,
@@ -127,7 +128,7 @@ def run_catalog_import(
             entity_id=work_id,
             aulos_work_id=work_id,
             body=body,
-            status="published",
+            status=document_status_for_source(source),
             source_id=source.id,
             artifact_id=art.id,
             job_id=job.id,

@@ -53,6 +53,7 @@ import {
   saveOpsScene,
   type OpsSessionScene,
 } from './sessionScene'
+import { requestAssetVersionCheck } from './assetVersion'
 import './App.css'
 
 type TabId = 'overview' | 'users' | 'llm' | 'skills' | 'mail' | 'fleet' | 'knowledge' | 'discogs' | 'blog' | 'tasks'
@@ -132,6 +133,10 @@ function App() {
     verifiedFilter: 'all' as 'all' | 'true' | 'false',
   })
   sceneSnapshotRef.current = { tab, userQuery, roleFilter, activeFilter, verifiedFilter }
+
+  useEffect(() => {
+    requestAssetVersionCheck()
+  }, [tab])
 
   useEffect(() => {
     return registerSceneCapture(() => {
@@ -654,7 +659,7 @@ function App() {
                   ['users', 'Users'],
                   ['llm', 'LLM'],
                   ['discogs', 'Discogs'],
-                  ['knowledge', 'Knowledge'],
+                  ['knowledge', 'Knowledge console'],
                   ['skills', 'Skills'],
                   ['mail', 'Mail'],
                   ['fleet', 'Fleet'],

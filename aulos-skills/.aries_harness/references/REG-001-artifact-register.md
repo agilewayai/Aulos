@@ -9,7 +9,7 @@ fingerprint: "aries-harness/bootstrap-doc/v1"
 initialized_at: "2026-07-25T11:22:04Z"
 effective_status: "active"
 effective_since: "2026-07-25T11:22:04Z"
-content_fingerprint: "sha256:fb7004e6913750939c1f127b70f92315940f361fcbcc2ee3856892a6bd029f8a"
+content_fingerprint: "sha256:2bb5bc1541e179097c544aef4031e887df61361d856ba7a3aeb4b6340ee4e8f4"
 trace_history_source: "filesystem-only"
 trace_last_commit_sha: ""
 trace_last_commit_at: ""
@@ -38,6 +38,7 @@ trace_revision_count: "0"
 | ADR-004 | adr | decisions/adrs/ADR-004-catalog-over-heuristics.md | accepted |
 | DOM-002 | domain | references/domain/DOM-002-listening-identity.md | active |
 | TRACE-001 | traceability | references/TRACE-001-value-traceability.md | active |
+| META-001 | meta-principles | references/META-001-meta-principles.md | active |
 | EC-001 | execution-card | references/tasks/EC-001-bootstrap-execution-card.md | active |
 | CKPT-005 | checkpoint | checkpoints/CKPT-005-ambient-identity-gates.md | complete |
 | VR-005 | verification | runs/tests/VR-005-ambient-identity-gates.md | complete |

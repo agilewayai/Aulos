@@ -78,3 +78,11 @@ export async function fetchServerVersion(): Promise<ServerVersion | null> {
     return null
   }
 }
+
+/** Fired by long-lived views / tab switches to check for a new deploy immediately. */
+export const ASSET_VERSION_CHECK_EVENT = 'aulos:asset-version-check'
+
+export function requestAssetVersionCheck(): void {
+  if (typeof window === 'undefined') return
+  window.dispatchEvent(new CustomEvent(ASSET_VERSION_CHECK_EVENT))
+}

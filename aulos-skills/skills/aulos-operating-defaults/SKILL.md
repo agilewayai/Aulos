@@ -2,6 +2,18 @@
 
 Canonical operator/agent preferences for all `aulos-*` work. **Load this skill at session start.**
 
+## Meta principles (纲领) — META-001
+
+Fleet-wide thinking rules live in **`aulos-skills/.aries_harness/references/META-001-meta-principles.md`** (v2). Apply on every non-trivial slice:
+
+1. **Root cause** — fix the class of failure; data/Catalog over heuristics; multi-stage validate.
+2. **Asset sync** — harness forced; REQ/SPEC/JOURNAL/schema/deploy stay aligned; Honeycomb closeout.
+3. **Engineering craft** — TDD, coerce LLM input, hard-fail product gates, no chat-only or symptom patches.
+4. **Architecture boundaries** — agent-centric product; identity before RAG; knowledge plane separate;
+   classical knowledge sources must be **registry-verified** (aulos-knowledge REQ-008) before crawl/RAG.
+
+META-001 is registered in REG-001 (MetaDefineLayer). This skill covers **how we run**; META-001 covers **how we think**. Incident detail: `docs/insights.md` with `↑ META-001 §…` back-links.
+
 ## Aries Harness — mandatory default (forced)
 
 **Aries Harness is not optional guidance.** It is the default forced process for product work, architecture, specs, coding slices, verification, history, and devops across the Aulos fleet.

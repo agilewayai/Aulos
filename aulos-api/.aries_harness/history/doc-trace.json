@@ -113,14 +113,14 @@
       "layer": "SharedSupportSurface",
       "declared_layer": "SharedSupportSurface",
       "effective_status": "generated",
-      "effective_since": "2026-07-27T10:25:06+00:00",
+      "effective_since": "2026-07-27T11:49:17+00:00",
       "managed_by": "aries-harness",
       "fingerprint": "aries-harness/bootstrap-doc/v1",
       "last_updated_at": "",
       "completed_at": "",
       "timebox_actual": "",
-      "content_fingerprint": "sha256:331ad2b4b105b55afba86584968d3b8c894423098ade44afc3a1998a5fcc52d9",
-      "observed_content_fingerprint": "sha256:331ad2b4b105b55afba86584968d3b8c894423098ade44afc3a1998a5fcc52d9",
+      "content_fingerprint": "sha256:c24e9f87c27d71d2a46a51327a9a3ff798653fdaed3445f48c560e894ad9d3cc",
+      "observed_content_fingerprint": "sha256:c24e9f87c27d71d2a46a51327a9a3ff798653fdaed3445f48c560e894ad9d3cc",
       "trace_history_source": "filesystem-only",
       "trace_last_commit_sha": "",
       "trace_last_commit_at": "",
@@ -132,11 +132,16 @@
         "trace_revision_count": "0"
       },
       "latest_commit": {
-        "sha": "c3009d2",
+        "sha": "5633e94",
         "date": "2026-07-27",
-        "subject": "Harden platform security, ship fleet DevOps control, and refresh harness honeycomb."
+        "subject": "Ship Ops task queue, dev blog v2, and refresh fleet honeycomb."
       },
       "recent_updates": [
+        {
+          "sha": "5633e94",
+          "date": "2026-07-27",
+          "subject": "Ship Ops task queue, dev blog v2, and refresh fleet honeycomb."
+        },
         {
           "sha": "c3009d2",
           "date": "2026-07-27",
@@ -146,11 +151,6 @@
           "sha": "0c8a847",
           "date": "2026-07-27",
           "subject": "Ship Ops daily Dev Blog and web forgot-password reset."
-        },
-        {
-          "sha": "6ab1ea3",
-          "date": "2026-07-26",
-          "subject": "Ship /discogs release and catalog-number listening guides with OPS token UI."
         }
       ],
       "dirty": false,
@@ -170,8 +170,8 @@
       "last_updated_at": "",
       "completed_at": "",
       "timebox_actual": "",
-      "content_fingerprint": "sha256:b2bc0482712fad70fc036f435ec7b46347b944816fb9d1ef9e78b34284c78116",
-      "observed_content_fingerprint": "sha256:b2bc0482712fad70fc036f435ec7b46347b944816fb9d1ef9e78b34284c78116",
+      "content_fingerprint": "sha256:bb20e5a08d74767bf9b8dcf39712d03f646f07d13e47de583a26bc0443664a3b",
+      "observed_content_fingerprint": "sha256:bb20e5a08d74767bf9b8dcf39712d03f646f07d13e47de583a26bc0443664a3b",
       "trace_history_source": "filesystem-only",
       "trace_last_commit_sha": "",
       "trace_last_commit_at": "",
@@ -183,11 +183,16 @@
         "trace_revision_count": "0"
       },
       "latest_commit": {
-        "sha": "c3009d2",
+        "sha": "5633e94",
         "date": "2026-07-27",
-        "subject": "Harden platform security, ship fleet DevOps control, and refresh harness honeycomb."
+        "subject": "Ship Ops task queue, dev blog v2, and refresh fleet honeycomb."
       },
       "recent_updates": [
+        {
+          "sha": "5633e94",
+          "date": "2026-07-27",
+          "subject": "Ship Ops task queue, dev blog v2, and refresh fleet honeycomb."
+        },
         {
           "sha": "c3009d2",
           "date": "2026-07-27",
@@ -197,11 +202,6 @@
           "sha": "0c8a847",
           "date": "2026-07-27",
           "subject": "Ship Ops daily Dev Blog and web forgot-password reset."
-        },
-        {
-          "sha": "6ab1ea3",
-          "date": "2026-07-26",
-          "subject": "Ship /discogs release and catalog-number listening guides with OPS token UI."
         }
       ],
       "dirty": false,
@@ -520,11 +520,16 @@
         "trace_revision_count": "0"
       },
       "latest_commit": {
-        "sha": "c3009d2",
+        "sha": "5633e94",
         "date": "2026-07-27",
-        "subject": "Harden platform security, ship fleet DevOps control, and refresh harness honeycomb."
+        "subject": "Ship Ops task queue, dev blog v2, and refresh fleet honeycomb."
       },
       "recent_updates": [
+        {
+          "sha": "5633e94",
+          "date": "2026-07-27",
+          "subject": "Ship Ops task queue, dev blog v2, and refresh fleet honeycomb."
+        },
         {
           "sha": "c3009d2",
           "date": "2026-07-27",
@@ -534,11 +539,6 @@
           "sha": "0c8a847",
           "date": "2026-07-27",
           "subject": "Ship Ops daily Dev Blog and web forgot-password reset."
-        },
-        {
-          "sha": "6ab1ea3",
-          "date": "2026-07-26",
-          "subject": "Ship /discogs release and catalog-number listening guides with OPS token UI."
         }
       ],
       "dirty": false,
@@ -987,14 +987,14 @@
       "layer": "SharedSupportSurface",
       "declared_layer": "SharedSupportSurface",
       "effective_status": "generated",
-      "effective_since": "2026-07-27T09:44:33+00:00",
+      "effective_since": "2026-07-27T10:25:06+00:00",
       "managed_by": "aries-harness",
       "fingerprint": "aries-harness/history-doc/v1",
       "last_updated_at": "",
       "completed_at": "",
       "timebox_actual": "",
-      "content_fingerprint": "sha256:d254ebe21c0ba4739e39d98ef837f1d312ab6614f890d71a8795cdda5d482421",
-      "observed_content_fingerprint": "sha256:d254ebe21c0ba4739e39d98ef837f1d312ab6614f890d71a8795cdda5d482421",
+      "content_fingerprint": "sha256:2891aff6ba16146e776fcd530042b6d03afa0ce52c2f2f88e4519b0ff15ed3be",
+      "observed_content_fingerprint": "sha256:2891aff6ba16146e776fcd530042b6d03afa0ce52c2f2f88e4519b0ff15ed3be",
       "trace_history_source": "filesystem-only",
       "trace_last_commit_sha": "",
       "trace_last_commit_at": "",
@@ -1006,11 +1006,16 @@
         "trace_revision_count": "0"
       },
       "latest_commit": {
-        "sha": "c3009d2",
+        "sha": "5633e94",
         "date": "2026-07-27",
-        "subject": "Harden platform security, ship fleet DevOps control, and refresh harness honeycomb."
+        "subject": "Ship Ops task queue, dev blog v2, and refresh fleet honeycomb."
       },
       "recent_updates": [
+        {
+          "sha": "5633e94",
+          "date": "2026-07-27",
+          "subject": "Ship Ops task queue, dev blog v2, and refresh fleet honeycomb."
+        },
         {
           "sha": "c3009d2",
           "date": "2026-07-27",
@@ -1020,11 +1025,6 @@
           "sha": "0c8a847",
           "date": "2026-07-27",
           "subject": "Ship Ops daily Dev Blog and web forgot-password reset."
-        },
-        {
-          "sha": "6ab1ea3",
-          "date": "2026-07-26",
-          "subject": "Ship /discogs release and catalog-number listening guides with OPS token UI."
         }
       ],
       "dirty": false,
@@ -1038,14 +1038,14 @@
       "layer": "SharedSupportSurface",
       "declared_layer": "SharedSupportSurface",
       "effective_status": "generated",
-      "effective_since": "2026-07-27T09:44:33+00:00",
+      "effective_since": "2026-07-27T10:25:06+00:00",
       "managed_by": "aries-harness",
       "fingerprint": "aries-harness/history-doc/v1",
       "last_updated_at": "",
       "completed_at": "",
       "timebox_actual": "",
-      "content_fingerprint": "sha256:328a2222966656ece5bee446aa3e7cf96736f45f5dec5e38d6629eeeff4eac4f",
-      "observed_content_fingerprint": "sha256:328a2222966656ece5bee446aa3e7cf96736f45f5dec5e38d6629eeeff4eac4f",
+      "content_fingerprint": "sha256:1322d64596fcd29372f7bc559f132bfa9f9397ee08cac225b9ab3f760153d75e",
+      "observed_content_fingerprint": "sha256:1322d64596fcd29372f7bc559f132bfa9f9397ee08cac225b9ab3f760153d75e",
       "trace_history_source": "filesystem-only",
       "trace_last_commit_sha": "",
       "trace_last_commit_at": "",
@@ -1057,11 +1057,16 @@
         "trace_revision_count": "0"
       },
       "latest_commit": {
-        "sha": "c3009d2",
+        "sha": "5633e94",
         "date": "2026-07-27",
-        "subject": "Harden platform security, ship fleet DevOps control, and refresh harness honeycomb."
+        "subject": "Ship Ops task queue, dev blog v2, and refresh fleet honeycomb."
       },
       "recent_updates": [
+        {
+          "sha": "5633e94",
+          "date": "2026-07-27",
+          "subject": "Ship Ops task queue, dev blog v2, and refresh fleet honeycomb."
+        },
         {
           "sha": "c3009d2",
           "date": "2026-07-27",
@@ -1071,11 +1076,6 @@
           "sha": "0c8a847",
           "date": "2026-07-27",
           "subject": "Ship Ops daily Dev Blog and web forgot-password reset."
-        },
-        {
-          "sha": "6ab1ea3",
-          "date": "2026-07-26",
-          "subject": "Ship /discogs release and catalog-number listening guides with OPS token UI."
         }
       ],
       "dirty": false,
@@ -1089,14 +1089,14 @@
       "layer": "SharedSupportSurface",
       "declared_layer": "SharedSupportSurface",
       "effective_status": "generated",
-      "effective_since": "2026-07-27T09:44:33+00:00",
+      "effective_since": "2026-07-27T10:25:06+00:00",
       "managed_by": "aries-harness",
       "fingerprint": "aries-harness/history-doc/v1",
       "last_updated_at": "",
       "completed_at": "",
       "timebox_actual": "",
-      "content_fingerprint": "sha256:059ec2b3cd2b1e62e732199796b2dd67ac16f86d218d8033970aa0dfa68cf859",
-      "observed_content_fingerprint": "sha256:059ec2b3cd2b1e62e732199796b2dd67ac16f86d218d8033970aa0dfa68cf859",
+      "content_fingerprint": "sha256:c64b2fd29cd9e8c46d9709d6b56f7975e6ba845a0a038c5793c3ee52baf80de0",
+      "observed_content_fingerprint": "sha256:c64b2fd29cd9e8c46d9709d6b56f7975e6ba845a0a038c5793c3ee52baf80de0",
       "trace_history_source": "filesystem-only",
       "trace_last_commit_sha": "",
       "trace_last_commit_at": "",
@@ -1108,11 +1108,16 @@
         "trace_revision_count": "0"
       },
       "latest_commit": {
-        "sha": "c3009d2",
+        "sha": "5633e94",
         "date": "2026-07-27",
-        "subject": "Harden platform security, ship fleet DevOps control, and refresh harness honeycomb."
+        "subject": "Ship Ops task queue, dev blog v2, and refresh fleet honeycomb."
       },
       "recent_updates": [
+        {
+          "sha": "5633e94",
+          "date": "2026-07-27",
+          "subject": "Ship Ops task queue, dev blog v2, and refresh fleet honeycomb."
+        },
         {
           "sha": "c3009d2",
           "date": "2026-07-27",
@@ -1122,11 +1127,6 @@
           "sha": "0c8a847",
           "date": "2026-07-27",
           "subject": "Ship Ops daily Dev Blog and web forgot-password reset."
-        },
-        {
-          "sha": "6ab1ea3",
-          "date": "2026-07-26",
-          "subject": "Ship /discogs release and catalog-number listening guides with OPS token UI."
         }
       ],
       "dirty": false,
@@ -1140,14 +1140,14 @@
       "layer": "SharedSupportSurface",
       "declared_layer": "SharedSupportSurface",
       "effective_status": "generated",
-      "effective_since": "2026-07-27T09:44:33+00:00",
+      "effective_since": "2026-07-27T10:25:06+00:00",
       "managed_by": "aries-harness",
       "fingerprint": "aries-harness/history-doc/v1",
       "last_updated_at": "",
       "completed_at": "",
       "timebox_actual": "",
-      "content_fingerprint": "sha256:4ee1be15cdea141bb2e091a68cb7e26dbee6a5b08ae281aec0357b2e9758004e",
-      "observed_content_fingerprint": "sha256:4ee1be15cdea141bb2e091a68cb7e26dbee6a5b08ae281aec0357b2e9758004e",
+      "content_fingerprint": "sha256:1f59bfc56433867ee61161c4f3afe041ec9be12fc214efb3eb48e454d1dc2940",
+      "observed_content_fingerprint": "sha256:1f59bfc56433867ee61161c4f3afe041ec9be12fc214efb3eb48e454d1dc2940",
       "trace_history_source": "filesystem-only",
       "trace_last_commit_sha": "",
       "trace_last_commit_at": "",
@@ -1159,11 +1159,16 @@
         "trace_revision_count": "0"
       },
       "latest_commit": {
-        "sha": "c3009d2",
+        "sha": "5633e94",
         "date": "2026-07-27",
-        "subject": "Harden platform security, ship fleet DevOps control, and refresh harness honeycomb."
+        "subject": "Ship Ops task queue, dev blog v2, and refresh fleet honeycomb."
       },
       "recent_updates": [
+        {
+          "sha": "5633e94",
+          "date": "2026-07-27",
+          "subject": "Ship Ops task queue, dev blog v2, and refresh fleet honeycomb."
+        },
         {
           "sha": "c3009d2",
           "date": "2026-07-27",
@@ -1173,11 +1178,6 @@
           "sha": "0c8a847",
           "date": "2026-07-27",
           "subject": "Ship Ops daily Dev Blog and web forgot-password reset."
-        },
-        {
-          "sha": "6ab1ea3",
-          "date": "2026-07-26",
-          "subject": "Ship /discogs release and catalog-number listening guides with OPS token UI."
         }
       ],
       "dirty": false,
@@ -1191,14 +1191,14 @@
       "layer": "SharedSupportSurface",
       "declared_layer": "SharedSupportSurface",
       "effective_status": "generated",
-      "effective_since": "2026-07-27T09:44:33+00:00",
+      "effective_since": "2026-07-27T10:25:06+00:00",
       "managed_by": "aries-harness",
       "fingerprint": "aries-harness/history-doc/v1",
       "last_updated_at": "",
       "completed_at": "",
       "timebox_actual": "",
-      "content_fingerprint": "sha256:e5d0ed2bed3859e3a14ecb466df72332ee742dc8f1220e02f624d2dff8c8b88e",
-      "observed_content_fingerprint": "sha256:e5d0ed2bed3859e3a14ecb466df72332ee742dc8f1220e02f624d2dff8c8b88e",
+      "content_fingerprint": "sha256:67f4fb7c5947d53445cc65b214d09f779bec5f3fd8f2b044a29fc7ec158deca1",
+      "observed_content_fingerprint": "sha256:67f4fb7c5947d53445cc65b214d09f779bec5f3fd8f2b044a29fc7ec158deca1",
       "trace_history_source": "filesystem-only",
       "trace_last_commit_sha": "",
       "trace_last_commit_at": "",
@@ -1210,11 +1210,16 @@
         "trace_revision_count": "0"
       },
       "latest_commit": {
-        "sha": "c3009d2",
+        "sha": "5633e94",
         "date": "2026-07-27",
-        "subject": "Harden platform security, ship fleet DevOps control, and refresh harness honeycomb."
+        "subject": "Ship Ops task queue, dev blog v2, and refresh fleet honeycomb."
       },
       "recent_updates": [
+        {
+          "sha": "5633e94",
+          "date": "2026-07-27",
+          "subject": "Ship Ops task queue, dev blog v2, and refresh fleet honeycomb."
+        },
         {
           "sha": "c3009d2",
           "date": "2026-07-27",
@@ -1224,11 +1229,6 @@
           "sha": "0c8a847",
           "date": "2026-07-27",
           "subject": "Ship Ops daily Dev Blog and web forgot-password reset."
-        },
-        {
-          "sha": "6ab1ea3",
-          "date": "2026-07-26",
-          "subject": "Ship /discogs release and catalog-number listening guides with OPS token UI."
         }
       ],
       "dirty": false,
@@ -1242,14 +1242,14 @@
       "layer": "SharedSupportSurface",
       "declared_layer": "SharedSupportSurface",
       "effective_status": "generated",
-      "effective_since": "2026-07-27T09:44:33+00:00",
+      "effective_since": "2026-07-27T10:25:06+00:00",
       "managed_by": "aries-harness",
       "fingerprint": "aries-harness/history-doc/v1",
       "last_updated_at": "",
       "completed_at": "",
       "timebox_actual": "",
-      "content_fingerprint": "sha256:ab9285f48eb33a3db8596d041f54964f643c2024ccad97a21e0f62f3bc025e3d",
-      "observed_content_fingerprint": "sha256:ab9285f48eb33a3db8596d041f54964f643c2024ccad97a21e0f62f3bc025e3d",
+      "content_fingerprint": "sha256:d0cdf5e4727b4e73ed757cfd02383a52f32eeb6e995931f180bbc06038e04e93",
+      "observed_content_fingerprint": "sha256:d0cdf5e4727b4e73ed757cfd02383a52f32eeb6e995931f180bbc06038e04e93",
       "trace_history_source": "filesystem-only",
       "trace_last_commit_sha": "",
       "trace_last_commit_at": "",
@@ -1261,11 +1261,16 @@
         "trace_revision_count": "0"
       },
       "latest_commit": {
-        "sha": "c3009d2",
+        "sha": "5633e94",
         "date": "2026-07-27",
-        "subject": "Harden platform security, ship fleet DevOps control, and refresh harness honeycomb."
+        "subject": "Ship Ops task queue, dev blog v2, and refresh fleet honeycomb."
       },
       "recent_updates": [
+        {
+          "sha": "5633e94",
+          "date": "2026-07-27",
+          "subject": "Ship Ops task queue, dev blog v2, and refresh fleet honeycomb."
+        },
         {
           "sha": "c3009d2",
           "date": "2026-07-27",
@@ -1275,11 +1280,6 @@
           "sha": "0c8a847",
           "date": "2026-07-27",
           "subject": "Ship Ops daily Dev Blog and web forgot-password reset."
-        },
-        {
-          "sha": "6ab1ea3",
-          "date": "2026-07-26",
-          "subject": "Ship /discogs release and catalog-number listening guides with OPS token UI."
         }
       ],
       "dirty": false,
@@ -1293,14 +1293,14 @@
       "layer": "SharedSupportSurface",
       "declared_layer": "SharedSupportSurface",
       "effective_status": "generated",
-      "effective_since": "2026-07-27T09:44:33+00:00",
+      "effective_since": "2026-07-27T10:25:06+00:00",
       "managed_by": "aries-harness",
       "fingerprint": "aries-harness/history-doc/v1",
       "last_updated_at": "",
       "completed_at": "",
       "timebox_actual": "",
-      "content_fingerprint": "sha256:d730fb1602a2f43fdc00e5e06725b634ba49101d536b82f2cd8fa24bae0f0365",
-      "observed_content_fingerprint": "sha256:d730fb1602a2f43fdc00e5e06725b634ba49101d536b82f2cd8fa24bae0f0365",
+      "content_fingerprint": "sha256:12ceba28b3e908d2c819ff6fe64d91a5f461b11ef67578109e688d65beeac2ad",
+      "observed_content_fingerprint": "sha256:12ceba28b3e908d2c819ff6fe64d91a5f461b11ef67578109e688d65beeac2ad",
       "trace_history_source": "filesystem-only",
       "trace_last_commit_sha": "",
       "trace_last_commit_at": "",
@@ -1312,11 +1312,16 @@
         "trace_revision_count": "0"
       },
       "latest_commit": {
-        "sha": "c3009d2",
+        "sha": "5633e94",
         "date": "2026-07-27",
-        "subject": "Harden platform security, ship fleet DevOps control, and refresh harness honeycomb."
+        "subject": "Ship Ops task queue, dev blog v2, and refresh fleet honeycomb."
       },
       "recent_updates": [
+        {
+          "sha": "5633e94",
+          "date": "2026-07-27",
+          "subject": "Ship Ops task queue, dev blog v2, and refresh fleet honeycomb."
+        },
         {
           "sha": "c3009d2",
           "date": "2026-07-27",
@@ -1326,11 +1331,6 @@
           "sha": "0c8a847",
           "date": "2026-07-27",
           "subject": "Ship Ops daily Dev Blog and web forgot-password reset."
-        },
-        {
-          "sha": "6ab1ea3",
-          "date": "2026-07-26",
-          "subject": "Ship /discogs release and catalog-number listening guides with OPS token UI."
         }
       ],
       "dirty": false,
@@ -1344,14 +1344,14 @@
       "layer": "SharedSupportSurface",
       "declared_layer": "SharedSupportSurface",
       "effective_status": "generated",
-      "effective_since": "2026-07-27T09:44:33+00:00",
+      "effective_since": "2026-07-27T10:25:06+00:00",
       "managed_by": "aries-harness",
       "fingerprint": "aries-harness/history-doc/v1",
       "last_updated_at": "",
       "completed_at": "",
       "timebox_actual": "",
-      "content_fingerprint": "sha256:0de90d3c8a0a6af269ba1a4da3d006b1d0a113952b8a91f1931b70db6cbc333b",
-      "observed_content_fingerprint": "sha256:0de90d3c8a0a6af269ba1a4da3d006b1d0a113952b8a91f1931b70db6cbc333b",
+      "content_fingerprint": "sha256:3a641627aa01a88a6e34408eab7b24ff9c0f152f7912035b127b49249bf31ec9",
+      "observed_content_fingerprint": "sha256:3a641627aa01a88a6e34408eab7b24ff9c0f152f7912035b127b49249bf31ec9",
       "trace_history_source": "filesystem-only",
       "trace_last_commit_sha": "",
       "trace_last_commit_at": "",
@@ -1363,11 +1363,16 @@
         "trace_revision_count": "0"
       },
       "latest_commit": {
-        "sha": "c3009d2",
+        "sha": "5633e94",
         "date": "2026-07-27",
-        "subject": "Harden platform security, ship fleet DevOps control, and refresh harness honeycomb."
+        "subject": "Ship Ops task queue, dev blog v2, and refresh fleet honeycomb."
       },
       "recent_updates": [
+        {
+          "sha": "5633e94",
+          "date": "2026-07-27",
+          "subject": "Ship Ops task queue, dev blog v2, and refresh fleet honeycomb."
+        },
         {
           "sha": "c3009d2",
           "date": "2026-07-27",
@@ -1377,11 +1382,6 @@
           "sha": "0c8a847",
           "date": "2026-07-27",
           "subject": "Ship Ops daily Dev Blog and web forgot-password reset."
-        },
-        {
-          "sha": "6ab1ea3",
-          "date": "2026-07-26",
-          "subject": "Ship /discogs release and catalog-number listening guides with OPS token UI."
         }
       ],
       "dirty": false,
@@ -1395,14 +1395,14 @@
       "layer": "SharedSupportSurface",
       "declared_layer": "SharedSupportSurface",
       "effective_status": "generated",
-      "effective_since": "2026-07-27T09:44:33+00:00",
+      "effective_since": "2026-07-27T10:25:06+00:00",
       "managed_by": "aries-harness",
       "fingerprint": "aries-harness/history-doc/v1",
       "last_updated_at": "",
       "completed_at": "",
       "timebox_actual": "",
-      "content_fingerprint": "sha256:6cb6553e5f348da239866bdf34c6bb1ac3407dd57c8bfa82216c15501ad58d1a",
-      "observed_content_fingerprint": "sha256:6cb6553e5f348da239866bdf34c6bb1ac3407dd57c8bfa82216c15501ad58d1a",
+      "content_fingerprint": "sha256:7561c1ad2a13adacf2c1d11c2805acabe7109f3f74aa55ae61ef1bfba0866973",
+      "observed_content_fingerprint": "sha256:7561c1ad2a13adacf2c1d11c2805acabe7109f3f74aa55ae61ef1bfba0866973",
       "trace_history_source": "filesystem-only",
       "trace_last_commit_sha": "",
       "trace_last_commit_at": "",
@@ -1414,11 +1414,16 @@
         "trace_revision_count": "0"
       },
       "latest_commit": {
-        "sha": "c3009d2",
+        "sha": "5633e94",
         "date": "2026-07-27",
-        "subject": "Harden platform security, ship fleet DevOps control, and refresh harness honeycomb."
+        "subject": "Ship Ops task queue, dev blog v2, and refresh fleet honeycomb."
       },
       "recent_updates": [
+        {
+          "sha": "5633e94",
+          "date": "2026-07-27",
+          "subject": "Ship Ops task queue, dev blog v2, and refresh fleet honeycomb."
+        },
         {
           "sha": "c3009d2",
           "date": "2026-07-27",
@@ -1428,11 +1433,6 @@
           "sha": "0c8a847",
           "date": "2026-07-27",
           "subject": "Ship Ops daily Dev Blog and web forgot-password reset."
-        },
-        {
-          "sha": "6ab1ea3",
-          "date": "2026-07-26",
-          "subject": "Ship /discogs release and catalog-number listening guides with OPS token UI."
         }
       ],
       "dirty": false,
@@ -1446,14 +1446,14 @@
       "layer": "SharedSupportSurface",
       "declared_layer": "SharedSupportSurface",
       "effective_status": "generated",
-      "effective_since": "2026-07-27T09:44:33+00:00",
+      "effective_since": "2026-07-27T10:25:06+00:00",
       "managed_by": "aries-harness",
       "fingerprint": "aries-harness/history-doc/v1",
       "last_updated_at": "",
       "completed_at": "",
       "timebox_actual": "",
-      "content_fingerprint": "sha256:b53e4b374c1ae1e621c33a6651b0716ff1e47c3d63ecb334eba9802e14cf5555",
-      "observed_content_fingerprint": "sha256:b53e4b374c1ae1e621c33a6651b0716ff1e47c3d63ecb334eba9802e14cf5555",
+      "content_fingerprint": "sha256:e0303a38d9bde53dc85b81ed2a66f3ce4b522b4341ba83c5357f25c5710716c1",
+      "observed_content_fingerprint": "sha256:e0303a38d9bde53dc85b81ed2a66f3ce4b522b4341ba83c5357f25c5710716c1",
       "trace_history_source": "filesystem-only",
       "trace_last_commit_sha": "",
       "trace_last_commit_at": "",
@@ -1465,11 +1465,16 @@
         "trace_revision_count": "0"
       },
       "latest_commit": {
-        "sha": "c3009d2",
+        "sha": "5633e94",
         "date": "2026-07-27",
-        "subject": "Harden platform security, ship fleet DevOps control, and refresh harness honeycomb."
+        "subject": "Ship Ops task queue, dev blog v2, and refresh fleet honeycomb."
       },
       "recent_updates": [
+        {
+          "sha": "5633e94",
+          "date": "2026-07-27",
+          "subject": "Ship Ops task queue, dev blog v2, and refresh fleet honeycomb."
+        },
         {
           "sha": "c3009d2",
           "date": "2026-07-27",
@@ -1764,8 +1769,8 @@
       "last_updated_at": "",
       "completed_at": "",
       "timebox_actual": "",
-      "content_fingerprint": "sha256:42341f89bf211fe21cbd0ad44f1a9818439523877eb74a16edfef98b2ea295c6",
-      "observed_content_fingerprint": "sha256:42341f89bf211fe21cbd0ad44f1a9818439523877eb74a16edfef98b2ea295c6",
+      "content_fingerprint": "sha256:b767f5a571452ababcc49ab6cab5c52008388df1cf90dff069d7f72d054c61f0",
+      "observed_content_fingerprint": "sha256:b767f5a571452ababcc49ab6cab5c52008388df1cf90dff069d7f72d054c61f0",
       "trace_history_source": "filesystem-only",
       "trace_last_commit_sha": "",
       "trace_last_commit_at": "",
@@ -1777,11 +1782,16 @@
         "trace_revision_count": "0"
       },
       "latest_commit": {
-        "sha": "c3009d2",
+        "sha": "5633e94",
         "date": "2026-07-27",
-        "subject": "Harden platform security, ship fleet DevOps control, and refresh harness honeycomb."
+        "subject": "Ship Ops task queue, dev blog v2, and refresh fleet honeycomb."
       },
       "recent_updates": [
+        {
+          "sha": "5633e94",
+          "date": "2026-07-27",
+          "subject": "Ship Ops task queue, dev blog v2, and refresh fleet honeycomb."
+        },
         {
           "sha": "c3009d2",
           "date": "2026-07-27",
@@ -1791,11 +1801,6 @@
           "sha": "0c8a847",
           "date": "2026-07-27",
           "subject": "Ship Ops daily Dev Blog and web forgot-password reset."
-        },
-        {
-          "sha": "53e7437",
-          "date": "2026-07-26",
-          "subject": "Ship identity catalog, Hans/Hant locales, web research, and knowledge plane."
         }
       ],
       "dirty": false,
@@ -2570,11 +2575,16 @@
         "trace_revision_count": "0"
       },
       "latest_commit": {
-        "sha": "c3009d2",
+        "sha": "5633e94",
         "date": "2026-07-27",
-        "subject": "Harden platform security, ship fleet DevOps control, and refresh harness honeycomb."
+        "subject": "Ship Ops task queue, dev blog v2, and refresh fleet honeycomb."
       },
       "recent_updates": [
+        {
+          "sha": "5633e94",
+          "date": "2026-07-27",
+          "subject": "Ship Ops task queue, dev blog v2, and refresh fleet honeycomb."
+        },
         {
           "sha": "c3009d2",
           "date": "2026-07-27",
@@ -2616,11 +2626,16 @@
         "trace_revision_count": "0"
       },
       "latest_commit": {
-        "sha": "0c8a847",
+        "sha": "5633e94",
         "date": "2026-07-27",
-        "subject": "Ship Ops daily Dev Blog and web forgot-password reset."
+        "subject": "Ship Ops task queue, dev blog v2, and refresh fleet honeycomb."
       },
       "recent_updates": [
+        {
+          "sha": "5633e94",
+          "date": "2026-07-27",
+          "subject": "Ship Ops task queue, dev blog v2, and refresh fleet honeycomb."
+        },
         {
           "sha": "0c8a847",
           "date": "2026-07-27",
@@ -2902,8 +2917,18 @@
         "trace_last_commit_at": "",
         "trace_revision_count": "0"
       },
-      "latest_commit": null,
-      "recent_updates": [],
+      "latest_commit": {
+        "sha": "5633e94",
+        "date": "2026-07-27",
+        "subject": "Ship Ops task queue, dev blog v2, and refresh fleet honeycomb."
+      },
+      "recent_updates": [
+        {
+          "sha": "5633e94",
+          "date": "2026-07-27",
+          "subject": "Ship Ops task queue, dev blog v2, and refresh fleet honeycomb."
+        }
+      ],
       "dirty": false,
       "issue_count": 0,
       "issues": []
@@ -2933,8 +2958,18 @@
         "trace_last_commit_at": "",
         "trace_revision_count": "0"
       },
-      "latest_commit": null,
-      "recent_updates": [],
+      "latest_commit": {
+        "sha": "5633e94",
+        "date": "2026-07-27",
+        "subject": "Ship Ops task queue, dev blog v2, and refresh fleet honeycomb."
+      },
+      "recent_updates": [
+        {
+          "sha": "5633e94",
+          "date": "2026-07-27",
+          "subject": "Ship Ops task queue, dev blog v2, and refresh fleet honeycomb."
+        }
+      ],
       "dirty": false,
       "issue_count": 0,
       "issues": []

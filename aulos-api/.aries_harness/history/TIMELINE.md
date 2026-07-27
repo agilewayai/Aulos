@@ -8,10 +8,10 @@ managed_by: "aries-harness"
 fingerprint: "aries-harness/history-doc/v1"
 generated_by: "/aries-harness history-refresh"
 initialized_at: "2026-07-25T11:07:43Z"
-generated_at: "2026-07-27T10:25:06+00:00"
+generated_at: "2026-07-27T11:49:17+00:00"
 effective_status: "generated"
-effective_since: "2026-07-27T10:25:06+00:00"
-content_fingerprint: "sha256:12ceba28b3e908d2c819ff6fe64d91a5f461b11ef67578109e688d65beeac2ad"
+effective_since: "2026-07-27T11:49:17+00:00"
+content_fingerprint: "sha256:272dfcc41a47b9e3f5be6503e4a64b1e8c7125269f70de87b2d6763ac1a48dd3"
 trace_history_source: "filesystem-only"
 trace_last_commit_sha: ""
 trace_last_commit_at: ""
@@ -19,9 +19,16 @@ trace_revision_count: "0"
 ---
 # Timeline
 
-Generated at: `2026-07-27T10:25:06+00:00`
+Generated at: `2026-07-27T11:49:17+00:00`
 
 ## Journal milestones
+
+### 2026-07-27T10:45:00Z
+
+- Cross-ref **AUDIT-009** remediation (primary journal: `aulos-skills/.aries_harness/JOURNAL.md`, review `runs/reviews/AUDIT-009-…`):
+- F3 SPEC-014 HttpOnly session cookie; F2 SPEC-015 guide HTML security + sanitizer; F10 SPEC-016 module splits; F11 ADR-008 plaintext secrets accepted for Sprint-1.
+- Fleet DevOps: `deploy/aulos-ctl.sh`, `deploy/OPS.md`, `deploy/honeycomb.sh` (commit `c3009d2`).
+- Dev-blog evidence fix: `_journal_slice_for_day` now keeps **newest** day entries (was truncating tail → dropped AUDIT slices).
 
 ### 2026-07-27T10:30:00Z
 
@@ -69,14 +76,9 @@ Generated at: `2026-07-27T10:25:06+00:00`
 - Routes: owner `GET /v1/listening-guides/{id}/trace`, ops `GET /v1/ops/listening-guides/{id}/trace`
 - Verify: `pytest tests/test_chain_trace.py` 4 passed
 
-### 2026-07-26T17:10:00Z
-
-- Discogs intent rewrite avoids `I'm listening to…` intake trap; Discogs title/composer always win over weak Catalog
-- Companion fix in aulos-skills family composer gate (Mozart K.488 no longer inherits Beethoven cello pack)
-- Verify: `pytest tests/test_discogs.py` 8 passed; live `/discogs #6280908` synthesize=`kb-rag` only
-
 ## Recent git commits
 
+- `5633e94` 2026-07-27 Ship Ops task queue, dev blog v2, and refresh fleet honeycomb.
 - `c3009d2` 2026-07-27 Harden platform security, ship fleet DevOps control, and refresh harness honeycomb.
 - `0c8a847` 2026-07-27 Ship Ops daily Dev Blog and web forgot-password reset.
 - `6ab1ea3` 2026-07-26 Ship /discogs release and catalog-number listening guides with OPS token UI.
@@ -93,10 +95,10 @@ Generated at: `2026-07-27T10:25:06+00:00`
 - `M` `aulos-api/.aries_harness/ARIES_HARNESS_FINGERPRINT.json`
 - `M` `aulos-api/.aries_harness/INDEX.md`
 - `M` `aulos-api/.aries_harness/JOURNAL.md`
-- `M` `aulos-api/.aries_harness/STATE.md`
 - `M` `aulos-api/.aries_harness/references/REG-001-artifact-register.md`
-- `M` `aulos-api/.aries_harness/references/specs/SPEC-008-discog-release-guide.md`
-- `M` `aulos-api/.aries_harness/references/specs/SPEC-009-ops-dev-blog.md`
-- `M` `aulos-api/src/aulos_api/app.py`
-- `M` `aulos-api/src/aulos_api/config/settings.py`
-- `M` `aulos-api/src/aulos_api/db/models.py`
+- `M` `aulos-api/src/aulos_api/services/dev_blog.py`
+- `M` `aulos-api/tests/test_dev_blog.py`
+- `M` `aulos-knowledge/.aries_harness/EVAL.md`
+- `M` `aulos-knowledge/.aries_harness/JOURNAL.md`
+- `M` `aulos-knowledge/.aries_harness/STATE.md`
+- `M` `aulos-knowledge/.aries_harness/TASK_STACK.md`

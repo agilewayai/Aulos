@@ -7,6 +7,7 @@ import {
   type OpsTaskDashboard,
   type OpsTaskRow,
 } from './api'
+import { requestAssetVersionCheck } from './assetVersion'
 import { formatDateTime } from './time'
 
 type Props = {
@@ -24,6 +25,7 @@ export function TaskQueuePanel({ busy, setBusy, setError }: Props) {
   const [selected, setSelected] = useState<OpsTaskRow | null>(null)
 
   const refresh = useCallback(async () => {
+    requestAssetVersionCheck()
     const [dash, list] = await Promise.all([
       fetchOpsTaskDashboard(),
       fetchOpsTasks({

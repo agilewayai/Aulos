@@ -440,6 +440,16 @@ export type KnowledgeSource = {
   rate_limit_qps: number
   enabled: boolean
   notes: string
+  verification_status?: string
+  verified_by?: string
+  verified_at?: string | null
+  origin_class?: string
+  tos_notes?: string
+  attribution_template?: string
+  connector_semver?: string
+  registry_revision?: string
+  connector_registered?: boolean
+  base_urls?: string[]
 }
 
 export type KnowledgeJob = {
@@ -449,6 +459,17 @@ export type KnowledgeJob = {
   error: string
   created_at?: string | null
   finished_at?: string | null
+}
+
+export type KnowledgeChunk = {
+  id: number
+  document_id: number
+  section: string
+  aulos_work_id?: string
+  text_preview?: string
+  text_len?: number
+  text?: string
+  created_at?: string | null
 }
 
 export type KnowledgeDoc = {
@@ -465,6 +486,7 @@ export type KnowledgeDoc = {
   license_class: string
   body_preview?: string
   body?: string
+  chunks?: KnowledgeChunk[]
 }
 
 export type KnowledgeComposer = {
@@ -477,11 +499,14 @@ export type KnowledgeComposer = {
 
 export type KnowledgePlaneStats = {
   sources: number
+  sources_enabled?: number
+  sources_verified?: number
   works: number
   composers?: number
   documents: number
   documents_published: number
   documents_quarantine: number
+  chunks?: number
   jobs: number
   artifacts: number
   media_assets?: number
@@ -546,6 +571,10 @@ export function fetchKnowledgeProvenance(documentId: number) {
   return plane(`/v1/admin/provenance/${documentId}`) as Promise<Record<string, unknown>>
 }
 
+export function fetchKnowledgeChunkProvenance(chunkId: number) {
+  return plane(`/v1/admin/chunks/${chunkId}/provenance`) as Promise<Record<string, unknown>>
+}
+
 export function fetchKnowledgeArtifact(artifactId: number) {
   return plane(`/v1/admin/artifacts/${artifactId}`) as Promise<{
     id: number
@@ -564,11 +593,52 @@ export function knowledgeRetrieveLab(query: string, workId = '', composerId = ''
   }) as Promise<{ hits: Array<{ title: string; score: number; text: string; aulos_work_id?: string }> }>
 }
 
-export function patchKnowledgeSource(sourceId: string, payload: { enabled?: boolean }) {
+export function patchKnowledgeSource(
+  sourceId: string,
+  payload: { enabled?: boolean; notes?: string; rate_limit_qps?: number },
+) {
   return plane(`/v1/admin/sources/${encodeURIComponent(sourceId)}`, {
     method: 'PATCH',
     body: JSON.stringify(payload),
-  }) as Promise<{ ok: boolean; id: string; enabled: boolean }>
+  }) as Promise<KnowledgeSource & { ok: boolean }>
+}
+
+export function createKnowledgeSource(payload: {
+  id: string
+  name?: string
+  tier?: string
+  connector?: string
+  base_urls?: string[]
+  license_class?: string
+  rate_limit_qps?: number
+  notes?: string
+  origin_class?: string
+}) {
+  return plane('/v1/admin/sources', {
+    method: 'POST',
+    body: JSON.stringify(payload),
+  }) as Promise<KnowledgeSource & { ok: boolean }>
+}
+
+export function verifyKnowledgeSource(sourceId: string, by = 'ops') {
+  return plane(`/v1/admin/sources/${encodeURIComponent(sourceId)}/verify`, {
+    method: 'POST',
+    body: JSON.stringify({ by }),
+  }) as Promise<KnowledgeSource & { ok: boolean }>
+}
+
+export function rejectKnowledgeSource(sourceId: string) {
+  return plane(`/v1/admin/sources/${encodeURIComponent(sourceId)}/reject`, {
+    method: 'POST',
+    body: JSON.stringify({}),
+  }) as Promise<KnowledgeSource & { ok: boolean }>
+}
+
+export function suspendKnowledgeSource(sourceId: string) {
+  return plane(`/v1/admin/sources/${encodeURIComponent(sourceId)}/suspend`, {
+    method: 'POST',
+    body: JSON.stringify({}),
+  }) as Promise<KnowledgeSource & { ok: boolean }>
 }
 
 export function quarantineKnowledgeDocument(docId: number) {

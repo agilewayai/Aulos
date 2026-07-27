@@ -8,18 +8,27 @@ from typing import Any
 
 from sqlalchemy.orm import Session
 
-from aulos_knowledge.connectors import run_connector
+from aulos_knowledge.connectors import connector_registered, run_connector
 from aulos_knowledge.db import FetchJob, SourceAuthority, utcnow
 
 logger = logging.getLogger("aulos_knowledge.jobs")
+
+
+def assert_source_crawlable(src: SourceAuthority) -> None:
+    status = (src.verification_status or "").strip() or "candidate"
+    if status != "verified":
+        raise ValueError(f"source not verified: {src.id} (status={status})")
+    if not src.enabled:
+        raise ValueError(f"source disabled: {src.id}")
+    if not connector_registered(src.connector or ""):
+        raise ValueError(f"connector not registered: {src.connector or '(empty)'} for source {src.id}")
 
 
 def enqueue_job(db: Session, *, source_id: str, params: dict[str, Any] | None = None) -> FetchJob:
     src = db.get(SourceAuthority, source_id)
     if src is None:
         raise ValueError(f"unknown source: {source_id}")
-    if not src.enabled:
-        raise ValueError(f"source disabled: {source_id}")
+    assert_source_crawlable(src)
     job = FetchJob(
         source_id=source_id,
         status="queued",
@@ -36,9 +45,17 @@ def run_job(db: Session, job_id: int) -> FetchJob:
     if job is None:
         raise ValueError(f"job not found: {job_id}")
     src = db.get(SourceAuthority, job.source_id)
-    if src is None or not src.enabled:
+    if src is None:
         job.status = "failed"
-        job.error = "source missing or disabled"
+        job.error = "source missing"
+        job.finished_at = utcnow()
+        db.commit()
+        return job
+    try:
+        assert_source_crawlable(src)
+    except ValueError as exc:
+        job.status = "failed"
+        job.error = str(exc)
         job.finished_at = utcnow()
         db.commit()
         return job

@@ -8,10 +8,10 @@ managed_by: "aries-harness"
 fingerprint: "aries-harness/history-doc/v1"
 generated_by: "/aries-harness history-refresh"
 initialized_at: "2026-07-25T11:07:42Z"
-generated_at: "2026-07-27T10:25:13+00:00"
+generated_at: "2026-07-27T11:49:24+00:00"
 effective_status: "generated"
-effective_since: "2026-07-27T10:25:13+00:00"
-content_fingerprint: "sha256:b63b0a3b552f2d2a5289e904bb55bc29ca9c0505bf92250719845420998b4a5a"
+effective_since: "2026-07-27T11:49:24+00:00"
+content_fingerprint: "sha256:9101cc7505a89ec056ee4408225cb0828ff5ee364e8f5eba934cae7dc9059869"
 trace_history_source: "filesystem-only"
 trace_last_commit_sha: ""
 trace_last_commit_at: ""
@@ -19,7 +19,7 @@ trace_revision_count: "0"
 ---
 # Retrospective Snapshot
 
-Generated at: `2026-07-27T10:25:13+00:00`
+Generated at: `2026-07-27T11:49:24+00:00`
 
 ## Recent changes
 
@@ -39,7 +39,7 @@ Generated at: `2026-07-27T10:25:13+00:00`
 
 ## What needs attention
 
-- working tree is dirty with 64 tracked or untracked change(s)
+- working tree is dirty with 103 tracked or untracked change(s)
 - no explicit next-up slice is recorded
 
 ## Durable reminders

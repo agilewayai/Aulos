@@ -11,7 +11,7 @@ generated_by: "/aries-harness init"
 initialized_at: "2026-07-25T11:20:05Z"
 effective_status: "active"
 effective_since: "2026-07-25T11:20:05Z"
-content_fingerprint: "sha256:81ef8118e103fa9992dfde3912f50b67d6f7567380517c85d446d8d8336e1ba6"
+content_fingerprint: "sha256:8fc288864f2b9c81a237b9e5dfd4db44b4981cf92df28b17e18fa050f0f0c54e"
 trace_history_source: "filesystem-only"
 trace_last_commit_sha: ""
 trace_last_commit_at: ""
@@ -42,6 +42,10 @@ This layer holds stable harness operating definitions, planning truth, design in
 - `decisions/`
 - `decisions/architecture/`
 - `decisions/adrs/`
+
+## Meta principles
+
+- `references/META-001-meta-principles.md` — fleet纲领: root-cause thinking, asset sync, engineering craft
 
 ## Rules
 

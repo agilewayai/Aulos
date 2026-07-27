@@ -9,7 +9,7 @@ fingerprint: "aries-harness/bootstrap-doc/v1"
 initialized_at: "2026-07-25T17:25:00+00:00"
 effective_status: "active"
 effective_since: "2026-07-25T17:25:00+00:00"
-content_fingerprint: "sha256:3ebc2e1a5bbe504dfd3f3beb4d39ff80b4d9b5b332ba4e1bb92a4b466c53e982"
+content_fingerprint: "sha256:9dcea1b38086aed128ba21fd04ed66dacc4fc706b94dd64a25ccb9e3721d9e69"
 trace_history_source: "filesystem-only"
 trace_last_commit_sha: ""
 trace_last_commit_at: ""
@@ -20,8 +20,10 @@ trace_revision_count: "0"
 | Artifact ID | Type | Canonical path | Status |
 | --- | --- | --- | --- |
 | REQ-007 | request | references/requests/REQ-007-music-knowledge-platform.md | active |
+| REQ-008 | request | references/requests/REQ-008-authority-source-registry.md | active |
 | SPEC-009 | spec | references/specs/SPEC-009-knowledge-api-and-data.md | active |
 | SPEC-010 | spec | references/specs/SPEC-010-ops-knowledge-audit-ui.md | active |
+| REG-SRC-001 | registry-manifest | data/registry/sources.yaml | active |
 | DOM-003 | domain | references/domain/DOM-003-music-knowledge.md | active |
 | ARCH-005 | architecture | decisions/architecture/ARCH-005-knowledge-plane.md | active |
 | ADR-005 | adr | decisions/adrs/ADR-005-dedicated-knowledge-db.md | accepted |

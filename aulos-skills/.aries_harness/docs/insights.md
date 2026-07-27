@@ -8,7 +8,7 @@ fingerprint: "aries-harness/bootstrap-doc/v1"
 initialized_at: "2026-07-25T16:19:58+00:00"
 effective_status: "active"
 effective_since: "2026-07-25T16:19:58+00:00"
-content_fingerprint: "sha256:f60e49b1e672ded519ea273d000a9ecc3334b756359f7696aa817a358e2122fe"
+content_fingerprint: "sha256:875535f6aaa71233f57144d01368b664b9910b9182aa6f1ab80ee9f17b971313"
 trace_history_source: "filesystem-only"
 trace_last_commit_sha: ""
 trace_last_commit_at: ""
@@ -16,7 +16,21 @@ trace_revision_count: "0"
 ---
 # Insights — aulos-skills durable baseline
 
+Programmatic thinking promoted into **[META-001](../references/META-001-meta-principles.md)** carries `↑ META-001 §…`. Domain gates and YAML details stay here + in SPEC.
+
+## 2026-07-27 — Authority Source Registry (promoted)
+
+↑ META-001 §4 (knowledge plane + verified sources)
+
+- Classical encyclopedic crawl/RAG may only use **registered + verified** sources
+  (`aulos-knowledge` REQ-008 / ADR-006 / `data/registry/sources.yaml`).
+- Job gate: enabled ∧ verified ∧ connector registered; fetch URLs ∈ base_urls;
+  publish defaults to quarantine unless tier-S verified policy allows.
+- Ops Knowledge Sources: register candidate → verify/reject/suspend.
+
 ## 2026-07-26 — Family evidence + per-node decontam (promoted)
+
+↑ META-001 §1 (multi-stage validate; data/evidence over one-shot scrub)
 
 - **Root cause (guide #44):** composer-scoped family packs scored `+2` on surname alone
   (`brahms` → `duo-cello-piano`) with **zero** instrument/form evidence. Scrub only ran
@@ -32,6 +46,8 @@ trace_revision_count: "0"
 
 ## 2026-07-26 — Never bare-dict LLM zh layers (promoted)
 
+↑ META-001 §3 (coerce external / LLM input)
+
 - **Root cause:** `merge_dossiers` used `dict(layer["zh_hans"])` when DeepSeek returned
   Chinese prose (or a list) instead of an object →
   `ValueError: dictionary update sequence element #0 has length 1; 2 is required`.
@@ -41,12 +57,16 @@ trace_revision_count: "0"
 
 ## 2026-07-26 — PG schema patch on every model change (promoted)
 
+↑ META-001 §2 (schema parity; SQLite ≠ production)
+
 - Production hot DB is Postgres; SQLite is failover mirror only.
 - `Base.metadata.create_all` does not ADD columns on existing PG tables.
 - Closeout rule: extend `aulos_api.db.schema_patches`, apply on primary+failover, verify PG columns after restart.
 - Incident: SPEC-013 fields (`message`, `tags_json`, `favorited_at`, …) landed in SQLite ALTER path only → PG missing until dual-dialect patches.
 
 ## 2026-07-26 — Family pack composer gate (promoted)
+
+↑ META-001 §1 (evidence gates; no form-only unlock)
 
 - **Root cause:** `_match_family` unlocked `duo-cello-piano` on bare `piano`+`sonata`
   (score≥2) with **no composer hit** → Beethoven cello chambers polluted Discogs Mozart
@@ -61,12 +81,16 @@ trace_revision_count: "0"
 
 ## 2026-07-26 — Locale script tags only (promoted)
 
+→ operating-defaults (locales); not META
+
 - Guide languages: **English / 简体 / 繁体** via `zh-Hans` and `zh-Hant`.
 - Do not use regional locale abbreviations in open-source source, UI, or LLM prompts.
 - Dossier keys: `zh` / `zh_hans` (simplified), `zh_hant` (traditional); synthesize Hant from Hans when missing.
 - Measurable gate: `tests/test_intake_i18n.py` asserts `data-lang="zh-Hans|zh-Hant"` and switcher labels 简体|繁体.
 
 ## 2026-07-26 — Intake composer recovery (promoted)
+
+→ SPEC-008 / identity tests (domain)
 
 - `Unknown composer` with clear Chinese 《书名》 text was intake failure, not missing LLM.
 - Fix path: `intake_parse.guess_composer_and_title` + catalog shelf (e.g. Dumky) + compose recovery.
@@ -75,11 +99,15 @@ trace_revision_count: "0"
 
 ## 2026-07-26 — Agent Reach as fenced search enabler (promoted)
 
+→ enabler skill / OPS (domain)
+
 - Install truth: owner `Panniantong/Agent-Reach` pinned commit under `skills/enabler-agent-reach/`.
 - Allow Jina deepen / optional Exa+gh read; deny cookies, social CLIs, `agent-reach` apt/npm install.
 - OPS toggle: `agent_reach_enabled` on web-research config.
 
 ## 2026-07-26 — Professional Music Knowledge Plane (promoted)
+
+↑ META-001 §4 (knowledge plane boundary)
 
 - Encyclopedic music data (works, composers, history, discography) lives in
   **aulos-knowledge**, not in `aulos.db` with users/guides.
@@ -89,6 +117,8 @@ trace_revision_count: "0"
 - Enable RAG merge with `AULOS_KNOWLEDGE_PLANE_ENABLED=true`.
 
 ## 2026-07-26 — Work Identity Catalog is identity authority (promoted)
+
+↑ META-001 §1 + §4 (data over heuristics; identity before enrich)
 
 - **Root cause of cross-work pollution was missing identity entities**, not missing
   Bach-cello `if` branches. Procedural heuristics cannot productize Chopin/Mahler.
@@ -103,11 +133,15 @@ trace_revision_count: "0"
 
 ## 2026-07-26 — Solo cello suites identity (superseded by Catalog)
 
+↑ META-001 §1 (symptom medicine → Catalog)
+
 - Earlier case patches (solo-cello family + scrub tuples) were symptom medicine.
 - Behavior preserved via catalog record `bach.cello-suites.bwv-1007-1012`;
   implementation now Catalog-driven.
 
 ## 2026-07-25 — Agent-centric 导赏 (promoted)
+
+↑ META-001 §4 (agent-centric product)
 
 - Product core is **Agent + Skill Harness + tools**, not API Python orchestration.
 - Listening jobs: API injects RAG/context and persists; **aulos-agent** calls `run_listening_skill` per trigger.
@@ -115,12 +149,16 @@ trace_revision_count: "0"
 
 ## 2026-07-25 — Timezone: store UTC / display OS local (promoted)
 
+→ operating-defaults (time); not META
+
 - API and DB store UTC; wire strings end in `Z` (`aulos_api.timefmt`).
 - Product UIs (`aulos-web`, `aulos-ops`) format via `src/time.ts` using the OS/browser timezone.
 - Do not show raw UTC ISO or force `timeZone: 'UTC'` in user-visible stamps.
 - Harness Markdown history may remain UTC (shared operator docs).
 
 ## 2026-07-25 — Harness process + facility + source (promoted)
+
+↑ META-001 §2 (harness forced; facility; canonical library; Honeycomb)
 
 - **Aries Harness is forced, not preferred.** Charter files (`AGENTS.md` / `CLAUDE.md`)
   and `aulos-operating-defaults` must say mandatory; soft wording invites code-first skips
@@ -138,6 +176,8 @@ trace_revision_count: "0"
 See: `docs/evolution-cycle-2026-07-25-harness-process-facility.md`
 
 ## 2026-07-25 — Ambient + identity (promoted)
+
+↑ META-001 §3 (hard-fail gates) + §4 (listening product surface)
 
 - **Chamber coverage ≠ listening product.** Guides must ship a playable ambient surface
   and bilingual panes, not only Salon Codex headings.

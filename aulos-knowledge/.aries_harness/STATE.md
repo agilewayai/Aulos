@@ -9,7 +9,7 @@ fingerprint: "aries-harness/bootstrap-doc/v1"
 initialized_at: "2026-07-25T17:25:00+00:00"
 effective_status: "active"
 effective_since: "2026-07-25T17:22:35+00:00"
-content_fingerprint: "sha256:a9340290c927e6083f0013d8eff377f784d9d666676fda3536724ec42e93e9a8"
+content_fingerprint: "sha256:fddf6f4927c642b88008881e0c46a92ff68c67fa3d016cf3267f6f1ca4c14202"
 trace_history_source: "filesystem-only"
 trace_last_commit_sha: ""
 trace_last_commit_at: ""
@@ -19,11 +19,11 @@ trace_revision_count: "0"
 
 ## Current phase
 
-STORY-PACK-007 / CKPT-007 **complete**. Idle until next story pack.
+REQ-008 Authority Source Registry S2/S3 shipped (Wikipedia/IMSLP/RISM + chunk provenance).
 
 ## Current milestone
 
-Music knowledge plane longrun closed (VR-007)
+Registry revision `2026-07-27.2`; Grove still candidate (ToS). Optional live crawl smoke.
 
 ## Active checkpoint
 
@@ -31,4 +31,4 @@ CKPT-007-music-knowledge-longrun.md (status: complete)
 
 ## Next action
 
-Optional PG smoke on docker host; otherwise wait for next REQ/SPEC
+Ops/knowledge deploy + live enqueue smoke for wikipedia/imslp/rism; Grove stays blocked.

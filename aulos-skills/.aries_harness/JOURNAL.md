@@ -10,13 +10,27 @@ generated_by: "/aries-harness init"
 initialized_at: "2026-07-25T11:20:05Z"
 effective_status: "active"
 effective_since: "2026-07-25T11:20:05Z"
-content_fingerprint: "sha256:e85c914623fa121698f0fd97d799d41e0e680d7e6f655fa6abf69af1fb142657"
+content_fingerprint: "sha256:60b1f5e8aecbf219046cf4b1675750ffe5e789903c9629c28fa644a298b81489"
 trace_history_source: "filesystem-only"
 trace_last_commit_sha: ""
 trace_last_commit_at: ""
 trace_revision_count: "0"
 ---
 # Journal
+
+## 2026-07-27T11:20:00Z
+
+- Promoted **Authority Source Registry** into META-001 §4 + insights (aulos-knowledge REQ-008 / ADR-006 / REG-SRC-001).
+
+## 2026-07-27T10:50:00Z
+
+- **META-001 v2** — promoted insights →纲领: data-over-heuristics, multi-stage validate, harness forced + facility, deploy-in-delivery, LLM coerce, hard-fail gates, architecture boundaries (agent / knowledge / identity→RAG).
+- `docs/insights.md` entries tagged `↑ META-001 §…` or `→ operating-defaults/SPEC` (domain stays out of META).
+
+## 2026-07-27T10:45:00Z
+
+- **META-001** Meta Principles (纲领层): root-cause thinking, asset synchronization, engineering craft / anti-smells.
+- Registered in REG-001; MetaDefineLayer manifest; promoted to workspace `AGENTS.md`, `CLAUDE.md`, `aulos-operating-defaults`.
 
 ## 2026-07-27T09:45:00Z
 

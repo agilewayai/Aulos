@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-07-27T10:24:56+00:00",
+  "generated_at": "2026-07-27T11:49:07+00:00",
   "project_root": "/home/ubuntu/hackathon/aulos/aulos-skills",
   "harness_root": "/home/ubuntu/hackathon/aulos/aulos-skills/.aries_harness",
   "history_root": "/home/ubuntu/hackathon/aulos/aulos-skills/.aries_harness/history",
@@ -8,7 +8,7 @@
   "branch": "main",
   "working_tree": {
     "clean": false,
-    "change_count": 37,
+    "change_count": 77,
     "changes": [
       {
         "status": "M",
@@ -24,35 +24,7 @@
       },
       {
         "status": "M",
-        "path": "aulos-api/.aries_harness/STATE.md"
-      },
-      {
-        "status": "M",
         "path": "aulos-api/.aries_harness/references/REG-001-artifact-register.md"
-      },
-      {
-        "status": "M",
-        "path": "aulos-api/.aries_harness/references/specs/SPEC-009-ops-dev-blog.md"
-      },
-      {
-        "status": "M",
-        "path": "aulos-api/src/aulos_api/app.py"
-      },
-      {
-        "status": "M",
-        "path": "aulos-api/src/aulos_api/config/settings.py"
-      },
-      {
-        "status": "M",
-        "path": "aulos-api/src/aulos_api/db/models.py"
-      },
-      {
-        "status": "M",
-        "path": "aulos-api/src/aulos_api/db/schema_patches.py"
-      },
-      {
-        "status": "M",
-        "path": "aulos-api/src/aulos_api/routes/ops.py"
       },
       {
         "status": "M",
@@ -60,19 +32,123 @@
       },
       {
         "status": "M",
-        "path": "aulos-api/src/aulos_api/services/worker_lifecycle.py"
-      },
-      {
-        "status": "M",
         "path": "aulos-api/tests/test_dev_blog.py"
       },
       {
         "status": "M",
-        "path": "aulos-ops/.aries_harness/references/requests/REQ-002-daily-dev-blog.md"
+        "path": "aulos-knowledge/.aries_harness/EVAL.md"
       },
       {
         "status": "M",
-        "path": "aulos-ops/.aries_harness/references/specs/SPEC-002-daily-dev-blog.md"
+        "path": "aulos-knowledge/.aries_harness/JOURNAL.md"
+      },
+      {
+        "status": "M",
+        "path": "aulos-knowledge/.aries_harness/STATE.md"
+      },
+      {
+        "status": "M",
+        "path": "aulos-knowledge/.aries_harness/TASK_STACK.md"
+      },
+      {
+        "status": "M",
+        "path": "aulos-knowledge/.aries_harness/decisions/adrs/ADR-006-allowlisted-sources-provenance.md"
+      },
+      {
+        "status": "M",
+        "path": "aulos-knowledge/.aries_harness/history/DAILY_SUMMARY_INDEX.md"
+      },
+      {
+        "status": "M",
+        "path": "aulos-knowledge/.aries_harness/history/DOC_TRACE.md"
+      },
+      {
+        "status": "M",
+        "path": "aulos-knowledge/.aries_harness/history/README.md"
+      },
+      {
+        "status": "M",
+        "path": "aulos-knowledge/.aries_harness/history/RETROSPECTIVE.md"
+      },
+      {
+        "status": "M",
+        "path": "aulos-knowledge/.aries_harness/history/ROADMAP.md"
+      },
+      {
+        "status": "M",
+        "path": "aulos-knowledge/.aries_harness/history/STATUS.md"
+      },
+      {
+        "status": "M",
+        "path": "aulos-knowledge/.aries_harness/history/TIMELINE.md"
+      },
+      {
+        "status": "M",
+        "path": "aulos-knowledge/.aries_harness/history/daily/2026-07-25.md"
+      },
+      {
+        "status": "M",
+        "path": "aulos-knowledge/.aries_harness/history/daily/2026-07-26.md"
+      },
+      {
+        "status": "M",
+        "path": "aulos-knowledge/.aries_harness/history/daily/2026-07-27.md"
+      },
+      {
+        "status": "M",
+        "path": "aulos-knowledge/.aries_harness/history/doc-trace.json"
+      },
+      {
+        "status": "M",
+        "path": "aulos-knowledge/.aries_harness/history/summary.json"
+      },
+      {
+        "status": "M",
+        "path": "aulos-knowledge/.aries_harness/references/REG-001-artifact-register.md"
+      },
+      {
+        "status": "M",
+        "path": "aulos-knowledge/.aries_harness/references/specs/SPEC-009-knowledge-api-and-data.md"
+      },
+      {
+        "status": "M",
+        "path": "aulos-knowledge/.aries_harness/references/specs/SPEC-010-ops-knowledge-audit-ui.md"
+      },
+      {
+        "status": "M",
+        "path": "aulos-knowledge/src/aulos_knowledge/connectors/__init__.py"
+      },
+      {
+        "status": "M",
+        "path": "aulos-knowledge/src/aulos_knowledge/connectors/catalog_import.py"
+      },
+      {
+        "status": "M",
+        "path": "aulos-knowledge/src/aulos_knowledge/connectors/musicbrainz.py"
+      },
+      {
+        "status": "M",
+        "path": "aulos-knowledge/src/aulos_knowledge/connectors/wikidata.py"
+      },
+      {
+        "status": "M",
+        "path": "aulos-knowledge/src/aulos_knowledge/db.py"
+      },
+      {
+        "status": "M",
+        "path": "aulos-knowledge/src/aulos_knowledge/jobs.py"
+      },
+      {
+        "status": "M",
+        "path": "aulos-knowledge/src/aulos_knowledge/routes.py"
+      },
+      {
+        "status": "M",
+        "path": "aulos-knowledge/src/aulos_knowledge/seed.py"
+      },
+      {
+        "status": "M",
+        "path": "aulos-ops/index.html"
       },
       {
         "status": "M",
@@ -84,7 +160,19 @@
       },
       {
         "status": "M",
+        "path": "aulos-ops/src/AssetUpdateToast.tsx"
+      },
+      {
+        "status": "M",
         "path": "aulos-ops/src/DevBlogPanel.tsx"
+      },
+      {
+        "status": "M",
+        "path": "aulos-ops/src/KnowledgePanel.tsx"
+      },
+      {
+        "status": "M",
+        "path": "aulos-ops/src/TaskQueuePanel.tsx"
       },
       {
         "status": "M",
@@ -92,7 +180,7 @@
       },
       {
         "status": "M",
-        "path": "aulos-ops/src/sessionScene.ts"
+        "path": "aulos-ops/src/assetVersion.ts"
       },
       {
         "status": "M",
@@ -104,59 +192,131 @@
       },
       {
         "status": "M",
+        "path": "aulos-skills/.aries_harness/JOURNAL.md"
+      },
+      {
+        "status": "M",
+        "path": "aulos-skills/.aries_harness/docs/insights.md"
+      },
+      {
+        "status": "M",
+        "path": "aulos-skills/.aries_harness/layers/MetaDefineLayer/README.md"
+      },
+      {
+        "status": "M",
+        "path": "aulos-skills/.aries_harness/references/REG-001-artifact-register.md"
+      },
+      {
+        "status": "M",
         "path": "aulos-skills/skills/aulos-operating-defaults/SKILL.md"
       },
       {
         "status": "M",
-        "path": "deploy/OPS.md"
+        "path": "aulos-web/index.html"
       },
       {
         "status": "M",
-        "path": "deploy/README.md"
+        "path": "aulos-web/src/App.tsx"
+      },
+      {
+        "status": "M",
+        "path": "aulos-web/src/AssetUpdateToast.tsx"
+      },
+      {
+        "status": "M",
+        "path": "aulos-web/src/assetVersion.ts"
       },
       {
         "status": "??",
-        "path": "aulos-api/.aries_harness/references/specs/SPEC-017-dev-blog-writing-contract.md"
+        "path": "aulos-knowledge/.aries_harness/references/requests/REQ-008-authority-source-registry.md"
       },
       {
         "status": "??",
-        "path": "aulos-api/.aries_harness/references/specs/SPEC-018-ops-task-queue.md"
+        "path": "aulos-knowledge/src/aulos_knowledge/connectors/imslp.py"
       },
       {
         "status": "??",
-        "path": "aulos-api/src/aulos_api/routes/ops_tasks.py"
+        "path": "aulos-knowledge/src/aulos_knowledge/connectors/rism.py"
       },
       {
         "status": "??",
-        "path": "aulos-api/src/aulos_api/services/dev_blog_contract.py"
+        "path": "aulos-knowledge/src/aulos_knowledge/connectors/wikipedia.py"
       },
       {
         "status": "??",
-        "path": "aulos-api/src/aulos_api/services/task_queue.py"
+        "path": "aulos-knowledge/src/aulos_knowledge/fetch_policy.py"
       },
       {
         "status": "??",
-        "path": "aulos-api/tests/test_task_queue.py"
+        "path": "aulos-knowledge/src/aulos_knowledge/publish_policy.py"
       },
       {
         "status": "??",
-        "path": "aulos-ops/src/TaskQueuePanel.tsx"
+        "path": "aulos-knowledge/src/aulos_knowledge/registry.py"
       },
       {
         "status": "??",
-        "path": "aulos-ops/src/devBlogMarkdown.selftest.ts"
+        "path": "aulos-knowledge/tests/test_s2_s3_connectors.py"
       },
       {
         "status": "??",
-        "path": "aulos-ops/src/devBlogMarkdown.tsx"
+        "path": "aulos-knowledge/tests/test_source_registry.py"
       },
       {
         "status": "??",
-        "path": "aulos-skills/.aries_harness/references/specs/SPEC-017-dev-blog-writing-contract.md"
+        "path": "aulos-ops/src/knowledge/KnowledgeConsole.tsx"
       },
       {
         "status": "??",
-        "path": "deploy/honeycomb.sh"
+        "path": "aulos-ops/src/knowledge/components/ProvenanceCard.tsx"
+      },
+      {
+        "status": "??",
+        "path": "aulos-ops/src/knowledge/components/SourceGateBadge.tsx"
+      },
+      {
+        "status": "??",
+        "path": "aulos-ops/src/knowledge/constants.ts"
+      },
+      {
+        "status": "??",
+        "path": "aulos-ops/src/knowledge/modules/DocumentsModule.tsx"
+      },
+      {
+        "status": "??",
+        "path": "aulos-ops/src/knowledge/modules/JobsModule.tsx"
+      },
+      {
+        "status": "??",
+        "path": "aulos-ops/src/knowledge/modules/MediaModule.tsx"
+      },
+      {
+        "status": "??",
+        "path": "aulos-ops/src/knowledge/modules/OverviewModule.tsx"
+      },
+      {
+        "status": "??",
+        "path": "aulos-ops/src/knowledge/modules/SimulateModule.tsx"
+      },
+      {
+        "status": "??",
+        "path": "aulos-ops/src/knowledge/modules/SourceRegistryModule.tsx"
+      },
+      {
+        "status": "??",
+        "path": "aulos-ops/src/knowledge/types.ts"
+      },
+      {
+        "status": "??",
+        "path": "aulos-ops/src/knowledge/useKnowledgePlane.ts"
+      },
+      {
+        "status": "??",
+        "path": "aulos-ops/src/knowledge/utils.ts"
+      },
+      {
+        "status": "??",
+        "path": "aulos-skills/.aries_harness/references/META-001-meta-principles.md"
       }
     ]
   },
@@ -185,21 +345,20 @@
   },
   "retrospective": {
     "recent_changes": [
-      "Fleet DevOps control plane:",
-      "`deploy/aulos-ctl.sh` \u2014 unified commands: `deploy`, `build`, `restart`, `status`, `smoke`, `logs`, `doctor`, `secrets {init|check}`, `units install`, `ingress apply`, `test`.",
-      "Shared libs under `deploy/lib/`; `start-host.sh` \u2192 thin `aulos-ctl deploy` wrapper.",
-      "AUDIT-009 continuation \u2014 F2 / F10 / F11 (F1 deferred per operator):",
-      "F11: `ADR-008-plaintext-systemsetting-secrets-sprint1.md` accepts Sprint-1 plaintext secrets with compensating controls.",
-      "F2: `SPEC-015` guide HTML security; `guide_html_security.sanitize_guide_html` + public CSP tests; web `guideHtml.ts` sandbox selftest (no `allow-same-origin`)."
+      "Promoted **Authority Source Registry** into META-001 \u00a74 + insights (aulos-knowledge REQ-008 / ADR-006 / REG-SRC-001).",
+      "**META-001 v2** \u2014 promoted insights \u2192\u7eb2\u9886: data-over-heuristics, multi-stage validate, harness forced + facility, deploy-in-delivery, LLM coerce, hard-fail gates, architecture boundaries (agent / knowledge / identity\u2192RAG).",
+      "`docs/insights.md` entries tagged `\u2191 META-001 \u00a7\u2026` or `\u2192 operating-defaults/SPEC` (domain stays out of META).",
+      "**META-001** Meta Principles (\u7eb2\u9886\u5c42): root-cause thinking, asset synchronization, engineering craft / anti-smells.",
+      "Registered in REG-001; MetaDefineLayer manifest; promoted to workspace `AGENTS.md`, `CLAUDE.md`, `aulos-operating-defaults`."
     ],
     "wins": [
-      "Fleet DevOps control plane:",
-      "`deploy/aulos-ctl.sh` \u2014 unified commands: `deploy`, `build`, `restart`, `status`, `smoke`, `logs`, `doctor`, `secrets {init|check}`, `units install`, `ingress apply`, `test`.",
-      "Shared libs under `deploy/lib/`; `start-host.sh` \u2192 thin `aulos-ctl deploy` wrapper.",
-      "AUDIT-009 continuation \u2014 F2 / F10 / F11 (F1 deferred per operator):"
+      "Promoted **Authority Source Registry** into META-001 \u00a74 + insights (aulos-knowledge REQ-008 / ADR-006 / REG-SRC-001).",
+      "**META-001 v2** \u2014 promoted insights \u2192\u7eb2\u9886: data-over-heuristics, multi-stage validate, harness forced + facility, deploy-in-delivery, LLM coerce, hard-fail gates, architecture boundaries (agent / knowledge / identity\u2192RAG).",
+      "`docs/insights.md` entries tagged `\u2191 META-001 \u00a7\u2026` or `\u2192 operating-defaults/SPEC` (domain stays out of META).",
+      "**META-001** Meta Principles (\u7eb2\u9886\u5c42): root-cause thinking, asset synchronization, engineering craft / anti-smells."
     ],
     "needs_attention": [
-      "working tree is dirty with 37 tracked or untracked change(s)",
+      "working tree is dirty with 77 tracked or untracked change(s)",
       "no explicit next-up slice is recorded"
     ],
     "durable_reminders": [
@@ -215,6 +374,9 @@
     {
       "date": "2026-07-27",
       "journal_headings": [
+        "2026-07-27T11:20:00Z",
+        "2026-07-27T10:50:00Z",
+        "2026-07-27T10:45:00Z",
         "2026-07-27T09:45:00Z",
         "2026-07-27T09:30:00Z",
         "2026-07-27T09:10:00Z",
@@ -222,30 +384,35 @@
         "2026-07-27T08:36:49Z"
       ],
       "journal_items": [
+        "Promoted **Authority Source Registry** into META-001 \u00a74 + insights (aulos-knowledge REQ-008 / ADR-006 / REG-SRC-001).",
+        "**META-001 v2** \u2014 promoted insights \u2192\u7eb2\u9886: data-over-heuristics, multi-stage validate, harness forced + facility, deploy-in-delivery, LLM coerce, hard-fail gates, architecture boundaries (agent / knowledge / identity\u2192RAG).",
+        "`docs/insights.md` entries tagged `\u2191 META-001 \u00a7\u2026` or `\u2192 operating-defaults/SPEC` (domain stays out of META).",
+        "**META-001** Meta Principles (\u7eb2\u9886\u5c42): root-cause thinking, asset synchronization, engineering craft / anti-smells.",
+        "Registered in REG-001; MetaDefineLayer manifest; promoted to workspace `AGENTS.md`, `CLAUDE.md`, `aulos-operating-defaults`.",
         "Fleet DevOps control plane:",
         "`deploy/aulos-ctl.sh` \u2014 unified commands: `deploy`, `build`, `restart`, `status`, `smoke`, `logs`, `doctor`, `secrets {init|check}`, `units install`, `ingress apply`, `test`.",
-        "Shared libs under `deploy/lib/`; `start-host.sh` \u2192 thin `aulos-ctl deploy` wrapper.",
-        "Canonical runbook `deploy/OPS.md` (architecture, secrets, gates, rollback).",
-        "Promoted into `AGENTS.md`, `README.md`, `CLAUDE.md`, `aulos-operating-defaults/SKILL.md`, `deploy/README.md`.",
-        "Verify: `aulos-ctl doctor`, `test` (5 passed), `smoke` all green.",
-        "AUDIT-009 continuation \u2014 F2 / F10 / F11 (F1 deferred per operator):",
-        "F11: `ADR-008-plaintext-systemsetting-secrets-sprint1.md` accepts Sprint-1 plaintext secrets with compensating controls."
+        "Shared libs under `deploy/lib/`; `start-host.sh` \u2192 thin `aulos-ctl deploy` wrapper."
       ],
       "feature_evolution": [
+        "Promoted **Authority Source Registry** into META-001 \u00a74 + insights (aulos-knowledge REQ-008 / ADR-006 / REG-SRC-001).",
+        "**META-001 v2** \u2014 promoted insights \u2192\u7eb2\u9886: data-over-heuristics, multi-stage validate, harness forced + facility, deploy-in-delivery, LLM coerce, hard-fail gates, architecture boundaries (agent / knowledge / identity\u2192RAG).",
+        "`docs/insights.md` entries tagged `\u2191 META-001 \u00a7\u2026` or `\u2192 operating-defaults/SPEC` (domain stays out of META).",
+        "**META-001** Meta Principles (\u7eb2\u9886\u5c42): root-cause thinking, asset synchronization, engineering craft / anti-smells.",
+        "Registered in REG-001; MetaDefineLayer manifest; promoted to workspace `AGENTS.md`, `CLAUDE.md`, `aulos-operating-defaults`.",
         "Fleet DevOps control plane:",
         "`deploy/aulos-ctl.sh` \u2014 unified commands: `deploy`, `build`, `restart`, `status`, `smoke`, `logs`, `doctor`, `secrets {init|check}`, `units install`, `ingress apply`, `test`.",
         "Shared libs under `deploy/lib/`; `start-host.sh` \u2192 thin `aulos-ctl deploy` wrapper.",
         "Canonical runbook `deploy/OPS.md` (architecture, secrets, gates, rollback).",
         "AUDIT-009 continuation \u2014 F2 / F10 / F11 (F1 deferred per operator):",
         "F11: `ADR-008-plaintext-systemsetting-secrets-sprint1.md` accepts Sprint-1 plaintext secrets with compensating controls.",
-        "F2: `SPEC-015` guide HTML security; `guide_html_security.sanitize_guide_html` + public CSP tests; web `guideHtml.ts` sandbox selftest (no `allow-same-origin`).",
-        "F10: `SPEC-016` seams \u2014 extracted `guide_html_security.py`, `ops_mail.py`, `ops_integrations.py`, `SkillsPanel.tsx`, `guideHtml.ts`. Line cuts: `listening.py` 801\u2192522, `ops.py` 971\u2192621, ops `App.tsx` 1677\u21921491.",
-        "AUDIT-009 continuation slice \u2014 F3 + F2 follow-up:",
-        "SPEC-014: login sets HttpOnly `aulos_session`; logout clears it; `get_current_user` accepts cookie or bearer.",
-        "`aulos-web` / `aulos-ops`: `credentials: 'include'`, removed `localStorage` JWT storage.",
-        "Added `tests/test_guide_security.py` for public guide CSP/security headers."
+        "F2: `SPEC-015` guide HTML security; `guide_html_security.sanitize_guide_html` + public CSP tests; web `guideHtml.ts` sandbox selftest (no `allow-same-origin`)."
       ],
       "git_commits": [
+        {
+          "sha": "5633e94",
+          "date": "2026-07-27",
+          "subject": "Ship Ops task queue, dev blog v2, and refresh fleet honeycomb."
+        },
         {
           "sha": "c3009d2",
           "date": "2026-07-27",
@@ -261,11 +428,11 @@
         "M AGENTS.md",
         "M CLAUDE.md",
         "M aulos-api/.aries_harness/JOURNAL.md",
-        "M aulos-api/.aries_harness/STATE.md",
         "M aulos-api/.aries_harness/references/REG-001-artifact-register.md",
-        "M aulos-api/.aries_harness/references/specs/SPEC-009-ops-dev-blog.md",
-        "M aulos-api/src/aulos_api/app.py",
-        "M aulos-api/src/aulos_api/config/settings.py"
+        "M aulos-api/src/aulos_api/services/dev_blog.py",
+        "M aulos-api/tests/test_dev_blog.py",
+        "M aulos-knowledge/.aries_harness/EVAL.md",
+        "M aulos-knowledge/.aries_harness/JOURNAL.md"
       ]
     },
     {
@@ -378,17 +545,17 @@
     }
   ],
   "doc_trace_summary": {
-    "document_count": 86,
+    "document_count": 87,
     "docs_with_issues": 0,
     "dirty_docs": 0,
     "by_layer": {
-      "MetaDefineLayer": 45,
+      "MetaDefineLayer": 46,
       "SharedSupportSurface": 18,
       "RunCookingLayer": 19,
       "unclassified": 4
     },
     "by_effective_status": {
-      "active": 75,
+      "active": 76,
       "generated": 11
     }
   },

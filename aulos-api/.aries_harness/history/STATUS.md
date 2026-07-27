@@ -8,10 +8,10 @@ managed_by: "aries-harness"
 fingerprint: "aries-harness/history-doc/v1"
 generated_by: "/aries-harness history-refresh"
 initialized_at: "2026-07-25T11:07:43Z"
-generated_at: "2026-07-27T10:25:06+00:00"
+generated_at: "2026-07-27T11:49:17+00:00"
 effective_status: "generated"
-effective_since: "2026-07-27T10:25:06+00:00"
-content_fingerprint: "sha256:d0cdf5e4727b4e73ed757cfd02383a52f32eeb6e995931f180bbc06038e04e93"
+effective_since: "2026-07-27T11:49:17+00:00"
+content_fingerprint: "sha256:65be104888acf7e38fd37cd5dbe25fa804061130a98d1485036a7b6caa7eb23c"
 trace_history_source: "filesystem-only"
 trace_last_commit_sha: ""
 trace_last_commit_at: ""
@@ -19,7 +19,7 @@ trace_revision_count: "0"
 ---
 # Current Status
 
-Generated at: `2026-07-27T10:25:06+00:00`
+Generated at: `2026-07-27T11:49:17+00:00`
 
 ## Current phase
 
@@ -29,16 +29,16 @@ Generated at: `2026-07-27T10:25:06+00:00`
 
 - no branch or workspace details recorded
 - git branch: main
-- HEAD: `c3009d2` Harden platform security, ship fleet DevOps control, and refresh harness honeycomb.
+- HEAD: `5633e94` Ship Ops task queue, dev blog v2, and refresh fleet honeycomb.
 - working tree: dirty
 - change: `M` `AGENTS.md`
 - change: `M` `CLAUDE.md`
 - change: `M` `aulos-api/.aries_harness/ARIES_HARNESS_FINGERPRINT.json`
 - change: `M` `aulos-api/.aries_harness/INDEX.md`
 - change: `M` `aulos-api/.aries_harness/JOURNAL.md`
-- change: `M` `aulos-api/.aries_harness/STATE.md`
 - change: `M` `aulos-api/.aries_harness/references/REG-001-artifact-register.md`
-- change: `M` `aulos-api/.aries_harness/references/specs/SPEC-008-discog-release-guide.md`
+- change: `M` `aulos-api/src/aulos_api/services/dev_blog.py`
+- change: `M` `aulos-api/tests/test_dev_blog.py`
 
 ## Current milestone
 

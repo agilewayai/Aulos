@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 import json
-import time
+import time  # noqa: F401 — kept for media timing compatibility
 from pathlib import Path
 from typing import Any
 
@@ -21,14 +21,17 @@ from aulos_knowledge.db import (
     SourceAuthority,
 )
 from aulos_knowledge.media_fetch import fetch_cover_art, persist_meta_json
+from aulos_knowledge.fetch_policy import assert_url_allowed, throttle
+from aulos_knowledge.publish_policy import document_status_for_source
 
 EXTRACTOR_VERSION = "musicbrainz/0.3.0"
 UA = "AulosKnowledge/0.1 (https://aulos.purezen.ai; knowledge-plane)"
 
 
-def _mb_get(client: httpx.Client, path: str, params: dict[str, Any]) -> dict[str, Any]:
-    time.sleep(1.05)
+def _mb_get(client: httpx.Client, path: str, params: dict[str, Any], *, source: SourceAuthority) -> dict[str, Any]:
     url = f"https://musicbrainz.org/ws/2/{path}"
+    assert_url_allowed(source, url)
+    throttle(source)
     resp = client.get(url, params={**params, "fmt": "json"})
     resp.raise_for_status()
     return resp.json()
@@ -56,11 +59,11 @@ def run_musicbrainz(
 
     with httpx.Client(timeout=45.0, headers={"User-Agent": UA, "Accept": "application/json"}) as client:
         if mode == "artist":
-            data = _mb_get(client, "artist", {"query": query, "limit": 5})
+            data = _mb_get(client, "artist", {"query": query, "limit": 5}, source=source)
         elif mode == "recording":
-            data = _mb_get(client, "recording", {"query": query, "limit": 10})
+            data = _mb_get(client, "recording", {"query": query, "limit": 10}, source=source)
         else:
-            data = _mb_get(client, "work", {"query": query, "limit": 5})
+            data = _mb_get(client, "work", {"query": query, "limit": 5}, source=source)
 
         # Secondary: release-group for cover art + recording file info when artist known
         release_groups: list[dict[str, Any]] = []
@@ -73,12 +76,14 @@ def run_musicbrainz(
                     client,
                     "release-group",
                     {"artist": artist_id, "limit": 5, "type": "album"},
+                    source=source,
                 )
                 release_groups = list(rg.get("release-groups") or [])
                 rec = _mb_get(
                     client,
                     "recording",
                     {"query": f'arid:{artist_id} AND recording:"{top.get("name") or ""}"', "limit": 8},
+                    source=source,
                 )
                 # Prefer a simpler recording query by artist name
                 if not rec.get("recordings"):
@@ -86,6 +91,7 @@ def run_musicbrainz(
                         client,
                         "recording",
                         {"query": f'artist:"{top.get("name")}"', "limit": 8},
+                        source=source,
                     )
                 recordings = list(rec.get("recordings") or [])
         elif mode == "work" and fetch_cover:
@@ -95,7 +101,7 @@ def run_musicbrainz(
             if works:
                 title = str(works[0].get("title") or "")
             if title:
-                rg = _mb_get(client, "release-group", {"query": f'releasegroup:"{title}"', "limit": 3})
+                rg = _mb_get(client, "release-group", {"query": f'releasegroup:"{title}"', "limit": 3}, source=source)
                 release_groups = list(rg.get("release-groups") or [])
 
     bundle = {
@@ -164,7 +170,7 @@ def run_musicbrainz(
                 entity_id=composer_id or mbid,
                 aulos_work_id="",
                 body=body,
-                status="published",
+                status=document_status_for_source(source),
                 source_id=source.id,
                 artifact_id=art.id,
                 job_id=job.id,
@@ -199,7 +205,7 @@ def run_musicbrainz(
                 entity_id=mbid,
                 aulos_work_id=aulos_work_id,
                 body=body,
-                status="published",
+                status=document_status_for_source(source),
                 source_id=source.id,
                 artifact_id=art.id,
                 job_id=job.id,
@@ -234,7 +240,7 @@ def run_musicbrainz(
                 entity_id=mbid,
                 aulos_work_id=aulos_work_id,
                 body=body,
-                status="published",
+                status=document_status_for_source(source),
                 source_id=source.id,
                 artifact_id=art.id,
                 job_id=job.id,

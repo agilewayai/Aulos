@@ -8,10 +8,10 @@ managed_by: "aries-harness"
 fingerprint: "aries-harness/history-doc/v1"
 generated_by: "/aries-harness history-refresh"
 initialized_at: "2026-07-25T11:20:05Z"
-generated_at: "2026-07-27T10:24:56+00:00"
+generated_at: "2026-07-27T11:49:07+00:00"
 effective_status: "generated"
-effective_since: "2026-07-27T10:24:56+00:00"
-content_fingerprint: "sha256:1cb6ec9b4668f37c68d25dfeeeeae646418fb2871f19d94868cca927fc2fd9af"
+effective_since: "2026-07-27T11:49:07+00:00"
+content_fingerprint: "sha256:6a0a35da70fbd6e53f34b11455f1d3414ea4d8be42afaa2c87cb5a324c4cef15"
 trace_history_source: "filesystem-only"
 trace_last_commit_sha: ""
 trace_last_commit_at: ""
@@ -19,27 +19,26 @@ trace_revision_count: "0"
 ---
 # Retrospective Snapshot
 
-Generated at: `2026-07-27T10:24:56+00:00`
+Generated at: `2026-07-27T11:49:07+00:00`
 
 ## Recent changes
 
-- Fleet DevOps control plane:
-- `deploy/aulos-ctl.sh` — unified commands: `deploy`, `build`, `restart`, `status`, `smoke`, `logs`, `doctor`, `secrets {init|check}`, `units install`, `ingress apply`, `test`.
-- Shared libs under `deploy/lib/`; `start-host.sh` → thin `aulos-ctl deploy` wrapper.
-- AUDIT-009 continuation — F2 / F10 / F11 (F1 deferred per operator):
-- F11: `ADR-008-plaintext-systemsetting-secrets-sprint1.md` accepts Sprint-1 plaintext secrets with compensating controls.
-- F2: `SPEC-015` guide HTML security; `guide_html_security.sanitize_guide_html` + public CSP tests; web `guideHtml.ts` sandbox selftest (no `allow-same-origin`).
+- Promoted **Authority Source Registry** into META-001 §4 + insights (aulos-knowledge REQ-008 / ADR-006 / REG-SRC-001).
+- **META-001 v2** — promoted insights →纲领: data-over-heuristics, multi-stage validate, harness forced + facility, deploy-in-delivery, LLM coerce, hard-fail gates, architecture boundaries (agent / knowledge / identity→RAG).
+- `docs/insights.md` entries tagged `↑ META-001 §…` or `→ operating-defaults/SPEC` (domain stays out of META).
+- **META-001** Meta Principles (纲领层): root-cause thinking, asset synchronization, engineering craft / anti-smells.
+- Registered in REG-001; MetaDefineLayer manifest; promoted to workspace `AGENTS.md`, `CLAUDE.md`, `aulos-operating-defaults`.
 
 ## What is working
 
-- Fleet DevOps control plane:
-- `deploy/aulos-ctl.sh` — unified commands: `deploy`, `build`, `restart`, `status`, `smoke`, `logs`, `doctor`, `secrets {init|check}`, `units install`, `ingress apply`, `test`.
-- Shared libs under `deploy/lib/`; `start-host.sh` → thin `aulos-ctl deploy` wrapper.
-- AUDIT-009 continuation — F2 / F10 / F11 (F1 deferred per operator):
+- Promoted **Authority Source Registry** into META-001 §4 + insights (aulos-knowledge REQ-008 / ADR-006 / REG-SRC-001).
+- **META-001 v2** — promoted insights →纲领: data-over-heuristics, multi-stage validate, harness forced + facility, deploy-in-delivery, LLM coerce, hard-fail gates, architecture boundaries (agent / knowledge / identity→RAG).
+- `docs/insights.md` entries tagged `↑ META-001 §…` or `→ operating-defaults/SPEC` (domain stays out of META).
+- **META-001** Meta Principles (纲领层): root-cause thinking, asset synchronization, engineering craft / anti-smells.
 
 ## What needs attention
 
-- working tree is dirty with 37 tracked or untracked change(s)
+- working tree is dirty with 77 tracked or untracked change(s)
 - no explicit next-up slice is recorded
 
 ## Durable reminders

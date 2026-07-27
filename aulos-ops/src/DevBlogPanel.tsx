@@ -1,14 +1,15 @@
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import type { FormEvent } from 'react'
 import {
   fetchDevBlogList,
   fetchDevBlogPost,
+  fetchOpsTask,
   generateDevBlog,
-  waitForOpsTask,
   type DevBlogListFilters,
   type DevBlogPost,
   type DevBlogSummary,
 } from './api'
+import { requestAssetVersionCheck } from './assetVersion'
 import { formatDateTime } from './time'
 import { DevBlogMarkdown } from './devBlogMarkdown'
 
@@ -23,7 +24,7 @@ function utcToday(): string {
   return new Date().toISOString().slice(0, 10)
 }
 
-export function DevBlogPanel({ busy, setBusy, setError, setNotice }: Props) {
+export function DevBlogPanel({ setError, setNotice }: Props) {
   const [rows, setRows] = useState<DevBlogSummary[]>([])
   const [selectedId, setSelectedId] = useState<number | null>(null)
   const [evidenceDay, setEvidenceDay] = useState(utcToday())
@@ -33,6 +34,15 @@ export function DevBlogPanel({ busy, setBusy, setError, setNotice }: Props) {
   const [keyword, setKeyword] = useState('')
   const [post, setPost] = useState<DevBlogPost | null>(null)
   const [showEvidence, setShowEvidence] = useState(false)
+  const [listLoading, setListLoading] = useState(false)
+  const [postLoadingId, setPostLoadingId] = useState<number | null>(null)
+  const [generating, setGenerating] = useState(false)
+  const [pendingTasks, setPendingTasks] = useState<number[]>([])
+  const pendingRef = useRef(pendingTasks)
+
+  useEffect(() => {
+    pendingRef.current = pendingTasks
+  }, [pendingTasks])
 
   const listFilters = useCallback((): DevBlogListFilters => {
     const f: DevBlogListFilters = { limit: 100 }
@@ -54,32 +64,88 @@ export function DevBlogPanel({ busy, setBusy, setError, setNotice }: Props) {
     [listFilters],
   )
 
-  const refreshList = useCallback(async () => applyFilters(), [applyFilters])
+  const refreshList = useCallback(async () => {
+    setListLoading(true)
+    try {
+      return await applyFilters()
+    } finally {
+      setListLoading(false)
+    }
+  }, [applyFilters])
 
   const loadPost = useCallback(async (postId: number) => {
+    setPostLoadingId(postId)
     setSelectedId(postId)
-    const data = await fetchDevBlogPost(postId)
-    setPost(data)
-    setEvidenceDay(data.day)
+    try {
+      const data = await fetchDevBlogPost(postId)
+      setPost(data)
+      setEvidenceDay(data.day)
+    } finally {
+      setPostLoadingId(null)
+    }
+  }, [])
+
+  useEffect(() => {
+    requestAssetVersionCheck()
   }, [])
 
   useEffect(() => {
     void (async () => {
-      setBusy(true)
       setError(null)
       try {
         await refreshList()
       } catch (err) {
         setError(err instanceof Error ? err.message : 'Failed to load blog list')
-      } finally {
-        setBusy(false)
       }
     })()
-  }, [refreshList, setBusy, setError])
+  }, [refreshList, setError])
+
+  useEffect(() => {
+    if (pendingTasks.length === 0) return
+
+    let cancelled = false
+    const poll = async () => {
+      requestAssetVersionCheck()
+      const ids = [...pendingRef.current]
+      if (ids.length === 0) return
+
+      for (const taskId of ids) {
+        try {
+          const row = await fetchOpsTask(taskId)
+          if (cancelled) return
+          if (row.status !== 'completed' && row.status !== 'failed') continue
+
+          setPendingTasks((prev) => prev.filter((id) => id !== taskId))
+
+          if (row.status === 'failed') {
+            setError(row.error_detail || `Task #${taskId} failed`)
+            continue
+          }
+
+          const postId = row.result?.post_id
+          setNotice(`Blog task #${taskId} completed.`)
+          await refreshList()
+          if (typeof postId === 'number') {
+            await loadPost(postId)
+          }
+        } catch (err) {
+          if (!cancelled) {
+            setError(err instanceof Error ? err.message : `Task #${taskId} poll failed`)
+          }
+        }
+      }
+    }
+
+    void poll()
+    const timer = window.setInterval(() => void poll(), 2000)
+    return () => {
+      cancelled = true
+      window.clearInterval(timer)
+    }
+  }, [pendingTasks, loadPost, refreshList, setError, setNotice])
 
   const onApplyFilters = async (event: FormEvent) => {
     event.preventDefault()
-    setBusy(true)
     setError(null)
     try {
       const list = await refreshList()
@@ -89,8 +155,6 @@ export function DevBlogPanel({ busy, setBusy, setError, setNotice }: Props) {
       }
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Filter failed')
-    } finally {
-      setBusy(false)
     }
   }
 
@@ -99,12 +163,12 @@ export function DevBlogPanel({ busy, setBusy, setError, setNotice }: Props) {
     setFilterFrom('')
     setFilterTo('')
     setKeyword('')
-    setBusy(true)
     setError(null)
+    setListLoading(true)
     void fetchDevBlogList({ limit: 100 })
       .then((list) => setRows(list))
       .catch((err) => setError(err instanceof Error ? err.message : 'Clear failed'))
-      .finally(() => setBusy(false))
+      .finally(() => setListLoading(false))
   }
 
   const onFilterByRowDay = (day: string) => {
@@ -116,63 +180,49 @@ export function DevBlogPanel({ busy, setBusy, setError, setNotice }: Props) {
     )
   }
 
-  const resolvePostFromTask = async (taskId: number, immediatePostId?: number | null) => {
-    if (immediatePostId) {
-      await loadPost(immediatePostId)
-      return
-    }
-    const done = await waitForOpsTask(taskId)
-    if (done.status === 'failed') {
-      throw new Error(done.error_detail || `Task ${taskId} failed`)
-    }
-    const postId = done.result?.post_id
-    if (typeof postId === 'number') {
-      await loadPost(postId)
+  const enqueueGenerate = async (day: string, options?: { force?: boolean; postId?: number }) => {
+    setGenerating(true)
+    setError(null)
+    setNotice(null)
+    try {
+      const accepted = await generateDevBlog(day, options)
+      setEvidenceDay(day)
+
+      if (accepted.status === 'completed') {
+        if (typeof accepted.post_id === 'number') {
+          await loadPost(accepted.post_id)
+        }
+        await refreshList()
+        setNotice(`Blog task #${accepted.task_id} completed.`)
+        return
+      }
+
+      setPendingTasks((prev) =>
+        prev.includes(accepted.task_id) ? prev : [...prev, accepted.task_id],
+      )
+      setNotice(
+        `Blog task #${accepted.task_id} queued — you can keep working; the post will open when ready.`,
+      )
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Generate failed')
+    } finally {
+      setGenerating(false)
     }
   }
 
-  const onGenerate = async () => {
+  const onGenerate = () => {
     const day = evidenceDay.trim() || utcToday()
     if (!/^\d{4}-\d{2}-\d{2}$/.test(day)) {
       setError('Evidence day must be YYYY-MM-DD (UTC)')
       return
     }
-    setBusy(true)
-    setError(null)
-    setNotice(null)
-    try {
-      const accepted = await generateDevBlog(day)
-      await resolvePostFromTask(accepted.task_id, accepted.post_id)
-      setEvidenceDay(day)
-      await refreshList()
-      setNotice(
-        accepted.status === 'completed'
-          ? `Blog task #${accepted.task_id} completed.`
-          : `Blog task #${accepted.task_id} queued — refresh or open Tasks tab.`,
-      )
-    } catch (err) {
-      setError(err instanceof Error ? err.message : 'Generate failed')
-    } finally {
-      setBusy(false)
-    }
+    void enqueueGenerate(day)
   }
 
-  const onRegenerate = async () => {
+  const onRegenerate = () => {
     if (!post) return
     const day = evidenceDay.trim() || post.day
-    setBusy(true)
-    setError(null)
-    setNotice(null)
-    try {
-      const accepted = await generateDevBlog(day, { force: true, postId: post.id })
-      await resolvePostFromTask(accepted.task_id, accepted.post_id)
-      await refreshList()
-      setNotice(`Regenerated via task #${accepted.task_id}.`)
-    } catch (err) {
-      setError(err instanceof Error ? err.message : 'Regenerate failed')
-    } finally {
-      setBusy(false)
-    }
+    void enqueueGenerate(day, { force: true, postId: post.id })
   }
 
   return (
@@ -182,7 +232,7 @@ export function DevBlogPanel({ busy, setBusy, setError, setNotice }: Props) {
         <button
           type="button"
           className="refresh"
-          disabled={busy}
+          disabled={listLoading}
           onClick={() =>
             void refreshList().catch((err) =>
               setError(err instanceof Error ? err.message : 'Refresh failed'),
@@ -197,6 +247,13 @@ export function DevBlogPanel({ busy, setBusy, setError, setNotice }: Props) {
         generation; not for external publish. See SPEC-017 writing contract.
       </p>
 
+      {pendingTasks.length > 0 ? (
+        <p className="dev-blog-pending meta" role="status">
+          {pendingTasks.length} background task{pendingTasks.length === 1 ? '' : 's'} running
+          {pendingTasks.map((id) => ` #${id}`).join(',')} — page stays interactive.
+        </p>
+      ) : null}
+
       <form className="dev-blog-toolbar dev-blog-filters" onSubmit={(e) => void onApplyFilters(e)}>
         <label>
           Evidence day (generate)
@@ -204,17 +261,17 @@ export function DevBlogPanel({ busy, setBusy, setError, setNotice }: Props) {
             type="date"
             value={evidenceDay}
             onChange={(e) => setEvidenceDay(e.target.value)}
-            disabled={busy}
+            disabled={generating}
           />
         </label>
-        <button type="button" disabled={busy} onClick={() => void onGenerate()}>
-          {busy ? 'Working…' : 'Generate new'}
+        <button type="button" disabled={generating} onClick={onGenerate}>
+          {generating ? 'Submitting…' : 'Generate new'}
         </button>
         <button
           type="button"
           className="ghost"
-          disabled={busy || !post}
-          onClick={() => void onRegenerate()}
+          disabled={generating || !post}
+          onClick={onRegenerate}
         >
           Regenerate selected
         </button>
@@ -227,7 +284,7 @@ export function DevBlogPanel({ busy, setBusy, setError, setNotice }: Props) {
             type="date"
             value={filterDay}
             onChange={(e) => setFilterDay(e.target.value)}
-            disabled={busy}
+            disabled={listLoading}
           />
         </label>
         <label>
@@ -236,7 +293,7 @@ export function DevBlogPanel({ busy, setBusy, setError, setNotice }: Props) {
             type="date"
             value={filterFrom}
             onChange={(e) => setFilterFrom(e.target.value)}
-            disabled={busy}
+            disabled={listLoading}
           />
         </label>
         <label>
@@ -245,7 +302,7 @@ export function DevBlogPanel({ busy, setBusy, setError, setNotice }: Props) {
             type="date"
             value={filterTo}
             onChange={(e) => setFilterTo(e.target.value)}
-            disabled={busy}
+            disabled={listLoading}
           />
         </label>
         <label className="dev-blog-keyword">
@@ -255,13 +312,13 @@ export function DevBlogPanel({ busy, setBusy, setError, setNotice }: Props) {
             placeholder="标题或正文关键词"
             value={keyword}
             onChange={(e) => setKeyword(e.target.value)}
-            disabled={busy}
+            disabled={listLoading}
           />
         </label>
-        <button type="submit" disabled={busy}>
+        <button type="submit" disabled={listLoading}>
           Search
         </button>
-        <button type="button" className="ghost" disabled={busy} onClick={onClearFilters}>
+        <button type="button" className="ghost" disabled={listLoading} onClick={onClearFilters}>
           Clear
         </button>
       </form>
@@ -280,19 +337,11 @@ export function DevBlogPanel({ busy, setBusy, setError, setNotice }: Props) {
                     className={
                       row.id === selectedId ? 'dev-blog-day active' : 'dev-blog-day'
                     }
-                    disabled={busy}
+                    disabled={postLoadingId === row.id}
                     onClick={() =>
-                      void (async () => {
-                        setBusy(true)
-                        setError(null)
-                        try {
-                          await loadPost(row.id)
-                        } catch (err) {
-                          setError(err instanceof Error ? err.message : 'Load failed')
-                        } finally {
-                          setBusy(false)
-                        }
-                      })()
+                      void loadPost(row.id).catch((err) =>
+                        setError(err instanceof Error ? err.message : 'Load failed'),
+                      )
                     }
                   >
                     <span className="dev-blog-day-date">

@@ -14,6 +14,7 @@ Hackathon monorepo for the Aulos initiative. Sub-projects each have their own `A
 
 Also:
 
+- **Meta principles (纲领)** — root-cause, asset sync, craft, architecture boundaries: [`META-001`](aulos-skills/.aries_harness/references/META-001-meta-principles.md) (v2). Load with operating-defaults for non-trivial slices.
 - **UI/UX** — apply the **`ui-ux-pro-max`** skill before visual/UX design changes.
 - **Listening-product changes** — promote into `aulos-skills` REQ/SPEC/SKILL/eval/tests + journal.
 - **Timestamps** — store UTC on the wire; display OS/browser local time in product UIs (`src/time.ts`).
@@ -22,7 +23,8 @@ Also:
 - **DB closeout** — Postgres is hot; after model changes, ship `schema_patches` + verify PG columns (SQLite pilot ≠ production).
 - **Honeycomb** — fleet harness closeout: `bash deploy/honeycomb.sh` (= `well-organized` + `history-refresh` per project). See `aulos-operating-defaults`.
 
-Canonical policy: [`aulos-skills/skills/aulos-operating-defaults/SKILL.md`](aulos-skills/skills/aulos-operating-defaults/SKILL.md)
+Canonical policy: [`aulos-skills/skills/aulos-operating-defaults/SKILL.md`](aulos-skills/skills/aulos-operating-defaults/SKILL.md)  
+Meta principles (纲领): [`aulos-skills/.aries_harness/references/META-001-meta-principles.md`](aulos-skills/.aries_harness/references/META-001-meta-principles.md)
 
 ## Sub-projects
 

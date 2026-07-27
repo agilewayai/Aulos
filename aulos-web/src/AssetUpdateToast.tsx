@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import {
   alreadyReloadedFor,
+  ASSET_VERSION_CHECK_EVENT,
   clearReloadAttempt,
   dismissBuild,
   fetchServerVersion,
@@ -11,11 +12,11 @@ import {
 } from './assetVersion'
 import { captureRegisteredScenes } from './sessionScene'
 
-const POLL_MS = 60_000
-const MIN_CHECK_GAP_MS = 15_000
+const POLL_MS = 30_000
+const MIN_CHECK_GAP_MS = 5_000
 const BACKOFF_BASE_MS = 60_000
 const BACKOFF_MAX_MS = 10 * 60_000
-const AUTO_RELOAD_MS = 1_800
+const AUTO_RELOAD_MS = 1_200
 
 type Phase = 'idle' | 'updating' | 'prompt'
 
@@ -36,7 +37,6 @@ export function AssetUpdateToast() {
 
   useEffect(() => {
     let cancelled = false
-    // Drop cache-bust query after a hard reload so URLs stay clean.
     try {
       const url = new URL(window.location.href)
       if (url.searchParams.has('_aulos_v')) {
@@ -49,7 +49,7 @@ export function AssetUpdateToast() {
 
     const schedule = (delay: number) => {
       if (timerRef.current != null) window.clearTimeout(timerRef.current)
-      timerRef.current = window.setTimeout(() => void check(), delay)
+      timerRef.current = window.setTimeout(() => void check(false), delay)
     }
 
     const beginAutoReload = (buildId: string) => {
@@ -65,14 +65,14 @@ export function AssetUpdateToast() {
       }, AUTO_RELOAD_MS)
     }
 
-    const check = async () => {
+    const check = async (urgent = false) => {
       if (cancelled || reloadingRef.current) return
       const now = Date.now()
       if (now < backoffUntilRef.current) {
         schedule(backoffUntilRef.current - now)
         return
       }
-      if (now - lastCheckRef.current < MIN_CHECK_GAP_MS) {
+      if (!urgent && now - lastCheckRef.current < MIN_CHECK_GAP_MS) {
         schedule(MIN_CHECK_GAP_MS - (now - lastCheckRef.current))
         return
       }
@@ -111,7 +111,6 @@ export function AssetUpdateToast() {
         return
       }
 
-      // Already hard-reloaded once for this build — do not loop; offer manual update.
       if (alreadyReloadedFor(buildId)) {
         setRemoteBuildId(buildId)
         setPhase('prompt')
@@ -122,18 +121,21 @@ export function AssetUpdateToast() {
       beginAutoReload(buildId)
     }
 
-    void check()
+    void check(true)
     const onVisible = () => {
-      if (document.visibilityState === 'visible') void check()
+      if (document.visibilityState === 'visible') void check(true)
     }
+    const onAssetCheck = () => void check(true)
     window.addEventListener('focus', onVisible)
     document.addEventListener('visibilitychange', onVisible)
+    window.addEventListener(ASSET_VERSION_CHECK_EVENT, onAssetCheck)
     return () => {
       cancelled = true
       if (timerRef.current != null) window.clearTimeout(timerRef.current)
       if (reloadTimerRef.current != null) window.clearTimeout(reloadTimerRef.current)
       window.removeEventListener('focus', onVisible)
       document.removeEventListener('visibilitychange', onVisible)
+      window.removeEventListener(ASSET_VERSION_CHECK_EVENT, onAssetCheck)
     }
   }, [])
 
@@ -143,7 +145,7 @@ export function AssetUpdateToast() {
     return (
       <div className="asset-update-toast" role="status" aria-live="polite">
         <span className="asset-update-toast__pulse" aria-hidden="true" />
-        <span className="asset-update-toast__text">Updating…</span>
+        <span className="asset-update-toast__text">New version found — refreshing…</span>
         <button
           type="button"
           className="asset-update-toast__dismiss"

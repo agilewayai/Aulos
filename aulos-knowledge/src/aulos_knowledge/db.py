@@ -36,6 +36,18 @@ class SourceAuthority(Base):
     enabled: Mapped[bool] = mapped_column(Boolean, default=True)
     owner: Mapped[str] = mapped_column(String(128), default="aulos")
     notes: Mapped[str] = mapped_column(Text, default="")
+    # REQ-008 Authority Source Registry
+    verification_status: Mapped[str] = mapped_column(String(32), default="candidate")
+    # candidate|review|verified|rejected|suspended
+    verified_by: Mapped[str] = mapped_column(String(128), default="")
+    verified_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True), nullable=True)
+    tos_notes: Mapped[str] = mapped_column(Text, default="")
+    attribution_template: Mapped[str] = mapped_column(Text, default="")
+    allowed_path_prefixes_json: Mapped[str] = mapped_column(Text, default="[]")
+    connector_semver: Mapped[str] = mapped_column(String(32), default="")
+    origin_class: Mapped[str] = mapped_column(String(32), default="encyclopedia")
+    # encyclopedia|identity_seed|media|editorial
+    registry_revision: Mapped[str] = mapped_column(String(64), default="")
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=utcnow)
 
 
@@ -140,7 +152,7 @@ class KnowledgeDocument(Base):
     entity_id: Mapped[str] = mapped_column(String(160), default="", index=True)
     aulos_work_id: Mapped[str] = mapped_column(String(160), default="", index=True)
     body: Mapped[str] = mapped_column(Text, default="")
-    status: Mapped[str] = mapped_column(String(32), default="published")  # published|quarantine
+    status: Mapped[str] = mapped_column(String(32), default="quarantine")  # published|quarantine
     source_id: Mapped[str] = mapped_column(String(64), default="", index=True)
     artifact_id: Mapped[int | None] = mapped_column(Integer, ForeignKey("fetch_artifacts.id"), nullable=True)
     job_id: Mapped[int | None] = mapped_column(Integer, ForeignKey("fetch_jobs.id"), nullable=True)
@@ -171,7 +183,48 @@ def init_db(url: str):
     _engine = create_engine(url, future=True, connect_args=connect_args)
     SessionLocal = sessionmaker(bind=_engine, autoflush=False, autocommit=False, future=True)
     Base.metadata.create_all(_engine)
+    apply_source_authority_patches(_engine)
     return _engine
+
+
+def apply_source_authority_patches(engine) -> list[str]:
+    """Add REQ-008 columns on existing source_authorities tables."""
+    from sqlalchemy import inspect, text
+
+    applied: list[str] = []
+    insp = inspect(engine)
+    if not insp.has_table("source_authorities"):
+        return applied
+    cols = {c["name"] for c in insp.get_columns("source_authorities")}
+    dialect = engine.dialect.name
+    additions: list[tuple[str, str]] = [
+        ("verification_status", "VARCHAR(32) DEFAULT 'candidate'"),
+        ("verified_by", "VARCHAR(128) DEFAULT ''"),
+        ("verified_at", "TIMESTAMP" if dialect != "sqlite" else "DATETIME"),
+        ("tos_notes", "TEXT DEFAULT ''"),
+        ("attribution_template", "TEXT DEFAULT ''"),
+        ("allowed_path_prefixes_json", "TEXT DEFAULT '[]'"),
+        ("connector_semver", "VARCHAR(32) DEFAULT ''"),
+        ("origin_class", "VARCHAR(32) DEFAULT 'encyclopedia'"),
+        ("registry_revision", "VARCHAR(64) DEFAULT ''"),
+    ]
+    with engine.begin() as conn:
+        for name, col_type in additions:
+            if name in cols:
+                continue
+            conn.execute(text(f"ALTER TABLE source_authorities ADD COLUMN {name} {col_type}"))
+            applied.append(f"source_authorities.{name}")
+        # Backfill known production sources to verified if still empty/candidate after upgrade
+        if "verification_status" in cols or any(a.endswith("verification_status") for a in applied):
+            conn.execute(
+                text(
+                    "UPDATE source_authorities SET verification_status = 'verified', "
+                    "origin_class = CASE id WHEN 'catalog-local' THEN 'identity_seed' ELSE COALESCE(NULLIF(origin_class, ''), 'encyclopedia') END "
+                    "WHERE id IN ('catalog-local', 'wikidata', 'musicbrainz') "
+                    "AND (verification_status IS NULL OR verification_status = '' OR verification_status = 'candidate')"
+                )
+            )
+    return applied
 
 
 def get_session():

@@ -13,6 +13,8 @@ Mirror of workspace `AGENTS.md` for Claude-compatible agents.
 
 Also: UI/UX → `ui-ux-pro-max`; listening-product → promote into `aulos-skills` harness assets; timestamps → store UTC / display OS local.
 
+**Meta principles (纲领):** `aulos-skills/.aries_harness/references/META-001-meta-principles.md` (v2) — root-cause, asset sync, craft, architecture boundaries.
+
 **DevOps:** `bash deploy/aulos-ctl.sh` — runbook `deploy/OPS.md`. **Honeycomb:** `bash deploy/honeycomb.sh`. Ask before production deploy.
 
 Canonical policy: `aulos-skills/skills/aulos-operating-defaults/SKILL.md`

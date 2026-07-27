@@ -211,3 +211,29 @@ def test_missing_day_404(client: TestClient) -> None:
 
     missing_post = client.get("/v1/ops/dev-blog/posts/99999", headers=headers)
     assert missing_post.status_code == 404
+
+
+def test_journal_slice_keeps_newest_day_entries() -> None:
+    from aulos_api.services.dev_blog import _journal_slice_for_day
+
+    journal = """---
+front: matter
+---
+# Journal
+
+## 2026-07-27T09:45:00Z
+
+- Fleet DevOps control plane and aulos-ctl.
+
+## 2026-07-27T09:30:00Z
+
+- AUDIT-009 F2 F10 F11 guide HTML security module splits ADR-008.
+
+## 2026-07-27T08:36:49Z
+
+- Completed workspace-wide architecture review as AUDIT-009.
+"""
+    slice_ = _journal_slice_for_day(journal, "2026-07-27")
+    assert "Fleet DevOps" in slice_
+    assert "F2 F10 F11" in slice_
+    assert slice_.index("Fleet DevOps") < slice_.index("F2 F10 F11")

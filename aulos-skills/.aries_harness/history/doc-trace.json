@@ -1,16 +1,16 @@
 {
   "summary": {
-    "document_count": 86,
+    "document_count": 87,
     "docs_with_issues": 0,
     "dirty_docs": 0,
     "by_layer": {
-      "MetaDefineLayer": 45,
+      "MetaDefineLayer": 46,
       "SharedSupportSurface": 18,
       "RunCookingLayer": 19,
       "unclassified": 4
     },
     "by_effective_status": {
-      "active": 75,
+      "active": 76,
       "generated": 11
     }
   },
@@ -124,14 +124,14 @@
       "layer": "SharedSupportSurface",
       "declared_layer": "SharedSupportSurface",
       "effective_status": "generated",
-      "effective_since": "2026-07-27T10:24:56+00:00",
+      "effective_since": "2026-07-27T11:49:07+00:00",
       "managed_by": "aries-harness",
       "fingerprint": "aries-harness/bootstrap-doc/v1",
       "last_updated_at": "",
       "completed_at": "",
       "timebox_actual": "",
-      "content_fingerprint": "sha256:6badbd2bfbad3707e41025d8992b48a0950f54a04f4e8e4f26b5852a474abd00",
-      "observed_content_fingerprint": "sha256:6badbd2bfbad3707e41025d8992b48a0950f54a04f4e8e4f26b5852a474abd00",
+      "content_fingerprint": "sha256:28a8a29029b91e0c8fe85ec8c76dc33f811ab87747c2b70db50c11996548da0c",
+      "observed_content_fingerprint": "sha256:28a8a29029b91e0c8fe85ec8c76dc33f811ab87747c2b70db50c11996548da0c",
       "trace_history_source": "filesystem-only",
       "trace_last_commit_sha": "",
       "trace_last_commit_at": "",
@@ -143,11 +143,16 @@
         "trace_revision_count": "0"
       },
       "latest_commit": {
-        "sha": "c3009d2",
+        "sha": "5633e94",
         "date": "2026-07-27",
-        "subject": "Harden platform security, ship fleet DevOps control, and refresh harness honeycomb."
+        "subject": "Ship Ops task queue, dev blog v2, and refresh fleet honeycomb."
       },
       "recent_updates": [
+        {
+          "sha": "5633e94",
+          "date": "2026-07-27",
+          "subject": "Ship Ops task queue, dev blog v2, and refresh fleet honeycomb."
+        },
         {
           "sha": "c3009d2",
           "date": "2026-07-27",
@@ -157,11 +162,6 @@
           "sha": "6ab1ea3",
           "date": "2026-07-26",
           "subject": "Ship /discogs release and catalog-number listening guides with OPS token UI."
-        },
-        {
-          "sha": "53e7437",
-          "date": "2026-07-26",
-          "subject": "Ship identity catalog, Hans/Hant locales, web research, and knowledge plane."
         }
       ],
       "dirty": false,
@@ -181,8 +181,8 @@
       "last_updated_at": "",
       "completed_at": "",
       "timebox_actual": "",
-      "content_fingerprint": "sha256:e85c914623fa121698f0fd97d799d41e0e680d7e6f655fa6abf69af1fb142657",
-      "observed_content_fingerprint": "sha256:e85c914623fa121698f0fd97d799d41e0e680d7e6f655fa6abf69af1fb142657",
+      "content_fingerprint": "sha256:60b1f5e8aecbf219046cf4b1675750ffe5e789903c9629c28fa644a298b81489",
+      "observed_content_fingerprint": "sha256:60b1f5e8aecbf219046cf4b1675750ffe5e789903c9629c28fa644a298b81489",
       "trace_history_source": "filesystem-only",
       "trace_last_commit_sha": "",
       "trace_last_commit_at": "",
@@ -1316,8 +1316,8 @@
       "last_updated_at": "",
       "completed_at": "",
       "timebox_actual": "",
-      "content_fingerprint": "sha256:f60e49b1e672ded519ea273d000a9ecc3334b756359f7696aa817a358e2122fe",
-      "observed_content_fingerprint": "sha256:f60e49b1e672ded519ea273d000a9ecc3334b756359f7696aa817a358e2122fe",
+      "content_fingerprint": "sha256:875535f6aaa71233f57144d01368b664b9910b9182aa6f1ab80ee9f17b971313",
+      "observed_content_fingerprint": "sha256:875535f6aaa71233f57144d01368b664b9910b9182aa6f1ab80ee9f17b971313",
       "trace_history_source": "filesystem-only",
       "trace_last_commit_sha": "",
       "trace_last_commit_at": "",
@@ -1361,14 +1361,14 @@
       "layer": "SharedSupportSurface",
       "declared_layer": "SharedSupportSurface",
       "effective_status": "generated",
-      "effective_since": "2026-07-27T09:46:13+00:00",
+      "effective_since": "2026-07-27T10:24:56+00:00",
       "managed_by": "aries-harness",
       "fingerprint": "aries-harness/history-doc/v1",
       "last_updated_at": "",
       "completed_at": "",
       "timebox_actual": "",
-      "content_fingerprint": "sha256:b69741f6ea8623c8b1db21ef804340fcf10db2370ea8f4a29a220042d5c5a60c",
-      "observed_content_fingerprint": "sha256:b69741f6ea8623c8b1db21ef804340fcf10db2370ea8f4a29a220042d5c5a60c",
+      "content_fingerprint": "sha256:1b5c34dfc0bedf36190bbac51f168e317415c68cf76b8a170140f8eea98812ab",
+      "observed_content_fingerprint": "sha256:1b5c34dfc0bedf36190bbac51f168e317415c68cf76b8a170140f8eea98812ab",
       "trace_history_source": "filesystem-only",
       "trace_last_commit_sha": "",
       "trace_last_commit_at": "",
@@ -1380,11 +1380,16 @@
         "trace_revision_count": "0"
       },
       "latest_commit": {
-        "sha": "c3009d2",
+        "sha": "5633e94",
         "date": "2026-07-27",
-        "subject": "Harden platform security, ship fleet DevOps control, and refresh harness honeycomb."
+        "subject": "Ship Ops task queue, dev blog v2, and refresh fleet honeycomb."
       },
       "recent_updates": [
+        {
+          "sha": "5633e94",
+          "date": "2026-07-27",
+          "subject": "Ship Ops task queue, dev blog v2, and refresh fleet honeycomb."
+        },
         {
           "sha": "c3009d2",
           "date": "2026-07-27",
@@ -1394,11 +1399,6 @@
           "sha": "6ab1ea3",
           "date": "2026-07-26",
           "subject": "Ship /discogs release and catalog-number listening guides with OPS token UI."
-        },
-        {
-          "sha": "53e7437",
-          "date": "2026-07-26",
-          "subject": "Ship identity catalog, Hans/Hant locales, web research, and knowledge plane."
         }
       ],
       "dirty": false,
@@ -1412,14 +1412,14 @@
       "layer": "SharedSupportSurface",
       "declared_layer": "SharedSupportSurface",
       "effective_status": "generated",
-      "effective_since": "2026-07-27T09:46:13+00:00",
+      "effective_since": "2026-07-27T10:24:56+00:00",
       "managed_by": "aries-harness",
       "fingerprint": "aries-harness/history-doc/v1",
       "last_updated_at": "",
       "completed_at": "",
       "timebox_actual": "",
-      "content_fingerprint": "sha256:77adaf776389674d44304402ed009cbc2c8bf9c2bac30661ddcd68bb61deb5e9",
-      "observed_content_fingerprint": "sha256:77adaf776389674d44304402ed009cbc2c8bf9c2bac30661ddcd68bb61deb5e9",
+      "content_fingerprint": "sha256:a85ca6718d9cb5882ffa223935672b35f577564f97c5238cb3d27e1842df2990",
+      "observed_content_fingerprint": "sha256:a85ca6718d9cb5882ffa223935672b35f577564f97c5238cb3d27e1842df2990",
       "trace_history_source": "filesystem-only",
       "trace_last_commit_sha": "",
       "trace_last_commit_at": "",
@@ -1431,11 +1431,16 @@
         "trace_revision_count": "0"
       },
       "latest_commit": {
-        "sha": "c3009d2",
+        "sha": "5633e94",
         "date": "2026-07-27",
-        "subject": "Harden platform security, ship fleet DevOps control, and refresh harness honeycomb."
+        "subject": "Ship Ops task queue, dev blog v2, and refresh fleet honeycomb."
       },
       "recent_updates": [
+        {
+          "sha": "5633e94",
+          "date": "2026-07-27",
+          "subject": "Ship Ops task queue, dev blog v2, and refresh fleet honeycomb."
+        },
         {
           "sha": "c3009d2",
           "date": "2026-07-27",
@@ -1445,11 +1450,6 @@
           "sha": "6ab1ea3",
           "date": "2026-07-26",
           "subject": "Ship /discogs release and catalog-number listening guides with OPS token UI."
-        },
-        {
-          "sha": "53e7437",
-          "date": "2026-07-26",
-          "subject": "Ship identity catalog, Hans/Hant locales, web research, and knowledge plane."
         }
       ],
       "dirty": false,
@@ -1463,14 +1463,14 @@
       "layer": "SharedSupportSurface",
       "declared_layer": "SharedSupportSurface",
       "effective_status": "generated",
-      "effective_since": "2026-07-27T09:46:13+00:00",
+      "effective_since": "2026-07-27T10:24:56+00:00",
       "managed_by": "aries-harness",
       "fingerprint": "aries-harness/history-doc/v1",
       "last_updated_at": "",
       "completed_at": "",
       "timebox_actual": "",
-      "content_fingerprint": "sha256:b161b4966866b49c4b6ad2fc41bc77bb65e05393f3261eb1cf35a71972374361",
-      "observed_content_fingerprint": "sha256:b161b4966866b49c4b6ad2fc41bc77bb65e05393f3261eb1cf35a71972374361",
+      "content_fingerprint": "sha256:678dd87be43d5e28231c6088b524deb115560fd20a6d2079237c6fc73584c084",
+      "observed_content_fingerprint": "sha256:678dd87be43d5e28231c6088b524deb115560fd20a6d2079237c6fc73584c084",
       "trace_history_source": "filesystem-only",
       "trace_last_commit_sha": "",
       "trace_last_commit_at": "",
@@ -1482,11 +1482,16 @@
         "trace_revision_count": "0"
       },
       "latest_commit": {
-        "sha": "c3009d2",
+        "sha": "5633e94",
         "date": "2026-07-27",
-        "subject": "Harden platform security, ship fleet DevOps control, and refresh harness honeycomb."
+        "subject": "Ship Ops task queue, dev blog v2, and refresh fleet honeycomb."
       },
       "recent_updates": [
+        {
+          "sha": "5633e94",
+          "date": "2026-07-27",
+          "subject": "Ship Ops task queue, dev blog v2, and refresh fleet honeycomb."
+        },
         {
           "sha": "c3009d2",
           "date": "2026-07-27",
@@ -1496,11 +1501,6 @@
           "sha": "6ab1ea3",
           "date": "2026-07-26",
           "subject": "Ship /discogs release and catalog-number listening guides with OPS token UI."
-        },
-        {
-          "sha": "53e7437",
-          "date": "2026-07-26",
-          "subject": "Ship identity catalog, Hans/Hant locales, web research, and knowledge plane."
         }
       ],
       "dirty": false,
@@ -1514,14 +1514,14 @@
       "layer": "SharedSupportSurface",
       "declared_layer": "SharedSupportSurface",
       "effective_status": "generated",
-      "effective_since": "2026-07-27T09:46:13+00:00",
+      "effective_since": "2026-07-27T10:24:56+00:00",
       "managed_by": "aries-harness",
       "fingerprint": "aries-harness/history-doc/v1",
       "last_updated_at": "",
       "completed_at": "",
       "timebox_actual": "",
-      "content_fingerprint": "sha256:4f13d85884d57c6fde1cd2a6f9ce5afc8af408209834a070bbfc8bdd81d90d74",
-      "observed_content_fingerprint": "sha256:4f13d85884d57c6fde1cd2a6f9ce5afc8af408209834a070bbfc8bdd81d90d74",
+      "content_fingerprint": "sha256:1cb6ec9b4668f37c68d25dfeeeeae646418fb2871f19d94868cca927fc2fd9af",
+      "observed_content_fingerprint": "sha256:1cb6ec9b4668f37c68d25dfeeeeae646418fb2871f19d94868cca927fc2fd9af",
       "trace_history_source": "filesystem-only",
       "trace_last_commit_sha": "",
       "trace_last_commit_at": "",
@@ -1533,11 +1533,16 @@
         "trace_revision_count": "0"
       },
       "latest_commit": {
-        "sha": "c3009d2",
+        "sha": "5633e94",
         "date": "2026-07-27",
-        "subject": "Harden platform security, ship fleet DevOps control, and refresh harness honeycomb."
+        "subject": "Ship Ops task queue, dev blog v2, and refresh fleet honeycomb."
       },
       "recent_updates": [
+        {
+          "sha": "5633e94",
+          "date": "2026-07-27",
+          "subject": "Ship Ops task queue, dev blog v2, and refresh fleet honeycomb."
+        },
         {
           "sha": "c3009d2",
           "date": "2026-07-27",
@@ -1547,11 +1552,6 @@
           "sha": "6ab1ea3",
           "date": "2026-07-26",
           "subject": "Ship /discogs release and catalog-number listening guides with OPS token UI."
-        },
-        {
-          "sha": "53e7437",
-          "date": "2026-07-26",
-          "subject": "Ship identity catalog, Hans/Hant locales, web research, and knowledge plane."
         }
       ],
       "dirty": false,
@@ -1565,14 +1565,14 @@
       "layer": "SharedSupportSurface",
       "declared_layer": "SharedSupportSurface",
       "effective_status": "generated",
-      "effective_since": "2026-07-27T09:46:13+00:00",
+      "effective_since": "2026-07-27T10:24:56+00:00",
       "managed_by": "aries-harness",
       "fingerprint": "aries-harness/history-doc/v1",
       "last_updated_at": "",
       "completed_at": "",
       "timebox_actual": "",
-      "content_fingerprint": "sha256:0573a6e2259e5acc4d60191754ca4b6dfb54446a2fc27a4e1fa3b5ce3730192c",
-      "observed_content_fingerprint": "sha256:0573a6e2259e5acc4d60191754ca4b6dfb54446a2fc27a4e1fa3b5ce3730192c",
+      "content_fingerprint": "sha256:8ae632f96799ab0fb5f631403fb4876a48286a994c2f6fecb0e101e50cbb2f7d",
+      "observed_content_fingerprint": "sha256:8ae632f96799ab0fb5f631403fb4876a48286a994c2f6fecb0e101e50cbb2f7d",
       "trace_history_source": "filesystem-only",
       "trace_last_commit_sha": "",
       "trace_last_commit_at": "",
@@ -1584,11 +1584,16 @@
         "trace_revision_count": "0"
       },
       "latest_commit": {
-        "sha": "c3009d2",
+        "sha": "5633e94",
         "date": "2026-07-27",
-        "subject": "Harden platform security, ship fleet DevOps control, and refresh harness honeycomb."
+        "subject": "Ship Ops task queue, dev blog v2, and refresh fleet honeycomb."
       },
       "recent_updates": [
+        {
+          "sha": "5633e94",
+          "date": "2026-07-27",
+          "subject": "Ship Ops task queue, dev blog v2, and refresh fleet honeycomb."
+        },
         {
           "sha": "c3009d2",
           "date": "2026-07-27",
@@ -1598,11 +1603,6 @@
           "sha": "6ab1ea3",
           "date": "2026-07-26",
           "subject": "Ship /discogs release and catalog-number listening guides with OPS token UI."
-        },
-        {
-          "sha": "53e7437",
-          "date": "2026-07-26",
-          "subject": "Ship identity catalog, Hans/Hant locales, web research, and knowledge plane."
         }
       ],
       "dirty": false,
@@ -1616,14 +1616,14 @@
       "layer": "SharedSupportSurface",
       "declared_layer": "SharedSupportSurface",
       "effective_status": "generated",
-      "effective_since": "2026-07-27T09:46:13+00:00",
+      "effective_since": "2026-07-27T10:24:56+00:00",
       "managed_by": "aries-harness",
       "fingerprint": "aries-harness/history-doc/v1",
       "last_updated_at": "",
       "completed_at": "",
       "timebox_actual": "",
-      "content_fingerprint": "sha256:14dd78126d8c6a5bd66799a3ab9d17ea800a6a7d5af19adf99a5ee6f2d90e5cc",
-      "observed_content_fingerprint": "sha256:14dd78126d8c6a5bd66799a3ab9d17ea800a6a7d5af19adf99a5ee6f2d90e5cc",
+      "content_fingerprint": "sha256:e5ffcfe516310789fbd8c0e19dc0ce556df7dc71ab0dda70a3315f81ff1d00f2",
+      "observed_content_fingerprint": "sha256:e5ffcfe516310789fbd8c0e19dc0ce556df7dc71ab0dda70a3315f81ff1d00f2",
       "trace_history_source": "filesystem-only",
       "trace_last_commit_sha": "",
       "trace_last_commit_at": "",
@@ -1635,11 +1635,16 @@
         "trace_revision_count": "0"
       },
       "latest_commit": {
-        "sha": "c3009d2",
+        "sha": "5633e94",
         "date": "2026-07-27",
-        "subject": "Harden platform security, ship fleet DevOps control, and refresh harness honeycomb."
+        "subject": "Ship Ops task queue, dev blog v2, and refresh fleet honeycomb."
       },
       "recent_updates": [
+        {
+          "sha": "5633e94",
+          "date": "2026-07-27",
+          "subject": "Ship Ops task queue, dev blog v2, and refresh fleet honeycomb."
+        },
         {
           "sha": "c3009d2",
           "date": "2026-07-27",
@@ -1649,11 +1654,6 @@
           "sha": "6ab1ea3",
           "date": "2026-07-26",
           "subject": "Ship /discogs release and catalog-number listening guides with OPS token UI."
-        },
-        {
-          "sha": "53e7437",
-          "date": "2026-07-26",
-          "subject": "Ship identity catalog, Hans/Hant locales, web research, and knowledge plane."
         }
       ],
       "dirty": false,
@@ -1667,14 +1667,14 @@
       "layer": "SharedSupportSurface",
       "declared_layer": "SharedSupportSurface",
       "effective_status": "generated",
-      "effective_since": "2026-07-27T09:46:13+00:00",
+      "effective_since": "2026-07-27T10:24:56+00:00",
       "managed_by": "aries-harness",
       "fingerprint": "aries-harness/history-doc/v1",
       "last_updated_at": "",
       "completed_at": "",
       "timebox_actual": "",
-      "content_fingerprint": "sha256:1384f6a171802178788dfef7eda3234aec3f08e2b07d3a7d9458782952f5edb8",
-      "observed_content_fingerprint": "sha256:1384f6a171802178788dfef7eda3234aec3f08e2b07d3a7d9458782952f5edb8",
+      "content_fingerprint": "sha256:a07fa8c2b905c381217d616ae7b3ebeaa7de794ea242179cd6eb29bbd644e7db",
+      "observed_content_fingerprint": "sha256:a07fa8c2b905c381217d616ae7b3ebeaa7de794ea242179cd6eb29bbd644e7db",
       "trace_history_source": "filesystem-only",
       "trace_last_commit_sha": "",
       "trace_last_commit_at": "",
@@ -1686,11 +1686,16 @@
         "trace_revision_count": "0"
       },
       "latest_commit": {
-        "sha": "c3009d2",
+        "sha": "5633e94",
         "date": "2026-07-27",
-        "subject": "Harden platform security, ship fleet DevOps control, and refresh harness honeycomb."
+        "subject": "Ship Ops task queue, dev blog v2, and refresh fleet honeycomb."
       },
       "recent_updates": [
+        {
+          "sha": "5633e94",
+          "date": "2026-07-27",
+          "subject": "Ship Ops task queue, dev blog v2, and refresh fleet honeycomb."
+        },
         {
           "sha": "c3009d2",
           "date": "2026-07-27",
@@ -1700,11 +1705,6 @@
           "sha": "6ab1ea3",
           "date": "2026-07-26",
           "subject": "Ship /discogs release and catalog-number listening guides with OPS token UI."
-        },
-        {
-          "sha": "53e7437",
-          "date": "2026-07-26",
-          "subject": "Ship identity catalog, Hans/Hant locales, web research, and knowledge plane."
         }
       ],
       "dirty": false,
@@ -1718,14 +1718,14 @@
       "layer": "SharedSupportSurface",
       "declared_layer": "SharedSupportSurface",
       "effective_status": "generated",
-      "effective_since": "2026-07-27T09:46:13+00:00",
+      "effective_since": "2026-07-27T10:24:56+00:00",
       "managed_by": "aries-harness",
       "fingerprint": "aries-harness/history-doc/v1",
       "last_updated_at": "",
       "completed_at": "",
       "timebox_actual": "",
-      "content_fingerprint": "sha256:df13f23ff70c58b381c85e2dc541807e8e75150a630a6e62071550de5c289df7",
-      "observed_content_fingerprint": "sha256:df13f23ff70c58b381c85e2dc541807e8e75150a630a6e62071550de5c289df7",
+      "content_fingerprint": "sha256:a7d4e8b19f8779ee021c4b1067cb0915a185a74709c70206690bbe319d46fca4",
+      "observed_content_fingerprint": "sha256:a7d4e8b19f8779ee021c4b1067cb0915a185a74709c70206690bbe319d46fca4",
       "trace_history_source": "filesystem-only",
       "trace_last_commit_sha": "",
       "trace_last_commit_at": "",
@@ -1737,11 +1737,16 @@
         "trace_revision_count": "0"
       },
       "latest_commit": {
-        "sha": "c3009d2",
+        "sha": "5633e94",
         "date": "2026-07-27",
-        "subject": "Harden platform security, ship fleet DevOps control, and refresh harness honeycomb."
+        "subject": "Ship Ops task queue, dev blog v2, and refresh fleet honeycomb."
       },
       "recent_updates": [
+        {
+          "sha": "5633e94",
+          "date": "2026-07-27",
+          "subject": "Ship Ops task queue, dev blog v2, and refresh fleet honeycomb."
+        },
         {
           "sha": "c3009d2",
           "date": "2026-07-27",
@@ -1751,11 +1756,6 @@
           "sha": "6ab1ea3",
           "date": "2026-07-26",
           "subject": "Ship /discogs release and catalog-number listening guides with OPS token UI."
-        },
-        {
-          "sha": "53e7437",
-          "date": "2026-07-26",
-          "subject": "Ship identity catalog, Hans/Hant locales, web research, and knowledge plane."
         }
       ],
       "dirty": false,
@@ -1769,14 +1769,14 @@
       "layer": "SharedSupportSurface",
       "declared_layer": "SharedSupportSurface",
       "effective_status": "generated",
-      "effective_since": "2026-07-27T09:46:13+00:00",
+      "effective_since": "2026-07-27T10:24:56+00:00",
       "managed_by": "aries-harness",
       "fingerprint": "aries-harness/history-doc/v1",
       "last_updated_at": "",
       "completed_at": "",
       "timebox_actual": "",
-      "content_fingerprint": "sha256:388d0967449ec7fa05b0d099bccc7da192e02dfa25ef3645700b479a6f84bf8b",
-      "observed_content_fingerprint": "sha256:388d0967449ec7fa05b0d099bccc7da192e02dfa25ef3645700b479a6f84bf8b",
+      "content_fingerprint": "sha256:d913e2c9262c2cf4b1997f5180e6061467329b93d25c1de55faa7925874ffb43",
+      "observed_content_fingerprint": "sha256:d913e2c9262c2cf4b1997f5180e6061467329b93d25c1de55faa7925874ffb43",
       "trace_history_source": "filesystem-only",
       "trace_last_commit_sha": "",
       "trace_last_commit_at": "",
@@ -1788,11 +1788,16 @@
         "trace_revision_count": "0"
       },
       "latest_commit": {
-        "sha": "c3009d2",
+        "sha": "5633e94",
         "date": "2026-07-27",
-        "subject": "Harden platform security, ship fleet DevOps control, and refresh harness honeycomb."
+        "subject": "Ship Ops task queue, dev blog v2, and refresh fleet honeycomb."
       },
       "recent_updates": [
+        {
+          "sha": "5633e94",
+          "date": "2026-07-27",
+          "subject": "Ship Ops task queue, dev blog v2, and refresh fleet honeycomb."
+        },
         {
           "sha": "c3009d2",
           "date": "2026-07-27",
@@ -1802,11 +1807,6 @@
           "sha": "6ab1ea3",
           "date": "2026-07-26",
           "subject": "Ship /discogs release and catalog-number listening guides with OPS token UI."
-        },
-        {
-          "sha": "53e7437",
-          "date": "2026-07-26",
-          "subject": "Ship identity catalog, Hans/Hant locales, web research, and knowledge plane."
         }
       ],
       "dirty": false,
@@ -1820,14 +1820,14 @@
       "layer": "SharedSupportSurface",
       "declared_layer": "SharedSupportSurface",
       "effective_status": "generated",
-      "effective_since": "2026-07-27T09:46:13+00:00",
+      "effective_since": "2026-07-27T10:24:56+00:00",
       "managed_by": "aries-harness",
       "fingerprint": "aries-harness/history-doc/v1",
       "last_updated_at": "",
       "completed_at": "",
       "timebox_actual": "",
-      "content_fingerprint": "sha256:01024f5cfe63f4c02e7842a93752b499fdb107acc0ce65f0a5fc2acaf31ef0a4",
-      "observed_content_fingerprint": "sha256:01024f5cfe63f4c02e7842a93752b499fdb107acc0ce65f0a5fc2acaf31ef0a4",
+      "content_fingerprint": "sha256:240c98d15090ab412edf88e359afd98b65778b03d329b669e329d57fc5b684a5",
+      "observed_content_fingerprint": "sha256:240c98d15090ab412edf88e359afd98b65778b03d329b669e329d57fc5b684a5",
       "trace_history_source": "filesystem-only",
       "trace_last_commit_sha": "",
       "trace_last_commit_at": "",
@@ -1839,11 +1839,16 @@
         "trace_revision_count": "0"
       },
       "latest_commit": {
-        "sha": "c3009d2",
+        "sha": "5633e94",
         "date": "2026-07-27",
-        "subject": "Harden platform security, ship fleet DevOps control, and refresh harness honeycomb."
+        "subject": "Ship Ops task queue, dev blog v2, and refresh fleet honeycomb."
       },
       "recent_updates": [
+        {
+          "sha": "5633e94",
+          "date": "2026-07-27",
+          "subject": "Ship Ops task queue, dev blog v2, and refresh fleet honeycomb."
+        },
         {
           "sha": "c3009d2",
           "date": "2026-07-27",
@@ -1867,8 +1872,8 @@
       "last_updated_at": "",
       "completed_at": "",
       "timebox_actual": "",
-      "content_fingerprint": "sha256:81ef8118e103fa9992dfde3912f50b67d6f7567380517c85d446d8d8336e1ba6",
-      "observed_content_fingerprint": "sha256:81ef8118e103fa9992dfde3912f50b67d6f7567380517c85d446d8d8336e1ba6",
+      "content_fingerprint": "sha256:8fc288864f2b9c81a237b9e5dfd4db44b4981cf92df28b17e18fa050f0f0c54e",
+      "observed_content_fingerprint": "sha256:8fc288864f2b9c81a237b9e5dfd4db44b4981cf92df28b17e18fa050f0f0c54e",
       "trace_history_source": "filesystem-only",
       "trace_last_commit_sha": "",
       "trace_last_commit_at": "",
@@ -2233,6 +2238,37 @@
       "issues": []
     },
     {
+      "path": "references/META-001-meta-principles.md",
+      "repo_path": ".aries_harness/references/META-001-meta-principles.md",
+      "doc_role": "meta-principles",
+      "layer": "MetaDefineLayer",
+      "declared_layer": "MetaDefineLayer",
+      "effective_status": "active",
+      "effective_since": "2026-07-27T10:50:00Z",
+      "managed_by": "aries-harness",
+      "fingerprint": "aries-harness/bootstrap-doc/v1",
+      "last_updated_at": "",
+      "completed_at": "",
+      "timebox_actual": "",
+      "content_fingerprint": "sha256:14944a054fda85134dd84b486f93786effbefe4c45a5934b4501f16b88e8fafe",
+      "observed_content_fingerprint": "sha256:14944a054fda85134dd84b486f93786effbefe4c45a5934b4501f16b88e8fafe",
+      "trace_history_source": "filesystem-only",
+      "trace_last_commit_sha": "",
+      "trace_last_commit_at": "",
+      "trace_revision_count": "0",
+      "observed_trace": {
+        "trace_history_source": "filesystem-only",
+        "trace_last_commit_sha": "",
+        "trace_last_commit_at": "",
+        "trace_revision_count": "0"
+      },
+      "latest_commit": null,
+      "recent_updates": [],
+      "dirty": false,
+      "issue_count": 0,
+      "issues": []
+    },
+    {
       "path": "references/REG-001-artifact-register.md",
       "repo_path": ".aries_harness/references/REG-001-artifact-register.md",
       "doc_role": "managed-doc",
@@ -2245,8 +2281,8 @@
       "last_updated_at": "",
       "completed_at": "",
       "timebox_actual": "",
-      "content_fingerprint": "sha256:fb7004e6913750939c1f127b70f92315940f361fcbcc2ee3856892a6bd029f8a",
-      "observed_content_fingerprint": "sha256:fb7004e6913750939c1f127b70f92315940f361fcbcc2ee3856892a6bd029f8a",
+      "content_fingerprint": "sha256:2bb5bc1541e179097c544aef4031e887df61361d856ba7a3aeb4b6340ee4e8f4",
+      "observed_content_fingerprint": "sha256:2bb5bc1541e179097c544aef4031e887df61361d856ba7a3aeb4b6340ee4e8f4",
       "trace_history_source": "filesystem-only",
       "trace_last_commit_sha": "",
       "trace_last_commit_at": "",
@@ -3316,8 +3352,18 @@
         "trace_last_commit_at": "",
         "trace_revision_count": "0"
       },
-      "latest_commit": null,
-      "recent_updates": [],
+      "latest_commit": {
+        "sha": "5633e94",
+        "date": "2026-07-27",
+        "subject": "Ship Ops task queue, dev blog v2, and refresh fleet honeycomb."
+      },
+      "recent_updates": [
+        {
+          "sha": "5633e94",
+          "date": "2026-07-27",
+          "subject": "Ship Ops task queue, dev blog v2, and refresh fleet honeycomb."
+        }
+      ],
       "dirty": false,
       "issue_count": 0,
       "issues": []

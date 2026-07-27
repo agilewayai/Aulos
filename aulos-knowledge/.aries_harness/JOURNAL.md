@@ -9,13 +9,33 @@ fingerprint: "aries-harness/bootstrap-doc/v1"
 initialized_at: "2026-07-25T17:20:00+00:00"
 effective_status: "active"
 effective_since: "2026-07-25T17:20:00+00:00"
-content_fingerprint: "sha256:e96aca611b191a901da72c6b4a49416b172b846abb3688db206aea57f35178d8"
+content_fingerprint: "sha256:05f08a8f4189def6c10c23022442c04415d93f1a2fdf03c06efab42a023f2ade"
 trace_history_source: "filesystem-only"
 trace_last_commit_sha: ""
 trace_last_commit_at: ""
 trace_revision_count: "0"
 ---
 # Journal
+
+## 2026-07-27T11:55:00Z
+
+- **OPS Knowledge console:** modular UI (overview / source registry / documents / jobs / RAG simulate / media);
+  REQ-008 registry as first-class module with crawl-gate visualization; structured provenance cards.
+- SPEC-010 rewritten; stats API adds `chunks` + `sources_verified`.
+
+## 2026-07-27T11:40:09Z
+
+- **REQ-008 S2/S3:** Wikipedia + IMSLP + RISM connectors registered; registry revision
+  `2026-07-27.2` verifies/enables them (Grove remains candidate, no connector).
+- Chunk provenance: `GET /v1/admin/chunks/{id}/provenance` + chunks on document detail/provenance;
+  Ops Knowledge audit lists chunks and opens chunk provenance.
+- Gates: `tests/test_s2_s3_connectors.py` + registry assertions (23 pytest passed).
+
+## 2026-07-27T11:20:00Z
+
+- **REQ-008 Authority Source Registry (S1):** versioned `data/registry/sources.yaml` (REG-SRC-001);
+  SourceAuthority verification lifecycle; job/fetch/publish gates; Ops Sources register/verify/reject/suspend.
+- ADR-006 revised; SPEC-009/010 deltas; gates `tests/test_source_registry.py` (pytest green).
 
 ## 2026-07-25T17:42:00Z
 

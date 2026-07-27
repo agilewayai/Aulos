@@ -20,6 +20,8 @@ from aulos_knowledge.db import (
     SourceAuthority,
 )
 from aulos_knowledge.media_fetch import fetch_wikidata_media_claims
+from aulos_knowledge.fetch_policy import assert_url_allowed, throttle
+from aulos_knowledge.publish_policy import document_status_for_source
 
 EXTRACTOR_VERSION = "wikidata/0.3.0"
 UA = "AulosKnowledge/0.1 (https://aulos.purezen.ai; knowledge-plane)"
@@ -60,6 +62,8 @@ def run_wikidata(
     with httpx.Client(timeout=30.0, headers={"User-Agent": UA}) as client:
         for qid in qids:
             url = f"https://www.wikidata.org/wiki/Special:EntityData/{qid}.json"
+            assert_url_allowed(source, url)
+            throttle(source)
             resp = client.get(url)
             resp.raise_for_status()
             results.append({"qid": qid, "url": url, "payload": resp.json()})
@@ -135,7 +139,7 @@ def run_wikidata(
             entity_id=entity_key,
             aulos_work_id=aulos_work_id,
             body=body,
-            status="published",
+            status=document_status_for_source(source),
             source_id=source.id,
             artifact_id=art.id,
             job_id=job.id,

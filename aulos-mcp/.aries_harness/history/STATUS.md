@@ -8,10 +8,10 @@ managed_by: "aries-harness"
 fingerprint: "aries-harness/history-doc/v1"
 generated_by: "/aries-harness history-refresh"
 initialized_at: "2026-07-25T11:07:44Z"
-generated_at: "2026-07-27T10:25:32+00:00"
+generated_at: "2026-07-27T11:49:44+00:00"
 effective_status: "generated"
-effective_since: "2026-07-27T10:25:32+00:00"
-content_fingerprint: "sha256:8ac03d0a3230f513c41b36356219ffc229eabf1030332647672fe206351004c3"
+effective_since: "2026-07-27T11:49:44+00:00"
+content_fingerprint: "sha256:eeec7daff48d8ba3b835a0607ccbd84bc2f58aa2d1822d8b0580bd3cda908733"
 trace_history_source: "filesystem-only"
 trace_last_commit_sha: ""
 trace_last_commit_at: ""
@@ -19,7 +19,7 @@ trace_revision_count: "0"
 ---
 # Current Status
 
-Generated at: `2026-07-27T10:25:32+00:00`
+Generated at: `2026-07-27T11:49:44+00:00`
 
 ## Current phase
 
@@ -29,7 +29,7 @@ Generated at: `2026-07-27T10:25:32+00:00`
 
 - no branch or workspace details recorded
 - git branch: main
-- HEAD: `c3009d2` Harden platform security, ship fleet DevOps control, and refresh harness honeycomb.
+- HEAD: `5633e94` Ship Ops task queue, dev blog v2, and refresh fleet honeycomb.
 - working tree: dirty
 - change: `M` `AGENTS.md`
 - change: `M` `CLAUDE.md`
