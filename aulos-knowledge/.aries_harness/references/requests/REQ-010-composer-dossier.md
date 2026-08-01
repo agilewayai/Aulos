@@ -9,7 +9,7 @@ fingerprint: "aries-harness/bootstrap-doc/v1"
 initialized_at: "2026-07-27T16:55:00Z"
 effective_status: "active"
 effective_since: "2026-07-27T16:55:00Z"
-content_fingerprint: "sha256:bf2d38c4ca84758b23c61613d2d5cfdba5295c32e61c3334d72788f7c7fc9ff1"
+content_fingerprint: "sha256:0c3330a40ec75662e208f5cfbc6e672e33fe8436442841265602364d8d2c1d1c"
 trace_history_source: "filesystem-only"
 trace_last_commit_sha: ""
 trace_last_commit_at: ""
@@ -50,7 +50,18 @@ optional Wikipedia sitelink narrative; portraits via existing P18 path. Async en
 4. OPS **Composer dossier** module: pick composer → build → browse timeline + tree (no QID in primary UX).
 5. Pytest with mocked Wikidata/SPARQL.
 
+## Completeness, ordering & identity (Δ)
+
+1. **Works ingest** — SPARQL P86 musical works only (exclude film / non-score noise); paginate to a soft
+   cap (**2048**); prefer inception year + catalog number (BWV / K. / Op.) ordering; store genre facet with
+   non-music genre labels dropped.
+2. **Views** — dossier payload exposes `works_tree` (hierarchy), `works_by_year` (timeline), and
+   `works_by_genre` (题材目录); OPS toggles 时间线 / 题材 (default 题材).
+3. **Famous identity lock** — allowlisted `famous_composers` QID / canonical EN name win over polluted
+   DB rows from person multi-source merge (REQ-012). `resolve_composer_qid` ignores dirty DB QID for
+   famous ids. Rebuild replaces prior works for that composer_id.
+
 ## Related
 
-- REQ-008 registry, REQ-009 explore seeds, META-001 §3.3 / §3.4
+- REQ-008 registry, REQ-009 explore seeds, REQ-012 famous QID lock, META-001 §3.3 / §3.4
 - SPEC-009 / SPEC-010

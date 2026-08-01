@@ -130,6 +130,34 @@ class RetrieveIn(BaseModel):
     k: int = 6
 
 
+class PersonResolveIn(BaseModel):
+    name: str = Field(min_length=1, max_length=255)
+    kind: str = "person"
+    enrich: bool = True
+
+
+class PersonIngestIn(BaseModel):
+    name: str = Field(min_length=1, max_length=255)
+    kind: str = "person"
+    display_name: str = ""
+    summary: str = ""
+    lifespan: str = ""
+    era: str = ""
+    portrait_url: str = ""
+    external_ids: dict[str, Any] = Field(default_factory=dict)
+    provenance: list[dict[str, str]] = Field(default_factory=list)
+    source_id: str = "discogs"
+    body_title: str = ""
+
+
+class PersonAggregateIn(BaseModel):
+    name: str = Field(min_length=1, max_length=255)
+    kind: str = "person"
+    fragments: list[dict[str, Any]] = Field(default_factory=list)
+    fetch_remote: bool = True
+    persist: bool = True
+
+
 def _db():
     yield from get_session()
 
@@ -176,6 +204,134 @@ def retrieve(body: RetrieveIn, db: Session = Depends(_db)) -> dict[str, Any]:
         composer_id=body.composer_id,
         k=body.k,
     )
+
+
+@router.post("/v1/kb/entities/person/resolve")
+def resolve_person(body: PersonResolveIn, db: Session = Depends(_db)) -> dict[str, Any]:
+    """REQ-011 — person info card: local KB first, then Wikidata/Wikipedia enrich."""
+    from aulos_knowledge.person_entity import resolve_person_card
+
+    try:
+        return resolve_person_card(
+            db,
+            name=body.name,
+            kind=body.kind,
+            enrich=body.enrich,
+        )
+    except ValueError as exc:
+        raise HTTPException(status_code=400, detail=str(exc)) from exc
+
+
+@router.post("/v1/kb/entities/person/ingest")
+def ingest_person(body: PersonIngestIn, db: Session = Depends(_db)) -> dict[str, Any]:
+    """Persist an authority person card (Discogs-first path from API gateway)."""
+    from aulos_knowledge.person_entity import persist_person_card
+
+    if not (body.summary or "").strip() and not (body.display_name or "").strip():
+        raise HTTPException(status_code=400, detail="summary or display_name required")
+    return persist_person_card(
+        db,
+        name=body.name,
+        kind=body.kind,
+        display_name=body.display_name or body.name,
+        summary=body.summary or "",
+        lifespan=body.lifespan or "",
+        era=body.era or "",
+        portrait_url=body.portrait_url or "",
+        external_ids=body.external_ids or {},
+        provenance=body.provenance or [],
+        source_id=body.source_id or "discogs",
+        body_title=body.body_title or "",
+    )
+
+
+@router.post("/v1/kb/entities/person/aggregate")
+def aggregate_person(body: PersonAggregateIn, db: Session = Depends(_db)) -> dict[str, Any]:
+    """REQ-012 — multi-source field merge (+ optional Discogs fragments from API)."""
+    from aulos_knowledge.person_aggregate import aggregate_person_card
+
+    try:
+        return aggregate_person_card(
+            db,
+            name=body.name,
+            kind=body.kind,
+            fragments=body.fragments,
+            fetch_remote=body.fetch_remote,
+            persist=body.persist,
+        )
+    except ValueError as exc:
+        raise HTTPException(status_code=400, detail=str(exc)) from exc
+
+
+@router.post("/v1/kb/entities/person/patch-locale")
+def patch_person_locale(body: dict[str, Any], db: Session = Depends(_db)) -> dict[str, Any]:
+    """Patch translated locale fields onto an existing person card."""
+    from aulos_knowledge.db import ComposerEntity
+    from aulos_knowledge.person_aggregate import card_from_composer_row, persist_bilingual_card
+
+    person_id = str(body.get("person_id") or "").strip()
+    name = str(body.get("name") or "").strip()
+    if not person_id and not name:
+        raise HTTPException(status_code=400, detail="person_id or name required")
+    row = db.get(ComposerEntity, person_id) if person_id else None
+    if row is None and name:
+        from aulos_knowledge.person_entity import find_local_person
+
+        row = find_local_person(db, name)
+    if row is None:
+        raise HTTPException(status_code=404, detail="person not found")
+    card = card_from_composer_row(db, name=name or row.name_en or row.name_zh, kind=str(body.get("kind") or "person"), row=row)
+    if body.get("summary_en"):
+        card["summary_en"] = str(body["summary_en"])
+        card["summary_en_origin"] = str(body.get("summary_en_origin") or "translated")
+    if body.get("summary_zh"):
+        card["summary_zh"] = str(body["summary_zh"])
+        card["summary_zh_origin"] = str(body.get("summary_zh_origin") or "translated")
+    if body.get("display_name_en"):
+        card["display_name_en"] = str(body["display_name_en"])
+    if body.get("display_name_zh"):
+        card["display_name_zh"] = str(body["display_name_zh"])
+    # Rebuild minimal sources attribution from external ids
+    sources: list[dict[str, Any]] = []
+    ext = card.get("external_ids") or {}
+    if ext.get("discogs"):
+        sources.append(
+            {
+                "source_id": "discogs",
+                "role": "catalog_profile",
+                "url": str(ext.get("discogs_uri") or f"https://www.discogs.com/artist/{ext['discogs']}"),
+            }
+        )
+    if ext.get("wikidata"):
+        sources.append(
+            {
+                "source_id": "wikidata",
+                "role": "identity",
+                "url": f"https://www.wikidata.org/wiki/{ext['wikidata']}",
+            }
+        )
+    if ext.get("enwiki"):
+        sources.append(
+            {
+                "source_id": "wikipedia",
+                "role": "encyclopedia",
+                "lang": "en",
+                "url": f"https://en.wikipedia.org/wiki/{ext['enwiki']}",
+            }
+        )
+    if ext.get("zhwiki"):
+        sources.append(
+            {
+                "source_id": "wikipedia",
+                "role": "encyclopedia",
+                "lang": "zh",
+                "url": f"https://zh.wikipedia.org/wiki/{ext['zhwiki']}",
+            }
+        )
+    card["sources"] = sources
+    card["source"] = "aggregated"
+    card["matched"] = True
+    return persist_bilingual_card(db, card)
 
 
 @router.get("/v1/kb/benchmark/suite")
@@ -590,9 +746,13 @@ def admin_build_composer_dossier(
     db: Session = Depends(_db),
 ) -> dict[str, Any]:
     """Enqueue Wikidata mode=composer_dossier (REQ-010). Returns 202 when async."""
-    from aulos_knowledge.composer_dossier import resolve_composer_qid
+    from aulos_knowledge.composer_dossier import (
+        repair_famous_composer_identity,
+        resolve_composer_qid,
+    )
 
     body = body or BuildDossierIn()
+    repair_famous_composer_identity(db, composer_id)
     qid = resolve_composer_qid(db, composer_id, body.qid or body.wikidata_qid)
     if not qid:
         raise HTTPException(400, f"no Wikidata QID for composer: {composer_id}")

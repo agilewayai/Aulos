@@ -185,6 +185,61 @@ class ChainTraceBuilder:
                     "facts": {"synthesize_source": synth_src},
                 }
             )
+        # SPEC-018 adversarial review
+        intent = dict(ctx.get("intent_lock") or {})
+        review_events = list(ctx.get("review_events") or [])
+        if intent or review_events:
+            failed = bool(ctx.get("review_failed"))
+            self.milestone(
+                "skill.review",
+                status="fail" if failed else "ok",
+                summary=(
+                    f"IntentLock source={intent.get('source') or 'n/a'} "
+                    f"events={len(review_events)} "
+                    f"{'FAILED' if failed else 'ok'}"
+                ),
+                facts={
+                    "intent_lock": {
+                        "work_title": intent.get("work_title"),
+                        "composer": intent.get("composer"),
+                        "catalog_numbers": list(intent.get("catalog_numbers") or [])[:8],
+                        "form_families": list(intent.get("form_families") or [])[:8],
+                        "source": intent.get("source"),
+                    },
+                    "review_events": review_events[-6:],
+                    "review_failed": failed,
+                    "critique_corrections": list(ctx.get("critique_corrections") or [])[:6],
+                },
+                signals=["review_failed"] if failed else [],
+            )
+            if failed:
+                self._deviations.append(
+                    {
+                        "code": "intent_review_failed",
+                        "at_milestone": "skill.review",
+                        "summary": "本意偏离已拦截 — adversarial review failed",
+                        "facts": {"events": len(review_events)},
+                    }
+                )
+        process = dict(ctx.get("process_scorecard") or {})
+        if process:
+            rollup = dict(process.get("rollup") or {})
+            self.milestone(
+                "skill.scorecard",
+                status="fail" if rollup.get("hard_fail") else "ok",
+                summary=(
+                    f"Process scorecard {rollup.get('pct')}% "
+                    f"band={rollup.get('band') or 'n/a'}"
+                ),
+                facts={
+                    "pct": rollup.get("pct"),
+                    "band": rollup.get("band"),
+                    "hard_fail": bool(rollup.get("hard_fail")),
+                    "node_count": len(process.get("nodes") or []),
+                    "gates": dict(process.get("gates") or {}),
+                },
+                signals=["scorecard_hard_fail"] if rollup.get("hard_fail") else [],
+            )
 
     def finalize(
         self,

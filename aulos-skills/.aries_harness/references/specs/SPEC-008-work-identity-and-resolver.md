@@ -9,7 +9,7 @@ fingerprint: "aries-harness/bootstrap-doc/v1"
 initialized_at: "2026-07-25T17:01:00+00:00"
 effective_status: "active"
 effective_since: "2026-07-25T17:01:00+00:00"
-content_fingerprint: "sha256:26656052723405f0ff8455126c738a733dba576a64176e837da7978e5f7a2cf2"
+content_fingerprint: "sha256:e8c0d6db87d05940f0737a98fd02fa8d46bc26aef979f0e4b48419956543c03f"
 trace_history_source: "filesystem-only"
 trace_last_commit_sha: ""
 trace_last_commit_at: ""
@@ -69,8 +69,10 @@ Scoring (generic for all composers):
 | Stage | Rule |
 | --- | --- |
 | Intake | Call Resolver only; emit `work_id`, `family_hints`, `corpus_keys`, `conflict_markers` |
+| Identity lock | Even without `work_id`, extract catalog numbers + form families from title/message; attach form-lock aliens from `policies/form_lock_groups.yaml` (class gate against sibling swaps) |
 | RAG | Attach `kb_dossier` only when doc `work_id`/`corpus_key` matches resolved identity |
-| Scrub | Use `conflict_markers` from context — no hardcoded flagship tuples |
+| Scrub | Use `conflict_markers` ∪ identity-lock aliens — no hardcoded flagship tuples |
+| LLM enrich | Reject dossiers that betray lock (foreign catalog numbers / opposing form aliens in thesis) |
 | Ambient | Prefer `ambient_ref`; else facet instrument intersection; drop curated packs that carry conflict markers |
 
 ## Acceptance
@@ -78,4 +80,6 @@ Scoring (generic for all composers):
 - Bach cello suites resolve to `bach.cello-suites.bwv-1007-1012`, not Goldberg.
 - Chopin / Mahler catalog slots resolve without any Chopin/Mahler Python branches.
 - Adding a new work YAML requires **zero** Resolver code changes for identity.
+- A Discogs/diary **piano concerto** title must not accept an LLM/KB **Requiem** thesis even when that concerto is not yet a Catalog work (form-lock policy).
+- Competing Köchel/BWV/Op numbers in core dossier fields vs the locked title are betrayal.
 - Code review gate: no new work-proper-name `elif` in `runtime.py` / `ambient_agent.py`.

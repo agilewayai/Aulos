@@ -11,6 +11,7 @@ from typing import Any
 from sqlalchemy import create_engine, inspect, text
 from sqlalchemy.engine import Engine
 from sqlalchemy.orm import Session, sessionmaker
+from sqlalchemy.pool import NullPool
 
 from aulos_api.config import get_settings
 from aulos_api.db.session import Base
@@ -20,7 +21,9 @@ logger = logging.getLogger("aulos_api.db_ha")
 _lock = threading.RLock()
 _primary_engine: Engine | None = None
 _failover_engine: Engine | None = None
+_probe_engines: dict[str, Engine] = {}
 _active_role: str = "primary"  # primary | failover
+_primary_fail_streak: int = 0
 _last_sync: dict[str, Any] = {
     "status": "never",
     "at": None,
@@ -46,10 +49,48 @@ def _ensure_sqlite_parent(url: str) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
 
 
+def _pool_kwargs_for_url(url: str) -> dict[str, Any]:
+    """QueuePool sizing for Postgres; SQLite keeps SQLAlchemy defaults (+ check_same_thread)."""
+    if url.startswith("sqlite"):
+        return {}
+    settings = get_settings()
+    return {
+        "pool_size": max(5, int(settings.db_pool_size or 20)),
+        "max_overflow": max(0, int(settings.db_max_overflow or 40)),
+        "pool_timeout": float(settings.db_pool_timeout or 30.0),
+        "pool_recycle": max(60, int(settings.db_pool_recycle or 1800)),
+    }
+
+
 def _make_engine(url: str) -> Engine:
     connect_args = {"check_same_thread": False} if url.startswith("sqlite") else {}
     _ensure_sqlite_parent(url)
-    return create_engine(url, future=True, connect_args=connect_args, pool_pre_ping=True)
+    return create_engine(
+        url,
+        future=True,
+        connect_args=connect_args,
+        pool_pre_ping=True,
+        **_pool_kwargs_for_url(url),
+    )
+
+
+def _probe_engine_for(url: str) -> Engine:
+    """Dedicated NullPool engine so HA probes never compete with the business QueuePool."""
+    with _lock:
+        eng = _probe_engines.get(url)
+        if eng is not None:
+            return eng
+        connect_args = {"check_same_thread": False} if url.startswith("sqlite") else {}
+        _ensure_sqlite_parent(url)
+        eng = create_engine(
+            url,
+            future=True,
+            connect_args=connect_args,
+            poolclass=NullPool,
+            pool_pre_ping=True,
+        )
+        _probe_engines[url] = eng
+        return eng
 
 
 def configure_engines() -> tuple[Engine, Engine | None]:
@@ -91,13 +132,15 @@ def configure_engines() -> tuple[Engine, Engine | None]:
 
 
 def reset_ha_engines() -> None:
-    global _primary_engine, _failover_engine
+    global _primary_engine, _failover_engine, _probe_engines, _primary_fail_streak
     with _lock:
-        for eng in (_primary_engine, _failover_engine):
+        for eng in (_primary_engine, _failover_engine, *_probe_engines.values()):
             if eng is not None:
                 eng.dispose()
         _primary_engine = None
         _failover_engine = None
+        _probe_engines = {}
+        _primary_fail_streak = 0
 
 
 def active_engine() -> Engine:
@@ -115,7 +158,7 @@ def get_active_role() -> str:
 
 
 def set_active_role(role: str, *, reason: str = "manual") -> str:
-    global _active_role
+    global _active_role, _primary_fail_streak
     primary, failover = configure_engines()
     role = role.strip().lower()
     if role not in {"primary", "failover"}:
@@ -124,6 +167,8 @@ def set_active_role(role: str, *, reason: str = "manual") -> str:
         raise ValueError("failover engine not configured (set AULOS_DB_FAILOVER_URL)")
     with _lock:
         _active_role = role
+        if role == "primary":
+            _primary_fail_streak = 0
     logger.warning("db_active_role=%s reason=%s", role, reason)
     # Rebind SessionLocal in session module
     from aulos_api.db import session as sess
@@ -132,11 +177,21 @@ def set_active_role(role: str, *, reason: str = "manual") -> str:
     return _active_role
 
 
-def probe(engine: Engine | None) -> bool:
+def probe(engine: Engine | None, *, url: str | None = None) -> bool:
     if engine is None:
         return False
+    # Prefer NullPool probe engine keyed by the real URL so a saturated business
+    # QueuePool cannot look like a down primary. Never use str(engine.url) alone —
+    # SQLAlchemy hides passwords as "***" which breaks auth.
+    probe_url = (url or "").strip()
+    if not probe_url:
+        try:
+            probe_url = engine.url.render_as_string(hide_password=False)
+        except Exception:  # noqa: BLE001
+            probe_url = ""
+    probe_eng = _probe_engine_for(probe_url) if probe_url else engine
     try:
-        with engine.connect() as conn:
+        with probe_eng.connect() as conn:
             conn.execute(text("SELECT 1"))
         return True
     except Exception as exc:  # noqa: BLE001
@@ -148,11 +203,14 @@ def ha_status() -> dict[str, Any]:
     settings = get_settings()
     primary, failover = configure_engines()
     global _primary_ok, _failover_ok
-    _primary_ok = probe(primary)
-    _failover_ok = probe(failover) if failover else False
+    _primary_ok = probe(primary, url=settings.db_url)
+    fo = (settings.db_failover_url or "").strip()
+    _failover_ok = probe(failover, url=fo) if failover else False
     with _lock:
         sync = dict(_last_sync)
         role = _active_role
+        fail_streak = _primary_fail_streak
+    pool = _pool_kwargs_for_url(settings.db_url)
     return {
         "active_role": role,
         "primary": {
@@ -165,6 +223,15 @@ def ha_status() -> dict[str, Any]:
             "url_scheme": (settings.db_failover_url or "").split(":", 1)[0] or None,
             "dialect": failover.dialect.name if failover else None,
             "ok": _failover_ok,
+        },
+        "pool": {
+            "pool_size": pool.get("pool_size"),
+            "max_overflow": pool.get("max_overflow"),
+            "pool_timeout": pool.get("pool_timeout"),
+            "pool_recycle": pool.get("pool_recycle"),
+            "probe_isolated": True,
+            "failover_fail_threshold": max(1, int(settings.db_failover_fail_threshold or 3)),
+            "primary_fail_streak": fail_streak,
         },
         "sync": sync,
         "auto_failover": settings.db_auto_failover,
@@ -303,18 +370,34 @@ def _worker_loop() -> None:
                         )
                     logger.warning("scheduled_clone_failed err=%s", exc)
 
-        # Auto-failover probe
+        # Auto-failover probe (isolated NullPool; require consecutive failures)
         if get_settings().db_auto_failover:
+            settings = get_settings()
             primary, failover = configure_engines()
-            ok = probe(primary)
-            global _primary_ok
+            ok = probe(primary, url=settings.db_url)
+            global _primary_ok, _primary_fail_streak
             _primary_ok = ok
-            if not ok and failover is not None and get_active_role() == "primary":
+            threshold = max(1, int(settings.db_failover_fail_threshold or 3))
+            with _lock:
+                if ok:
+                    _primary_fail_streak = 0
+                else:
+                    _primary_fail_streak += 1
+                streak = _primary_fail_streak
+            if (
+                not ok
+                and failover is not None
+                and get_active_role() == "primary"
+                and streak >= threshold
+            ):
                 try:
-                    set_active_role("failover", reason="auto_primary_down")
+                    set_active_role(
+                        "failover",
+                        reason=f"auto_primary_down streak={streak}/{threshold}",
+                    )
                 except Exception as exc:  # noqa: BLE001
                     logger.warning("auto_failover_failed err=%s", exc)
-            elif ok and get_active_role() == "failover" and get_settings().db_auto_failback:
+            elif ok and get_active_role() == "failover" and settings.db_auto_failback:
                 try:
                     set_active_role("primary", reason="auto_primary_recovered")
                 except Exception as exc:  # noqa: BLE001

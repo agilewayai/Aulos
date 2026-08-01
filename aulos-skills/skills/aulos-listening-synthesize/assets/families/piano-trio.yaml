@@ -1,0 +1,97 @@
+family_id: piano-trio
+match:
+  instruments:
+  - piano
+  - violin
+  - cello
+  - 钢琴
+  - 小提琴
+  - 大提琴
+  forms:
+  - trio
+  - piano trio
+  - dumky
+  - 三重奏
+  - 钢琴三重奏
+  - 杜姆卡
+work_title_template: '{composer} — Piano Trio'
+era: Classical / Romantic chamber trio practice
+form: Piano trio — violin, cello, and piano in conversational chamber architecture
+listening_thesis: >
+  Hear the trio as three-voice conversation — lock each instrument’s opening character
+  and how the piano mediates; map whether dumky / character sets are mood rooms under
+  one chamber contract rather than a medley.
+work_introduction: >
+  Piano-trio listening owns blend and speech: violin cantabile, cello gait, piano as
+  harmony and rival voice. Character sets (dumky and kin) reward comparative rooms —
+  same trio contract, different temperaments — without collapsing into folk pastiche myth.
+genesis:
+  year: late 18th–19th century (varies)
+  place: Salon and chamber concert culture
+  publication: Numbered trios / character sets; treat opus identity as lock
+  background: Domestic chamber speech meeting public recital craft.
+  instrument_culture: Classical–Romantic chamber balance; modern vs period strings/piano.
+historical_stature:
+  reasons:
+  - Teaches three-voice chamber literacy as public craft.
+  - Character / dumky sets reward comparative temperament listening.
+  reception_arc: Salon intimacy → recital canon → folk-color reception debates → HIP blend.
+width_points:
+- Lock each voice’s opening character before blend myths.
+- Piano is a partner, not only accompaniment — state the balance philosophy.
+- Character sets: compare rooms under one trio contract.
+- Folk-color nicknames are reception — keep caveats.
+depth_points:
+- Map dialogue turns among violin, cello, and piano.
+- Track how a dumky / character movement revises the previous room’s weather.
+- Close: shared cadence or unresolved conversation?
+listening_map:
+- label: Opening voices
+  cue: Memorize violin / cello / piano entry characters.
+- label: Character rooms
+  cue: Mood shifts under one trio contract.
+- label: Close
+  cue: Shared cadence — or conversation left open?
+sound_world:
+  original_instrument: Violin, cello, and period/modern piano
+  ensemble_notes: Chamber trio; orchestrations are receptions.
+  modern_modes:
+  - Modern instruments, modern blend
+  - Period strings / fortepiano
+  - Comparative balance philosophies
+myths_and_caveats:
+- “Folk authenticity” claims for dumky-style sets are often reception lore.
+- Do not import another composer’s trio mythology.
+practice_notes:
+- One hearing naming three entry characters.
+- Second hearing comparing two character rooms.
+- Journal piano’s role when the strings intensify.
+zh:
+  listening_thesis: >
+    把钢琴三重奏当作三声部对话来听——先锁住每件乐器的开场性格与钢琴如何居中调解；
+    画出杜姆卡／性格套曲是同一室内乐契约下的性情之室，而非拼盘。
+  work_introduction: >
+    钢琴三重奏聆听要抓住融合与言说：小提琴如歌、大提琴步态、钢琴既是和声也是竞争声部。
+    性格套曲（杜姆卡一类）奖励比较之室——同一三重奏契约、不同性情——而不坍缩成民俗拼贴神话。
+  width_points:
+  - 融合神话之前先锁住各声部开场性格。
+  - 钢琴是伙伴而非仅伴奏——说明平衡哲学。
+  - 性格套曲：在同一三重奏契约下比较房间。
+  - 民俗色彩别名属接受史——保留存疑。
+  depth_points:
+  - 画出小提琴、大提琴与钢琴之间的对话转折。
+  - 追踪杜姆卡／性格乐章如何改写前一室的天气。
+  - 收束：共同终止，还是未完的对话？
+  listening_map:
+  - label: 开场声部
+    cue: 记住小提琴／大提琴／钢琴进入性格。
+  - label: 性格之室
+    cue: 同一三重奏契约下的情绪转换。
+  - label: 收束
+    cue: 共同终止——还是对话保持敞开？
+  myths_and_caveats:
+  - 杜姆卡类套曲的“民俗真确”说法常是接受史。
+  - 不要挪来另一位作曲家的三重奏神话。
+  practice_notes:
+  - 第一遍为三个进入性格命名。
+  - 第二遍比较两间性格之室。

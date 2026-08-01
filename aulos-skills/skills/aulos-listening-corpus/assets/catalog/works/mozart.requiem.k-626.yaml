@@ -1,0 +1,45 @@
+work_id: mozart.requiem.k-626
+composer_id: wolfgang-amadeus-mozart
+canonical_title: Mozart — Requiem in D minor, K. 626
+canonical_title_zh: 莫扎特 — d小调安魂曲，K. 626
+aliases:
+  - Requiem
+  - Mozart Requiem
+  - Requiem K. 626
+  - K. 626
+  - K.626
+  - 安魂曲
+  - 安魂弥撒
+  - 末日经
+  - Dies irae
+catalog_numbers:
+  - K. 626
+  - K.626
+  - KV 626
+facets:
+  instruments: [choir, orchestra, voice]
+  ensemble: [choral]
+  forms: [requiem, mass, sacred]
+  era: classical
+family_id: sacred-requiem
+corpus_key: null
+ambient_ref: null
+identity:
+  distinctive_tokens:
+    - requiem
+    - k. 626
+    - dies irae
+    - lacrimosa
+    - 安魂曲
+    - 末日经
+  conflict_work_ids:
+    - mozart.piano-concerto-23.k-488
+  conflict_markers:
+    - piano concerto no. 23
+    - k. 488
+    - k.488
+    - 第23钢琴协奏曲
+    - horowitz plays mozart
+provenance:
+  authority: Köchel K. 626
+  notes: Sacred mass — distinct from Horowitz DG piano-concerto pressing.

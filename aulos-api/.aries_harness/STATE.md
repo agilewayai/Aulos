@@ -9,7 +9,7 @@ fingerprint: "aries-harness/bootstrap-doc/v1"
 initialized_at: "2026-07-25T11:10:22Z"
 effective_status: "active"
 effective_since: "2026-07-25T11:10:22Z"
-content_fingerprint: "sha256:b27d8a54445fe50ebe45e34029401bfa6c91a647c59746bb143e32ed10ea482c"
+content_fingerprint: "sha256:0abb195e2d1e6e1febe2f05665f04ec91d43a5cf44437566cf2e50e051c94983"
 trace_history_source: "filesystem-only"
 trace_last_commit_sha: ""
 trace_last_commit_at: ""
@@ -19,19 +19,16 @@ trace_revision_count: "0"
 
 ## Current phase
 
-- SPEC-018 delta: `knowledge.benchmark` ops task + knowledge plane proxy shipped
+- REQ-011 / SPEC-021Δ diary guide lifecycle (revise / unpublish / delete) shipped locally
+- REQ-010 Listening diary + plaza SNS S1–S6 + lifecycle delta (await deploy)
 
 ## Current phase (prior)
 
-- SPEC-013 durable jobs + library shipped (pytest green)
-
-## Current phase (prior)
-
-- SPEC-008 Discogs identity lock + family pollution fix
+- REQ-010 / SPEC-019/020 Listening diary + plaza SNS (RUN-010 active)
 
 ## Active run
 
-- RUN-GUIDE-JOBS-013 (closing)
+- idle (RUN-010 S1–S6 + REQ-011 lifecycle complete)
 
 
 ## Hot facts

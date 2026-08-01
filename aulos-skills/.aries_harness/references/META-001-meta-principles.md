@@ -8,8 +8,8 @@ managed_by: "aries-harness"
 fingerprint: "aries-harness/bootstrap-doc/v1"
 initialized_at: "2026-07-27T10:45:00Z"
 effective_status: "active"
-effective_since: "2026-07-27T10:50:00Z"
-content_fingerprint: "sha256:37217f2ced82b0d5c2401a835793a8a2123392e8c6c2e028e320472b132f6179"
+effective_since: "2026-08-01T10:20:00Z"
+content_fingerprint: "sha256:1f205636bde6ac273c32110d6db2c8ecdbbf03489bd75a005d6e4291fde8447a"
 trace_history_source: "filesystem-only"
 trace_last_commit_sha: ""
 trace_last_commit_at: ""
@@ -27,10 +27,10 @@ Downstream: `aulos-operating-defaults` skill, workspace `AGENTS.md`, per-project
 | Field | Value |
 | --- | --- |
 | Artifact ID | META-001 |
-| Version | v4 |
+| Version | v6 |
 | Layer | MetaDefineLayer |
 | Scope | Whole Aulos monorepo + harness fleet |
-| Supersedes | ad-hoc “common sense” in chat only |
+| Supersedes | ad-hoc “common sense” in chat only; v5 without explicit unknown-case anti-case rule |
 
 ## How to use
 
@@ -57,15 +57,22 @@ Solve problems at the source, not at the symptom.
 - If the same patch would land in three places → extract a shared contract, helper, or **data record**.
 - If the third similar case patch appears → stop writing Python `if` branches; author Catalog / SPEC / YAML instead (**data over heuristics**).
 - Multi-stage pipelines must **validate at each stage** that can reintroduce pollution (scrub once at the end is not enough).
+- **Listening unknown-case (SPEC-029–031):** thickness must come from **facet dimensions +
+  promote pipeline**, not from enumerating famous works one-by-one. Catalog/craft/family
+  YAML are **accelerators/caches**, never the engine. Forbidden as the “fix”:
+  `if mendelssohn`, guide-#N special cases, or shipping one craft YAML solely to silence
+  a single Discogs repro. Tests must prove **≥2 unrelated identities** on the same path.
 
 **Promoted examples:**
 
 | Incident | Symptom medicine | Root cause / class fix |
 | --- | --- | --- |
 | Cross-work chamber pollution | composer/`if bach` scrub lists | Missing **identity entities** → Catalog + IdentityResolver (SPEC-008) |
+| Same-composer sibling swap (Horowitz Mozart K.488 → Requiem/末日经) | hope LLM stays on title; per-work if lists | **Identity lock class gate**: catalog numbers + `form_lock_groups.yaml` aliens + dossier betrayal reject + compose HTML re-scrub (`identity_lock.py`) — Catalog work YAML improves recall but is not required for the form/number lock |
 | Family unlock on form alone | one-shot synthesize scrub | Evidence gates + **per-node decontam** (SPEC-009) |
 | Dev Blog missing AUDIT-009 | “LLM forgot” | Evidence collector truncated **newest** journal entries |
 | Solo cello suites | case-specific scrub tuples | Catalog record (symptom path superseded) |
+| Thin Discogs/NLP guides (unknown titles) | hand craft YAML / per-work thicken | **FacetClassifier → dimension templates → stage → promote-production** (SPEC-029–031) |
 
 Domain detail stays in `docs/insights.md` and SPEC-008/009; this section owns the **thinking pattern**.
 
@@ -118,6 +125,7 @@ Prefer small, clear, test-backed changes over clever or sprawling diffs.
 | **Minimal scope** | Smallest correct diff; no drive-by refactors in unrelated files. |
 | **Conventions** | Match surrounding module naming, types, and error style. |
 | **Seams over monoliths** | Split when a file owns multiple reasons to change (SPEC-016 / AUDIT-009 F10). |
+| **DRY before second copy** | The **second** identical (or near-identical) UI block / helper / pipeline step must be an extract, not a paste. See §3.5. |
 | **Explicit contracts** | Types, Pydantic models, SPEC acceptance — not implicit dict shapes from LLM/HTTP. |
 | **Coerce external input** | Always `coerce_dict()` / schema-validate before treating LLM or web payloads as mappings. |
 | **Hard-fail product gates** | Soft notes alone do not prevent shipping broken UX (e.g. missing ambient player). |
@@ -125,8 +133,9 @@ Prefer small, clear, test-backed changes over clever or sprawling diffs.
 
 ### 3.2 Code smells to avoid
 
+- **Duplicated code (copy-paste)** — same markup, progress math, or join/coerce logic forked across surfaces (e.g. Studio Atelier vs 我的聆乐导赏工坊). **Forbidden as a delivery shape**; extract a shared module/component first (§3.5).
 - **Shotgun surgery** — one concept changed in many unrelated files without a shared abstraction.
-- **Divergent duplicate** — same logic copied in web and ops instead of one module or API.
+- **Divergent duplicate** — same logic copied in web and ops (or diary and studio) then edited differently until they disagree.
 - **Boolean blindness** — `busy` flags that block entire app when only one panel is working.
 - **Chat-only fixes** — behavior change with no test or harness artifact.
 - **Evidence truncation** — summarizers that drop newest facts (journal tail-bias, LLM hype in Dev Blog).
@@ -168,6 +177,25 @@ When building knowledge / crawl / explore flows, start from **who** (composer) a
 
 When smell is found during audit, open SPEC/ADR or insight — don't only fix the instance.
 
+### 3.5 DRY — no duplicated product code (禁止重复实现)
+
+**Rule:** If two product surfaces need the same interaction or calculation, they share **one** implementation. Copy-paste to ship faster is a **defect**, not a shortcut.
+
+| Do | Don't |
+| --- | --- |
+| Extract shared component/helper **before** or **as part of** the second consumer (e.g. `AtelierTrail` for Studio + 我的聆乐). | Paste progress-bar / step-list markup into a second page and tweak labels only. |
+| Put shared pure logic in a tiny util module with a unit test. | Re-derive `done/total/%` with the same filter set in three JSX blocks. |
+| Prefer one SSE/watch helper used by multiple screens. | Fork event-consumption loops that drift apart. |
+| Allow **params** (labels, empty copy, className) — not a second component tree. | “Almost the same” private forks that silently diverge. |
+
+**Gate before merge/deploy:**
+
+1. Search for near-duplicate JSX/CSS/helpers introduced in the slice.
+2. If the same structure appears twice → extract; do not ship the fork.
+3. Record the shared seam in JOURNAL (path + consumers).
+
+**Promoted example (2026-08-01):** Diary guide atelier initially forked Studio chain UI → collapsed into `aulos-web/src/AtelierTrail.tsx` + `atelierTrailUtils.ts`. Plaza vs 我的聆乐 cards → `ListeningPostCard` + `sourceKind.ts`. Legacy skills `render_guide_html` fork → deleted; shared `html_bits` for point coerce + list HTML. Discogs analyze/snapshot → `_parse_release_core`; Studio/diary Discogs UI → `DiscogsReleasePicker` + `useDiscogsSearch`.
+
 ---
 
 ## 4. Architecture boundaries (架构边界)
@@ -178,6 +206,7 @@ Stable seams for the listening product and ops stack. Detail lives in SPEC/ADR; 
 | --- | --- |
 | **Agent-centric product** | Core is **Agent + Skill Harness + tools**. API injects context/RAG and persists; do not grow `aulos-api` into the listening orchestration entrypoint. |
 | **Identity before enrich** | Catalog + IdentityResolver decide the work; RAG / knowledge / LLM **enrich after** identity — they must not alone choose `work_id`. |
+| **Adversarial process review** | After each atelier node: deterministic IntentLock review; after synthesize/compose: review-only LLM Critic against the frozen lock (REQ-008 / SPEC-018 / ADR-005). Critic never rewrites identity. |
 | **Knowledge plane** | Encyclopedic music data lives in **aulos-knowledge**, not mixed into `aulos.db` with users/guides. **Authority sources** must be registered and **verified** in the Source Registry (`data/registry/sources.yaml` / REQ-008) before crawl or RAG publish. |
 | **Listening product surface** | A guide is chambers + bilingual panes + **playable ambient**, not headings alone (SPEC-005/006). Media contract and sandbox are part of the product. |
 | **Security / HTML** | Guide HTML and session cookies follow SPEC-014/015; fail closed; module seams per SPEC-016. |

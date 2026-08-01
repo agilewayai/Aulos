@@ -47,6 +47,10 @@ function WorkTreeNode({ node, depth = 0 }: { node: ComposerDossierWorkNode; dept
   const [open, setOpen] = useState(depth < 1)
   const hasKids = (node.children || []).length > 0
   const catalogs = (node.catalog_numbers || []).filter(Boolean).join(', ')
+  const genre =
+    node.genre ||
+    (typeof node.facets?.genre === 'string' ? (node.facets.genre as string) : '') ||
+    ''
   return (
     <li className={`kb-dossier-work depth-${Math.min(depth, 3)}`}>
       <div className="kb-dossier-work-row">
@@ -65,6 +69,7 @@ function WorkTreeNode({ node, depth = 0 }: { node: ComposerDossierWorkNode; dept
             <span className="kb-badge">{node.work_kind}</span>
             {node.year_start ? <span className="kb-badge">{node.year_start}</span> : null}
             {catalogs ? <span className="kb-badge">{catalogs}</span> : null}
+            {genre ? <span className="kb-badge">{genre}</span> : null}
           </span>
         </div>
       </div>
@@ -79,6 +84,31 @@ function WorkTreeNode({ node, depth = 0 }: { node: ComposerDossierWorkNode; dept
   )
 }
 
+function FlatWorkRow({ node }: { node: ComposerDossierWorkNode }) {
+  const catalogs = (node.catalog_numbers || []).filter(Boolean).join(', ')
+  const genre =
+    node.genre ||
+    (typeof node.facets?.genre === 'string' ? (node.facets.genre as string) : '') ||
+    ''
+  return (
+    <li className="kb-dossier-work depth-0">
+      <div className="kb-dossier-work-row">
+        <span className="kb-dossier-toggle spacer" aria-hidden>
+          ·
+        </span>
+        <div className="kb-dossier-work-meta">
+          <strong>{node.title_en}</strong>
+          <span className="kb-composer-tags">
+            {node.year_start ? <span className="kb-badge">{node.year_start}</span> : null}
+            {catalogs ? <span className="kb-badge">{catalogs}</span> : null}
+            {genre ? <span className="kb-badge">{genre}</span> : null}
+          </span>
+        </div>
+      </div>
+    </li>
+  )
+}
+
 export function ComposerDossierModule({ busy, setBusy, setError, setNotice, onNavigate }: Props) {
   const [seeds, setSeeds] = useState<KnowledgeExploreSeed[]>([])
   const [featured, setFeatured] = useState<KnowledgeExploreSeed[]>([])
@@ -87,6 +117,7 @@ export function ComposerDossierModule({ busy, setBusy, setError, setNotice, onNa
   const [query, setQuery] = useState('')
   const [selected, setSelected] = useState<KnowledgeExploreSeed | null>(null)
   const [dossier, setDossier] = useState<ComposerDossier | null>(null)
+  const [worksView, setWorksView] = useState<'genre' | 'year' | 'tree'>('genre')
 
   const loadSeeds = useCallback(async () => {
     try {
@@ -351,15 +382,102 @@ export function ComposerDossierModule({ busy, setBusy, setError, setNotice, onNa
             </section>
 
             <section className="kb-dossier-panel" aria-labelledby="kb-works-h">
-              <h5 id="kb-works-h">作品树</h5>
-              {(dossier?.works_tree || []).length === 0 ? (
-                <p className="meta">暂无作品 — 构建后显示层级</p>
+              <div className="kb-dossier-works-head">
+                <h5 id="kb-works-h">作品目录</h5>
+                <div className="kb-letter-rail" role="tablist" aria-label="作品视图">
+                  <button
+                    type="button"
+                    role="tab"
+                    aria-selected={worksView === 'genre'}
+                    className={worksView === 'genre' ? 'active' : ''}
+                    onClick={() => setWorksView('genre')}
+                  >
+                    题材
+                  </button>
+                  <button
+                    type="button"
+                    role="tab"
+                    aria-selected={worksView === 'year'}
+                    className={worksView === 'year' ? 'active' : ''}
+                    onClick={() => setWorksView('year')}
+                  >
+                    时间线
+                  </button>
+                  <button
+                    type="button"
+                    role="tab"
+                    aria-selected={worksView === 'tree'}
+                    className={worksView === 'tree' ? 'active' : ''}
+                    onClick={() => setWorksView('tree')}
+                  >
+                    树
+                  </button>
+                </div>
+              </div>
+              {(dossier?.works_count || 0) === 0 ? (
+                <p className="meta">暂无作品 — 构建后按题材 / 时间线浏览</p>
               ) : (
-                <ul className="kb-dossier-work-tree">
-                  {dossier!.works_tree.map((n) => (
-                    <WorkTreeNode key={n.id} node={n} />
-                  ))}
-                </ul>
+                <>
+                  <p className="meta kb-explore-hint">
+                    已收录 {dossier!.works_count} 部
+                    {dossier!.works_cap ? `（软上限 ${dossier!.works_cap}，未必等于全集）` : ''}
+                  </p>
+                  {worksView === 'genre' ? (
+                    <ul className="kb-dossier-work-tree">
+                      {(dossier!.works_by_genre || []).map((g) => (
+                        <li key={g.genre || 'g'} className="kb-dossier-work depth-0">
+                          <div className="kb-dossier-work-row">
+                            <span className="kb-dossier-toggle spacer" aria-hidden>
+                              ·
+                            </span>
+                            <div className="kb-dossier-work-meta">
+                              <strong>{g.genre || 'Unclassified'}</strong>
+                              <span className="kb-composer-tags">
+                                <span className="kb-badge">{g.count}</span>
+                              </span>
+                            </div>
+                          </div>
+                          <ul className="kb-dossier-work-children">
+                            {(g.works || []).map((w) => (
+                              <FlatWorkRow key={w.id} node={w} />
+                            ))}
+                          </ul>
+                        </li>
+                      ))}
+                    </ul>
+                  ) : null}
+                  {worksView === 'year' ? (
+                    <ul className="kb-dossier-work-tree">
+                      {(dossier!.works_by_year || []).map((y) => (
+                        <li key={y.year || 'y'} className="kb-dossier-work depth-0">
+                          <div className="kb-dossier-work-row">
+                            <span className="kb-dossier-toggle spacer" aria-hidden>
+                              ·
+                            </span>
+                            <div className="kb-dossier-work-meta">
+                              <strong>{y.year === 'undated' ? '年代未知' : y.year}</strong>
+                              <span className="kb-composer-tags">
+                                <span className="kb-badge">{y.count}</span>
+                              </span>
+                            </div>
+                          </div>
+                          <ul className="kb-dossier-work-children">
+                            {(y.works || []).map((w) => (
+                              <FlatWorkRow key={w.id} node={w} />
+                            ))}
+                          </ul>
+                        </li>
+                      ))}
+                    </ul>
+                  ) : null}
+                  {worksView === 'tree' ? (
+                    <ul className="kb-dossier-work-tree">
+                      {dossier!.works_tree.map((n) => (
+                        <WorkTreeNode key={n.id} node={n} />
+                      ))}
+                    </ul>
+                  ) : null}
+                </>
               )}
             </section>
           </div>

@@ -1,0 +1,97 @@
+family_id: piano-concerto
+match:
+  instruments:
+  - piano
+  - orchestra
+  - 钢琴
+  - 管弦乐
+  forms:
+  - concerto
+  - piano concerto
+  - 协奏曲
+  - 钢琴协奏曲
+work_title_template: '{composer} — Piano Concerto'
+era: Classical / Romantic concerto practice
+form: Piano concerto — ritornello / sonata dialogue between soloist and orchestra
+listening_thesis: >
+  Hear the concerto as a conversation — lock the opening orchestral thesis and the
+  soloist's first entry character before chasing bravura; map how cadenza and close
+  remember the opening contract.
+work_introduction: >
+  A piano concerto teaches ear ownership of theme vs accompaniment, solo vs tutti,
+  and the politics of the cadenza. Serious listening tracks dialogue turns rather
+  than treating the orchestra as wallpaper under a virtuoso parade.
+genesis:
+  year: late 18th–19th century (varies by opus)
+  place: Public concert hall and subscription culture
+  publication: Numbered concertos; treat K./Op. identity as lock
+  background: Solo piano and orchestra negotiate Classical form under public display.
+  instrument_culture: Fortepiano → modern grand; orchestra size and wind color reshape speech.
+historical_stature:
+  reasons:
+  - Makes public virtuosity legible as form dialogue, not only display.
+  - Cadenza culture teaches improvisatory memory inside written architecture.
+  reception_arc: Court / subscription hall → Romantic star vehicle → HIP vs modern piano/orchestra.
+width_points:
+- Lock the orchestral opening thesis before the solo entry.
+- Track solo vs tutti as dialogue turns, not volume contests.
+- State the piano era (fortepiano / modern) — color changes the contract.
+- Cadenza is rhetoric inside form — ask what it remembers.
+depth_points:
+- Map first-movement exposition landmarks with ear cues.
+- Notice how the slow movement changes the conversation temperature.
+- Finale pulse and wit — how the close recalls opening character.
+listening_map:
+- label: Orchestral thesis
+  cue: Memorize the opening orchestral character before solo entry.
+- label: Solo dialogue
+  cue: Entry character, development turns, cadenza memory.
+- label: Close
+  cue: Does the finale remember the opening contract intact or ironized?
+sound_world:
+  original_instrument: Fortepiano or period piano with Classical/Romantic orchestra
+  ensemble_notes: Solo piano + orchestra; reductions are study aids, not the thesis.
+  modern_modes:
+  - Modern grand + modern orchestra
+  - Period instruments / reduced forces
+  - Comparative cadenza philosophies
+interpretations:
+- artist: Murray Perahia / Alfred Brendel / period-leaning surveys
+  album: Selected Mozart / Beethoven concertos
+  why: Clear dialogue under different piano eras.
+myths_and_caveats:
+- Cadenza legends and “composer improvised here” claims need documentation.
+- Discogs coupling titles are not IntentLock work titles.
+practice_notes:
+- One hearing focused only on orchestral thesis vs solo entry.
+- Second hearing mapping cadenza memory of opening material.
+- Journal three dialogue turns with timestamps.
+zh:
+  listening_thesis: >
+    把钢琴协奏曲当作一场对话来听——先锁住开场乐队命题与独奏首次进入的性格，再追炫技；
+    画出华彩与收束如何记得开场契约。
+  work_introduction: >
+    钢琴协奏曲训练耳朵分辨主题与伴奏、独奏与全奏，以及华彩的修辞政治。认真的聆听追踪对话转折，
+    而不是把乐队当成炫技游行下的壁纸。
+  width_points:
+  - 独奏进入前先锁住乐队开场命题。
+  - 把独奏与全奏当作对话转折，而非音量竞赛。
+  - 说明钢琴时代（古钢琴／现代琴）——音色改变契约。
+  - 华彩是形式内的修辞——问它记得什么。
+  depth_points:
+  - 用耳部线索画出第一乐章呈示部地标。
+  - 注意慢乐章如何改变对话温度。
+  - 终乐章脉搏与机智——收束如何回想开场性格。
+  listening_map:
+  - label: 乐队命题
+    cue: 独奏进入前记住开场乐队性格。
+  - label: 独奏对话
+    cue: 进入性格、展开转折、华彩记忆。
+  - label: 收束
+    cue: 终乐章是原样记得开场契约，还是被反讽？
+  myths_and_caveats:
+  - 华彩传说与“作曲家在此即兴”需有文献。
+  - Discogs 拼盘标题不是 IntentLock 作品标题。
+  practice_notes:
+  - 第一遍只听乐队命题与独奏进入。
+  - 第二遍画出华彩对开场材料的记忆。

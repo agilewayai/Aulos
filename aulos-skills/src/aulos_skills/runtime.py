@@ -6,12 +6,20 @@ import json
 import re
 from dataclasses import asdict, dataclass, field
 from datetime import datetime, timezone
-from html import escape
 from pathlib import Path
 from typing import Any
 
 import yaml
 
+from aulos_skills.adversarial_review import (
+    LLM_CRITIC_TRIGGERS,
+    apply_critique_to_context,
+    deterministic_review,
+    freeze_intent_lock_dict,
+    intent_critic_review,
+    record_review_event,
+    review_llm_enabled,
+)
 from aulos_skills.ambient_agent import select_ambient
 from aulos_skills.ambient_playlist import resolve_ambient_audio
 from aulos_skills.config import get_settings
@@ -33,8 +41,11 @@ from aulos_skills.salon_codex import (
     merge_dossiers,
     parse_llm_dossier_json,
 )
+from aulos_skills.html_bits import point_text, point_texts
+from aulos_skills.process_scorecard import record_node_scorecard, rollup_process
 
 _DECONTAM_MAX_REWORK = 1
+_CRITIC_MAX_REWORK = 1
 
 
 def _utcnow() -> str:
@@ -151,9 +162,16 @@ class SkillRuntime:
         thinking = self._thinking_from_skill(skill)
         outputs = self._dispatch(trigger, skill, context)
         detail = self._detail_from_outputs(trigger, outputs)
-        if trigger in DECONTAM_TRIGGERS:
-            outputs, detail = self._decontam_gate(trigger, skill, context, outputs, detail)
+        if trigger == "listening.intake":
+            # Freeze IntentLock immediately so later nodes cannot rewrite truth.
+            self._freeze_intent_lock(context, outputs)
+        if trigger in DECONTAM_TRIGGERS or trigger in LLM_CRITIC_TRIGGERS:
+            outputs, detail = self._adversarial_review_gate(trigger, skill, context, outputs, detail)
         context.update(outputs)
+        # SPEC-019 process scorecard — after gate so fidelity sees review_events
+        card = record_node_scorecard(context, trigger, outputs)
+        if card is not None and card.findings:
+            detail = f"{detail} | score {card.pct}% {card.band}"
         return SkillStepResult(
             id=step_id,
             title=title,
@@ -167,6 +185,203 @@ class SkillRuntime:
             outputs=outputs,
         )
 
+    def _freeze_intent_lock(self, context: dict[str, Any], outputs: dict[str, Any]) -> None:
+        existing = dict(context.get("intent_lock") or {})
+        if existing.get("work_title"):
+            # Already frozen (e.g. API Discogs pre-lock) — keep truth; sync scrub mirrors.
+            outputs["intent_lock"] = existing
+            if existing.get("conflict_markers"):
+                markers = list(outputs.get("conflict_markers") or context.get("conflict_markers") or [])
+                for m in existing["conflict_markers"]:
+                    if m not in markers:
+                        markers.append(m)
+                outputs["conflict_markers"] = markers
+                context["conflict_markers"] = markers
+            return
+        work_title = str(outputs.get("work_title") or context.get("work_title") or "")
+        composer = str(
+            outputs.get("composer")
+            or outputs.get("composer_guess")
+            or context.get("composer")
+            or ""
+        )
+        prov = dict((context.get("kb_dossier") or {}).get("_provenance") or {})
+        source = "intake"
+        if prov.get("source") == "discogs" or prov.get("discogs"):
+            source = "discogs"
+        elif outputs.get("work_id") or context.get("work_id"):
+            source = "catalog"
+        lock = freeze_intent_lock_dict(
+            work_title=work_title,
+            composer=composer,
+            work_hint=str(context.get("work_hint") or ""),
+            raw_message=str(context.get("raw_message") or ""),
+            work_id=str(outputs.get("work_id") or context.get("work_id") or "") or None,
+            conflict_markers=list(outputs.get("conflict_markers") or context.get("conflict_markers") or []),
+            source=source,
+        )
+        outputs["intent_lock"] = lock
+        context["intent_lock"] = lock
+        # Keep flat mirrors for scrubbers
+        if lock.get("conflict_markers"):
+            outputs["conflict_markers"] = list(lock["conflict_markers"])
+            context["conflict_markers"] = list(lock["conflict_markers"])
+
+    def _review_milestone_step(
+        self, trigger: str, context: dict[str, Any]
+    ) -> SkillStepResult | None:
+        """Atelier-visible review milestone after synthesize/compose."""
+        if trigger not in LLM_CRITIC_TRIGGERS:
+            return None
+        events = list(context.get("review_events") or [])
+        relevant = [e for e in events if e.get("trigger") == trigger]
+        if not relevant:
+            return None
+        last = relevant[-1]
+        verdict = str(last.get("verdict") or "PASS")
+        repaired = bool(last.get("repaired"))
+        if not last.get("ok") and not repaired:
+            status = "failed"
+            detail = "本意偏离已拦截 — " + "; ".join(
+                str(d.get("summary") or d.get("code") or "")
+                for d in (last.get("deviations") or [])[:3]
+            )
+        elif repaired:
+            status = "completed"
+            detail = f"Review rework ok ({last.get('layer')})"
+        else:
+            status = "completed"
+            detail = f"Review PASS ({last.get('layer')})"
+        corrections = list(context.get("critique_corrections") or [])
+        thinking = (
+            "Intent Critic — review only; lock is truth."
+            if not corrections
+            else "Intent Critic corrections: " + "; ".join(corrections[:3])
+        )
+        short = trigger.rsplit(".", 1)[-1]
+        return SkillStepResult(
+            id=f"review-{short}",
+            title=f"Review ({short})",
+            status=status,
+            thinking=thinking,
+            detail=detail[:480],
+            skill_id="listening.review",
+            skill_version="1",
+            started_at=_utcnow(),
+            finished_at=_utcnow(),
+            outputs={"verdict": verdict, "layer": last.get("layer"), "ok": last.get("ok")},
+        )
+
+    def _adversarial_review_gate(
+        self,
+        trigger: str,
+        skill: SkillManifest,
+        context: dict[str, Any],
+        outputs: dict[str, Any],
+        detail: str,
+    ) -> tuple[dict[str, Any], str]:
+        """Deterministic review every enrich node; LLM/intent Critic on synthesize+compose."""
+        family_snap = dict(context.get("_last_matched_family") or {})
+
+        # --- Deterministic layer (SPEC-009 + IntentLock) ---
+        if trigger in DECONTAM_TRIGGERS:
+            for attempt in range(_DECONTAM_MAX_REWORK + 1):
+                report = deterministic_review(
+                    trigger, context, outputs, family=family_snap or None
+                )
+                # Map to decontam for back-compat events when alien markers only
+                deco = validate_node_outputs(
+                    trigger, context, outputs, family=family_snap or None
+                )
+                if report.ok:
+                    if attempt > 0:
+                        record_decontam_event(
+                            context,
+                            trigger=trigger,
+                            attempt=attempt,
+                            report=deco,
+                            repaired=True,
+                        )
+                        report.repaired = True
+                        record_review_event(context, report)
+                        detail = f"{detail} | review-rework ok"
+                    else:
+                        record_review_event(context, report)
+                    break
+
+                if attempt >= _DECONTAM_MAX_REWORK:
+                    record_decontam_event(
+                        context,
+                        trigger=trigger,
+                        attempt=attempt,
+                        report=deco,
+                        repaired=False,
+                    )
+                    self._apply_decontam_scrub(trigger, context, outputs, report.markers_used)
+                    if trigger == "listening.compose":
+                        outputs = self._dispatch(trigger, skill, context)
+                        report2 = deterministic_review(
+                            trigger, context, outputs, family=family_snap or None
+                        )
+                        if not report2.ok:
+                            html = str(outputs.get("guide_html") or "")
+                            outputs["guide_html"] = self._scrub_html_markers(
+                                html, list(context.get("conflict_markers") or [])
+                            )
+                            context["guide_html"] = outputs["guide_html"]
+                    apply_critique_to_context(context, report)
+                    record_review_event(context, report)
+                    detail = (
+                        f"{detail} | review-fail "
+                        f"({', '.join(d.code for d in report.deviations[:4])})"
+                    )
+                    break
+
+                apply_critique_to_context(context, report)
+                apply_rework_hints(context, deco)
+                self._apply_decontam_scrub(trigger, context, outputs, report.markers_used)
+                outputs = self._dispatch(trigger, skill, context)
+                family_snap = dict(context.get("_last_matched_family") or {})
+                detail = self._detail_from_outputs(trigger, outputs)
+
+        # --- Intent / LLM Critic on high-risk nodes (SPEC-018) ---
+        if trigger in LLM_CRITIC_TRIGGERS and review_llm_enabled(context):
+            for attempt in range(_CRITIC_MAX_REWORK + 1):
+                critic = intent_critic_review(trigger, context, outputs)
+                if critic.ok:
+                    if attempt > 0:
+                        critic.repaired = True
+                    record_review_event(context, critic)
+                    if attempt > 0:
+                        detail = f"{detail} | critic-rework ok"
+                    break
+                if attempt >= _CRITIC_MAX_REWORK:
+                    apply_critique_to_context(context, critic)
+                    self._apply_decontam_scrub(
+                        trigger, context, outputs, resolve_scrub_markers(context)
+                    )
+                    if trigger == "listening.compose":
+                        outputs = self._dispatch(trigger, skill, context)
+                        html = str(outputs.get("guide_html") or "")
+                        outputs["guide_html"] = self._scrub_html_markers(
+                            html, list(context.get("conflict_markers") or [])
+                        )
+                        context["guide_html"] = outputs["guide_html"]
+                    record_review_event(context, critic)
+                    detail = (
+                        f"{detail} | critic-fail "
+                        f"({', '.join(d.code for d in critic.deviations[:4])})"
+                    )
+                    break
+                apply_critique_to_context(context, critic)
+                self._apply_decontam_scrub(
+                    trigger, context, outputs, resolve_scrub_markers(context)
+                )
+                outputs = self._dispatch(trigger, skill, context)
+                detail = self._detail_from_outputs(trigger, outputs)
+
+        return outputs, detail
+
     def _decontam_gate(
         self,
         trigger: str,
@@ -175,47 +390,8 @@ class SkillRuntime:
         outputs: dict[str, Any],
         detail: str,
     ) -> tuple[dict[str, Any], str]:
-        """Validate node outputs; scrub + rework once when polluted (SPEC-009)."""
-        family_snap = dict(context.get("_last_matched_family") or {})
-        for attempt in range(_DECONTAM_MAX_REWORK + 1):
-            report = validate_node_outputs(
-                trigger, context, outputs, family=family_snap or None
-            )
-            if report.ok:
-                if attempt > 0:
-                    record_decontam_event(
-                        context,
-                        trigger=trigger,
-                        attempt=attempt,
-                        report=report,
-                        repaired=True,
-                    )
-                    detail = f"{detail} | decontam-rework ok"
-                return outputs, detail
-
-            if attempt >= _DECONTAM_MAX_REWORK:
-                record_decontam_event(
-                    context,
-                    trigger=trigger,
-                    attempt=attempt,
-                    report=report,
-                    repaired=False,
-                )
-                # Last-chance scrub of dossier / HTML context fields
-                self._apply_decontam_scrub(trigger, context, outputs, report.markers_used)
-                detail = (
-                    f"{detail} | decontam-fail "
-                    f"({', '.join(f.marker for f in report.findings[:4])})"
-                )
-                return outputs, detail
-
-            apply_rework_hints(context, report)
-            self._apply_decontam_scrub(trigger, context, outputs, report.markers_used)
-            # Re-run node with refuse_families / expanded markers
-            outputs = self._dispatch(trigger, skill, context)
-            family_snap = dict(context.get("_last_matched_family") or {})
-            detail = self._detail_from_outputs(trigger, outputs)
-        return outputs, detail
+        """Back-compat alias → adversarial review gate."""
+        return self._adversarial_review_gate(trigger, skill, context, outputs, detail)
 
     def _apply_decontam_scrub(
         self,
@@ -238,9 +414,28 @@ class SkillRuntime:
         if trigger == "listening.synthesize":
             dossier = dict(outputs.get("corpus_dossier") or context.get("corpus_dossier") or {})
             if dossier:
-                cleaned = self._scrub_foreign_chambers(
+                from aulos_skills.identity_hygiene import apply_identity_hygiene
+
+                cleaned, hygiene = apply_identity_hygiene(
                     dossier,
+                    composer=str(
+                        outputs.get("composer")
+                        or context.get("composer")
+                        or context.get("composer_guess")
+                        or ""
+                    ),
                     work_title=work_title or str(dossier.get("work_title") or ""),
+                    raw_message=str(context.get("raw_message") or ""),
+                )
+                if hygiene.markers:
+                    context["conflict_markers"] = list(
+                        dict.fromkeys(
+                            list(context.get("conflict_markers") or []) + list(hygiene.markers)
+                        )
+                    )
+                cleaned = self._scrub_foreign_chambers(
+                    cleaned,
+                    work_title=work_title or str(cleaned.get("work_title") or ""),
                     conflict_markers=list(context.get("conflict_markers") or []),
                     force_ambient_scrub=True,
                 )
@@ -248,18 +443,24 @@ class SkillRuntime:
                 context["corpus_dossier"] = cleaned
         elif trigger == "listening.width":
             width = dict(outputs.get("width_dossier") or context.get("width_dossier") or {})
-            salon = dict(width.get("salon_dossier") or context.get("corpus_dossier") or {})
+            cleaned_width = self._scrub_foreign_chambers(
+                width,
+                work_title=work_title or str(context.get("work_title") or ""),
+                conflict_markers=list(context.get("conflict_markers") or []),
+                force_ambient_scrub=True,
+            )
+            salon = dict(cleaned_width.get("salon_dossier") or context.get("corpus_dossier") or {})
             if salon:
-                cleaned = self._scrub_foreign_chambers(
+                salon = self._scrub_foreign_chambers(
                     salon,
                     work_title=work_title or str(salon.get("work_title") or ""),
                     conflict_markers=list(context.get("conflict_markers") or []),
                     force_ambient_scrub=True,
                 )
-                width["salon_dossier"] = cleaned
-                outputs["width_dossier"] = width
-                context["width_dossier"] = width
-                context["corpus_dossier"] = cleaned
+                cleaned_width["salon_dossier"] = salon
+                context["corpus_dossier"] = salon
+            outputs["width_dossier"] = cleaned_width
+            context["width_dossier"] = cleaned_width
         elif trigger == "listening.depth":
             depth = dict(outputs.get("depth_dossier") or context.get("depth_dossier") or {})
             # depth points live as lists — scrub via a thin dossier shell
@@ -279,7 +480,7 @@ class SkillRuntime:
             depth.update({k: cleaned[k] for k in shell if k in cleaned})
             outputs["depth_dossier"] = depth
             context["depth_dossier"] = depth
-        elif trigger == "listening.compose":
+        elif trigger in ("listening.compose", "listening.revise"):
             dossier = dict(context.get("corpus_dossier") or {})
             if dossier:
                 cleaned = self._scrub_foreign_chambers(
@@ -294,6 +495,33 @@ class SkillRuntime:
                     width["salon_dossier"] = cleaned
                     context["width_dossier"] = width
 
+    @staticmethod
+    def _scrub_html_markers(html: str, markers: list[str]) -> str:
+        """Drop block-level HTML chunks that still contain alien markers."""
+        active = [m.lower() for m in markers if m and len(str(m)) >= 3]
+        if not html or not active:
+            return html
+        import re as _re
+
+        def drop_if_polluted(match: _re.Match[str]) -> str:
+            chunk = match.group(0)
+            low = chunk.lower()
+            if any(m in low for m in active):
+                return ""
+            return chunk
+
+        out = html
+        # Prefer removing whole sections/articles/list items over silent word deletes.
+        for pattern in (
+            r"<section\b[^>]*>[\s\S]*?</section>",
+            r"<article\b[^>]*>[\s\S]*?</article>",
+            r"<li\b[^>]*>[\s\S]*?</li>",
+            r"<p\b[^>]*>[\s\S]*?</p>",
+            r"<h1\b[^>]*>[\s\S]*?</h1>",
+        ):
+            out = _re.sub(pattern, drop_if_polluted, out, flags=_re.I)
+        return out
+
     def iter_listening_chain(
         self,
         *,
@@ -305,6 +533,7 @@ class SkillRuntime:
         rag_hits: list[str] | None = None,
         rag_mode: str | None = None,
         disabled_skill_ids: set[str] | None = None,
+        context_seed: dict[str, Any] | None = None,
     ):
         """Yield each SkillStepResult, then a final SkillRunReport."""
         context: dict[str, Any] = {
@@ -316,6 +545,11 @@ class SkillRuntime:
             "rag_hits": list(rag_hits or []),
             "rag_mode": rag_mode or "",
         }
+        if context_seed:
+            for key, value in context_seed.items():
+                if key in {"raw_message", "work_hint"} and context.get(key):
+                    continue
+                context[key] = value
         # If enrichment looks like JSON dossier, parse into llm_dossier
         if not context["llm_dossier"] and llm_enrichment:
             parsed = parse_llm_dossier_json(str(llm_enrichment))
@@ -329,6 +563,8 @@ class SkillRuntime:
             "listening.width",
             "listening.depth",
             "listening.compose",
+            "listening.external_review",
+            "listening.revise",
             "listening.eval",
         ]
         steps: list[SkillStepResult] = []
@@ -341,6 +577,11 @@ class SkillRuntime:
             steps.append(result)
             versions[result.skill_id] = result.skill_version
             yield result
+            review_step = self._review_milestone_step(trigger, context)
+            if review_step is not None:
+                steps.append(review_step)
+                versions[review_step.skill_id] = review_step.skill_version
+                yield review_step
 
         # If compose was skipped, ensure minimal guide exists for eval/UI
         if not context.get("guide_html") and context.get("work_title"):
@@ -379,6 +620,7 @@ class SkillRuntime:
         rag_hits: list[str] | None = None,
         rag_mode: str | None = None,
         disabled_skill_ids: set[str] | None = None,
+        context_seed: dict[str, Any] | None = None,
     ) -> SkillRunReport:
         report: SkillRunReport | None = None
         for item in self.iter_listening_chain(
@@ -390,12 +632,12 @@ class SkillRuntime:
             rag_hits=rag_hits,
             rag_mode=rag_mode,
             disabled_skill_ids=disabled_skill_ids,
+            context_seed=context_seed,
         ):
             if isinstance(item, SkillRunReport):
                 report = item
         assert report is not None
         return report
-
     def _thinking_from_skill(self, skill: SkillManifest) -> str:
         body = skill_body(skill)
         # Prefer first procedure-ish lines
@@ -425,13 +667,18 @@ class SkillRuntime:
                 return f"Synthesized via {outputs.get('synthesize_source')}"
             return "Corpus already rich — synthesize pass-through"
         if trigger == "listening.width":
-            points = outputs.get("width_points") or []
-            return "; ".join(points[:2]) if points else "Width dossier ready"
+            points = point_texts(outputs.get("width_points") or [], limit=2)
+            return "; ".join(points) if points else "Width dossier ready"
         if trigger == "listening.depth":
-            points = outputs.get("depth_points") or []
-            return "; ".join(points[:2]) if points else "Depth dossier ready"
+            points = point_texts(outputs.get("depth_points") or [], limit=2)
+            return "; ".join(points) if points else "Depth dossier ready"
         if trigger == "listening.compose":
             return str(outputs.get("summary") or "Guide composed")[:280]
+        if trigger == "listening.external_review":
+            report = outputs.get("external_review_report") or {}
+            return str(report.get("summary") or "External review ready")[:280]
+        if trigger == "listening.revise":
+            return str(outputs.get("summary") or "Guide revised after review")[:280]
         if trigger == "listening.eval":
             return f"score={outputs.get('eval_score')} pass={outputs.get('pass')} — {outputs.get('eval_notes')}"
         if trigger == "listening.route":
@@ -453,6 +700,10 @@ class SkillRuntime:
             return self._run_depth(context)
         if trigger == "listening.compose":
             return self._run_compose(context)
+        if trigger == "listening.external_review":
+            return self._run_external_review(context)
+        if trigger == "listening.revise":
+            return self._run_revise(context)
         if trigger == "listening.eval":
             return self._run_eval(context)
         return {"note": f"No deterministic executor for {trigger}; skill loaded only"}
@@ -460,8 +711,8 @@ class SkillRuntime:
     def _run_route(self, context: dict[str, Any]) -> dict[str, Any]:
         return {
             "plan": (
-                "intake → corpus → synthesize → width → depth → compose → eval "
-                "(Salon Codex atelier — curated or compounded)"
+            "intake → corpus → synthesize → width → depth → compose → "
+            "external_review → revise → eval (Salon Codex + networked review round)"
             )
         }
 
@@ -474,35 +725,51 @@ class SkillRuntime:
         text = f"{hint} {message}".strip()
         lowered = text.lower()
 
-        # Catalog-driven identity (SPEC-008) — no per-work elif trees.
-        identity = resolve_identity(message, work_hint=hint)
-        out = identity.to_context()
+        from aulos_skills.work_resolver import resolve_listening_work
 
-        if identity.status == "work" and identity.work_title:
+        kb = dict(context.get("kb_dossier") or {})
+        resolved = resolve_listening_work(
+            raw_message=message, work_hint=hint, kb_dossier=kb
+        )
+        identity = resolved.identity or resolve_identity(message, work_hint=hint)
+        out = identity.to_context()
+        # Overlay resolver fields (cleaned title + Catalog lock even on Discogs)
+        for k, v in resolved.to_intake_fields().items():
+            if v not in (None, "", [], {}):
+                out[k] = v
+
+        work_title = str(out.get("work_title") or "")
+        composer = str(out.get("composer") or out.get("composer_guess") or "")
+
+        if identity.status == "work" and identity.work_title and not work_title:
             work_title = identity.work_title
-            composer = identity.composer_name
-        else:
+            composer = identity.composer_name or composer
+        elif resolved.status != "work" or not work_title:
             cat = load_catalog()
             guessed = guess_composer_and_title(text, catalog_composers=cat.composers)
-            work_title = guessed["work_title"] or "Unspecified classical work"
-            composer = identity.composer_name or guessed["composer"]
+            if not work_title:
+                work_title = guessed["work_title"] or "Unspecified classical work"
+            if not composer:
+                composer = identity.composer_name or guessed["composer"]
             if guessed.get("composer_id") and not out.get("composer_id"):
                 out["composer_id"] = guessed["composer_id"]
-            # Prefer catalog work_title when soft-guess only got composer_only
-            if identity.status == "composer_only" and not guessed["work_title"]:
+            if identity.status == "composer_only" and not guessed["work_title"] and not work_title:
                 work_title = f"{composer} — unspecified work" if composer else work_title
 
-        # Prefer Discogs / KB seed title+composer when Catalog did not lock a work.
-        kb = dict(context.get("kb_dossier") or {})
+        # Discogs seed may still supply composer/title facts, but never wipe Catalog lock.
         prov = dict(kb.get("_provenance") or {})
-        if prov.get("source") == "discogs" or (kb.get("_provenance") or {}).get("discogs"):
-            if kb.get("composer"):
+        if prov.get("source") == "discogs" or prov.get("discogs"):
+            if kb.get("composer") and not composer:
                 composer = str(kb["composer"])
-            if kb.get("work_title"):
-                work_title = str(kb["work_title"])
-            # Discogs path is not a Catalog work — clear wrong family hints.
-            if identity.status != "work":
-                out["family_hints"] = []
+            if kb.get("work_title") and resolved.status != "work":
+                from aulos_skills.prose_hygiene import clean_packaging_work_title
+
+                work_title = clean_packaging_work_title(
+                    str(kb["work_title"]), composer=composer
+                )
+            # Only clear wrong family/corpus when Catalog did NOT lock a work
+            if resolved.status != "work" and identity.status != "work":
+                out["family_hints"] = list(out.get("family_hints") or [])
                 out["corpus_keys"] = []
                 out["work_id"] = None
                 out["ambient_ref"] = None
@@ -513,6 +780,17 @@ class SkillRuntime:
         elif any(w in lowered for w in ("perform", "practice", "rehearse")) or "练习" in text:
             goal = "performance_prep"
 
+        # composer_only / multi_work: keep Catalog-shaped "Composer — Work" so
+        # identity stays readable when no single work_id exists (SPEC-032).
+        if (
+            identity.status in {"composer_only", "multi_work", "ambiguous"}
+            and composer
+            and work_title
+            and "—" not in work_title
+            and composer.split()[-1].lower() not in work_title.lower()
+        ):
+            work_title = f"{composer} — {work_title}"
+
         out.update(
             {
                 "work_title": work_title,
@@ -521,9 +799,30 @@ class SkillRuntime:
                 "listener_goal": goal,
                 "experience_level": "curious_listener",
                 "corpus_keys": list(out.get("corpus_keys") or identity.corpus_keys),
-                "family_hints": list(out.get("family_hints") or ([] if not identity.family_id else [identity.family_id])),
+                "family_hints": list(
+                    out.get("family_hints")
+                    or ([] if not identity.family_id else [identity.family_id])
+                ),
             }
         )
+        # Class gate aliens even when Catalog work_id is missing (form policy + catalog nos.)
+        from aulos_skills.identity_lock import build_identity_lock
+
+        lock = build_identity_lock(
+            work_title=work_title,
+            work_hint=hint,
+            raw_message=message,
+        )
+        if lock.alien_markers:
+            merged_markers = list(out.get("conflict_markers") or [])
+            for m in lock.alien_markers:
+                if m not in merged_markers:
+                    merged_markers.append(m)
+            out["conflict_markers"] = merged_markers
+        if lock.catalog_numbers:
+            out["identity_lock_numbers"] = sorted(lock.catalog_numbers)
+        if lock.form_families:
+            out["identity_lock_forms"] = sorted(lock.form_families)
         return out
 
     def _synthesize_assets_dir(self, skill: SkillManifest) -> Path:
@@ -536,14 +835,24 @@ class SkillRuntime:
         return yaml.safe_load(path.read_text(encoding="utf-8")) or {}
 
     def _match_composer_card(self, skill: SkillManifest, text: str, composer_guess: str) -> dict[str, Any]:
+        from aulos_skills.text_match import alias_in_text, composers_compatible
+
         index = self._load_synthesize_index(skill)
         blob = f"{composer_guess} {text}".lower()
+        guess = (composer_guess or "").strip()
         for entry in index.get("composers") or []:
-            aliases = [str(a).lower() for a in (entry.get("aliases") or [])]
-            if any(a and a in blob for a in aliases):
-                path = self._synthesize_assets_dir(skill) / "composers" / str(entry.get("path") or "")
-                if path.is_file():
-                    return yaml.safe_load(path.read_text(encoding="utf-8")) or {}
+            aliases = [str(a).lower() for a in (entry.get("aliases") or []) if a]
+            if not any(alias_in_text(a, blob) for a in aliases):
+                continue
+            path = self._synthesize_assets_dir(skill) / "composers" / str(entry.get("path") or "")
+            if not path.is_file():
+                continue
+            card = yaml.safe_load(path.read_text(encoding="utf-8")) or {}
+            card_name = str(card.get("composer") or entry.get("id") or "")
+            # When intake already named a composer, refuse a mismatched card (SPEC-032).
+            if guess and card_name and not composers_compatible(guess, card_name):
+                continue
+            return card
         return {}
 
     def _match_family(
@@ -612,6 +921,18 @@ class SkillRuntime:
         text = f"{context.get('work_title', '')} {context.get('raw_message', '')}"
         composer_guess = str(context.get("composer_guess") or existing.get("composer") or "")
         family_hints = list(context.get("family_hints") or [])
+        # SPEC-027: Catalog family_id wins as explicit hint before fuzzy match
+        work_id_early = str(context.get("work_id") or "")
+        if work_id_early:
+            try:
+                from aulos_skills.family_packs import catalog_family_id
+
+                fid_cat = catalog_family_id(work_id_early)
+                if fid_cat and fid_cat not in family_hints:
+                    family_hints = [fid_cat, *family_hints]
+                    context["family_hints"] = list(family_hints)
+            except Exception:  # noqa: BLE001
+                pass
         card = self._match_composer_card(skill, text, composer_guess)
         refuse_families = bool(context.get("refuse_families"))
         refuse_ids = {str(x) for x in (context.get("refuse_family_ids") or []) if x}
@@ -622,11 +943,22 @@ class SkillRuntime:
             if fid and fid in refuse_ids:
                 family = {}
         context["_last_matched_family"] = dict(family) if family else {}
-        composer_name = (
-            str(card.get("composer") or "")
-            or composer_guess
-            or str(existing.get("composer") or "")
-        )
+        # SPEC-032: IntentLock composer is write-once truth over composer-card names.
+        locked = dict(context.get("intent_lock") or {})
+        locked_composer = str(locked.get("composer") or "").strip()
+        card_composer = str(card.get("composer") or "").strip()
+        if locked_composer:
+            from aulos_skills.text_match import composers_compatible
+
+            composer_name = locked_composer
+            if card_composer and not composers_compatible(locked_composer, card_composer):
+                card = {}
+        else:
+            composer_name = (
+                card_composer
+                or composer_guess
+                or str(existing.get("composer") or "")
+            )
         work_title = str(context.get("work_title") or existing.get("work_title") or "")
 
         layers: list[dict[str, Any]] = []
@@ -648,6 +980,26 @@ class SkillRuntime:
             # Wrong-title / wrong-id KB must never thicken a resolved shelf.
             if id_mismatch or key_mismatch or title_mismatch:
                 kb_dossier = {}
+        # Guide #48: refuse KB layer whose dossier_id is a foreign family pack
+        # (instruments miss locked title) even when titles were force-aligned.
+        if kb_dossier:
+            from aulos_skills.identity_hygiene import foreign_family_id
+
+            title_blob = f"{work_title} {composer_name} {context.get('raw_message') or ''}"
+            fid = foreign_family_id(kb_dossier, title_blob, composer=composer_name)
+            if fid:
+                kb_dossier = {}
+            else:
+                from aulos_skills.identity_hygiene import portrait_betrays_composer
+
+                if portrait_betrays_composer(
+                    kb_dossier.get("composer_portrait")
+                    if isinstance(kb_dossier.get("composer_portrait"), dict)
+                    else {},
+                    composer_name,
+                ):
+                    kb_dossier = dict(kb_dossier)
+                    kb_dossier["composer_portrait"] = {}
         if kb_dossier:
             layers.append(kb_dossier)
             sources.append("kb-rag")
@@ -657,6 +1009,38 @@ class SkillRuntime:
         if card:
             layers.append(composer_to_dossier(card))
             sources.append("composer-card")
+        # SPEC-026: Catalog-bound craft floor (any work_id; craft YAML still wins later)
+        work_id = str(context.get("work_id") or "")
+        if work_id:
+            try:
+                from aulos_skills.catalog_craft_floor import build_catalog_craft_floor
+
+                floor = build_catalog_craft_floor(
+                    work_id,
+                    family=family if family else None,
+                    composer_name=composer_name,
+                    work_title=work_title,
+                )
+                if floor:
+                    layers.append(floor)
+                    sources.append(f"catalog-floor:{work_id}")
+            except Exception:  # noqa: BLE001
+                pass
+        # SPEC-025: work craft pack after catalog floor (later layers win scalars)
+        if work_id:
+            try:
+                from aulos_skills.craft_packs import craft_pack_to_dossier, load_craft_pack
+
+                craft_pack = load_craft_pack(work_id)
+                if craft_pack:
+                    layers.append(
+                        craft_pack_to_dossier(
+                            craft_pack, composer=composer_name, work_title=work_title
+                        )
+                    )
+                    sources.append(f"craft:{work_id}")
+            except Exception:  # noqa: BLE001
+                pass
         if existing:
             layers.append(existing)
             sources.append("corpus")
@@ -676,17 +1060,102 @@ class SkillRuntime:
                 llm_dossier["work_title"] = work_title
                 if composer_name:
                     llm_dossier["composer"] = composer_name
-            layers.append(llm_dossier)
-            sources.append("llm")
+            from aulos_skills.identity_lock import dossier_betrays_identity_lock
+
+            if dossier_betrays_identity_lock(
+                llm_dossier,
+                work_title=work_title,
+                work_hint=str(context.get("work_hint") or ""),
+                raw_message=str(context.get("raw_message") or ""),
+            ):
+                # Class gate: drop sibling-swap LLM layer (concerto→Requiem etc.)
+                llm_dossier = {}
+            if llm_dossier:
+                layers.append(llm_dossier)
+                sources.append("llm")
+            # Re-assert craft scalars over LLM when craft pack exists (work shelf > model)
+            if work_id:
+                try:
+                    from aulos_skills.craft_packs import craft_pack_to_dossier, load_craft_pack
+
+                    craft_pack = load_craft_pack(work_id)
+                    if craft_pack:
+                        layers.append(
+                            craft_pack_to_dossier(
+                                craft_pack, composer=composer_name, work_title=work_title
+                            )
+                        )
+                        if f"craft:{work_id}" not in sources:
+                            sources.append(f"craft:{work_id}")
+                except Exception:  # noqa: BLE001
+                    pass
+
+        corrections = [str(c) for c in (context.get("critique_corrections") or []) if c]
+        refuse_topics = [str(t) for t in (context.get("refuse_topics") or []) if t]
+
+        # SPEC-029: Unknown-Case Thicken — archetype floor when no family/catalog/craft
+        used_family = bool(family)
+        used_catalog_craft = any(
+            s.startswith("catalog-floor:") or s.startswith("craft:") for s in sources
+        )
+        facet_clf: dict[str, Any] = {}
+        archetype_used = False
+        if not used_family and not used_catalog_craft:
+            try:
+                from aulos_skills.facet_classifier import classify_facets
+                from aulos_skills.unknown_case_thicken import build_archetype_floor
+
+                facet_clf = classify_facets(
+                    work_title=work_title,
+                    composer=composer_name,
+                    raw_message=str(context.get("raw_message") or ""),
+                    facets=dict(context.get("facets") or {}) or None,
+                )
+                if float(facet_clf.get("confidence") or 0.0) >= 0.4:
+                    arch_floor = build_archetype_floor(
+                        work_title,
+                        composer_name,
+                        classification=facet_clf,
+                    )
+                    if arch_floor:
+                        layers.append(arch_floor)
+                        arch_id = str(facet_clf.get("archetype_id") or "chamber-generic")
+                        sources.append(f"archetype:{arch_id}")
+                        prov = arch_floor.get("_provenance") or {}
+                        if isinstance(prov, dict) and prov.get("dimension_template"):
+                            dim = str(prov.get("dimension_id") or "")
+                            if dim:
+                                sources.append(f"dimension:{dim}")
+                        archetype_used = True
+                        context["facet_classification"] = facet_clf
+            except Exception:  # noqa: BLE001
+                facet_clf = {}
+                archetype_used = False
 
         if not layers:
             # last-resort thin scaffold still better than raw sentence title
             thin = empty_dossier()
             thin["work_title"] = work_title or "Classical work"
             thin["composer"] = composer_name
-            thin["listening_thesis"] = (
-                f"Listen for large-scale form and recurring motives in {thin['work_title']}."
+            thesis = (
+                f"Listen for recurring motives and form landmarks in {thin['work_title']}."
             )
+            from aulos_skills.prose_hygiene import infer_form_label
+
+            thin["form"] = infer_form_label(
+                work_title=str(thin.get("work_title") or ""),
+                form=str(thin.get("form") or ""),
+                facets=dict(context.get("facets") or {}),
+            )
+            if "miniature" in thin["form"].lower() or "songs without words" in thin["form"].lower():
+                thesis = (
+                    f"Hear {thin['work_title']} as a lyric piano room — "
+                    "lock the singing line and left-hand gait before chasing drama."
+                )
+            # Keep critique as caveats — never inject process locks into product thesis.
+            if corrections:
+                thin["myths_and_caveats"] = list(corrections[:4])
+            thin["listening_thesis"] = thesis
             thin["width_points"] = [
                 f"Frame {thin['work_title']} in biography, publication, and reception.",
                 "Separate legends from documented fact.",
@@ -708,10 +1177,55 @@ class SkillRuntime:
             thin["myths_and_caveats"] = [
                 "Cold path without family pack — verify anecdotes before stating as fact."
             ]
+            if refuse_topics:
+                thin["myths_and_caveats"].append(
+                    "Do not treat as work body: " + ", ".join(refuse_topics[:6])
+                )
             layers.append(thin)
             sources.append("generic-scaffold")
 
         merged = merge_dossiers(*layers)
+        # Identity hygiene before lock overwrite — clear betraying portrait / foreign family id
+        from aulos_skills.identity_hygiene import apply_identity_hygiene
+
+        merged, hygiene = apply_identity_hygiene(
+            merged,
+            composer=composer_name,
+            work_title=work_title,
+            raw_message=str(context.get("raw_message") or ""),
+        )
+        if hygiene.markers:
+            markers = list(context.get("conflict_markers") or [])
+            for m in hygiene.markers:
+                if m and m not in markers:
+                    markers.append(m)
+            context["conflict_markers"] = markers
+            if any(f.code == "foreign_family_dossier" for f in hygiene.findings):
+                context["refuse_families"] = True
+                refused = list(context.get("refuse_family_ids") or [])
+                for f in hygiene.findings:
+                    if f.code != "foreign_family_dossier":
+                        continue
+                    for m in f.markers:
+                        if str(m).startswith("family:"):
+                            fid = str(m).split(":", 1)[1]
+                            if fid and fid not in refused:
+                                refused.append(fid)
+                context["refuse_family_ids"] = refused
+            # Drop polluted list chambers immediately (don't wait for review rework)
+            merged = self._scrub_foreign_chambers(
+                merged,
+                work_title=work_title,
+                conflict_markers=list(context.get("conflict_markers") or []),
+                force_ambient_scrub=True,
+            )
+        # Rework path: park Intent Critic corrections in caveats — never product thesis.
+        if corrections:
+            caveats = list(merged.get("myths_and_caveats") or [])
+            for c in corrections[:4]:
+                if c not in caveats:
+                    caveats.insert(0, c)
+            merged["myths_and_caveats"] = caveats
         # Intake identity wins unless curated corpus already locked the work.
         if work_title and not context.get("corpus_hit"):
             merged["work_title"] = work_title
@@ -723,11 +1237,27 @@ class SkillRuntime:
             merged["composer"] = composer_name
         if not merged.get("listening_thesis") and merged.get("work_introduction"):
             merged["listening_thesis"] = str(merged["work_introduction"]).split(".")[0][:240]
-        rag_hits = list(context.get("rag_hits") or [])
+        from aulos_skills.prose_hygiene import (
+            clean_packaging_work_title,
+            looks_like_packaging_dump,
+            partition_dossier_languages,
+        )
+
+        merged["work_title"] = clean_packaging_work_title(
+            str(merged.get("work_title") or work_title or ""),
+            composer=str(merged.get("composer") or composer_name or ""),
+        )
+        merged = partition_dossier_languages(merged)
+        rag_hits = [
+            point_text(h)
+            for h in list(context.get("rag_hits") or [])
+            if point_text(h) and not looks_like_packaging_dump(point_text(h))
+        ]
         if rag_hits and len(merged.get("width_points") or []) < 4:
             extra = [f"From prior research cache: {h[:220]}" for h in rag_hits[:2]]
+            extra = [e for e in extra if not looks_like_packaging_dump(e)]
             merged["width_points"] = list(merged.get("width_points") or []) + extra
-            if "kb-rag" not in sources:
+            if extra and "kb-rag" not in sources:
                 sources.append("kb-rag-hits")
 
         # Family is a FORM scaffold floor only — never a composer branch and never
@@ -780,6 +1310,31 @@ class SkillRuntime:
                         zh_merged[key] = zh_fam[key]
                 merged["zh"] = zh_merged
 
+        from aulos_skills.chamber_contracts import ensure_chamber_floor
+        from aulos_skills.knowledge_thicken import (
+            knowledge_dossier_to_chambers,
+            merge_knowledge_thicken,
+        )
+
+        # SPEC-025 knowledge-plane composer thicken (portrait / profile / genesis)
+        kn_raw = (
+            context.get("_knowledge_composer")
+            or (context.get("kb_dossier") or {}).get("_knowledge_composer")
+        )
+        if isinstance(kn_raw, dict) and kn_raw:
+            kn_patch = knowledge_dossier_to_chambers(kn_raw)
+            merged = merge_knowledge_thicken(merged, kn_patch)
+            if kn_patch and "knowledge-plane" not in sources:
+                sources.append("knowledge-plane")
+        elif isinstance((context.get("kb_dossier") or {}).get("_knowledge_thicken"), dict):
+            merged = merge_knowledge_thicken(
+                merged, dict((context.get("kb_dossier") or {}).get("_knowledge_thicken") or {})
+            )
+            if "knowledge-plane" not in sources:
+                sources.append("knowledge-plane")
+
+        merged = ensure_chamber_floor(merged, family if family else None)
+
         merged = self._scrub_foreign_chambers(
             merged,
             work_title=str(merged.get("work_title") or work_title),
@@ -793,7 +1348,7 @@ class SkillRuntime:
             force_ambient_scrub=bool(context.get("decontam_rework") or context.get("refuse_families")),
         )
 
-        return {
+        out: dict[str, Any] = {
             "synthesize_hit": True,
             "synthesize_source": "+".join(sources),
             "corpus_dossier": merged,
@@ -803,6 +1358,28 @@ class SkillRuntime:
             "work_id": context.get("work_id"),
             "conflict_markers": list(context.get("conflict_markers") or []),
         }
+        # SPEC-029/032: promote dry-run when unknown archetype path meets chamber floors
+        if archetype_used:
+            try:
+                from aulos_skills.promote_candidate import build_promote_candidate
+
+                lock_now = dict(context.get("intent_lock") or {})
+                allow_promote = not (
+                    context.get("review_failed") or context.get("decontam_failed")
+                )
+                cand = build_promote_candidate(
+                    work_title=str(merged.get("work_title") or work_title),
+                    composer=str(merged.get("composer") or composer_name),
+                    classification=facet_clf,
+                    dossier=merged,
+                    locked_composer=str(lock_now.get("composer") or "") or None,
+                    allow=allow_promote,
+                )
+                if cand:
+                    out["promote_candidate"] = cand
+            except Exception:  # noqa: BLE001
+                pass
+        return out
 
     @staticmethod
     def _scrub_foreign_chambers(
@@ -848,10 +1425,38 @@ class SkillRuntime:
             if out.get(key):
                 out[key] = cleanse(list(out.get(key) or []))
 
+        # historical_stature.reasons is a prime pollution sink (Goldberg + cello + target)
+        stature = dict(out.get("historical_stature") or {}) if isinstance(out.get("historical_stature"), dict) else {}
+        if stature.get("reasons"):
+            stature["reasons"] = cleanse(list(stature.get("reasons") or []))
+            if isinstance(stature.get("reception_arc"), str) and polluted(
+                str(stature.get("reception_arc") or "").lower()
+            ):
+                stature["reception_arc"] = ""
+            out["historical_stature"] = stature
+
+        # Portrait betrayal / wrong-composer URL
+        portrait = dict(out.get("composer_portrait") or {}) if isinstance(out.get("composer_portrait"), dict) else {}
+        if portrait:
+            from aulos_skills.identity_hygiene import portrait_betrays_composer
+
+            composer_guess = str(out.get("composer") or "")
+            if portrait_betrays_composer(portrait, composer_guess) or polluted(
+                json.dumps(portrait, ensure_ascii=False).lower()
+            ):
+                out["composer_portrait"] = {}
+
         for key in ("listening_thesis", "work_introduction", "form", "catalog", "era"):
             val = out.get(key)
             if isinstance(val, str) and polluted(val.lower()):
-                out[key] = ""
+                # SPEC-028: craft / catalog-floor prose may name conflict works to refuse them
+                dossier_id = str(out.get("dossier_id") or "")
+                prov = out.get("_provenance") if isinstance(out.get("_provenance"), dict) else {}
+                protected = dossier_id.startswith(("craft:", "catalog-floor:")) or bool(
+                    prov.get("craft_pack") or prov.get("catalog_craft_floor")
+                )
+                if not protected:
+                    out[key] = ""
 
         amb = dict(out.get("ambient_audio") or {})
         peerish = False
@@ -881,8 +1486,11 @@ class SkillRuntime:
                 else:
                     out["ambient_audio"] = {}
 
-        zh = coerce_dict(out.get("zh") or out.get("zh_hans"))
-        if zh:
+        zh_keys = ("zh", "zh_hans", "zh_hant")
+        for zkey in zh_keys:
+            zh = coerce_dict(out.get(zkey))
+            if not zh:
+                continue
             for key in (
                 "depth_points",
                 "width_points",
@@ -913,7 +1521,7 @@ class SkillRuntime:
             if zh_amb and polluted(json.dumps(zh_amb, ensure_ascii=False).lower()):
                 if force_ambient_scrub or not peerish:
                     zh["ambient_audio"] = {}
-            out["zh"] = zh
+            out[zkey] = zh
         return out
 
     @staticmethod
@@ -1164,7 +1772,38 @@ class SkillRuntime:
             reasons = []
         enrichment = str(context.get("llm_enrichment") or "").strip()
         if enrichment:
-            points = [*points, f"Live enrichment note: {enrichment[:400]}"]
+            # Prefer structured JSON into chambers; never paste raw JSON into width bullets.
+            parsed: dict[str, Any] | None = None
+            try:
+                raw_e = enrichment
+                if raw_e.startswith("```"):
+                    raw_e = re.sub(r"^```(?:json)?\s*", "", raw_e)
+                    raw_e = re.sub(r"\s*```$", "", raw_e)
+                blob = json.loads(raw_e)
+                if isinstance(blob, dict):
+                    parsed = blob
+            except Exception:  # noqa: BLE001
+                parsed = None
+            if parsed:
+                for key in ("listening_thesis", "work_introduction", "era", "form", "catalog"):
+                    if parsed.get(key) and not corpus.get(key):
+                        corpus[key] = parsed[key]
+                if isinstance(parsed.get("width_points"), list) and parsed["width_points"]:
+                    points = list(points) + [str(x) for x in parsed["width_points"][:4] if x]
+                if isinstance(parsed.get("myths_and_caveats"), list) and parsed["myths_and_caveats"]:
+                    myths = list(myths) + [str(x) for x in parsed["myths_and_caveats"][:3] if x]
+                if isinstance(parsed.get("related_works"), list) and parsed["related_works"]:
+                    related = self._normalize_related(list(related) + list(parsed["related_works"][:3]))
+                if isinstance(parsed.get("composer_portrait"), dict) and parsed["composer_portrait"]:
+                    portrait = parsed["composer_portrait"]
+                if isinstance(parsed.get("genesis"), dict) and parsed["genesis"]:
+                    genesis = parsed["genesis"]
+            elif not enrichment.lstrip().startswith("{"):
+                from aulos_skills.prose_hygiene import looks_like_packaging_dump
+
+                note = enrichment[:220].strip()
+                if note and not looks_like_packaging_dump(note):
+                    points = [*points, note]
         width_dossier = {
             "era": era,
             "width_points": points,
@@ -1203,8 +1842,8 @@ class SkillRuntime:
         else:
             title = context.get("work_title") or "the work"
             points = [
-                f"Identify large-scale form of “{title}” and the unit the ear should lock onto first.",
-                "List movement/section landmarks with tempo and character words.",
+                f"Identify the form unit of “{title}” and what the ear should lock onto first.",
+                "List section landmarks with tempo and character words.",
                 "Track motives, keys, and dramatic turning points with ear cues.",
             ]
             listening_map = [
@@ -1220,6 +1859,26 @@ class SkillRuntime:
             form = "Large-scale work — form clarified in deep research"
             deepdives = []
             sound_world = {}
+        from aulos_skills.prose_hygiene import infer_form_label
+
+        form = infer_form_label(
+            work_title=str(context.get("work_title") or corpus.get("work_title") or ""),
+            form=form,
+            facets=dict(context.get("facets") or {}),
+        )
+        # Miniature / cycle shelves: swap symphony-scale depth rhetoric
+        if "miniature" in form.lower() or "songs without words" in form.lower():
+            title = context.get("work_title") or corpus.get("work_title") or "the piece"
+            points = [
+                f"Treat “{title}” as a lyric room — lock the opening gait and singing line first.",
+                "Map ternary or episodic rooms: opening character → contrast → return.",
+                "Compare two pieces from the same set for shared lyric speech under different temperaments.",
+            ]
+            listening_map = [
+                {"label": "Opening song", "cue": "Memorize the singing line and left-hand gait before ornament."},
+                {"label": "Middle tint", "cue": "Mode shift, register lift, or episodic turn — still one lyric room."},
+                {"label": "Return / close", "cue": "Does the opening song return intact, deepened, or ironized?"},
+            ]
         return {
             "depth_dossier": {
                 "form": form,
@@ -1264,7 +1923,14 @@ class SkillRuntime:
         width = dict(context.get("width_dossier") or {})
         depth = dict(context.get("depth_dossier") or {})
         dossier = dict(width.get("salon_dossier") or context.get("corpus_dossier") or {})
-        # Ensure compose-critical fields from width/depth are present on EN layer
+        # Park critique corrections in caveats only — never product thesis / H1 lede.
+        corrections = [str(c) for c in (context.get("critique_corrections") or []) if c]
+        if corrections:
+            caveats = list(dossier.get("myths_and_caveats") or [])
+            for c in corrections[:4]:
+                if c not in caveats:
+                    caveats.insert(0, c)
+            dossier["myths_and_caveats"] = caveats
         if width.get("listening_thesis"):
             dossier["listening_thesis"] = width["listening_thesis"]
         if width.get("work_introduction"):
@@ -1288,6 +1954,12 @@ class SkillRuntime:
         ):
             if width.get(key):
                 dossier[key] = width[key]
+        if corrections:
+            caveats = list(dossier.get("myths_and_caveats") or [])
+            for c in corrections[:4]:
+                if c not in caveats:
+                    caveats.insert(0, c)
+            dossier["myths_and_caveats"] = caveats
         if width.get("historical_reasons") or width.get("reception_arc"):
             stature = dict(dossier.get("historical_stature") or {})
             if width.get("historical_reasons"):
@@ -1301,10 +1973,39 @@ class SkillRuntime:
         if width.get("zh"):
             dossier["zh"] = width["zh"]
 
+        from aulos_skills.prose_hygiene import (
+            clean_packaging_work_title,
+            infer_form_label,
+            partition_dossier_languages,
+        )
+
+        work_title = clean_packaging_work_title(work_title, composer=composer)
+        context["work_title"] = work_title
+        dossier["work_title"] = work_title
+        dossier["composer"] = composer
+        dossier["form"] = infer_form_label(
+            work_title=work_title,
+            form=str(dossier.get("form") or depth.get("form") or ""),
+            facets=dict(context.get("facets") or {}),
+        )
+        dossier = partition_dossier_languages(dossier)
+        # SPEC-025: craft-pack theses win over LLM poetic ZH/EN drift
+        from aulos_skills.craft_packs import reassert_craft_leads
+
+        dossier = reassert_craft_leads(dossier, str(context.get("work_id") or "") or None)
+        context["corpus_dossier"] = dossier
+        # If EN thesis emptied after CJK move, seed a short English lede from title
+        if not str(dossier.get("listening_thesis") or "").strip():
+            dossier["listening_thesis"] = (
+                f"A listening path into {work_title}"
+                + (f" by {composer}." if composer else ".")
+            )
+
         dossier.setdefault("work_title", work_title)
         dossier.setdefault("composer", composer)
 
         corpus_dir = self._corpus_assets_dir_for_key("")
+        prefer_zh_early = re_has_cjk(str(context.get("raw_message") or ""))
         ambient = select_ambient(
             work_title=work_title,
             composer=composer,
@@ -1316,6 +2017,11 @@ class SkillRuntime:
             conflict_markers=list(context.get("conflict_markers") or []),
             existing=dict(dossier.get("ambient_audio") or {}),
             corpus_dir=corpus_dir,
+            fallback_mode=str(context.get("ambient_fallback_mode") or "embed"),
+            appreciation_videos=list(dossier.get("appreciation_videos") or []),
+            interpretations=list(dossier.get("interpretations") or []),
+            prefer_zh=prefer_zh_early,
+            allow_video_search=bool(context.get("ambient_allow_video_search", True)),
         )
         if ambient:
             dossier["ambient_audio"] = ambient
@@ -1389,17 +2095,107 @@ class SkillRuntime:
             summary_zh=thesis_zh,
             default_lang=html_default,
         )
+        from aulos_skills.external_review import snapshot_draft
+
+        rounds = dict(context.get("generation_rounds") or {})
+        if not rounds.get("draft_v1"):
+            context["guide_html"] = html
+            context["summary"] = summary
+            snapshot_draft(context, which="draft_v1", guide_html=html, summary=summary)
         return {
             "guide_html": html,
             "summary": summary,
             "composer": composer,
             "work_title": work_title,
+            "generation_rounds": dict(context.get("generation_rounds") or {}),
         }
+
+    def _run_external_review(self, context: dict[str, Any]) -> dict[str, Any]:
+        from aulos_skills.external_review import build_external_review_report, snapshot_draft
+        from aulos_skills.revise_repair import rescore_draft_v1_with_report
+        from aulos_skills.review_targets import intents_from_expert_report
+        from aulos_skills.targeted_revise import ROUNDS_SCHEMA_V2, _append_history, _score_snapshot, _utcnow_iso
+
+        html = str(context.get("guide_html") or "")
+        if html and not (context.get("generation_rounds") or {}).get("draft_v1"):
+            snapshot_draft(
+                context,
+                which="draft_v1",
+                guide_html=html,
+                summary=str(context.get("summary") or ""),
+            )
+        llm_complete = context.get("llm_external_review_complete")
+        if not callable(llm_complete):
+            llm_complete = context.get("llm_critic_complete")
+        if not callable(llm_complete):
+            llm_complete = None
+        report = build_external_review_report(context, llm_complete=llm_complete)
+        corrections = list(context.get("critique_corrections") or [])
+        for c in report.get("required_corrections") or []:
+            if c and str(c) not in corrections:
+                corrections.append(str(c))
+        context["critique_corrections"] = corrections[:16]
+        context["external_review_report"] = report
+        rounds = dict(context.get("generation_rounds") or {})
+        rounds["review_report"] = report
+        rounds["schema"] = ROUNDS_SCHEMA_V2
+        context["generation_rounds"] = rounds
+        # Re-score draft_v1 with hard-flaw penalties from the expert report
+        rescore_draft_v1_with_report(context, report)
+        score = _score_snapshot(html or str((rounds.get("draft_v1") or {}).get("guide_html") or ""), context)
+        intents = intents_from_expert_report(report)
+        _append_history(
+            context,
+            {
+                "id": f"rev-review-{_utcnow_iso()}",
+                "at": _utcnow_iso(),
+                "source": "expert",
+                "summary": str(report.get("summary") or report.get("verdict") or "expert review")[:200],
+                "targets": sorted({t for i in intents for t in (i.get("targets") or [])}),
+                "scope": "review",
+                "score_before": {"pct": score["pct"], "hard_flaws": score["hard_flaws"]},
+                "score_after": {"pct": score["pct"], "hard_flaws": score["hard_flaws"]},
+                "diff_summary": [f"verdict={report.get('verdict')}", f"findings={len(report.get('findings') or [])}"],
+                "intent_ids": [str(i.get("id")) for i in intents],
+            },
+        )
+        if report.get("verdict") in {"FAIL", "REVISE"}:
+            context["external_review_needs_revise"] = True
+        return {
+            "external_review_report": report,
+            "critique_corrections": list(context.get("critique_corrections") or []),
+            "generation_rounds": dict(context.get("generation_rounds") or {}),
+            "review_intents": intents,
+        }
+
+    def _run_revise(self, context: dict[str, Any]) -> dict[str, Any]:
+        from aulos_skills.targeted_revise import run_targeted_revise
+
+        report = dict(context.get("external_review_report") or {})
+        corrections = list(context.get("critique_corrections") or [])
+        for c in report.get("required_corrections") or []:
+            if c and str(c) not in corrections:
+                corrections.append(str(c))
+        context["critique_corrections"] = corrections
+
+        llm_complete = context.get("llm_revise_complete")
+        if not callable(llm_complete):
+            llm_complete = context.get("llm_external_review_complete")
+        if not callable(llm_complete):
+            llm_complete = None
+
+        return run_targeted_revise(
+            context,
+            report=report,
+            human_notes=str(context.get("review_notes") or "") or None,
+            llm_complete=llm_complete,
+            allow_full_compose=self._run_compose,
+        )
 
     def _run_eval(self, context: dict[str, Any]) -> dict[str, Any]:
         html = str(context.get("guide_html") or "")
         html_l = html.lower()
-        depth_points = list((context.get("depth_dossier") or {}).get("depth_points") or [])
+        depth_points = point_texts((context.get("depth_dossier") or {}).get("depth_points") or [])
         listening_map = list((context.get("depth_dossier") or {}).get("listening_map") or [])
         score = 0
         notes: list[str] = []
@@ -1413,7 +2209,7 @@ class SkillRuntime:
             notes.append("Missing depth specificity")
         # ear-actionability
         earish = sum(1 for p in depth_points if any(w in p.lower() for w in ("listen", "hear", "notice", "track", "lock")))
-        earish += sum(1 for m in listening_map if "cue" in m)
+        earish += sum(1 for m in listening_map if isinstance(m, dict) and "cue" in m)
         if earish >= 3 and listening_map:
             score += 2
         elif earish or listening_map:
@@ -1460,17 +2256,17 @@ class SkillRuntime:
         )
         # Full atelier coverage when identity/family/corpus resolved (product bar vs thin cold path)
         atelier_pairs = (
-            ("id='composer-", "作曲家"),
-            ("id='genesis-", "创作背景与时代"),
-            ("id='stature-", "何以传世"),
-            ("id='sound-", "声响世界"),
-            ("id='interpretations-", "名家演绎"),
-            ("id='media-", "聆听室"),
+            ("id='composer-", 'id="composer-', "作曲家"),
+            ("id='genesis-", 'id="genesis-', "创作背景与时代"),
+            ("id='stature-", 'id="stature-', "何以传世"),
+            ("id='sound-", 'id="sound-', "声响世界"),
+            ("id='interpretations-", 'id="interpretations-', "名家演绎"),
+            ("id='media-", 'id="media-', "聆听室"),
         )
         atelier_hits = 0
         missing_atelier: list[str] = []
-        for en_id, zh_label in atelier_pairs:
-            present = en_id in html_l or zh_label in html
+        for en_sq, en_dq, zh_label in atelier_pairs:
+            present = en_sq in html_l or en_dq in html_l or zh_label in html
             if present:
                 atelier_hits += 1
             else:
@@ -1492,7 +2288,7 @@ class SkillRuntime:
         if has_ambient:
             structure_hits += 1
         else:
-            notes.append("Missing ambient listening player")
+            notes.append("Missing ambient listening player (soft — no work-matched audio/video)")
         score += 2 if structure_hits >= 4 else (1 if structure_hits >= 2 else 0)
         if structure_hits < 4:
             notes.append("Expand Salon Codex chambers")
@@ -1500,360 +2296,95 @@ class SkillRuntime:
             notes.append("Add Chinese/English bilingual panes")
         # craft
         score += 2 if "<!DOCTYPE html>" in html and ("Fraunces" in html or "Noto Serif SC" in html) else (1 if html else 0)
-        if not has_ambient:
-            score = min(score, 7)
-            passed = False
-        elif rich_identity and atelier_hits < 4:
+        if rich_identity and atelier_hits < 4:
             # Identity-resolved guides must ship the full atelier shelf (Goldberg parity bar)
             score = min(score, 7)
             passed = False
         else:
             passed = score >= 8
+        # Ambient absence is soft (SPEC-006): do not alone force fail.
         if context.get("decontam_failed"):
             notes.append("Decontam gate failed — foreign chambers remain")
             score = min(score, 7)
             passed = False
-        return {
+        if context.get("review_failed"):
+            notes.append("本意偏离已拦截 — Intent Critic / review gate failed")
+            score = min(score, 7)
+            passed = False
+        # SPEC-024 chamber contracts — identity-resolved shelves must meet craft floors
+        from aulos_skills.chamber_contracts import audit_chamber_contracts
+        from aulos_skills.product_scorecard import score_product
+
+        dossier = dict(context.get("corpus_dossier") or {})
+        identity_resolved = bool(
+            context.get("work_id")
+            or context.get("corpus_hit")
+            or (context.get("family_hints") and context.get("synthesize_hit"))
+        )
+        contract_gaps = audit_chamber_contracts(
+            dossier, identity_resolved=identity_resolved
+        )
+        high_gaps = [g for g in contract_gaps if g.get("severity") == "high"]
+        if high_gaps:
+            notes.extend(f"Contract: {g.get('note')}" for g in high_gaps[:4])
+            score = min(score, 7)
+            passed = False
+        elif any(g.get("severity") == "medium" for g in contract_gaps) and identity_resolved:
+            med_notes = [
+                f"Contract: {g.get('note')}"
+                for g in contract_gaps
+                if g.get("severity") == "medium"
+            ]
+            notes.extend(med_notes[:3])
+            if len(med_notes) >= 3:
+                score = min(score, 7)
+                passed = False
+
+        # SPEC-025 ProductScorecard — reader quality owns eval_pass (process stays diagnostic)
+        product = score_product(html=html, context=context, dossier=dossier)
+        context["product_scorecard"] = product.to_dict()
+        hard_gate = bool(
+            context.get("decontam_failed")
+            or context.get("review_failed")
+            or high_gaps
+        )
+        if not product.pass_:
+            for f in product.findings:
+                if f.severity == "high":
+                    note = f"Product: {f.note}"
+                    if note not in notes:
+                        notes.append(note)
+                    if len([n for n in notes if n.startswith("Product:")]) >= 4:
+                        break
+            score = min(score, 7)
+            passed = False
+        else:
+            notes.append(f"ProductScore {product.pct}% {product.band}")
+            if product.band == "strong":
+                score = max(score, 10)
+            elif product.band == "solid":
+                score = max(score, 9)
+            # Product can lift soft atelier shortfalls; never revive decontam/review/contracts
+            if not hard_gate:
+                passed = True
+
+        out = {
             "eval_score": score,
             "pass": passed,
             "eval_notes": "; ".join(notes) if notes else "Meets Salon Codex 导赏 quality bar",
+            "product_scorecard": product.to_dict(),
         }
+        # SPEC-019 — process scorecard rollup (does not replace legacy eval_score)
+        context.update(out)
+        process = rollup_process(context)
+        out["process_scorecard"] = process
+        context["process_scorecard"] = process
+        from aulos_skills.external_review import build_rounds_comparison
 
-
-def _li(items: list[Any]) -> str:
-    out = []
-    for p in items:
-        if isinstance(p, dict):
-            # YAML may parse "Label: rest" bullets as single-key maps
-            text = "; ".join(f"{k}: {v}" for k, v in p.items())
-        else:
-            text = str(p)
-        if text:
-            out.append(f"<li>{escape(text)}</li>")
-    return "".join(out)
-
-
-def _p(text: str) -> str:
-    text = (text or "").strip()
-    return f"<p>{escape(text)}</p>" if text else ""
-
-
-def render_guide_html(
-    *,
-    work_title: str,
-    composer: str,
-    era: str,
-    form: str,
-    summary: str,
-    width_points: list[str],
-    depth_points: list[str],
-    listening_map: list[dict[str, str]],
-    practice_notes: list[str],
-    related_works: list[dict[str, str]] | list[str],
-    catalog: str = "",
-    work_introduction: str = "",
-    myths_and_caveats: list[str] | None = None,
-    composer_portrait: dict[str, Any] | None = None,
-    composer_profile: dict[str, Any] | None = None,
-    genesis: dict[str, Any] | None = None,
-    historical_reasons: list[str] | None = None,
-    reception_arc: str = "",
-    variation_deepdives: list[dict[str, Any]] | None = None,
-    sound_world: dict[str, Any] | None = None,
-    interpretations: list[dict[str, Any]] | None = None,
-    appreciation_videos: list[dict[str, Any]] | None = None,
-    vinyl_and_discography: list[dict[str, Any]] | None = None,
-) -> str:
-    myths_and_caveats = myths_and_caveats or []
-    composer_portrait = composer_portrait or {}
-    composer_profile = composer_profile or {}
-    genesis = genesis or {}
-    historical_reasons = historical_reasons or []
-    variation_deepdives = variation_deepdives or []
-    sound_world = sound_world or {}
-    interpretations = interpretations or []
-    appreciation_videos = appreciation_videos or []
-    vinyl_and_discography = vinyl_and_discography or []
-
-    related_norm: list[dict[str, str]] = []
-    for item in related_works:
-        if isinstance(item, dict):
-            related_norm.append({"title": str(item.get("title") or ""), "why": str(item.get("why") or "")})
-        else:
-            related_norm.append({"title": str(item), "why": ""})
-
-    map_blocks = "".join(
-        f"<article class='map-item'><h3>{escape(str(m.get('label', '')))}</h3>"
-        f"<p>{escape(str(m.get('cue', '')))}</p></article>"
-        for m in listening_map
-    )
-    related_blocks = "".join(
-        f"<article class='rel'><h3>{escape(r['title'])}</h3>"
-        f"{_p(r['why'])}</article>"
-        for r in related_norm
-        if r["title"]
-    )
-    deepdive_blocks = "".join(
-        f"<article class='map-item'><h3>{escape(str(d.get('title', '')))}</h3>"
-        f"<p>{escape(str(d.get('note', '')))}</p></article>"
-        for d in variation_deepdives
-    )
-    interp_blocks = "".join(
-        (
-            "<article class='interp'>"
-            f"<h3>{escape(str(i.get('artist', '')))} · {escape(str(i.get('year', '')))}</h3>"
-            f"<p class='meta-line'>{escape(str(i.get('instrument', '')))} — {escape(str(i.get('era_note', '')))}</p>"
-            f"<p>{escape(str(i.get('why_listen', '')))}</p>"
-            + (
-                f"<p class='links'><a href=\"{escape(str(i['youtube_url']))}\" target=\"_blank\" rel=\"noopener\">YouTube</a></p>"
-                if i.get("youtube_url")
-                else ""
-            )
-            + (
-                f"<p class='links'><a href=\"{escape(str(i['discogs_url']))}\" target=\"_blank\" rel=\"noopener\">Discogs</a></p>"
-                if i.get("discogs_url")
-                else ""
-            )
-            + "</article>"
-        )
-        for i in interpretations
-    )
-    video_blocks = "".join(
-        f"<article class='media'><h3><a href=\"{escape(str(v.get('url', '')))}\" target=\"_blank\" rel=\"noopener\">"
-        f"{escape(str(v.get('title', '')))}</a></h3><p>{escape(str(v.get('why', '')))}</p></article>"
-        for v in appreciation_videos
-        if v.get("url")
-    )
-    vinyl_blocks = "".join(
-        f"<article class='media'><h3><a href=\"{escape(str(v.get('url', '')))}\" target=\"_blank\" rel=\"noopener\">"
-        f"{escape(str(v.get('label', '')))}</a></h3><p>{escape(str(v.get('note', '')))}</p></article>"
-        for v in vinyl_and_discography
-        if v.get("url")
-    )
-
-    portrait_html = ""
-    if composer_portrait.get("image_url"):
-        portrait_html = (
-            "<figure class='portrait'>"
-            f"<img src=\"{escape(str(composer_portrait['image_url']))}\" "
-            f"alt=\"Portrait of {escape(composer)}\" "
-            f"width=\"800\" height=\"1040\" "
-            f"loading=\"eager\" decoding=\"async\" fetchpriority=\"high\" "
-            f"referrerpolicy=\"no-referrer\"/>"
-            f"<figcaption>{escape(str(composer_portrait.get('caption') or ''))}"
-            f"<span class='credit'>{escape(str(composer_portrait.get('credit') or ''))}</span>"
-            "</figcaption></figure>"
-        )
-
-    profile_bits = []
-    if composer_profile.get("lifespan"):
-        profile_bits.append(f"<p class='meta-line'>{escape(str(composer_profile['lifespan']))}</p>")
-    for key in ("summary", "temperament", "place_in_oeuvre", "place_in_history"):
-        if composer_profile.get(key):
-            label = {
-                "summary": "Life",
-                "temperament": "Temperament",
-                "place_in_oeuvre": "In the oeuvre",
-                "place_in_history": "In music history",
-            }[key]
-            profile_bits.append(f"<h3>{label}</h3>{_p(str(composer_profile[key]))}")
-    profile_html = "".join(profile_bits)
-
-    genesis_rows = []
-    for key, label in (
-        ("year", "Year"),
-        ("place", "Place"),
-        ("publication", "Publication"),
-        ("patronage", "Patronage"),
-        ("background", "Background"),
-        ("instrument_culture", "Instrument culture"),
-    ):
-        if genesis.get(key):
-            genesis_rows.append(
-                f"<div class='fact'><span>{label}</span><p>{escape(str(genesis[key]))}</p></div>"
-            )
-    genesis_html = "".join(genesis_rows)
-
-    sound_html_parts = []
-    if sound_world.get("original_instrument"):
-        sound_html_parts.append(f"<h3>Original instrument</h3>{_p(str(sound_world['original_instrument']))}")
-    if sound_world.get("ensemble_notes"):
-        sound_html_parts.append(f"<h3>Ensemble / scoring</h3>{_p(str(sound_world['ensemble_notes']))}")
-    modes = list(sound_world.get("modern_modes") or [])
-    if modes:
-        sound_html_parts.append(f"<h3>Modern listening modes</h3><ul>{_li([str(m) for m in modes])}</ul>")
-    sound_html = "".join(sound_html_parts)
-
-    chips = "".join(
-        f"<span class='chip'>{escape(c)}</span>"
-        for c in [composer, catalog, era, form]
-        if c
-    )
-
-    sections: list[str] = []
-    # Portrait early — mobile readers must see the oil painting without hunting
-    if portrait_html or profile_html:
-        sections.append(
-            f"<section id='composer'><h2>Composer</h2>"
-            f"<div class='composer-grid'>{portrait_html}<div class='composer-copy'>{profile_html}</div></div>"
-            f"</section>"
-        )
-    if work_introduction:
-        sections.append(f"<section id='introduction'><h2>The work</h2>{_p(work_introduction)}</section>")
-    if genesis_html:
-        sections.append(f"<section id='genesis'><h2>Genesis &amp; world</h2><div class='facts'>{genesis_html}</div></section>")
-    if historical_reasons or reception_arc:
-        reasons_ul = f"<ul>{_li(historical_reasons)}</ul>" if historical_reasons else ""
-        sections.append(
-            f"<section id='stature'><h2>Why it endures</h2>{reasons_ul}{_p(reception_arc)}</section>"
-        )
-    if width_points:
-        sections.append(f"<section id='wide'><h2>Wide research</h2><ul>{_li(width_points)}</ul></section>")
-    anatomy_inner = ""
-    if depth_points:
-        anatomy_inner += f"<h3>Deep research</h3><ul>{_li(depth_points)}</ul>"
-    if deepdive_blocks:
-        anatomy_inner += f"<h3>Selected deep dives</h3><div class='map'>{deepdive_blocks}</div>"
-    if map_blocks:
-        anatomy_inner += f"<h3>Listening map</h3><div class='map'>{map_blocks}</div>"
-    if anatomy_inner:
-        sections.append(f"<section id='anatomy'><h2>Anatomy of the work</h2>{anatomy_inner}</section>")
-    if sound_html:
-        sections.append(f"<section id='sound'><h2>Sound world</h2>{sound_html}</section>")
-    if related_blocks:
-        sections.append(f"<section id='kindred'><h2>Kindred works</h2><div class='rels'>{related_blocks}</div></section>")
-    if interp_blocks:
-        sections.append(
-            f"<section id='interpretations'><h2>Famous interpretations</h2><div class='interps'>{interp_blocks}</div></section>"
-        )
-    media_inner = ""
-    if video_blocks:
-        media_inner += f"<h3>YouTube &amp; appreciation</h3><div class='medias'>{video_blocks}</div>"
-    if vinyl_blocks:
-        media_inner += f"<h3>Discogs &amp; vinyl shelf</h3><div class='medias'>{vinyl_blocks}</div>"
-    if media_inner:
-        sections.append(f"<section id='media'><h2>Listening room media</h2>{media_inner}</section>")
-    if practice_notes:
-        sections.append(
-            f"<section id='practice'><h2>How to practice listening</h2><ul>{_li(practice_notes)}</ul></section>"
-        )
-    if myths_and_caveats:
-        sections.append(
-            f"<section id='caveats'><h2>Myths &amp; caveats</h2><ul>{_li(myths_and_caveats)}</ul></section>"
-        )
-
-    body_sections = "\n".join(sections)
-
-    return f"""<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="utf-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>{escape(work_title)} — Aulos Listening Guide</title>
-<link rel="preconnect" href="https://fonts.googleapis.com"/>
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet"/>
-<style>
-:root {{
-  --stage: #0c1216; --panel: #151c22; --ink: #e8efe9; --mute: #9aafa3;
-  --accent: #c9a66b; --line: rgba(232,239,233,0.11); --glow: rgba(201,166,107,0.14);
-  --varnish: rgba(40,28,18,0.55);
-}}
-* {{ box-sizing: border-box; }}
-html, body {{ margin: 0; background: var(--stage); color: var(--ink); font-family: Manrope, system-ui, sans-serif; }}
-body {{
-  min-height: 100vh;
-  background:
-    radial-gradient(ellipse 55% 40% at 85% 0%, var(--glow), transparent 50%),
-    radial-gradient(ellipse 45% 35% at 0% 20%, rgba(90,70,40,0.12), transparent 55%),
-    linear-gradient(168deg, #10171c 0%, #0c1216 48%, #12191f 100%);
-}}
-.wrap {{ max-width: 44rem; margin: 0 auto; padding: 2.75rem 1.25rem 4.5rem; }}
-.eyebrow {{ letter-spacing: 0.2em; text-transform: uppercase; color: var(--accent); font-size: 0.72rem; font-weight: 700; margin: 0 0 0.85rem; }}
-h1 {{ font-family: Fraunces, Georgia, serif; font-weight: 700; font-size: clamp(1.75rem, 7vw, 3.05rem); line-height: 1.07; letter-spacing: -0.03em; margin: 0 0 0.85rem; }}
-.lede {{ color: var(--mute); font-size: clamp(1rem, 3.6vw, 1.1rem); line-height: 1.7; margin: 0 0 1.5rem; max-width: 38rem; font-family: Fraunces, Georgia, serif; font-weight: 500; font-variation-settings: "opsz" 72; }}
-.meta {{ display: flex; flex-wrap: wrap; gap: 0.5rem; margin: 0 0 2.5rem; }}
-.chip {{ border: 1px solid var(--line); background: rgba(21,28,34,0.85); padding: 0.4rem 0.7rem; font-size: 0.82rem; color: var(--mute); max-width: 100%; }}
-section {{ margin: 0 0 1.75rem; padding: 1.35rem 0 0; border-top: 1px solid var(--line); background: transparent; }}
-h2 {{ font-family: Fraunces, Georgia, serif; font-size: clamp(1.2rem, 4.5vw, 1.45rem); margin: 0 0 0.95rem; letter-spacing: -0.02em; }}
-h3 {{ font-family: Fraunces, Georgia, serif; font-size: 1.02rem; margin: 1rem 0 0.45rem; color: var(--ink); font-weight: 600; }}
-p {{ color: var(--mute); line-height: 1.65; margin: 0 0 0.75rem; }}
-ul {{ margin: 0; padding-left: 1.15rem; display: grid; gap: 0.55rem; color: var(--mute); line-height: 1.55; }}
-.composer-grid {{ display: grid; gap: 1.25rem; align-items: start; }}
-@media (min-width: 720px) {{
-  .composer-grid {{ grid-template-columns: minmax(0, 13.5rem) minmax(0, 1fr); gap: 1.75rem; }}
-}}
-.portrait {{ margin: 0; width: 100%; }}
-.portrait img {{
-  width: 100%;
-  height: auto;
-  max-width: 100%;
-  display: block;
-  border: 1px solid var(--line);
-  box-shadow: 0 18px 40px rgba(0,0,0,0.35);
-  filter: saturate(0.92) contrast(1.04);
-  background: #1a1510;
-}}
-.portrait figcaption {{ margin-top: 0.65rem; font-size: 0.82rem; color: var(--mute); line-height: 1.45; }}
-.portrait .credit {{ display: block; margin-top: 0.35rem; opacity: 0.75; font-size: 0.75rem; }}
-@media (max-width: 719px) {{
-  .wrap {{ padding: 1.35rem 1rem 3.25rem; }}
-  .meta {{ margin-bottom: 1.5rem; }}
-  section {{ margin-bottom: 1.35rem; padding-top: 1.1rem; }}
-  .portrait {{
-    max-width: 17rem;
-    margin: 0 auto;
-  }}
-  .portrait img {{
-    max-height: min(68vh, 26rem);
-    width: 100%;
-    object-fit: contain;
-    object-position: top center;
-    box-shadow: 0 12px 28px rgba(0,0,0,0.4);
-  }}
-  .composer-copy h3:first-child {{ margin-top: 0.35rem; }}
-  .map-item, .rel, .interp, .media {{
-    padding: 0.75rem 0 0.75rem 0.8rem;
-  }}
-  .chip {{ font-size: 0.78rem; padding: 0.35rem 0.55rem; }}
-}}
-.facts {{ display: grid; gap: 0.85rem; }}
-.fact span {{ display: block; letter-spacing: 0.14em; text-transform: uppercase; font-size: 0.68rem; color: var(--accent); font-weight: 700; margin-bottom: 0.25rem; }}
-.fact p {{ margin: 0; }}
-.map, .rels, .interps, .medias {{ display: grid; gap: 0.7rem; }}
-.map-item, .rel, .interp, .media {{
-  padding: 0.9rem 0 0.9rem 0.95rem;
-  border-left: 2px solid var(--accent);
-  background: linear-gradient(90deg, rgba(201,166,107,0.06), transparent 70%);
-}}
-.map-item h3, .rel h3, .interp h3, .media h3 {{ margin: 0 0 0.35rem; font-size: 0.98rem; }}
-.meta-line {{ font-size: 0.88rem; color: var(--accent); margin-bottom: 0.35rem; }}
-.links {{ margin: 0.35rem 0 0; font-size: 0.88rem; }}
-a {{ color: var(--accent); text-underline-offset: 0.18em; }}
-a:hover {{ color: var(--ink); }}
-footer {{ margin-top: 2.5rem; padding-top: 1rem; border-top: 1px solid var(--line); color: var(--mute); font-size: 0.82rem; }}
-img {{ max-width: 100%; height: auto; }}
-@supports (padding: max(0px)) {{
-  .wrap {{
-    padding-left: max(1rem, env(safe-area-inset-left));
-    padding-right: max(1rem, env(safe-area-inset-right));
-    padding-bottom: max(3rem, calc(2rem + env(safe-area-inset-bottom)));
-  }}
-}}
-</style>
-</head>
-<body>
-<main class="wrap">
-  <p class="eyebrow">Aulos · Salon Codex listening guide</p>
-  <h1>{escape(work_title)}</h1>
-  <p class="lede">{escape(summary)}</p>
-  <div class="meta">{chips}</div>
-  {body_sections}
-  <footer>Generated by Aulos SkillRuntime — Salon Codex atelier for deep listening.</footer>
-</main>
-</body>
-</html>
-"""
+        comparison = build_rounds_comparison(context)
+        out["generation_rounds"] = dict(context.get("generation_rounds") or {})
+        out["rounds_comparison"] = comparison
+        return out
 
 
 

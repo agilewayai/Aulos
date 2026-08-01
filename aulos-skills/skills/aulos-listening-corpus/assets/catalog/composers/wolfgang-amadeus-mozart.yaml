@@ -1,0 +1,16 @@
+composer_id: wolfgang-amadeus-mozart
+name_en: Wolfgang Amadeus Mozart
+name_zh: 沃尔夫冈·阿马德乌斯·莫扎特
+aliases:
+  - mozart
+  - wolfgang amadeus mozart
+  - w. a. mozart
+  - w.a. mozart
+  - 莫扎特
+  - 莫札特
+  - 沃尔夫冈·阿马德乌斯·莫扎特
+lifespan: 1756–1791
+era: classical
+provenance:
+  authority: Köchel / standard biographical reference
+  notes: Composer card — work shelves under works/*.yaml.

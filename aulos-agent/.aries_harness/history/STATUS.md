@@ -8,10 +8,10 @@ managed_by: "aries-harness"
 fingerprint: "aries-harness/history-doc/v1"
 generated_by: "/aries-harness history-refresh"
 initialized_at: "2026-07-25T10:55:22Z"
-generated_at: "2026-08-01T06:31:48+00:00"
+generated_at: "2026-08-01T20:59:39+00:00"
 effective_status: "generated"
-effective_since: "2026-08-01T06:31:48+00:00"
-content_fingerprint: "sha256:d968bf9145985a55f6ec6a6d599aa26e4542ed8f03fc93998c3d2cbf09aa94a0"
+effective_since: "2026-08-01T20:59:39+00:00"
+content_fingerprint: "sha256:77c99fb5c3caa24a9d7647a11714261d994016b943138275d9825ad7d26562ca"
 trace_history_source: "filesystem-only"
 trace_last_commit_sha: ""
 trace_last_commit_at: ""
@@ -19,7 +19,7 @@ trace_revision_count: "0"
 ---
 # Current Status
 
-Generated at: `2026-08-01T06:31:48+00:00`
+Generated at: `2026-08-01T20:59:39+00:00`
 
 ## Current phase
 
@@ -29,16 +29,16 @@ Generated at: `2026-08-01T06:31:48+00:00`
 
 - no branch or workspace details recorded
 - git branch: main
-- HEAD: `491b042` Ship authority source registry, OPS knowledge console, and refresh fleet honeycomb.
+- HEAD: `1d325d5` Ship knowledge discovery, dossier, and benchmark console; refresh fleet honeycomb.
 - working tree: dirty
 - change: `M` `aulos-agent/.aries_harness/ARIES_HARNESS_FINGERPRINT.json`
 - change: `M` `aulos-agent/.aries_harness/INDEX.md`
-- change: `M` `aulos-api/.aries_harness/INDEX.md`
-- change: `M` `aulos-api/.aries_harness/JOURNAL.md`
-- change: `M` `aulos-api/.aries_harness/STATE.md`
-- change: `M` `aulos-api/.aries_harness/TASK_STACK.md`
-- change: `M` `aulos-api/.aries_harness/history/DAILY_SUMMARY_INDEX.md`
-- change: `M` `aulos-api/.aries_harness/history/DOC_TRACE.md`
+- change: `M` `aulos-agent/.aries_harness/history/DAILY_SUMMARY_INDEX.md`
+- change: `M` `aulos-agent/.aries_harness/history/DOC_TRACE.md`
+- change: `M` `aulos-agent/.aries_harness/history/README.md`
+- change: `M` `aulos-agent/.aries_harness/history/RETROSPECTIVE.md`
+- change: `M` `aulos-agent/.aries_harness/history/ROADMAP.md`
+- change: `M` `aulos-agent/.aries_harness/history/STATUS.md`
 
 ## Current milestone
 

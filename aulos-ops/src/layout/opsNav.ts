@@ -30,6 +30,7 @@ export const OPS_NAV_GROUPS: OpsNavGroup[] = [
     items: [
       { id: 'llm', label: 'LLM & embeddings', hint: 'Providers, embed, web research' },
       { id: 'skills', label: 'Skills', hint: 'Harness skills registry' },
+      { id: 'guides', label: 'Guide quality', hint: 'Process scorecards' },
       { id: 'knowledge', label: 'Knowledge', hint: 'Registry, corpus, RAG lab' },
       { id: 'tasks', label: 'Task queue', hint: 'Async ops jobs' },
     ],

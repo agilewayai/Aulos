@@ -118,6 +118,17 @@ export type LlmTestResult = {
   model?: string
 }
 
+export type ListeningReviewConfig = {
+  key: string
+  enabled: boolean
+}
+
+export type AmbientFallbackConfig = {
+  key: string
+  mode: 'embed' | 'stream' | string
+  allowed: string[]
+}
+
 export type SkillRow = {
   id: string
   name: string
@@ -308,6 +319,30 @@ export function deleteOpsUser(userId: number, confirmEmail: string) {
 
 export function fetchLlmConfig() {
   return request<LlmConfig>('/v1/ops/llm', {}, true)
+}
+
+export function fetchListeningReviewConfig() {
+  return request<ListeningReviewConfig>('/v1/ops/listening-review', {}, true)
+}
+
+export function updateListeningReviewConfig(payload: { enabled: boolean }) {
+  return request<ListeningReviewConfig>(
+    '/v1/ops/listening-review',
+    { method: 'PUT', body: JSON.stringify(payload) },
+    true,
+  )
+}
+
+export function fetchAmbientFallbackConfig() {
+  return request<AmbientFallbackConfig>('/v1/ops/ambient-fallback', {}, true)
+}
+
+export function updateAmbientFallbackConfig(payload: { mode: string }) {
+  return request<AmbientFallbackConfig>(
+    '/v1/ops/ambient-fallback',
+    { method: 'PUT', body: JSON.stringify(payload) },
+    true,
+  )
 }
 
 export function updateLlmConfig(payload: {
@@ -595,6 +630,15 @@ export type ComposerDossierWorkNode = {
   catalog_numbers: string[]
   facets: Record<string, unknown>
   children: ComposerDossierWorkNode[]
+  catalog?: string
+  genre?: string
+}
+
+export type ComposerDossierWorkGroup = {
+  year?: string
+  genre?: string
+  count: number
+  works: ComposerDossierWorkNode[]
 }
 
 export type ComposerDossier = {
@@ -619,7 +663,10 @@ export type ComposerDossier = {
   } | null
   timeline: ComposerDossierEvent[]
   works_tree: ComposerDossierWorkNode[]
+  works_by_year?: ComposerDossierWorkGroup[]
+  works_by_genre?: ComposerDossierWorkGroup[]
   works_count: number
+  works_cap?: number
   events_count: number
   doc_counts: { composer: number; works: number }
 }
@@ -1277,6 +1324,53 @@ export function fetchOpsGuideTrace(guideId: number) {
     work_title: string
     composer: string
     created_at?: string | null
+    synthesize_source?: string | null
+    facet_classification?: {
+      archetype_id?: string
+      confidence?: number
+      instruments?: string[]
+      forms?: string[]
+      era?: string
+    } | null
+    product_scorecard?: {
+      band?: string
+      pct?: number
+      dimensions?: Record<string, number>
+    } | null
+    promote_candidate?: {
+      schema?: string
+      dry_run?: boolean
+      status?: string
+      suggested_work_id?: string
+      family_id?: string
+      staged_path?: string
+      staged_at?: string
+      production_craft_path?: string
+      production_catalog_path?: string
+      craft_draft?: {
+        listening_thesis?: string
+        zh?: { listening_thesis?: string }
+      }
+      gates?: Record<string, unknown>
+    } | null
+    process_scorecard?: {
+      schema?: string
+      nodes?: Array<{
+        trigger: string
+        pct?: number
+        band?: string
+        hard_fail?: boolean
+        scores?: Record<string, number>
+      }>
+      product?: { scores?: Record<string, number>; pct?: number; band?: string }
+      rollup?: { pct?: number; band?: string; hard_fail?: boolean }
+      gates?: {
+        eval_pass?: boolean
+        review_failed?: boolean
+        decontam_failed?: boolean
+        ambient_ok?: boolean
+      }
+    } | null
     chain_trace: {
       schema: string
       trace_id: string
@@ -1285,6 +1379,91 @@ export function fetchOpsGuideTrace(guideId: number) {
       identity_arc?: Array<{ stage: string; composer?: string; work_title?: string }>
     } | null
   }>(`/v1/ops/listening-guides/${guideId}/trace`, {}, true)
+}
+
+export type GuideScorecardSummary = {
+  guide_id: number
+  work_title: string
+  composer: string
+  status?: string
+  source?: string
+  created_at?: string | null
+  eval_pass?: boolean | null
+  eval_score?: number | null
+  review_failed?: boolean
+  pct?: number | null
+  band?: string
+  hard_fail?: boolean
+  has_scorecard?: boolean
+  has_promote_candidate?: boolean
+  promote_status?: string | null
+  synthesize_source?: string | null
+  product_band?: string | null
+  asset_depth?: number | null
+}
+
+export function fetchGuideScorecards(limit = 40) {
+  return request<{ items: GuideScorecardSummary[]; total: number }>(
+    `/v1/ops/listening-guides/scorecards?limit=${limit}`,
+    {},
+    true,
+  )
+}
+
+export function fetchPromoteCandidates(limit = 40) {
+  return request<{
+    items: Array<{
+      guide_id: number
+      work_title: string
+      composer: string
+      synthesize_source?: string | null
+      promote_candidate: {
+        suggested_work_id?: string
+        family_id?: string
+        status?: string
+        craft_draft?: { listening_thesis?: string }
+      }
+    }>
+    total: number
+  }>(`/v1/ops/listening-guides/promote-candidates?limit=${limit}`, {}, true)
+}
+
+export function stagePromoteCandidate(guideId: number, overwrite = false) {
+  return request<{
+    ok: boolean
+    guide_id: number
+    suggested_work_id: string
+    staged_path: string
+    promote_candidate: Record<string, unknown>
+  }>(
+    `/v1/ops/listening-guides/${guideId}/promote-stage`,
+    {
+      method: 'POST',
+      body: JSON.stringify({ overwrite }),
+    },
+    true,
+  )
+}
+
+export function promoteCandidateToProduction(guideId: number, overwrite = false) {
+  return request<{
+    ok: boolean
+    guide_id: number
+    report: {
+      work_id: string
+      composer_id?: string
+      craft_path?: string
+      catalog_work_path?: string
+    }
+    promote_candidate: Record<string, unknown>
+  }>(
+    `/v1/ops/listening-guides/${guideId}/promote-production`,
+    {
+      method: 'POST',
+      body: JSON.stringify({ overwrite }),
+    },
+    true,
+  )
 }
 
 export type DevBlogListFilters = {

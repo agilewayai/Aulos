@@ -8,10 +8,10 @@ managed_by: "aries-harness"
 fingerprint: "aries-harness/history-doc/v1"
 generated_by: "/aries-harness history-refresh"
 initialized_at: "2026-07-25T11:20:05Z"
-generated_at: "2026-08-01T06:31:13+00:00"
+generated_at: "2026-08-01T20:59:01+00:00"
 effective_status: "generated"
-effective_since: "2026-08-01T06:31:13+00:00"
-content_fingerprint: "sha256:915c8fc1ef08698082a71d82c3c5c247f24581449669d219e430d9b96253fbcc"
+effective_since: "2026-08-01T20:59:01+00:00"
+content_fingerprint: "sha256:c901cede41f6a8e47020ae54575c13b5d5d6e7831352abff028808657ddf3094"
 trace_history_source: "filesystem-only"
 trace_last_commit_sha: ""
 trace_last_commit_at: ""
@@ -19,25 +19,25 @@ trace_revision_count: "0"
 ---
 # Document Trace
 
-Generated at: `2026-08-01T06:31:13+00:00`
+Generated at: `2026-08-01T20:59:01+00:00`
 
 ## Summary
 
-- managed Markdown docs: 87
+- managed Markdown docs: 116
 - docs with governance gaps: 0
 - dirty docs: 0
 
 ## By layer
 
-- MetaDefineLayer: 46
+- MetaDefineLayer: 73
 - RunCookingLayer: 19
-- SharedSupportSurface: 18
-- unclassified: 4
+- SharedSupportSurface: 19
+- unclassified: 5
 
 ## By effective status
 
-- active: 76
-- generated: 11
+- active: 104
+- generated: 12
 
 ## Managed docs
 
@@ -59,7 +59,7 @@ Generated at: `2026-08-01T06:31:13+00:00`
 - role: evaluation
 - layer: MetaDefineLayer
 - effective status: active since 2026-07-25T16:10:00Z
-- content fingerprint: `sha256:f7cfec5cb1055aad6c98af5bf8d777b476cc6cb60502220c8128e351214ce1d7`
+- content fingerprint: `sha256:73877626f33c8a7a558239af2a9d86f6f2d1b680219c61df99cddf2d381b6d3f`
 - trace: filesystem-only / count=0 / sha=none
 - latest revision: `555cf53` 2026-07-26 Ship listening product, mandatory harness, facility layout, and UTC/local time.
 - dirty: no
@@ -71,27 +71,27 @@ Generated at: `2026-08-01T06:31:13+00:00`
 
 - role: harness-index
 - layer: SharedSupportSurface
-- effective status: generated since 2026-08-01T06:31:13+00:00
-- content fingerprint: `sha256:3b76f5030d6d0d5b201f9edfcc01a7d62b3c4d6d4e172e5e98aae09c785cdc3b`
+- effective status: generated since 2026-08-01T20:59:01+00:00
+- content fingerprint: `sha256:ed71b12cb69414685cd2a570daedea2ff26ef4eff3776e744b4d20a0e0aa3953`
 - trace: filesystem-only / count=0 / sha=none
-- latest revision: `491b042` 2026-07-27 Ship authority source registry, OPS knowledge console, and refresh fleet honeycomb.
+- latest revision: `1d325d5` 2026-08-01 Ship knowledge discovery, dossier, and benchmark console; refresh fleet honeycomb.
 - dirty: no
 - earlier revisions:
+  - `491b042` 2026-07-27 Ship authority source registry, OPS knowledge console, and refresh fleet honeycomb.
   - `5633e94` 2026-07-27 Ship Ops task queue, dev blog v2, and refresh fleet honeycomb.
-  - `c3009d2` 2026-07-27 Harden platform security, ship fleet DevOps control, and refresh harness honeycomb.
 
 ### JOURNAL.md
 
 - role: journal
 - layer: RunCookingLayer
 - effective status: active since 2026-07-25T11:20:05Z
-- content fingerprint: `sha256:3e7be4158bc616b714741cfae8447211e620ed26f1a2c0b88d8d867e5dc3a7d3`
+- content fingerprint: `sha256:d52befe0aec5f1c942d5a3f234981d5f01db96a47abdddfb42c0d6ba05f09c8a`
 - trace: filesystem-only / count=0 / sha=none
-- latest revision: `491b042` 2026-07-27 Ship authority source registry, OPS knowledge console, and refresh fleet honeycomb.
+- latest revision: `1d325d5` 2026-08-01 Ship knowledge discovery, dossier, and benchmark console; refresh fleet honeycomb.
 - dirty: no
 - earlier revisions:
+  - `491b042` 2026-07-27 Ship authority source registry, OPS knowledge console, and refresh fleet honeycomb.
   - `c3009d2` 2026-07-27 Harden platform security, ship fleet DevOps control, and refresh harness honeycomb.
-  - `53e7437` 2026-07-26 Ship identity catalog, Hans/Hant locales, web research, and knowledge plane.
 
 ### MEMORY.md
 
@@ -173,7 +173,7 @@ Generated at: `2026-08-01T06:31:13+00:00`
 - role: state
 - layer: RunCookingLayer
 - effective status: active since 2026-07-25T16:20:00Z
-- content fingerprint: `sha256:c84298f9236882ab106133dd3b3e3095b9dcde5969c0e8f4581d5fedbe54d222`
+- content fingerprint: `sha256:2ee2947b00457ab69c8ecf3c6e0ede26314bdea79375054b840e51cac3002e5e`
 - trace: filesystem-only / count=0 / sha=none
 - latest revision: `c3009d2` 2026-07-27 Harden platform security, ship fleet DevOps control, and refresh harness honeycomb.
 - dirty: no
@@ -186,7 +186,7 @@ Generated at: `2026-08-01T06:31:13+00:00`
 - role: task-stack
 - layer: RunCookingLayer
 - effective status: active since 2026-07-25T16:20:00Z
-- content fingerprint: `sha256:c3f7ed7529d3e357f0d82d70c333e379f5de4662ae280fd45cadaee90317c431`
+- content fingerprint: `sha256:818e22e385114413c28e58ca20cdbd2275cbe0f5d3aa160239e9e492af314491`
 - trace: filesystem-only / count=0 / sha=none
 - latest revision: `c3009d2` 2026-07-27 Harden platform security, ship fleet DevOps control, and refresh harness honeycomb.
 - dirty: no
@@ -268,6 +268,16 @@ Generated at: `2026-08-01T06:31:13+00:00`
 - latest revision: `53e7437` 2026-07-26 Ship identity catalog, Hans/Hant locales, web research, and knowledge plane.
 - dirty: no
 
+### decisions/adrs/ADR-005-hybrid-adversarial-review.md
+
+- role: architecture-decision
+- layer: MetaDefineLayer
+- effective status: active since 2026-08-01T11:30:00Z
+- content fingerprint: `sha256:179534f5ffe3bbec970f2f9e698b9e7837b22d453de4b0d15be89255dcc4428c`
+- trace: filesystem-only / count=0 / sha=none
+- latest revision: no git history recorded
+- dirty: no
+
 ### decisions/adrs/README.md
 
 - role: pipeline-adrs-readme
@@ -335,6 +345,16 @@ Generated at: `2026-08-01T06:31:13+00:00`
 - earlier revisions:
   - `0d5cb01` 2026-07-25 Initial commit: Aulos hackathon workspace with LangChain agent runtime.
 
+### docs/SYSTEM_MECHANISM_TOUR.md
+
+- role: managed-doc
+- layer: not set
+- effective status: active since 2026-08-01T21:30:00Z
+- content fingerprint: `sha256:8301050e864abc9329c4353996ee0bc8735c85f10e81eb676afa9dd6586b79b6`
+- trace: filesystem-only / count=0 / sha=none
+- latest revision: no git history recorded
+- dirty: no
+
 ### docs/evolution-cycle-2026-07-25-ambient-identity.md
 
 - role: managed-doc
@@ -370,7 +390,7 @@ Generated at: `2026-08-01T06:31:13+00:00`
 - role: managed-doc
 - layer: not set
 - effective status: active since 2026-07-25T16:19:58+00:00
-- content fingerprint: `sha256:875535f6aaa71233f57144d01368b664b9910b9182aa6f1ab80ee9f17b971313`
+- content fingerprint: `sha256:72fb839ef61f6b17ddc812f036b30d1eb03fdb79457b4a639db9012815a7a9dc`
 - trace: filesystem-only / count=0 / sha=none
 - latest revision: `491b042` 2026-07-27 Ship authority source registry, OPS knowledge console, and refresh fleet honeycomb.
 - dirty: no
@@ -382,131 +402,141 @@ Generated at: `2026-08-01T06:31:13+00:00`
 
 - role: history-daily-summary-index
 - layer: SharedSupportSurface
-- effective status: generated since 2026-07-27T16:30:07+00:00
-- content fingerprint: `sha256:e32e3a59c070bdc08d5e4b8cc2d8dd909daa6f3f6cdac97ee7cc620a12900de7`
+- effective status: generated since 2026-08-01T20:54:51+00:00
+- content fingerprint: `sha256:79286ea050199954e0ba6212a8a6365a49abf6ffd881328a67f5b96edc3a76e7`
 - trace: filesystem-only / count=0 / sha=none
-- latest revision: `491b042` 2026-07-27 Ship authority source registry, OPS knowledge console, and refresh fleet honeycomb.
+- latest revision: `1d325d5` 2026-08-01 Ship knowledge discovery, dossier, and benchmark console; refresh fleet honeycomb.
 - dirty: no
 - earlier revisions:
+  - `491b042` 2026-07-27 Ship authority source registry, OPS knowledge console, and refresh fleet honeycomb.
   - `5633e94` 2026-07-27 Ship Ops task queue, dev blog v2, and refresh fleet honeycomb.
-  - `c3009d2` 2026-07-27 Harden platform security, ship fleet DevOps control, and refresh harness honeycomb.
 
 ### history/DOC_TRACE.md
 
 - role: history-doc-trace
 - layer: SharedSupportSurface
-- effective status: generated since 2026-07-27T16:30:07+00:00
-- content fingerprint: `sha256:aa608e0478d833b5ffe3a2d732dc3fafc06de8f6670ea616dd5b36330887ee33`
+- effective status: generated since 2026-08-01T20:54:51+00:00
+- content fingerprint: `sha256:b3312dc5a4cfe2ea0b6a72ec40db8e37a952e5d99050ff53d24b891d68c12979`
 - trace: filesystem-only / count=0 / sha=none
-- latest revision: `491b042` 2026-07-27 Ship authority source registry, OPS knowledge console, and refresh fleet honeycomb.
+- latest revision: `1d325d5` 2026-08-01 Ship knowledge discovery, dossier, and benchmark console; refresh fleet honeycomb.
 - dirty: no
 - earlier revisions:
+  - `491b042` 2026-07-27 Ship authority source registry, OPS knowledge console, and refresh fleet honeycomb.
   - `5633e94` 2026-07-27 Ship Ops task queue, dev blog v2, and refresh fleet honeycomb.
-  - `c3009d2` 2026-07-27 Harden platform security, ship fleet DevOps control, and refresh harness honeycomb.
 
 ### history/README.md
 
 - role: history-readme
 - layer: SharedSupportSurface
-- effective status: generated since 2026-07-27T16:30:07+00:00
-- content fingerprint: `sha256:6f1b73716b2adbb492a5904fe71517bb6358fbfe98e648984879800286ff29a7`
+- effective status: generated since 2026-08-01T20:54:51+00:00
+- content fingerprint: `sha256:c0ebe2d5bca1a0c4224004e8832e7c1f3926c8529edc83d9aabd60d97446f1e5`
 - trace: filesystem-only / count=0 / sha=none
-- latest revision: `491b042` 2026-07-27 Ship authority source registry, OPS knowledge console, and refresh fleet honeycomb.
+- latest revision: `1d325d5` 2026-08-01 Ship knowledge discovery, dossier, and benchmark console; refresh fleet honeycomb.
 - dirty: no
 - earlier revisions:
+  - `491b042` 2026-07-27 Ship authority source registry, OPS knowledge console, and refresh fleet honeycomb.
   - `5633e94` 2026-07-27 Ship Ops task queue, dev blog v2, and refresh fleet honeycomb.
-  - `c3009d2` 2026-07-27 Harden platform security, ship fleet DevOps control, and refresh harness honeycomb.
 
 ### history/RETROSPECTIVE.md
 
 - role: history-retrospective
 - layer: SharedSupportSurface
-- effective status: generated since 2026-07-27T16:30:07+00:00
-- content fingerprint: `sha256:573fe825855a1538558cb7b5a5414bac5f0b88b30e1f51156cd63c92037836e2`
+- effective status: generated since 2026-08-01T20:54:51+00:00
+- content fingerprint: `sha256:0964da9b6710f6d8ceba5891af78c2ff1bf32df1397ad74c9a4197a345f209fa`
 - trace: filesystem-only / count=0 / sha=none
-- latest revision: `491b042` 2026-07-27 Ship authority source registry, OPS knowledge console, and refresh fleet honeycomb.
+- latest revision: `1d325d5` 2026-08-01 Ship knowledge discovery, dossier, and benchmark console; refresh fleet honeycomb.
 - dirty: no
 - earlier revisions:
+  - `491b042` 2026-07-27 Ship authority source registry, OPS knowledge console, and refresh fleet honeycomb.
   - `5633e94` 2026-07-27 Ship Ops task queue, dev blog v2, and refresh fleet honeycomb.
-  - `c3009d2` 2026-07-27 Harden platform security, ship fleet DevOps control, and refresh harness honeycomb.
 
 ### history/ROADMAP.md
 
 - role: history-roadmap
 - layer: SharedSupportSurface
-- effective status: generated since 2026-07-27T16:30:07+00:00
-- content fingerprint: `sha256:c679e8047bdf0f167b7213009e0167e3ace294ea893704a2cacb49e634d5cb83`
+- effective status: generated since 2026-08-01T20:54:51+00:00
+- content fingerprint: `sha256:52b90a8e0afb760a0dcb98ab37792a57471e8c247b939552311e7856d3d69c4c`
 - trace: filesystem-only / count=0 / sha=none
-- latest revision: `491b042` 2026-07-27 Ship authority source registry, OPS knowledge console, and refresh fleet honeycomb.
+- latest revision: `1d325d5` 2026-08-01 Ship knowledge discovery, dossier, and benchmark console; refresh fleet honeycomb.
 - dirty: no
 - earlier revisions:
+  - `491b042` 2026-07-27 Ship authority source registry, OPS knowledge console, and refresh fleet honeycomb.
   - `5633e94` 2026-07-27 Ship Ops task queue, dev blog v2, and refresh fleet honeycomb.
-  - `c3009d2` 2026-07-27 Harden platform security, ship fleet DevOps control, and refresh harness honeycomb.
 
 ### history/STATUS.md
 
 - role: history-status
 - layer: SharedSupportSurface
-- effective status: generated since 2026-07-27T16:30:07+00:00
-- content fingerprint: `sha256:96af0fbc6d0111d419ab25cf70cdabc35ce955ee160ee664cfca3f3a45328f1e`
+- effective status: generated since 2026-08-01T20:54:51+00:00
+- content fingerprint: `sha256:958dc969c8598bb31c299b6135857e2f8d6e2a36d3b1f07ade5ab746888c3002`
 - trace: filesystem-only / count=0 / sha=none
-- latest revision: `491b042` 2026-07-27 Ship authority source registry, OPS knowledge console, and refresh fleet honeycomb.
+- latest revision: `1d325d5` 2026-08-01 Ship knowledge discovery, dossier, and benchmark console; refresh fleet honeycomb.
 - dirty: no
 - earlier revisions:
+  - `491b042` 2026-07-27 Ship authority source registry, OPS knowledge console, and refresh fleet honeycomb.
   - `5633e94` 2026-07-27 Ship Ops task queue, dev blog v2, and refresh fleet honeycomb.
-  - `c3009d2` 2026-07-27 Harden platform security, ship fleet DevOps control, and refresh harness honeycomb.
 
 ### history/TIMELINE.md
 
 - role: history-timeline
 - layer: SharedSupportSurface
-- effective status: generated since 2026-07-27T16:30:07+00:00
-- content fingerprint: `sha256:68e66c7537431659435ec9d4eb12a9716a0aa713f654bd8ab7438b2efaca3bce`
+- effective status: generated since 2026-08-01T20:54:51+00:00
+- content fingerprint: `sha256:408d2e134a8c52fb3e5ed8fbb0ed6c9088b0d4ab42913c1a564f5efe397838e6`
 - trace: filesystem-only / count=0 / sha=none
-- latest revision: `491b042` 2026-07-27 Ship authority source registry, OPS knowledge console, and refresh fleet honeycomb.
+- latest revision: `1d325d5` 2026-08-01 Ship knowledge discovery, dossier, and benchmark console; refresh fleet honeycomb.
 - dirty: no
 - earlier revisions:
+  - `491b042` 2026-07-27 Ship authority source registry, OPS knowledge console, and refresh fleet honeycomb.
   - `5633e94` 2026-07-27 Ship Ops task queue, dev blog v2, and refresh fleet honeycomb.
-  - `c3009d2` 2026-07-27 Harden platform security, ship fleet DevOps control, and refresh harness honeycomb.
 
 ### history/daily/2026-07-25.md
 
 - role: history-daily-summary
 - layer: SharedSupportSurface
-- effective status: generated since 2026-07-27T16:30:07+00:00
-- content fingerprint: `sha256:6221cdcb11b2db4621f3ec31a7e489bb8d2d92351cbe9e4100091446aa6ea862`
+- effective status: generated since 2026-08-01T20:54:51+00:00
+- content fingerprint: `sha256:69934d31427b18e6140100898c176d47676c660bbdfd29c884c6d6211ffd92b3`
 - trace: filesystem-only / count=0 / sha=none
-- latest revision: `491b042` 2026-07-27 Ship authority source registry, OPS knowledge console, and refresh fleet honeycomb.
+- latest revision: `1d325d5` 2026-08-01 Ship knowledge discovery, dossier, and benchmark console; refresh fleet honeycomb.
 - dirty: no
 - earlier revisions:
+  - `491b042` 2026-07-27 Ship authority source registry, OPS knowledge console, and refresh fleet honeycomb.
   - `5633e94` 2026-07-27 Ship Ops task queue, dev blog v2, and refresh fleet honeycomb.
-  - `c3009d2` 2026-07-27 Harden platform security, ship fleet DevOps control, and refresh harness honeycomb.
 
 ### history/daily/2026-07-26.md
 
 - role: history-daily-summary
 - layer: SharedSupportSurface
-- effective status: generated since 2026-07-27T16:30:07+00:00
-- content fingerprint: `sha256:364eb1c53d1036c35e7a73dfbbcb1a8d7a89002df6593fb40a69d787aed92603`
+- effective status: generated since 2026-08-01T20:54:51+00:00
+- content fingerprint: `sha256:7afe9e71f0e8f1dc5e8f36c984ff1aed686214979e65deb1a1530bc2465ecd57`
 - trace: filesystem-only / count=0 / sha=none
-- latest revision: `491b042` 2026-07-27 Ship authority source registry, OPS knowledge console, and refresh fleet honeycomb.
+- latest revision: `1d325d5` 2026-08-01 Ship knowledge discovery, dossier, and benchmark console; refresh fleet honeycomb.
 - dirty: no
 - earlier revisions:
+  - `491b042` 2026-07-27 Ship authority source registry, OPS knowledge console, and refresh fleet honeycomb.
   - `5633e94` 2026-07-27 Ship Ops task queue, dev blog v2, and refresh fleet honeycomb.
-  - `c3009d2` 2026-07-27 Harden platform security, ship fleet DevOps control, and refresh harness honeycomb.
 
 ### history/daily/2026-07-27.md
 
 - role: history-daily-summary
 - layer: SharedSupportSurface
-- effective status: generated since 2026-07-27T16:30:07+00:00
-- content fingerprint: `sha256:559afaaa50b07f455d5ef5031b94a9c477bae856b9bbd6fc12eefce8a9b2d858`
+- effective status: generated since 2026-08-01T20:54:51+00:00
+- content fingerprint: `sha256:d169646a6ca31047c7623653d84497bd64da09ba7ab6fbd6f48f5c7d57c36f95`
 - trace: filesystem-only / count=0 / sha=none
-- latest revision: `491b042` 2026-07-27 Ship authority source registry, OPS knowledge console, and refresh fleet honeycomb.
+- latest revision: `1d325d5` 2026-08-01 Ship knowledge discovery, dossier, and benchmark console; refresh fleet honeycomb.
 - dirty: no
 - earlier revisions:
+  - `491b042` 2026-07-27 Ship authority source registry, OPS knowledge console, and refresh fleet honeycomb.
   - `5633e94` 2026-07-27 Ship Ops task queue, dev blog v2, and refresh fleet honeycomb.
-  - `c3009d2` 2026-07-27 Harden platform security, ship fleet DevOps control, and refresh harness honeycomb.
+
+### history/daily/2026-08-01.md
+
+- role: history-daily-summary
+- layer: SharedSupportSurface
+- effective status: generated since 2026-08-01T20:54:51+00:00
+- content fingerprint: `sha256:84045e20c44a669c3222f52ef6ff1050b63eb429f529aad1bcd9f55913ab9628`
+- trace: filesystem-only / count=0 / sha=none
+- latest revision: `1d325d5` 2026-08-01 Ship knowledge discovery, dossier, and benchmark console; refresh fleet honeycomb.
+- dirty: no
 
 ### layers/MetaDefineLayer/README.md
 
@@ -609,18 +639,20 @@ Generated at: `2026-08-01T06:31:13+00:00`
 
 - role: meta-principles
 - layer: MetaDefineLayer
-- effective status: active since 2026-07-27T10:50:00Z
-- content fingerprint: `sha256:37217f2ced82b0d5c2401a835793a8a2123392e8c6c2e028e320472b132f6179`
+- effective status: active since 2026-08-01T10:20:00Z
+- content fingerprint: `sha256:1f205636bde6ac273c32110d6db2c8ecdbbf03489bd75a005d6e4291fde8447a`
 - trace: filesystem-only / count=0 / sha=none
-- latest revision: `491b042` 2026-07-27 Ship authority source registry, OPS knowledge console, and refresh fleet honeycomb.
+- latest revision: `1d325d5` 2026-08-01 Ship knowledge discovery, dossier, and benchmark console; refresh fleet honeycomb.
 - dirty: no
+- earlier revisions:
+  - `491b042` 2026-07-27 Ship authority source registry, OPS knowledge console, and refresh fleet honeycomb.
 
 ### references/REG-001-artifact-register.md
 
 - role: managed-doc
 - layer: MetaDefineLayer
 - effective status: active since 2026-07-25T11:22:04Z
-- content fingerprint: `sha256:2bb5bc1541e179097c544aef4031e887df61361d856ba7a3aeb4b6340ee4e8f4`
+- content fingerprint: `sha256:f99ed5de5f36c007ba8eae70a7a6019a4b3107cbf75340191f4ff1f1fb38f52c`
 - trace: filesystem-only / count=0 / sha=none
 - latest revision: `491b042` 2026-07-27 Ship authority source registry, OPS knowledge console, and refresh fleet honeycomb.
 - dirty: no
@@ -733,7 +765,7 @@ Generated at: `2026-08-01T06:31:13+00:00`
 - role: business-requirement
 - layer: MetaDefineLayer
 - effective status: active since 2026-07-25T16:19:58+00:00
-- content fingerprint: `sha256:4e7d7eb7b7a47ee0bf7a14217508500075c5be967506d6c5f4cb65cf8e04cced`
+- content fingerprint: `sha256:6065e951641db7002a42c85bb6929163f1304e0e109c49ec3c4ee0302b131af9`
 - trace: filesystem-only / count=0 / sha=none
 - latest revision: `555cf53` 2026-07-26 Ship listening product, mandatory harness, facility layout, and UTC/local time.
 - dirty: no
@@ -756,6 +788,136 @@ Generated at: `2026-08-01T06:31:13+00:00`
 - content fingerprint: `sha256:ee6217832da46285361246b120acac8cd7007a869e5331ddae1dbac6aa467f58`
 - trace: filesystem-only / count=0 / sha=none
 - latest revision: `c3009d2` 2026-07-27 Harden platform security, ship fleet DevOps control, and refresh harness honeycomb.
+- dirty: no
+
+### references/requests/REQ-008-adversarial-process-review.md
+
+- role: request-brief
+- layer: MetaDefineLayer
+- effective status: active since 2026-08-01T11:30:00Z
+- content fingerprint: `sha256:530a7107a38a099bc9e258e3ecaff7676e2cb508ca278452636c0601c53a6617`
+- trace: filesystem-only / count=0 / sha=none
+- latest revision: no git history recorded
+- dirty: no
+
+### references/requests/REQ-009-process-scorecard.md
+
+- role: request-brief
+- layer: MetaDefineLayer
+- effective status: active since 2026-08-01T10:42:00Z
+- content fingerprint: `sha256:2199658eec356b217b8afd52d3907f3e652d1f89261743284cc12c6668e3873a`
+- trace: filesystem-only / count=0 / sha=none
+- latest revision: no git history recorded
+- dirty: no
+
+### references/requests/REQ-012-external-review-round.md
+
+- role: business-requirement
+- layer: MetaDefineLayer
+- effective status: active since 2026-08-01T17:55:00Z
+- content fingerprint: `sha256:ffb171994f6633a4452952a5dbac8a6a6c3394493cfe8d1d8c5879032cfe258a`
+- trace: filesystem-only / count=0 / sha=none
+- latest revision: no git history recorded
+- dirty: no
+
+### references/requests/REQ-013-product-prose-hygiene.md
+
+- role: business-requirement
+- layer: MetaDefineLayer
+- effective status: active since 2026-08-01T18:30:00Z
+- content fingerprint: `sha256:5acdcd25f59fab69465179a0246ba3cdbb8a0866ff6fc4e2935f970588508c2c`
+- trace: filesystem-only / count=0 / sha=none
+- latest revision: no git history recorded
+- dirty: no
+
+### references/requests/REQ-014-craft-raise-work-resolver.md
+
+- role: business-requirement
+- layer: MetaDefineLayer
+- effective status: active since 2026-08-01T18:50:00Z
+- content fingerprint: `sha256:810c1444585c9d28a7c42be3a878be63884ddc6570f1566864e67b965cac6123`
+- trace: filesystem-only / count=0 / sha=none
+- latest revision: no git history recorded
+- dirty: no
+
+### references/requests/REQ-015-knowledge-thicken-product-score.md
+
+- role: business-requirement
+- layer: MetaDefineLayer
+- effective status: active since 2026-08-01T19:20:00Z
+- content fingerprint: `sha256:351bb2c7a8426bb8d91ff1d1e652e1b4d08953618b611d31fcb627a0dfb07a69`
+- trace: filesystem-only / count=0 / sha=none
+- latest revision: no git history recorded
+- dirty: no
+
+### references/requests/REQ-016-systemic-cold-thicken.md
+
+- role: business-requirement
+- layer: MetaDefineLayer
+- effective status: active since 2026-08-01T19:40:00Z
+- content fingerprint: `sha256:522b25d175ba000cce9db0d04b9fbc3e0f3b1d12094364e02e69e75b0685e3bb`
+- trace: filesystem-only / count=0 / sha=none
+- latest revision: no git history recorded
+- dirty: no
+
+### references/requests/REQ-017-family-coverage.md
+
+- role: business-requirement
+- layer: MetaDefineLayer
+- effective status: active since 2026-08-01T19:55:00Z
+- content fingerprint: `sha256:d822c0352f8161c9d05a0e159f4b9fc361256cd37f86766ca1959de6efce885c`
+- trace: filesystem-only / count=0 / sha=none
+- latest revision: no git history recorded
+- dirty: no
+
+### references/requests/REQ-018-catalog-craft-fleet-dossier.md
+
+- role: business-requirement
+- layer: MetaDefineLayer
+- effective status: active since 2026-08-01T20:00:00Z
+- content fingerprint: `sha256:fa801cb7b6696f1ef5722d11e3fcf9aba2fa757faa4871a45c52d89306edbccd`
+- trace: filesystem-only / count=0 / sha=none
+- latest revision: no git history recorded
+- dirty: no
+
+### references/requests/REQ-019-unknown-case-thicken.md
+
+- role: business-requirement
+- layer: MetaDefineLayer
+- effective status: active since 2026-08-01T20:15:00Z
+- content fingerprint: `sha256:b20f05be3e2b6436ea0778b28f3768b43280be5c4d8526b7d4a012ca8d1728c9`
+- trace: filesystem-only / count=0 / sha=none
+- latest revision: no git history recorded
+- dirty: no
+
+### references/requests/REQ-020-promote-staging.md
+
+- role: business-requirement
+- layer: MetaDefineLayer
+- effective status: active since 2026-08-01T20:30:00Z
+- content fingerprint: `sha256:1364fc04c0e98b761b7d22c2dfc1935900adc6f11ea0133c053e55fea1917022`
+- trace: filesystem-only / count=0 / sha=none
+- latest revision: no git history recorded
+- dirty: no
+
+### references/requests/REQ-021-dimensional-promote.md
+
+- role: business-requirement
+- layer: MetaDefineLayer
+- effective status: active since 2026-08-01T20:50:00Z
+- content fingerprint: `sha256:5957af7d7d980718247391fc36a065748c3f1ded4c32db3d81a722227b5a0bb8`
+- trace: filesystem-only / count=0 / sha=none
+- latest revision: no git history recorded
+- dirty: no
+
+### references/requests/REQ-022-identity-freeze-catalog-facets.md
+
+- role: request-package
+- layer: MetaDefineLayer
+- effective status: active since 2026-08-01T20:50:00Z
+- content fingerprint: `sha256:18daa9fc63036a00b5e7f3fb4b4c2d0165871cb06b05603635ca58ea519f97bb`
+- trace: filesystem-only / count=0 / sha=none
+- latest revision: no git history recorded
 - dirty: no
 
 ### references/risks/README.md
@@ -844,7 +1006,7 @@ Generated at: `2026-08-01T06:31:13+00:00`
 - role: spec-package
 - layer: MetaDefineLayer
 - effective status: active since 2026-07-25T16:19:58+00:00
-- content fingerprint: `sha256:91b38752a1ee0716f981b841db146de5feb47576db021c96e63f73c03d54254a`
+- content fingerprint: `sha256:c6faf2e8da1f181cae725af162fb8452377f9f0d22365e02d68e27cd349215be`
 - trace: filesystem-only / count=0 / sha=none
 - latest revision: `53e7437` 2026-07-26 Ship identity catalog, Hans/Hant locales, web research, and knowledge plane.
 - dirty: no
@@ -856,7 +1018,7 @@ Generated at: `2026-08-01T06:31:13+00:00`
 - role: spec-package
 - layer: MetaDefineLayer
 - effective status: active since 2026-07-25T17:01:00+00:00
-- content fingerprint: `sha256:26656052723405f0ff8455126c738a733dba576a64176e837da7978e5f7a2cf2`
+- content fingerprint: `sha256:e8c0d6db87d05940f0737a98fd02fa8d46bc26aef979f0e4b48419956543c03f`
 - trace: filesystem-only / count=0 / sha=none
 - latest revision: `53e7437` 2026-07-26 Ship identity catalog, Hans/Hant locales, web research, and knowledge plane.
 - dirty: no
@@ -866,7 +1028,7 @@ Generated at: `2026-08-01T06:31:13+00:00`
 - role: spec-package
 - layer: MetaDefineLayer
 - effective status: active since 2026-07-26T19:20:00+00:00
-- content fingerprint: `sha256:ae922028f17ca8f97d66f21cd4fdee860d34d6648e576ab1093104aa33a1c20c`
+- content fingerprint: `sha256:b5fdf1bdb1b3ef8329150cc464274fcd056052b4ba8a3677926ed4ead05c5373`
 - trace: filesystem-only / count=0 / sha=none
 - latest revision: `c3009d2` 2026-07-27 Harden platform security, ship fleet DevOps control, and refresh harness honeycomb.
 - dirty: no
@@ -889,6 +1051,136 @@ Generated at: `2026-08-01T06:31:13+00:00`
 - content fingerprint: `sha256:42eeb5a442c9941877e29cdf4cff1c0e0bcd38f4bbdbd6561b50bed1a0405af6`
 - trace: filesystem-only / count=0 / sha=none
 - latest revision: `5633e94` 2026-07-27 Ship Ops task queue, dev blog v2, and refresh fleet honeycomb.
+- dirty: no
+
+### references/specs/SPEC-018-adversarial-process-review.md
+
+- role: spec-package
+- layer: MetaDefineLayer
+- effective status: active since 2026-08-01T11:30:00Z
+- content fingerprint: `sha256:527b9b207786e66f58719587eaacba3b9067f53e3cab1535074a2604afcc9a84`
+- trace: filesystem-only / count=0 / sha=none
+- latest revision: no git history recorded
+- dirty: no
+
+### references/specs/SPEC-019-process-scorecard.md
+
+- role: spec-package
+- layer: MetaDefineLayer
+- effective status: active since 2026-08-01T10:42:00Z
+- content fingerprint: `sha256:1ca49079dfc8031a65c2b04416fe88e138c1f9470ba550ea96676cca1bcb05c7`
+- trace: filesystem-only / count=0 / sha=none
+- latest revision: no git history recorded
+- dirty: no
+
+### references/specs/SPEC-022-external-review-round.md
+
+- role: spec-package
+- layer: MetaDefineLayer
+- effective status: active since 2026-08-01T17:55:00Z
+- content fingerprint: `sha256:2e2e86b8754d85071219e7643297b6b46dda27962144797011a74505eec082cb`
+- trace: filesystem-only / count=0 / sha=none
+- latest revision: no git history recorded
+- dirty: no
+
+### references/specs/SPEC-023-product-prose-hygiene.md
+
+- role: spec-package
+- layer: MetaDefineLayer
+- effective status: active since 2026-08-01T18:30:00Z
+- content fingerprint: `sha256:18c3ac80d7328d9a028a8289947dff2404c571c72993036cc21cc9d941d5ba4e`
+- trace: filesystem-only / count=0 / sha=none
+- latest revision: no git history recorded
+- dirty: no
+
+### references/specs/SPEC-024-craft-raise.md
+
+- role: spec-package
+- layer: MetaDefineLayer
+- effective status: active since 2026-08-01T18:50:00Z
+- content fingerprint: `sha256:f282f148e97134265e9d509d00e4f97086e765ee3f330179297747e62754836e`
+- trace: filesystem-only / count=0 / sha=none
+- latest revision: no git history recorded
+- dirty: no
+
+### references/specs/SPEC-025-knowledge-thicken-product-score.md
+
+- role: spec-package
+- layer: MetaDefineLayer
+- effective status: active since 2026-08-01T19:20:00Z
+- content fingerprint: `sha256:7b0e32be2bed0139a47bf958e526386842b4958970337f7959879e2139e8a5c6`
+- trace: filesystem-only / count=0 / sha=none
+- latest revision: no git history recorded
+- dirty: no
+
+### references/specs/SPEC-026-systemic-cold-thicken.md
+
+- role: spec-package
+- layer: MetaDefineLayer
+- effective status: active since 2026-08-01T19:40:00Z
+- content fingerprint: `sha256:ae6ff6dcdf82777c6aa19e848cf4b25f0a10f36568b597e1aaf237fef6768102`
+- trace: filesystem-only / count=0 / sha=none
+- latest revision: no git history recorded
+- dirty: no
+
+### references/specs/SPEC-027-family-coverage.md
+
+- role: spec-package
+- layer: MetaDefineLayer
+- effective status: active since 2026-08-01T19:55:00Z
+- content fingerprint: `sha256:e28e9e0350cf78ed901816eda76ec004aab3527ad384bfa309e96520d6df3dc4`
+- trace: filesystem-only / count=0 / sha=none
+- latest revision: no git history recorded
+- dirty: no
+
+### references/specs/SPEC-028-catalog-craft-fleet-dossier.md
+
+- role: spec-package
+- layer: MetaDefineLayer
+- effective status: active since 2026-08-01T20:00:00Z
+- content fingerprint: `sha256:7fc871c87dcec71f5a017016c00489cb161303cc6d5f5c4946746f468a146bbc`
+- trace: filesystem-only / count=0 / sha=none
+- latest revision: no git history recorded
+- dirty: no
+
+### references/specs/SPEC-029-unknown-case-thicken.md
+
+- role: spec-package
+- layer: MetaDefineLayer
+- effective status: active since 2026-08-01T20:15:00Z
+- content fingerprint: `sha256:47cc1a49490016f2ee9ce50511823564596df1e2809562d3c429341ce53522bb`
+- trace: filesystem-only / count=0 / sha=none
+- latest revision: no git history recorded
+- dirty: no
+
+### references/specs/SPEC-030-promote-staging.md
+
+- role: spec-package
+- layer: MetaDefineLayer
+- effective status: active since 2026-08-01T20:30:00Z
+- content fingerprint: `sha256:1f556c15bb63c9803f24c32a2ada6861b8b932fdf959eb772a571585a2330004`
+- trace: filesystem-only / count=0 / sha=none
+- latest revision: no git history recorded
+- dirty: no
+
+### references/specs/SPEC-031-dimensional-promote.md
+
+- role: spec-package
+- layer: MetaDefineLayer
+- effective status: active since 2026-08-01T20:50:00Z
+- content fingerprint: `sha256:322eee76ee29cf62bac760befd28e0bb96b18d46c605060e34ac86bc4e61675e`
+- trace: filesystem-only / count=0 / sha=none
+- latest revision: no git history recorded
+- dirty: no
+
+### references/specs/SPEC-032-identity-freeze-catalog-facets.md
+
+- role: spec-package
+- layer: MetaDefineLayer
+- effective status: active since 2026-08-01T20:50:00Z
+- content fingerprint: `sha256:b7054c8d51552ce4f211d5d9749be56ebfa9a2b72e3e30ec3e481f7952c19095`
+- trace: filesystem-only / count=0 / sha=none
+- latest revision: no git history recorded
 - dirty: no
 
 ### references/stories/README.md

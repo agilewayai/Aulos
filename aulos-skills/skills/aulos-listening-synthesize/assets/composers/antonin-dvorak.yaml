@@ -1,0 +1,32 @@
+composer: Antonín Dvořák
+aliases:
+- dvorak
+- dvořák
+- antonin dvorak
+- antonín dvořák
+- Antonín Dvořák
+- 德沃夏克
+- 德弗札克
+composer_portrait:
+  image_url: https://upload.wikimedia.org/wikipedia/commons/1/12/Dvorak.jpg
+  credit: Portrait of Antonín Dvořák (public domain via Wikimedia Commons)
+  caption: Dvořák — chamber speech, dance color, and New World reception lore.
+composer_profile:
+  lifespan: 1841–1904
+  summary: >
+    Antonín Dvořák brought Slavic dance color and song speech into Classical chamber
+    and orchestral forms — dumky rooms beside symphony craft.
+  temperament: Warm song under dance pulse; folk-color as reception, craft as absolute.
+  place_in_oeuvre: Piano trios, Slavonic dances, and symphonies share one lyric-chamber grammar.
+  place_in_history: Reception hears “national” color — keep lore as caveats while craft stays absolute.
+zh:
+  composer: 安东宁·德沃夏克
+  composer_portrait:
+    caption: 德沃夏克——室内乐言说、舞曲色彩，与新世界接受传说。
+    credit: 德沃夏克肖像（公有领域，经 Wikimedia Commons）
+  composer_profile:
+    lifespan: 1841–1904
+    summary: 安东宁·德沃夏克把斯拉夫舞曲色彩与歌曲言说带进古典室内乐与管弦形式——杜姆卡之室与交响工艺并列。
+    temperament: 舞曲脉搏下的温暖歌咏；民俗色彩属接受史，工艺仍是绝对音乐。
+    place_in_oeuvre: 钢琴三重奏、斯拉夫舞曲与交响曲共享同一抒情－室内语法。
+    place_in_history: 接受史听到“民族”色彩——保留传说存疑，工艺本身仍是绝对。

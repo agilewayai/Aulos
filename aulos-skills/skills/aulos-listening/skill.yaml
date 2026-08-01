@@ -13,5 +13,8 @@ depends_on:
   - aulos-listening-corpus
   - aulos-listening-synthesize
   - aulos-listening-compose
+  - aulos-listening-external-review
+  - aulos-listening-revise
   - aulos-listening-eval
 observability_title: Plan listening atelier
+version: 0.3.0

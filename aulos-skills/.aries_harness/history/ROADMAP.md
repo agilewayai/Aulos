@@ -8,10 +8,10 @@ managed_by: "aries-harness"
 fingerprint: "aries-harness/history-doc/v1"
 generated_by: "/aries-harness history-refresh"
 initialized_at: "2026-07-25T11:20:05Z"
-generated_at: "2026-08-01T06:31:13+00:00"
+generated_at: "2026-08-01T20:59:01+00:00"
 effective_status: "generated"
-effective_since: "2026-08-01T06:31:13+00:00"
-content_fingerprint: "sha256:2a229d916901eb8e681e06cd463378936cfed5e09a733eaf129ccc70bf27c0c2"
+effective_since: "2026-08-01T20:59:01+00:00"
+content_fingerprint: "sha256:e99d520f5179ce2ed0f47d023d7912972b588cc9fc05360a1e51fdbd756f99d2"
 trace_history_source: "filesystem-only"
 trace_last_commit_sha: ""
 trace_last_commit_at: ""
@@ -19,7 +19,7 @@ trace_revision_count: "0"
 ---
 # Roadmap Snapshot
 
-Generated at: `2026-08-01T06:31:13+00:00`
+Generated at: `2026-08-01T20:59:01+00:00`
 
 ## Outcome target
 
@@ -31,13 +31,15 @@ Generated at: `2026-08-01T06:31:13+00:00`
 
 ## Now
 
-- Optional operator: rotate live secrets in `.run/host.env` when ready to redeploy (F1 deferred).
-- Later: deeper F10 splits (`listening_guide.py` / `runtime.py`) when product work touches those files.
+- Optional: regenerate multi-work Discogs probe guides after deploy to confirm IntentLock freeze + multi_work status in production.
+- Optional: expand dimension **voice tables** and form_lock aliens from live Discogs facet histograms — still dimensional, never per-work craft.
+- Optional: knowledge-plane auto-thicken after promote-production (composer stub → dossier job).
 
 ## Next
 
-- Optional operator: rotate live secrets in `.run/host.env` when ready to redeploy (F1 deferred).
-- Later: deeper F10 splits (`listening_guide.py` / `runtime.py`) when product work touches those files.
+- Optional: regenerate multi-work Discogs probe guides after deploy to confirm IntentLock freeze + multi_work status in production.
+- Optional: expand dimension **voice tables** and form_lock aliens from live Discogs facet histograms — still dimensional, never per-work craft.
+- Optional: knowledge-plane auto-thicken after promote-production (composer stub → dossier job).
 
 ## Later / guardrails
 

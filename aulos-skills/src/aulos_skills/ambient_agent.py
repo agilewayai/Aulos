@@ -1,12 +1,11 @@
-"""Adaptive ambient-music agent — curated → related → default rotation.
+"""Adaptive ambient-music agent — work-matched curated/catalog-ref → video fallback.
 
-Identity-aware: conflict_markers + facet instrument gates (SPEC-008).
-No work-proper-name special cases.
+Identity-aware: conflict_markers scrub alien curated (SPEC-006 / REQ-005).
+No related/defaults library rotation. No work-proper-name special cases.
 """
 
 from __future__ import annotations
 
-import hashlib
 import json
 from pathlib import Path
 from typing import Any
@@ -14,21 +13,21 @@ from typing import Any
 import yaml
 
 from aulos_skills.ambient_playlist import resolve_ambient_audio
+from aulos_skills.ambient_video import normalize_fallback_mode, resolve_ambient_video
 
-_INSTRUMENT_TOKENS = (
-    "cello",
-    "violoncello",
-    "大提琴",
-    "piano",
-    "键盘",
-    "harpsichord",
-    "羽管键琴",
-    "keyboard",
-    "organ",
-    "管风琴",
-    "violin",
-    "orchestra",
-    "交响",
+_STANDIN_WHY_MARKERS = (
+    "peer",
+    "stand-in",
+    "stand in",
+    "atmosphere",
+    "关联",
+    "尚无",
+    "open library",
+    "公开授权库",
+    "library rotation",
+    "备用库",
+    "defaults",
+    "related pack",
 )
 
 
@@ -72,16 +71,17 @@ def _entry_to_ambient(entry: dict[str, Any], *, base_url: str, corpus_dir: Path 
         raw["tracks"] = list(entry["tracks"])
     resolved = resolve_ambient_audio(raw, corpus_dir=corpus_dir)
     resolved["selection_id"] = str(entry.get("id") or "")
-    resolved["selection_source"] = str(entry.get("_source") or "related")
+    resolved["selection_source"] = str(entry.get("_source") or "catalog-ref")
+    # Preserve playlist mode when tracks expanded (SPEC-006 / catalog ambient_ref).
+    if resolved.get("tracks"):
+        resolved["mode"] = "playlist"
+    else:
+        resolved["mode"] = str(resolved.get("mode") or "audio")
     if entry.get("why"):
         resolved["why"] = entry["why"]
     if entry.get("why_zh"):
         resolved["why_zh"] = entry["why_zh"]
     return resolved
-
-
-def _has_any(blob: str, tokens: tuple[str, ...] | list[str]) -> bool:
-    return any(t and t in blob for t in tokens)
 
 
 def ambient_conflicts_markers(*, ambient: dict[str, Any], conflict_markers: list[str]) -> bool:
@@ -92,102 +92,12 @@ def ambient_conflicts_markers(*, ambient: dict[str, Any], conflict_markers: list
     return any(len(m) >= 3 and m.lower() in amb_blob for m in conflict_markers)
 
 
-def _facet_instruments(facets: dict[str, Any] | None, blob: str) -> set[str]:
-    out: set[str] = set()
-    for v in (facets or {}).get("instruments") or []:
-        out.add(str(v).lower())
-    for tok in _INSTRUMENT_TOKENS:
-        if tok in blob:
-            out.add(tok)
-    return out
-
-
-def _score_related(
-    entry: dict[str, Any],
-    *,
-    blob: str,
-    composer: str,
-    peers_blob: str,
-    work_instruments: set[str],
-) -> int:
-    score = 0
-    composers = [str(x).lower() for x in (entry.get("composers") or [])]
-    eras = [str(x).lower() for x in (entry.get("eras") or [])]
-    forms = [str(x).lower() for x in (entry.get("forms") or [])]
-    peers = [str(x).lower() for x in (entry.get("peers") or [])]
-    instruments = [str(x).lower() for x in (entry.get("instruments") or [])]
-    weight = int(entry.get("weight") or 5)
-
-    entry_instruments = set(instruments) | {
-        f for f in forms if f in _INSTRUMENT_TOKENS
-    }
-
-    # Generic timbre gate: instrument-specific packs require intersection
-    if entry_instruments and work_instruments and entry_instruments.isdisjoint(work_instruments):
-        return 0
-    if entry_instruments and not work_instruments:
-        # Prefer not attaching cello-only packs to non-cello works without instrument signal
-        if any(i in entry_instruments for i in ("cello", "violoncello", "大提琴")) and "cello" not in blob and "大提琴" not in blob:
-            return 0
-
-    composer_hit = any(c and c in composer for c in composers) or any(c and c in blob for c in composers)
-    peer_hit = any(p and p in peers_blob for p in peers) or any(p and p in blob for p in peers)
-    era_hit = any(e and e in blob for e in eras)
-    form_hit = any(f and f in blob for f in forms)
-    instrument_hit = bool(entry_instruments & work_instruments) or any(i and i in blob for i in instruments)
-
-    # Composer-scoped packs must not unlock on bare form/era (Mozart piano ≠ Beethoven Für Elise).
-    if composers and not composer_hit:
-        # Intentional cross-composer peer (e.g. Bach cello suite for Beethoven duo) needs peer + timbre
-        if not (peer_hit and (instrument_hit or form_hit)):
-            return 0
-
-    # Era/form "classical peer" packs with empty composers[] must name the shelf composer in peers[]
-    if peers and not composers and not peer_hit:
-        return 0
-
-    if composer_hit:
-        score += 40
-    if era_hit:
-        score += 12
-    if form_hit:
-        score += 14
-    if instrument_hit:
-        score += 22
-    if peer_hit and not composer_hit:
-        score += 18
-    if score <= 0:
-        return 0
-    return score + weight
-
-
-def _entry_names_foreign_composer(entry: dict[str, Any], composer_l: str) -> bool:
-    """True when entry is clearly another composer's recording and shelf composer is known."""
-    if not composer_l or len(composer_l) < 4:
-        return False
-    composers = [str(x).lower() for x in (entry.get("composers") or []) if x]
-    if composers and not any(c and c in composer_l for c in composers):
-        return True
-    title = str(entry.get("title") or "").lower()
-    # Bare title prefixes used in defaults / peers
-    foreign_prefixes = (
-        "beethoven",
-        "bach",
-        "chopin",
-        "mozart",
-        "goldberg",
-        "贝多芬",
-        "巴赫",
-        "肖邦",
-        "莫扎特",
-    )
-    for pref in foreign_prefixes:
-        if pref in title and pref not in composer_l:
-            # Allow when composers list explicitly includes shelf composer
-            if composers and any(c in composer_l for c in composers):
-                return False
-            return True
-    return False
+def _is_standin_curated(ambient: dict[str, Any]) -> bool:
+    why_blob = f"{ambient.get('why') or ''} {ambient.get('why_zh') or ''}".lower()
+    src = str(ambient.get("selection_source") or "").lower()
+    if src in {"related", "default", "video-embed", "video-stream"}:
+        return src in {"related", "default"}
+    return any(w in why_blob for w in _STANDIN_WHY_MARKERS)
 
 
 def select_ambient(
@@ -202,94 +112,90 @@ def select_ambient(
     conflict_markers: list[str] | None = None,
     existing: dict[str, Any] | None = None,
     corpus_dir: Path | None = None,
+    fallback_mode: str | None = None,
+    appreciation_videos: list[Any] | None = None,
+    interpretations: list[Any] | None = None,
+    prefer_zh: bool = False,
+    video_extract_fn: Any | None = None,
+    allow_video_search: bool = True,
 ) -> dict[str, Any]:
-    """Pick ambient audio: ambient_ref → curated → related → default."""
-    hints = list(family_hints or [])
+    """Pick ambient: catalog-ref → work-matched curated → video fallback → {}."""
+    del era, form, family_hints, facets  # retained for call-site compatibility
     markers = [str(m).lower() for m in (conflict_markers or []) if m]
-    work_blob = " ".join(str(x) for x in [composer, work_title, era, form, *hints] if x).lower()
-    work_instruments = _facet_instruments(facets, work_blob)
+    mode = normalize_fallback_mode(fallback_mode)
 
     lib = load_ambient_library(corpus_dir)
     base_url = str(lib.get("base_url") or "")
 
-    # 1) Explicit catalog ambient_ref — catalog authority wins (may be an honest
-    # same-composer peer when no work-specific CC0 track exists).
+    # 1) Explicit catalog ambient_ref — work-bound catalog authority only.
     if ambient_ref:
         for entry in list(lib.get("related") or []) + list(lib.get("defaults") or []):
             if not isinstance(entry, dict):
                 continue
             if str(entry.get("id") or "") == ambient_ref:
+                if ambient_conflicts_markers(ambient=entry, conflict_markers=markers):
+                    break
                 pick = dict(entry)
                 pick["_source"] = "catalog-ref"
                 return _entry_to_ambient(pick, base_url=base_url, corpus_dir=corpus_dir)
 
-    # 2) Curated on dossier — keep honest peer stand-ins; scrub alien flagships only
+    # 2) Curated on dossier — keep work-matched open recordings; scrub stand-ins.
     existing_resolved = resolve_ambient_audio(dict(existing or {}), corpus_dir=corpus_dir)
-    if existing_resolved.get("tracks") or existing_resolved.get("url"):
-        why_blob = f"{existing_resolved.get('why') or ''} {existing_resolved.get('why_zh') or ''}".lower()
-        peerish = any(
-            w in why_blob
-            for w in (
-                "peer",
-                "stand-in",
-                "stand in",
-                "atmosphere",
-                "关联",
-                "尚无",
-                "open library",
-                "公开授权库",
-            )
-        )
-        if peerish or not ambient_conflicts_markers(ambient=existing_resolved, conflict_markers=markers):
-            out = dict(existing_resolved)
+    has_audio = bool(existing_resolved.get("tracks") or existing_resolved.get("url"))
+    has_embed = bool(existing_resolved.get("embed_src") or (existing or {}).get("embed_src"))
+    if has_audio or has_embed:
+        candidate = dict(existing_resolved)
+        if has_embed and not has_audio:
+            candidate.setdefault("embed_src", (existing or {}).get("embed_src"))
+            candidate.setdefault("mode", (existing or {}).get("mode") or "embed")
+        if _is_standin_curated(candidate) or ambient_conflicts_markers(
+            ambient=candidate, conflict_markers=markers
+        ):
+            pass  # discard → video fallback
+        else:
+            out = dict(candidate)
             out.setdefault("selection_source", "curated")
+            if out.get("tracks"):
+                out["mode"] = "playlist"
+            else:
+                out.setdefault(
+                    "mode",
+                    "embed" if out.get("embed_src") and not out.get("url") else "audio",
+                )
             if not out.get("why"):
                 out["why"] = "Curated open recording packaged with this listening guide."
                 out["why_zh"] = "本导赏附带的公开授权录音／曲目列表。"
             return out
 
-    # 3) Related by facets / composer
-    blob = work_blob
-    peers_blob = blob
-    composer_l = (composer or "").lower()
-    scored: list[tuple[int, dict[str, Any]]] = []
-    for entry in lib.get("related") or []:
-        if not isinstance(entry, dict):
-            continue
-        if ambient_conflicts_markers(ambient=entry, conflict_markers=markers):
-            continue
-        score = _score_related(
-            entry,
-            blob=blob,
-            composer=composer_l,
-            peers_blob=peers_blob,
-            work_instruments=work_instruments,
-        )
-        if score > 0:
-            scored.append((score, entry))
-    if scored:
-        scored.sort(key=lambda x: x[0], reverse=True)
-        best = dict(scored[0][1])
-        best["_source"] = "related"
-        return _entry_to_ambient(best, base_url=base_url, corpus_dir=corpus_dir)
+    # 3) related / defaults library rotation — disabled (REQ-005).
 
-    # 4) Defaults — skip conflict-marked and foreign-composer entries when shelf is known
-    defaults = [e for e in (lib.get("defaults") or []) if isinstance(e, dict)]
-    safe = [
-        e
-        for e in defaults
-        if not ambient_conflicts_markers(ambient=e, conflict_markers=markers)
-        and not _entry_names_foreign_composer(e, composer_l)
-    ]
-    pool = safe or [
-        e
-        for e in defaults
-        if not ambient_conflicts_markers(ambient=e, conflict_markers=markers)
-    ] or defaults
-    if not pool:
+    # 4) Video-platform fallback (OPS mode).
+    video = resolve_ambient_video(
+        composer=composer,
+        work_title=work_title,
+        appreciation_videos=appreciation_videos,
+        interpretations=interpretations,
+        fallback_mode=mode,
+        prefer_zh=prefer_zh,
+        extract_fn=video_extract_fn,
+        allow_search=allow_video_search,
+    )
+    if not video:
         return {}
-    digest = hashlib.sha256(f"{composer}|{work_title}".encode("utf-8")).hexdigest()
-    idx = int(digest[:8], 16) % len(pool)
-    pick = dict(pool[idx])
-    pick["_source"] = "default"
-    return _entry_to_ambient(pick, base_url=base_url, corpus_dir=corpus_dir)
+    if video.get("mode") == "audio" and video.get("url"):
+        resolved = resolve_ambient_audio(dict(video), corpus_dir=corpus_dir)
+        for key in (
+            "selection_source",
+            "selection_id",
+            "platform",
+            "video_id",
+            "watch_url",
+            "embed_src",
+            "mode",
+            "why",
+            "why_zh",
+        ):
+            if video.get(key) is not None:
+                resolved[key] = video[key]
+        return resolved
+    return video

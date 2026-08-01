@@ -8,10 +8,10 @@ managed_by: "aries-harness"
 fingerprint: "aries-harness/history-doc/v1"
 generated_by: "/aries-harness history-refresh"
 initialized_at: "2026-07-25T10:55:22Z"
-generated_at: "2026-08-01T06:31:48+00:00"
+generated_at: "2026-08-01T20:59:39+00:00"
 effective_status: "generated"
-effective_since: "2026-08-01T06:31:48+00:00"
-content_fingerprint: "sha256:2bfb29fb2256811ae755981a9a97a34b6fd962ccbdf069c01cb961b01a824f0f"
+effective_since: "2026-08-01T20:59:39+00:00"
+content_fingerprint: "sha256:4a1aad26614d9741edfe0cee069ba8848f0149310bf0628041ecbaae71211d7f"
 trace_history_source: "filesystem-only"
 trace_last_commit_sha: ""
 trace_last_commit_at: ""
@@ -19,11 +19,11 @@ trace_revision_count: "0"
 ---
 # Document Trace
 
-Generated at: `2026-08-01T06:31:48+00:00`
+Generated at: `2026-08-01T20:59:39+00:00`
 
 ## Summary
 
-- managed Markdown docs: 53
+- managed Markdown docs: 54
 - docs with governance gaps: 0
 - dirty docs: 0
 
@@ -31,12 +31,12 @@ Generated at: `2026-08-01T06:31:48+00:00`
 
 - MetaDefineLayer: 27
 - RunCookingLayer: 10
-- SharedSupportSurface: 16
+- SharedSupportSurface: 17
 
 ## By effective status
 
 - active: 42
-- generated: 11
+- generated: 12
 
 ## Managed docs
 
@@ -64,14 +64,14 @@ Generated at: `2026-08-01T06:31:48+00:00`
 
 - role: harness-index
 - layer: SharedSupportSurface
-- effective status: generated since 2026-08-01T06:31:48+00:00
-- content fingerprint: `sha256:792c272987fa94ecfc197d743fa4de44761b12a6e1b263ffe15ea63074721a25`
+- effective status: generated since 2026-08-01T20:59:39+00:00
+- content fingerprint: `sha256:4b7c6532b0b7b8acd544d62b4e6256f037168415085bf644cc8f10fe8f8762c5`
 - trace: filesystem-only / count=0 / sha=none
-- latest revision: `491b042` 2026-07-27 Ship authority source registry, OPS knowledge console, and refresh fleet honeycomb.
+- latest revision: `1d325d5` 2026-08-01 Ship knowledge discovery, dossier, and benchmark console; refresh fleet honeycomb.
 - dirty: no
 - earlier revisions:
+  - `491b042` 2026-07-27 Ship authority source registry, OPS knowledge console, and refresh fleet honeycomb.
   - `5633e94` 2026-07-27 Ship Ops task queue, dev blog v2, and refresh fleet honeycomb.
-  - `c3009d2` 2026-07-27 Harden platform security, ship fleet DevOps control, and refresh harness honeycomb.
 
 ### JOURNAL.md
 
@@ -236,131 +236,144 @@ Generated at: `2026-08-01T06:31:48+00:00`
 
 - role: history-daily-summary-index
 - layer: SharedSupportSurface
-- effective status: generated since 2026-07-27T11:49:41+00:00
-- content fingerprint: `sha256:a9eff2f4b50e39306ab99beb41eafa91a7f9c15c181e8c667f12a0b6eef4bdcb`
+- effective status: generated since 2026-08-01T20:26:43+00:00
+- content fingerprint: `sha256:4a395e86e969a7edd39577f66bdcbb7a2b48355d4118a0ac17c8b2316fa3001d`
 - trace: filesystem-only / count=0 / sha=none
-- latest revision: `491b042` 2026-07-27 Ship authority source registry, OPS knowledge console, and refresh fleet honeycomb.
+- latest revision: `1d325d5` 2026-08-01 Ship knowledge discovery, dossier, and benchmark console; refresh fleet honeycomb.
 - dirty: no
 - earlier revisions:
+  - `491b042` 2026-07-27 Ship authority source registry, OPS knowledge console, and refresh fleet honeycomb.
   - `5633e94` 2026-07-27 Ship Ops task queue, dev blog v2, and refresh fleet honeycomb.
-  - `c3009d2` 2026-07-27 Harden platform security, ship fleet DevOps control, and refresh harness honeycomb.
 
 ### history/DOC_TRACE.md
 
 - role: history-doc-trace
 - layer: SharedSupportSurface
-- effective status: generated since 2026-07-27T11:49:41+00:00
-- content fingerprint: `sha256:2bbaaf6685cb3de49d335d5442a0de89f09395d4bfd8b997d3ba92b3cd34faa2`
+- effective status: generated since 2026-08-01T20:26:43+00:00
+- content fingerprint: `sha256:911d2e00ecf2825ace2518a064ee77ff7277daedbf19e78bf2a3a523e1e2fcbe`
 - trace: filesystem-only / count=0 / sha=none
-- latest revision: `491b042` 2026-07-27 Ship authority source registry, OPS knowledge console, and refresh fleet honeycomb.
+- latest revision: `1d325d5` 2026-08-01 Ship knowledge discovery, dossier, and benchmark console; refresh fleet honeycomb.
 - dirty: no
 - earlier revisions:
+  - `491b042` 2026-07-27 Ship authority source registry, OPS knowledge console, and refresh fleet honeycomb.
   - `5633e94` 2026-07-27 Ship Ops task queue, dev blog v2, and refresh fleet honeycomb.
-  - `c3009d2` 2026-07-27 Harden platform security, ship fleet DevOps control, and refresh harness honeycomb.
 
 ### history/README.md
 
 - role: history-readme
 - layer: SharedSupportSurface
-- effective status: generated since 2026-07-27T11:49:41+00:00
-- content fingerprint: `sha256:57a795197f4a913946f4446c69a683dacf7e58c910deb658a13e6d7b8bd86e5d`
+- effective status: generated since 2026-08-01T20:26:43+00:00
+- content fingerprint: `sha256:eea2696d220c72cfb4c8a5c196b99fb1c0a329c30a1e0d89be229c690d568c0a`
 - trace: filesystem-only / count=0 / sha=none
-- latest revision: `491b042` 2026-07-27 Ship authority source registry, OPS knowledge console, and refresh fleet honeycomb.
+- latest revision: `1d325d5` 2026-08-01 Ship knowledge discovery, dossier, and benchmark console; refresh fleet honeycomb.
 - dirty: no
 - earlier revisions:
+  - `491b042` 2026-07-27 Ship authority source registry, OPS knowledge console, and refresh fleet honeycomb.
   - `5633e94` 2026-07-27 Ship Ops task queue, dev blog v2, and refresh fleet honeycomb.
-  - `c3009d2` 2026-07-27 Harden platform security, ship fleet DevOps control, and refresh harness honeycomb.
 
 ### history/RETROSPECTIVE.md
 
 - role: history-retrospective
 - layer: SharedSupportSurface
-- effective status: generated since 2026-07-27T11:49:41+00:00
-- content fingerprint: `sha256:64cdacb5e8cbcabe29a0ff5b750a973dac315a6a0f8a2fd45e8ac1d33b6927c3`
+- effective status: generated since 2026-08-01T20:26:43+00:00
+- content fingerprint: `sha256:1c1a910c8a05110c1d2c0e122852b22014e8c6d9d6bb7044a094955fb4da74f0`
 - trace: filesystem-only / count=0 / sha=none
-- latest revision: `491b042` 2026-07-27 Ship authority source registry, OPS knowledge console, and refresh fleet honeycomb.
+- latest revision: `1d325d5` 2026-08-01 Ship knowledge discovery, dossier, and benchmark console; refresh fleet honeycomb.
 - dirty: no
 - earlier revisions:
+  - `491b042` 2026-07-27 Ship authority source registry, OPS knowledge console, and refresh fleet honeycomb.
   - `5633e94` 2026-07-27 Ship Ops task queue, dev blog v2, and refresh fleet honeycomb.
-  - `c3009d2` 2026-07-27 Harden platform security, ship fleet DevOps control, and refresh harness honeycomb.
 
 ### history/ROADMAP.md
 
 - role: history-roadmap
 - layer: SharedSupportSurface
-- effective status: generated since 2026-07-27T11:49:41+00:00
-- content fingerprint: `sha256:7b02d10c3297e4e5cc626f656609492793daa7d9b52a530d199bb8e7bf365b60`
+- effective status: generated since 2026-08-01T20:26:43+00:00
+- content fingerprint: `sha256:ba62ded01be05b1a7bfad529b8af1990769b115e8336c9f3ce2d2c7ef0995b66`
 - trace: filesystem-only / count=0 / sha=none
-- latest revision: `491b042` 2026-07-27 Ship authority source registry, OPS knowledge console, and refresh fleet honeycomb.
+- latest revision: `1d325d5` 2026-08-01 Ship knowledge discovery, dossier, and benchmark console; refresh fleet honeycomb.
 - dirty: no
 - earlier revisions:
+  - `491b042` 2026-07-27 Ship authority source registry, OPS knowledge console, and refresh fleet honeycomb.
   - `5633e94` 2026-07-27 Ship Ops task queue, dev blog v2, and refresh fleet honeycomb.
-  - `c3009d2` 2026-07-27 Harden platform security, ship fleet DevOps control, and refresh harness honeycomb.
 
 ### history/STATUS.md
 
 - role: history-status
 - layer: SharedSupportSurface
-- effective status: generated since 2026-07-27T11:49:41+00:00
-- content fingerprint: `sha256:fa16e6df3161bc646283e318a917d3a307a75f633563f9f7e760478ae27cbd54`
+- effective status: generated since 2026-08-01T20:26:43+00:00
+- content fingerprint: `sha256:aeb054e2e3d9700cd7f56b2cefdc6c12246c1a021b05992c6aac6ecc5a0c9b40`
 - trace: filesystem-only / count=0 / sha=none
-- latest revision: `491b042` 2026-07-27 Ship authority source registry, OPS knowledge console, and refresh fleet honeycomb.
+- latest revision: `1d325d5` 2026-08-01 Ship knowledge discovery, dossier, and benchmark console; refresh fleet honeycomb.
 - dirty: no
 - earlier revisions:
+  - `491b042` 2026-07-27 Ship authority source registry, OPS knowledge console, and refresh fleet honeycomb.
   - `5633e94` 2026-07-27 Ship Ops task queue, dev blog v2, and refresh fleet honeycomb.
-  - `c3009d2` 2026-07-27 Harden platform security, ship fleet DevOps control, and refresh harness honeycomb.
 
 ### history/TIMELINE.md
 
 - role: history-timeline
 - layer: SharedSupportSurface
-- effective status: generated since 2026-07-27T11:49:41+00:00
-- content fingerprint: `sha256:f94dec86d7485d337ec069a8b5eb6fa57aa14b803ef91d7a784b6d86ec7b56bf`
+- effective status: generated since 2026-08-01T20:26:43+00:00
+- content fingerprint: `sha256:b3a815b9272823ce7f2d1b9e760f1c4dfd654e006711855025886552f5c1f8af`
 - trace: filesystem-only / count=0 / sha=none
-- latest revision: `491b042` 2026-07-27 Ship authority source registry, OPS knowledge console, and refresh fleet honeycomb.
+- latest revision: `1d325d5` 2026-08-01 Ship knowledge discovery, dossier, and benchmark console; refresh fleet honeycomb.
 - dirty: no
 - earlier revisions:
+  - `491b042` 2026-07-27 Ship authority source registry, OPS knowledge console, and refresh fleet honeycomb.
   - `5633e94` 2026-07-27 Ship Ops task queue, dev blog v2, and refresh fleet honeycomb.
-  - `c3009d2` 2026-07-27 Harden platform security, ship fleet DevOps control, and refresh harness honeycomb.
 
 ### history/daily/2026-07-25.md
 
 - role: history-daily-summary
 - layer: SharedSupportSurface
-- effective status: generated since 2026-07-27T11:49:41+00:00
-- content fingerprint: `sha256:159822e57e439fae23d7d0b564c6e9970e3a513b34c9067f5c03aaa37039a32c`
+- effective status: generated since 2026-08-01T20:26:43+00:00
+- content fingerprint: `sha256:03b10defd8475927ed21195d12f2ad4c33fbe11200d34628512632fce7a70b7d`
 - trace: filesystem-only / count=0 / sha=none
-- latest revision: `491b042` 2026-07-27 Ship authority source registry, OPS knowledge console, and refresh fleet honeycomb.
+- latest revision: `1d325d5` 2026-08-01 Ship knowledge discovery, dossier, and benchmark console; refresh fleet honeycomb.
 - dirty: no
 - earlier revisions:
+  - `491b042` 2026-07-27 Ship authority source registry, OPS knowledge console, and refresh fleet honeycomb.
   - `5633e94` 2026-07-27 Ship Ops task queue, dev blog v2, and refresh fleet honeycomb.
-  - `c3009d2` 2026-07-27 Harden platform security, ship fleet DevOps control, and refresh harness honeycomb.
 
 ### history/daily/2026-07-26.md
 
 - role: history-daily-summary
 - layer: SharedSupportSurface
-- effective status: generated since 2026-07-27T11:49:41+00:00
-- content fingerprint: `sha256:f39592646421a3898146dc9fb328c3a3ade2abb7ce9c77e41ba2cadf9b67f0b7`
+- effective status: generated since 2026-08-01T20:26:43+00:00
+- content fingerprint: `sha256:ed75f2d11548f383ec3c9d4fc617bf3f0e38d8a2c7414099cf7824b56430f40c`
 - trace: filesystem-only / count=0 / sha=none
-- latest revision: `491b042` 2026-07-27 Ship authority source registry, OPS knowledge console, and refresh fleet honeycomb.
+- latest revision: `1d325d5` 2026-08-01 Ship knowledge discovery, dossier, and benchmark console; refresh fleet honeycomb.
 - dirty: no
 - earlier revisions:
+  - `491b042` 2026-07-27 Ship authority source registry, OPS knowledge console, and refresh fleet honeycomb.
   - `5633e94` 2026-07-27 Ship Ops task queue, dev blog v2, and refresh fleet honeycomb.
-  - `c3009d2` 2026-07-27 Harden platform security, ship fleet DevOps control, and refresh harness honeycomb.
 
 ### history/daily/2026-07-27.md
 
 - role: history-daily-summary
 - layer: SharedSupportSurface
-- effective status: generated since 2026-07-27T11:49:41+00:00
-- content fingerprint: `sha256:c57752b9cba115e6120bcfe16341cd13df5e3f811f1956af2f71b192159754c2`
+- effective status: generated since 2026-08-01T20:26:43+00:00
+- content fingerprint: `sha256:0aa0c622a5eab704fbb4a83e500ce019470380abfbb3cb15e7e4496e25259ede`
 - trace: filesystem-only / count=0 / sha=none
-- latest revision: `491b042` 2026-07-27 Ship authority source registry, OPS knowledge console, and refresh fleet honeycomb.
+- latest revision: `1d325d5` 2026-08-01 Ship knowledge discovery, dossier, and benchmark console; refresh fleet honeycomb.
 - dirty: no
 - earlier revisions:
+  - `491b042` 2026-07-27 Ship authority source registry, OPS knowledge console, and refresh fleet honeycomb.
   - `5633e94` 2026-07-27 Ship Ops task queue, dev blog v2, and refresh fleet honeycomb.
-  - `c3009d2` 2026-07-27 Harden platform security, ship fleet DevOps control, and refresh harness honeycomb.
+
+### history/daily/2026-08-01.md
+
+- role: history-daily-summary
+- layer: SharedSupportSurface
+- effective status: generated since 2026-08-01T20:26:43+00:00
+- content fingerprint: `sha256:cb642e7dad38cc1252ef40b06263bb1e20ea2e8bb6aa00e3b5768564e498a96a`
+- trace: filesystem-only / count=0 / sha=none
+- latest revision: `1d325d5` 2026-08-01 Ship knowledge discovery, dossier, and benchmark console; refresh fleet honeycomb.
+- dirty: no
+- earlier revisions:
+  - `491b042` 2026-07-27 Ship authority source registry, OPS knowledge console, and refresh fleet honeycomb.
+  - `5633e94` 2026-07-27 Ship Ops task queue, dev blog v2, and refresh fleet honeycomb.
 
 ### layers/MetaDefineLayer/README.md
 

@@ -8,10 +8,10 @@ managed_by: "aries-harness"
 fingerprint: "aries-harness/history-doc/v1"
 generated_by: "/aries-harness history-refresh"
 initialized_at: "2026-07-25T11:07:42Z"
-generated_at: "2026-08-01T06:31:30+00:00"
+generated_at: "2026-08-01T20:59:19+00:00"
 effective_status: "generated"
-effective_since: "2026-08-01T06:31:30+00:00"
-content_fingerprint: "sha256:319a9e72efa83a343ff234ce6d8359295eb59fb9bcb22e12f3b5c4d88b8d5091"
+effective_since: "2026-08-01T20:59:19+00:00"
+content_fingerprint: "sha256:8aec61eddbbe8eb03e2b88e61b48e6c2ed1582ef2cc22bbadc1b01e0d99b4fe6"
 trace_history_source: "filesystem-only"
 trace_last_commit_sha: ""
 trace_last_commit_at: ""
@@ -19,59 +19,51 @@ trace_revision_count: "0"
 ---
 # Timeline
 
-Generated at: `2026-08-01T06:31:30+00:00`
+Generated at: `2026-08-01T20:59:19+00:00`
 
 ## Journal milestones
 
-### 2026-07-26T19:12:00Z
+### 2026-08-01T16:20:00Z
 
-- Atelier: countable chain progress (N/M) + stage list; SSE reconnect; Retry chain for failed/interrupted jobs (pairs with API SPEC-013 delta).
+- Dual-draft UI: score + hard-flaw delta; repair_log on v2; scorecard chip 硬伤 N.
+- Verify: npm run build.
+
+### 2026-08-01T16:00:00Z
+
+- Review panel: expert perspective header; 硬伤修复指令 / 硬伤发现 (drop Sources list).
+- Verify: npm run build.
+
+### 2026-08-01T15:55:00Z
+
+- **Travel / immersive guide reading:** GuideReader with in-app fullscreen overlay
+- Verify: npm run build green.
+
+### 2026-08-01T15:30:00Z
+
+- **Atelier trail progress UX:** show 完成 / 跳过 / 共 breakdown; localize step status labels;
+- Verify: atelierTrailUtils.test.ts ok; npm run build green.
+
+### 2026-08-01T11:34:00Z
+
+- REQ-011 / SPEC-021Δ: 聆乐导赏工坊审阅区 — 审阅意见 textarea；按状态显示通过发布 /
+- Verify: `npm run build` green (upstream `test_diary_guides.py` 3 passed).
+
+### 2026-08-01T19:05:00Z
+
+- Diary guide review now uses the same Studio iframe path (`prepareGuideHtml` + `GUIDE_IFRAME_SANDBOX` + `.guide-frame`) instead of `dangerouslySetInnerHTML` into `.diary-guide-html` (which restyled Salon Codex HTML).
 - Verify: `npm run build`.
 
-### 2026-07-26T19:15:00Z
+### 2026-08-01T18:55:00Z
 
-- SPEC-007: move Guide | Atelier | Library tabs from mobile bottom bar to sticky top (under topbar) for easier reach.
-- Verify: `npm run build`.
+- SPEC-019: `ProcessScorecardCard` on Studio Atelier + diary 导赏工坊 when `process_scorecard` present.
 
-### 2026-07-26T18:55:00Z
+### 2026-08-01T18:40:00Z
 
-- SPEC-008: before asset auto-reload, capture UI scene (tab, draft, guide id, library filters, scroll); restore once after reload with notice.
-- Same pattern on aulos-ops (tab + user filters + scroll). Passwords never persisted.
-- Verify: `node --experimental-strip-types src/sessionScene.selftest.ts`; `npm run build` web+ops.
-
-### 2026-07-26T18:45:00Z
-
-- Asset update: poll `/version.json`; on mismatch show “New version found — refreshing…” then auto `location.reload` (~2.2s). No manual Reload click.
-- Same behavior in aulos-ops. Dismiss/session skip removed.
-- Verify: `npm run build` (web + ops).
-
-### 2026-07-26T18:40:00Z
-
-- SPEC-007: single-pane studio — Guide | Atelier | Library as full-area tabs at all breakpoints (ui-ux-pro-max: progressive disclosure, one job per view).
-- Compose dock collapses after compose/open; expandable “New guide”. Desktop no longer three-column squeeze.
-- Verify: `npm run build` green.
-
-### 2026-07-26T18:15:00Z
-
-- SPEC-006: compose/recompose via durable jobs + event watch; resume in-progress on studio load.
-- Library: search, All/Favorites/Published/In progress filters, tag filter, favorite/star, tags editor, delete, failed retry.
-- Verify: `npm run build` green.
-
-### 2026-07-26T17:55:00Z
-
-- SPEC-005 closeout: product portal polish via ui-ux-pro-max (editorial listening studio — Fraunces/Syne/Manrope, teal + paper/stage).
-- Auth split gate; sticky topbar; compose dock; Guide/Atelier/Library mobile tabs with fixed bottom nav + safe-area; More menu with outside/Escape dismiss; toast auto-dismiss.
-- Compose/recompose auto-switches to Atelier then Guide when ready. Reset password minLength aligned to 10.
-- Verify: `npm run build` green.
-
-### 2026-07-26T17:45:00Z
-
-- Recovered the complete `src/App.tsx` portal surface after a bad checkout: authentication and password recovery, streamed compose/recompose, guide publishing, library, Discogs picker, and chain-trace diagnostics.
-- Restored SPEC-005 responsive studio structure: compose dock, Guide/Atelier/Library tabs, guide overflow actions, toasts, accessible password fields, and skip navigation.
-- Verify: `npx tsc -b --pretty false` passed.
+- SPEC-018: `AtelierTrail` surfaces failed `listening.review` milestones as「本意偏离已拦截」.
 
 ## Recent git commits
 
+- `1d325d5` 2026-08-01 Ship knowledge discovery, dossier, and benchmark console; refresh fleet honeycomb.
 - `491b042` 2026-07-27 Ship authority source registry, OPS knowledge console, and refresh fleet honeycomb.
 - `5633e94` 2026-07-27 Ship Ops task queue, dev blog v2, and refresh fleet honeycomb.
 - `c3009d2` 2026-07-27 Harden platform security, ship fleet DevOps control, and refresh harness honeycomb.
@@ -85,15 +77,15 @@ Generated at: `2026-08-01T06:31:30+00:00`
 
 ## Working tree snapshot
 
-- `M` `aulos-api/.aries_harness/INDEX.md`
-- `M` `aulos-api/.aries_harness/JOURNAL.md`
-- `M` `aulos-api/.aries_harness/STATE.md`
-- `M` `aulos-api/.aries_harness/TASK_STACK.md`
-- `M` `aulos-api/.aries_harness/history/DAILY_SUMMARY_INDEX.md`
-- `M` `aulos-api/.aries_harness/history/DOC_TRACE.md`
-- `M` `aulos-api/.aries_harness/history/README.md`
-- `M` `aulos-api/.aries_harness/history/RETROSPECTIVE.md`
-- `M` `aulos-api/.aries_harness/history/ROADMAP.md`
-- `M` `aulos-api/.aries_harness/history/STATUS.md`
-- `M` `aulos-api/.aries_harness/history/TIMELINE.md`
-- `M` `aulos-api/.aries_harness/history/daily/2026-07-25.md`
+- `M` `aulos-agent/.aries_harness/INDEX.md`
+- `M` `aulos-agent/.aries_harness/history/DAILY_SUMMARY_INDEX.md`
+- `M` `aulos-agent/.aries_harness/history/DOC_TRACE.md`
+- `M` `aulos-agent/.aries_harness/history/README.md`
+- `M` `aulos-agent/.aries_harness/history/RETROSPECTIVE.md`
+- `M` `aulos-agent/.aries_harness/history/ROADMAP.md`
+- `M` `aulos-agent/.aries_harness/history/STATUS.md`
+- `M` `aulos-agent/.aries_harness/history/TIMELINE.md`
+- `M` `aulos-agent/.aries_harness/history/daily/2026-07-25.md`
+- `M` `aulos-agent/.aries_harness/history/daily/2026-07-26.md`
+- `M` `aulos-agent/.aries_harness/history/daily/2026-07-27.md`
+- `M` `aulos-agent/.aries_harness/history/daily/2026-08-01.md`

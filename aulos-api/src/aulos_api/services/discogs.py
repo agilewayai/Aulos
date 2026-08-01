@@ -32,6 +32,9 @@ _PERFORMER_ROLE = re.compile(
     r"orchestra|ensemble|quartet|trio|conductor|directed|performed|soloist|"
     r"mezzo|baritone|countertenor|harp|percussion|timpani)\b"
 )
+_ENSEMBLE_ROLE = re.compile(
+    r"(?i)\b(orchestra|ensemble|choir|chorus|philharmonic|symphony|quartet|trio|quintet)\b"
+)
 _ARTIST_PREFIX = re.compile(
     r"^(?P<artist>.+?)\s*[-–—:]\s*(?P<title>.+)$"
 )
@@ -279,14 +282,37 @@ def _guess_work_title(raw: dict[str, Any], artists: list[str]) -> str:
     if candidates:
         # Prefer the richest classical title (release / paren often beat "Variation 1").
         candidates.sort(key=lambda s: (len(s), s), reverse=True)
-        return candidates[0][:160]
-    if len(tracks) >= 2:
+        picked = candidates[0][:160]
+    elif len(tracks) >= 2:
         prefix = os.path.commonprefix(tracks).rstrip(" :-–—0123456789.")
         if len(prefix) >= 8:
-            return prefix[:160]
-    if tracks and (not title or title.lower() in {"classical", "various"}):
-        return tracks[0][:160]
-    return title[:160]
+            picked = prefix[:160]
+        else:
+            picked = title[:160]
+    elif tracks and (not title or title.lower() in {"classical", "various"}):
+        picked = tracks[0][:160]
+    else:
+        picked = title[:160]
+
+    # Packaging / multi-language dump → listening-work title (systemic)
+    try:
+        import sys
+        from pathlib import Path
+
+        skills = Path(__file__).resolve().parents[4] / "aulos-skills" / "src"
+        if skills.is_dir() and str(skills) not in sys.path:
+            sys.path.insert(0, str(skills))
+        from aulos_skills.prose_hygiene import clean_packaging_work_title
+
+        composers = [
+            str(a.get("name") or "")
+            for a in (raw.get("extraartists") or []) + (raw.get("artists") or [])
+            if isinstance(a, dict)
+        ]
+        composer_hint = next((c for c in composers if c), "")
+        return clean_packaging_work_title(picked, composer=composer_hint)
+    except Exception:  # noqa: BLE001
+        return picked
 
 
 def search_discogs_by_catno(
@@ -485,8 +511,8 @@ def suggest_discogs_releases(
             http.close()
 
 
-def analyze_discogs_release(payload: dict[str, Any]) -> dict[str, Any]:
-    """Turn Discogs JSON into listening-intent fields + dossier seeds."""
+def _parse_release_core(payload: dict[str, Any]) -> dict[str, Any]:
+    """Single credit/id/URI parse for analyze_* and build_diary_snapshot (META-001 §3.5)."""
     raw = dict(payload.get("raw") or {})
     kind = str(payload.get("kind") or "release")
     release_id = int(payload.get("main_release_id") or raw.get("id") or payload.get("id") or 0)
@@ -500,31 +526,82 @@ def analyze_discogs_release(payload: dict[str, Any]) -> dict[str, Any]:
     extras = list(raw.get("extraartists") or [])
     composers = _role_names(extras, _COMPOSER_ROLE)
     composer_names = {c.lower() for c in composers}
+    ensembles = _role_names(extras, _ENSEMBLE_ROLE)
+    ensemble_names = {e.lower() for e in ensembles}
+    for name in artists:
+        low = name.lower()
+        if _ENSEMBLE_ROLE.search(name) and low not in ensemble_names:
+            ensembles.append(name)
+            ensemble_names.add(low)
+
     performers: list[str] = []
     for name in artists + _role_names(extras, _PERFORMER_ROLE):
-        if name.lower() in composer_names:
+        low = name.lower()
+        if low in composer_names or low in ensemble_names:
             continue
         if name not in performers:
             performers.append(name)
 
-    work_title = _guess_work_title(raw, artists)
-    composer = composers[0] if composers else ""
-    year = raw.get("year") or ""
-    labels = []
+    labels: list[dict[str, str]] = []
+    catno = ""
+    label_name = ""
     for lab in raw.get("labels") or []:
         if not isinstance(lab, dict):
             continue
-        labels.append(
-            {
-                "name": str(lab.get("name") or ""),
-                "catno": str(lab.get("catno") or ""),
-            }
-        )
+        entry = {"name": str(lab.get("name") or ""), "catno": str(lab.get("catno") or "")}
+        labels.append(entry)
+        if not label_name and entry["name"]:
+            label_name = entry["name"]
+        if not catno and entry["catno"]:
+            catno = entry["catno"]
+
     uri = str(raw.get("uri") or "")
     if uri and not uri.startswith("http"):
         uri = f"https://www.discogs.com{uri}"
     if not uri and release_id:
         uri = f"https://www.discogs.com/release/{release_id}"
+
+    cover, thumb = _cover_urls(raw)
+    return {
+        "raw": raw,
+        "kind": kind,
+        "release_id": release_id,
+        "master_id": master_id,
+        "artists": artists,
+        "composers": composers,
+        "performers": performers,
+        "ensembles": ensembles,
+        "year": raw.get("year") or "",
+        "labels": labels,
+        "label_name": label_name,
+        "catno": catno,
+        "uri": uri,
+        "cover": cover,
+        "thumb": thumb,
+        "title": str(raw.get("title") or "").strip(),
+        "genres": [str(g) for g in (raw.get("genres") or []) if g][:8],
+        "styles": [str(s) for s in (raw.get("styles") or []) if s][:8],
+        "country": str(raw.get("country") or "").strip(),
+    }
+
+
+def analyze_discogs_release(payload: dict[str, Any]) -> dict[str, Any]:
+    """Turn Discogs JSON into listening-intent fields + dossier seeds."""
+    core = _parse_release_core(payload)
+    raw = core["raw"]
+    kind = core["kind"]
+    release_id = core["release_id"]
+    master_id = core["master_id"]
+    artists = core["artists"]
+    composers = core["composers"]
+    performers = core["performers"]
+    ensembles = core["ensembles"]
+    year = core["year"]
+    labels = core["labels"]
+    uri = core["uri"]
+
+    work_title = _guess_work_title(raw, artists)
+    composer = composers[0] if composers else ""
 
     label_note = ""
     if labels:
@@ -533,6 +610,7 @@ def analyze_discogs_release(payload: dict[str, Any]) -> dict[str, Any]:
         label_note = " · ".join(b for b in bits if b)
 
     performer_line = ", ".join(performers[:6])
+    ensemble_line = ", ".join(ensembles[:4])
     catno_note = ""
     if payload.get("catno_query"):
         catno_note = f", catno {payload.get('catno_match') or payload.get('catno_query')}"
@@ -542,6 +620,7 @@ def analyze_discogs_release(payload: dict[str, Any]) -> dict[str, Any]:
     intent = (
         f"Listening guide for {title_bit}. "
         f"{f'Performers: {performer_line}. ' if performer_line else ''}"
+        f"{f'Ensembles: {ensemble_line}. ' if ensemble_line else ''}"
         f"Discogs release {release_id}{catno_note}"
         f"{f', {year}' if year else ''}. "
         "Write a professional listening guide for this work, "
@@ -553,7 +632,7 @@ def analyze_discogs_release(payload: dict[str, Any]) -> dict[str, Any]:
         "composer": composer,
         "interpretations": [
             {
-                "artist": performer_line or (artists[0] if artists else "Unknown"),
+                "artist": performer_line or ensemble_line or (artists[0] if artists else "Unknown"),
                 "year": str(year or ""),
                 "instrument": "",
                 "era_note": "Discogs release seed",
@@ -599,6 +678,7 @@ def analyze_discogs_release(payload: dict[str, Any]) -> dict[str, Any]:
         "composer": composer,
         "composers": composers,
         "performers": performers,
+        "ensembles": ensembles,
         "artists": artists,
         "year": year,
         "labels": labels,
@@ -610,16 +690,288 @@ def analyze_discogs_release(payload: dict[str, Any]) -> dict[str, Any]:
             if isinstance(t, dict) and str(t.get("title") or "").strip()
         ][:24],
         "listening_intent": intent,
-        "work_hint": f"{composer} {work_title}".strip() if composer else work_title,
+        "work_hint": (
+            f"{composer} — {work_title}".strip(" —") if composer else work_title
+        ),
         "kb_seed": seed,
         "rag_snippets": [
             f"Discogs {kind} #{release_id}: {raw.get('title')}",
             f"Composer credits: {', '.join(composers) or 'unlisted'}",
             f"Performers: {performer_line or 'unlisted'}",
+            f"Ensembles: {ensemble_line or 'unlisted'}",
             f"Label: {label_note or 'n/a'}",
             f"URL: {uri}",
         ],
     }
+
+
+def _guess_source_kind(raw: dict[str, Any]) -> str:
+    formats = raw.get("formats") or []
+    names: list[str] = []
+    for fmt in formats:
+        if isinstance(fmt, dict):
+            names.append(str(fmt.get("name") or "").lower())
+            for d in fmt.get("descriptions") or []:
+                names.append(str(d).lower())
+    blob = " ".join(names)
+    if "vinyl" in blob or "lp" in blob:
+        return "vinyl"
+    if "cd" in blob or "compact disc" in blob:
+        return "cd"
+    return "release"
+
+
+def _cover_urls(raw: dict[str, Any]) -> tuple[str, str]:
+    cover = ""
+    thumb = str(raw.get("thumb") or "").strip()
+    images = raw.get("images") or []
+    if isinstance(images, list):
+        for img in images:
+            if not isinstance(img, dict):
+                continue
+            uri = str(img.get("uri") or img.get("resource_url") or "").strip()
+            if not uri:
+                continue
+            itype = str(img.get("type") or "").lower()
+            if itype == "primary" or not cover:
+                cover = uri
+            if itype == "primary":
+                break
+    if not cover:
+        cover = thumb
+    if not thumb:
+        thumb = cover
+    return cover, thumb
+
+
+def build_diary_snapshot(payload: dict[str, Any]) -> dict[str, Any]:
+    """Normalize Discogs release payload into ListeningDiary ReleaseSnapshot (SPEC-019)."""
+    core = _parse_release_core(payload)
+    raw = core["raw"]
+    tracklist: list[dict[str, Any]] = []
+    for t in raw.get("tracklist") or []:
+        if not isinstance(t, dict):
+            continue
+        title = str(t.get("title") or "").strip()
+        if not title:
+            continue
+        tracklist.append(
+            {
+                "position": str(t.get("position") or "").strip(),
+                "title": title,
+                "duration": str(t.get("duration") or "").strip(),
+                "type": str(t.get("type_") or "track").strip() or "track",
+            }
+        )
+
+    source_kind = _guess_source_kind(raw)
+    fetched_at = datetime.now(timezone.utc).isoformat().replace("+00:00", "Z")
+    release_id = core["release_id"]
+    uri = core["uri"]
+    return {
+        "provider": "discogs",
+        "external_id": str(release_id),
+        "source_kind": source_kind,
+        "title": core["title"],
+        "cover_image_url": core["cover"],
+        "thumb_url": core["thumb"],
+        "composers": core["composers"],
+        "performers": core["performers"],
+        "ensembles": core["ensembles"],
+        "artists": core["artists"],
+        "year": str(core["year"] or ""),
+        "label": core["label_name"],
+        "catno": core["catno"],
+        "labels": core["labels"],
+        "country": core["country"],
+        "uri": uri,
+        "tracklist": tracklist,
+        "genres": core["genres"],
+        "styles": core["styles"],
+        "fetched_at": fetched_at,
+        "provenance": {
+            "kind": core["kind"],
+            "release_id": release_id,
+            "master_id": core["master_id"],
+            "uri": uri,
+            "fetched_at": fetched_at,
+        },
+    }
+
+
+def suggest_discogs_artists(
+    q: str,
+    *,
+    client: httpx.Client | None = None,
+    db: Session | None = None,
+    limit: int = 5,
+) -> list[dict[str, Any]]:
+    """Search Discogs artists by name; returns lightweight hits."""
+    query = (q or "").strip()
+    if len(query) < 1:
+        return []
+    own = client is None
+    http = client or httpx.Client(timeout=20.0, headers={"User-Agent": _UA}, follow_redirects=True)
+    params = {**_auth_params(db), "q": query, "type": "artist", "per_page": str(min(limit, 10))}
+    try:
+        data = _get_json(http, f"{_API}/database/search", params=params) or {}
+        results = data.get("results") or []
+        out: list[dict[str, Any]] = []
+        for row in results:
+            if not isinstance(row, dict):
+                continue
+            title = str(row.get("title") or "").strip()
+            rid = row.get("id")
+            if not title or rid is None:
+                continue
+            out.append(
+                {
+                    "id": int(rid),
+                    "title": title,
+                    "thumb": str(row.get("thumb") or ""),
+                    "resource_url": str(row.get("resource_url") or ""),
+                    "uri": str(row.get("uri") or ""),
+                }
+            )
+            if len(out) >= limit:
+                break
+        return out
+    except DiscogsError:
+        raise
+    except httpx.HTTPError as exc:
+        logger.warning("discogs_artist_search_failed q=%s err=%s", query, exc)
+        raise DiscogsError("Discogs unavailable", status_code=502) from exc
+    finally:
+        if own:
+            http.close()
+
+
+def _artist_name_score(query: str, title: str) -> float:
+    q = re.sub(r"\s+", " ", (query or "").strip().lower())
+    t = re.sub(r"\s+", " ", (title or "").strip().lower())
+    # Discogs titles sometimes "Name (n)"
+    t = re.sub(r"\s*\(\d+\)\s*$", "", t).strip()
+    if not q or not t:
+        return 0.0
+    if q == t:
+        return 1.0
+    if q in t or t in q:
+        return 0.85
+    qt = set(re.findall(r"[a-z0-9\u4e00-\u9fff]+", q))
+    tt = set(re.findall(r"[a-z0-9\u4e00-\u9fff]+", t))
+    if not qt or not tt:
+        return 0.0
+    return len(qt & tt) / max(len(qt), len(tt))
+
+
+def _strip_discogs_disambig(name: str) -> str:
+    return re.sub(r"\s*\(\d+\)\s*$", "", (name or "").strip()).strip()
+
+
+def resolve_discogs_artist_card(
+    name: str,
+    *,
+    kind: str = "person",
+    client: httpx.Client | None = None,
+    db: Session | None = None,
+) -> dict[str, Any] | None:
+    """Fetch Discogs artist profile as person-card fields (first authority for 聆乐 names)."""
+    query = (name or "").strip()
+    if not query:
+        return None
+    if db is not None:
+        try:
+            if not load_discogs_config(db).get("enabled", True):
+                return None
+        except Exception:  # noqa: BLE001
+            pass
+    if not _auth_params(db):
+        logger.info("discogs_artist_skip_no_auth name=%s", query)
+        return None
+
+    own = client is None
+    http = client or httpx.Client(timeout=20.0, headers={"User-Agent": _UA}, follow_redirects=True)
+    try:
+        hits = suggest_discogs_artists(query, client=http, db=db, limit=8)
+        if not hits:
+            return None
+        # Prefer exact/high score; among ties prefer titles without "(2)" disambiguation
+        def rank_key(h: dict[str, Any]) -> tuple[float, int, str]:
+            title = str(h.get("title") or "")
+            score = _artist_name_score(query, title)
+            disambig_penalty = 1 if re.search(r"\(\d+\)\s*$", title) else 0
+            return (score, -disambig_penalty, title)
+
+        ranked = sorted(hits, key=rank_key, reverse=True)
+        best = ranked[0]
+        score = _artist_name_score(query, str(best.get("title") or ""))
+        # Prefer near-exact artist title; weak fuzzy matches invent wrong people
+        if score < 0.72:
+            return None
+        artist_id = int(best["id"])
+        params = _auth_params(db)
+        raw = _get_json(http, f"{_API}/artists/{artist_id}", params=params)
+        if not raw:
+            return None
+        display = _strip_discogs_disambig(str(raw.get("name") or best.get("title") or query))
+        if _artist_name_score(query, display) < 0.72:
+            return None
+        profile = str(raw.get("profile") or "").strip()
+        profile = re.sub(r"\[/?[^\]]+\]", "", profile)
+        profile = re.sub(r"\s+\n", "\n", profile).strip()
+        # Reject placeholder / truncated Discogs stubs
+        if profile and (
+            len(profile) < 40
+            or profile.lower().startswith("please note")
+            or profile.endswith(" is .")
+            or profile.endswith(" is.")
+        ):
+            profile = ""
+        if len(profile) > 1200:
+            profile = profile[:1197].rstrip() + "…"
+        if not profile and not display:
+            return None
+        images = raw.get("images") or []
+        portrait = ""
+        if isinstance(images, list):
+            for img in images:
+                if isinstance(img, dict) and img.get("uri"):
+                    portrait = str(img.get("uri") or "")
+                    if str(img.get("type") or "") == "primary":
+                        break
+        uri = str(raw.get("uri") or best.get("uri") or "")
+        if uri and not uri.startswith("http"):
+            uri = f"https://www.discogs.com{uri}"
+        realname = str(raw.get("realname") or "").strip()
+        namevars = [str(x) for x in (raw.get("namevariations") or []) if x][:12]
+        return {
+            "name": query,
+            "kind": kind,
+            "display_name": display,
+            "summary": profile or (f"{display}" + (f" — also known as {realname}" if realname else "")),
+            "lifespan": "",
+            "era": "",
+            "portrait_url": portrait,
+            "external_ids": {
+                "discogs": str(artist_id),
+                "discogs_uri": uri,
+                "person_kind": kind,
+                "realname": realname,
+                "namevariations": namevars,
+            },
+            "provenance": [{"source_id": "discogs", "url": uri or f"https://www.discogs.com/artist/{artist_id}"}],
+            "source": "enriched",
+            "authority": "discogs",
+        }
+    except DiscogsError as exc:
+        logger.warning("discogs_artist_resolve_failed name=%s err=%s", query, exc)
+        return None
+    except httpx.HTTPError as exc:
+        logger.warning("discogs_artist_http_failed name=%s err=%s", query, exc)
+        return None
+    finally:
+        if own:
+            http.close()
 
 
 def resolve_discogs_message(

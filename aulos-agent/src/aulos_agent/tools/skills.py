@@ -17,6 +17,8 @@ LISTENING_PLAYBOOK_TRIGGERS: tuple[str, ...] = (
     "listening.width",
     "listening.depth",
     "listening.compose",
+    "listening.external_review",
+    "listening.revise",
     "listening.eval",
 )
 
@@ -71,6 +73,7 @@ def run_listening_skill(trigger: str, context_json: str) -> str:
     """
     context = _parse_context(context_json)
     disabled = set(str(x) for x in (context.get("disabled_skill_ids") or []))
+    _attach_review_llms(context)
     runtime = _runtime()
     step = runtime.run_trigger(trigger, context, disabled_skill_ids=disabled)
     versions = dict(context.get("skill_versions") or {})
@@ -78,11 +81,184 @@ def run_listening_skill(trigger: str, context_json: str) -> str:
     context["skill_versions"] = versions
     steps = list(context.get("_agent_steps") or [])
     steps.append(_step_payload(step))
+    review = runtime._review_milestone_step(trigger, context)
+    if review is not None:
+        steps.append(_step_payload(review))
+        versions[review.skill_id] = review.skill_version
+        context["skill_versions"] = versions
     context["_agent_steps"] = steps
     return json.dumps(
-        {"step": _step_payload(step), "context": context},
+        {
+            "step": _step_payload(step),
+            "context": _jsonable_context(context),
+            "review_step": _step_payload(review) if review is not None else None,
+        },
         ensure_ascii=False,
     )
+
+
+def _jsonable_context(context: dict[str, Any]) -> dict[str, Any]:
+    """Drop callables so context survives tool JSON round-trips."""
+    return {k: v for k, v in context.items() if not callable(v)}
+
+
+def _ops_llm_complete(system_prompt: str):
+    """Sync completer via aulos-api ops LLM (DeepSeek/Grok) when agent provider is fake."""
+
+    def complete(prompt: str) -> str | None:
+        try:
+            import asyncio
+
+            from aulos_api.db.session import SessionLocal, get_engine, init_db
+            from aulos_api.services.llm_providers import invoke_openai_compatible, load_llm_config
+
+            init_db()
+            get_engine()
+            assert SessionLocal is not None
+            db = SessionLocal()
+            try:
+                cfg = load_llm_config(db)
+                if cfg.active_provider == "fake" or not cfg.ready_for_live:
+                    return None
+                creds = cfg.provider_creds()
+                if creds is None or not creds.complete:
+                    return None
+
+                async def _run() -> str:
+                    return await invoke_openai_compatible(
+                        provider=cfg.active_provider,
+                        creds=creds,
+                        message=prompt,
+                        system_prompt=system_prompt,
+                        timeout=120.0,
+                    )
+
+                try:
+                    loop = asyncio.get_running_loop()
+                except RuntimeError:
+                    loop = None
+                if loop and loop.is_running():
+                    import concurrent.futures
+
+                    with concurrent.futures.ThreadPoolExecutor(max_workers=1) as pool:
+                        return pool.submit(lambda: asyncio.run(_run())).result(timeout=150)
+                return asyncio.run(_run())
+            finally:
+                db.close()
+        except Exception:  # noqa: BLE001
+            return None
+
+    return complete
+
+
+def _attach_intent_critic(context: dict[str, Any]) -> None:
+    """Re-attach LLM Critic completer each tool call (callables cannot travel in JSON)."""
+    if context.get("review_llm_enabled") is False:
+        return
+    if callable(context.get("llm_critic_complete")):
+        return
+    system = (
+        "You are Aulos Intent Critic. Review ONLY; never write a guide. "
+        "Return ONLY JSON with verdict PASS|FAIL."
+    )
+    try:
+        from aulos_agent.config.settings import get_settings
+        from aulos_agent.llm.factory import create_chat_model
+
+        cfg = get_settings()
+        if getattr(cfg, "llm_provider", "fake") == "fake":
+            context["llm_critic_complete"] = _ops_llm_complete(system)
+            return
+        model = create_chat_model(cfg)
+
+        def complete(prompt: str) -> str | None:
+            from langchain_core.messages import HumanMessage, SystemMessage
+
+            resp = model.invoke(
+                [SystemMessage(content=system), HumanMessage(content=prompt)]
+            )
+            return str(getattr(resp, "content", "") or "")
+
+        context["llm_critic_complete"] = complete
+    except Exception:  # noqa: BLE001
+        context["llm_critic_complete"] = _ops_llm_complete(system)
+
+
+def _attach_external_review_expert(context: dict[str, Any]) -> None:
+    """Music-guide + music-analysis expert completer for SPEC-022 hard-flaw review."""
+    if context.get("review_llm_enabled") is False:
+        return
+    if callable(context.get("llm_external_review_complete")):
+        return
+    system = (
+        "You are a senior music appreciation-guide expert and music-analysis "
+        "expert for Aulos. Find hard flaws (硬伤) in the finished listening "
+        "guide: wrong work/composer/portrait, foreign chambers, form/movement "
+        "errors, missing listening map/anatomy, weak ear cues, factual mistakes. "
+        "Do NOT hunt or score web sources. Be critical and specific. "
+        "Review ONLY; never rewrite the full guide. Return ONLY JSON."
+    )
+    try:
+        from aulos_agent.config.settings import get_settings
+        from aulos_agent.llm.factory import create_chat_model
+
+        cfg = get_settings()
+        if getattr(cfg, "llm_provider", "fake") == "fake":
+            context["llm_external_review_complete"] = _ops_llm_complete(system)
+            return
+        model = create_chat_model(cfg)
+
+        def complete(prompt: str) -> str | None:
+            from langchain_core.messages import HumanMessage, SystemMessage
+
+            resp = model.invoke(
+                [SystemMessage(content=system), HumanMessage(content=prompt)]
+            )
+            return str(getattr(resp, "content", "") or "")
+
+        context["llm_external_review_complete"] = complete
+    except Exception:  # noqa: BLE001
+        context["llm_external_review_complete"] = _ops_llm_complete(system)
+
+
+def _attach_revise_proofreader(context: dict[str, Any]) -> None:
+    """Proofread/repair completer that rewrites dossier fields from the review report."""
+    if context.get("review_llm_enabled") is False:
+        return
+    if callable(context.get("llm_revise_complete")):
+        return
+    system = (
+        "You are Aulos revise proofreader: a music-guide editor who repairs "
+        "dossier fields to clear expert hard-flaw findings. Return ONLY JSON "
+        "patches (thesis, points, listening_map, caveats). Do not emit full HTML."
+    )
+    try:
+        from aulos_agent.config.settings import get_settings
+        from aulos_agent.llm.factory import create_chat_model
+
+        cfg = get_settings()
+        if getattr(cfg, "llm_provider", "fake") == "fake":
+            context["llm_revise_complete"] = _ops_llm_complete(system)
+            return
+        model = create_chat_model(cfg)
+
+        def complete(prompt: str) -> str | None:
+            from langchain_core.messages import HumanMessage, SystemMessage
+
+            resp = model.invoke(
+                [SystemMessage(content=system), HumanMessage(content=prompt)]
+            )
+            return str(getattr(resp, "content", "") or "")
+
+        context["llm_revise_complete"] = complete
+    except Exception:  # noqa: BLE001
+        context["llm_revise_complete"] = _ops_llm_complete(system)
+
+
+def _attach_review_llms(context: dict[str, Any]) -> None:
+    _attach_intent_critic(context)
+    _attach_external_review_expert(context)
+    _attach_revise_proofreader(context)
 
 
 @tool
@@ -91,6 +267,7 @@ def finalize_listening_guide(context_json: str) -> str:
     context = _parse_context(context_json)
     # Ensure guide exists if compose was skipped — run compose trigger via public API
     if not context.get("guide_html") and context.get("work_title"):
+        _attach_review_llms(context)
         runtime = _runtime()
         step = runtime.run_trigger("listening.compose", context)
         versions = dict(context.get("skill_versions") or {})
@@ -98,6 +275,9 @@ def finalize_listening_guide(context_json: str) -> str:
         context["skill_versions"] = versions
         steps = list(context.get("_agent_steps") or [])
         steps.append(_step_payload(step))
+        review = runtime._review_milestone_step("listening.compose", context)
+        if review is not None:
+            steps.append(_step_payload(review))
         context["_agent_steps"] = steps
     eval_pass = bool(context.get("pass", True))
     eval_score = int(context.get("eval_score") or 0)
@@ -105,6 +285,9 @@ def finalize_listening_guide(context_json: str) -> str:
     if not any(s.get("id") == "eval" and s.get("status") == "completed" for s in steps):
         eval_pass = bool(context.get("guide_html"))
         eval_score = eval_score or (8 if eval_pass else 0)
+    if context.get("review_failed"):
+        eval_pass = False
+        eval_score = min(eval_score, 7)
     report = {
         "steps": steps,
         "guide_html": str(context.get("guide_html") or ""),
@@ -116,7 +299,11 @@ def finalize_listening_guide(context_json: str) -> str:
         "eval_pass": eval_pass,
         "eval_score": eval_score,
         "skill_versions": dict(context.get("skill_versions") or {}),
-        "context": {k: v for k, v in context.items() if k != "_agent_steps"},
+        "context": {
+            k: v
+            for k, v in _jsonable_context(context).items()
+            if k != "_agent_steps"
+        },
         "source": "agent-skills",
     }
     return json.dumps(report, ensure_ascii=False)

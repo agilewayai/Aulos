@@ -83,3 +83,114 @@ def retrieve_sync(
     except httpx.HTTPError as exc:
         logger.warning("knowledge_retrieve_failed err=%s", exc)
         return {}
+
+
+def fetch_composer_dossier_sync(composer_id: str) -> dict[str, Any]:
+    """Sync GET composer dossier for listening thicken (SPEC-025)."""
+    cid = (composer_id or "").strip()
+    if not cid or not knowledge_enabled():
+        return {}
+    url = f"{knowledge_base_url()}/v1/kb/composers/{cid}/dossier"
+    headers: dict[str, str] = {}
+    token = (get_settings().knowledge_admin_token or "").strip()
+    if token:
+        headers["Authorization"] = f"Bearer {token}"
+    try:
+        with httpx.Client(timeout=30.0) as client:
+            resp = client.get(url, headers=headers)
+            if resp.status_code >= 400:
+                logger.warning(
+                    "knowledge_dossier_http composer=%s status=%s", cid, resp.status_code
+                )
+                return {}
+            data = resp.json()
+            return data if isinstance(data, dict) else {}
+    except httpx.HTTPError as exc:
+        logger.warning("knowledge_dossier_failed composer=%s err=%s", cid, exc)
+        return {}
+
+
+def dossier_is_thin(dossier: dict[str, Any] | None) -> bool:
+    """True when knowledge-plane composer dossier cannot thicken Salon craft."""
+    from aulos_skills.knowledge_thicken import dossier_is_thin as _thin
+
+    return _thin(dossier)
+
+
+def enqueue_composer_dossier_build_sync(composer_id: str) -> dict[str, Any]:
+    """Fire-and-forget POST build-dossier (SPEC-026). Never blocks compose on crawl."""
+    cid = (composer_id or "").strip()
+    if not cid or not knowledge_enabled():
+        return {}
+    url = f"{knowledge_base_url()}/v1/admin/composers/{cid}/build-dossier"
+    headers: dict[str, str] = {"Content-Type": "application/json"}
+    token = (get_settings().knowledge_admin_token or "").strip()
+    if token:
+        headers["Authorization"] = f"Bearer {token}"
+    try:
+        with httpx.Client(timeout=15.0) as client:
+            resp = client.post(url, headers=headers, json={"async_mode": True})
+            if resp.status_code >= 400:
+                logger.warning(
+                    "knowledge_dossier_enqueue_http composer=%s status=%s body=%s",
+                    cid,
+                    resp.status_code,
+                    (resp.text or "")[:200],
+                )
+                return {"ok": False, "status": resp.status_code, "composer_id": cid}
+            data = resp.json() if resp.content else {}
+            logger.info(
+                "knowledge_dossier_enqueued composer=%s job=%s status=%s",
+                cid,
+                (data or {}).get("job_id"),
+                (data or {}).get("status"),
+            )
+            return {"ok": True, "composer_id": cid, **(data if isinstance(data, dict) else {})}
+    except httpx.HTTPError as exc:
+        logger.warning("knowledge_dossier_enqueue_failed composer=%s err=%s", cid, exc)
+        return {"ok": False, "composer_id": cid, "error": str(exc)}
+
+
+def ensure_catalog_composer_dossiers(*, dry_run: bool = False) -> dict[str, Any]:
+    """Enqueue build-dossier for every Catalog composer with a thin knowledge dossier."""
+    try:
+        from aulos_skills.identity import load_catalog
+    except ImportError:
+        return {"ok": False, "error": "aulos_skills unavailable", "rich": [], "enqueued": [], "failed": []}
+
+    if not knowledge_enabled() and not dry_run:
+        return {
+            "ok": False,
+            "error": "knowledge plane disabled",
+            "dry_run": dry_run,
+            "rich": [],
+            "enqueued": [],
+            "failed": [],
+        }
+
+    load_catalog.cache_clear()
+    cat = load_catalog()
+    rich: list[str] = []
+    enqueued: list[dict[str, Any]] = []
+    failed: list[dict[str, Any]] = []
+    for cid in sorted(cat.composers.keys()):
+        dossier = fetch_composer_dossier_sync(cid) if knowledge_enabled() else {}
+        if not dossier_is_thin(dossier):
+            rich.append(cid)
+            continue
+        if dry_run:
+            enqueued.append({"composer_id": cid, "dry_run": True, "ok": True})
+            continue
+        result = enqueue_composer_dossier_build_sync(cid)
+        if result.get("ok"):
+            enqueued.append(result)
+        else:
+            failed.append(result or {"composer_id": cid, "ok": False})
+    return {
+        "ok": not failed,
+        "dry_run": dry_run,
+        "rich": rich,
+        "enqueued": enqueued,
+        "failed": failed,
+        "composer_count": len(cat.composers),
+    }

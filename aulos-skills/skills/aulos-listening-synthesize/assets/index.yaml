@@ -21,6 +21,38 @@ composers:
       - frédéric chopin
       - 肖邦
       - 弗雷德里克·肖邦
+  - id: wolfgang-amadeus-mozart
+    path: wolfgang-amadeus-mozart.yaml
+    aliases:
+      - mozart
+      - 莫扎特
+      - 莫札特
+      - wolfgang amadeus mozart
+      - w. a. mozart
+  - id: felix-mendelssohn
+    path: felix-mendelssohn.yaml
+    aliases:
+      - mendelssohn
+      - felix mendelssohn
+      - mendelssohn-bartholdy
+      - 门德尔松
+      - 门德尔松-巴托尔迪
+  - id: gustav-mahler
+    path: gustav-mahler.yaml
+    aliases:
+      - mahler
+      - gustav mahler
+      - 马勒
+      - 古斯塔夫·马勒
+  - id: antonin-dvorak
+    path: antonin-dvorak.yaml
+    aliases:
+      - dvorak
+      - dvořák
+      - antonin dvorak
+      - antonín dvořák
+      - 德沃夏克
+      - 德弗札克
 
 families:
   - id: solo-cello-suites
@@ -31,3 +63,13 @@ families:
     path: keyboard-variations.yaml
   - id: character-dance-piano
     path: character-dance-piano.yaml
+  - id: lyric-piano-miniatures
+    path: lyric-piano-miniatures.yaml
+  - id: piano-concerto
+    path: piano-concerto.yaml
+  - id: sacred-requiem
+    path: sacred-requiem.yaml
+  - id: symphony-orchestra
+    path: symphony-orchestra.yaml
+  - id: piano-trio
+    path: piano-trio.yaml

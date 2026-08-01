@@ -8,10 +8,10 @@ managed_by: "aries-harness"
 fingerprint: "aries-harness/history-doc/v1"
 generated_by: "/aries-harness history-refresh"
 initialized_at: "2026-07-25T17:25:00+00:00"
-generated_at: "2026-08-01T06:31:43+00:00"
+generated_at: "2026-08-01T20:59:34+00:00"
 effective_status: "generated"
-effective_since: "2026-08-01T06:31:43+00:00"
-content_fingerprint: "sha256:e9372b3bcc76ab567af0fb3add2ac5c2db1395ec51f5434b354f5256797d3039"
+effective_since: "2026-08-01T20:59:34+00:00"
+content_fingerprint: "sha256:edee587868e5ad861372e4b663c97d65ae3164f513e970dd025af7f5ebb10fef"
 trace_history_source: "filesystem-only"
 trace_last_commit_sha: ""
 trace_last_commit_at: ""
@@ -19,9 +19,30 @@ trace_revision_count: "0"
 ---
 # Timeline
 
-Generated at: `2026-08-01T06:31:43+00:00`
+Generated at: `2026-08-01T20:59:34+00:00`
 
 ## Journal milestones
+
+### 2026-08-01T17:15:00Z
+
+- **REQ-010 soft-cap → 2048:** `WORKS_CAP` raised from 400 to 2048.
+- **Plaza “lost diaries” root cause:** API `db_ha` stuck on **SQLite failover**
+
+### 2026-08-01T17:05:00Z
+
+- **REQ-010 Δ Composer dossier works + identity:** Famous QID lock (Mozart no longer Franz
+
+### 2026-08-01T08:10:00Z
+
+- **REQ-012 Multi-source person aggregate + bilingual:** field-merge Discogs + Wikidata +
+
+### 2026-08-01T07:45:00Z
+
+- **REQ-011 match fix:** strict person identity (no CJK soft match; orphan RAG cannot invent
+
+### 2026-08-01T07:30:00Z
+
+- **REQ-011 Person entity cards:** `person_entity.resolve_person_card` — local composer+RAG first,
 
 ### 2026-08-01T06:35:00Z
 
@@ -36,29 +57,9 @@ Generated at: `2026-08-01T06:31:43+00:00`
 
 - **Crawl async queue (META-001 §3.3):** `job_queue.py` background dispatch + drain loop;
 
-### 2026-07-27T16:45:00Z
-
-- **Fix Explore seeds 404:** redeployed `aulos-knowledge` / ops so `/explore/seeds` + `prepare-seeds` live;
-
-### 2026-07-27T16:40:00Z
-
-- **Explore product UX (META-001 §3.4 Meta Play Simple):** A–Z composer picker + Famous/Featured strip;
-- Expanded `FAMOUS_COMPOSERS` seed network; OPS Explore module redesigned as human-first entry.
-
-### 2026-07-27T16:20:00Z
-
-- **REQ-009 follow-on:** explore → auto-enqueue authority crawl (Wikidata/Wikipedia/MusicBrainz/IMSLP);
-
-### 2026-07-27T13:10:00Z
-
-- **REQ-009 Source discovery:** `source_discovery.py` depth+breadth graph search from registry seeds +
-
-### 2026-07-27T12:50:00Z
-
-- **KB-DIAG-001 / KB-IMPROVE-001:** diagnosis engine (`diagnosis.py`), improvement executor
-
 ## Recent git commits
 
+- `1d325d5` 2026-08-01 Ship knowledge discovery, dossier, and benchmark console; refresh fleet honeycomb.
 - `491b042` 2026-07-27 Ship authority source registry, OPS knowledge console, and refresh fleet honeycomb.
 - `5633e94` 2026-07-27 Ship Ops task queue, dev blog v2, and refresh fleet honeycomb.
 - `c3009d2` 2026-07-27 Harden platform security, ship fleet DevOps control, and refresh harness honeycomb.
@@ -72,15 +73,15 @@ Generated at: `2026-08-01T06:31:43+00:00`
 
 ## Working tree snapshot
 
-- `M` `aulos-api/.aries_harness/INDEX.md`
-- `M` `aulos-api/.aries_harness/JOURNAL.md`
-- `M` `aulos-api/.aries_harness/STATE.md`
-- `M` `aulos-api/.aries_harness/TASK_STACK.md`
-- `M` `aulos-api/.aries_harness/history/DAILY_SUMMARY_INDEX.md`
-- `M` `aulos-api/.aries_harness/history/DOC_TRACE.md`
-- `M` `aulos-api/.aries_harness/history/README.md`
-- `M` `aulos-api/.aries_harness/history/RETROSPECTIVE.md`
-- `M` `aulos-api/.aries_harness/history/ROADMAP.md`
-- `M` `aulos-api/.aries_harness/history/STATUS.md`
-- `M` `aulos-api/.aries_harness/history/TIMELINE.md`
-- `M` `aulos-api/.aries_harness/history/daily/2026-07-25.md`
+- `M` `aulos-agent/.aries_harness/INDEX.md`
+- `M` `aulos-agent/.aries_harness/history/DAILY_SUMMARY_INDEX.md`
+- `M` `aulos-agent/.aries_harness/history/DOC_TRACE.md`
+- `M` `aulos-agent/.aries_harness/history/README.md`
+- `M` `aulos-agent/.aries_harness/history/RETROSPECTIVE.md`
+- `M` `aulos-agent/.aries_harness/history/ROADMAP.md`
+- `M` `aulos-agent/.aries_harness/history/STATUS.md`
+- `M` `aulos-agent/.aries_harness/history/TIMELINE.md`
+- `M` `aulos-agent/.aries_harness/history/daily/2026-07-25.md`
+- `M` `aulos-agent/.aries_harness/history/daily/2026-07-26.md`
+- `M` `aulos-agent/.aries_harness/history/daily/2026-07-27.md`
+- `M` `aulos-agent/.aries_harness/history/daily/2026-08-01.md`

@@ -82,6 +82,9 @@ class ListeningGuideOut(BaseModel):
     skill_versions: dict[str, str] = {}
     eval_pass: bool | None = None
     eval_score: int | None = None
+    process_scorecard: dict | None = None
+    generation_rounds: dict | None = None
+    external_review_report: dict | None = None
     created_at: datetime | str | None = None
     updated_at: datetime | str | None = None
     published: bool = False

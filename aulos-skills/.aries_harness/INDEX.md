@@ -8,10 +8,10 @@ managed_by: "aries-harness"
 fingerprint: "aries-harness/bootstrap-doc/v1"
 generated_by: "/aries-harness well-organized"
 initialized_at: "2026-07-25T11:20:05Z"
-last_organized_at: "2026-08-01T06:31:13+00:00"
+last_organized_at: "2026-08-01T20:59:01+00:00"
 effective_status: "generated"
-effective_since: "2026-08-01T06:31:13+00:00"
-content_fingerprint: "sha256:3b76f5030d6d0d5b201f9edfcc01a7d62b3c4d6d4e172e5e98aae09c785cdc3b"
+effective_since: "2026-08-01T20:59:01+00:00"
+content_fingerprint: "sha256:ed71b12cb69414685cd2a570daedea2ff26ef4eff3776e744b4d20a0e0aa3953"
 trace_history_source: "filesystem-only"
 trace_last_commit_sha: ""
 trace_last_commit_at: ""
@@ -19,7 +19,7 @@ trace_revision_count: "0"
 ---
 # Harness Index
 
-Last organized: `2026-08-01T06:31:13+00:00`
+Last organized: `2026-08-01T20:59:01+00:00`
 
 Canonical spelling: `/aries-harness well-organized`
 
@@ -70,6 +70,19 @@ Fingerprint marker: `aries-harness` / `aries-harness/bootstrap-doc/v1`
 - [REQ-005-ambient-media-identity.md](references/requests/REQ-005-ambient-media-identity.md)
 - [REQ-006-work-identity-catalog.md](references/requests/REQ-006-work-identity-catalog.md)
 - [REQ-007-node-decontam-rework.md](references/requests/REQ-007-node-decontam-rework.md)
+- [REQ-008-adversarial-process-review.md](references/requests/REQ-008-adversarial-process-review.md)
+- [REQ-009-process-scorecard.md](references/requests/REQ-009-process-scorecard.md)
+- [REQ-012-external-review-round.md](references/requests/REQ-012-external-review-round.md)
+- [REQ-013-product-prose-hygiene.md](references/requests/REQ-013-product-prose-hygiene.md)
+- [REQ-014-craft-raise-work-resolver.md](references/requests/REQ-014-craft-raise-work-resolver.md)
+- [REQ-015-knowledge-thicken-product-score.md](references/requests/REQ-015-knowledge-thicken-product-score.md)
+- [REQ-016-systemic-cold-thicken.md](references/requests/REQ-016-systemic-cold-thicken.md)
+- [REQ-017-family-coverage.md](references/requests/REQ-017-family-coverage.md)
+- [REQ-018-catalog-craft-fleet-dossier.md](references/requests/REQ-018-catalog-craft-fleet-dossier.md)
+- [REQ-019-unknown-case-thicken.md](references/requests/REQ-019-unknown-case-thicken.md)
+- [REQ-020-promote-staging.md](references/requests/REQ-020-promote-staging.md)
+- [REQ-021-dimensional-promote.md](references/requests/REQ-021-dimensional-promote.md)
+- [REQ-022-identity-freeze-catalog-facets.md](references/requests/REQ-022-identity-freeze-catalog-facets.md)
 
 #### `references/specs/`
 - role: behavior and acceptance contracts derived from requests
@@ -84,6 +97,19 @@ Fingerprint marker: `aries-harness` / `aries-harness/bootstrap-doc/v1`
 - [SPEC-009-node-decontam-rework.md](references/specs/SPEC-009-node-decontam-rework.md)
 - [SPEC-016-module-split-seams.md](references/specs/SPEC-016-module-split-seams.md)
 - [SPEC-017-dev-blog-writing-contract.md](references/specs/SPEC-017-dev-blog-writing-contract.md)
+- [SPEC-018-adversarial-process-review.md](references/specs/SPEC-018-adversarial-process-review.md)
+- [SPEC-019-process-scorecard.md](references/specs/SPEC-019-process-scorecard.md)
+- [SPEC-022-external-review-round.md](references/specs/SPEC-022-external-review-round.md)
+- [SPEC-023-product-prose-hygiene.md](references/specs/SPEC-023-product-prose-hygiene.md)
+- [SPEC-024-craft-raise.md](references/specs/SPEC-024-craft-raise.md)
+- [SPEC-025-knowledge-thicken-product-score.md](references/specs/SPEC-025-knowledge-thicken-product-score.md)
+- [SPEC-026-systemic-cold-thicken.md](references/specs/SPEC-026-systemic-cold-thicken.md)
+- [SPEC-027-family-coverage.md](references/specs/SPEC-027-family-coverage.md)
+- [SPEC-028-catalog-craft-fleet-dossier.md](references/specs/SPEC-028-catalog-craft-fleet-dossier.md)
+- [SPEC-029-unknown-case-thicken.md](references/specs/SPEC-029-unknown-case-thicken.md)
+- [SPEC-030-promote-staging.md](references/specs/SPEC-030-promote-staging.md)
+- [SPEC-031-dimensional-promote.md](references/specs/SPEC-031-dimensional-promote.md)
+- [SPEC-032-identity-freeze-catalog-facets.md](references/specs/SPEC-032-identity-freeze-catalog-facets.md)
 
 #### `references/stories/`
 - role: sprintable slices linked to specs and verification
@@ -125,6 +151,7 @@ Fingerprint marker: `aries-harness` / `aries-harness/bootstrap-doc/v1`
 - [ADR-001-filesystem-skill-packs.md](decisions/adrs/ADR-001-filesystem-skill-packs.md)
 - [ADR-002-domain-runtime-listening-skills.md](decisions/adrs/ADR-002-domain-runtime-listening-skills.md)
 - [ADR-004-catalog-over-heuristics.md](decisions/adrs/ADR-004-catalog-over-heuristics.md)
+- [ADR-005-hybrid-adversarial-review.md](decisions/adrs/ADR-005-hybrid-adversarial-review.md)
 - [README.md](decisions/adrs/README.md)
 
 ## RunCookingLayer

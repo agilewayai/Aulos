@@ -1,0 +1,17 @@
+composer_id: felix-mendelssohn
+name_en: Felix Mendelssohn
+name_zh: 菲利克斯·门德尔松
+aliases:
+  - mendelssohn
+  - felix mendelssohn
+  - felix mendelssohn-bartholdy
+  - mendelssohn-bartholdy
+  - bartholdy
+  - 门德尔松
+  - 门德尔松-巴托尔迪
+  - 菲利克斯·门德尔松
+lifespan: 1809–1847
+era: romantic
+provenance:
+  authority: standard biographical reference
+  notes: Composer card only — work shelves live under works/*.yaml.

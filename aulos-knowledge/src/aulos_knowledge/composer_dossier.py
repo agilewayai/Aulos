@@ -21,6 +21,7 @@ from aulos_knowledge.db import (
     KnowledgeChunk,
     KnowledgeDocument,
     MediaAsset,
+    RecordingEntity,
     SourceAuthority,
     WorkEntity,
 )
@@ -31,15 +32,27 @@ from aulos_knowledge.publish_policy import document_status_for_source
 
 logger = logging.getLogger("aulos_knowledge.composer_dossier")
 
-EXTRACTOR_VERSION = "wikidata-dossier/0.1.0"
+EXTRACTOR_VERSION = "wikidata-dossier/0.2.0"
 UA = "AulosKnowledge/0.1 (https://aulos.purezen.ai; knowledge-plane)"
 SPARQL_ENDPOINT = "https://query.wikidata.org/sparql"
 ENTITY_DATA = "https://www.wikidata.org/wiki/Special:EntityData"
-WORKS_CAP = 80
+WORKS_CAP = 2048
+WORKS_PAGE = 100
 AWARDS_CAP = 12
 POSITIONS_CAP = 16
 RESIDENCE_CAP = 12
 EDUCATION_CAP = 8
+HTTP_TIMEOUT = 120.0
+
+# Non-music P136 / label noise (films about composers, etc.)
+_GENRE_BLOCK = re.compile(
+    r"(?i)\b("
+    r"film|movie|television|tv\s*series|documentary|anime|video\s*game|podcast|"
+    r"cartoon|rumba|hip[\s-]?hop|rap\s*music|k-?pop|j-?pop|disco|house\s*music"
+    r")\b"
+)
+# Prefer excluding films without expensive subclass walks (Wikidata timeouts)
+_FILM_QID = "Q11424"
 
 EVENT_TYPES = frozenset(
     {
@@ -178,34 +191,101 @@ def fetch_entity_json(
     return resp.json()
 
 
-def fetch_sparql_works(
-    client: httpx.Client,
-    *,
-    source: SourceAuthority,
-    composer_qid: str,
-    limit: int = WORKS_CAP,
-) -> list[dict[str, Any]]:
-    """Works with P86 = composer; optional inception, genre, part-of."""
-    q = f"""
-SELECT ?work ?workLabel ?inception ?genreLabel ?partOf ?partOfLabel ?catalog WHERE {{
-  ?work wdt:P86 wd:{composer_qid} .
-  OPTIONAL {{ ?work wdt:P571 ?inception }}
-  OPTIONAL {{ ?work wdt:P136 ?genre }}
-  OPTIONAL {{ ?work wdt:P361 ?partOf }}
-  OPTIONAL {{ ?work wdt:P528 ?catalog }}
-  SERVICE wikibase:label {{ bd:serviceParam wikibase:language "en,zh" }}
-}}
-LIMIT {int(limit)}
-"""
-    assert_url_allowed(source, SPARQL_ENDPOINT)
-    throttle(source)
-    resp = client.get(
-        SPARQL_ENDPOINT,
-        params={"query": q, "format": "json"},
-        headers={"Accept": "application/sparql-results+json", "User-Agent": UA},
+def _work_row_id(qid: str) -> str:
+    q = (qid or "").strip()
+    if q.startswith("wd:"):
+        return q
+    return f"wd:{q}" if q else "wd:unknown"
+
+
+def normalize_genre(genre: str) -> str:
+    """Drop non-music genre labels (film / TV / game noise)."""
+    g = (genre or "").strip()
+    if not g or _GENRE_BLOCK.search(g):
+        return ""
+    return g
+
+
+def catalog_sort_key(catalog: str) -> tuple[int, int, str]:
+    """Parse BWV / K. / KV / Op. style numbers for stable ordering."""
+    raw = (catalog or "").strip()
+    if not raw:
+        return (9, 10**9, "")
+    m = re.search(
+        r"(?i)\b(?:BWV|B\.\s*W\.\s*V\.?|K\.?\s*V?\.?|KV|Op\.?|Opp\.?|Hob\.?|D\.?|WWV|S\.?)\s*([0-9]+)",
+        raw,
     )
-    resp.raise_for_status()
-    bindings = ((resp.json().get("results") or {}).get("bindings") or [])
+    if m:
+        return (0, int(m.group(1)), raw.casefold())
+    m2 = re.search(r"([0-9]{1,5})", raw)
+    if m2:
+        return (1, int(m2.group(1)), raw.casefold())
+    return (8, 10**9, raw.casefold())
+
+
+def work_sort_key(work: dict[str, Any]) -> tuple:
+    year = str(work.get("year_start") or "").strip()
+    year_key = year if re.match(r"^-?\d{3,4}", year) else "9999"
+    cat = ""
+    if work.get("catalog"):
+        cat = str(work["catalog"])
+    elif work.get("catalog_numbers"):
+        cats = work["catalog_numbers"]
+        if isinstance(cats, list) and cats:
+            cat = str(cats[0])
+    title = str(work.get("title_en") or work.get("id") or "")
+    return (year_key, catalog_sort_key(cat), title.casefold())
+
+
+def work_node_from_raw(w: dict[str, Any]) -> dict[str, Any]:
+    genre = normalize_genre(str(w.get("genre") or ""))
+    catalogs = [str(w["catalog"])] if w.get("catalog") else []
+    return {
+        "id": _work_row_id(str(w.get("qid") or w.get("id") or "")),
+        "title_en": str(w.get("title_en") or ""),
+        "title_zh": str(w.get("title_zh") or ""),
+        "work_kind": str(w.get("work_kind") or "work"),
+        "year_start": str(w.get("year_start") or ""),
+        "year_end": str(w.get("year_end") or ""),
+        "catalog_numbers": catalogs,
+        "facets": {"genre": genre} if genre else {},
+        "children": [],
+        "catalog": catalogs[0] if catalogs else "",
+        "genre": genre,
+    }
+
+
+def group_works_by_year(nodes: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    buckets: dict[str, list[dict[str, Any]]] = {}
+    for n in nodes:
+        if n.get("children"):
+            # flatten: include node itself when it is a root work; skip pure stubs later
+            pass
+        year = str(n.get("year_start") or "").strip() or "undated"
+        buckets.setdefault(year, []).append(n)
+    out: list[dict[str, Any]] = []
+    dated = sorted((y for y in buckets if y != "undated"), key=lambda y: y)
+    for y in dated + (["undated"] if "undated" in buckets else []):
+        works = sorted(buckets[y], key=work_sort_key)
+        out.append({"year": y, "works": works, "count": len(works)})
+    return out
+
+
+def group_works_by_genre(nodes: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    buckets: dict[str, list[dict[str, Any]]] = {}
+    for n in nodes:
+        facets = n.get("facets") if isinstance(n.get("facets"), dict) else {}
+        genre = normalize_genre(str(n.get("genre") or facets.get("genre") or ""))
+        key = genre or "Unclassified"
+        buckets.setdefault(key, []).append(n)
+    out: list[dict[str, Any]] = []
+    for genre in sorted(buckets.keys(), key=lambda g: (g == "Unclassified", g.casefold())):
+        works = sorted(buckets[genre], key=work_sort_key)
+        out.append({"genre": genre, "works": works, "count": len(works)})
+    return out
+
+
+def _parse_sparql_work_bindings(bindings: list[dict[str, Any]]) -> list[dict[str, Any]]:
     out: list[dict[str, Any]] = []
     seen: set[str] = set()
     for b in bindings:
@@ -219,19 +299,81 @@ LIMIT {int(limit)}
         inception = ((b.get("inception") or {}).get("value") or "")
         year = ""
         if inception:
-            m = re.match(r"^(\d{4})", inception)
-            year = m.group(1) if m else inception[:4]
+            m = re.match(r"^([+-]?\d{4})", inception.replace("T", " ")[:20])
+            if not m:
+                m = re.match(r"^(\d{4})", inception)
+            year = m.group(1).lstrip("+") if m else ""
+            if year.startswith("-"):
+                year = year  # keep negative years
+            elif len(year) > 4:
+                year = year[:4]
+        genre = normalize_genre(((b.get("genreLabel") or {}).get("value") or ""))
         out.append(
             {
                 "qid": wqid,
                 "title_en": ((b.get("workLabel") or {}).get("value") or wqid),
                 "year_start": year,
-                "genre": ((b.get("genreLabel") or {}).get("value") or ""),
+                "genre": genre,
                 "parent_qid": pqid if pqid.startswith("Q") else "",
                 "parent_label": ((b.get("partOfLabel") or {}).get("value") or ""),
                 "catalog": ((b.get("catalog") or {}).get("value") or ""),
             }
         )
+    return out
+
+
+def fetch_sparql_works(
+    client: httpx.Client,
+    *,
+    source: SourceAuthority,
+    composer_qid: str,
+    limit: int = WORKS_CAP,
+) -> list[dict[str, Any]]:
+    """Musical works with P86 = composer; paginated; ordered by year/catalog."""
+    assert_url_allowed(source, SPARQL_ENDPOINT)
+    out: list[dict[str, Any]] = []
+    seen: set[str] = set()
+    page = max(1, min(WORKS_PAGE, int(limit)))
+    offset = 0
+    while len(out) < int(limit):
+        q = f"""
+SELECT ?work ?workLabel ?inception ?genreLabel ?partOf ?partOfLabel ?catalog WHERE {{
+  ?work wdt:P86 wd:{composer_qid} .
+  FILTER NOT EXISTS {{ ?work wdt:P31 wd:{_FILM_QID} }}
+  OPTIONAL {{ ?work wdt:P571 ?inception }}
+  OPTIONAL {{ ?work wdt:P136 ?genre }}
+  OPTIONAL {{ ?work wdt:P361 ?partOf }}
+  OPTIONAL {{ ?work wdt:P528 ?catalog }}
+  SERVICE wikibase:label {{ bd:serviceParam wikibase:language "en,zh" }}
+}}
+ORDER BY ASC(?inception) ASC(?catalog) ASC(?workLabel)
+LIMIT {page}
+OFFSET {offset}
+"""
+        throttle(source)
+        resp = client.get(
+            SPARQL_ENDPOINT,
+            params={"query": q, "format": "json"},
+            headers={"Accept": "application/sparql-results+json", "User-Agent": UA},
+        )
+        resp.raise_for_status()
+        bindings = ((resp.json().get("results") or {}).get("bindings") or [])
+        if not bindings:
+            break
+        batch = _parse_sparql_work_bindings(bindings)
+        fresh = 0
+        for w in batch:
+            if w["qid"] in seen:
+                continue
+            seen.add(w["qid"])
+            out.append(w)
+            fresh += 1
+            if len(out) >= int(limit):
+                break
+        if fresh == 0 or len(bindings) < page:
+            break
+        offset += page
+    out.sort(key=work_sort_key)
     return out
 
 
@@ -241,16 +383,36 @@ def _resolve_place_labels(
     source: SourceAuthority,
     qids: list[str],
 ) -> dict[str, str]:
+    """Batch-resolve labels via wbgetentities (avoid N sequential EntityData calls)."""
     labels: dict[str, str] = {}
     uniq = [q for q in dict.fromkeys(qids) if q.startswith("Q")][:40]
-    for qid in uniq:
+    if not uniq:
+        return labels
+    assert_url_allowed(source, "https://www.wikidata.org/w/api.php")
+    throttle(source)
+    # Wikidata allows up to 50 ids per wbgetentities
+    for i in range(0, len(uniq), 40):
+        chunk = uniq[i : i + 40]
         try:
-            data = fetch_entity_json(client, source=source, qid=qid)
-            ent = (data.get("entities") or {}).get(qid) or {}
-            labels[qid] = _label_from_entity(ent) or qid
+            resp = client.get(
+                "https://www.wikidata.org/w/api.php",
+                params={
+                    "action": "wbgetentities",
+                    "ids": "|".join(chunk),
+                    "props": "labels",
+                    "languages": "en",
+                    "format": "json",
+                },
+            )
+            resp.raise_for_status()
+            entities = (resp.json().get("entities") or {})
+            for qid in chunk:
+                ent = entities.get(qid) or {}
+                labels[qid] = _label_from_entity(ent) or qid
         except Exception as exc:  # noqa: BLE001
-            logger.warning("place_label_failed qid=%s err=%s", qid, exc)
-            labels[qid] = qid
+            logger.warning("place_label_batch_failed err=%s", exc)
+            for qid in chunk:
+                labels.setdefault(qid, qid)
     return labels
 
 
@@ -363,26 +525,38 @@ def extract_life_events(
     return list(by_id.values())
 
 
-def _work_row_id(qid: str) -> str:
-    return f"wd:{qid}"
-
-
 def upsert_works_tree(
     db: Session,
     *,
     composer_id: str,
     works: list[dict[str, Any]],
 ) -> list[WorkEntity]:
-    # First pass: ensure parent stubs exist
+    junk_title = re.compile(
+        r"(?i)albums?\s+in\s+chronological\s+order|^list of\b|discography|filmography"
+    )
+    works = [
+        w
+        for w in works
+        if not junk_title.search(str(w.get("title_en") or ""))
+        and not junk_title.search(str(w.get("parent_label") or ""))
+    ]
+
+    # First pass: ensure parent stubs exist (deduped)
     parent_qids = {w["parent_qid"] for w in works if w.get("parent_qid")}
     work_qids = {w["qid"] for w in works}
-    for pqid in parent_qids - work_qids:
-        parent = next((w for w in works if w.get("parent_qid") == pqid), None)
+    for pqid in sorted(parent_qids - work_qids):
         label = ""
         for w in works:
             if w.get("parent_qid") == pqid:
                 label = w.get("parent_label") or pqid
                 break
+        if junk_title.search(str(label or "")):
+            # Drop part-of link to junk parents
+            for w in works:
+                if w.get("parent_qid") == pqid:
+                    w["parent_qid"] = ""
+                    w["parent_label"] = ""
+            continue
         works.append(
             {
                 "qid": pqid,
@@ -396,20 +570,28 @@ def upsert_works_tree(
             }
         )
 
+    # Dedupe by qid (last wins)
+    by_qid: dict[str, dict[str, Any]] = {}
+    for w in works:
+        by_qid[str(w["qid"])] = w
+    works = list(by_qid.values())
+
     children_of: set[str] = set()
     for w in works:
         if w.get("parent_qid"):
             children_of.add(w["parent_qid"])
 
+    keep_ids: set[str] = set()
     rows: list[WorkEntity] = []
     for w in works:
         wid = _work_row_id(w["qid"])
+        keep_ids.add(wid)
         row = db.get(WorkEntity, wid)
         if row is None:
             row = WorkEntity(id=wid, composer_id=composer_id)
             db.add(row)
         row.composer_id = composer_id
-        row.title_en = str(w.get("title_en") or row.title_en or w["qid"])
+        row.title_en = str(w.get("title_en") or w["qid"])
         parent_qid = w.get("parent_qid") or ""
         row.parent_work_id = _work_row_id(parent_qid) if parent_qid else None
         if w["qid"] in children_of:
@@ -422,32 +604,35 @@ def upsert_works_tree(
         catalogs = []
         if w.get("catalog"):
             catalogs.append(str(w["catalog"]))
-        try:
-            existing = json.loads(row.catalog_numbers_json or "[]")
-            if isinstance(existing, list):
-                for c in existing:
-                    if c not in catalogs:
-                        catalogs.append(c)
-        except json.JSONDecodeError:
-            pass
         row.catalog_numbers_json = json.dumps(catalogs, ensure_ascii=False)
-        facets = {}
-        try:
-            facets = json.loads(row.facets_json or "{}")
-        except json.JSONDecodeError:
-            facets = {}
-        if w.get("genre"):
-            facets["genre"] = w["genre"]
+        facets: dict[str, Any] = {}
+        genre = normalize_genre(str(w.get("genre") or ""))
+        if genre:
+            facets["genre"] = genre
         row.facets_json = json.dumps(facets, ensure_ascii=False)
-        ext = {}
-        try:
-            ext = json.loads(row.external_ids_json or "{}")
-        except json.JSONDecodeError:
-            ext = {}
-        ext["wikidata"] = w["qid"]
-        row.external_ids_json = json.dumps(ext, ensure_ascii=False)
+        row.external_ids_json = json.dumps({"wikidata": w["qid"]}, ensure_ascii=False)
         rows.append(row)
     db.flush()
+
+    # Drop prior works for this composer that are no longer in the ingest set
+    prior = (
+        db.query(WorkEntity)
+        .filter(WorkEntity.composer_id == composer_id)
+        .all()
+    )
+    stale = [w for w in prior if w.id not in keep_ids]
+    if stale:
+        stale_ids = [w.id for w in stale]
+        db.query(RecordingEntity).filter(RecordingEntity.work_id.in_(stale_ids)).delete(
+            synchronize_session=False
+        )
+        for w in stale:
+            w.parent_work_id = None
+        db.flush()
+        db.query(WorkEntity).filter(WorkEntity.id.in_(stale_ids)).delete(
+            synchronize_session=False
+        )
+        db.flush()
     return rows
 
 
@@ -587,8 +772,13 @@ def run_composer_dossier(
     if not composer_id:
         raise ValueError("composer_dossier requires composer_id")
 
+    # Famous identity lock before any network fetch
+    famous_seed = famous_by_id().get(composer_id) or {}
+    if famous_seed.get("wikidata_qid"):
+        qid = str(famous_seed["wikidata_qid"]).upper()
+
     settings = get_settings()
-    with httpx.Client(timeout=60.0, headers={"User-Agent": UA}) as client:
+    with httpx.Client(timeout=HTTP_TIMEOUT, headers={"User-Agent": UA}) as client:
         entity_payload = fetch_entity_json(client, source=source, qid=qid)
         entity = (entity_payload.get("entities") or {}).get(qid) or {}
         claims = entity.get("claims") or {}
@@ -603,13 +793,15 @@ def run_composer_dossier(
 
         works_raw = fetch_sparql_works(client, source=source, composer_qid=qid, limit=WORKS_CAP)
 
-        # Prefer P800 notable works first in ordering
+        # Prefer P800 notable works first among same-year peers
         notable: set[str] = set()
         for claim in claims.get("P800") or []:
             nq = _entity_qid_from_claim(claim)
             if nq:
                 notable.add(nq)
-        works_raw.sort(key=lambda w: (0 if w["qid"] in notable else 1, w.get("title_en") or ""))
+        works_raw.sort(
+            key=lambda w: (0 if w["qid"] in notable else 1, *work_sort_key(w))
+        )
 
         bundle = {
             "mode": "composer_dossier",
@@ -661,15 +853,20 @@ def run_composer_dossier(
             death = _time_from_claim(c)
             break
 
-        famous = famous_by_id().get(composer_id) or {}
+        famous = famous_seed
         era = str(famous.get("era") or "")
+        # Canonical EN name from seed when available
+        if famous.get("name_en"):
+            label_en = str(famous["name_en"])
+        if famous.get("name_zh") and not label_zh:
+            label_zh = str(famous["name_zh"])
 
         row = db.get(ComposerEntity, composer_id)
         if row is None:
             row = ComposerEntity(id=composer_id)
             db.add(row)
-        row.name_en = label_en or row.name_en
-        row.name_zh = label_zh or row.name_zh
+        row.name_en = (str(famous.get("name_en") or "") if famous else "") or label_en or row.name_en
+        row.name_zh = label_zh or (str(famous.get("name_zh") or "") if famous else "") or row.name_zh
         row.lifespan = _lifespan(birth, death) or row.lifespan
         row.era = era or row.era
         row.summary_en = desc_en or row.summary_en
@@ -778,6 +975,47 @@ def _portrait_meta(db: Session, composer_id: str) -> dict[str, Any] | None:
     }
 
 
+def _work_entity_to_node(w: WorkEntity, *, children: list[dict[str, Any]] | None = None) -> dict[str, Any]:
+    try:
+        catalogs = json.loads(w.catalog_numbers_json or "[]")
+    except json.JSONDecodeError:
+        catalogs = []
+    try:
+        facets = json.loads(w.facets_json or "{}")
+    except json.JSONDecodeError:
+        facets = {}
+    if not isinstance(facets, dict):
+        facets = {}
+    genre = normalize_genre(str(facets.get("genre") or ""))
+    if genre:
+        facets = {**facets, "genre": genre}
+    elif "genre" in facets:
+        facets = {k: v for k, v in facets.items() if k != "genre"}
+    return {
+        "id": w.id,
+        "title_en": w.title_en,
+        "title_zh": w.title_zh,
+        "work_kind": w.work_kind or "work",
+        "year_start": w.year_start or "",
+        "year_end": w.year_end or "",
+        "catalog_numbers": catalogs if isinstance(catalogs, list) else [],
+        "facets": facets,
+        "children": children or [],
+        "catalog": (catalogs[0] if isinstance(catalogs, list) and catalogs else ""),
+        "genre": genre,
+    }
+
+
+def _catalog_from_entity(w: WorkEntity) -> str:
+    try:
+        catalogs = json.loads(w.catalog_numbers_json or "[]")
+    except json.JSONDecodeError:
+        catalogs = []
+    if isinstance(catalogs, list) and catalogs:
+        return str(catalogs[0] or "")
+    return ""
+
+
 def _build_works_tree(works: list[WorkEntity]) -> list[dict[str, Any]]:
     by_id = {w.id: w for w in works}
     children: dict[str | None, list[WorkEntity]] = {}
@@ -786,29 +1024,94 @@ def _build_works_tree(works: list[WorkEntity]) -> list[dict[str, Any]]:
         children.setdefault(parent, []).append(w)
 
     def node(w: WorkEntity) -> dict[str, Any]:
-        try:
-            catalogs = json.loads(w.catalog_numbers_json or "[]")
-        except json.JSONDecodeError:
-            catalogs = []
-        try:
-            facets = json.loads(w.facets_json or "{}")
-        except json.JSONDecodeError:
-            facets = {}
-        kids = [node(c) for c in sorted(children.get(w.id) or [], key=lambda x: x.title_en or x.id)]
-        return {
-            "id": w.id,
-            "title_en": w.title_en,
-            "title_zh": w.title_zh,
-            "work_kind": w.work_kind or "work",
-            "year_start": w.year_start or "",
-            "year_end": w.year_end or "",
-            "catalog_numbers": catalogs,
-            "facets": facets,
-            "children": kids,
-        }
+        kids_raw = children.get(w.id) or []
+        kids_sorted = sorted(
+            kids_raw,
+            key=lambda x: work_sort_key(
+                {
+                    "year_start": x.year_start or "",
+                    "catalog": _catalog_from_entity(x),
+                    "title_en": x.title_en or x.id,
+                }
+            ),
+        )
+        return _work_entity_to_node(w, children=[node(c) for c in kids_sorted])
 
     roots = children.get(None) or []
-    return [node(w) for w in sorted(roots, key=lambda x: (x.year_start or "9999", x.title_en or x.id))]
+    return [
+        node(w)
+        for w in sorted(
+            roots,
+            key=lambda x: work_sort_key(
+                {
+                    "year_start": x.year_start or "",
+                    "catalog": _catalog_from_entity(x),
+                    "title_en": x.title_en or x.id,
+                }
+            ),
+        )
+    ]
+
+
+def _flatten_work_nodes(tree: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    flat: list[dict[str, Any]] = []
+
+    def walk(nodes: list[dict[str, Any]]) -> None:
+        for n in nodes:
+            flat.append({**n, "children": []})
+            walk(n.get("children") or [])
+
+    walk(tree)
+    return flat
+
+
+def apply_famous_identity_lock(
+    composer_id: str,
+    *,
+    name_en: str,
+    name_zh: str,
+    lifespan: str,
+    ext: dict[str, Any],
+) -> tuple[str, str, str, dict[str, Any]]:
+    """Force allowlisted seed identity when composer_id is famous."""
+    famous = famous_by_id().get(composer_id)
+    if not famous:
+        return name_en, name_zh, lifespan, ext
+    out_ext = dict(ext or {})
+    seed_qid = str(famous.get("wikidata_qid") or "").upper()
+    if seed_qid:
+        out_ext["wikidata"] = seed_qid
+    locked_en = str(famous.get("name_en") or name_en)
+    locked_zh = name_zh or str(famous.get("name_zh") or "")
+    return locked_en, locked_zh, lifespan, out_ext
+
+
+def repair_famous_composer_identity(db: Session, composer_id: str) -> dict[str, Any] | None:
+    """Rewrite polluted famous row back to seed QID + canonical name."""
+    famous = famous_by_id().get(composer_id)
+    if not famous:
+        return None
+    row = db.get(ComposerEntity, composer_id)
+    if row is None:
+        row = ComposerEntity(id=composer_id)
+        db.add(row)
+    seed_qid = str(famous["wikidata_qid"]).upper()
+    try:
+        ext = json.loads(row.external_ids_json or "{}")
+        if not isinstance(ext, dict):
+            ext = {}
+    except json.JSONDecodeError:
+        ext = {}
+    before = {"name_en": row.name_en, "wikidata": ext.get("wikidata"), "lifespan": row.lifespan}
+    row.name_en = str(famous.get("name_en") or row.name_en)
+    if famous.get("name_zh"):
+        row.name_zh = str(famous["name_zh"])
+    if famous.get("era"):
+        row.era = str(famous["era"])
+    ext["wikidata"] = seed_qid
+    row.external_ids_json = json.dumps(ext, ensure_ascii=False)
+    db.flush()
+    return {"composer_id": composer_id, "before": before, "wikidata": seed_qid, "name_en": row.name_en}
 
 
 def build_composer_dossier(db: Session, composer_id: str) -> dict[str, Any] | None:
@@ -830,8 +1133,17 @@ def build_composer_dossier(db: Session, composer_id: str) -> dict[str, Any] | No
             ext = json.loads(row.external_ids_json or "{}")
         except json.JSONDecodeError:
             ext = {}
-    if famous and not ext.get("wikidata"):
-        ext["wikidata"] = famous.get("wikidata_qid")
+    name_en, name_zh, lifespan, ext = apply_famous_identity_lock(
+        composer_id, name_en=name_en, name_zh=name_zh, lifespan=lifespan, ext=ext
+    )
+    if famous:
+        era = era or str(famous.get("era") or "")
+        # If DB was polluted to a relative, prefer empty lifespan until dossier rebuild
+        dirty_qid = str(ext.get("wikidata") or "")
+        seed_qid = str(famous.get("wikidata_qid") or "").upper()
+        if dirty_qid and seed_qid and dirty_qid.upper() != seed_qid:
+            lifespan = lifespan  # lock already fixed ext; lifespan corrected on rebuild
+        ext["wikidata"] = seed_qid or dirty_qid
 
     events = (
         db.query(ComposerLifeEvent)
@@ -858,6 +1170,9 @@ def build_composer_dossier(db: Session, composer_id: str) -> dict[str, Any] | No
 
     works = db.query(WorkEntity).filter(WorkEntity.composer_id == composer_id).all()
     works_tree = _build_works_tree(works)
+    flat = _flatten_work_nodes(works_tree)
+    works_by_year = group_works_by_year(flat)
+    works_by_genre = group_works_by_genre(flat)
 
     doc_count = (
         db.query(KnowledgeDocument)
@@ -888,7 +1203,10 @@ def build_composer_dossier(db: Session, composer_id: str) -> dict[str, Any] | No
         "portrait": _portrait_meta(db, composer_id),
         "timeline": timeline,
         "works_tree": works_tree,
+        "works_by_year": works_by_year,
+        "works_by_genre": works_by_genre,
         "works_count": len(works),
+        "works_cap": WORKS_CAP,
         "events_count": len(timeline),
         "doc_counts": {
             "composer": doc_count,
@@ -898,11 +1216,12 @@ def build_composer_dossier(db: Session, composer_id: str) -> dict[str, Any] | No
 
 
 def resolve_composer_qid(db: Session, composer_id: str, qid_hint: str = "") -> str:
-    if qid_hint:
-        return qid_hint.strip().upper()
     famous = famous_by_id().get(composer_id)
     if famous and famous.get("wikidata_qid"):
+        # Famous allowlist always wins over polluted DB / wrong search hits
         return str(famous["wikidata_qid"]).upper()
+    if qid_hint:
+        return qid_hint.strip().upper()
     row = db.get(ComposerEntity, composer_id)
     if row:
         try:

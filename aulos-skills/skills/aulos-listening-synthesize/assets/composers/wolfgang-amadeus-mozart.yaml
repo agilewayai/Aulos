@@ -1,0 +1,34 @@
+composer: Wolfgang Amadeus Mozart
+aliases:
+- mozart
+- 莫扎特
+- 莫札特
+- Wolfgang Amadeus Mozart
+- W. A. Mozart
+composer_portrait:
+  image_url: https://upload.wikimedia.org/wikipedia/commons/1/1e/Wolfgang-amadeus-mozart_1.jpg
+  credit: Barbara Krafft — Portrait of Wolfgang Amadeus Mozart (public domain via Wikimedia Commons)
+  caption: Mozart — the face listeners carry into the late Viennese piano-concerto room.
+composer_profile:
+  lifespan: 1756–1791
+  summary: 'Wolfgang Amadeus Mozart wrote twenty-seven piano concertos that turn gallant entertainment
+    into dramatic dialogue between soloist and orchestra. The mature Viennese set (especially K. 466,
+    K. 488, K. 491) remains a measuring rod for lyric clarity and operatic depth without words.'
+  temperament: Effortless melodic invention under formal discipline — charm that can suddenly open into
+    chromatic vulnerability.
+  place_in_oeuvre: The A-major K. 488 sits among the great public concertos of 1784–86, companion to the
+    darker D-minor and C-minor siblings.
+  place_in_history: Elevated the piano concerto toward symphonic and operatic stature; later pianism still
+    answers problems of balance, wind colour, and slow-movement pathos posed here.
+zh:
+  composer: 沃尔夫冈·阿马德乌斯·莫扎特
+  composer_portrait:
+    caption: 莫扎特——听者走进晚期维也纳钢琴协奏曲厅堂时，最常携带的那一张面容。
+    credit: 克拉夫特《莫扎特肖像》（公有领域，经 Wikimedia Commons）
+  composer_profile:
+    lifespan: 1756–1791
+    summary: 沃尔夫冈·阿马德乌斯·莫扎特写作二十七部钢琴协奏曲，将华丽娱乐转化为独奏与乐队的戏剧对话。成熟维也纳一组（尤其
+      K. 466、K. 488、K. 491）仍是抒情清晰与无言歌剧深度的准绳。
+    temperament: 形式纪律下的旋律天成——魅力可骤然转入半音阶的脆弱。
+    place_in_oeuvre: A大调 K. 488 属于 1784–86 年伟大的公开协奏曲之列，与较暗的 d 小调、c 小调姊妹篇并肩。
+    place_in_history: 将钢琴协奏曲推向交响与歌剧般的高度；后世钢琴艺术仍在回答此处提出的平衡、管乐色彩与慢乐章悲情问题。

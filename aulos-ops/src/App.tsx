@@ -13,6 +13,8 @@ import {
   logout,
   deleteOpsUser,
   fetchLlmConfig,
+  fetchListeningReviewConfig,
+  fetchAmbientFallbackConfig,
   fetchSkills,
   fetchEmbedConfig,
   fetchWebResearchConfig,
@@ -22,6 +24,8 @@ import {
   testLlmProvider,
   testMailgun,
   updateLlmConfig,
+  updateListeningReviewConfig,
+  updateAmbientFallbackConfig,
   updateEmbedConfig,
   updateWebResearchConfig,
   updateDiscogsConfig,
@@ -32,6 +36,8 @@ import {
   type EmbedConfig,
   type HealthResponse,
   type LlmConfig,
+  type ListeningReviewConfig,
+  type AmbientFallbackConfig,
   type MailgunConfig,
   type OpsOverview,
   type OpsRole,
@@ -42,6 +48,7 @@ import {
 } from './api'
 import { KnowledgePanel } from './KnowledgePanel'
 import { SkillsPanel } from './SkillsPanel'
+import { GuideQualityPanel } from './GuideQualityPanel'
 import { DbHaPanel } from './DbHaPanel'
 import { DevBlogPanel } from './DevBlogPanel'
 import { TaskQueuePanel } from './TaskQueuePanel'
@@ -78,6 +85,10 @@ function App() {
   )
   const [mailgun, setMailgun] = useState<MailgunConfig | null>(null)
   const [llm, setLlm] = useState<LlmConfig | null>(null)
+  const [listeningReview, setListeningReview] = useState<ListeningReviewConfig | null>(null)
+  const [reviewLlmEnabled, setReviewLlmEnabled] = useState(true)
+  const [ambientFallback, setAmbientFallback] = useState<AmbientFallbackConfig | null>(null)
+  const [ambientFallbackMode, setAmbientFallbackMode] = useState<'embed' | 'stream'>('embed')
   const [llmActive, setLlmActive] = useState('fake')
   const [deepseekKey, setDeepseekKey] = useState('')
   const [deepseekModel, setDeepseekModel] = useState('deepseek-chat')
@@ -230,6 +241,22 @@ function App() {
     setDeepseekKey('')
     setGrokKey('')
     try {
+      const rev = await fetchListeningReviewConfig()
+      setListeningReview(rev)
+      setReviewLlmEnabled(rev.enabled)
+    } catch {
+      setListeningReview(null)
+      setReviewLlmEnabled(true)
+    }
+    try {
+      const amb = await fetchAmbientFallbackConfig()
+      setAmbientFallback(amb)
+      setAmbientFallbackMode(amb.mode === 'stream' ? 'stream' : 'embed')
+    } catch {
+      setAmbientFallback(null)
+      setAmbientFallbackMode('embed')
+    }
+    try {
       const emb = await fetchEmbedConfig()
       setEmbed(emb)
       setEmbedProvider(emb.provider || 'local')
@@ -329,10 +356,14 @@ function App() {
       setLlm(cfg)
       setDeepseekKey('')
       setGrokKey('')
+      const rev = await updateListeningReviewConfig({ enabled: reviewLlmEnabled })
+      setListeningReview(rev)
+      const amb = await updateAmbientFallbackConfig({ mode: ambientFallbackMode })
+      setAmbientFallback(amb)
       setNotice(
         cfg.ready_for_live
-          ? `LLM saved. Active provider: ${cfg.active_provider} (live chat ready).`
-          : `LLM saved. Active provider: ${cfg.active_provider}.`,
+          ? `LLM saved. Active provider: ${cfg.active_provider} (live chat ready). Review LLM=${rev.enabled ? 'on' : 'off'}. Ambient fallback=${amb.mode}.`
+          : `LLM saved. Active provider: ${cfg.active_provider}. Review LLM=${rev.enabled ? 'on' : 'off'}. Ambient fallback=${amb.mode}.`,
       )
       await refreshOverview()
     } catch (err) {
@@ -989,6 +1020,48 @@ function App() {
                     placeholder={llm?.grok.api_key_set ? '•••••••• (leave blank to keep)' : 'xai-...'}
                   />
 
+                  <h3>Adversarial review (SPEC-018)</h3>
+                  <p className="settings-lead">
+                    Deterministic IntentLock review always runs. This switch gates the optional LLM
+                    Critic after synthesize/compose ({listeningReview?.key ?? 'listening.review_llm'}).
+                  </p>
+                  <label htmlFor="review-llm" className="checkbox-row">
+                    <input
+                      id="review-llm"
+                      type="checkbox"
+                      checked={reviewLlmEnabled}
+                      onChange={(e) => setReviewLlmEnabled(e.target.checked)}
+                    />{' '}
+                    Enable LLM Intent Critic (listening.review_llm)
+                  </label>
+
+                  <h3>Ambient fallback (SPEC-006)</h3>
+                  <p className="settings-lead">
+                    When no work-matched open recording exists, choose platform fallback
+                    ({ambientFallback?.key ?? 'listening.ambient_fallback_mode'}). Default is
+                    official Embed (compliance-first). Stream uses optional server-side yt-dlp.
+                  </p>
+                  <label htmlFor="ambient-fallback-embed" className="checkbox-row">
+                    <input
+                      id="ambient-fallback-embed"
+                      type="radio"
+                      name="ambient-fallback"
+                      checked={ambientFallbackMode === 'embed'}
+                      onChange={() => setAmbientFallbackMode('embed')}
+                    />{' '}
+                    Official Embed (YouTube / Bilibili)
+                  </label>
+                  <label htmlFor="ambient-fallback-stream" className="checkbox-row">
+                    <input
+                      id="ambient-fallback-stream"
+                      type="radio"
+                      name="ambient-fallback"
+                      checked={ambientFallbackMode === 'stream'}
+                      onChange={() => setAmbientFallbackMode('stream')}
+                    />{' '}
+                    Server stream extract (ops opt-in; ToS / fragility risk)
+                  </label>
+
                   <button type="submit" disabled={busy}>
                     {busy ? 'Saving…' : 'Save LLM settings'}
                   </button>
@@ -1317,6 +1390,15 @@ function App() {
                 setNotice={setNotice}
                 skills={skills}
                 setSkills={setSkills}
+              />
+            ) : null}
+
+            {tab === 'guides' ? (
+              <GuideQualityPanel
+                busy={busy}
+                setBusy={setBusy}
+                setError={setError}
+                setNotice={setNotice}
               />
             ) : null}
 

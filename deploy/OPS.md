@@ -130,6 +130,10 @@ systemctl --user stop aulos-api.service
 
 - Production primary: **Postgres** (`AULOS_DB_URL` in unit file).
 - Failover mirror: SQLite (`AULOS_DB_FAILOVER_URL`).
+- Pool (Postgres): `AULOS_DB_POOL_SIZE` (default **20**) / `AULOS_DB_MAX_OVERFLOW` (**40**).
+  HA probes use a separate **NullPool** connection so a saturated business pool cannot
+  falsely trigger `auto_primary_down`. Failover requires
+  `AULOS_DB_FAILOVER_FAIL_THRESHOLD` consecutive probe failures (default **3**).
 - After ORM changes: ship `schema_patches.py`, deploy, verify PG columns (see `aulos-operating-defaults` DB closeout).
 
 Knowledge plane has separate DB `aulos_knowledge` on the same Postgres instance.
@@ -144,6 +148,7 @@ Portal builds emit `dist/version.json`. Browsers poll it; mismatch shows a reloa
 - Static/proxy security headers (`deploy/security_headers.py`, `aulos-ctl test`).
 - Session cookies HttpOnly (`aulos_session`) — no JWT in `localStorage`.
 - Knowledge admin only via API proxy with bearer from `host.env`.
+- Listening ambient fallback (`listening.ambient_fallback_mode` = `embed`|`stream`, default `embed`) is set in OPS → LLM/Listening settings; `stream` opts into server yt-dlp extract (ToS/fragility risk).
 
 ## Human approval boundaries
 

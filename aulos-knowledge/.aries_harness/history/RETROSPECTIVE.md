@@ -8,10 +8,10 @@ managed_by: "aries-harness"
 fingerprint: "aries-harness/history-doc/v1"
 generated_by: "/aries-harness history-refresh"
 initialized_at: "2026-07-25T17:25:00+00:00"
-generated_at: "2026-08-01T06:31:43+00:00"
+generated_at: "2026-08-01T20:59:34+00:00"
 effective_status: "generated"
-effective_since: "2026-08-01T06:31:43+00:00"
-content_fingerprint: "sha256:c2af2137675f7c7735812933a3becd987011dc3046b0fbc494a73675aba97f7f"
+effective_since: "2026-08-01T20:59:34+00:00"
+content_fingerprint: "sha256:775385638c534888ca6448ee15af547a7a3661fe4eab8357f23512c5b774ad63"
 trace_history_source: "filesystem-only"
 trace_last_commit_sha: ""
 trace_last_commit_at: ""
@@ -19,25 +19,25 @@ trace_revision_count: "0"
 ---
 # Retrospective Snapshot
 
-Generated at: `2026-08-01T06:31:43+00:00`
+Generated at: `2026-08-01T20:59:34+00:00`
 
 ## Recent changes
 
-- **Ship closeout / Honeycomb:** REQ-009 source discovery + REQ-010 composer dossier + benchmark /
-- Gates: knowledge pytest suite (benchmark / dossier / discovery / job_queue / diagnosis) + API
-- **REQ-010 Composer life dossier + works tree:** `composer_life_events` + works parent/kind/years +
-- **Crawl async queue (META-001 §3.3):** `job_queue.py` background dispatch + drain loop;
+- **REQ-010 soft-cap → 2048:** `WORKS_CAP` raised from 400 to 2048.
+- **Plaza “lost diaries” root cause:** API `db_ha` stuck on **SQLite failover**
+- **REQ-010 Δ Composer dossier works + identity:** Famous QID lock (Mozart no longer Franz
+- **REQ-012 Multi-source person aggregate + bilingual:** field-merge Discogs + Wikidata +
 
 ## What is working
 
-- **Ship closeout / Honeycomb:** REQ-009 source discovery + REQ-010 composer dossier + benchmark /
-- Gates: knowledge pytest suite (benchmark / dossier / discovery / job_queue / diagnosis) + API
-- **REQ-010 Composer life dossier + works tree:** `composer_life_events` + works parent/kind/years +
-- **Crawl async queue (META-001 §3.3):** `job_queue.py` background dispatch + drain loop;
+- **REQ-010 soft-cap → 2048:** `WORKS_CAP` raised from 400 to 2048.
+- **Plaza “lost diaries” root cause:** API `db_ha` stuck on **SQLite failover**
+- **REQ-010 Δ Composer dossier works + identity:** Famous QID lock (Mozart no longer Franz
+- **REQ-012 Multi-source person aggregate + bilingual:** field-merge Discogs + Wikidata +
 
 ## What needs attention
 
-- working tree is dirty with 139 tracked or untracked change(s)
+- working tree is dirty with 330 tracked or untracked change(s)
 - verification gates are not documented yet in EVAL.md
 - no explicit next-up slice is recorded
 

@@ -9,7 +9,7 @@ fingerprint: "aries-harness/bootstrap-doc/v1"
 initialized_at: "2026-07-25T11:10:22Z"
 effective_status: "active"
 effective_since: "2026-07-25T11:10:22Z"
-content_fingerprint: "sha256:b767f5a571452ababcc49ab6cab5c52008388df1cf90dff069d7f72d054c61f0"
+content_fingerprint: "sha256:9c38552250017cb3777b472a34a01cf79a28b6389e00b3d492731f5a146b82ca"
 trace_history_source: "filesystem-only"
 trace_last_commit_sha: ""
 trace_last_commit_at: ""
@@ -33,7 +33,13 @@ trace_revision_count: "0"
 | SPEC-010 | spec | references/specs/SPEC-010-salon-email-craft.md | active |
 | SPEC-011 | spec | references/specs/SPEC-011-mail-queue.md | active |
 | REQ-009 | request | references/requests/REQ-009-durable-guide-jobs-library.md | active |
+| REQ-010 | request | references/requests/REQ-010-listening-diary-plaza.md | active |
 | SPEC-013 | spec | references/specs/SPEC-013-listening-guide-jobs-library.md | active |
+| SPEC-019 | spec | references/specs/SPEC-019-listening-diary.md | active |
+| SPEC-020 | spec | references/specs/SPEC-020-listening-plaza-sns.md | active |
+| DOM-004 | domain | references/domain/DOM-004-listening-diary-sns.md | active |
+| STORY-PACK-010 | story-pack | references/stories/STORY-PACK-010-listening-diary-plaza.md | active |
+| CKPT-010 | checkpoint | checkpoints/CKPT-010-listening-diary-plaza.md | active |
 | STORY-PACK-001 | story-pack | references/stories/STORY-PACK-001-bootstrap.md | active |
 | ARCH-001 | architecture | decisions/architecture/ARCH-001-api-gateway-architecture.md | active |
 | ADR-001 | adr | decisions/adrs/ADR-001-fastapi-gateway.md | accepted |

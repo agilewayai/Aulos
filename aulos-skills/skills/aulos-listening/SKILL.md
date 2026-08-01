@@ -15,8 +15,10 @@ Use this skill when a listener names a classical work they are learning or liste
 3. `aulos-listening-synthesize` — compound composer cards + family scaffolds (+ optional LLM JSON)
 4. `aulos-listening-width` — historical & cultural frame
 5. `aulos-listening-depth` — form, ear cues, listening map
-6. `aulos-listening-compose` — narrative + HTML page
-7. `aulos-listening-eval` — quality gate; retry compose if below bar
+6. `aulos-listening-compose` — narrative + HTML page (draft v1)
+7. `aulos-listening-external-review` — networked deep review Agent → report
+8. `aulos-listening-revise` — second compose under review corrections (draft v2)
+9. `aulos-listening-eval` — quality gate + dual-draft score comparison
 
 ## Quality bar
 

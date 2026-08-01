@@ -8,7 +8,7 @@ fingerprint: "aries-harness/bootstrap-doc/v1"
 initialized_at: "2026-07-25T16:19:58+00:00"
 effective_status: "active"
 effective_since: "2026-07-25T16:19:58+00:00"
-content_fingerprint: "sha256:875535f6aaa71233f57144d01368b664b9910b9182aa6f1ab80ee9f17b971313"
+content_fingerprint: "sha256:72fb839ef61f6b17ddc812f036b30d1eb03fdb79457b4a639db9012815a7a9dc"
 trace_history_source: "filesystem-only"
 trace_last_commit_sha: ""
 trace_last_commit_at: ""
@@ -17,6 +17,109 @@ trace_revision_count: "0"
 # Insights — aulos-skills durable baseline
 
 Programmatic thinking promoted into **[META-001](../references/META-001-meta-principles.md)** carries `↑ META-001 §…`. Domain gates and YAML details stay here + in SPEC.
+
+## 2026-08-01 — Compression: delete case patches, keep dimensional engine
+
+↑ META-001 §1 (anti-case)
+
+- Deleted pre-authored `craft/*.yaml` (were coverage-by-enumeration).
+- Deleted localized review/scrub hardcodes; form_lock + facet dimensions remain.
+- Catalog floor + family + dimension templates are the thicken path; craft only via promote.
+
+## 2026-08-01 — Dimensional engine, not case patches (SPEC-031 / META-001 v6)
+
+↑ META-001 §1 (class fix; anti-case for listening unknown titles)
+
+- **Constraint:** Do not “fix” thin guides by authoring one craft/Catalog YAML per
+  Discogs repro. Engine = FacetClassifier → dimension voices → stage → promote-production.
+  YAML caches accelerate; they are not the mechanism.
+- **Evidence:** two unrelated titles (lyric piano + string quartet) graduate on one
+  pipeline in `tests/test_dimensional_promote.py`.
+
+## 2026-08-01 — Promote staging closes the unknown-case loop (SPEC-030)
+
+↑ META-001 §2 (asset sync with operator gate) + §1 (mechanism before Catalog write)
+
+- **Symptoms:** promote_candidate was invisible and non-actionable; Discogs forms like
+  prelude/etude fell through classifier.
+- **Class fix:** staging craft write under `craft/staging/` + ops Stage surface;
+  expanded facet tokens. Production craft/Catalog still require explicit future REQ.
+- **Evidence:** promote staging unit + API tests; Guide quality Promote column.
+
+## 2026-08-01 — Unknown-Case Thicken Loop (SPEC-029)
+
+↑ META-001 §1 (mechanism over asset lists) + §3 (contracts as floor)
+
+- **Symptoms:** Catalog/family/craft YAML only thicken known works; next Discogs/NLP
+  cases fall to bare `generic-scaffold`.
+- **Class fix:** FacetClassifier → archetype floor (reuse family pack or built-in
+  `chamber-generic`) → chamber contracts → `promote_candidate` dry-run cache draft.
+  YAML remains accelerator, not engine.
+- **Evidence:** `tests/test_unknown_case_thicken.py` — Clara Schumann nocturne (non-Catalog)
+  yields `archetype:lyric-piano-miniatures` + promote dry-run schema.
+
+## 2026-08-01 — Catalog craft coverage + refuse-prose scrub protect (SPEC-028)
+
+↑ META-001 §1 (class scrub bug) + §3 (craft assets as product floor)
+
+- **Symptoms:** Only Mendelssohn had craft YAML; scrub wiped craft theses that named
+  conflict works to refuse them (e.g. nocturne mentioning mazurka); thin Catalog
+  composers (Dvořák) never got dossier builds unless manually triggered.
+- **Class fix:** Craft pack for every Catalog work; protect `craft:` /
+  `catalog-floor:` scalars from alien scrub; fleet
+  `ensure_catalog_composer_dossiers` + ops endpoint.
+- **Evidence:** 10/10 craft coverage tests; K.488 synthesize includes `craft:`;
+  Dvořák dossier built (10 events / 142 works).
+
+## 2026-08-01 — Genre family coverage closes Catalog gauze holes (SPEC-027)
+
+↑ META-001 §1 (data/Catalog over heuristics) + §2 (asset sync)
+
+- **Symptoms:** Concerto / requiem / symphony / trio Catalog works had `family_id: null`
+  and no genre pack — catalog floor fell back to generic scaffold.
+- **Class fix:** Four bilingual family packs + Catalog lock + synthesize hint prepend +
+  craft-floor auto-load family by id; Mahler/Dvořák composer cards.
+- **Evidence:** Every Catalog work has registered family; K.488 synthesize includes
+  `family:piano-concerto+catalog-floor:…`.
+
+## 2026-08-01 — Systemic cold thicken: catalog floor + asset_depth (SPEC-026)
+
+↑ META-001 §1 (class fix over case packs) + §4 (knowledge plane async thicken)
+
+- **Symptoms:** Thickness still required hand craft YAML / pre-built dossiers; arbitrary
+  Catalog works stayed on family gauze; product score could still read “strong” on
+  family-only shelves.
+- **Class fix:** `build_catalog_craft_floor(work_id)` binds Catalog+family; thin dossier
+  auto-enqueues build for *next* compose; ProductScorecard `asset_depth` caps honesty.
+- **Evidence:** Chopin nocturne synthesize source includes `catalog-floor:…` without craft YAML.
+
+## 2026-08-01 — Product vs process dual-track + digit alien bounds (guide #50)
+
+↑ META-001 §1 (root-cause class) + §3 (hard-fail product gates) + §4 (knowledge plane separate)
+
+- **Symptoms:** Process scorecard hard-failed on alien `988` because Discogs year
+  `1988` substring-matched; `eval_pass` still mixed process honesty with reader craft;
+  cold Mendelssohn shelf stayed thin without knowledge dossier / work craft pack;
+  LLM poetic ZH overwrote craft theses after synthesize.
+- **Class fix:** `marker_in_text` digit/word boundaries; ProductScorecard owns
+  `eval_pass`; knowledge thicken + `assets/craft/{work_id}.yaml`; `reassert_craft_leads`
+  at compose; persist `product_scorecard` in API research_json.
+- **Evidence:** guide #50 process 76.1% hard_fail → 81.2% solid; product 100% strong;
+  synthesize includes `craft:` + `knowledge-plane`.
+
+## 2026-08-01 — Portrait / foreign-family dossier_id / H1 shadow (guide #48)
+
+↑ META-001 §1 (multi-stage validate; class gates) + §3 (craft: no variable shadow)
+
+- **Symptoms:** Bernstein as guide H1; Mozart alt text on Beethoven.jpg; Beethoven cello
+  Op.69 / Goldberg stature reasons on Horowitz Mozart K.488.
+- **Root causes:** (1) render loop reused `title` for video cards; (2) no portrait↔composer
+  identity gate and no Mozart composer card; (3) KB-RAG shipped `dossier_id=family:duo-cello-piano`
+  without `family:` in synthesize_source — decontam missed it; shared `piano` defeated
+  instrument-miss; process scorecard/review not persisted on that ship path so self-heal never fired.
+- **Rules:** identity hygiene on dossier_id + portrait every synthesize/compose; scorecard
+  identity hard_fail feeds `critique_corrections`; never shadow H1 `title` in render loops.
+- Gate: `tests/test_identity_hygiene.py`.
 
 ## 2026-07-27 — Authority Source Registry (promoted)
 

@@ -1,0 +1,126 @@
+family_id: lyric-piano-miniatures
+match:
+  instruments:
+  - piano
+  - keyboard
+  - 钢琴
+  forms:
+  - songs without words
+  - lieder ohne worte
+  - romances sans paroles
+  - lyric miniature
+  - character piece
+  - nocturne
+  - nocturnes
+  - intermezzo
+  - 无词歌
+  - 无言歌
+  - 夜曲
+  - 抒情小品
+work_title_template: '{composer} — Lyric piano miniatures'
+era: Romantic salon / lyric piano practice
+form: Lyric piano miniatures (song-without-words rooms; often ternary or episodic)
+listening_thesis: Hear a singing line over a keyboard gait first — these are lyric rooms, not
+  symphony-scale dramas; lock the opening character before chasing ornament.
+work_introduction: Lyric piano miniatures turn song speech into keyboard rooms. A serious listening
+  path treats the opening gait and cantabile line as identity, then follows how middle tint and return
+  revise that first character — often across a set or book rather than a single movement arc.
+genesis:
+  year: early–mid 19th century (varies by composer and opus)
+  place: Salon intimacy meeting published piano markets
+  publication: Often issued in books or groups; treat dating per opus / book.
+  patronage: Domestic piano culture and recital intimacy; verify dedicatees per piece.
+  background: Song-without-words and kindred lyric forms migrate vocal cantabile onto piano —
+    left-hand gait and right-hand speech become the grammar.
+  instrument_culture: Early Romantic / mid-century pianos evolving toward modern grand — pedals,
+    touch, and rubato culture reshape how lyric speech speaks.
+historical_stature:
+  reasons:
+  - Makes absolute piano pieces feel sung without text — a durable Romantic listening contract.
+  - Builds lifelong atlases of short forms that reward comparative listening across a set.
+  - Reception often hears “song” metaphor inside craft — keep title lore and nickname caveats.
+  - Becomes teaching and recital core for Romantic lyric piano literacy.
+  reception_arc: Salon intimacy → parlor canon → recital set evenings → HIP vs modern piano color.
+width_points:
+- Hold the singing line and left-hand gait before chasing ornaments or drama.
+- Books and sets invite comparative rooms — same lyric speech, different temperaments.
+- Pedal and rubato are grammar here; state the recording’s era rather than one “correct” pulse.
+- Nicknames and “song” metaphors are reception lore — keep caveats when titles are editorial.
+depth_points:
+- Lock the opening bars’ cantabile and gait; carry them through the whole piece.
+- Notice ternary or episodic rooms — how the return remembers or revises the first character.
+- Track mode shifts and register lifts as weather over one lyric room.
+- Compare two pieces from the same book for shared speech under different temperaments.
+- In a set evening, journal three rooms that share a lyric contract but not a mood.
+listening_map:
+- label: Opening song
+  cue: Memorize the singing line and gait before ornament.
+- label: Middle tint
+  cue: Mode shift, register lift, or episodic turn — still one lyric room.
+- label: Return / close
+  cue: Does the opening song return intact, deepened, or ironized?
+variation_deepdives:
+- title: Cantabile ownership
+  note: Journal whether the pianist sings the line or dissolves it into texture.
+- title: Gait under song
+  note: Can you still feel the left-hand gait when the middle room intensifies?
+- title: Set temperament
+  note: In a book, name three rooms that share lyric speech but not a mood.
+sound_world:
+  original_instrument: Mid-19th-c. piano evolving toward modern concert grand
+  ensemble_notes: Usually solo piano; later orchestrations are receptions, not the listening thesis.
+  modern_modes:
+  - Modern grand — sustain and color; watch that pedal does not blur gait identity.
+  - Period / early Romantic piano — clearer speech, different rubato space.
+  - Comparative listening — same lyric room across two tempi philosophies.
+related_works:
+- title: Kindred lyric piano rooms (nocturnes, intermezzi, Songs Without Words across composers)
+  why: Same cantabile-literacy problem under different salon masks.
+composer_portrait: {}
+composer_profile:
+  lifespan: early–mid 19th century (varies)
+  summary: Lyric piano miniatures turn song speech into keyboard rooms across the Romantic salon.
+  temperament: Cantabile ownership over left-hand gait; intimacy without symphony rhetoric.
+interpretations:
+- artist: Daniel Barenboim
+  album: Lieder ohne Worte (complete)
+  why: Modern grand cantabile with clear gait — a full-cycle atlas for comparative rooms.
+- artist: Murray Perahia
+  album: Songs Without Words (selected)
+  why: Transparent song speech; useful for locking opening character before ornament.
+- artist: Livia Rév / period-leaning surveys
+  album: Songs Without Words selections
+  why: Alternate pulse and pedal philosophies under the same lyric contract.
+myths_and_caveats:
+- Nicknames and “song” titles are often editorial reception — do not treat them as composer programs.
+- These are lyric miniatures / cycles, not large-scale symphony rhetoric.
+- Packaging titles (multi-language Discogs dumps) are not IntentLock work titles.
+practice_notes:
+- One focused hearing with a single question (gait / cantabile / return).
+- Second hearing comparing two pieces from the same book.
+- Journal three timestamps where the lyric character shifted.
+zh:
+  listening_thesis: 先听见歌唱声部与左手步态——这是抒情之室，而非交响规模的戏剧；锁住开场性格再追逐装饰。
+  work_introduction: 抒情钢琴小品把歌曲的言说变成键盘上的房间。认真的聆听路径把开场步态与如歌声部当作身份，再追随中段色调与再现如何改写那第一个性格——往往在一套或一册之中，而不是单一乐章弧线。
+  width_points:
+  - 先抓住歌唱声部与左手步态，再追装饰或戏剧。
+  - 分册与套曲邀请比较之室——同样的抒情言说，不同的性情。
+  - 踏板与弹性速度是语法；说明录音时代，而非唯一“正确”脉搏。
+  - “歌曲”隐喻与别名多属接受史——标题是编辑传说时要保留存疑。
+  depth_points:
+  - 锁住开场小节的如歌与步态，贯穿全曲。
+  - 注意三部曲或插段之室——再现如何记忆或改写第一个性格。
+  - 把调式转换与音区抬升当作一间抒情之室里的天气。
+  listening_map:
+  - label: 开场之歌
+    cue: 在装饰之前记住歌唱声部与步态。
+  - label: 中段色调
+    cue: 调式转换、音区抬升或插段转折——仍是同一抒情之室。
+  - label: 再现 / 收束
+    cue: 开场之歌是原样回来、加深，还是被反讽？
+  myths_and_caveats:
+  - 别名与“歌曲”标题常是接受史编辑——不要当成作曲家节目说明。
+  - 这是抒情小品 / 套曲，不是交响规模修辞。
+  practice_notes:
+  - 一次只带一个问题听（步态 / 如歌 / 再现）。
+  - 第二次听同一册中的两首做比较。

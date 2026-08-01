@@ -63,6 +63,8 @@ def retrieve(
                 "text": ch.text,
                 "title": doc.title,
                 "document_id": doc.id,
+                "entity_id": doc.entity_id or "",
+                "entity_type": doc.entity_type or "",
                 "aulos_work_id": doc.aulos_work_id or ch.aulos_work_id,
                 "source_id": doc.source_id,
                 "artifact_id": doc.artifact_id,

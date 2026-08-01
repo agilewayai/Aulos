@@ -10,13 +10,42 @@ generated_by: "/aries-harness init"
 initialized_at: "2026-07-25T11:20:06Z"
 effective_status: "active"
 effective_since: "2026-07-25T11:20:06Z"
-content_fingerprint: "sha256:0027073805aea3573c3247f4f0787f23164cd7168cde72094383b99df643db6b"
+content_fingerprint: "sha256:77e1a15360404f241fb1ce1a0fd1e2233413c9ea6f60bca086944d87efd5701c"
 trace_history_source: "filesystem-only"
 trace_last_commit_sha: ""
 trace_last_commit_at: ""
 trace_revision_count: "0"
 ---
 # Journal
+
+## 2026-08-01T21:00:00Z
+
+- **SPEC-031:** Guide quality — Promote to production after staging; copy states
+  system pipeline, not case patch.
+
+## 2026-08-01T20:40:00Z
+
+- **SPEC-030:** Guide quality panel shows promote candidate + Stage craft (staging
+  only); scorecard table adds Asset / Promote columns.
+
+## 2026-08-01T17:35:00Z
+
+- **Ambient fallback UI:** LLM/Listening settings radio for official Embed vs server
+  stream extract (`listening.ambient_fallback_mode`); API helpers in `api.ts`.
+
+
+## 2026-08-01T17:05:00Z
+
+- **REQ-010 Δ Composer dossier UI:** works panel tabs 题材 / 时间线 / 树; shows year, catalog,
+  genre badges + soft-cap hint. Types: `works_by_year` / `works_by_genre`.
+
+## 2026-08-01T18:55:00Z
+
+- SPEC-019: Ops tab **Guide quality** (`GuideQualityPanel`) — multi-guide rollup table + node dim expand via trace.
+
+## 2026-08-01T18:40:00Z
+
+- SPEC-018: LLM settings tab hosts `listening.review_llm` Intent Critic switch (saved with LLM form).
 
 ## 2026-08-01T06:35:00Z
 

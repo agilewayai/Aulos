@@ -1,0 +1,97 @@
+family_id: sacred-requiem
+match:
+  instruments:
+  - choir
+  - orchestra
+  - voice
+  - 合唱
+  - 管弦乐
+  forms:
+  - requiem
+  - mass
+  - sacred
+  - 安魂曲
+  - 弥撒
+  - 追思曲
+work_title_template: '{composer} — Requiem / Sacred mass'
+era: Classical / Romantic sacred concert practice
+form: Requiem or sacred mass — liturgical sequence heard as concert architecture
+listening_thesis: >
+  Hear the requiem as a sequence of ritual rooms — lock the opening plea and the
+  Dies irae (or equivalent hinge) before chasing solo display; map how the close
+  answers the first prayer.
+work_introduction: >
+  Sacred requiem listening treats texted sections as identity landmarks. The ear
+  owns introit/kyrie character, the terror or mercy hinge, and whether the close
+  consoles, judges, or leaves the plea open — without collapsing into biography myth.
+genesis:
+  year: varies by commission and completion state
+  place: Liturgical space meeting concert hall reception
+  publication: Catalog numbers (K./Op.) lock identity; unfinished states are reception facts
+  background: Liturgical sequence becomes public concert architecture.
+  instrument_culture: Choir + orchestra; continuo / organ practices vary by era.
+historical_stature:
+  reasons:
+  - Makes sacred text into audible architecture for concert ears.
+  - Unfinished / completion histories become part of honest reception craft.
+  reception_arc: Liturgy → concert monument → completion debates → HIP vs modern choir/orchestra.
+width_points:
+- Lock the opening prayer character before the dramatic hinge.
+- Treat section titles (Dies irae, Lacrimosa, …) as ear landmarks, not plot spoilers alone.
+- State completion / edition — unfinished works need honest caveats.
+- Choir–orchestra balance is grammar; name the recording’s forces.
+depth_points:
+- Map the sequence as rooms — how each section revises the opening plea.
+- Soloists are rhetorical persons inside the rite, not a recital medley.
+- Close: consolation, judgment, or open prayer?
+listening_map:
+- label: Opening plea
+  cue: Memorize introit / kyrie character.
+- label: Hinge
+  cue: Dies irae or equivalent — terror, mercy, or both.
+- label: Close
+  cue: Does the final room answer the first prayer?
+sound_world:
+  original_instrument: Choir with Classical/Romantic orchestra; organ/continuo as era requires
+  ensemble_notes: Sacred forces; piano reductions are rehearsal aids.
+  modern_modes:
+  - Modern choir + orchestra
+  - Period forces / church acoustic
+  - Comparative completion editions
+myths_and_caveats:
+- Deathbed and “commission ghost” legends are reception — verify before stating as fact.
+- Unfinished / Süssmayr-style completions are editorial history, not silent craft.
+- Do not swap sibling sacred works under the same composer.
+practice_notes:
+- One hearing for opening plea vs hinge only.
+- Second hearing with a section landmark list.
+- Journal whether the close consoles or leaves the plea open.
+zh:
+  listening_thesis: >
+    把安魂曲当作一串仪式之室来听——先锁住开场祈请与末日经（或同等枢纽），再追独唱炫示；
+    画出收束如何回应最初的祈祷。
+  work_introduction: >
+    神圣安魂聆听把带词的段落当作身份地标。耳朵要抓住进台／垂怜性格、恐惧或慈悲的枢纽，
+    以及收束是安慰、审判，还是让祈请保持敞开——而不坍缩成传记神话。
+  width_points:
+  - 戏剧枢纽之前先锁住开场祈祷性格。
+  - 把段落标题当作耳部地标，而非仅剧情剧透。
+  - 说明完成／版本状态——未完成之作要诚实存疑。
+  - 合唱与乐队的平衡是语法；说明录音编制。
+  depth_points:
+  - 把序列画成房间——每段如何改写开场祈请。
+  - 独唱者是仪式中的修辞人物，不是独唱音乐会拼盘。
+  - 收束：安慰、审判，还是敞开的祈祷？
+  listening_map:
+  - label: 开场祈请
+    cue: 记住进台／垂怜性格。
+  - label: 枢纽
+    cue: 末日经或同等——恐惧、慈悲，或二者兼有。
+  - label: 收束
+    cue: 最后之室是否回应最初的祈祷？
+  myths_and_caveats:
+  - 临终与“委托幽灵”传说属接受史——陈述前需核实。
+  - 未完成／续作是编辑史，不是沉默的工艺。
+  practice_notes:
+  - 第一遍只听开场祈请与枢纽。
+  - 第二遍带着段落地标表听。

@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from datetime import datetime
+from typing import Any
 
 from fastapi import APIRouter, Depends, HTTPException, Query, Request, status
 from pydantic import BaseModel, EmailStr, Field, field_serializer
@@ -527,6 +528,23 @@ def enqueue_knowledge_improve_cycle(
     )
 
 
+class EnsureComposerDossiersIn(BaseModel):
+    dry_run: bool = False
+
+
+@router.post("/knowledge/composers/ensure-dossiers")
+def ensure_composer_dossiers(
+    body: EnsureComposerDossiersIn | None = None,
+    user: User = Depends(require_roles("superadmin")),
+) -> dict[str, Any]:
+    """SPEC-028: enqueue build-dossier for thin Catalog composer dossiers."""
+    del user  # auth gate only
+    from aulos_api.services.knowledge_proxy import ensure_catalog_composer_dossiers
+
+    body = body or EnsureComposerDossiersIn()
+    return ensure_catalog_composer_dossiers(dry_run=bool(body.dry_run))
+
+
 class SkillOut(BaseModel):
     id: str
     name: str
@@ -596,6 +614,84 @@ def post_skills_probe(
             detail=f"Skill probe failed: {exc}",
         ) from exc
     return SkillProbeOut(**result)
+
+
+@router.get("/listening-guides/scorecards")
+def ops_listening_guide_scorecards(
+    limit: int = 40,
+    _: User = Depends(require_roles("superadmin")),
+    db: Session = Depends(get_db),
+) -> dict:
+    """SPEC-019 — recent guides with process scorecard rollups."""
+    from aulos_api.services.listening_guide import list_guide_scorecard_summaries
+
+    items = list_guide_scorecard_summaries(db, limit=limit)
+    return {"items": items, "total": len(items)}
+
+
+@router.get("/listening-guides/promote-candidates")
+def ops_listening_promote_candidates(
+    limit: int = 40,
+    _: User = Depends(require_roles("superadmin")),
+    db: Session = Depends(get_db),
+) -> dict:
+    """SPEC-030 — guides with unknown-case promote_candidate drafts."""
+    from aulos_api.services.listening_guide import list_promote_candidates
+
+    items = list_promote_candidates(db, limit=limit)
+    return {"items": items, "total": len(items)}
+
+
+class PromoteStageIn(BaseModel):
+    overwrite: bool = False
+
+
+@router.post("/listening-guides/{guide_id}/promote-stage")
+def ops_listening_promote_stage(
+    guide_id: int,
+    body: PromoteStageIn | None = None,
+    _: User = Depends(require_roles("superadmin")),
+    db: Session = Depends(get_db),
+) -> dict:
+    """SPEC-030 — write craft/staging YAML from promote_candidate (not production craft/)."""
+    from aulos_api.services.listening_guide import stage_promote_candidate
+
+    opts = body or PromoteStageIn()
+    try:
+        return stage_promote_candidate(db, guide_id, overwrite=bool(opts.overwrite))
+    except LookupError as exc:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=str(exc)) from exc
+    except FileExistsError as exc:
+        raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail=str(exc)) from exc
+    except ValueError as exc:
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=str(exc)) from exc
+
+
+class PromoteProductionIn(BaseModel):
+    overwrite: bool = False
+
+
+@router.post("/listening-guides/{guide_id}/promote-production")
+def ops_listening_promote_production(
+    guide_id: int,
+    body: PromoteProductionIn | None = None,
+    _: User = Depends(require_roles("superadmin")),
+    db: Session = Depends(get_db),
+) -> dict:
+    """SPEC-031 — generic Catalog+craft graduate for any staged promote_candidate."""
+    from aulos_api.services.listening_guide import promote_candidate_to_production
+
+    opts = body or PromoteProductionIn()
+    try:
+        return promote_candidate_to_production(
+            db, guide_id, overwrite=bool(opts.overwrite)
+        )
+    except LookupError as exc:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=str(exc)) from exc
+    except FileExistsError as exc:
+        raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail=str(exc)) from exc
+    except ValueError as exc:
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=str(exc)) from exc
 
 
 @router.get("/listening-guides/{guide_id}/trace")

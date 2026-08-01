@@ -1,0 +1,57 @@
+work_id: mendelssohn.lieder-ohne-worte
+composer_id: felix-mendelssohn
+canonical_title: Felix Mendelssohn — Lieder ohne Worte (Songs Without Words)
+canonical_title_zh: 门德尔松 — 《无词歌》（Lieder ohne Worte）
+aliases:
+  - Lieder ohne Worte
+  - Songs Without Words
+  - Romances sans paroles
+  - Gesänge ohne Worte
+  - 无词歌
+  - 无言歌
+  - Mendelssohn Songs Without Words
+  - Mendelssohn Lieder ohne Worte
+  - Bartholdy Lieder Ohne Worte
+catalog_numbers:
+  - Op. 19b
+  - Op. 30
+  - Op. 38
+  - Op. 53
+  - Op. 62
+  - Op. 67
+  - Op. 85
+  - Op. 102
+facets:
+  instruments: [piano]
+  ensemble: [solo]
+  forms:
+    - songs without words
+    - lieder ohne worte
+    - lyric miniature
+    - character piece
+    - 无词歌
+    - 无言歌
+  era: romantic
+family_id: lyric-piano-miniatures
+corpus_key: null
+ambient_ref: null
+identity:
+  distinctive_tokens:
+    - lieder ohne worte
+    - songs without words
+    - 无词歌
+    - 无言歌
+    - mendelssohn
+    - 门德尔松
+  conflict_work_ids:
+    - chopin.nocturne-op9-no2
+    - chopin.mazurkas
+    - bach.goldberg.bwv-988
+  conflict_markers:
+    - nocturne
+    - mazurka
+    - goldberg
+    - cello sonata
+provenance:
+  authority: Mendelssohn Lieder ohne Worte cycle (eight books / Opp. 19b–102)
+  notes: Catalog identity for Discogs packaging titles that dump multi-language release names.

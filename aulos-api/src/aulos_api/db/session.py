@@ -43,7 +43,18 @@ def get_engine():
             if not path.is_absolute() and raw.startswith("./"):
                 path = Path(raw)
             path.parent.mkdir(parents=True, exist_ok=True)
-        _engine = create_engine(settings.db_url, future=True, connect_args=connect_args, pool_pre_ping=True)
+        pool_kwargs: dict = {}
+        if not settings.db_url.startswith("sqlite"):
+            from aulos_api.services.db_ha import _pool_kwargs_for_url
+
+            pool_kwargs = _pool_kwargs_for_url(settings.db_url)
+        _engine = create_engine(
+            settings.db_url,
+            future=True,
+            connect_args=connect_args,
+            pool_pre_ping=True,
+            **pool_kwargs,
+        )
         SessionLocal = sessionmaker(bind=_engine, autoflush=False, autocommit=False, future=True)
     return _engine
 

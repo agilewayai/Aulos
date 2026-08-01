@@ -7,10 +7,14 @@ composers:
     path: composers/ludwig-van-beethoven.yaml
   - id: frederic-chopin
     path: composers/frederic-chopin.yaml
+  - id: felix-mendelssohn
+    path: composers/felix-mendelssohn.yaml
   - id: gustav-mahler
     path: composers/gustav-mahler.yaml
   - id: antonin-dvorak
     path: composers/antonin-dvorak.yaml
+  - id: wolfgang-amadeus-mozart
+    path: composers/wolfgang-amadeus-mozart.yaml
 
 works:
   - id: bach.goldberg.bwv-988
@@ -23,7 +27,13 @@ works:
     path: works/chopin.nocturne-op9-no2.yaml
   - id: chopin.mazurkas
     path: works/chopin.mazurkas.yaml
+  - id: mendelssohn.lieder-ohne-worte
+    path: works/mendelssohn.lieder-ohne-worte.yaml
   - id: mahler.symphony-5
     path: works/mahler.symphony-5.yaml
   - id: dvorak.dumky-trio
     path: works/dvorak.dumky-trio.yaml
+  - id: mozart.piano-concerto-23.k-488
+    path: works/mozart.piano-concerto-23.k-488.yaml
+  - id: mozart.requiem.k-626
+    path: works/mozart.requiem.k-626.yaml

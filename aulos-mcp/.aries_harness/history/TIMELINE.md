@@ -8,10 +8,10 @@ managed_by: "aries-harness"
 fingerprint: "aries-harness/history-doc/v1"
 generated_by: "/aries-harness history-refresh"
 initialized_at: "2026-07-25T11:07:44Z"
-generated_at: "2026-08-01T06:31:50+00:00"
+generated_at: "2026-08-01T20:59:42+00:00"
 effective_status: "generated"
-effective_since: "2026-08-01T06:31:50+00:00"
-content_fingerprint: "sha256:8326410062fcc2a7245c8757001d512a1cc319751d49c56378fd3fbd8fe38ec1"
+effective_since: "2026-08-01T20:59:42+00:00"
+content_fingerprint: "sha256:b5ccff8e8e90d467ac83c440971b50569067e8be1b0152ce0cdbad684988fb37"
 trace_history_source: "filesystem-only"
 trace_last_commit_sha: ""
 trace_last_commit_at: ""
@@ -19,7 +19,7 @@ trace_revision_count: "0"
 ---
 # Timeline
 
-Generated at: `2026-08-01T06:31:50+00:00`
+Generated at: `2026-08-01T20:59:42+00:00`
 
 ## Journal milestones
 
@@ -31,6 +31,7 @@ Generated at: `2026-08-01T06:31:50+00:00`
 
 ## Recent git commits
 
+- `1d325d5` 2026-08-01 Ship knowledge discovery, dossier, and benchmark console; refresh fleet honeycomb.
 - `491b042` 2026-07-27 Ship authority source registry, OPS knowledge console, and refresh fleet honeycomb.
 - `5633e94` 2026-07-27 Ship Ops task queue, dev blog v2, and refresh fleet honeycomb.
 - `c3009d2` 2026-07-27 Harden platform security, ship fleet DevOps control, and refresh harness honeycomb.
@@ -55,4 +56,4 @@ Generated at: `2026-08-01T06:31:50+00:00`
 - `M` `aulos-agent/.aries_harness/history/daily/2026-07-25.md`
 - `M` `aulos-agent/.aries_harness/history/daily/2026-07-26.md`
 - `M` `aulos-agent/.aries_harness/history/daily/2026-07-27.md`
-- `M` `aulos-agent/.aries_harness/history/doc-trace.json`
+- `M` `aulos-agent/.aries_harness/history/daily/2026-08-01.md`

@@ -20,6 +20,14 @@ from aulos_api.services.llm_providers import (
     save_llm_config,
     test_llm_provider,
 )
+from aulos_api.services.listening_ambient import (
+    public_ambient_fallback_config,
+    save_ambient_fallback_mode,
+)
+from aulos_api.services.listening_review import (
+    public_review_config,
+    save_review_llm_enabled,
+)
 from aulos_api.services.web_research import (
     load_web_research_config,
     public_web_research_config,
@@ -242,5 +250,60 @@ def put_embeddings(
     except ValueError as exc:
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=str(exc)) from exc
     return EmbedConfigOut(**cfg.public_dict())
+
+
+class ListeningReviewOut(BaseModel):
+    key: str
+    enabled: bool
+
+
+class ListeningReviewUpdate(BaseModel):
+    enabled: bool = True
+
+
+@router.get("/listening-review", response_model=ListeningReviewOut)
+def get_listening_review(
+    _: User = Depends(require_roles("superadmin")),
+    db: Session = Depends(get_db),
+) -> ListeningReviewOut:
+    return ListeningReviewOut(**public_review_config(db))
+
+
+@router.put("/listening-review", response_model=ListeningReviewOut)
+def put_listening_review(
+    body: ListeningReviewUpdate,
+    _: User = Depends(require_roles("superadmin")),
+    db: Session = Depends(get_db),
+) -> ListeningReviewOut:
+    enabled = save_review_llm_enabled(db, enabled=body.enabled)
+    return ListeningReviewOut(key="listening.review_llm", enabled=enabled)
+
+
+class AmbientFallbackOut(BaseModel):
+    key: str
+    mode: str
+    allowed: list[str]
+
+
+class AmbientFallbackUpdate(BaseModel):
+    mode: str = "embed"
+
+
+@router.get("/ambient-fallback", response_model=AmbientFallbackOut)
+def get_ambient_fallback(
+    _: User = Depends(require_roles("superadmin")),
+    db: Session = Depends(get_db),
+) -> AmbientFallbackOut:
+    return AmbientFallbackOut(**public_ambient_fallback_config(db))
+
+
+@router.put("/ambient-fallback", response_model=AmbientFallbackOut)
+def put_ambient_fallback(
+    body: AmbientFallbackUpdate,
+    _: User = Depends(require_roles("superadmin")),
+    db: Session = Depends(get_db),
+) -> AmbientFallbackOut:
+    mode = save_ambient_fallback_mode(db, mode=body.mode)
+    return AmbientFallbackOut(**public_ambient_fallback_config(db) | {"mode": mode})
 
 

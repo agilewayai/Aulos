@@ -8,10 +8,10 @@ managed_by: "aries-harness"
 fingerprint: "aries-harness/bootstrap-doc/v1"
 generated_by: "/aries-harness well-organized"
 initialized_at: "2026-07-25T11:07:43Z"
-last_organized_at: "2026-08-01T06:31:23+00:00"
+last_organized_at: "2026-08-01T20:59:12+00:00"
 effective_status: "generated"
-effective_since: "2026-08-01T06:31:23+00:00"
-content_fingerprint: "sha256:c5e84cfdc458f0382e7edc23b7db6228871f70c8e50e38357c0b6a11453362ba"
+effective_since: "2026-08-01T20:59:12+00:00"
+content_fingerprint: "sha256:bc9b492f2ac1e67999a8458a5b82d3a44372e6da61282463e81ca56704544460"
 trace_history_source: "filesystem-only"
 trace_last_commit_sha: ""
 trace_last_commit_at: ""
@@ -19,7 +19,7 @@ trace_revision_count: "0"
 ---
 # Harness Index
 
-Last organized: `2026-08-01T06:31:23+00:00`
+Last organized: `2026-08-01T20:59:12+00:00`
 
 Canonical spelling: `/aries-harness well-organized`
 
@@ -68,6 +68,8 @@ Fingerprint marker: `aries-harness` / `aries-harness/bootstrap-doc/v1`
 - [REQ-006-rag-work-identity-catalog.md](references/requests/REQ-006-rag-work-identity-catalog.md)
 - [REQ-008-discog-release-guide.md](references/requests/REQ-008-discog-release-guide.md)
 - [REQ-009-durable-guide-jobs-library.md](references/requests/REQ-009-durable-guide-jobs-library.md)
+- [REQ-010-listening-diary-plaza.md](references/requests/REQ-010-listening-diary-plaza.md)
+- [REQ-011-diary-guide-lifecycle.md](references/requests/REQ-011-diary-guide-lifecycle.md)
 
 #### `references/specs/`
 - role: behavior and acceptance contracts derived from requests
@@ -87,6 +89,9 @@ Fingerprint marker: `aries-harness` / `aries-harness/bootstrap-doc/v1`
 - [SPEC-015-guide-html-security.md](references/specs/SPEC-015-guide-html-security.md)
 - [SPEC-017-dev-blog-writing-contract.md](references/specs/SPEC-017-dev-blog-writing-contract.md)
 - [SPEC-018-ops-task-queue.md](references/specs/SPEC-018-ops-task-queue.md)
+- [SPEC-019-listening-diary.md](references/specs/SPEC-019-listening-diary.md)
+- [SPEC-020-listening-plaza-sns.md](references/specs/SPEC-020-listening-plaza-sns.md)
+- [SPEC-021-diary-guide-attach.md](references/specs/SPEC-021-diary-guide-attach.md)
 
 #### `references/stories/`
 - role: sprintable slices linked to specs and verification
@@ -94,9 +99,11 @@ Fingerprint marker: `aries-harness` / `aries-harness/bootstrap-doc/v1`
 - [STORY-PACK-001-bootstrap.md](references/stories/STORY-PACK-001-bootstrap.md)
 - [STORY-PACK-002-auth-mvp.md](references/stories/STORY-PACK-002-auth-mvp.md)
 - [STORY-PACK-008-discog-release-guide.md](references/stories/STORY-PACK-008-discog-release-guide.md)
+- [STORY-PACK-010-listening-diary-plaza.md](references/stories/STORY-PACK-010-listening-diary-plaza.md)
 
 #### `references/domain/`
 - role: domain analysis and modeling artifacts
+- [DOM-004-listening-diary-sns.md](references/domain/DOM-004-listening-diary-sns.md)
 - [README.md](references/domain/README.md)
 
 #### `references/iterations/`
@@ -147,6 +154,7 @@ Fingerprint marker: `aries-harness` / `aries-harness/bootstrap-doc/v1`
 #### `checkpoints/`
 - role: pause, resume, handoff, and checkpoint artifacts
 - [CKPT-008-discog-release-guide.md](checkpoints/CKPT-008-discog-release-guide.md)
+- [CKPT-010-listening-diary-plaza.md](checkpoints/CKPT-010-listening-diary-plaza.md)
 
 #### `runs/`
 - role: run summaries and execution evidence

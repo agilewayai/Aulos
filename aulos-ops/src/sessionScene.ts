@@ -6,6 +6,7 @@ export type OpsTabId =
   | 'users'
   | 'llm'
   | 'skills'
+  | 'guides'
   | 'mail'
   | 'fleet'
   | 'dbha'

@@ -248,3 +248,92 @@ def test_extract_life_events_unit() -> None:
     assert by_type["birth"]["place_label"] == "Eisenach"
     assert by_type["death"]["date_start"].startswith("1750")
     assert any(e["event_type"] == "composition_milestone" for e in events)
+
+
+def test_normalize_genre_drops_film_noise() -> None:
+    from aulos_knowledge.composer_dossier import normalize_genre
+
+    assert normalize_genre("drama film") == ""
+    assert normalize_genre("documentary film") == ""
+    assert normalize_genre("cantata") == "cantata"
+    assert normalize_genre("concerto grosso") == "concerto grosso"
+
+
+def test_work_sort_key_prefers_year_then_catalog() -> None:
+    from aulos_knowledge.composer_dossier import work_sort_key
+
+    early = work_sort_key({"year_start": "1721", "catalog": "BWV 1046", "title_en": "A"})
+    late = work_sort_key({"year_start": "1749", "catalog": "BWV 232", "title_en": "B"})
+    undated_low = work_sort_key({"year_start": "", "catalog": "BWV 4", "title_en": "C"})
+    undated_high = work_sort_key({"year_start": "", "catalog": "BWV 232", "title_en": "D"})
+    assert early < late
+    assert undated_low < undated_high
+
+
+def test_group_works_by_genre_and_year() -> None:
+    from aulos_knowledge.composer_dossier import (
+        group_works_by_genre,
+        group_works_by_year,
+        work_node_from_raw,
+    )
+
+    raw = [
+        {"qid": "Q1", "title_en": "Cantata A", "year_start": "1724", "genre": "cantata", "catalog": "BWV 1", "parent_qid": ""},
+        {"qid": "Q2", "title_en": "Mass", "year_start": "1749", "genre": "mass", "catalog": "BWV 232", "parent_qid": ""},
+        {"qid": "Q3", "title_en": "Cantata B", "year_start": "1725", "genre": "cantata", "catalog": "BWV 2", "parent_qid": ""},
+        {"qid": "Q4", "title_en": "Film junk", "year_start": "2001", "genre": "drama film", "catalog": "", "parent_qid": ""},
+    ]
+    nodes = [work_node_from_raw(w) for w in raw]
+    by_genre = group_works_by_genre(nodes)
+    labels = [g["genre"] for g in by_genre]
+    assert "cantata" in labels
+    assert "mass" in labels
+    assert "drama film" not in labels
+    cantata = next(g for g in by_genre if g["genre"] == "cantata")
+    assert [w["title_en"] for w in cantata["works"]] == ["Cantata A", "Cantata B"]
+
+    by_year = group_works_by_year(nodes)
+    years = [y["year"] for y in by_year if y["year"] != "undated"]
+    assert years == sorted(years)
+    assert by_year[0]["year"] == "1724"
+
+
+def test_resolve_composer_qid_famous_overrides_dirty_db(client: TestClient) -> None:
+    from aulos_knowledge.composer_dossier import resolve_composer_qid
+    from aulos_knowledge.db import ComposerEntity, get_session
+
+    db = next(get_session())
+    try:
+        row = db.get(ComposerEntity, "wolfgang-amadeus-mozart")
+        if row is None:
+            row = ComposerEntity(id="wolfgang-amadeus-mozart", name_en="Franz Xaver Wolfgang Mozart")
+            db.add(row)
+        row.name_en = "Franz Xaver Wolfgang Mozart"
+        row.external_ids_json = json.dumps({"wikidata": "Q156023"}, ensure_ascii=False)
+        db.commit()
+        qid = resolve_composer_qid(db, "wolfgang-amadeus-mozart", qid_hint="Q156023")
+        assert qid == "Q254"
+    finally:
+        db.close()
+
+
+def test_dossier_payload_includes_year_and_genre_views(client: TestClient) -> None:
+    with patch("aulos_knowledge.composer_dossier.httpx.Client") as client_cls:
+        mock_client = MagicMock()
+        mock_client.__enter__.return_value = mock_client
+        mock_client.__exit__.return_value = False
+        mock_client.get.side_effect = _http_get
+        client_cls.return_value = mock_client
+
+        with patch("aulos_knowledge.composer_dossier.fetch_wikidata_media_claims", return_value=[]):
+            job = client.post(
+                f"/v1/admin/composers/{BACH_ID}/build-dossier",
+                headers=AUTH_HEADERS,
+                json={"qid": BACH_QID},
+            )
+    assert job.status_code == 200, job.text
+    data = client.get(f"/v1/admin/composers/{BACH_ID}/dossier", headers=AUTH_HEADERS).json()
+    assert isinstance(data.get("works_by_year"), list)
+    assert isinstance(data.get("works_by_genre"), list)
+    assert any(g.get("genre") for g in data["works_by_genre"])
+    assert data["composer"]["external_ids"].get("wikidata") == BACH_QID

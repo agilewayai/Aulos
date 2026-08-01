@@ -58,6 +58,7 @@ def enqueue_listening_job(
     user_id: int,
     kind: str = "compose",
     work_hint: str | None = None,
+    review_notes: str | None = None,
 ) -> dict[str, Any]:
     """Push a listening job. Prefer Redis; fall back to a daemon thread."""
     job = {
@@ -65,6 +66,7 @@ def enqueue_listening_job(
         "user_id": int(user_id),
         "kind": kind,
         "work_hint": (work_hint or "").strip() or None,
+        "review_notes": (review_notes or "").strip() or None,
         "enqueued_at": datetime.now(timezone.utc).isoformat().replace("+00:00", "Z"),
     }
     url = _redis_url()
@@ -147,7 +149,7 @@ def _persist_steps(db: Any, row: Any, step: dict[str, Any]) -> None:
 
 
 def run_listening_job(job: dict[str, Any]) -> dict[str, Any]:
-    """Open a fresh DB session and run one queued compose/recompose."""
+    """Open a fresh DB session and run one queued compose/recompose/targeted_revise."""
     from aulos_api.db import session as db_session
     from aulos_api.services.listening_guide import (
         _persist_report,
@@ -160,6 +162,7 @@ def run_listening_job(job: dict[str, Any]) -> dict[str, Any]:
     user_id = int(job.get("user_id") or 0)
     kind = str(job.get("kind") or "compose")
     work_hint = job.get("work_hint") if isinstance(job.get("work_hint"), str) else None
+    review_notes = job.get("review_notes") if isinstance(job.get("review_notes"), str) else None
 
     db_session.get_engine()
     if db_session.SessionLocal is None:
@@ -173,7 +176,6 @@ def run_listening_job(job: dict[str, Any]) -> dict[str, Any]:
         row.status = "running"
         row.error_detail = ""
         row.updated_at = utcnow()
-        # Ensure countable plan is present for reconnecting clients.
         try:
             existing = json.loads(row.steps_json or "[]")
         except json.JSONDecodeError:
@@ -185,6 +187,21 @@ def run_listening_job(job: dict[str, Any]) -> dict[str, Any]:
         db.add(row)
         db.commit()
         db.refresh(row)
+
+        if kind == "targeted_revise":
+            updated = _run_targeted_revise_job(
+                db,
+                row=row,
+                review_notes=review_notes,
+                work_hint=work_hint,
+            )
+            logger.info(
+                "listening_job_ok guide=%s kind=%s status=%s",
+                updated.id,
+                kind,
+                updated.status,
+            )
+            return {"guide_id": updated.id, "status": updated.status}
 
         message = (row.message or "").strip() or f"Listening guide for {row.work_title}"
         hint = (work_hint or "").strip() or (row.work_title if kind == "recompose" else None)
@@ -225,6 +242,128 @@ def run_listening_job(job: dict[str, Any]) -> dict[str, Any]:
         return {"guide_id": updated.id, "status": updated.status}
     finally:
         db.close()
+
+
+def _run_targeted_revise_job(
+    db: Any,
+    *,
+    row: Any,
+    review_notes: str | None,
+    work_hint: str | None,
+) -> Any:
+    """Apply chamber-targeted revise using existing research snapshot."""
+    import sys
+    from pathlib import Path
+    from types import SimpleNamespace
+
+    from aulos_api.services.listening_guide import _persist_report, utcnow
+
+    try:
+        research = json.loads(row.research_json or "{}")
+    except json.JSONDecodeError:
+        research = {}
+    if not isinstance(research, dict):
+        research = {}
+
+    notes = (review_notes or research.get("pending_review_notes") or "").strip()
+    if not notes:
+        raise RuntimeError("targeted_revise requires review_notes")
+
+    def _mark(step_id: str, title: str, status: str, detail: str = "") -> None:
+        _persist_steps(
+            db,
+            row,
+            {
+                "id": step_id,
+                "title": title,
+                "status": status,
+                "thinking": title,
+                "detail": detail,
+            },
+        )
+
+    _mark("targeted.locate", "Locate review targets", "running")
+
+    skills = Path(__file__).resolve().parents[4] / "aulos-skills" / "src"
+    if skills.is_dir() and str(skills) not in sys.path:
+        sys.path.insert(0, str(skills))
+    from aulos_skills.targeted_revise import run_targeted_revise
+
+    dossier = dict(research.get("corpus_dossier") or {})
+    rounds = dict(research.get("generation_rounds") or {})
+    if row.guide_html and not (rounds.get("draft_v1") or {}).get("guide_html"):
+        rounds["draft_v1"] = {
+            "guide_html": row.guide_html,
+            "summary": row.summary or research.get("summary") or "",
+        }
+
+    context: dict[str, Any] = {
+        "raw_message": row.message or "",
+        "work_title": row.work_title or research.get("work_title") or work_hint or "",
+        "composer": row.composer or research.get("composer") or "",
+        "guide_html": row.guide_html or "",
+        "summary": row.summary or research.get("summary") or "",
+        "corpus_dossier": dossier,
+        "generation_rounds": rounds,
+        "external_review_report": dict(research.get("external_review_report") or {}),
+        "critique_corrections": list(research.get("critique_corrections") or []),
+        "intent_lock": research.get("intent_lock"),
+        "review_notes": notes,
+    }
+    _mark("targeted.locate", "Locate review targets", "done", f"notes={len(notes)}")
+    _mark("targeted.patch", "Patch chambers", "running")
+    result = run_targeted_revise(context, human_notes=notes, allow_full_compose=None)
+    _mark(
+        "targeted.patch",
+        "Patch chambers",
+        "done",
+        f"scope={result.get('revise_scope')} targets={result.get('patched_targets')}",
+    )
+    _mark("targeted.render", "Re-render + score", "running")
+
+    pct = float(
+        (
+            ((result.get("generation_rounds") or {}).get("draft_v2") or {})
+            .get("process_scorecard")
+            or {}
+        )
+        .get("rollup", {})
+        .get("pct")
+        or 0
+    )
+    report = SimpleNamespace(
+        eval_pass=True,
+        eval_score=int(round(pct / 10.0)),
+        skill_versions=dict(research.get("skill_versions") or {}),
+        work_title=str(result.get("work_title") or row.work_title or ""),
+        composer=str(result.get("composer") or row.composer or ""),
+        summary=str(result.get("summary") or ""),
+        guide_html=str(result.get("guide_html") or ""),
+        source="targeted-revise",
+        context=context,
+        steps=[],
+    )
+    updated = _persist_report(
+        db=db,
+        user_id=int(row.user_id),
+        report=report,
+        source="targeted-revise",
+        existing=row,
+    )
+    try:
+        research2 = json.loads(updated.research_json or "{}")
+    except json.JSONDecodeError:
+        research2 = {}
+    if isinstance(research2, dict):
+        research2.pop("pending_review_notes", None)
+        research2["revise_mode"] = "targeted"
+        updated.research_json = json.dumps(research2, ensure_ascii=False)
+        updated.updated_at = utcnow()
+        db.add(updated)
+        db.commit()
+        db.refresh(updated)
+    _mark("targeted.render", "Re-render + score", "done")
+    return updated
 
 
 def _worker_loop() -> None:

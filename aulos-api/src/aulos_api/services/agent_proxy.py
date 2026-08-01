@@ -98,6 +98,9 @@ class AgentProxy:
         rag_hits: list[str] | None = None,
         rag_mode: str | None = None,
         disabled_skill_ids: list[str] | set[str] | None = None,
+        review_llm_enabled: bool | None = None,
+        ambient_fallback_mode: str | None = None,
+        external_review_sources: list[dict[str, Any]] | None = None,
         on_step: Any = None,
     ) -> ListeningProxyReport:
         """Delegate 导赏 to aulos-agent (HTTP when configured, else in-process)."""
@@ -112,6 +115,9 @@ class AgentProxy:
                 rag_hits=rag_hits,
                 rag_mode=rag_mode,
                 disabled_skill_ids=list(disabled_skill_ids or []),
+                review_llm_enabled=review_llm_enabled,
+                ambient_fallback_mode=ambient_fallback_mode,
+                external_review_sources=external_review_sources,
             )
         return self._run_listening_inprocess(
             message=message,
@@ -122,6 +128,9 @@ class AgentProxy:
             rag_hits=rag_hits,
             rag_mode=rag_mode,
             disabled_skill_ids=disabled_skill_ids,
+            review_llm_enabled=review_llm_enabled,
+            ambient_fallback_mode=ambient_fallback_mode,
+            external_review_sources=external_review_sources,
             on_step=on_step,
         )
 
@@ -136,6 +145,9 @@ class AgentProxy:
         rag_hits: list[str] | None,
         rag_mode: str | None,
         disabled_skill_ids: list[str] | set[str] | None,
+        review_llm_enabled: bool | None,
+        ambient_fallback_mode: str | None,
+        external_review_sources: list[dict[str, Any]] | None,
         on_step: Any,
     ) -> ListeningProxyReport:
         _ensure_aulos_agent_importable()
@@ -150,6 +162,9 @@ class AgentProxy:
             rag_hits=rag_hits,
             rag_mode=rag_mode,
             disabled_skill_ids=disabled_skill_ids,
+            review_llm_enabled=review_llm_enabled,
+            ambient_fallback_mode=ambient_fallback_mode,
+            external_review_sources=external_review_sources,
             on_step=on_step,
         )
         return ListeningProxyReport(
@@ -176,22 +191,28 @@ class AgentProxy:
         rag_hits: list[str] | None,
         rag_mode: str | None,
         disabled_skill_ids: list[str],
+        review_llm_enabled: bool | None,
+        ambient_fallback_mode: str | None = None,
+        external_review_sources: list[dict[str, Any]] | None = None,
     ) -> ListeningProxyReport:
         url = f"{self._settings.agent_base_url.rstrip('/')}/v1/listening/run"
+        body: dict[str, Any] = {
+            "message": message,
+            "work_hint": work_hint,
+            "llm_enrichment": llm_enrichment,
+            "llm_dossier": llm_dossier or {},
+            "kb_dossier": kb_dossier or {},
+            "rag_hits": rag_hits or [],
+            "rag_mode": rag_mode or "",
+            "disabled_skill_ids": disabled_skill_ids,
+            "external_review_sources": list(external_review_sources or []),
+        }
+        if review_llm_enabled is not None:
+            body["review_llm_enabled"] = bool(review_llm_enabled)
+        if ambient_fallback_mode is not None:
+            body["ambient_fallback_mode"] = str(ambient_fallback_mode)
         with httpx.Client(timeout=180.0) as client:
-            response = client.post(
-                url,
-                json={
-                    "message": message,
-                    "work_hint": work_hint,
-                    "llm_enrichment": llm_enrichment,
-                    "llm_dossier": llm_dossier or {},
-                    "kb_dossier": kb_dossier or {},
-                    "rag_hits": rag_hits or [],
-                    "rag_mode": rag_mode or "",
-                    "disabled_skill_ids": disabled_skill_ids,
-                },
-            )
+            response = client.post(url, json=body)
             response.raise_for_status()
             data = response.json()
         return ListeningProxyReport(

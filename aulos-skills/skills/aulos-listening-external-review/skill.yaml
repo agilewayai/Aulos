@@ -1,0 +1,13 @@
+id: aulos-listening-external-review
+name: Listening External Review
+version: 0.1.0
+layer: domain-runtime
+runtime: agent
+summary: Networked deep review Agent after first compose — produces review_report + corrections (SPEC-022).
+triggers:
+  - listening.external_review
+depends_on:
+  - aulos-listening-compose
+inputs: [guide_html, corpus_dossier, external_review_sources, intent_lock]
+outputs: [external_review_report, critique_corrections, generation_rounds]
+observability_title: External networked review

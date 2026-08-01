@@ -9,7 +9,7 @@ fingerprint: "aries-harness/bootstrap-doc/v1"
 initialized_at: "2026-07-25T11:22:04Z"
 effective_status: "active"
 effective_since: "2026-07-25T11:22:04Z"
-content_fingerprint: "sha256:2bb5bc1541e179097c544aef4031e887df61361d856ba7a3aeb4b6340ee4e8f4"
+content_fingerprint: "sha256:f99ed5de5f36c007ba8eae70a7a6019a4b3107cbf75340191f4ff1f1fb38f52c"
 trace_history_source: "filesystem-only"
 trace_last_commit_sha: ""
 trace_last_commit_at: ""
@@ -25,6 +25,8 @@ trace_revision_count: "0"
 | REQ-004 | request | references/requests/REQ-004-cold-path-salon-parity.md | active |
 | REQ-005 | request | references/requests/REQ-005-ambient-media-identity.md | active |
 | REQ-006 | request | references/requests/REQ-006-work-identity-catalog.md | active |
+| REQ-007 | request | references/requests/REQ-007-node-decontam-rework.md | active |
+| REQ-008 | request | references/requests/REQ-008-adversarial-process-review.md | active |
 | SPEC-001 | spec | references/specs/SPEC-001-skills-harness.md | active |
 | SPEC-002 | spec | references/specs/SPEC-002-domain-runtime-listening-skills.md | active |
 | SPEC-003 | spec | references/specs/SPEC-003-salon-codex-dossier.md | active |
@@ -32,10 +34,13 @@ trace_revision_count: "0"
 | SPEC-005 | spec | references/specs/SPEC-005-bilingual-salon-codex.md | active |
 | SPEC-006 | spec | references/specs/SPEC-006-ambient-media-and-identity.md | active |
 | SPEC-008 | spec | references/specs/SPEC-008-work-identity-and-resolver.md | active |
+| SPEC-009 | spec | references/specs/SPEC-009-node-decontam-rework.md | active |
+| SPEC-018 | spec | references/specs/SPEC-018-adversarial-process-review.md | active |
 | STORY-PACK-001 | story-pack | references/stories/STORY-PACK-001-bootstrap.md | active |
 | ARCH-001 | architecture | decisions/architecture/ARCH-001-skills-harness-architecture.md | active |
 | ADR-001 | adr | decisions/adrs/ADR-001-filesystem-skill-packs.md | accepted |
 | ADR-004 | adr | decisions/adrs/ADR-004-catalog-over-heuristics.md | accepted |
+| ADR-005 | adr | decisions/adrs/ADR-005-hybrid-adversarial-review.md | accepted |
 | DOM-002 | domain | references/domain/DOM-002-listening-identity.md | active |
 | TRACE-001 | traceability | references/TRACE-001-value-traceability.md | active |
 | META-001 | meta-principles | references/META-001-meta-principles.md | active |

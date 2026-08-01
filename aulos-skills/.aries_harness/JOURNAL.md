@@ -10,13 +10,249 @@ generated_by: "/aries-harness init"
 initialized_at: "2026-07-25T11:20:05Z"
 effective_status: "active"
 effective_since: "2026-07-25T11:20:05Z"
-content_fingerprint: "sha256:3e7be4158bc616b714741cfae8447211e620ed26f1a2c0b88d8d867e5dc3a7d3"
+content_fingerprint: "sha256:d52befe0aec5f1c942d5a3f234981d5f01db96a47abdddfb42c0d6ba05f09c8a"
 trace_history_source: "filesystem-only"
 trace_last_commit_sha: ""
 trace_last_commit_at: ""
 trace_revision_count: "0"
 ---
 # Journal
+
+## 2026-08-01T21:50:00Z
+
+- **REQ-022 / SPEC-032 Identity freeze + Catalog/facet hardening (anti-case):**
+  Probe class from multi-Köchel piano-sonata pressing (Eschenbach⊂bach, KV prefix
+  false ties, German Sonaten → chamber-generic, promote poison slug). Shipped:
+  `text_match.alias_in_text` word boundaries; IntentLock composer wins in synthesize;
+  Catalog scoring rejects bare `kv`/`op` tokens + `multi_work` for unmatched multi-numbers;
+  FacetClassifier `solo-piano-sonata` + German/rondo tokens (duo requires cello);
+  form_lock `solo_keyboard` (duo suppresses solo); promote refuses drift/hard-fail;
+  ProductScorecard `product_composer_drift`; packaging peel no longer eats form nouns;
+  ambient playlist mode preserved under catalog-ref. Verify: `pytest tests/` **157 passed**.
+
+## 2026-08-01T21:30:00Z
+
+- **Mechanism tour:** wrote `.aries_harness/docs/SYSTEM_MECHANISM_TOUR.md` — fleet topology,
+  atelier chain, identity law, thicken engine vs accelerators, promote graduation, dual
+  scorecards, invariants. Lens = system/mechanism only (post-compression).
+
+## 2026-08-01T21:15:00Z
+
+- **Compression — delete case/temporary localize logic:** Removed all 10 hand-authored
+  craft YAML packs; craft is promote-pipeline only. Stripped case marker lists
+  (Bernstein H1, K.488 hints, Op.69/Fournier scrub, rival-composer maps, beethoven.jpg
+  URL fingerprint, Mendelssohn-only surname bleed, goldberg-as-form-token, chamber-generic
+  duplicate scaffold). External review aliens come from `form_lock_groups.yaml` only.
+- Verify: 67 skills + promote API tests green.
+
+## 2026-08-01T21:00:00Z
+
+- **REQ-021 / SPEC-031 Dimensional promote (anti-case):** Facet voices
+  `(instruments × forms × era)` thicken any unknown title; generic
+  stage→Catalog stub→production craft pipeline. META-001 v6 encodes: Catalog/craft
+  are accelerators; engine is dimensional — tests require ≥2 unrelated identities.
+- Verify: `tests/test_dimensional_promote.py`, `test_promote_production_api.py`.
+
+## 2026-08-01T20:40:00Z
+
+- **REQ-020 / SPEC-030 Promote staging + ops surface:** Operator can stage
+  `promote_candidate` → `craft/staging/{id}.yaml` (not production craft/). API
+  list/stage endpoints; Guide quality panel Stage action; FacetClassifier tokens
+  for prelude/etude/ballade/impromptu/fantasy/quartet.
+- Verify: `tests/test_promote_staging.py`, `aulos-api/tests/test_promote_stage_api.py`.
+
+## 2026-08-01T20:25:00Z
+
+- **REQ-019 / SPEC-029 Unknown-Case Thicken Loop v1:** FacetClassifier → archetype
+  floor (reuse family pack or built-in `chamber-generic`) → promote_candidate dry-run.
+  Synthesize no longer depends on Catalog/craft YAML for unknown Discogs/NLP titles;
+  `archetype:{id}` replaces bare `generic-scaffold` when confidence ≥ 0.4. API persists
+  `promote_candidate` + `facet_classification` in `research_json`.
+- Verify: `tests/test_unknown_case_thicken.py` (6) + thicken regressions green.
+
+## 2026-08-01T20:05:00Z
+
+- **REQ-018 / SPEC-028 Catalog craft + fleet dossier:** Craft YAML for all 10 Catalog
+  works; scrub no longer wipes craft/catalog-floor theses that name conflict works to
+  refuse them; `ensure_catalog_composer_dossiers` + ops
+  `POST /v1/ops/knowledge/composers/ensure-dossiers`; live enqueue for thin Dvořák.
+- Verify: `tests/test_catalog_craft_coverage.py`, `tests/test_ensure_composer_dossiers.py`.
+
+## 2026-08-01T19:55:00Z
+
+- **REQ-017 / SPEC-027 genre family coverage:** Added `piano-concerto`, `sacred-requiem`,
+  `symphony-orchestra`, `piano-trio` bilingual family packs; every Catalog work now has
+  registered `family_id`; synthesize prepends Catalog family lock; catalog craft floor
+  auto-loads family by id; Mahler + Dvořák composer cards in synthesize index.
+- Verify: `tests/test_family_coverage.py` (14 related green with systemic/craft).
+
+## 2026-08-01T19:50:00Z
+
+- **REQ-016 / SPEC-026 systemic cold-path thicken:** Catalog craft floor binds any
+  Catalog `work_id` + family into work-specific Salon chambers (no hand YAML required);
+  explicit craft pack still wins. Thin knowledge dossier after identity lock
+  fire-and-forget enqueues `build-dossier`. ProductScorecard gains `asset_depth`;
+  identity-resolved family-only shelves capped ≤ solid / fail if asset empty.
+- Verify: `tests/test_systemic_cold_thicken.py` (+ product/craft regressions).
+
+## 2026-08-01T19:32:00Z
+
+- **REQ-015 / SPEC-025 knowledge thicken + ProductScorecard:** Knowledge-plane
+  composer dossier → Salon chambers (`knowledge_thicken`); Catalog work craft packs
+  (`assets/craft/{work_id}.yaml`) merge after family and re-assert EN/ZH theses over
+  LLM poetic drift; ProductScorecard dual-track (`eval_pass` ← product band; process
+  stays diagnostic); API persists `product_scorecard` in `research_json`.
+- **Alien marker bounds:** bare `988` no longer hard-fails inside year `1988`
+  (`marker_in_text` digit boundaries in decontam / process / adversarial).
+- **Guide #50:** process **76.1% hard_fail** (false `988`) → **81.2% solid no hard_fail**;
+  product **100% strong**; eval **10 / pass**; synthesize
+  `…+craft:mendelssohn.lieder-ohne-worte+…+knowledge-plane`; Mendelssohn knowledge
+  dossier built (portrait + timeline); craft ZH「歌唱房间」pinned in HTML.
+- Verify: `tests/test_knowledge_product_score.py`, `tests/test_marker_boundaries.py`,
+  `tests/test_craft_raise.py`.
+
+## 2026-08-01T19:10:00Z
+
+- **REQ-014 / SPEC-024 craft raise:** Work Resolver (Discogs packaging → Catalog
+  `work_id`/`family_id`); chamber contracts (EN floors + ZH parity) in eval; cold
+  thicken via registered `lyric-piano-miniatures` + Mendelssohn composer card; family
+  forms-hit so Songs Without Words is not refused as foreign for missing "piano" token;
+  atelier eval accepts double-quoted HTML ids; API Discogs lock keeps Catalog when
+  resolver matches.
+- **Guide #50:** original eval **7 fail** / dishonest v2 91.7% → hygiene **9 pass** →
+  craft raise **10 pass**; portrait/genesis/sound/interpretations filled; EN+ZH theses
+  aligned; `work_id=mendelssohn.lieder-ohne-worte`.
+- Verify: `tests/test_craft_raise.py` + runtime/identity hygiene regressions.
+
+
+## 2026-08-01T18:45:00Z
+
+- **REQ-013 / SPEC-023 product-prose hygiene (systemic):** Root-cause classes from
+  Mendelssohn《无词歌》guide #50 — packaging IntentLock, CRITIQUE LOCK in thesis,
+  CJK-on-EN, large-scale form placeholder, review empty-body hallucination, gameable
+  scorecards. Shipped `prose_hygiene` + hooks in Discogs / synthesize / compose /
+  revise_repair / external_review / scan_hard_flaws; catalog Mendelssohn +
+  `lyric-piano-miniatures` family; RAG packaging-dump filter.
+- **Follow-up from deep RCA:** intake dash-regex no longer splits hyphenated surnames;
+  composer-name strip prefers longer aliases; Discogs `work_hint` uses `Composer — Title`;
+  enrichment JSON no longer pasted into width bullets; review_targets map title/process
+  codes to `work_title`; bilingual score requires craft parity; identity score hard-fails
+  packaging titles.
+- **Regen #50:** eval_score **7→9** (fail→pass); product: clean title, bilingual EN/ZH
+  theses aligned, no process locks, lyric miniature form. Process scorecard now honest
+  (~70.8%, 0 hard) vs prior dishonest v2 91.7% with locks still in HTML.
+- Verify: `tests/test_prose_hygiene.py` + `tests/test_external_review_hygiene.py` +
+  `test_intake_i18n` surname case; `aulos-api` `tests/test_discogs.py`.
+
+
+## 2026-08-01T18:00:00Z
+
+- **SPEC-022Δ targeted revise:** semantic `review_targets` (expert codes + human notes)
+  → chamber patch via `targeted_revise` (no default full compose); `generation_rounds` v2
+  with frozen `draft_v1`, latest report/v2, `revision_history`; diary revise enqueues
+  `kind=targeted_revise`; Studio panel shows iteration history + score deltas.
+- Verify: `test_review_targets` + `test_targeted_revise` + `test_external_review_round`;
+  diary revise lifecycle.
+
+
+## 2026-08-01T17:30:00Z
+
+- **REQ-005 / SPEC-006Δ:** Disable ambient-library related/defaults rotation; scrub
+  peer/stand-in curated ambient; OPS `listening.ambient_fallback_mode` (`embed` default |
+  `stream` yt-dlp); `ambient_video` + embed DOM (`v2-embed`); eval ambient gate softened
+  (missing player is soft score, not hard-fail alone).
+- Verify: `tests/test_ambient_agent.py` + `test_ambient_video.py` + eval soft note (15);
+  `aulos-api` `tests/test_ambient_fallback.py` (2); Mozart Moonlight stand-in → `{}`.
+
+
+## 2026-08-01T16:20:00Z
+
+- **SPEC-022 revise repair:** apply_review_repairs + optional LLM proofread; rescore
+  draft_v1 with hard-flaw penalties; draft_v2 scored on remaining flaws so dual
+  scorecards diverge (comparison tracks hard_flaws delta).
+- Verify: pytest tests/test_external_review_round.py (6 passed).
+
+
+## 2026-08-01T16:00:00Z
+
+- **SPEC-022Δ:** External Review Agent perspective = music guide + analysis expert;
+  hard-flaw findings only (no web_catalog_weak source hunt). LLM expert completer
+  attached in agent; UI shows 专家视角 / 硬伤修复指令.
+- Verify: pytest tests/test_external_review_round.py.
+
+
+## 2026-08-01T12:15:00Z
+
+- **Deploy + regen:** `aulos-ctl deploy` smoke green; Guide #48 recomposed with
+  `generation_rounds` (v1/review/v2) — comparison 94.4% / 94.4% (tie), review
+  verdict PASS (1 low: web_catalog_weak). Live web ships「双稿与联网 Review」panel.
+
+## 2026-08-01T12:07:00Z
+
+- **REQ-012 / SPEC-022:** Post-compose networked External Review Agent round —
+  playbook `compose → external_review → revise → eval`; API injects open-web
+  `external_review_sources`; persists `generation_rounds` (draft_v1 / review_report /
+  draft_v2 / comparison); Studio+diary UI tabs for 初稿/报告/修订稿 + dual scores.
+- Verify: `tests/test_external_review_round.py` + identity/process **13+**; agent listening
+  tests; `aulos-web` build green.
+
+## 2026-08-01T11:47:00Z
+
+- **Guide #48 root-cause (Mozart K.488 / Horowitz):** three drift classes fixed via SPEC-009Δ
+  + SPEC-019 self-improvement — not symptom patches.
+  1. H1「伯恩斯坦谈莫扎特」: `guide_render` video loop shadowed `title` → last appreciation
+     video overwrote work H1.
+  2. Mozart portrait = Beethoven.jpg: no Mozart composer card + no portrait↔composer gate;
+     KB/polluted layer supplied Beethoven cello-room caption.
+  3. Beethoven cello Op.69 chambers: KB carried `dossier_id=family:duo-cello-piano` while
+     `synthesize_source` lacked `family:` — prior decontam only checked source string; shared
+     `piano` token masked instrument-miss.
+- **Class fix:** `identity_hygiene.py` (portrait betrayal + composer-scoped/strong-instrument
+  foreign family); synthesize refuses polluted KB; scrub cleanses `historical_stature.reasons`
+  + portrait; decontam/review + scorecard identity hard_fail → `critique_corrections` rework.
+  Mozart composer card added; K.488 catalog conflict_markers expanded.
+- Verify: `tests/test_identity_hygiene.py` + process/adversarial/runtime/media **39 passed**.
+
+## 2026-08-01T18:55:00Z
+
+- **SPEC-019 / REQ-009:** Listening process scorecard — `process_scorecard.py` NodeScorecard per skill node + ProcessScorecard rollup at eval; Atelier card; Ops Guide quality board; research_json/chain_trace persistence. Legacy `eval_score`/`pass` unchanged.
+- Verify: skills `test_process_scorecard` + adversarial **12 passed**; API scorecard list/trace; web+ops `npm run build` green.
+
+## 2026-08-01T18:40:00Z
+
+- **SPEC-018 / ADR-005 / REQ-008:** Hybrid adversarial process review for listening atelier.
+  - Intake freezes `intent_lock` (Discogs/Catalog/diary truth); later nodes cannot overwrite.
+  - Unified `_adversarial_review_gate`: deterministic ReviewReport every enrich node; LLM/intent Critic after synthesize+compose; `critique_corrections` rework ≤1; eval soft-fail on `review_failed`.
+  - Atelier emits `review-*` milestones; chain_trace / research_json expose review events.
+  - OPS `listening.review_llm` switch; agent re-attaches Critic completer per tool call (JSON-safe).
+- Verify: `tests/test_adversarial_review.py` + mozart/identity_lock **14 passed**.
+
+## 2026-08-01T11:20:00Z
+
+- Operator challenge: prior Requiem fix still smelled case-specific (K.488 hardcode).
+- **Class gate:** `identity_lock.py` + `policies/form_lock_groups.yaml` — catalog-number lock + form-family aliens (concerto↔sacred_mass, etc.) with **zero per-work Python branches**; intake merges lock aliens into conflict_markers; synthesize drops betraying LLM layers; API betrayal uses the same module; SPEC-008 acceptance updated.
+- Verify: `tests/test_identity_lock.py` (Beethoven/Brahms/generic) + mozart drift + identity/runtime **31 passed**.
+
+## 2026-08-01T11:05:00Z
+
+- **Root cause (guide #47):** Horowitz DG Mozart pressing (K.488 concerto + K.333) drifted to Requiem/末日经.
+  Drift chain: no Mozart Catalog card → identity unknown → LLM free-associated Horowitz+Mozart → Requiem transcription meme;
+  Discogs title vs Catalog substring check could also drop a correct work_id; compose decontam scrubbed dossier but left stale `guide_html`.
+- **Class fix:** Catalog Mozart + K.488 + Requiem (bidirectional conflict markers); form-lock aliens in `decontam`; intake `Composers:` line; LLM identity lock + betrayal reject; `_titles_compatible`; compose re-render + HTML marker scrub.
+- Verify: `pytest tests/test_mozart_requiem_drift.py` (+ identity/runtime) green.
+
+## 2026-08-01T10:40:00Z
+
+- META-001 §3.5: extract `aulos_skills.html_bits` (`point_text(s)`, `html_li`, `html_p`); `guide_render` wraps them; delete unused legacy `render_guide_html` + local `_li`/`_p`/`_point_*` from `runtime.py` (compose already uses bilingual renderer).
+- Verify: `pytest tests/test_html_bits.py` + `tests/test_runtime.py` green.
+
+## 2026-08-01T10:25:00Z
+
+- META-001 → **v5**: added §3.5 DRY (no copy-paste product code); strengthened §3.1/§3.2 against duplicated implementations. Spurred by Studio vs diary atelier fork → shared `AtelierTrail`.
+
+## 2026-08-01T10:15:00Z
+
+- Fix Agent atelier crash: LLM/KB `width_points`/`depth_points` may be dicts; `_detail_from_outputs` used `"; ".join(points)` → `sequence item 0: expected str instance, dict found`. Coerce via `_point_text(s)`; harden rag_hits + eval earish. Triggered by diary Mozart Horowitz K.488 guide #47.
 
 ## 2026-08-01T06:35:00Z
 

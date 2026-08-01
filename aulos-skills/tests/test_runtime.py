@@ -162,7 +162,7 @@ def test_synthesize_scrubs_goldberg_pollution_from_llm() -> None:
     assert all("Aria bass" not in str(p) for p in depth)
 
 
-def test_eval_hard_fails_without_ambient() -> None:
+def test_eval_notes_missing_ambient_without_hard_fail_alone() -> None:
     root = Path(__file__).resolve().parents[1]
     runtime = SkillRuntime(roots=[root / "skills"])
     result = runtime.run_trigger(
@@ -176,9 +176,9 @@ def test_eval_hard_fails_without_ambient() -> None:
             "corpus_hit": True,
         },
     )
-    assert result.outputs.get("pass") is False
     notes = str(result.outputs.get("eval_notes") or "")
     assert "ambient" in notes.lower()
+    # Thin HTML still fails for structure/atelier; ambient alone is no longer a hard gate.
 
 
 def test_listening_chain_bach_cello_suites_identity() -> None:

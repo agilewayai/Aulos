@@ -15,7 +15,6 @@ import {
   register,
   resetPassword,
   retryListeningJob,
-  searchDiscogsReleases,
   shareGuideUrl,
   streamGuideEvents,
   streamListeningGuide,
@@ -31,8 +30,10 @@ import {
   type WorkflowStep,
 } from './api'
 import { formatDateTime } from './time'
+import { errorMessage } from './errors'
 import { PasswordField } from './PasswordField'
-import { GUIDE_IFRAME_SANDBOX, prepareGuideHtml } from './guideHtml'
+import { prepareGuideHtml } from './guideHtml'
+import { GuideReader } from './GuideReader'
 import {
   consumeWebScene,
   registerSceneCapture,
@@ -40,9 +41,22 @@ import {
   type WebSessionScene,
 } from './sessionScene'
 import { requestAssetVersionCheck } from './assetVersion'
+import { ListeningPlaza, MyListeningDiary } from './ListeningDiaryViews'
+import { AtelierTrail } from './AtelierTrail'
+import { ProcessScorecardCard } from './ProcessScorecardCard'
+import { GenerationRoundsPanel } from './GenerationRoundsPanel'
+import type { GenerationRounds } from './GenerationRoundsPanel'
+import { DiscogsReleasePicker } from './DiscogsReleasePicker'
+import {
+  chainProgressFromSteps,
+  sortWorkflowSteps,
+  upsertWorkflowStep,
+  type ChainProgress,
+} from './atelierTrailUtils'
 import './App.css'
 
 type Mode = 'login' | 'register' | 'verify' | 'forgot' | 'reset' | 'studio'
+type ProductSurface = 'plaza' | 'diary' | 'studio'
 type StudioTab = 'guide' | 'atelier' | 'library'
 type AttachMenu = 'menu' | 'discogs' | null
 type LibraryFilter = 'all' | 'favorites' | 'published' | 'progress'
@@ -53,10 +67,6 @@ const PENDING_SCENE: WebSessionScene | null =
 const EXAMPLE =
   "I'm beginning to listen to Bach's Goldberg Variations — I want to learn this masterwork while I listen."
 const DISCOGS_EXAMPLE = '/discogs #423-287-1'
-
-function errorMessage(error: unknown, fallback: string) {
-  return error instanceof Error ? error.message : fallback
-}
 
 function App() {
   const initialToken = useMemo(
@@ -78,6 +88,7 @@ function App() {
     return 'login'
   })
   const [user, setUser] = useState<User | null>(null)
+  const [surface, setSurface] = useState<ProductSurface>('plaza')
   const [busy, setBusy] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const [notice, setNotice] = useState<string | null>(null)
@@ -95,9 +106,6 @@ function App() {
   const [showGuide, setShowGuide] = useState(() => PENDING_SCENE?.showGuide ?? false)
   const [attachMenu, setAttachMenu] = useState<AttachMenu>(null)
   const [discogsQuery, setDiscogsQuery] = useState('')
-  const [discogsResults, setDiscogsResults] = useState<DiscogsSearchHit[]>([])
-  const [discogsError, setDiscogsError] = useState<string | null>(null)
-  const [discogsLoading, setDiscogsLoading] = useState(false)
   const [chainTrace, setChainTrace] = useState<ChainTrace | null>(null)
   const [traceOpen, setTraceOpen] = useState(false)
   const [studioTab, setStudioTab] = useState<StudioTab>(() => PENDING_SCENE?.studioTab ?? 'guide')
@@ -108,7 +116,7 @@ function App() {
   const [tagDraft, setTagDraft] = useState('')
   const [taggingId, setTaggingId] = useState<number | null>(null)
   const [composeOpen, setComposeOpen] = useState(() => PENDING_SCENE?.composeOpen ?? true)
-  const [chainProgress, setChainProgress] = useState<{ done: number; total: number } | null>(null)
+  const [chainProgress, setChainProgress] = useState<ChainProgress | null>(null)
   const [retryableGuideId, setRetryableGuideId] = useState<number | null>(null)
   const trailRef = useRef<HTMLDivElement>(null)
   const attachRef = useRef<HTMLDivElement>(null)
@@ -218,27 +226,6 @@ function App() {
   }, [actionsOpen])
 
   useEffect(() => {
-    if (attachMenu !== 'discogs' || discogsQuery.trim().length < 2) {
-      setDiscogsResults([])
-      setDiscogsLoading(false)
-      return
-    }
-    let current = true
-    const timer = window.setTimeout(() => {
-      setDiscogsLoading(true)
-      setDiscogsError(null)
-      searchDiscogsReleases(discogsQuery.trim())
-        .then((result) => current && setDiscogsResults(result.results))
-        .catch((err) => current && setDiscogsError(errorMessage(err, 'Discogs search failed')))
-        .finally(() => current && setDiscogsLoading(false))
-    }, 280)
-    return () => {
-      current = false
-      window.clearTimeout(timer)
-    }
-  }, [attachMenu, discogsQuery])
-
-  useEffect(() => {
     if (!guide?.id) {
       setChainTrace(null)
       setTraceOpen(false)
@@ -260,6 +247,7 @@ function App() {
       .then(async (me) => {
         setUser(me)
         setMode('studio')
+        setSurface('plaza')
         try {
           setHistory(await listListeningGuides({ limit: 50 }))
         } catch {
@@ -287,7 +275,7 @@ function App() {
     setBusy(true); setError(null); setNotice(null)
     try {
       const data = await login(email.trim(), password)
-      setUser(data.user); setMode('studio'); setPassword('')
+      setUser(data.user); setMode('studio'); setSurface('plaza'); setPassword('')
       setHistory(await listListeningGuides({ limit: 50 }))
     } catch (err) {
       setError(errorMessage(err, 'Login failed'))
@@ -339,21 +327,30 @@ function App() {
 
   function receiveStep(step: WorkflowStep) {
     setVisibleSteps((previous) => {
-      const next = [...previous.filter((item) => item.id !== step.id), step]
-      next.sort((a, b) => (a.index ?? 0) - (b.index ?? 0))
-      const done = next.filter((s) =>
-        ['done', 'completed', 'ok', 'skip', 'skipped', 'failed'].includes(s.status),
-      ).length
-      const total = step.total || next[0]?.total || next.length
-      setChainProgress({ done, total })
+      const next = upsertWorkflowStep(previous, step)
+      setChainProgress(chainProgressFromSteps(next, step.total))
       return next
     })
   }
 
-  function receiveProgress(progress: { done: number; total: number; steps: WorkflowStep[] }) {
-    const steps = [...progress.steps].sort((a, b) => (a.index ?? 0) - (b.index ?? 0))
+  function receiveProgress(progress: {
+    done: number
+    total: number
+    completed?: number
+    skipped?: number
+    failed?: number
+    steps: WorkflowStep[]
+  }) {
+    const steps = sortWorkflowSteps(progress.steps)
     setVisibleSteps(steps)
-    setChainProgress({ done: progress.done, total: progress.total || steps.length })
+    const derived = chainProgressFromSteps(steps, progress.total || steps.length)
+    setChainProgress({
+      done: progress.done ?? derived.done,
+      total: progress.total || derived.total,
+      completed: progress.completed ?? derived.completed,
+      skipped: progress.skipped ?? derived.skipped,
+      failed: progress.failed ?? derived.failed,
+    })
   }
 
   function mergeGuide(updated: ListeningGuide) {
@@ -394,10 +391,7 @@ function App() {
         const snap = await fetchListeningGuide(guideId)
         if (snap.steps?.length) {
           receiveProgress({
-            done: snap.steps.filter((s) =>
-              ['done', 'completed', 'ok', 'skip', 'skipped', 'failed'].includes(s.status),
-            ).length,
-            total: snap.steps[0]?.total || snap.steps.length,
+            ...chainProgressFromSteps(snap.steps, snap.steps[0]?.total || snap.steps.length),
             steps: snap.steps,
           })
         }
@@ -492,7 +486,7 @@ function App() {
   }
 
   function onLogout() {
-    void logout(); setUser(null); setMode('login'); setGuide(null); setVisibleSteps([])
+    void logout(); setUser(null); setMode('login'); setSurface('plaza'); setGuide(null); setVisibleSteps([])
     setHistory([]); setNotice('Signed out.'); setStudioTab('guide')
     watchingRef.current = null
   }
@@ -728,10 +722,11 @@ function App() {
     } catch (err) { setError(errorMessage(err, 'Update publish failed')) } finally { setBusy(false) }
   }
 
-  const isStudio = mode === 'studio' && Boolean(user)
+  const isApp = mode === 'studio' && Boolean(user)
+  const isStudio = isApp && surface === 'studio'
   const isActiveAuthTab = (tab: Mode) => mode === tab
   return (
-    <div className={`shell ${isStudio ? 'shell-studio' : 'shell-auth'}`}>
+    <div className={`shell ${isApp ? 'shell-studio' : 'shell-auth'}`}>
       <a className="skip-link" href="#main">Skip to main content</a>
       <div className="atmosphere" aria-hidden="true" />
       <header className="topbar">
@@ -739,14 +734,24 @@ function App() {
           <p className="brand">Aulos</p>
           <p className="tagline">{user ? 'A listening practice, composed for you' : 'Deep listening companion'}</p>
         </div>
-        {user && <div className="topbar-user"><span className="user-chip">{user.display_name || user.email}</span><button type="button" className="btn btn-ghost btn-sm" onClick={onLogout}>Sign out</button></div>}
+        {user && (
+          <div className="topbar-user">
+            <nav className="product-nav product-nav-desktop" aria-label="产品入口">
+              <button type="button" className={surface === 'plaza' ? 'active' : ''} onClick={() => setSurface('plaza')}>聆乐广场</button>
+              <button type="button" className={surface === 'diary' ? 'active' : ''} onClick={() => setSurface('diary')}>我的聆乐</button>
+              <button type="button" className={surface === 'studio' ? 'active' : ''} onClick={() => setSurface('studio')}>导赏</button>
+            </nav>
+            <span className="user-chip">{user.display_name || user.email}</span>
+            <button type="button" className="btn btn-ghost btn-sm" onClick={onLogout}>退出</button>
+          </div>
+        )}
       </header>
       <div className="toast-stack" aria-live="polite">
         {notice && <p className="toast toast-ok" role="status"><span>{notice}</span><button className="toast-dismiss" type="button" onClick={() => setNotice(null)} aria-label="Dismiss notification">×</button></p>}
         {error && <p className="toast toast-err" role="alert"><span>{error}</span><button className="toast-dismiss" type="button" onClick={() => setError(null)} aria-label="Dismiss error">×</button></p>}
       </div>
       <main id="main" className="stage">
-        {!isStudio ? <section className="auth-gate" aria-label="Account access">
+        {!isApp ? <section className="auth-gate" aria-label="Account access">
           <aside className="auth-brand">
             <p className="auth-kicker">Aulos listening portal</p><h1 className="auth-display">Hear the work beneath the performance.</h1>
             <p className="auth-lede">A composed route into the music: context, landmarks, and a practice for listening again.</p>
@@ -762,7 +767,22 @@ function App() {
             {mode === 'reset' && <form className="auth-form" onSubmit={onReset}><h2>Set new password</h2><label htmlFor="reset-token">Reset token</label><input id="reset-token" required value={resetToken} onChange={(event) => setResetToken(event.target.value)} autoComplete="off" /><label htmlFor="reset-password">New password</label><PasswordField id="reset-password" required minLength={10} value={password} onChange={(event) => setPassword(event.target.value)} autoComplete="new-password" /><label htmlFor="reset-password-confirm">Confirm password</label><PasswordField id="reset-password-confirm" required minLength={10} value={passwordConfirm} onChange={(event) => setPasswordConfirm(event.target.value)} autoComplete="new-password" /><button className="btn btn-primary" type="submit" disabled={busy}>{busy ? 'Updating…' : 'Update password'}</button></form>}
             {mode === 'verify' && <form className="auth-form" onSubmit={onVerify}><h2>Verify email</h2><label htmlFor="verify-token">Verification token</label><input id="verify-token" required value={verifyToken} onChange={(event) => setVerifyToken(event.target.value)} autoComplete="off" /><p className="hint">Paste the token from your email, or open the verification link directly.</p><button className="btn btn-primary" type="submit" disabled={busy}>{busy ? 'Verifying…' : 'Verify email'}</button></form>}
           </section>
-        </section> : <div className="studio">
+        </section> : <>
+          {surface === 'plaza' && user && (
+            <ListeningPlaza
+              user={user}
+              onNotice={(msg) => setNotice(msg)}
+              onError={(msg) => setError(msg.trim() ? msg : null)}
+            />
+          )}
+          {surface === 'diary' && user && (
+            <MyListeningDiary
+              user={user}
+              onNotice={(msg) => setNotice(msg)}
+              onError={(msg) => setError(msg.trim() ? msg : null)}
+            />
+          )}
+          {isStudio && <div className="studio">
           <nav className="studio-tabs" role="tablist" aria-label="Studio views">
             <button type="button" role="tab" id="tab-guide" aria-selected={studioTab === 'guide'} aria-controls="pane-guide" className={studioTab === 'guide' ? 'active' : ''} onClick={() => setStudioTab('guide')}>Guide</button>
             <button type="button" role="tab" id="tab-atelier" aria-selected={studioTab === 'atelier'} aria-controls="pane-atelier" className={studioTab === 'atelier' ? 'active' : ''} onClick={() => setStudioTab('atelier')}>Atelier {busy && <span className="tab-pulse" aria-label="Working" />}</button>
@@ -797,7 +817,15 @@ function App() {
                     <div className="attach-wrap" ref={attachRef}>
                       <button className="attach-btn" type="button" disabled={busy} aria-label="Attach a source" aria-expanded={attachMenu !== null} onClick={() => setAttachMenu((menu) => menu ? null : 'menu')}>+</button>
                       {attachMenu === 'menu' && <div className="attach-menu"><button type="button" onClick={() => setAttachMenu('discogs')}>Search Discogs</button></div>}
-                      {attachMenu === 'discogs' && <div className="discogs-picker"><label className="sr-only" htmlFor="discogs-search">Search Discogs releases</label><input id="discogs-search" autoFocus value={discogsQuery} placeholder="Artist, work, label, catalogue no." onChange={(event) => setDiscogsQuery(event.target.value)} />{discogsQuery.length > 0 && discogsQuery.length < 2 && <p className="discogs-status">Type at least two characters.</p>}{discogsLoading && <p className="discogs-status">Searching Discogs…</p>}{discogsError && <p className="discogs-status is-error">{discogsError}</p>}<div className="discogs-results"><ul>{discogsResults.map((hit) => <li key={hit.id}><button type="button" onClick={() => onPickDiscogs(hit)}>{hit.thumb ? <img src={hit.thumb} alt="" /> : <span className="discogs-thumb-fallback" aria-hidden="true" />}<span className="discogs-hit-body"><span className="discogs-hit-title">{hit.title}</span><span className="discogs-hit-meta">{[hit.catno, hit.label, hit.year].filter(Boolean).join(' · ')}</span></span></button></li>)}</ul></div></div>}
+                      {attachMenu === 'discogs' && (
+                        <DiscogsReleasePicker
+                          query={discogsQuery}
+                          onQueryChange={setDiscogsQuery}
+                          onPick={onPickDiscogs}
+                          disabled={busy}
+                          autoFocus
+                        />
+                      )}
                     </div>
                     <div><label className="sr-only" htmlFor="prompt">Listening intent</label><textarea id="prompt" rows={2} value={draft} placeholder="I'm listening to… or /discogs #423-287-1" onChange={(event) => setDraft(event.target.value)} /></div>
                   </div>
@@ -815,55 +843,19 @@ function App() {
                 </div>
                 {guide && <span className="meta-pill">{guide.source} · {guide.status}{guide.published ? ' · published' : ''}</span>}
               </div>
-              {(chainProgress || visibleSteps.length > 0) && (
-                <div className="chain-progress" aria-live="polite">
-                  <div className="chain-progress-meta">
-                    <span>
-                      Progress{' '}
-                      <strong>
-                        {chainProgress?.done ??
-                          visibleSteps.filter((s) =>
-                            ['done', 'completed', 'ok', 'skip', 'skipped', 'failed'].includes(s.status),
-                          ).length}
-                        {' / '}
-                        {chainProgress?.total || visibleSteps[0]?.total || visibleSteps.length || '—'}
-                      </strong>
-                    </span>
-                    {busy && <span className="chain-progress-live">Running</span>}
-                  </div>
-                  <div
-                    className="chain-progress-bar"
-                    role="progressbar"
-                    aria-valuemin={0}
-                    aria-valuemax={chainProgress?.total || visibleSteps.length || 1}
-                    aria-valuenow={
-                      chainProgress?.done ??
-                      visibleSteps.filter((s) =>
-                        ['done', 'completed', 'ok', 'skip', 'skipped', 'failed'].includes(s.status),
-                      ).length
-                    }
-                  >
-                    <span
-                      style={{
-                        width: `${Math.min(
-                          100,
-                          Math.round(
-                            (100 *
-                              (chainProgress?.done ??
-                                visibleSteps.filter((s) =>
-                                  ['done', 'completed', 'ok', 'skip', 'skipped', 'failed'].includes(s.status),
-                                ).length)) /
-                              Math.max(
-                                1,
-                                chainProgress?.total || visibleSteps[0]?.total || visibleSteps.length || 1,
-                              ),
-                          ),
-                        )}%`,
-                      }}
-                    />
-                  </div>
-                </div>
-              )}
+              <AtelierTrail
+                steps={visibleSteps}
+                progress={chainProgress}
+                busy={busy}
+                trailRef={trailRef}
+              />
+              {guide?.process_scorecard ? (
+                <ProcessScorecardCard scorecard={guide.process_scorecard} />
+              ) : null}
+              <GenerationRoundsPanel
+                rounds={(guide?.generation_rounds as GenerationRounds | null) || null}
+                workTitle={guide?.work_title || 'Listening guide'}
+              />
               {retryableGuideId != null && (
                 <div className="chain-recover">
                   <p>Chain interrupted or failed. Progress is saved — retry to continue robustly.</p>
@@ -872,41 +864,19 @@ function App() {
                   </button>
                 </div>
               )}
-              <div className="trail" ref={trailRef}>
-                {visibleSteps.length === 0 && !busy && (
-                  <p className="empty">Your process appears here: Discogs → identity → knowledge → web → LLM → agent skills → persist.</p>
-                )}
-                {busy && visibleSteps.length === 0 && (
-                  <p className="thinking"><span className="thinking-dot" />Aulos is opening the research atelier…</p>
-                )}
-                <ol className="step-list">
-                  {visibleSteps.map((step, index) => (
-                    <li key={step.id} className={`step status-${step.status}`} style={{ animationDelay: `${index * 0.04}s` }}>
-                      <div className="step-index">{step.index ?? index + 1}</div>
-                      <div>
-                        <p className="step-title">
-                          {step.title}
-                          <span className="step-status-label">{step.status}</span>
-                        </p>
-                        {step.skill_id && (
-                          <p className="step-skill">
-                            {step.skill_id}
-                            {step.skill_version ? `@${step.skill_version}` : ''}
-                          </p>
-                        )}
-                        <p className="step-thinking">{step.thinking}</p>
-                        {step.detail && <p className="step-detail">{step.detail}</p>}
-                      </div>
-                    </li>
-                  ))}
-                </ol>
-              </div>
               {chainTrace && <div className="chain-trace"><button type="button" className="chain-trace-toggle" aria-expanded={traceOpen} onClick={() => setTraceOpen((open) => !open)}>Diagnostic log · {chainTrace.deviations?.length ? `${chainTrace.deviations.length} deviation${chainTrace.deviations.length === 1 ? '' : 's'}` : 'clean'}</button>{traceOpen && <div className="chain-trace-body">{chainTrace.deviations?.length ? <ul className="trace-deviations">{chainTrace.deviations.map((deviation, index) => <li key={`${deviation.code}-${index}`}>{deviation.code}: {deviation.summary}</li>)}</ul> : <p className="trace-clean">No deviations recorded.</p>}{chainTrace.milestones?.length ? <ul className="trace-milestones">{chainTrace.milestones.map((milestone) => <li key={milestone.id} className={`trace-${milestone.status}`}><span className="trace-id">{milestone.id}</span><span className="trace-status">{milestone.status}</span><span>{milestone.summary}</span></li>)}</ul> : null}{chainTrace.identity_arc?.length ? <div className="trace-arc"><p className="trace-arc-label">Identity arc</p><ol>{chainTrace.identity_arc.map((arc, index) => <li key={`${arc.stage}-${index}`}><code>{arc.stage}</code> · {[arc.composer, arc.work_title].filter(Boolean).join(' — ')}</li>)}</ol></div> : null}</div>}</div>}
             </section>
             <section id="pane-guide" role="tabpanel" aria-labelledby="tab-guide" hidden={studioTab !== 'guide'} className="guide-pane panel-card studio-pane">
               <div className="section-head"><div><h2 id="guide-title">Listening guide</h2>{guide?.created_at && <p className="section-sub">{guide.work_title} · {formatDateTime(guide.created_at)}</p>}</div>{guide && showGuide && <div className="guide-actions" ref={actionsRef}><button type="button" className="btn btn-ghost btn-sm" disabled={busy} onClick={() => { setActionsOpen(false); void onRecompose() }}>Re-compose</button><button type="button" className="btn btn-ghost btn-sm actions-more-btn" aria-expanded={actionsOpen} aria-haspopup="menu" onClick={() => setActionsOpen((open) => !open)}>More</button><div className={`guide-actions-more ${actionsOpen ? 'is-open' : ''}`} role="menu">{!guide.published ? <button type="button" role="menuitem" className="btn btn-ghost btn-sm" disabled={busy} onClick={() => { setActionsOpen(false); void onPublish() }}>Publish & copy link</button> : <><button type="button" role="menuitem" className="btn btn-ghost btn-sm" onClick={() => { setActionsOpen(false); void onCopyShareLink() }}>Copy share link</button><a className="btn btn-ghost btn-sm" role="menuitem" href={guide.share_path || '#'} target="_blank" rel="noopener noreferrer" onClick={() => setActionsOpen(false)}>Open share page</a><button type="button" role="menuitem" className="btn btn-ghost btn-sm" disabled={busy} onClick={() => { setActionsOpen(false); void onUnpublish() }}>Unpublish</button></>}<button type="button" role="menuitem" className="btn btn-ghost btn-sm" disabled={busy} onClick={() => { setActionsOpen(false); void onUpdatePublish() }}>Update publish</button><button type="button" role="menuitem" className="btn btn-ghost btn-sm" onClick={() => { setActionsOpen(false); const url = URL.createObjectURL(new Blob([prepareGuideHtml(guide.guide_html)], { type: 'text/html' })); window.open(url, '_blank', 'noopener,noreferrer') }}>Open full page</button></div></div>}</div>
               {guide?.published && guide.share_path && <p className="share-url">Public link: <code>{shareGuideUrl(guide.share_path)}</code></p>}
-              {guide && showGuide ? <iframe className="guide-frame" title={guide.work_title} sandbox={GUIDE_IFRAME_SANDBOX} srcDoc={prepareGuideHtml(guide.guide_html)} /> : <div className="guide-placeholder"><p className="placeholder-title">A guide awaits.</p><p>Tell Aulos what you are listening for, and the page will appear here.</p></div>}
+              {guide && showGuide ? (
+                <GuideReader html={guide.guide_html} title={guide.work_title || 'Listening guide'} />
+              ) : (
+                <div className="guide-placeholder">
+                  <p className="placeholder-title">A guide awaits.</p>
+                  <p>Tell Aulos what you are listening for, and the page will appear here.</p>
+                </div>
+              )}
             </section>
             <section id="pane-library" role="tabpanel" aria-labelledby="tab-library" hidden={studioTab !== 'library'} className="library panel-card studio-pane">
 <div className="section-head">
@@ -1044,7 +1014,23 @@ function App() {
             </section>
           </div>
         </div>}
+        </>}
       </main>
+      {user && (
+        <nav className="product-nav-dock" aria-label="主导航">
+          <div className="product-nav-dock-bar">
+            <button type="button" className={surface === 'plaza' ? 'active' : ''} onClick={() => setSurface('plaza')}>
+              <span className="dock-label">广场</span>
+            </button>
+            <button type="button" className={surface === 'diary' ? 'active' : ''} onClick={() => setSurface('diary')}>
+              <span className="dock-label">我的聆乐</span>
+            </button>
+            <button type="button" className={surface === 'studio' ? 'active' : ''} onClick={() => setSurface('studio')}>
+              <span className="dock-label">导赏</span>
+            </button>
+          </div>
+        </nav>
+      )}
     </div>
   )
 }

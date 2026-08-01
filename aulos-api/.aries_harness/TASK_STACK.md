@@ -9,7 +9,7 @@ fingerprint: "aries-harness/bootstrap-doc/v1"
 initialized_at: "2026-07-25T11:10:22Z"
 effective_status: "active"
 effective_since: "2026-07-25T11:10:22Z"
-content_fingerprint: "sha256:145a48b1cd78592cb8ad990634a67dba7eaf459bc8239eaf16425a6dcb8dbad7"
+content_fingerprint: "sha256:de3ae31f2426f79c49fb11313a48a91711f5acea52fce062bf9a30b24ebdb686"
 trace_history_source: "filesystem-only"
 trace_last_commit_sha: ""
 trace_last_commit_at: ""
@@ -19,11 +19,13 @@ trace_revision_count: "0"
 
 ## Now
 
-- none (SPEC-018 knowledge.benchmark task shipped)
+- none (REQ-011 / SPEC-021Δ lifecycle verified; await deploy)
 
 ## Next
 
+- Guest plaza browse without login
 - Knowledge-plane Discogs ingest (compliance-gated; deferred from SPEC-008)
+- Multi-round review_notes history (deferred; latest-only for now)
 
 ## Later
 

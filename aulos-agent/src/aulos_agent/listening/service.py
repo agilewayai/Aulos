@@ -56,20 +56,26 @@ def _job_payload(
     rag_hits: list[str] | None = None,
     rag_mode: str | None = None,
     disabled_skill_ids: list[str] | set[str] | None = None,
+    review_llm_enabled: bool | None = None,
+    ambient_fallback_mode: str | None = None,
+    external_review_sources: list[dict[str, Any]] | None = None,
 ) -> str:
-    return json.dumps(
-        {
-            "message": message,
-            "work_hint": work_hint or "",
-            "llm_enrichment": llm_enrichment or "",
-            "llm_dossier": dict(llm_dossier or {}),
-            "kb_dossier": dict(kb_dossier or {}),
-            "rag_hits": list(rag_hits or []),
-            "rag_mode": rag_mode or "",
-            "disabled_skill_ids": list(disabled_skill_ids or []),
-        },
-        ensure_ascii=False,
-    )
+    payload: dict[str, Any] = {
+        "message": message,
+        "work_hint": work_hint or "",
+        "llm_enrichment": llm_enrichment or "",
+        "llm_dossier": dict(llm_dossier or {}),
+        "kb_dossier": dict(kb_dossier or {}),
+        "rag_hits": list(rag_hits or []),
+        "rag_mode": rag_mode or "",
+        "disabled_skill_ids": list(disabled_skill_ids or []),
+        "external_review_sources": list(external_review_sources or []),
+    }
+    if review_llm_enabled is not None:
+        payload["review_llm_enabled"] = bool(review_llm_enabled)
+    if ambient_fallback_mode is not None:
+        payload["ambient_fallback_mode"] = str(ambient_fallback_mode)
+    return json.dumps(payload, ensure_ascii=False)
 
 
 def _extract_report(messages: list[Any]) -> ListeningAgentReport:
@@ -136,6 +142,9 @@ def run_listening_via_agent(
     rag_hits: list[str] | None = None,
     rag_mode: str | None = None,
     disabled_skill_ids: list[str] | set[str] | None = None,
+    review_llm_enabled: bool | None = None,
+    ambient_fallback_mode: str | None = None,
+    external_review_sources: list[dict[str, Any]] | None = None,
     settings: Settings | None = None,
     on_step: Callable[[dict[str, Any]], None] | None = None,
 ) -> ListeningAgentReport:
@@ -175,6 +184,9 @@ def run_listening_via_agent(
         rag_hits=rag_hits,
         rag_mode=rag_mode,
         disabled_skill_ids=disabled_skill_ids,
+        review_llm_enabled=review_llm_enabled,
+        ambient_fallback_mode=ambient_fallback_mode,
+        external_review_sources=external_review_sources,
     )
     thread_id = str(uuid.uuid4())
     seen_steps = 0
@@ -198,6 +210,12 @@ def run_listening_via_agent(
             if isinstance(step, dict):
                 seen_steps += 1
                 on_step(step)
+            review_step = (
+                payload_obj.get("review_step") if isinstance(payload_obj, dict) else None
+            )
+            if isinstance(review_step, dict):
+                seen_steps += 1
+                on_step(review_step)
     return _extract_report(messages)
 
 

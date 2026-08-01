@@ -19,3 +19,7 @@ venv/
 .DS_Store
 *.log
 node_modules/
+
+# SPEC-030 operator-staged craft drafts (never auto-commit)
+skills/aulos-listening-corpus/assets/craft/staging/*.yaml
+!skills/aulos-listening-corpus/assets/craft/staging/.gitkeep

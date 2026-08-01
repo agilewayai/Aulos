@@ -30,6 +30,8 @@ export type WorkflowStep = {
   finished_at?: string | null
   index?: number | null
   total?: number | null
+  /** When false, step is visible but excluded from done/total (e.g. review milestones). */
+  countable?: boolean | null
 }
 
 export type GuideProgress = {
@@ -37,8 +39,46 @@ export type GuideProgress = {
   status: string
   done: number
   total: number
+  completed?: number
+  skipped?: number
+  failed?: number
   steps: WorkflowStep[]
   error_detail?: string
+}
+
+export type ProcessScorecard = {
+  schema?: string
+  nodes?: Array<{
+    trigger: string
+    pct?: number
+    band?: string
+    hard_fail?: boolean
+    scores?: Record<string, number>
+  }>
+  product?: {
+    scores?: Record<string, number>
+    pct?: number
+    band?: string
+    hard_fail?: boolean
+  }
+  rollup?: {
+    earned?: number
+    max_possible?: number
+    pct?: number
+    band?: string
+    hard_fail?: boolean
+    hard_flaws_high?: number
+    hard_flaws_medium?: number
+    hard_flaws_remaining?: number
+    flaw_budget_earned?: number
+    flaw_budget_max?: number
+  }
+  gates?: {
+    eval_pass?: boolean
+    review_failed?: boolean
+    decontam_failed?: boolean
+    ambient_ok?: boolean
+  }
 }
 
 export type ListeningGuide = {
@@ -53,6 +93,44 @@ export type ListeningGuide = {
   skill_versions?: Record<string, string>
   eval_pass?: boolean | null
   eval_score?: number | null
+  process_scorecard?: ProcessScorecard | null
+  generation_rounds?: {
+    schema?: string
+    draft_v1?: {
+      guide_html?: string
+      summary?: string
+      process_scorecard?: ProcessScorecard | null
+    }
+    review_report?: Record<string, unknown>
+    draft_v2?: {
+      guide_html?: string
+      summary?: string
+      process_scorecard?: ProcessScorecard | null
+      patched_targets?: string[]
+      scope?: string
+    }
+    comparison?: {
+      v1_pct?: number
+      v2_pct?: number
+      delta_pct?: number
+      v1_hard_flaws?: number
+      v2_hard_flaws?: number
+      winner?: string
+      notes?: string[]
+    }
+    revision_history?: Array<{
+      id?: string
+      at?: string
+      source?: string
+      summary?: string
+      targets?: string[]
+      scope?: string
+      score_before?: { pct?: number; hard_flaws?: number }
+      score_after?: { pct?: number; hard_flaws?: number }
+      diff_summary?: string[]
+    }>
+  } | null
+  external_review_report?: Record<string, unknown> | null
   created_at?: string | null
   updated_at?: string | null
   published?: boolean
@@ -219,6 +297,30 @@ export async function fetchListeningGuide(guideId: number) {
   return request<ListeningGuide>(`/v1/listening-guides/${guideId}`, {}, true)
 }
 
+function progressFromGuideSteps(snap: {
+  id: number
+  status: string
+  steps?: WorkflowStep[]
+  error_detail?: string
+}): GuideProgress | null {
+  const steps = snap.steps || []
+  if (!steps.length) return null
+  const countable = steps.filter((s) => s.countable !== false)
+  return {
+    guide_id: snap.id,
+    status: snap.status,
+    done: countable.filter((s) =>
+      ['done', 'completed', 'ok', 'skip', 'skipped', 'failed'].includes(s.status),
+    ).length,
+    completed: countable.filter((s) => ['done', 'completed', 'ok'].includes(s.status)).length,
+    skipped: countable.filter((s) => ['skip', 'skipped'].includes(s.status)).length,
+    failed: countable.filter((s) => s.status === 'failed').length,
+    total: steps[0]?.total || countable.length || steps.length,
+    steps,
+    error_detail: snap.error_detail,
+  }
+}
+
 export async function retryListeningJob(guideId: number) {
   return request<ListeningGuide>(`/v1/listening-guides/${guideId}/retry`, { method: 'POST' }, true)
 }
@@ -265,18 +367,8 @@ export async function streamGuideEvents(guideId: number, handlers: GuideStreamHa
       if (terminal) return
       // Stream ended without terminal event — poll once then reconnect.
       const snap = await fetchListeningGuide(guideId)
-      if (snap.steps?.length) {
-        wrapped.onProgress?.({
-          guide_id: snap.id,
-          status: snap.status,
-          done: snap.steps.filter((s) =>
-            ['done', 'completed', 'ok', 'skip', 'skipped', 'failed'].includes(s.status),
-          ).length,
-          total: snap.steps[0]?.total || snap.steps.length,
-          steps: snap.steps,
-          error_detail: snap.error_detail,
-        })
-      }
+      const progress = progressFromGuideSteps(snap)
+      if (progress) wrapped.onProgress?.(progress)
       if (snap.status === 'completed') {
         wrapped.onDone?.(snap)
         return
@@ -305,17 +397,8 @@ export async function streamGuideEvents(guideId: number, handlers: GuideStreamHa
           })
           return
         }
-        if (snap.steps?.length) {
-          wrapped.onProgress?.({
-            guide_id: snap.id,
-            status: snap.status,
-            done: snap.steps.filter((s) =>
-              ['done', 'completed', 'ok', 'skip', 'skipped', 'failed'].includes(s.status),
-            ).length,
-            total: snap.steps[0]?.total || snap.steps.length,
-            steps: snap.steps,
-          })
-        }
+        const progress = progressFromGuideSteps(snap)
+        if (progress) wrapped.onProgress?.(progress)
       } catch {
         /* keep reconnecting */
       }
@@ -551,6 +634,286 @@ export function publicGuidePageUrl(slug: string) {
 export function shareGuideUrl(sharePath: string) {
   if (typeof window === 'undefined') return sharePath
   return `${window.location.origin}${sharePath}`
+}
+
+export type DiaryAuthor = {
+  id: number
+  display_name: string
+}
+
+export type DiarySnapshot = {
+  provider?: string
+  external_id?: string
+  source_kind?: string
+  title?: string
+  cover_image_url?: string
+  composers?: string[]
+  performers?: string[]
+  ensembles?: string[]
+  year?: string
+  label?: string
+  catno?: string
+  uri?: string
+  genres?: string[]
+  styles?: string[]
+  tracklist?: Array<{ position?: string; title: string; duration?: string; type?: string }>
+}
+
+export type DiaryGuideLink = {
+  id: number
+  diary_post_id: number
+  guide_id?: number | null
+  aspect?: string
+  status: string
+  review_notes?: string
+  revised_at?: string | null
+  notified_at?: string | null
+  published_at?: string | null
+  created_at?: string | null
+  diary_title?: string
+  diary_cover_image_url?: string
+  needs_attention?: boolean
+  actions?: {
+    can_publish?: boolean
+    can_revise?: boolean
+    can_unpublish?: boolean
+    can_dismiss?: boolean
+    can_delete?: boolean
+  }
+  guide?: {
+    id: number
+    work_title?: string
+    composer?: string
+    status?: string
+    summary?: string
+    published?: boolean
+    share_slug?: string | null
+    share_path?: string | null
+    error_detail?: string
+    updated_at?: string | null
+    steps?: WorkflowStep[]
+    guide_html?: string
+    process_scorecard?: ProcessScorecard | null
+    generation_rounds?: import('./GenerationRoundsPanel').GenerationRounds | null
+    external_review_report?: Record<string, unknown> | null
+    eval_pass?: boolean | null
+    eval_score?: number | null
+  } | null
+}
+
+export type ListeningDiaryPost = {
+  id: number
+  user_id: number
+  status: string
+  source_provider: string
+  source_external_id: string
+  source_kind: string
+  title: string
+  cover_image_url: string
+  listening_note: string
+  listened_on?: string | null
+  share_slug?: string | null
+  share_path?: string | null
+  published?: boolean
+  published_at?: string | null
+  like_count: number
+  comment_count: number
+  created_at?: string | null
+  updated_at?: string | null
+  snapshot?: DiarySnapshot | null
+  author?: DiaryAuthor
+  guides?: DiaryGuideLink[]
+}
+
+export function createListeningDiary(body: {
+  provider: string
+  external_id: string
+  listening_note?: string
+  listened_on?: string
+  source_kind?: string
+}) {
+  return request<ListeningDiaryPost>('/v1/listening-diary', { method: 'POST', body: JSON.stringify(body) }, true)
+}
+
+export function listListeningDiary(status?: string) {
+  const params = new URLSearchParams()
+  if (status) params.set('status', status)
+  params.set('limit', '100')
+  const q = params.toString()
+  return request<ListeningDiaryPost[]>(`/v1/listening-diary?${q}`, {}, true)
+}
+
+export function fetchListeningDiary(postId: number) {
+  return request<ListeningDiaryPost>(`/v1/listening-diary/${postId}`, {}, true)
+}
+
+export function patchListeningDiary(
+  postId: number,
+  body: { listening_note?: string; listened_on?: string },
+) {
+  return request<ListeningDiaryPost>(
+    `/v1/listening-diary/${postId}`,
+    { method: 'PATCH', body: JSON.stringify(body) },
+    true,
+  )
+}
+
+export function publishListeningDiary(postId: number) {
+  return request<ListeningDiaryPost>(`/v1/listening-diary/${postId}/publish`, { method: 'POST' }, true)
+}
+
+export function unpublishListeningDiary(postId: number) {
+  return request<ListeningDiaryPost>(`/v1/listening-diary/${postId}/unpublish`, { method: 'POST' }, true)
+}
+
+export function deleteListeningDiary(postId: number) {
+  return request<void>(`/v1/listening-diary/${postId}`, { method: 'DELETE' }, true)
+}
+
+export function enqueueDiaryGuide(postId: number, aspect = '作品导赏') {
+  return request<DiaryGuideLink>(
+    `/v1/listening-diary/${postId}/guides`,
+    { method: 'POST', body: JSON.stringify({ aspect }) },
+    true,
+  )
+}
+
+export function listDiaryGuides(postId: number) {
+  return request<{ items: DiaryGuideLink[] }>(`/v1/listening-diary/${postId}/guides`, {}, true)
+}
+
+export function listDiaryGuideTasks(limit = 50) {
+  return request<{
+    items: DiaryGuideLink[]
+    ready_for_review_count: number
+    queued_count: number
+  }>(`/v1/listening-diary/guide-tasks?limit=${limit}`, {}, true)
+}
+
+export function publishDiaryGuideLink(linkId: number) {
+  return request<DiaryGuideLink>(`/v1/listening-diary/guides/${linkId}/publish`, { method: 'POST' }, true)
+}
+
+export function unpublishDiaryGuideLink(linkId: number) {
+  return request<DiaryGuideLink>(
+    `/v1/listening-diary/guides/${linkId}/unpublish`,
+    { method: 'POST' },
+    true,
+  )
+}
+
+export function reviseDiaryGuideLink(linkId: number, notes: string) {
+  return request<DiaryGuideLink>(
+    `/v1/listening-diary/guides/${linkId}/revise`,
+    { method: 'POST', body: JSON.stringify({ notes }) },
+    true,
+  )
+}
+
+export function deleteDiaryGuideLink(linkId: number) {
+  return request<void>(`/v1/listening-diary/guides/${linkId}`, { method: 'DELETE' }, true)
+}
+
+export function dismissDiaryGuideLink(linkId: number) {
+  return request<DiaryGuideLink>(`/v1/listening-diary/guides/${linkId}/dismiss`, { method: 'POST' }, true)
+}
+
+export function ackDiaryGuideLink(linkId: number) {
+  return request<DiaryGuideLink>(`/v1/listening-diary/guides/${linkId}/ack`, { method: 'POST' }, true)
+}
+
+export function fetchPlazaFeed(limit = 30) {
+  return request<{ items: ListeningDiaryPost[]; limit: number; offset: number }>(
+    `/v1/plaza/feed?limit=${limit}`,
+  )
+}
+
+export function fetchPlazaHome(limit = 30) {
+  return request<{ items: ListeningDiaryPost[]; limit: number; offset: number }>(
+    `/v1/plaza/home?limit=${limit}`,
+    {},
+    true,
+  )
+}
+
+export function fetchPlazaPost(slug: string) {
+  return request<ListeningDiaryPost>(`/v1/plaza/posts/${encodeURIComponent(slug)}`)
+}
+
+export function likePlazaPost(postId: number) {
+  return request<ListeningDiaryPost>(`/v1/plaza/posts/${postId}/likes`, { method: 'POST' }, true)
+}
+
+export function unlikePlazaPost(postId: number) {
+  return request<ListeningDiaryPost>(`/v1/plaza/posts/${postId}/likes`, { method: 'DELETE' }, true)
+}
+
+export function listPlazaComments(postId: number) {
+  return request<{
+    items: Array<{
+      id: number
+      post_id: number
+      body: string
+      created_at?: string | null
+      author: DiaryAuthor
+    }>
+  }>(`/v1/plaza/posts/${postId}/comments`)
+}
+
+export function addPlazaComment(postId: number, body: string) {
+  return request<{
+    id: number
+    post_id: number
+    body: string
+    created_at?: string | null
+    author: DiaryAuthor
+  }>(`/v1/plaza/posts/${postId}/comments`, { method: 'POST', body: JSON.stringify({ body }) }, true)
+}
+
+export function followUser(userId: number) {
+  return request<{ follower_id: number; followee_id: number }>(
+    `/v1/social/follows/${userId}`,
+    { method: 'POST' },
+    true,
+  )
+}
+
+export function unfollowUser(userId: number) {
+  return request<void>(`/v1/social/follows/${userId}`, { method: 'DELETE' }, true)
+}
+
+export type PersonEntityCard = {
+  name: string
+  kind: string
+  person_id: string
+  display_name: string
+  display_name_en?: string
+  display_name_zh?: string
+  lifespan?: string
+  era?: string
+  summary?: string
+  summary_en?: string
+  summary_zh?: string
+  summary_en_origin?: string
+  summary_zh_origin?: string
+  portrait_url?: string
+  external_ids?: Record<string, string | string[]>
+  snippets?: Array<{ title?: string; text?: string; source_id?: string; score?: number }>
+  sources?: Array<{ source_id?: string; role?: string; url?: string; fields?: string[]; lang?: string }>
+  source?: string
+  provenance?: Array<{ source_id?: string; url?: string }>
+  locale_default?: string
+  matched?: boolean
+}
+
+export function resolvePersonEntity(name: string, kind = 'person', enrich = true, locale = 'zh') {
+  const params = new URLSearchParams({
+    name,
+    kind,
+    enrich: enrich ? 'true' : 'false',
+    locale,
+  })
+  return request<PersonEntityCard>(`/v1/entities/person?${params.toString()}`)
 }
 
 export async function logout() {

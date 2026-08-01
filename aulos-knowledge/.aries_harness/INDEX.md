@@ -8,10 +8,10 @@ managed_by: "aries-harness"
 fingerprint: "aries-harness/bootstrap-doc/v1"
 generated_by: "/aries-harness well-organized"
 initialized_at: "2026-07-25T17:25:00+00:00"
-last_organized_at: "2026-08-01T06:31:43+00:00"
+last_organized_at: "2026-08-01T20:59:33+00:00"
 effective_status: "generated"
-effective_since: "2026-08-01T06:31:43+00:00"
-content_fingerprint: "sha256:47043be49c5432ac9ff4be6c9ddd265285c53f5c933aaefce18c234d1d0dbb37"
+effective_since: "2026-08-01T20:59:33+00:00"
+content_fingerprint: "sha256:67cfc173ad9ec22695aacabe64fd31bc7e0c42fd4895480df539f076988ea295"
 trace_history_source: "filesystem-only"
 trace_last_commit_sha: ""
 trace_last_commit_at: ""
@@ -19,7 +19,7 @@ trace_revision_count: "0"
 ---
 # Harness Index
 
-Last organized: `2026-08-01T06:31:43+00:00`
+Last organized: `2026-08-01T20:59:33+00:00`
 
 Canonical spelling: `/aries-harness well-organized`
 
@@ -59,11 +59,15 @@ Fingerprint marker: `aries-harness` / `aries-harness/bootstrap-doc/v1`
 - [REQ-008-authority-source-registry.md](references/requests/REQ-008-authority-source-registry.md)
 - [REQ-009-source-discovery-graph.md](references/requests/REQ-009-source-discovery-graph.md)
 - [REQ-010-composer-dossier.md](references/requests/REQ-010-composer-dossier.md)
+- [REQ-011-person-entity-cards.md](references/requests/REQ-011-person-entity-cards.md)
+- [REQ-012-person-multi-source-bilingual.md](references/requests/REQ-012-person-multi-source-bilingual.md)
 
 #### `references/specs/`
 - role: behavior and acceptance contracts derived from requests
 - [SPEC-009-knowledge-api-and-data.md](references/specs/SPEC-009-knowledge-api-and-data.md)
 - [SPEC-010-ops-knowledge-audit-ui.md](references/specs/SPEC-010-ops-knowledge-audit-ui.md)
+- [SPEC-011-person-entity-card.md](references/specs/SPEC-011-person-entity-card.md)
+- [SPEC-012-person-multi-source-bilingual.md](references/specs/SPEC-012-person-multi-source-bilingual.md)
 
 #### `references/stories/`
 - role: sprintable slices linked to specs and verification

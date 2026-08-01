@@ -9,7 +9,9 @@ from aulos_api.config import get_settings
 from aulos_api.routes import (
     auth_router,
     chat_router,
+    entities_router,
     health_router,
+    listening_diary_router,
     listening_router,
     media_router,
     ops_router,
@@ -110,6 +112,8 @@ def create_app() -> FastAPI:
     app.include_router(auth_router)
     app.include_router(ops_router)
     app.include_router(listening_router)
+    app.include_router(listening_diary_router)
+    app.include_router(entities_router)
     app.include_router(media_router)
     return app
 

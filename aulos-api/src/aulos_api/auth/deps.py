@@ -46,6 +46,30 @@ def get_current_user(
     return user
 
 
+def get_optional_user(
+    request: Request,
+    creds: HTTPAuthorizationCredentials | None = Depends(_bearer),
+    db: Session = Depends(get_db),
+) -> User | None:
+    token = _resolve_access_token(request, creds)
+    if not token:
+        return None
+    try:
+        payload = decode_access_token(token)
+        email = str(payload.get("sub") or "")
+    except Exception:  # noqa: BLE001
+        return None
+    user = (
+        db.query(User)
+        .options(joinedload(User.roles))
+        .filter(User.email == email.lower())
+        .one_or_none()
+    )
+    if user is None or not user.is_active:
+        return None
+    return user
+
+
 def require_roles(*required: str):
     required_set = set(required)
 

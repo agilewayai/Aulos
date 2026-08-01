@@ -1,8 +1,8 @@
 from __future__ import annotations
 
-from datetime import datetime, timezone
+from datetime import date, datetime, timezone
 
-from sqlalchemy import Boolean, Column, DateTime, ForeignKey, Integer, String, Table, Text, UniqueConstraint
+from sqlalchemy import Boolean, Column, Date, DateTime, ForeignKey, Integer, String, Table, Text, UniqueConstraint
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from aulos_api.db.session import Base
@@ -200,3 +200,95 @@ class OpsTask(Base):
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=utcnow, index=True)
     started_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True), nullable=True)
     finished_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True), nullable=True)
+
+
+class ListeningDiaryPost(Base):
+    """User listening diary entry anchored to an external source (SPEC-019)."""
+
+    __tablename__ = "listening_diary_posts"
+
+    id: Mapped[int] = mapped_column(Integer, primary_key=True)
+    user_id: Mapped[int] = mapped_column(ForeignKey("users.id", ondelete="CASCADE"), index=True)
+    status: Mapped[str] = mapped_column(String(16), default="draft", index=True)
+    source_provider: Mapped[str] = mapped_column(String(32), nullable=False, index=True)
+    source_external_id: Mapped[str] = mapped_column(String(128), nullable=False, index=True)
+    source_kind: Mapped[str] = mapped_column(String(32), default="release")
+    title: Mapped[str] = mapped_column(String(512), default="")
+    cover_image_url: Mapped[str] = mapped_column(String(1024), default="")
+    listening_note: Mapped[str] = mapped_column(Text, default="")
+    listened_on: Mapped[date | None] = mapped_column(Date, nullable=True, index=True)
+    snapshot_json: Mapped[str] = mapped_column(Text, default="{}")
+    share_slug: Mapped[str | None] = mapped_column(String(64), unique=True, nullable=True, index=True)
+    published_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True), nullable=True, index=True)
+    like_count: Mapped[int] = mapped_column(Integer, default=0)
+    comment_count: Mapped[int] = mapped_column(Integer, default=0)
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=utcnow, index=True)
+    updated_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True),
+        default=utcnow,
+        onupdate=utcnow,
+    )
+
+
+class DiaryGuideLink(Base):
+    """Diary post → listening guide by aspect (SPEC-019 / SPEC-021)."""
+
+    __tablename__ = "diary_guide_links"
+
+    id: Mapped[int] = mapped_column(Integer, primary_key=True)
+    diary_post_id: Mapped[int] = mapped_column(
+        ForeignKey("listening_diary_posts.id", ondelete="CASCADE"),
+        index=True,
+    )
+    guide_id: Mapped[int | None] = mapped_column(
+        ForeignKey("listening_guides.id", ondelete="SET NULL"),
+        nullable=True,
+        index=True,
+    )
+    aspect: Mapped[str] = mapped_column(String(255), default="")
+    status: Mapped[str] = mapped_column(String(32), default="queued", index=True)
+    # queued | ready_for_review | published | failed | dismissed
+    review_notes: Mapped[str] = mapped_column(Text, default="")
+    revised_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True), nullable=True)
+    notified_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True), nullable=True)
+    published_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True), nullable=True)
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=utcnow)
+
+
+class UserFollow(Base):
+    """Directed follow edge for plaza home feed (SPEC-020)."""
+
+    __tablename__ = "user_follows"
+    __table_args__ = (UniqueConstraint("follower_id", "followee_id", name="uq_user_follows_pair"),)
+
+    id: Mapped[int] = mapped_column(Integer, primary_key=True)
+    follower_id: Mapped[int] = mapped_column(ForeignKey("users.id", ondelete="CASCADE"), index=True)
+    followee_id: Mapped[int] = mapped_column(ForeignKey("users.id", ondelete="CASCADE"), index=True)
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=utcnow)
+
+
+class ListeningDiaryLike(Base):
+    __tablename__ = "listening_diary_likes"
+    __table_args__ = (UniqueConstraint("post_id", "user_id", name="uq_diary_likes_post_user"),)
+
+    id: Mapped[int] = mapped_column(Integer, primary_key=True)
+    post_id: Mapped[int] = mapped_column(
+        ForeignKey("listening_diary_posts.id", ondelete="CASCADE"),
+        index=True,
+    )
+    user_id: Mapped[int] = mapped_column(ForeignKey("users.id", ondelete="CASCADE"), index=True)
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=utcnow)
+
+
+class ListeningDiaryComment(Base):
+    __tablename__ = "listening_diary_comments"
+
+    id: Mapped[int] = mapped_column(Integer, primary_key=True)
+    post_id: Mapped[int] = mapped_column(
+        ForeignKey("listening_diary_posts.id", ondelete="CASCADE"),
+        index=True,
+    )
+    user_id: Mapped[int] = mapped_column(ForeignKey("users.id", ondelete="CASCADE"), index=True)
+    body: Mapped[str] = mapped_column(Text, default="")
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=utcnow, index=True)
+    deleted_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True), nullable=True)

@@ -83,7 +83,7 @@ class WorkRecord:
 
 @dataclass
 class IdentityResult:
-    status: str  # work | composer_only | ambiguous | unknown
+    status: str  # work | composer_only | ambiguous | multi_work | unknown
     work_id: str | None = None
     composer_id: str | None = None
     work_title: str = ""
@@ -251,19 +251,40 @@ class IdentityResolver:
         self.catalog = catalog or load_catalog()
 
     def resolve(self, query: str, work_hint: str = "") -> IdentityResult:
+        from aulos_skills.identity_lock import extract_catalog_numbers
+
         blob = _norm(f"{work_hint} {query}")
         if not blob:
             return IdentityResult(status="unknown", reason="empty query")
 
         q_tokens = _tokens(blob)
+        q_nums = extract_catalog_numbers(blob)
         scored: list[tuple[float, WorkRecord, str]] = []
         for work in self.catalog.works.values():
-            score, reason = self._score_work(work, blob=blob, q_tokens=q_tokens)
+            score, reason = self._score_work(
+                work, blob=blob, q_tokens=q_tokens, query_catalog_numbers=q_nums
+            )
             if score > 0:
                 scored.append((score, work, reason))
         scored.sort(key=lambda x: x[0], reverse=True)
 
         composer_hit = self._match_composer(blob, q_tokens)
+
+        # SPEC-032: multi unmatched catalog numbers → multi_work, never a false tie
+        exact_catalog = [
+            row for row in scored if any(p.startswith("catalog:") for p in row[2].split("+"))
+        ]
+        if len(q_nums) >= 2 and not exact_catalog:
+            if composer_hit:
+                card = self.catalog.composers[composer_hit]
+                return IdentityResult(
+                    status="multi_work",
+                    composer_id=card.composer_id,
+                    composer_name=card.name_en or card.name_zh,
+                    confidence=0.4,
+                    reason="multi_catalog_numbers",
+                )
+            return IdentityResult(status="multi_work", reason="multi_catalog_numbers")
 
         if not scored:
             if composer_hit:
@@ -305,7 +326,6 @@ class IdentityResolver:
                 )
 
         return self._result_from_work(best, score=best_score, reason=best_reason)
-
     def _composer_name(self, composer_id: str) -> str:
         card = self.catalog.composers.get(composer_id)
         if not card:
@@ -334,73 +354,104 @@ class IdentityResolver:
         )
 
     def _match_composer(self, blob: str, q_tokens: set[str]) -> str | None:
+        from aulos_skills.text_match import alias_in_text
+
         for card in self.catalog.composers.values():
             for alias in card.aliases:
                 a = alias.lower().strip()
-                if len(a) >= 2 and (a in blob or a in q_tokens):
+                if len(a) >= 2 and (alias_in_text(a, blob) or a in q_tokens):
                     return card.composer_id
         return None
 
-    def _score_work(self, work: WorkRecord, *, blob: str, q_tokens: set[str]) -> tuple[float, str]:
+    def _score_work(
+        self,
+        work: WorkRecord,
+        *,
+        blob: str,
+        q_tokens: set[str],
+        query_catalog_numbers: set[str] | None = None,
+    ) -> tuple[float, str]:
+        from aulos_skills.identity_lock import normalize_catalog_number
+        from aulos_skills.text_match import alias_in_text, numeric_token_in_text
+
         score = 0.0
         reasons: list[str] = []
+        q_nums = set(query_catalog_numbers or ())
 
         # Hard composer gate: if the query names a *different* catalog composer, reject.
         mentioned = self._mentioned_composer_ids(blob, q_tokens)
         if mentioned and work.composer_id not in mentioned:
             return 0.0, "wrong-composer"
 
-        # Alias hits (substring) — strongest surface
+        # Alias hits — token-boundary for short Latin aliases (SPEC-032)
         for alias in work.aliases:
             a = alias.lower().strip()
             if len(a) < 3:
                 continue
-            if a in blob:
+            hit = alias_in_text(a, blob) if len(a) < 12 else (a in blob)
+            if hit:
                 bump = 55.0 if len(a) >= 8 else 40.0
                 score += bump
                 reasons.append(f"alias:{a}")
                 break
 
-        # Catalog numbers
+        # Catalog numbers — exact / compact first; catalog-tok needs a digit token
+        work_nums = {normalize_catalog_number(n) for n in work.catalog_numbers if n}
+        exact_catalog = False
         for num in work.catalog_numbers:
             n = num.lower().strip()
+            n_norm = normalize_catalog_number(num)
             n_compact = re.sub(r"[\s.\-]", "", n)
             blob_compact = re.sub(r"[\s.\-]", "", blob)
-            if n and (n in blob or n_compact in blob_compact):
+            if n and (n in blob or n_compact in blob_compact or (n_norm and n_norm in q_nums)):
                 score += 45.0
                 reasons.append(f"catalog:{n}")
+                exact_catalog = True
                 break
             num_tokens = _tokens(num)
-            # Require composer when matching bare numbers (5, 9, 40…)
-            if num_tokens & q_tokens and self._composer_mentioned(work.composer_id, blob, q_tokens):
+            digit_overlap = {
+                t for t in (num_tokens & q_tokens) if any(ch.isdigit() for ch in t)
+            }
+            # Bare prefix tokens (kv/op/bwv) alone must never score (SPEC-032).
+            if digit_overlap and self._composer_mentioned(work.composer_id, blob, q_tokens):
+                # When the query already locked catalog numbers, require overlap.
+                if q_nums and work_nums.isdisjoint(q_nums):
+                    continue
                 score += 35.0
-                reasons.append(f"catalog-tok:{','.join(sorted(num_tokens & q_tokens))}")
+                reasons.append(f"catalog-tok:{','.join(sorted(digit_overlap))}")
                 break
 
-        # Distinctive tokens — ignore pure composer-surname tokens unless paired later
+        # Distinctive tokens — digit runs must not match inside release ids
         composer_aliases = set()
         card = self.catalog.composers.get(work.composer_id)
         if card:
             composer_aliases = {a.lower() for a in card.aliases}
-        dist_hits = [
-            t
-            for t in work.distinctive_tokens
-            if t and (t in blob or t in q_tokens) and t not in composer_aliases
-        ]
+        dist_hits = []
+        for t in work.distinctive_tokens:
+            tl = (t or "").lower().strip()
+            if not tl or tl in composer_aliases:
+                continue
+            if tl.isdigit() or (len(tl) <= 4 and any(ch.isdigit() for ch in tl)):
+                if numeric_token_in_text(tl, blob) or tl in q_tokens:
+                    dist_hits.append(tl)
+            elif tl in blob or tl in q_tokens:
+                dist_hits.append(tl)
         if dist_hits:
             score += min(50.0, 12.0 * len(dist_hits))
             reasons.append(f"dist:{','.join(dist_hits[:4])}")
 
-        # Facets
+        # Facets — when query has catalog numbers disjoint from this work, do not
+        # invent a sibling win from generic facet overlap alone (SPEC-032).
         facet_hits: list[str] = []
-        for values in work.facets.values():
-            for v in values:
-                vl = v.lower()
-                if vl and (vl in blob or vl in q_tokens):
-                    facet_hits.append(vl)
-        if facet_hits:
-            score += min(24.0, 6.0 * len(set(facet_hits)))
-            reasons.append(f"facet:{','.join(sorted(set(facet_hits))[:4])}")
+        if not (q_nums and work_nums and work_nums.isdisjoint(q_nums) and not exact_catalog):
+            for values in work.facets.values():
+                for v in values:
+                    vl = v.lower()
+                    if vl and (vl in blob or vl in q_tokens):
+                        facet_hits.append(vl)
+            if facet_hits:
+                score += min(24.0, 6.0 * len(set(facet_hits)))
+                reasons.append(f"facet:{','.join(sorted(set(facet_hits))[:4])}")
 
         if score >= 12 and self._composer_mentioned(work.composer_id, blob, q_tokens):
             score += 8.0
@@ -426,22 +477,26 @@ class IdentityResolver:
         return max(0.0, score), "+".join(reasons) or "none"
 
     def _mentioned_composer_ids(self, blob: str, q_tokens: set[str]) -> set[str]:
+        from aulos_skills.text_match import alias_in_text
+
         found: set[str] = set()
         for card in self.catalog.composers.values():
             for alias in card.aliases:
                 a = alias.lower().strip()
-                if len(a) >= 3 and (a in blob or a in q_tokens):
+                if len(a) >= 3 and (alias_in_text(a, blob) or a in q_tokens):
                     found.add(card.composer_id)
                     break
         return found
 
     def _composer_mentioned(self, composer_id: str, blob: str, q_tokens: set[str]) -> bool:
+        from aulos_skills.text_match import alias_in_text
+
         card = self.catalog.composers.get(composer_id)
         if not card:
             return False
         for alias in card.aliases:
             a = alias.lower().strip()
-            if len(a) >= 2 and (a in blob or a in q_tokens):
+            if len(a) >= 2 and (alias_in_text(a, blob) or a in q_tokens):
                 return True
         return False
 

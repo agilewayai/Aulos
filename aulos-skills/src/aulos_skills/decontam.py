@@ -8,6 +8,8 @@ from dataclasses import dataclass, field
 from typing import Any
 
 from aulos_skills.identity import load_catalog
+from aulos_skills.identity_hygiene import inspect_dossier_hygiene
+from aulos_skills.identity_lock import identity_lock_alien_markers
 
 DECONTAM_TRIGGERS = frozenset(
     {
@@ -15,6 +17,7 @@ DECONTAM_TRIGGERS = frozenset(
         "listening.width",
         "listening.depth",
         "listening.compose",
+        "listening.revise",
     }
 )
 
@@ -150,9 +153,15 @@ def resolve_scrub_markers(context: dict[str, Any]) -> list[str]:
         work_id=str(context.get("work_id") or "") or None,
         composer_id=str(context.get("composer_id") or "") or None,
     )
+    # Class gate: form-family aliens from locked title/message (policy YAML, not per-work code)
+    form_aliens = identity_lock_alien_markers(
+        work_title=str(context.get("work_title") or ""),
+        work_hint=str(context.get("work_hint") or ""),
+        raw_message=str(context.get("raw_message") or ""),
+    )
     out: list[str] = []
     seen: set[str] = set()
-    for m in base + aliens:
+    for m in base + aliens + form_aliens:
         ml = m.lower().strip()
         if not ml or len(ml) < 3 or ml in seen:
             continue
@@ -163,9 +172,29 @@ def resolve_scrub_markers(context: dict[str, Any]) -> list[str]:
     return out
 
 
+def marker_in_text(marker: str, text: str) -> bool:
+    """True when alien marker appears as a real token — not as a digit substring.
+
+    Bare catalog numbers like ``988`` must not fire inside years (``1988``) or
+    Discogs/catalog suffixes. Longer phrase markers keep substring match.
+    """
+    import re
+
+    m = (marker or "").strip().lower()
+    if not m or not text:
+        return False
+    low = text.lower()
+    # Digit-led catalog tokens (988, bwv 988 handled via phrase; bare digits need bounds)
+    if m.isdigit():
+        return bool(re.search(rf"(?<!\d){re.escape(m)}(?!\d)", low))
+    # Short alnum tokens (≤4) also need non-alnum bounds to avoid false positives
+    if len(m) <= 3 and m.isalnum():
+        return bool(re.search(rf"(?<![a-z0-9]){re.escape(m)}(?![a-z0-9])", low))
+    return m in low
+
+
 def _blob_hits(blob: str, markers: list[str]) -> list[str]:
-    low = blob.lower()
-    return [m for m in markers if m and m in low]
+    return [m for m in markers if m and marker_in_text(str(m), blob)]
 
 
 def _dossier_blob(dossier: dict[str, Any]) -> str:
@@ -241,6 +270,29 @@ def validate_node_outputs(
             foreign_family = str(fam.get("family_id") or "unknown")
             findings.append(DecontamFinding(marker=f"family:{foreign_family}", where="synthesize_source"))
         dossier = dict(outputs.get("corpus_dossier") or {})
+        # Guide #48: KB may ship dossier_id family:* without family: in synthesize_source.
+        hygiene = inspect_dossier_hygiene(
+            dossier,
+            composer=str(context.get("composer") or context.get("composer_guess") or ""),
+            work_title=str(context.get("work_title") or ""),
+            raw_message=str(context.get("raw_message") or ""),
+        )
+        for hf in hygiene.findings:
+            if hf.code == "foreign_family_dossier":
+                for m in hf.markers:
+                    if str(m).startswith("family:"):
+                        foreign_family = str(m).split(":", 1)[1]
+                        findings.append(
+                            DecontamFinding(marker=str(m), where="dossier_id")
+                        )
+                        break
+            elif hf.code == "portrait_composer_mismatch":
+                findings.append(
+                    DecontamFinding(marker="portrait_mismatch", where="composer_portrait")
+                )
+            for m in hf.markers:
+                if m and not any(f.marker == m for f in findings):
+                    findings.append(DecontamFinding(marker=m, where="hygiene"))
         # Exclude ambient — peer stand-ins may legally mention conflict-work tokens
         scan_doc = {k: v for k, v in dossier.items() if k != "ambient_audio"}
         zh = dict(scan_doc.get("zh") or scan_doc.get("zh_hans") or {})
@@ -261,20 +313,57 @@ def validate_node_outputs(
         key = "width_dossier" if trigger.endswith("width") else "depth_dossier"
         dossier = dict(outputs.get(key) or {})
         scan = dict(dossier)
-        if isinstance(scan.get("salon_dossier"), dict):
-            salon = dict(scan["salon_dossier"])
+        salon = dict(scan.get("salon_dossier") or {}) if isinstance(scan.get("salon_dossier"), dict) else {}
+        if salon:
             salon.pop("ambient_audio", None)
             zh = dict(salon.get("zh") or {})
             zh.pop("ambient_audio", None)
             salon["zh"] = zh
             scan["salon_dossier"] = salon
+            hygiene = inspect_dossier_hygiene(
+                salon,
+                composer=str(context.get("composer") or context.get("composer_guess") or ""),
+                work_title=str(context.get("work_title") or ""),
+                raw_message=str(context.get("raw_message") or ""),
+            )
+            for hf in hygiene.findings:
+                if hf.code == "foreign_family_dossier":
+                    for m in hf.markers:
+                        if str(m).startswith("family:"):
+                            foreign_family = str(m).split(":", 1)[1]
+                            findings.append(DecontamFinding(marker=str(m), where="dossier_id"))
+                            break
+                elif hf.code == "portrait_composer_mismatch":
+                    findings.append(
+                        DecontamFinding(marker="portrait_mismatch", where="composer_portrait")
+                    )
         for m in _blob_hits(_dossier_blob(scan), markers):
             findings.append(DecontamFinding(marker=m, where=key))
 
-    elif trigger == "listening.compose":
+    elif trigger in ("listening.compose", "listening.revise"):
         html = _strip_ambient_for_scan(str(outputs.get("guide_html") or ""))
         for m in _blob_hits(html, markers):
             findings.append(DecontamFinding(marker=m, where="guide_html"))
+        from aulos_skills.identity_hygiene import html_title_matches_work
+
+        if not html_title_matches_work(html, str(context.get("work_title") or "")):
+            findings.append(DecontamFinding(marker="html_title_drift", where="guide_html_h1"))
+        dossier = dict(context.get("corpus_dossier") or {})
+        hygiene = inspect_dossier_hygiene(
+            dossier,
+            composer=str(context.get("composer") or context.get("composer_guess") or ""),
+            work_title=str(context.get("work_title") or ""),
+            raw_message=str(context.get("raw_message") or ""),
+        )
+        for hf in hygiene.findings:
+            if hf.code == "portrait_composer_mismatch":
+                findings.append(DecontamFinding(marker="portrait_mismatch", where="composer_portrait"))
+            if hf.code == "foreign_family_dossier":
+                for m in hf.markers:
+                    if str(m).startswith("family:"):
+                        foreign_family = str(m).split(":", 1)[1]
+                        findings.append(DecontamFinding(marker=str(m), where="dossier_id"))
+                        break
 
     # Deduplicate findings by marker+where
     uniq: list[DecontamFinding] = []

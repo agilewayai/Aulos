@@ -8,10 +8,10 @@ managed_by: "aries-harness"
 fingerprint: "aries-harness/history-doc/v1"
 generated_by: "/aries-harness history-refresh"
 initialized_at: "2026-07-25T11:07:42Z"
-generated_at: "2026-08-01T06:31:30+00:00"
+generated_at: "2026-08-01T20:59:19+00:00"
 effective_status: "generated"
-effective_since: "2026-08-01T06:31:30+00:00"
-content_fingerprint: "sha256:75945b1f86007a8d85adac75a986b3d3fb4e6c1aa477f13456f41d2186901c54"
+effective_since: "2026-08-01T20:59:19+00:00"
+content_fingerprint: "sha256:3d5d899ca6dba1fa93f0580f60c536422d3d36ece52119f027cb56d8dfc664e7"
 trace_history_source: "filesystem-only"
 trace_last_commit_sha: ""
 trace_last_commit_at: ""
@@ -19,27 +19,27 @@ trace_revision_count: "0"
 ---
 # Retrospective Snapshot
 
-Generated at: `2026-08-01T06:31:30+00:00`
+Generated at: `2026-08-01T20:59:19+00:00`
 
 ## Recent changes
 
-- Atelier: countable chain progress (N/M) + stage list; SSE reconnect; Retry chain for failed/interrupted jobs (pairs with API SPEC-013 delta).
-- Verify: `npm run build`.
-- SPEC-007: move Guide | Atelier | Library tabs from mobile bottom bar to sticky top (under topbar) for easier reach.
-- Verify: `npm run build`.
-- SPEC-008: before asset auto-reload, capture UI scene (tab, draft, guide id, library filters, scroll); restore once after reload with notice.
-- Same pattern on aulos-ops (tab + user filters + scroll). Passwords never persisted.
+- Dual-draft UI: score + hard-flaw delta; repair_log on v2; scorecard chip 硬伤 N.
+- Verify: npm run build.
+- Review panel: expert perspective header; 硬伤修复指令 / 硬伤发现 (drop Sources list).
+- Verify: npm run build.
+- **Travel / immersive guide reading:** GuideReader with in-app fullscreen overlay
+- Verify: npm run build green.
 
 ## What is working
 
-- Atelier: countable chain progress (N/M) + stage list; SSE reconnect; Retry chain for failed/interrupted jobs (pairs with API SPEC-013 delta).
-- Verify: `npm run build`.
-- SPEC-007: move Guide | Atelier | Library tabs from mobile bottom bar to sticky top (under topbar) for easier reach.
-- Verify: `npm run build`.
+- Dual-draft UI: score + hard-flaw delta; repair_log on v2; scorecard chip 硬伤 N.
+- Verify: npm run build.
+- Review panel: expert perspective header; 硬伤修复指令 / 硬伤发现 (drop Sources list).
+- Verify: npm run build.
 
 ## What needs attention
 
-- working tree is dirty with 124 tracked or untracked change(s)
+- working tree is dirty with 330 tracked or untracked change(s)
 - no explicit next-up slice is recorded
 
 ## Durable reminders

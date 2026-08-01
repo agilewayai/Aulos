@@ -34,6 +34,14 @@ class Settings(BaseSettings):
     db_sync_interval_sec: int = Field(default=300, alias="AULOS_DB_SYNC_INTERVAL_SEC")
     db_auto_failover: bool = Field(default=True, alias="AULOS_DB_AUTO_FAILOVER")
     db_auto_failback: bool = Field(default=False, alias="AULOS_DB_AUTO_FAILBACK")
+    # Postgres connection pool (SQLAlchemy QueuePool). Defaults sized for concurrent
+    # guide workers + HA probe without starving SELECT 1 health checks.
+    db_pool_size: int = Field(default=20, alias="AULOS_DB_POOL_SIZE")
+    db_max_overflow: int = Field(default=40, alias="AULOS_DB_MAX_OVERFLOW")
+    db_pool_timeout: float = Field(default=30.0, alias="AULOS_DB_POOL_TIMEOUT")
+    db_pool_recycle: int = Field(default=1800, alias="AULOS_DB_POOL_RECYCLE")
+    # Require N consecutive primary probe failures before auto-failover (anti-flap).
+    db_failover_fail_threshold: int = Field(default=3, alias="AULOS_DB_FAILOVER_FAIL_THRESHOLD")
     redis_url: str = Field(default="redis://127.0.0.1:6379/0", alias="AULOS_REDIS_URL")
     db_sync_redis_url: str = Field(default="", alias="AULOS_DB_SYNC_REDIS_URL")  # empty → use redis_url
     mail_queue_enabled: bool = Field(default=True, alias="AULOS_MAIL_QUEUE_ENABLED")

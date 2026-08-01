@@ -1,0 +1,13 @@
+id: aulos-listening-revise
+name: Listening Guide Revise
+version: 0.1.0
+layer: domain-runtime
+runtime: agent
+summary: Second compose under external-review corrections; draft_v2 becomes primary guide (SPEC-022).
+triggers:
+  - listening.revise
+depends_on:
+  - aulos-listening-external-review
+inputs: [critique_corrections, external_review_report, corpus_dossier, width_dossier, depth_dossier]
+outputs: [guide_html, summary, generation_rounds]
+observability_title: Revise after external review

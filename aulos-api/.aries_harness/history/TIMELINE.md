@@ -8,10 +8,10 @@ managed_by: "aries-harness"
 fingerprint: "aries-harness/history-doc/v1"
 generated_by: "/aries-harness history-refresh"
 initialized_at: "2026-07-25T11:07:43Z"
-generated_at: "2026-08-01T06:31:23+00:00"
+generated_at: "2026-08-01T20:59:12+00:00"
 effective_status: "generated"
-effective_since: "2026-08-01T06:31:23+00:00"
-content_fingerprint: "sha256:565f164b05e53a79dfa0d394a97085fa0a47ccc664c600d23f35a776c249b043"
+effective_since: "2026-08-01T20:59:12+00:00"
+content_fingerprint: "sha256:202d5b9ad79c63c5e33a909a969debacc02d7f2889bc703aed5c47fdd125157b"
 trace_history_source: "filesystem-only"
 trace_last_commit_sha: ""
 trace_last_commit_at: ""
@@ -19,62 +19,47 @@ trace_revision_count: "0"
 ---
 # Timeline
 
-Generated at: `2026-08-01T06:31:23+00:00`
+Generated at: `2026-08-01T20:59:12+00:00`
 
 ## Journal milestones
 
-### 2026-08-01T06:35:00Z
+### 2026-08-01T21:00:00Z
 
-- **SPEC-018 delta:** ops task type `knowledge.benchmark` (+ improve path) via knowledge plane proxy;
-- Honeycomb closeout with knowledge/ops knowledge-console ship.
+- **SPEC-031:** `POST …/promote-production` graduates any staged promote_candidate
 
-### 2026-07-27T10:45:00Z
+### 2026-08-01T20:40:00Z
 
-- Cross-ref **AUDIT-009** remediation (primary journal: `aulos-skills/.aries_harness/JOURNAL.md`, review `runs/reviews/AUDIT-009-…`):
-- F3 SPEC-014 HttpOnly session cookie; F2 SPEC-015 guide HTML security + sanitizer; F10 SPEC-016 module splits; F11 ADR-008 plaintext secrets accepted for Sprint-1.
-- Fleet DevOps: `deploy/aulos-ctl.sh`, `deploy/OPS.md`, `deploy/honeycomb.sh` (commit `c3009d2`).
-- Dev-blog evidence fix: `_journal_slice_for_day` now keeps **newest** day entries (was truncating tail → dropped AUDIT slices).
+- **SPEC-030:** `GET …/promote-candidates`, `POST …/{id}/promote-stage`; trace +
 
-### 2026-07-27T10:30:00Z
+### 2026-08-01T20:25:00Z
 
-- SPEC-018: Ops background task queue — `ops_tasks` table, Redis `aulos:ops:tasks:queue`, worker in lifespan.
-- Dev blog generate/regenerate → **202** enqueue `dev_blog.generate`; sync mode for tests (`AULOS_TASK_QUEUE_SYNC`).
-- API: `GET /v1/ops/tasks/dashboard`, `/tasks`, `/tasks/{id}`; dashboard aggregates mail + listening + ops.
-- Ops UI: **Tasks** tab (`TaskQueuePanel`), Dev Blog panel polls task completion.
-- Gates: `tests/test_task_queue.py`, `tests/test_dev_blog.py` (8 passed).
+- **SPEC-029 companion:** `_research_payload` persists `promote_candidate` +
 
-### 2026-07-27T10:15:00Z
+### 2026-08-01T20:05:00Z
 
-- SPEC-017: Dev Blog **internal writing contract** — evidence-only, factual dev trace; no hype/emotion/external marketing.
-- `dev_blog_contract.py`: SYSTEM_PROMPT rewrite + `validate_dev_blog_body()` soft lint; fake draft aligned.
-- Promoted into SPEC-009, ops SPEC-002, REQ-002, `aulos-operating-defaults`, Ops UI lead copy.
+- **SPEC-028 companion:** `ensure_catalog_composer_dossiers` +
 
-### 2026-07-26T19:20:00Z
+### 2026-08-01T19:50:00Z
 
-- Root cause: `merge_dossiers` called bare `dict(zh_hans)` when LLM/web returned prose/list →
-- Fix: `coerce_dict()` + harden merge/parse/runtime/KB; gate `tests/test_salon_codex_merge.py`.
+- **SPEC-026 companion:** `dossier_is_thin` + `enqueue_composer_dossier_build_sync`;
 
-### 2026-07-26T19:10:00Z
+### 2026-08-01T19:32:00Z
 
-- SPEC-013 delta: countable listening-chain plan (15 stages) seeded in `steps_json`; gateway emits live stage updates; SSE `progress` snapshots for reconnect.
-- Robust recovery: client SSE reconnect + hydrate; `POST /{id}/retry` for failed/stale jobs; Atelier progress bar + Retry chain.
-- Gates: `tests/test_listening_plan.py`, `tests/test_listening_jobs.py`; web `npm run build`.
+- **SPEC-025 companion:** `fetch_composer_dossier_sync` + listening thicken bag;
 
-### 2026-07-26T18:20:00Z
+### 2026-08-01T19:10:00Z
 
-- Operating rule: every model-shape slice must close with dual-dialect `schema_patches` + PG verify (SQLite pilot ≠ production).
-- Added `aulos_api.db.schema_patches`; HA/init apply on Postgres+SQLite. Migrated live PG SPEC-013 columns (`message`, `tags_json`, `favorited_at`, …).
-- Gate: `tests/test_schema_patches.py`; promoted insight + `aulos-operating-defaults` section.
+- **SPEC-024 companion:** Discogs identity lock uses Work Resolver; keeps Catalog
+- Guide #50 full-chain regen → eval **10 / pass**.
 
-### 2026-07-26T18:15:00Z
+### 2026-08-01T18:45:00Z
 
-- SPEC-013: durable listening-guide jobs (`queued`→`running`→`completed|failed`), Redis/`thread` worker (`listening_queue.py`), reconnect-safe `GET …/events`.
-- Library: DELETE, list `q`/`status`/`published`/`favorited`/`tag`, favorite + tags.
-- Legacy `/stream` and recompose/stream enqueue then attach to job events (no long-held DB session).
-- Verify: `pytest tests/test_listening_jobs.py` + stream/recompose SSE green.
+- **REQ-013 / SPEC-023 (skills) companion:** Discogs `_guess_work_title` now runs
+- Verify: `tests/test_discogs.py` green.
 
 ## Recent git commits
 
+- `1d325d5` 2026-08-01 Ship knowledge discovery, dossier, and benchmark console; refresh fleet honeycomb.
 - `491b042` 2026-07-27 Ship authority source registry, OPS knowledge console, and refresh fleet honeycomb.
 - `5633e94` 2026-07-27 Ship Ops task queue, dev blog v2, and refresh fleet honeycomb.
 - `c3009d2` 2026-07-27 Harden platform security, ship fleet DevOps control, and refresh harness honeycomb.
@@ -88,15 +73,15 @@ Generated at: `2026-08-01T06:31:23+00:00`
 
 ## Working tree snapshot
 
-- `M` `aulos-api/.aries_harness/ARIES_HARNESS_FINGERPRINT.json`
-- `M` `aulos-api/.aries_harness/INDEX.md`
-- `M` `aulos-api/.aries_harness/JOURNAL.md`
-- `M` `aulos-api/.aries_harness/STATE.md`
-- `M` `aulos-api/.aries_harness/TASK_STACK.md`
-- `M` `aulos-api/.aries_harness/references/specs/SPEC-018-ops-task-queue.md`
-- `M` `aulos-api/src/aulos_api/routes/ops.py`
-- `M` `aulos-api/src/aulos_api/services/knowledge_proxy.py`
-- `M` `aulos-api/src/aulos_api/services/task_queue.py`
-- `M` `aulos-knowledge/.aries_harness/INDEX.md`
-- `M` `aulos-knowledge/.aries_harness/JOURNAL.md`
-- `M` `aulos-knowledge/.aries_harness/STATE.md`
+- `M` `aulos-agent/.aries_harness/INDEX.md`
+- `M` `aulos-agent/.aries_harness/history/DAILY_SUMMARY_INDEX.md`
+- `M` `aulos-agent/.aries_harness/history/DOC_TRACE.md`
+- `M` `aulos-agent/.aries_harness/history/README.md`
+- `M` `aulos-agent/.aries_harness/history/RETROSPECTIVE.md`
+- `M` `aulos-agent/.aries_harness/history/ROADMAP.md`
+- `M` `aulos-agent/.aries_harness/history/STATUS.md`
+- `M` `aulos-agent/.aries_harness/history/TIMELINE.md`
+- `M` `aulos-agent/.aries_harness/history/daily/2026-07-25.md`
+- `M` `aulos-agent/.aries_harness/history/daily/2026-07-26.md`
+- `M` `aulos-agent/.aries_harness/history/daily/2026-07-27.md`
+- `M` `aulos-agent/.aries_harness/history/daily/2026-08-01.md`

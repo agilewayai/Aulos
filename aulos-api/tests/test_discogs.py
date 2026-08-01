@@ -47,6 +47,46 @@ def test_parse_discogs_command() -> None:
     assert parse_discogs_command("I'm listening to Bach") is None
 
 
+def test_analyze_and_snapshot_share_ensemble_credits() -> None:
+    """Analyze and diary snapshot must parse the same Discogs credit core (META-001 §3.5)."""
+    from aulos_api.services.discogs import analyze_discogs_release, build_diary_snapshot
+
+    payload = {
+        "kind": "release",
+        "id": 4084139,
+        "raw": {
+            "id": 4084139,
+            "title": "Horowitz Plays Mozart",
+            "artists": [
+                {"name": "Vladimir Horowitz"},
+                {"name": "Orchestra Del Teatro Alla Scala"},
+            ],
+            "extraartists": [
+                {"name": "Wolfgang Amadeus Mozart", "role": "Composed By"},
+                {"name": "Vladimir Horowitz", "role": "Piano"},
+                {"name": "Orchestra Del Teatro Alla Scala", "role": "Orchestra"},
+                {"name": "Carlo Maria Giulini", "role": "Conductor"},
+            ],
+            "labels": [{"name": "Deutsche Grammophon", "catno": "423 287-1"}],
+            "year": 1987,
+            "uri": "/release/4084139",
+            "genres": ["Classical"],
+            "styles": [],
+            "tracklist": [{"title": "Piano Concerto No. 23", "type_": "track"}],
+            "formats": [{"name": "Vinyl"}],
+        },
+    }
+    analyzed = analyze_discogs_release(payload)
+    snap = build_diary_snapshot(payload)
+    assert "Orchestra Del Teatro Alla Scala" in analyzed["ensembles"]
+    assert snap["ensembles"] == analyzed["ensembles"]
+    assert analyzed["composers"] == snap["composers"]
+    assert "Vladimir Horowitz" in analyzed["performers"]
+    assert "Vladimir Horowitz" in snap["performers"]
+    assert "Orchestra Del Teatro Alla Scala" not in analyzed["performers"]
+    assert analyzed["uri"] == snap["uri"]
+
+
 def test_analyze_discogs_release_extracts_composer_and_performers() -> None:
     from aulos_api.services.discogs import analyze_discogs_release
 

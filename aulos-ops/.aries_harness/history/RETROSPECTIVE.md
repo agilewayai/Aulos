@@ -8,10 +8,10 @@ managed_by: "aries-harness"
 fingerprint: "aries-harness/history-doc/v1"
 generated_by: "/aries-harness history-refresh"
 initialized_at: "2026-07-25T11:20:06Z"
-generated_at: "2026-08-01T06:31:36+00:00"
+generated_at: "2026-08-01T20:59:26+00:00"
 effective_status: "generated"
-effective_since: "2026-08-01T06:31:36+00:00"
-content_fingerprint: "sha256:119bd4cedef904666b28a072d15fee9e665b4f344164eac61de881e9e6072ce7"
+effective_since: "2026-08-01T20:59:26+00:00"
+content_fingerprint: "sha256:053869a4845e5632f8ec44dcd08051c426a5b5a9da6bb5c1e29ae650b1e8b3fe"
 trace_history_source: "filesystem-only"
 trace_last_commit_sha: ""
 trace_last_commit_at: ""
@@ -19,23 +19,23 @@ trace_revision_count: "0"
 ---
 # Retrospective Snapshot
 
-Generated at: `2026-08-01T06:31:36+00:00`
+Generated at: `2026-08-01T20:59:26+00:00`
 
 ## Recent changes
 
-- **Knowledge console ship closeout:** Explore / Benchmark / Diagnose-improve / Performance report /
-- Knowledge **Composer dossier** module: picker + 构建履历与作品 + timeline/works tree (REQ-010).
-- UX: `PasswordField` Show/Hide on login password + all API key / token fields
+- **SPEC-031:** Guide quality — Promote to production after staging; copy states
+- **SPEC-030:** Guide quality panel shows promote candidate + Stage craft (staging
+- **Ambient fallback UI:** LLM/Listening settings radio for official Embed vs server
 
 ## What is working
 
-- **Knowledge console ship closeout:** Explore / Benchmark / Diagnose-improve / Performance report /
-- Knowledge **Composer dossier** module: picker + 构建履历与作品 + timeline/works tree (REQ-010).
-- UX: `PasswordField` Show/Hide on login password + all API key / token fields
+- **SPEC-031:** Guide quality — Promote to production after staging; copy states
+- **SPEC-030:** Guide quality panel shows promote candidate + Stage craft (staging
+- **Ambient fallback UI:** LLM/Listening settings radio for official Embed vs server
 
 ## What needs attention
 
-- working tree is dirty with 138 tracked or untracked change(s)
+- working tree is dirty with 330 tracked or untracked change(s)
 - no explicit next-up slice is recorded
 
 ## Durable reminders

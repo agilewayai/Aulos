@@ -10,13 +10,98 @@ generated_by: "/aries-harness init"
 initialized_at: "2026-07-25T11:07:42Z"
 effective_status: "active"
 effective_since: "2026-07-25T11:07:42Z"
-content_fingerprint: "sha256:4c412daaf20158baefc44d8ff1dc421c9c4cb6e7f8e36b4189f7ac7d4d2abcbc"
+content_fingerprint: "sha256:8bed8f8e160b6f1fb52cb5eff1e8bbdfac49ae64b05ea771019f86b830e774aa"
 trace_history_source: "filesystem-only"
 trace_last_commit_sha: ""
 trace_last_commit_at: ""
 trace_revision_count: "0"
 ---
 # Journal
+
+## 2026-08-01T16:20:00Z
+
+- Dual-draft UI: score + hard-flaw delta; repair_log on v2; scorecard chip 硬伤 N.
+- Verify: npm run build.
+
+
+## 2026-08-01T16:00:00Z
+
+- Review panel: expert perspective header; 硬伤修复指令 / 硬伤发现 (drop Sources list).
+- Verify: npm run build.
+
+
+## 2026-08-01T15:55:00Z
+
+- **Travel / immersive guide reading:** GuideReader with in-app fullscreen overlay
+  (Studio + diary review + draft rounds). Sticky full-width 全屏阅读 on mobile;
+  Esc / 退出全屏; safe-area aware. Avoids blob-tab round-trip while traveling.
+- Verify: npm run build green.
+
+
+## 2026-08-01T15:30:00Z
+
+- **Atelier trail progress UX:** show 完成 / 跳过 / 共 breakdown; localize step status labels;
+  keep skipped steps visible (dashed style). Pair with API step-id canonicalization.
+- Verify: atelierTrailUtils.test.ts ok; npm run build green.
+
+## 2026-08-01T11:34:00Z
+
+- REQ-011 / SPEC-021Δ: 聆乐导赏工坊审阅区 — 审阅意见 textarea；按状态显示通过发布 /
+  按意见重生 / 撤回 / 废除 / 删除；api client `revise` / `unpublish` / `delete`.
+- Verify: `npm run build` green (upstream `test_diary_guides.py` 3 passed).
+
+## 2026-08-01T19:05:00Z
+
+- Diary guide review now uses the same Studio iframe path (`prepareGuideHtml` + `GUIDE_IFRAME_SANDBOX` + `.guide-frame`) instead of `dangerouslySetInnerHTML` into `.diary-guide-html` (which restyled Salon Codex HTML).
+- Verify: `npm run build`.
+
+## 2026-08-01T18:55:00Z
+
+- SPEC-019: `ProcessScorecardCard` on Studio Atelier + diary 导赏工坊 when `process_scorecard` present.
+
+## 2026-08-01T18:40:00Z
+
+- SPEC-018: `AtelierTrail` surfaces failed `listening.review` milestones as「本意偏离已拦截」.
+
+## 2026-08-01T10:45:00Z
+
+- META-001 §3.5 follow-up from deep dup audit: `DiscogsReleasePicker` + `useDiscogsSearch`; shared `upsertWorkflowStep` / `chainProgressFromSteps` for Studio + diary atelier SSE; earlier `ListeningPostCard` / `errors` / `sourceKind` land.
+- Verify: `npm run build` green.
+
+## 2026-08-01T10:40:00Z
+
+- META-001 §3.5 deep DRY pass: plaza + 我的聆乐 share `ListeningPostCard` / `sourceKind`; App + diary share `errors.errorMessage`; skills drop legacy `render_guide_html` fork → `html_bits` for point coerce + `<li>`/`<p>`.
+- Verify: `pytest tests/test_html_bits.py` + runtime slice; `npx tsx src/diaryBlogUtils.test.ts`; `npm run build`.
+
+## 2026-08-01T10:25:00Z
+
+- META-001 §3.5 DRY: Studio Atelier + 我的聆乐导赏工坊 shared `AtelierTrail` + `atelierTrailUtils` (removed copy-pasted chain-progress/step-list). Verify: unit + `npm run build`.
+
+## 2026-08-01T10:15:00Z
+
+- Root-cause: Mozart (Horowitz K.488) diary guide failed at Agent atelier — `width_points`/`depth_points` arrived as dicts and `"; ".join(points)` crashed (`sequence item 0: expected str instance, dict found`). Fixed coerce in aulos-skills runtime; diary enqueue now prefixes `/discogs #id`; diary UI shows live atelier step trail + retry.
+- Verify: coerce unit; goldberg chain; `npm run build`; diary message prefix.
+
+## 2026-08-01T10:00:00Z
+
+- REQ-005 / SPEC-009: 我的聆乐 → 博客式主栏流 + 侧栏月历与 Tag 云（作曲家/演奏家/乐团/类型/风格/介质）；点日与 Tag 筛选；API list 返回 snapshot。
+- Verify: `npx tsx src/diaryBlogUtils.test.ts`; `npm run build`; aulos-api `pytest tests/test_listening_diary.py` (2 passed).
+
+## 2026-08-01T09:45:00Z
+
+- 聆乐广场 editorial redesign (ui-ux-pro-max magazine feed): large cover cards + featured lead, browse↔reader modes (no admin master-detail), skeleton loading, byline/avatar, pull-quote listening notes, threaded comments, sticky engage bar; responsive 2-col→1-col.
+- Verify: `npm run build` green.
+
+## 2026-08-01T09:30:00Z
+
+- ui-ux-pro-max pass on 聆乐日记 / 聆乐广场: mobile master–detail (list XOR detail + back), bottom product dock (thumb zone), sticky publish/like actions, safe-area + 16px inputs (no iOS zoom), compose focus hides list, person sheet full-bleed on phone.
+- Preserved existing paper/teal/Fraunces system (diary+editorial soft UI); avoided purple/cream-serif clichés.
+- Verify: `npm run build` green.
+
+## 2026-08-01T07:45:00Z
+
+- REQ-004: product nav **广场 / 聆乐 / 导赏**; My Diary Discogs compose+publish; Plaza feed/following/like/comment/follow.
+- Verify: `npm run build` green (pairs with aulos-api REQ-010).
 
 ## 2026-07-26T19:12:00Z
 

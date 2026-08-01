@@ -19,6 +19,22 @@ def test_guess_composer_from_chinese_book_title() -> None:
     assert "Dvořák" in g["composer"] or "德沃" in g["composer"]
 
 
+def test_hyphenated_surname_not_split_into_title() -> None:
+    """Mendelssohn-Bartholdy mash must not yield title starting with Bartholdy."""
+    cat = load_catalog()
+    mashed = (
+        "Felix Mendelssohn-Bartholdy Lieder Ohne Worte = Songs Without Words / "
+        "Romances Sans Paroles / Gesamtaufnahme"
+    )
+    g = guess_composer_and_title(mashed, catalog_composers=cat.composers)
+    assert not str(g.get("work_title") or "").lower().startswith("bartholdy")
+    # Proper em-dash separator still works
+    dashed = "Felix Mendelssohn — Lieder ohne Worte (Songs Without Words)"
+    g2 = guess_composer_and_title(dashed, catalog_composers=cat.composers)
+    assert "Lieder" in g2["work_title"] or "Songs" in g2["work_title"]
+    assert "Mendelssohn" in g2["composer"]
+
+
 def test_dumky_chain_not_unknown_composer() -> None:
     report = SkillRuntime().run_listening_chain(
         message="帮我写一份德沃夏克《杜姆卡》三重奏的导赏"

@@ -19,6 +19,9 @@ class ListeningRunRequest(BaseModel):
     rag_hits: list[str] | None = None
     rag_mode: str | None = None
     disabled_skill_ids: list[str] | None = None
+    review_llm_enabled: bool | None = None
+    ambient_fallback_mode: str | None = None
+    external_review_sources: list[dict[str, Any]] | None = None
 
 
 def create_app() -> FastAPI:
@@ -39,6 +42,9 @@ def create_app() -> FastAPI:
             rag_hits=body.rag_hits,
             rag_mode=body.rag_mode,
             disabled_skill_ids=body.disabled_skill_ids,
+            review_llm_enabled=body.review_llm_enabled,
+            ambient_fallback_mode=body.ambient_fallback_mode,
+            external_review_sources=body.external_review_sources,
         )
         return report.to_dict()
 

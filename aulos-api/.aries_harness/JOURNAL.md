@@ -10,13 +10,136 @@ generated_by: "/aries-harness init"
 initialized_at: "2026-07-25T11:07:43Z"
 effective_status: "active"
 effective_since: "2026-07-25T11:07:43Z"
-content_fingerprint: "sha256:e36ea709441bec34661289b00cae339a08ff3439d700ddd0b89948ac94481768"
+content_fingerprint: "sha256:470747f5145bbf38ba74f3a1f2b9146a5d478714cdb2b79a73fe33276a07fafc"
 trace_history_source: "filesystem-only"
 trace_last_commit_sha: ""
 trace_last_commit_at: ""
 trace_revision_count: "0"
 ---
 # Journal
+
+## 2026-08-01T21:00:00Z
+
+- **SPEC-031:** `POST …/promote-production` graduates any staged promote_candidate
+  via generic Catalog+craft pipeline (tmp-rooted in tests).
+
+## 2026-08-01T20:40:00Z
+
+- **SPEC-030:** `GET …/promote-candidates`, `POST …/{id}/promote-stage`; trace +
+  scorecard summaries expose promote/product asset signals.
+
+## 2026-08-01T20:25:00Z
+
+- **SPEC-029 companion:** `_research_payload` persists `promote_candidate` +
+  `facet_classification` when synthesize emits unknown-case thicken.
+
+## 2026-08-01T20:05:00Z
+
+- **SPEC-028 companion:** `ensure_catalog_composer_dossiers` +
+  `POST /v1/ops/knowledge/composers/ensure-dossiers` (dry_run supported).
+
+## 2026-08-01T19:50:00Z
+
+- **SPEC-026 companion:** `dossier_is_thin` + `enqueue_composer_dossier_build_sync`;
+  listening_guide enqueues build when composer dossier is thin (non-blocking).
+
+## 2026-08-01T19:32:00Z
+
+- **SPEC-025 companion:** `fetch_composer_dossier_sync` + listening thicken bag;
+  `_research_payload` persists `product_scorecard`; Mendelssohn knowledge dossier
+  built via admin `build-dossier` (job 136/137). Guide #50 product **100% strong**.
+
+## 2026-08-01T19:10:00Z
+
+- **SPEC-024 companion:** Discogs identity lock uses Work Resolver; keeps Catalog
+  `work_id` when packaging-cleaned titles match; `work_hint` uses em-dash.
+- Guide #50 full-chain regen → eval **10 / pass**.
+
+
+## 2026-08-01T18:45:00Z
+
+- **REQ-013 / SPEC-023 (skills) companion:** Discogs `_guess_work_title` now runs
+  `clean_packaging_work_title` so multi-language release dumps do not become IntentLock.
+- Verify: `tests/test_discogs.py` green.
+
+
+## 2026-08-01T18:05:00Z
+
+- **SPEC-022Δ:** Diary guide revise uses `enqueue_targeted_revise_guide` /
+  `kind=targeted_revise` (chamber patch from notes + research snapshot), not full
+  listening chain. Queue worker handles targeted path.
+
+
+## 2026-08-01T17:35:00Z
+
+- **Ambient fallback OPS:** `listening.ambient_fallback_mode` (`embed`|`stream`) in
+  `system_settings`; routes `/v1/ops/ambient-fallback`; inject into listening compose
+  via AgentProxy. Tests: `tests/test_ambient_fallback.py` (2).
+
+
+## 2026-08-01T17:20:00Z
+
+- **DB pool + HA probe isolation:** Postgres QueuePool defaults `pool_size=20` /
+  `max_overflow=40` (env-tunable). HA `probe()` uses dedicated NullPool with
+  `render_as_string(hide_password=False)` / settings URL (avoid `***` auth false
+  negatives). Require 3 consecutive probe failures before failover.
+  Tests: `tests/test_db_ha.py` 3 passed; live `/health` primary_ok after restart.
+
+## 2026-08-01T15:50:00Z
+
+- **Ghost pending steps:** coalesce short agent ids onto listening.* placeholders
+  on read/persist; heal completed guides in PG (guide #48 21/31 -> 18/18).
+- Verify: pytest tests/test_listening_plan.py (8 passed).
+
+
+## 2026-08-01T15:30:00Z
+
+- **SPEC-013 progress count fidelity:** canonicalize skill short ids (route to listening.route);
+  progress_counts exposes completed/skipped/failed; review milestones visible but non-countable.
+- Verify: pytest tests/test_listening_plan.py (7 passed).
+
+## 2026-08-01T11:34:00Z
+
+- **REQ-011 / SPEC-021Δ:** Diary guide review lifecycle — `review_notes` + `revised_at` on
+  `diary_guide_links`; revise (notes → `enqueue_recompose_guide` → queued), unpublish,
+  dismiss-after-unpublish, delete link (hard-delete exclusive unpublished guide).
+  Payload adds derived `actions` flags. Web: 审阅意见 + status-aware buttons.
+- Verify: `pytest tests/test_diary_guides.py` (3 passed); `aulos-web` `npm run build` green.
+
+## 2026-08-01T18:55:00Z
+
+- SPEC-019: `GET /v1/ops/listening-guides/scorecards`; guide GET/trace/research_json carry `process_scorecard`; diary light payload includes scorecard.
+- Verify: `tests/test_process_scorecard_api.py` passed.
+
+## 2026-08-01T18:40:00Z
+
+- SPEC-018: OPS `listening.review_llm` SystemSetting + `/v1/ops/listening-review`; gateway seeds `review_llm_enabled` into agent; research_json/chain_trace carry `intent_lock` + `review_events`.
+- Verify: `tests/test_listening_review.py` + chain_trace **5 passed**.
+
+## 2026-08-01T11:05:00Z
+
+- Guide #47 Requiem drift: LLM prompt identity lock + `_dossier_betrays_lock` discard; Discogs vs Catalog `_titles_compatible` (K.488 token overlap) so work_id is not cleared by album chrome.
+- Verify: helper smoke; skills `test_mozart_requiem_drift`.
+
+## 2026-08-01T10:45:00Z
+
+- META-001 §3.5: `_parse_release_core` unifies Discogs credit/id parse for `analyze_discogs_release` + `build_diary_snapshot` (ensembles no longer analyze-only gap); `share_slug.new_share_slug` shared by guide + diary.
+- Verify: `pytest tests/test_discogs.py tests/test_listening_diary.py` (11 passed).
+
+## 2026-08-01T08:40:00Z
+
+- **SPEC-021 / STORY S6:** Diary → 聆乐导赏 queue (listening_queue) → author review → publish
+  onto blog. Routes: `POST …/guides`, `GET guide-tasks`, publish/dismiss/ack. Web: generate CTA,
+  queue banner, review panel; plaza shows published guides. Gate: `test_diary_guides.py`.
+
+## 2026-08-01T07:45:00Z
+
+- **REQ-010 / SPEC-019/020 longrun S1–S5:** Listening diary + 爱乐广场 SNS.
+  - Discogs `build_diary_snapshot`; draft CRUD; publish/plaza/follow/like/comment.
+  - Tables: listening_diary_posts, diary_guide_links (reserve), user_follows, likes, comments.
+  - Web: product nav 广场 / 聆乐 / 导赏; My Diary create from Discogs; Plaza feed+following.
+  - Gates: `pytest tests/test_listening_diary.py` 2 passed; `aulos-web` `npm run build` green.
+  - Next (S6): diary → guide attach by aspect.
 
 ## 2026-08-01T06:35:00Z
 

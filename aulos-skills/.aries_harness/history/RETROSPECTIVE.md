@@ -8,10 +8,10 @@ managed_by: "aries-harness"
 fingerprint: "aries-harness/history-doc/v1"
 generated_by: "/aries-harness history-refresh"
 initialized_at: "2026-07-25T11:20:05Z"
-generated_at: "2026-08-01T06:31:13+00:00"
+generated_at: "2026-08-01T20:59:01+00:00"
 effective_status: "generated"
-effective_since: "2026-08-01T06:31:13+00:00"
-content_fingerprint: "sha256:a0ce9ff1b9e08e57c6742d3bc4db0e3f9f5b1c4b5ca3bf410dea25c2e04f6f42"
+effective_since: "2026-08-01T20:59:01+00:00"
+content_fingerprint: "sha256:0612dce594f18aae8eacecd17482663a95d5cf7ace95dfef8663760fc036027b"
 trace_history_source: "filesystem-only"
 trace_last_commit_sha: ""
 trace_last_commit_at: ""
@@ -19,23 +19,25 @@ trace_revision_count: "0"
 ---
 # Retrospective Snapshot
 
-Generated at: `2026-08-01T06:31:13+00:00`
+Generated at: `2026-08-01T20:59:01+00:00`
 
 ## Recent changes
 
-- Honeycomb closeout after META-001 §3.4 Meta Play Simple promotion + knowledge/ops console ship.
-- **META-001 v4 §3.4 Product interaction — Meta Play Simple:** human nouns first, progressive disclosure,
-- Promoted **Authority Source Registry** into META-001 §4 + insights (aulos-knowledge REQ-008 / ADR-006 / REG-SRC-001).
+- **REQ-022 / SPEC-032 Identity freeze + Catalog/facet hardening (anti-case):**
+- **Mechanism tour:** wrote `.aries_harness/docs/SYSTEM_MECHANISM_TOUR.md` — fleet topology,
+- **Compression — delete case/temporary localize logic:** Removed all 10 hand-authored
+- Verify: 67 skills + promote API tests green.
 
 ## What is working
 
-- Honeycomb closeout after META-001 §3.4 Meta Play Simple promotion + knowledge/ops console ship.
-- **META-001 v4 §3.4 Product interaction — Meta Play Simple:** human nouns first, progressive disclosure,
-- Promoted **Authority Source Registry** into META-001 §4 + insights (aulos-knowledge REQ-008 / ADR-006 / REG-SRC-001).
+- **REQ-022 / SPEC-032 Identity freeze + Catalog/facet hardening (anti-case):**
+- **Mechanism tour:** wrote `.aries_harness/docs/SYSTEM_MECHANISM_TOUR.md` — fleet topology,
+- **Compression — delete case/temporary localize logic:** Removed all 10 hand-authored
+- Verify: 67 skills + promote API tests green.
 
 ## What needs attention
 
-- working tree is dirty with 108 tracked or untracked change(s)
+- working tree is dirty with 330 tracked or untracked change(s)
 - no explicit next-up slice is recorded
 
 ## Durable reminders

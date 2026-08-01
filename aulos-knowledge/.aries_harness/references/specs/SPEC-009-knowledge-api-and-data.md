@@ -9,7 +9,7 @@ fingerprint: "aries-harness/bootstrap-doc/v1"
 initialized_at: "2026-07-25T17:15:00+00:00"
 effective_status: "active"
 effective_since: "2026-07-25T17:15:00+00:00"
-content_fingerprint: "sha256:1180124c3c9eb6d80e3772ff33c9806e6d4f10b080fff65ab78703c6e4e846c2"
+content_fingerprint: "sha256:d04bffa6d50005629bc289d8bd001bc532057f68fbdd61592cdc1e89385d9694"
 trace_history_source: "filesystem-only"
 trace_last_commit_sha: ""
 trace_last_commit_at: ""
@@ -106,8 +106,10 @@ Ops unified queue: `POST /v1/ops/knowledge/benchmark/run` → `knowledge.benchma
 - `GET /v1/admin/provenance/{document_id}` — includes `chunks[]` summaries
 - `GET /v1/admin/chunks/{chunk_id}/provenance` — chunk → document → source + artifact + job
 - `GET /v1/admin/documents/{id}` — includes `chunks[]`
-- `GET /v1/admin/composers/{id}/dossier` — REQ-010 timeline + works_tree + portrait
-- `POST /v1/admin/composers/{id}/build-dossier` — enqueue Wikidata `mode=composer_dossier` (**202** async)
+- `GET /v1/admin/composers/{id}/dossier` — REQ-010 timeline + `works_tree` + `works_by_year` +
+  `works_by_genre` + portrait; famous seeds overlay canonical name/QID
+- `POST /v1/admin/composers/{id}/build-dossier` — enqueue Wikidata `mode=composer_dossier` (**202** async);
+  famous QID locked from allowlist; works ingest paginated musical-only soft cap (**2048**)
 - `GET /v1/kb/composers/{id}/dossier` — read dossier (same token gate as admin for S1)
 
 ## Acceptance

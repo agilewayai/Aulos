@@ -9,13 +9,49 @@ fingerprint: "aries-harness/bootstrap-doc/v1"
 initialized_at: "2026-07-25T17:20:00+00:00"
 effective_status: "active"
 effective_since: "2026-07-25T17:20:00+00:00"
-content_fingerprint: "sha256:e46b9638d6429532209d8342763884eed8891d1825ef6682c3e3fca08852675c"
+content_fingerprint: "sha256:cebd10c063e6eb0e7b7b86a660c25ae38c5472d27dd40e03526b9602bf26d8e0"
 trace_history_source: "filesystem-only"
 trace_last_commit_sha: ""
 trace_last_commit_at: ""
 trace_revision_count: "0"
 ---
 # Journal
+
+## 2026-08-01T17:15:00Z
+
+- **REQ-010 soft-cap → 2048:** `WORKS_CAP` raised from 400 to 2048.
+- **Plaza “lost diaries” root cause:** API `db_ha` stuck on **SQLite failover**
+  (`auto_failback=false`) while Postgres primary still held the published Horowitz/Mozart
+  diary. Failover mirror had a different draft → plaza feed empty. Restored `active_role=primary`
+  (API restart); healed guide #47 ghost `running` → `completed`. Diary guide links #47/#48
+  derive `ready_for_review` (not deleted).
+
+## 2026-08-01T17:05:00Z
+
+- **REQ-010 Δ Composer dossier works + identity:** Famous QID lock (Mozart no longer Franz
+  Xaver); SPARQL works soft-cap 400 with year/catalog order + film/junk filters; dossier payload
+  adds `works_by_year` / `works_by_genre`; merge upsert avoids global `works` PK clashes.
+  Live rebuild: Mozart 424 / Beethoven ~310 / Bach 397. Tests: `test_composer_dossier` + famous
+  persist lock green.
+
+## 2026-08-01T08:10:00Z
+
+- **REQ-012 Multi-source person aggregate + bilingual:** field-merge Discogs + Wikidata +
+  Wikipedia EN/ZH (ADR-007); API fan-in + OPS LLM translate for missing locale; 聆乐 card
+  中文/EN toggle. Tests: merge precedence + aggregate endpoint + API orchestration green.
+
+## 2026-08-01T07:45:00Z
+
+- **REQ-011 match fix:** strict person identity (no CJK soft match; orphan RAG cannot invent
+  cards). Discogs artist profile is now first enrich authority (API → ingest), then Wikidata/
+  Wikipedia. Tests: unrelated 朱莉亚尼/Giuliani ≠ Bach; Discogs-before-wikidata API path.
+
+## 2026-08-01T07:30:00Z
+
+- **REQ-011 Person entity cards:** `person_entity.resolve_person_card` — local composer+RAG first,
+  then Wikidata search + Wikipedia summary enrich; persist composer + searchable chunk (prefer
+  wikidata tier-S publish). Route `POST /v1/kb/entities/person/resolve`. Tests: `test_person_entity.py`
+  3 passed. API proxy `/v1/entities/person`; 聆乐 names clickable → side panel.
 
 ## 2026-08-01T06:35:00Z
 

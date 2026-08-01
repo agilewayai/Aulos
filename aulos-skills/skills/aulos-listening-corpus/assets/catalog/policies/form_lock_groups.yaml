@@ -1,0 +1,111 @@
+# Form-family opposition policy — sibling-work swap prevention (SPEC-008 / SPEC-009).
+# Data-driven: no per-work Python branches. When the locked title anchors a family,
+# markers from opposing families are treated as alien chambers.
+
+families:
+  concerto:
+    anchors:
+      - concerto
+      - 协奏
+      - 協奏
+    alien_markers:
+      - requiem
+      - dies irae
+      - dies iræ
+      - lacrimosa
+      - missa
+      - mass ordinary
+      - 安魂曲
+      - 安魂
+      - 末日经
+      - 末日經
+      - 落泪之日
+      - 落淚之日
+      - 弥撒
+      - 彌撒
+      - kyrie
+      - süssmayr
+      - sussmayr
+      - cello sonata
+      - cello-and-piano
+      - cello and piano
+      - violoncello
+      - 大提琴奏鸣
+      - duo-cello
+
+  sacred_mass:
+    anchors:
+      - requiem
+      - 安魂
+      - dies irae
+      - 末日经
+      - 末日經
+      - lacrimosa
+      - missa solemnis
+      - 弥撒
+      - 彌撒
+    alien_markers:
+      - concerto
+      - 协奏曲
+      - 協奏曲
+      - 协奏
+      - 協奏
+
+  solo_cello_suite:
+    anchors:
+      - cello suite
+      - violoncello suite
+      - 无伴奏大提琴
+      - solo cello
+    alien_markers:
+      - goldberg
+      - 哥德堡
+      - bwv 988
+      - keyboard variation
+
+  keyboard_variation:
+    anchors:
+      - goldberg
+      - 哥德堡
+      - keyboard variation
+      - bwv 988
+    alien_markers:
+      - cello suite
+      - 无伴奏大提琴
+      - bwv 1007
+
+  duo_cello_piano:
+    anchors:
+      - cello sonata
+      - 大提琴奏鸣
+      - cello and piano
+    alien_markers:
+      - violin concerto
+      - 小提琴协奏
+      - piano concerto
+
+  # Solo keyboard sonata / rondo pressings (SPEC-032) — oppose orchestra / sacred / duo.
+  # Do NOT anchor bare 奏鸣曲 / sonata (those also hit cello duo titles).
+  solo_keyboard:
+    anchors:
+      - sonaten
+      - piano sonata
+      - piano sonatas
+      - 钢琴奏鸣
+      - 鋼琴奏鳴
+      - keyboard sonata
+      - solo piano
+      - 回旋曲
+    alien_markers:
+      - requiem
+      - dies irae
+      - 安魂曲
+      - concerto
+      - 协奏曲
+      - 協奏曲
+      - cello sonata
+      - cello-and-piano
+      - violoncello
+      - 大提琴奏鸣
+      - symphony
+      - 交响曲

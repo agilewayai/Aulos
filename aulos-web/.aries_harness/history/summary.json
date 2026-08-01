@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-08-01T06:31:30+00:00",
+  "generated_at": "2026-08-01T20:59:19+00:00",
   "project_root": "/home/ubuntu/hackathon/aulos/aulos-web",
   "harness_root": "/home/ubuntu/hackathon/aulos/aulos-web/.aries_harness",
   "history_root": "/home/ubuntu/hackathon/aulos/aulos-web/.aries_harness/history",
@@ -8,8 +8,84 @@
   "branch": "main",
   "working_tree": {
     "clean": false,
-    "change_count": 124,
+    "change_count": 330,
     "changes": [
+      {
+        "status": "M",
+        "path": "aulos-agent/.aries_harness/INDEX.md"
+      },
+      {
+        "status": "M",
+        "path": "aulos-agent/.aries_harness/history/DAILY_SUMMARY_INDEX.md"
+      },
+      {
+        "status": "M",
+        "path": "aulos-agent/.aries_harness/history/DOC_TRACE.md"
+      },
+      {
+        "status": "M",
+        "path": "aulos-agent/.aries_harness/history/README.md"
+      },
+      {
+        "status": "M",
+        "path": "aulos-agent/.aries_harness/history/RETROSPECTIVE.md"
+      },
+      {
+        "status": "M",
+        "path": "aulos-agent/.aries_harness/history/ROADMAP.md"
+      },
+      {
+        "status": "M",
+        "path": "aulos-agent/.aries_harness/history/STATUS.md"
+      },
+      {
+        "status": "M",
+        "path": "aulos-agent/.aries_harness/history/TIMELINE.md"
+      },
+      {
+        "status": "M",
+        "path": "aulos-agent/.aries_harness/history/daily/2026-07-25.md"
+      },
+      {
+        "status": "M",
+        "path": "aulos-agent/.aries_harness/history/daily/2026-07-26.md"
+      },
+      {
+        "status": "M",
+        "path": "aulos-agent/.aries_harness/history/daily/2026-07-27.md"
+      },
+      {
+        "status": "M",
+        "path": "aulos-agent/.aries_harness/history/daily/2026-08-01.md"
+      },
+      {
+        "status": "M",
+        "path": "aulos-agent/.aries_harness/history/doc-trace.json"
+      },
+      {
+        "status": "M",
+        "path": "aulos-agent/.aries_harness/history/summary.json"
+      },
+      {
+        "status": "M",
+        "path": "aulos-agent/src/aulos_agent/http_app.py"
+      },
+      {
+        "status": "M",
+        "path": "aulos-agent/src/aulos_agent/listening/service.py"
+      },
+      {
+        "status": "M",
+        "path": "aulos-agent/src/aulos_agent/llm/listening_fake.py"
+      },
+      {
+        "status": "M",
+        "path": "aulos-agent/src/aulos_agent/tools/skills.py"
+      },
+      {
+        "status": "M",
+        "path": "aulos-api/.aries_harness/EVAL.md"
+      },
       {
         "status": "M",
         "path": "aulos-api/.aries_harness/INDEX.md"
@@ -68,6 +144,10 @@
       },
       {
         "status": "M",
+        "path": "aulos-api/.aries_harness/history/daily/2026-08-01.md"
+      },
+      {
+        "status": "M",
         "path": "aulos-api/.aries_harness/history/doc-trace.json"
       },
       {
@@ -76,7 +156,43 @@
       },
       {
         "status": "M",
-        "path": "aulos-api/.aries_harness/references/specs/SPEC-018-ops-task-queue.md"
+        "path": "aulos-api/.aries_harness/references/REG-001-artifact-register.md"
+      },
+      {
+        "status": "M",
+        "path": "aulos-api/src/aulos_api/app.py"
+      },
+      {
+        "status": "M",
+        "path": "aulos-api/src/aulos_api/auth/__init__.py"
+      },
+      {
+        "status": "M",
+        "path": "aulos-api/src/aulos_api/auth/deps.py"
+      },
+      {
+        "status": "M",
+        "path": "aulos-api/src/aulos_api/config/settings.py"
+      },
+      {
+        "status": "M",
+        "path": "aulos-api/src/aulos_api/db/models.py"
+      },
+      {
+        "status": "M",
+        "path": "aulos-api/src/aulos_api/db/schema_patches.py"
+      },
+      {
+        "status": "M",
+        "path": "aulos-api/src/aulos_api/db/session.py"
+      },
+      {
+        "status": "M",
+        "path": "aulos-api/src/aulos_api/routes/__init__.py"
+      },
+      {
+        "status": "M",
+        "path": "aulos-api/src/aulos_api/routes/listening.py"
       },
       {
         "status": "M",
@@ -84,11 +200,51 @@
       },
       {
         "status": "M",
+        "path": "aulos-api/src/aulos_api/routes/ops_integrations.py"
+      },
+      {
+        "status": "M",
+        "path": "aulos-api/src/aulos_api/services/agent_proxy.py"
+      },
+      {
+        "status": "M",
+        "path": "aulos-api/src/aulos_api/services/chain_trace.py"
+      },
+      {
+        "status": "M",
+        "path": "aulos-api/src/aulos_api/services/db_ha.py"
+      },
+      {
+        "status": "M",
+        "path": "aulos-api/src/aulos_api/services/discogs.py"
+      },
+      {
+        "status": "M",
         "path": "aulos-api/src/aulos_api/services/knowledge_proxy.py"
       },
       {
         "status": "M",
-        "path": "aulos-api/src/aulos_api/services/task_queue.py"
+        "path": "aulos-api/src/aulos_api/services/listening_guide.py"
+      },
+      {
+        "status": "M",
+        "path": "aulos-api/src/aulos_api/services/listening_plan.py"
+      },
+      {
+        "status": "M",
+        "path": "aulos-api/src/aulos_api/services/listening_queue.py"
+      },
+      {
+        "status": "M",
+        "path": "aulos-api/tests/test_db_ha.py"
+      },
+      {
+        "status": "M",
+        "path": "aulos-api/tests/test_discogs.py"
+      },
+      {
+        "status": "M",
+        "path": "aulos-api/tests/test_listening_plan.py"
       },
       {
         "status": "M",
@@ -148,6 +304,10 @@
       },
       {
         "status": "M",
+        "path": "aulos-knowledge/.aries_harness/history/daily/2026-08-01.md"
+      },
+      {
+        "status": "M",
         "path": "aulos-knowledge/.aries_harness/history/doc-trace.json"
       },
       {
@@ -156,7 +316,7 @@
       },
       {
         "status": "M",
-        "path": "aulos-knowledge/.aries_harness/references/REG-001-artifact-register.md"
+        "path": "aulos-knowledge/.aries_harness/references/requests/REQ-010-composer-dossier.md"
       },
       {
         "status": "M",
@@ -164,43 +324,11 @@
       },
       {
         "status": "M",
-        "path": "aulos-knowledge/.aries_harness/references/specs/SPEC-010-ops-knowledge-audit-ui.md"
+        "path": "aulos-knowledge/src/aulos_knowledge/composer_dossier.py"
       },
       {
         "status": "M",
-        "path": "aulos-knowledge/README.md"
-      },
-      {
-        "status": "M",
-        "path": "aulos-knowledge/deploy/.env.example"
-      },
-      {
-        "status": "M",
-        "path": "aulos-knowledge/docs/worker.md"
-      },
-      {
-        "status": "M",
-        "path": "aulos-knowledge/src/aulos_knowledge/app.py"
-      },
-      {
-        "status": "M",
-        "path": "aulos-knowledge/src/aulos_knowledge/config.py"
-      },
-      {
-        "status": "M",
-        "path": "aulos-knowledge/src/aulos_knowledge/connectors/wikidata.py"
-      },
-      {
-        "status": "M",
-        "path": "aulos-knowledge/src/aulos_knowledge/db.py"
-      },
-      {
-        "status": "M",
-        "path": "aulos-knowledge/src/aulos_knowledge/famous_composers.py"
-      },
-      {
-        "status": "M",
-        "path": "aulos-knowledge/src/aulos_knowledge/jobs.py"
+        "path": "aulos-knowledge/src/aulos_knowledge/retrieve.py"
       },
       {
         "status": "M",
@@ -208,15 +336,71 @@
       },
       {
         "status": "M",
+        "path": "aulos-knowledge/tests/test_composer_dossier.py"
+      },
+      {
+        "status": "M",
+        "path": "aulos-mcp/.aries_harness/INDEX.md"
+      },
+      {
+        "status": "M",
+        "path": "aulos-mcp/.aries_harness/history/DAILY_SUMMARY_INDEX.md"
+      },
+      {
+        "status": "M",
+        "path": "aulos-mcp/.aries_harness/history/DOC_TRACE.md"
+      },
+      {
+        "status": "M",
+        "path": "aulos-mcp/.aries_harness/history/README.md"
+      },
+      {
+        "status": "M",
+        "path": "aulos-mcp/.aries_harness/history/RETROSPECTIVE.md"
+      },
+      {
+        "status": "M",
+        "path": "aulos-mcp/.aries_harness/history/ROADMAP.md"
+      },
+      {
+        "status": "M",
+        "path": "aulos-mcp/.aries_harness/history/STATUS.md"
+      },
+      {
+        "status": "M",
+        "path": "aulos-mcp/.aries_harness/history/TIMELINE.md"
+      },
+      {
+        "status": "M",
+        "path": "aulos-mcp/.aries_harness/history/daily/2026-07-25.md"
+      },
+      {
+        "status": "M",
+        "path": "aulos-mcp/.aries_harness/history/daily/2026-07-26.md"
+      },
+      {
+        "status": "M",
+        "path": "aulos-mcp/.aries_harness/history/daily/2026-07-27.md"
+      },
+      {
+        "status": "M",
+        "path": "aulos-mcp/.aries_harness/history/daily/2026-08-01.md"
+      },
+      {
+        "status": "M",
+        "path": "aulos-mcp/.aries_harness/history/doc-trace.json"
+      },
+      {
+        "status": "M",
+        "path": "aulos-mcp/.aries_harness/history/summary.json"
+      },
+      {
+        "status": "M",
+        "path": "aulos-ops/.aries_harness/INDEX.md"
+      },
+      {
+        "status": "M",
         "path": "aulos-ops/.aries_harness/JOURNAL.md"
-      },
-      {
-        "status": "M",
-        "path": "aulos-ops/.aries_harness/STATE.md"
-      },
-      {
-        "status": "M",
-        "path": "aulos-ops/.aries_harness/TASK_STACK.md"
       },
       {
         "status": "M",
@@ -260,6 +444,10 @@
       },
       {
         "status": "M",
+        "path": "aulos-ops/.aries_harness/history/daily/2026-08-01.md"
+      },
+      {
+        "status": "M",
         "path": "aulos-ops/.aries_harness/history/doc-trace.json"
       },
       {
@@ -280,27 +468,19 @@
       },
       {
         "status": "M",
-        "path": "aulos-ops/src/knowledge/KnowledgeConsole.tsx"
+        "path": "aulos-ops/src/knowledge/modules/ComposerDossierModule.tsx"
       },
       {
         "status": "M",
-        "path": "aulos-ops/src/knowledge/constants.ts"
-      },
-      {
-        "status": "M",
-        "path": "aulos-ops/src/knowledge/modules/OverviewModule.tsx"
-      },
-      {
-        "status": "M",
-        "path": "aulos-ops/src/knowledge/types.ts"
-      },
-      {
-        "status": "M",
-        "path": "aulos-ops/src/knowledge/useKnowledgePlane.ts"
+        "path": "aulos-ops/src/layout/opsNav.ts"
       },
       {
         "status": "M",
         "path": "aulos-ops/src/sessionScene.ts"
+      },
+      {
+        "status": "M",
+        "path": "aulos-skills/.aries_harness/EVAL.md"
       },
       {
         "status": "M",
@@ -309,6 +489,18 @@
       {
         "status": "M",
         "path": "aulos-skills/.aries_harness/JOURNAL.md"
+      },
+      {
+        "status": "M",
+        "path": "aulos-skills/.aries_harness/STATE.md"
+      },
+      {
+        "status": "M",
+        "path": "aulos-skills/.aries_harness/TASK_STACK.md"
+      },
+      {
+        "status": "M",
+        "path": "aulos-skills/.aries_harness/docs/insights.md"
       },
       {
         "status": "M",
@@ -352,6 +544,10 @@
       },
       {
         "status": "M",
+        "path": "aulos-skills/.aries_harness/history/daily/2026-08-01.md"
+      },
+      {
+        "status": "M",
         "path": "aulos-skills/.aries_harness/history/doc-trace.json"
       },
       {
@@ -364,7 +560,99 @@
       },
       {
         "status": "M",
+        "path": "aulos-skills/.aries_harness/references/REG-001-artifact-register.md"
+      },
+      {
+        "status": "M",
+        "path": "aulos-skills/.aries_harness/references/requests/REQ-005-ambient-media-identity.md"
+      },
+      {
+        "status": "M",
+        "path": "aulos-skills/.aries_harness/references/specs/SPEC-006-ambient-media-and-identity.md"
+      },
+      {
+        "status": "M",
+        "path": "aulos-skills/.aries_harness/references/specs/SPEC-008-work-identity-and-resolver.md"
+      },
+      {
+        "status": "M",
+        "path": "aulos-skills/.aries_harness/references/specs/SPEC-009-node-decontam-rework.md"
+      },
+      {
+        "status": "M",
+        "path": "aulos-skills/.gitignore"
+      },
+      {
+        "status": "M",
+        "path": "aulos-skills/skills/aulos-listening-corpus/assets/catalog/index.yaml"
+      },
+      {
+        "status": "M",
+        "path": "aulos-skills/skills/aulos-listening-corpus/assets/catalog/works/chopin.nocturne-op9-no2.yaml"
+      },
+      {
+        "status": "M",
+        "path": "aulos-skills/skills/aulos-listening-corpus/assets/catalog/works/dvorak.dumky-trio.yaml"
+      },
+      {
+        "status": "M",
+        "path": "aulos-skills/skills/aulos-listening-corpus/assets/catalog/works/mahler.symphony-5.yaml"
+      },
+      {
+        "status": "M",
+        "path": "aulos-skills/skills/aulos-listening-synthesize/assets/index.yaml"
+      },
+      {
+        "status": "M",
+        "path": "aulos-skills/skills/aulos-listening/SKILL.md"
+      },
+      {
+        "status": "M",
+        "path": "aulos-skills/skills/aulos-listening/skill.yaml"
+      },
+      {
+        "status": "M",
+        "path": "aulos-skills/src/aulos_skills/ambient_agent.py"
+      },
+      {
+        "status": "M",
+        "path": "aulos-skills/src/aulos_skills/decontam.py"
+      },
+      {
+        "status": "M",
+        "path": "aulos-skills/src/aulos_skills/guide_render.py"
+      },
+      {
+        "status": "M",
+        "path": "aulos-skills/src/aulos_skills/identity.py"
+      },
+      {
+        "status": "M",
+        "path": "aulos-skills/src/aulos_skills/intake_parse.py"
+      },
+      {
+        "status": "M",
+        "path": "aulos-skills/src/aulos_skills/runtime.py"
+      },
+      {
+        "status": "M",
+        "path": "aulos-skills/tests/test_ambient_agent.py"
+      },
+      {
+        "status": "M",
+        "path": "aulos-skills/tests/test_intake_i18n.py"
+      },
+      {
+        "status": "M",
+        "path": "aulos-skills/tests/test_runtime.py"
+      },
+      {
+        "status": "M",
         "path": "aulos-web/.aries_harness/ARIES_HARNESS_FINGERPRINT.json"
+      },
+      {
+        "status": "M",
+        "path": "aulos-web/.aries_harness/EVAL.md"
       },
       {
         "status": "M",
@@ -372,143 +660,679 @@
       },
       {
         "status": "M",
-        "path": "deploy/systemd/user/aulos-knowledge.service"
+        "path": "aulos-web/.aries_harness/JOURNAL.md"
+      },
+      {
+        "status": "M",
+        "path": "aulos-web/.aries_harness/STATE.md"
+      },
+      {
+        "status": "M",
+        "path": "aulos-web/.aries_harness/TASK_STACK.md"
+      },
+      {
+        "status": "M",
+        "path": "aulos-web/.aries_harness/history/DAILY_SUMMARY_INDEX.md"
+      },
+      {
+        "status": "M",
+        "path": "aulos-web/.aries_harness/history/DOC_TRACE.md"
+      },
+      {
+        "status": "M",
+        "path": "aulos-web/.aries_harness/history/README.md"
+      },
+      {
+        "status": "M",
+        "path": "aulos-web/.aries_harness/history/RETROSPECTIVE.md"
+      },
+      {
+        "status": "M",
+        "path": "aulos-web/.aries_harness/history/ROADMAP.md"
+      },
+      {
+        "status": "M",
+        "path": "aulos-web/.aries_harness/history/STATUS.md"
+      },
+      {
+        "status": "M",
+        "path": "aulos-web/.aries_harness/history/TIMELINE.md"
+      },
+      {
+        "status": "M",
+        "path": "aulos-web/.aries_harness/history/daily/2026-07-25.md"
+      },
+      {
+        "status": "M",
+        "path": "aulos-web/.aries_harness/history/daily/2026-07-26.md"
+      },
+      {
+        "status": "M",
+        "path": "aulos-web/.aries_harness/history/daily/2026-07-27.md"
+      },
+      {
+        "status": "M",
+        "path": "aulos-web/.aries_harness/history/daily/2026-08-01.md"
+      },
+      {
+        "status": "M",
+        "path": "aulos-web/.aries_harness/history/doc-trace.json"
+      },
+      {
+        "status": "M",
+        "path": "aulos-web/.aries_harness/history/summary.json"
+      },
+      {
+        "status": "M",
+        "path": "aulos-web/index.html"
+      },
+      {
+        "status": "M",
+        "path": "aulos-web/src/App.css"
+      },
+      {
+        "status": "M",
+        "path": "aulos-web/src/App.tsx"
+      },
+      {
+        "status": "M",
+        "path": "aulos-web/src/api.ts"
+      },
+      {
+        "status": "M",
+        "path": "aulos-web/tsconfig.app.json"
+      },
+      {
+        "status": "M",
+        "path": "deploy/OPS.md"
+      },
+      {
+        "status": "M",
+        "path": "deploy/systemd/user/aulos-api.service"
       },
       {
         "status": "??",
-        "path": "aulos-api/.aries_harness/history/daily/2026-08-01.md"
+        "path": "aulos-api/.aries_harness/checkpoints/CKPT-010-listening-diary-plaza.md"
       },
       {
         "status": "??",
-        "path": "aulos-api/tests/test_knowledge_benchmark_task.py"
+        "path": "aulos-api/.aries_harness/references/domain/DOM-004-listening-diary-sns.md"
       },
       {
         "status": "??",
-        "path": "aulos-knowledge/.aries_harness/references/requests/REQ-009-source-discovery-graph.md"
+        "path": "aulos-api/.aries_harness/references/requests/REQ-010-listening-diary-plaza.md"
       },
       {
         "status": "??",
-        "path": "aulos-knowledge/.aries_harness/references/requests/REQ-010-composer-dossier.md"
+        "path": "aulos-api/.aries_harness/references/requests/REQ-011-diary-guide-lifecycle.md"
       },
       {
         "status": "??",
-        "path": "aulos-knowledge/src/aulos_knowledge/benchmark.py"
+        "path": "aulos-api/.aries_harness/references/specs/SPEC-019-listening-diary.md"
       },
       {
         "status": "??",
-        "path": "aulos-knowledge/src/aulos_knowledge/benchmark_queue.py"
+        "path": "aulos-api/.aries_harness/references/specs/SPEC-020-listening-plaza-sns.md"
       },
       {
         "status": "??",
-        "path": "aulos-knowledge/src/aulos_knowledge/composer_dossier.py"
+        "path": "aulos-api/.aries_harness/references/specs/SPEC-021-diary-guide-attach.md"
       },
       {
         "status": "??",
-        "path": "aulos-knowledge/src/aulos_knowledge/diagnosis.py"
+        "path": "aulos-api/.aries_harness/references/stories/STORY-PACK-010-listening-diary-plaza.md"
       },
       {
         "status": "??",
-        "path": "aulos-knowledge/src/aulos_knowledge/explore_seeds.py"
+        "path": "aulos-api/src/aulos_api/routes/entities.py"
       },
       {
         "status": "??",
-        "path": "aulos-knowledge/src/aulos_knowledge/improvement.py"
+        "path": "aulos-api/src/aulos_api/routes/listening_diary.py"
       },
       {
         "status": "??",
-        "path": "aulos-knowledge/src/aulos_knowledge/job_queue.py"
+        "path": "aulos-api/src/aulos_api/services/listening_ambient.py"
       },
       {
         "status": "??",
-        "path": "aulos-knowledge/src/aulos_knowledge/source_discovery.py"
+        "path": "aulos-api/src/aulos_api/services/listening_diary.py"
       },
       {
         "status": "??",
-        "path": "aulos-knowledge/tests/test_benchmark.py"
+        "path": "aulos-api/src/aulos_api/services/listening_review.py"
       },
       {
         "status": "??",
-        "path": "aulos-knowledge/tests/test_composer_dossier.py"
+        "path": "aulos-api/src/aulos_api/services/share_slug.py"
       },
       {
         "status": "??",
-        "path": "aulos-knowledge/tests/test_diagnosis.py"
+        "path": "aulos-api/tests/test_ambient_fallback.py"
       },
       {
         "status": "??",
-        "path": "aulos-knowledge/tests/test_explore_seeds.py"
+        "path": "aulos-api/tests/test_diary_guides.py"
       },
       {
         "status": "??",
-        "path": "aulos-knowledge/tests/test_job_queue.py"
+        "path": "aulos-api/tests/test_ensure_composer_dossiers.py"
       },
       {
         "status": "??",
-        "path": "aulos-knowledge/tests/test_source_discovery.py"
+        "path": "aulos-api/tests/test_entities_person.py"
       },
       {
         "status": "??",
-        "path": "aulos-ops/src/knowledge/benchmarkUtils.ts"
+        "path": "aulos-api/tests/test_listening_diary.py"
       },
       {
         "status": "??",
-        "path": "aulos-ops/src/knowledge/components/BenchmarkDashboardReport.tsx"
+        "path": "aulos-api/tests/test_listening_review.py"
       },
       {
         "status": "??",
-        "path": "aulos-ops/src/knowledge/components/DiscoveryGraph.tsx"
+        "path": "aulos-api/tests/test_process_scorecard_api.py"
       },
       {
         "status": "??",
-        "path": "aulos-ops/src/knowledge/modules/BenchmarkModule.tsx"
+        "path": "aulos-api/tests/test_promote_production_api.py"
       },
       {
         "status": "??",
-        "path": "aulos-ops/src/knowledge/modules/ComposerDossierModule.tsx"
+        "path": "aulos-api/tests/test_promote_stage_api.py"
       },
       {
         "status": "??",
-        "path": "aulos-ops/src/knowledge/modules/ExploreModule.tsx"
+        "path": "aulos-knowledge/.aries_harness/references/architecture/ADR-007-person-field-merge.md"
       },
       {
         "status": "??",
-        "path": "aulos-ops/src/knowledge/modules/ImproveModule.tsx"
+        "path": "aulos-knowledge/.aries_harness/references/requests/REQ-011-person-entity-cards.md"
       },
       {
         "status": "??",
-        "path": "aulos-ops/src/knowledge/modules/ReportModule.tsx"
+        "path": "aulos-knowledge/.aries_harness/references/requests/REQ-012-person-multi-source-bilingual.md"
       },
       {
         "status": "??",
-        "path": "aulos-ops/src/layout/OpsDashboardShell.tsx"
+        "path": "aulos-knowledge/.aries_harness/references/specs/SPEC-011-person-entity-card.md"
       },
       {
         "status": "??",
-        "path": "aulos-ops/src/layout/OpsSidebar.tsx"
+        "path": "aulos-knowledge/.aries_harness/references/specs/SPEC-012-person-multi-source-bilingual.md"
       },
       {
         "status": "??",
-        "path": "aulos-ops/src/layout/layoutIcons.tsx"
+        "path": "aulos-knowledge/src/aulos_knowledge/person_aggregate.py"
       },
       {
         "status": "??",
-        "path": "aulos-ops/src/layout/navIcons.tsx"
+        "path": "aulos-knowledge/src/aulos_knowledge/person_entity.py"
       },
       {
         "status": "??",
-        "path": "aulos-ops/src/layout/opsNav.ts"
+        "path": "aulos-knowledge/tests/test_person_aggregate.py"
       },
       {
         "status": "??",
-        "path": "aulos-ops/src/layout/useOpsLayout.ts"
+        "path": "aulos-knowledge/tests/test_person_entity.py"
       },
       {
         "status": "??",
-        "path": "aulos-skills/.aries_harness/history/daily/2026-08-01.md"
+        "path": "aulos-ops/src/GuideQualityPanel.tsx"
+      },
+      {
+        "status": "??",
+        "path": "aulos-skills/.aries_harness/decisions/adrs/ADR-005-hybrid-adversarial-review.md"
+      },
+      {
+        "status": "??",
+        "path": "aulos-skills/.aries_harness/docs/SYSTEM_MECHANISM_TOUR.md"
+      },
+      {
+        "status": "??",
+        "path": "aulos-skills/.aries_harness/references/requests/REQ-008-adversarial-process-review.md"
+      },
+      {
+        "status": "??",
+        "path": "aulos-skills/.aries_harness/references/requests/REQ-009-process-scorecard.md"
+      },
+      {
+        "status": "??",
+        "path": "aulos-skills/.aries_harness/references/requests/REQ-012-external-review-round.md"
+      },
+      {
+        "status": "??",
+        "path": "aulos-skills/.aries_harness/references/requests/REQ-013-product-prose-hygiene.md"
+      },
+      {
+        "status": "??",
+        "path": "aulos-skills/.aries_harness/references/requests/REQ-014-craft-raise-work-resolver.md"
+      },
+      {
+        "status": "??",
+        "path": "aulos-skills/.aries_harness/references/requests/REQ-015-knowledge-thicken-product-score.md"
+      },
+      {
+        "status": "??",
+        "path": "aulos-skills/.aries_harness/references/requests/REQ-016-systemic-cold-thicken.md"
+      },
+      {
+        "status": "??",
+        "path": "aulos-skills/.aries_harness/references/requests/REQ-017-family-coverage.md"
+      },
+      {
+        "status": "??",
+        "path": "aulos-skills/.aries_harness/references/requests/REQ-018-catalog-craft-fleet-dossier.md"
+      },
+      {
+        "status": "??",
+        "path": "aulos-skills/.aries_harness/references/requests/REQ-019-unknown-case-thicken.md"
+      },
+      {
+        "status": "??",
+        "path": "aulos-skills/.aries_harness/references/requests/REQ-020-promote-staging.md"
+      },
+      {
+        "status": "??",
+        "path": "aulos-skills/.aries_harness/references/requests/REQ-021-dimensional-promote.md"
+      },
+      {
+        "status": "??",
+        "path": "aulos-skills/.aries_harness/references/requests/REQ-022-identity-freeze-catalog-facets.md"
+      },
+      {
+        "status": "??",
+        "path": "aulos-skills/.aries_harness/references/specs/SPEC-018-adversarial-process-review.md"
+      },
+      {
+        "status": "??",
+        "path": "aulos-skills/.aries_harness/references/specs/SPEC-019-process-scorecard.md"
+      },
+      {
+        "status": "??",
+        "path": "aulos-skills/.aries_harness/references/specs/SPEC-022-external-review-round.md"
+      },
+      {
+        "status": "??",
+        "path": "aulos-skills/.aries_harness/references/specs/SPEC-023-product-prose-hygiene.md"
+      },
+      {
+        "status": "??",
+        "path": "aulos-skills/.aries_harness/references/specs/SPEC-024-craft-raise.md"
+      },
+      {
+        "status": "??",
+        "path": "aulos-skills/.aries_harness/references/specs/SPEC-025-knowledge-thicken-product-score.md"
+      },
+      {
+        "status": "??",
+        "path": "aulos-skills/.aries_harness/references/specs/SPEC-026-systemic-cold-thicken.md"
+      },
+      {
+        "status": "??",
+        "path": "aulos-skills/.aries_harness/references/specs/SPEC-027-family-coverage.md"
+      },
+      {
+        "status": "??",
+        "path": "aulos-skills/.aries_harness/references/specs/SPEC-028-catalog-craft-fleet-dossier.md"
+      },
+      {
+        "status": "??",
+        "path": "aulos-skills/.aries_harness/references/specs/SPEC-029-unknown-case-thicken.md"
+      },
+      {
+        "status": "??",
+        "path": "aulos-skills/.aries_harness/references/specs/SPEC-030-promote-staging.md"
+      },
+      {
+        "status": "??",
+        "path": "aulos-skills/.aries_harness/references/specs/SPEC-031-dimensional-promote.md"
+      },
+      {
+        "status": "??",
+        "path": "aulos-skills/.aries_harness/references/specs/SPEC-032-identity-freeze-catalog-facets.md"
+      },
+      {
+        "status": "??",
+        "path": "aulos-skills/skills/aulos-listening-corpus/assets/catalog/composers/felix-mendelssohn.yaml"
+      },
+      {
+        "status": "??",
+        "path": "aulos-skills/skills/aulos-listening-corpus/assets/catalog/composers/wolfgang-amadeus-mozart.yaml"
+      },
+      {
+        "status": "??",
+        "path": "aulos-skills/skills/aulos-listening-corpus/assets/catalog/policies/form_lock_groups.yaml"
+      },
+      {
+        "status": "??",
+        "path": "aulos-skills/skills/aulos-listening-corpus/assets/catalog/works/mendelssohn.lieder-ohne-worte.yaml"
+      },
+      {
+        "status": "??",
+        "path": "aulos-skills/skills/aulos-listening-corpus/assets/catalog/works/mozart.piano-concerto-23.k-488.yaml"
+      },
+      {
+        "status": "??",
+        "path": "aulos-skills/skills/aulos-listening-corpus/assets/catalog/works/mozart.requiem.k-626.yaml"
+      },
+      {
+        "status": "??",
+        "path": "aulos-skills/skills/aulos-listening-corpus/assets/craft/staging/.gitkeep"
+      },
+      {
+        "status": "??",
+        "path": "aulos-skills/skills/aulos-listening-external-review/SKILL.md"
+      },
+      {
+        "status": "??",
+        "path": "aulos-skills/skills/aulos-listening-external-review/skill.yaml"
+      },
+      {
+        "status": "??",
+        "path": "aulos-skills/skills/aulos-listening-revise/SKILL.md"
+      },
+      {
+        "status": "??",
+        "path": "aulos-skills/skills/aulos-listening-revise/skill.yaml"
+      },
+      {
+        "status": "??",
+        "path": "aulos-skills/skills/aulos-listening-synthesize/assets/composers/antonin-dvorak.yaml"
+      },
+      {
+        "status": "??",
+        "path": "aulos-skills/skills/aulos-listening-synthesize/assets/composers/felix-mendelssohn.yaml"
+      },
+      {
+        "status": "??",
+        "path": "aulos-skills/skills/aulos-listening-synthesize/assets/composers/gustav-mahler.yaml"
+      },
+      {
+        "status": "??",
+        "path": "aulos-skills/skills/aulos-listening-synthesize/assets/composers/wolfgang-amadeus-mozart.yaml"
+      },
+      {
+        "status": "??",
+        "path": "aulos-skills/skills/aulos-listening-synthesize/assets/families/lyric-piano-miniatures.yaml"
+      },
+      {
+        "status": "??",
+        "path": "aulos-skills/skills/aulos-listening-synthesize/assets/families/piano-concerto.yaml"
+      },
+      {
+        "status": "??",
+        "path": "aulos-skills/skills/aulos-listening-synthesize/assets/families/piano-trio.yaml"
+      },
+      {
+        "status": "??",
+        "path": "aulos-skills/skills/aulos-listening-synthesize/assets/families/sacred-requiem.yaml"
+      },
+      {
+        "status": "??",
+        "path": "aulos-skills/skills/aulos-listening-synthesize/assets/families/symphony-orchestra.yaml"
+      },
+      {
+        "status": "??",
+        "path": "aulos-skills/src/aulos_skills/adversarial_review.py"
+      },
+      {
+        "status": "??",
+        "path": "aulos-skills/src/aulos_skills/ambient_video.py"
+      },
+      {
+        "status": "??",
+        "path": "aulos-skills/src/aulos_skills/catalog_craft_floor.py"
+      },
+      {
+        "status": "??",
+        "path": "aulos-skills/src/aulos_skills/chamber_contracts.py"
+      },
+      {
+        "status": "??",
+        "path": "aulos-skills/src/aulos_skills/craft_packs.py"
+      },
+      {
+        "status": "??",
+        "path": "aulos-skills/src/aulos_skills/dimension_templates.py"
+      },
+      {
+        "status": "??",
+        "path": "aulos-skills/src/aulos_skills/external_review.py"
+      },
+      {
+        "status": "??",
+        "path": "aulos-skills/src/aulos_skills/facet_classifier.py"
+      },
+      {
+        "status": "??",
+        "path": "aulos-skills/src/aulos_skills/family_packs.py"
+      },
+      {
+        "status": "??",
+        "path": "aulos-skills/src/aulos_skills/html_bits.py"
+      },
+      {
+        "status": "??",
+        "path": "aulos-skills/src/aulos_skills/identity_hygiene.py"
+      },
+      {
+        "status": "??",
+        "path": "aulos-skills/src/aulos_skills/identity_lock.py"
+      },
+      {
+        "status": "??",
+        "path": "aulos-skills/src/aulos_skills/knowledge_thicken.py"
+      },
+      {
+        "status": "??",
+        "path": "aulos-skills/src/aulos_skills/process_scorecard.py"
+      },
+      {
+        "status": "??",
+        "path": "aulos-skills/src/aulos_skills/product_scorecard.py"
+      },
+      {
+        "status": "??",
+        "path": "aulos-skills/src/aulos_skills/promote_candidate.py"
+      },
+      {
+        "status": "??",
+        "path": "aulos-skills/src/aulos_skills/promote_production.py"
+      },
+      {
+        "status": "??",
+        "path": "aulos-skills/src/aulos_skills/promote_staging.py"
+      },
+      {
+        "status": "??",
+        "path": "aulos-skills/src/aulos_skills/prose_hygiene.py"
+      },
+      {
+        "status": "??",
+        "path": "aulos-skills/src/aulos_skills/review_targets.py"
+      },
+      {
+        "status": "??",
+        "path": "aulos-skills/src/aulos_skills/revise_repair.py"
+      },
+      {
+        "status": "??",
+        "path": "aulos-skills/src/aulos_skills/targeted_revise.py"
+      },
+      {
+        "status": "??",
+        "path": "aulos-skills/src/aulos_skills/text_match.py"
+      },
+      {
+        "status": "??",
+        "path": "aulos-skills/src/aulos_skills/unknown_case_thicken.py"
+      },
+      {
+        "status": "??",
+        "path": "aulos-skills/src/aulos_skills/work_resolver.py"
+      },
+      {
+        "status": "??",
+        "path": "aulos-skills/tests/test_adversarial_review.py"
+      },
+      {
+        "status": "??",
+        "path": "aulos-skills/tests/test_ambient_video.py"
+      },
+      {
+        "status": "??",
+        "path": "aulos-skills/tests/test_catalog_craft_coverage.py"
+      },
+      {
+        "status": "??",
+        "path": "aulos-skills/tests/test_craft_raise.py"
+      },
+      {
+        "status": "??",
+        "path": "aulos-skills/tests/test_dimensional_promote.py"
+      },
+      {
+        "status": "??",
+        "path": "aulos-skills/tests/test_external_review_hygiene.py"
+      },
+      {
+        "status": "??",
+        "path": "aulos-skills/tests/test_external_review_round.py"
+      },
+      {
+        "status": "??",
+        "path": "aulos-skills/tests/test_family_coverage.py"
+      },
+      {
+        "status": "??",
+        "path": "aulos-skills/tests/test_html_bits.py"
+      },
+      {
+        "status": "??",
+        "path": "aulos-skills/tests/test_identity_freeze_catalog_facets.py"
+      },
+      {
+        "status": "??",
+        "path": "aulos-skills/tests/test_identity_hygiene.py"
+      },
+      {
+        "status": "??",
+        "path": "aulos-skills/tests/test_identity_lock.py"
+      },
+      {
+        "status": "??",
+        "path": "aulos-skills/tests/test_knowledge_product_score.py"
+      },
+      {
+        "status": "??",
+        "path": "aulos-skills/tests/test_marker_boundaries.py"
+      },
+      {
+        "status": "??",
+        "path": "aulos-skills/tests/test_mozart_requiem_drift.py"
+      },
+      {
+        "status": "??",
+        "path": "aulos-skills/tests/test_process_scorecard.py"
+      },
+      {
+        "status": "??",
+        "path": "aulos-skills/tests/test_promote_staging.py"
+      },
+      {
+        "status": "??",
+        "path": "aulos-skills/tests/test_prose_hygiene.py"
+      },
+      {
+        "status": "??",
+        "path": "aulos-skills/tests/test_review_targets.py"
+      },
+      {
+        "status": "??",
+        "path": "aulos-skills/tests/test_systemic_cold_thicken.py"
+      },
+      {
+        "status": "??",
+        "path": "aulos-skills/tests/test_targeted_revise.py"
+      },
+      {
+        "status": "??",
+        "path": "aulos-skills/tests/test_unknown_case_thicken.py"
+      },
+      {
+        "status": "??",
+        "path": "aulos-web/.aries_harness/references/requests/REQ-004-listening-diary-plaza-ui.md"
+      },
+      {
+        "status": "??",
+        "path": "aulos-web/.aries_harness/references/requests/REQ-005-diary-blog-calendar-tags.md"
+      },
+      {
+        "status": "??",
+        "path": "aulos-web/.aries_harness/references/specs/SPEC-009-diary-blog-calendar-tags.md"
+      },
+      {
+        "status": "??",
+        "path": "aulos-web/src/AtelierTrail.tsx"
+      },
+      {
+        "status": "??",
+        "path": "aulos-web/src/DiscogsReleasePicker.tsx"
+      },
+      {
+        "status": "??",
+        "path": "aulos-web/src/GenerationRoundsPanel.tsx"
+      },
+      {
+        "status": "??",
+        "path": "aulos-web/src/GuideReader.tsx"
+      },
+      {
+        "status": "??",
+        "path": "aulos-web/src/ListeningDiaryViews.tsx"
+      },
+      {
+        "status": "??",
+        "path": "aulos-web/src/ListeningPostCard.tsx"
+      },
+      {
+        "status": "??",
+        "path": "aulos-web/src/ProcessScorecardCard.tsx"
+      },
+      {
+        "status": "??",
+        "path": "aulos-web/src/atelierTrailUtils.test.ts"
+      },
+      {
+        "status": "??",
+        "path": "aulos-web/src/atelierTrailUtils.ts"
+      },
+      {
+        "status": "??",
+        "path": "aulos-web/src/diaryBlogUtils.test.ts"
+      },
+      {
+        "status": "??",
+        "path": "aulos-web/src/diaryBlogUtils.ts"
+      },
+      {
+        "status": "??",
+        "path": "aulos-web/src/errors.ts"
+      },
+      {
+        "status": "??",
+        "path": "aulos-web/src/sourceKind.ts"
+      },
+      {
+        "status": "??",
+        "path": "aulos-web/src/useDiscogsSearch.ts"
       }
     ]
   },
-  "current_phase": "SPEC-008 session scene restore shipped (with asset auto-refresh)",
+  "current_phase": "REQ-011 / SPEC-021\u0394 diary guide review lifecycle UI shipped locally",
   "current_milestone": [
     "no current milestone recorded"
   ],
@@ -530,21 +1354,21 @@
   },
   "retrospective": {
     "recent_changes": [
-      "Atelier: countable chain progress (N/M) + stage list; SSE reconnect; Retry chain for failed/interrupted jobs (pairs with API SPEC-013 delta).",
-      "Verify: `npm run build`.",
-      "SPEC-007: move Guide | Atelier | Library tabs from mobile bottom bar to sticky top (under topbar) for easier reach.",
-      "Verify: `npm run build`.",
-      "SPEC-008: before asset auto-reload, capture UI scene (tab, draft, guide id, library filters, scroll); restore once after reload with notice.",
-      "Same pattern on aulos-ops (tab + user filters + scroll). Passwords never persisted."
+      "Dual-draft UI: score + hard-flaw delta; repair_log on v2; scorecard chip \u786c\u4f24 N.",
+      "Verify: npm run build.",
+      "Review panel: expert perspective header; \u786c\u4f24\u4fee\u590d\u6307\u4ee4 / \u786c\u4f24\u53d1\u73b0 (drop Sources list).",
+      "Verify: npm run build.",
+      "**Travel / immersive guide reading:** GuideReader with in-app fullscreen overlay",
+      "Verify: npm run build green."
     ],
     "wins": [
-      "Atelier: countable chain progress (N/M) + stage list; SSE reconnect; Retry chain for failed/interrupted jobs (pairs with API SPEC-013 delta).",
-      "Verify: `npm run build`.",
-      "SPEC-007: move Guide | Atelier | Library tabs from mobile bottom bar to sticky top (under topbar) for easier reach.",
-      "Verify: `npm run build`."
+      "Dual-draft UI: score + hard-flaw delta; repair_log on v2; scorecard chip \u786c\u4f24 N.",
+      "Verify: npm run build.",
+      "Review panel: expert perspective header; \u786c\u4f24\u4fee\u590d\u6307\u4ee4 / \u786c\u4f24\u53d1\u73b0 (drop Sources list).",
+      "Verify: npm run build."
     ],
     "needs_attention": [
-      "working tree is dirty with 124 tracked or untracked change(s)",
+      "working tree is dirty with 330 tracked or untracked change(s)",
       "no explicit next-up slice is recorded"
     ],
     "durable_reminders": [
@@ -559,19 +1383,56 @@
   "daily_summaries": [
     {
       "date": "2026-08-01",
-      "journal_headings": [],
-      "journal_items": [],
-      "feature_evolution": [],
-      "git_commits": [],
+      "journal_headings": [
+        "2026-08-01T16:20:00Z",
+        "2026-08-01T16:00:00Z",
+        "2026-08-01T15:55:00Z",
+        "2026-08-01T15:30:00Z",
+        "2026-08-01T11:34:00Z",
+        "2026-08-01T19:05:00Z",
+        "2026-08-01T18:55:00Z",
+        "2026-08-01T18:40:00Z"
+      ],
+      "journal_items": [
+        "Dual-draft UI: score + hard-flaw delta; repair_log on v2; scorecard chip \u786c\u4f24 N.",
+        "Verify: npm run build.",
+        "Review panel: expert perspective header; \u786c\u4f24\u4fee\u590d\u6307\u4ee4 / \u786c\u4f24\u53d1\u73b0 (drop Sources list).",
+        "**Travel / immersive guide reading:** GuideReader with in-app fullscreen overlay",
+        "Verify: npm run build green.",
+        "**Atelier trail progress UX:** show \u5b8c\u6210 / \u8df3\u8fc7 / \u5171 breakdown; localize step status labels;",
+        "Verify: atelierTrailUtils.test.ts ok; npm run build green.",
+        "REQ-011 / SPEC-021\u0394: \u8046\u4e50\u5bfc\u8d4f\u5de5\u574a\u5ba1\u9605\u533a \u2014 \u5ba1\u9605\u610f\u89c1 textarea\uff1b\u6309\u72b6\u6001\u663e\u793a\u901a\u8fc7\u53d1\u5e03 /"
+      ],
+      "feature_evolution": [
+        "Dual-draft UI: score + hard-flaw delta; repair_log on v2; scorecard chip \u786c\u4f24 N.",
+        "Verify: npm run build.",
+        "Review panel: expert perspective header; \u786c\u4f24\u4fee\u590d\u6307\u4ee4 / \u786c\u4f24\u53d1\u73b0 (drop Sources list).",
+        "**Travel / immersive guide reading:** GuideReader with in-app fullscreen overlay",
+        "Verify: npm run build green.",
+        "**Atelier trail progress UX:** show \u5b8c\u6210 / \u8df3\u8fc7 / \u5171 breakdown; localize step status labels;",
+        "Verify: atelierTrailUtils.test.ts ok; npm run build green.",
+        "REQ-011 / SPEC-021\u0394: \u8046\u4e50\u5bfc\u8d4f\u5de5\u574a\u5ba1\u9605\u533a \u2014 \u5ba1\u9605\u610f\u89c1 textarea\uff1b\u6309\u72b6\u6001\u663e\u793a\u901a\u8fc7\u53d1\u5e03 /",
+        "Verify: `npm run build` green (upstream `test_diary_guides.py` 3 passed).",
+        "Diary guide review now uses the same Studio iframe path (`prepareGuideHtml` + `GUIDE_IFRAME_SANDBOX` + `.guide-frame`) instead of `dangerouslySetInnerHTML` into `.diary-guide-html` (which restyled Salon Codex HTML).",
+        "Verify: `npm run build`.",
+        "SPEC-019: `ProcessScorecardCard` on Studio Atelier + diary \u5bfc\u8d4f\u5de5\u574a when `process_scorecard` present."
+      ],
+      "git_commits": [
+        {
+          "sha": "1d325d5",
+          "date": "2026-08-01",
+          "subject": "Ship knowledge discovery, dossier, and benchmark console; refresh fleet honeycomb."
+        }
+      ],
       "working_tree_hints": [
-        "M aulos-api/.aries_harness/INDEX.md",
-        "M aulos-api/.aries_harness/JOURNAL.md",
-        "M aulos-api/.aries_harness/STATE.md",
-        "M aulos-api/.aries_harness/TASK_STACK.md",
-        "M aulos-api/.aries_harness/history/DAILY_SUMMARY_INDEX.md",
-        "M aulos-api/.aries_harness/history/DOC_TRACE.md",
-        "M aulos-api/.aries_harness/history/README.md",
-        "M aulos-api/.aries_harness/history/RETROSPECTIVE.md"
+        "M aulos-agent/.aries_harness/INDEX.md",
+        "M aulos-agent/.aries_harness/history/DAILY_SUMMARY_INDEX.md",
+        "M aulos-agent/.aries_harness/history/DOC_TRACE.md",
+        "M aulos-agent/.aries_harness/history/README.md",
+        "M aulos-agent/.aries_harness/history/RETROSPECTIVE.md",
+        "M aulos-agent/.aries_harness/history/ROADMAP.md",
+        "M aulos-agent/.aries_harness/history/STATUS.md",
+        "M aulos-agent/.aries_harness/history/TIMELINE.md"
       ]
     },
     {
@@ -705,17 +1566,17 @@
     }
   ],
   "doc_trace_summary": {
-    "document_count": 60,
+    "document_count": 64,
     "docs_with_issues": 0,
     "dirty_docs": 0,
     "by_layer": {
-      "MetaDefineLayer": 31,
-      "SharedSupportSurface": 16,
+      "MetaDefineLayer": 34,
+      "SharedSupportSurface": 17,
       "RunCookingLayer": 13
     },
     "by_effective_status": {
-      "active": 49,
-      "generated": 11
+      "active": 52,
+      "generated": 12
     }
   },
   "evidence_sources": [

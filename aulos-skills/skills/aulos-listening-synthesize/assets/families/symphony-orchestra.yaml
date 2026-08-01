@@ -1,0 +1,93 @@
+family_id: symphony-orchestra
+match:
+  instruments:
+  - orchestra
+  - 管弦乐
+  - 乐队
+  forms:
+  - symphony
+  - symphonies
+  - 交响曲
+  - 交响乐
+work_title_template: '{composer} — Symphony'
+era: Classical / Romantic / Modern symphony practice
+form: Multi-movement orchestra symphony — architecture across movements
+listening_thesis: >
+  Hear the symphony as architecture across movements — lock the opening movement’s
+  primary character and the scherzo/slow hinge before chasing climax; map how the
+  finale remembers or transforms the first contract.
+work_introduction: >
+  Symphony listening owns large-scale memory: first-movement thesis, interior
+  weather (slow / dance), and whether the finale answers, overwhelms, or reframes
+  the opening. Instrumentation eras (Mahlerian expansion, Classical clarity) are
+  grammar — state them.
+genesis:
+  year: varies by opus and revision history
+  place: Public concert hall
+  publication: Numbered symphonies; revision states matter (Mahler, Bruckner, …)
+  background: Orchestra as civic architecture and private myth engine.
+  instrument_culture: Classical orchestra → Romantic expansion → modern / HIP forces.
+historical_stature:
+  reasons:
+  - Teaches multi-movement memory as a public listening craft.
+  - Instrumentation and revision histories are part of honest reception.
+  reception_arc: Court / civic hall → Romantic monument → recording-era mythology → HIP reductions.
+width_points:
+- Lock first-movement primary character before interior movements.
+- Name the orchestra era and size — color is form.
+- Revision / edition caveats when relevant.
+- Slow and dance movements are weather, not interludes to skip.
+depth_points:
+- Map exposition landmarks with ear cues in movement I.
+- Track how later movements cite or refuse the opening contract.
+- Finale: culmination, collapse, or new speech?
+listening_map:
+- label: First movement thesis
+  cue: Memorize primary character and pulse.
+- label: Interior weather
+  cue: Slow / scherzo — temperature change under one architecture.
+- label: Finale
+  cue: Remembers, transforms, or abandons the opening contract?
+sound_world:
+  original_instrument: Period or modern orchestra as the work’s era requires
+  ensemble_notes: Full orchestra; piano four-hands reductions are study aids.
+  modern_modes:
+  - Modern symphony orchestra
+  - Period / reduced forces
+  - Comparative tempo and seating philosophies
+myths_and_caveats:
+- Program titles and nickname lore are reception — keep caveats.
+- Do not import another symphony’s mythology under the same composer.
+practice_notes:
+- One hearing for movement I thesis only.
+- Second hearing with a cross-movement memory question.
+- Journal three timestamps where architecture turned.
+zh:
+  listening_thesis: >
+    把交响曲当作跨乐章的建筑来听——先锁住第一乐章的主要性格与谐谑／慢板枢纽，再追高潮；
+    画出终乐章如何记得或改写最初的契约。
+  work_introduction: >
+    交响聆听要抓住大尺度记忆：第一乐章命题、内部天气（慢板／舞曲），以及终乐章是回答、压倒，
+    还是重写开场。编制时代（马勒式扩张、古典清晰）是语法——需要说明。
+  width_points:
+  - 内部乐章之前先锁住第一乐章主要性格。
+  - 说明乐队时代与规模——音色即形式。
+  - 有修订／版本时保留存疑。
+  - 慢板与舞曲是天气，不是可跳过的间奏。
+  depth_points:
+  - 用耳部线索画出第一乐章呈示部地标。
+  - 追踪后续乐章如何引用或拒绝开场契约。
+  - 终乐章：顶点、坍塌，还是新的言说？
+  listening_map:
+  - label: 第一乐章命题
+    cue: 记住主要性格与脉搏。
+  - label: 内部天气
+    cue: 慢板／谐谑——同一建筑下的温度变化。
+  - label: 终乐章
+    cue: 记得、改写，还是抛弃开场契约？
+  myths_and_caveats:
+  - 标题与别名传说属接受史——保留存疑。
+  - 不要把同一作曲家另一部交响的神话挪过来。
+  practice_notes:
+  - 第一遍只听第一乐章命题。
+  - 第二遍带着跨乐章记忆问题听。

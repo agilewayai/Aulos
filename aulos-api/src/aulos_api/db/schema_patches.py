@@ -216,9 +216,190 @@ def apply_ops_tasks_patches(engine: Engine) -> list[str]:
     return applied
 
 
+def apply_listening_diary_patches(engine: Engine) -> list[str]:
+    """Ensure diary / plaza SNS tables exist (SPEC-019 / SPEC-020). create_all covers new DBs."""
+    applied: list[str] = []
+    dialect = engine.dialect.name
+    with engine.begin() as conn:
+        insp = inspect(conn)
+        if dialect == "postgresql":
+            ts = "TIMESTAMPTZ"
+            date_t = "DATE"
+            serial = "SERIAL"
+        else:
+            ts = "DATETIME"
+            date_t = "DATE"
+            serial = "INTEGER"
+
+        def ensure_table(name: str, ddl: str, change_id: str) -> None:
+            if insp.has_table(name):
+                return
+            conn.execute(text(ddl))
+            applied.append(change_id)
+            logger.info("schema_patch applied dialect=%s change=%s", dialect, change_id)
+
+        ensure_table(
+            "listening_diary_posts",
+            f"""
+            CREATE TABLE listening_diary_posts (
+                id {serial} PRIMARY KEY,
+                user_id INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+                status VARCHAR(16) NOT NULL DEFAULT 'draft',
+                source_provider VARCHAR(32) NOT NULL,
+                source_external_id VARCHAR(128) NOT NULL,
+                source_kind VARCHAR(32) NOT NULL DEFAULT 'release',
+                title VARCHAR(512) NOT NULL DEFAULT '',
+                cover_image_url VARCHAR(1024) NOT NULL DEFAULT '',
+                listening_note TEXT NOT NULL DEFAULT '',
+                listened_on {date_t},
+                snapshot_json TEXT NOT NULL DEFAULT '{{}}',
+                share_slug VARCHAR(64),
+                published_at {ts},
+                like_count INTEGER NOT NULL DEFAULT 0,
+                comment_count INTEGER NOT NULL DEFAULT 0,
+                created_at {ts} NOT NULL,
+                updated_at {ts} NOT NULL
+            )
+            """,
+            "listening_diary_posts.create",
+        )
+        ensure_table(
+            "diary_guide_links",
+            f"""
+            CREATE TABLE diary_guide_links (
+                id {serial} PRIMARY KEY,
+                diary_post_id INTEGER NOT NULL REFERENCES listening_diary_posts(id) ON DELETE CASCADE,
+                guide_id INTEGER REFERENCES listening_guides(id) ON DELETE SET NULL,
+                aspect VARCHAR(255) NOT NULL DEFAULT '',
+                status VARCHAR(32) NOT NULL DEFAULT 'queued',
+                review_notes TEXT NOT NULL DEFAULT '',
+                revised_at {ts},
+                notified_at {ts},
+                published_at {ts},
+                created_at {ts} NOT NULL
+            )
+            """,
+            "diary_guide_links.create",
+        )
+        # Existing installs: add SPEC-021 columns
+        if insp.has_table("diary_guide_links"):
+            cols = {c["name"] for c in insp.get_columns("diary_guide_links")}
+
+            def add_link_col(col: str, ddl: str, change_id: str) -> None:
+                nonlocal cols
+                if col in cols:
+                    return
+                conn.execute(text(ddl))
+                cols.add(col)
+                applied.append(change_id)
+                logger.info("schema_patch applied dialect=%s change=%s", dialect, change_id)
+
+            add_link_col(
+                "status",
+                "ALTER TABLE diary_guide_links ADD COLUMN status VARCHAR(32) DEFAULT 'queued'",
+                "diary_guide_links.status",
+            )
+            add_link_col(
+                "notified_at",
+                f"ALTER TABLE diary_guide_links ADD COLUMN notified_at {ts}",
+                "diary_guide_links.notified_at",
+            )
+            add_link_col(
+                "published_at",
+                f"ALTER TABLE diary_guide_links ADD COLUMN published_at {ts}",
+                "diary_guide_links.published_at",
+            )
+            add_link_col(
+                "review_notes",
+                "ALTER TABLE diary_guide_links ADD COLUMN review_notes TEXT DEFAULT ''",
+                "diary_guide_links.review_notes",
+            )
+            add_link_col(
+                "revised_at",
+                f"ALTER TABLE diary_guide_links ADD COLUMN revised_at {ts}",
+                "diary_guide_links.revised_at",
+            )
+            try:
+                conn.execute(
+                    text(
+                        "CREATE INDEX IF NOT EXISTS ix_diary_guide_links_status "
+                        "ON diary_guide_links (status)"
+                    )
+                )
+            except Exception as exc:  # noqa: BLE001
+                logger.warning("schema_index_skip diary_guide_links.status err=%s", exc)
+
+        ensure_table(
+            "user_follows",
+            f"""
+            CREATE TABLE user_follows (
+                id {serial} PRIMARY KEY,
+                follower_id INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+                followee_id INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+                created_at {ts} NOT NULL,
+                UNIQUE (follower_id, followee_id)
+            )
+            """,
+            "user_follows.create",
+        )
+        ensure_table(
+            "listening_diary_likes",
+            f"""
+            CREATE TABLE listening_diary_likes (
+                id {serial} PRIMARY KEY,
+                post_id INTEGER NOT NULL REFERENCES listening_diary_posts(id) ON DELETE CASCADE,
+                user_id INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+                created_at {ts} NOT NULL,
+                UNIQUE (post_id, user_id)
+            )
+            """,
+            "listening_diary_likes.create",
+        )
+        ensure_table(
+            "listening_diary_comments",
+            f"""
+            CREATE TABLE listening_diary_comments (
+                id {serial} PRIMARY KEY,
+                post_id INTEGER NOT NULL REFERENCES listening_diary_posts(id) ON DELETE CASCADE,
+                user_id INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+                body TEXT NOT NULL DEFAULT '',
+                created_at {ts} NOT NULL,
+                deleted_at {ts}
+            )
+            """,
+            "listening_diary_comments.create",
+        )
+        for idx_sql, change_id in (
+            (
+                "CREATE INDEX IF NOT EXISTS ix_listening_diary_posts_user_id ON listening_diary_posts (user_id)",
+                "listening_diary_posts.ix_user",
+            ),
+            (
+                "CREATE INDEX IF NOT EXISTS ix_listening_diary_posts_status ON listening_diary_posts (status)",
+                "listening_diary_posts.ix_status",
+            ),
+            (
+                "CREATE UNIQUE INDEX IF NOT EXISTS ix_listening_diary_posts_share_slug ON listening_diary_posts (share_slug)",
+                "listening_diary_posts.ix_slug",
+            ),
+            (
+                "CREATE INDEX IF NOT EXISTS ix_listening_diary_posts_published_at ON listening_diary_posts (published_at)",
+                "listening_diary_posts.ix_published",
+            ),
+        ):
+            try:
+                conn.execute(text(idx_sql))
+                applied.append(change_id)
+            except Exception as exc:  # noqa: BLE001
+                logger.warning("schema_index_skip change=%s err=%s", change_id, exc)
+    return applied
+
+
 def apply_all_schema_patches(engine: Engine) -> list[str]:
     """Run every registered business-schema patch against one engine."""
     out = apply_listening_guide_patches(engine)
     out.extend(apply_dev_blog_patches(engine))
     out.extend(apply_ops_tasks_patches(engine))
+    out.extend(apply_listening_diary_patches(engine))
     return out
+

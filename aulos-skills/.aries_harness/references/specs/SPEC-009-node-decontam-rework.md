@@ -9,7 +9,7 @@ fingerprint: "aries-harness/bootstrap-doc/v1"
 initialized_at: "2026-07-26T19:20:00+00:00"
 effective_status: "active"
 effective_since: "2026-07-26T19:20:00+00:00"
-content_fingerprint: "sha256:ae922028f17ca8f97d66f21cd4fdee860d34d6648e576ab1093104aa33a1c20c"
+content_fingerprint: "sha256:b5fdf1bdb1b3ef8329150cc464274fcd056052b4ba8a3677926ed4ead05c5373"
 trace_history_source: "filesystem-only"
 trace_last_commit_sha: ""
 trace_last_commit_at: ""
@@ -44,6 +44,12 @@ After `listening.synthesize`, `listening.width`, `listening.depth`, `listening.c
 1. Inspect node outputs (dossier chambers / guide HTML / ambient) against markers.
 2. Extra synthesize check: if `synthesize_source` contains `family:` and family instruments
    do not intersect the title blob, treat as pollution (`foreign_family`).
+2b. **SPEC-009Δ (guide #48):** also treat `dossier_id: family:*` as foreign when
+   (a) composer-scoped `match.composers` miss the locked composer, or (b) strong instruments
+   (cello/violin/…) required by the family are absent from the title — even if a shared
+   token like `piano` is present, and even when `synthesize_source` has no `family:` token
+   (KB-RAG may carry a polluted family id). Reject `composer_portrait` whose caption/credit/URL
+   names a different registered composer (e.g. Beethoven.jpg on Mozart).
 3. On fail (max 1 rework):
    - Expand `conflict_markers` on context.
    - Set `refuse_families=true` when foreign family detected.
@@ -57,4 +63,9 @@ After `listening.synthesize`, `listening.width`, `listening.depth`, `listening.c
   `family:duo-cello-piano`, must not render Beethoven cello-duo chambers or Bach Suite I
   ambient as the primary shelf atmosphere.
 - Existing Beethoven cello / Bach cello / Mozart piano regression tests stay green.
+- Guide #48 class: Mozart K.488 with KB `dossier_id=family:duo-cello-piano` + Beethoven
+  portrait must hard-fail decontam/scorecard identity and scrub chambers
+  (`tests/test_identity_hygiene.py`).
 - Chain context records `decontam_events` when a rework fires.
+- Guide H1 must equal locked `work_title` (never last appreciation-video title).
+

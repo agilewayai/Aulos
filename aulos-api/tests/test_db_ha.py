@@ -63,6 +63,8 @@ def test_ha_status_and_clone(ha_client: TestClient) -> None:
     assert body["active_role"] == "primary"
     assert body["failover"]["configured"] is True
     assert body["primary"]["ok"] is True
+    assert body["pool"]["probe_isolated"] is True
+    assert body["pool"]["failover_fail_threshold"] >= 1
 
     sync = ha_client.post(
         "/v1/ops/db/sync?queue=false",
@@ -86,3 +88,38 @@ def test_ha_status_and_clone(ha_client: TestClient) -> None:
         json={"email": "ha-admin@example.com", "password": "HaAdminPass123!"},
     )
     assert r.status_code == 200
+
+
+def test_pool_kwargs_postgres_defaults(monkeypatch: pytest.MonkeyPatch) -> None:
+    monkeypatch.setenv("AULOS_DB_POOL_SIZE", "20")
+    monkeypatch.setenv("AULOS_DB_MAX_OVERFLOW", "40")
+    monkeypatch.setenv("AULOS_DB_FAILOVER_FAIL_THRESHOLD", "3")
+    from aulos_api.config import get_settings
+
+    get_settings.cache_clear()
+    from aulos_api.services.db_ha import _pool_kwargs_for_url
+
+    kw = _pool_kwargs_for_url("postgresql+psycopg://aulos:aulos@127.0.0.1:5433/aulos")
+    assert kw["pool_size"] == 20
+    assert kw["max_overflow"] == 40
+    assert _pool_kwargs_for_url("sqlite:///./tmp.db") == {}
+    get_settings.cache_clear()
+
+
+def test_probe_uses_isolated_engine(monkeypatch: pytest.MonkeyPatch, tmp_path: Path) -> None:
+    """Probe must not borrow from the business QueuePool (false primary_down)."""
+    db = tmp_path / "probe.db"
+    url = f"sqlite:///{db}"
+    monkeypatch.setenv("AULOS_DB_URL", url)
+    from aulos_api.config import get_settings
+
+    get_settings.cache_clear()
+    from aulos_api.services import db_ha
+
+    db_ha.reset_ha_engines()
+    business = db_ha._make_engine(url)  # noqa: SLF001
+    probe_eng = db_ha._probe_engine_for(url)  # noqa: SLF001
+    assert probe_eng is not business
+    assert probe_eng.pool.__class__.__name__ == "NullPool"
+    assert db_ha.probe(business) is True
+    get_settings.cache_clear()

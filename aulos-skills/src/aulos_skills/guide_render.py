@@ -19,26 +19,15 @@ from aulos_skills.i18n import (
     strip_tech_leaks_zh,
 )
 from aulos_skills.media_search import enrich_appreciation_video, enrich_interpretation_links
+from aulos_skills.html_bits import html_li, html_p
 
 
 def _li(items: list[Any]) -> str:
-    out = []
-    for p in items:
-        if isinstance(p, dict):
-            text = "; ".join(f"{k}: {v}" for k, v in p.items())
-        else:
-            text = str(p)
-        text = strip_tech_leaks_zh(text) if text else ""
-        if text:
-            out.append(f"<li>{escape(text)}</li>")
-    return "".join(out)
+    return html_li(items, scrub=strip_tech_leaks_zh)
 
 
 def _p(text: str, *, zh: bool = False) -> str:
-    text = (text or "").strip()
-    if zh:
-        text = strip_tech_leaks_zh(text)
-    return f"<p>{escape(text)}</p>" if text else ""
+    return html_p(text, scrub=strip_tech_leaks_zh if zh else None)
 
 
 def _pick(item: dict[str, Any], key: str, lang: str) -> str:
@@ -174,8 +163,9 @@ def _render_lang_article(
     for v in videos:
         if not isinstance(v, dict):
             continue
-        title = _pick(v, "title", lang) or str(v.get("title") or "")
-        if not title and not v.get("url") and not v.get("bilibili_url"):
+        # Never reuse `title` — that shadows the H1 work title (guide #48 Bernstein drift).
+        video_title = _pick(v, "title", lang) or str(v.get("title") or "")
+        if not video_title and not v.get("url") and not v.get("bilibili_url"):
             continue
         yt = str(v.get("url") or "").strip()
         bili = str(v.get("bilibili_url") or "").strip()
@@ -192,7 +182,7 @@ def _render_lang_article(
             )
         video_blocks.append(
             "<article class='media'>"
-            f"<h3>{escape(title)}</h3>"
+            f"<h3>{escape(video_title)}</h3>"
             f"{_p(_pick(v, 'why', lang), zh=zh)}"
             f"<p class='links'>{' · '.join(links)}</p>"
             "</article>"
@@ -346,13 +336,79 @@ def _render_lang_article(
 """
 
 
+def _ambient_why_html(ambient: dict[str, Any], *, ui: dict[str, str], use_zh: bool) -> str:
+    why_en = str(ambient.get("why") or "")
+    why_zh = str(ambient.get("why_zh") or why_en)
+    why = why_zh if use_zh else why_en
+    if not why:
+        return ""
+    why_label = ui.get("ambient_why") or "Why this music"
+    return (
+        f'<p class="ambient-why-label" data-i18n-ambient="why_label">{escape(why_label)}</p>'
+        f'<p class="ambient-why" data-i18n-ambient="why" data-why-en="{escape(why_en)}" '
+        f'data-why-zh="{escape(why_zh)}">{escape(why)}</p>'
+    )
+
+
+def _ambient_embed_bar(ambient: dict[str, Any], *, default_lang: str) -> str:
+    embed_src = str(ambient.get("embed_src") or "").strip()
+    if not embed_src:
+        return ""
+    title_en = str(ambient.get("title") or "Listening video")
+    title_zh = str(ambient.get("title_zh") or title_en)
+    credit_en = str(ambient.get("credit") or "")
+    credit_zh = str(ambient.get("credit_zh") or credit_en)
+    default_lang = normalize_lang(default_lang)
+    ui = UI_COPY.get(default_lang) or UI_COPY[LANG_ZH_HANS]
+    use_zh = is_chinese_lang(default_lang)
+    title = title_zh if use_zh else title_en
+    credit = credit_zh if use_zh else credit_en
+    why_html = _ambient_why_html(ambient, ui=ui, use_zh=use_zh)
+    watch = str(ambient.get("watch_url") or "").strip()
+    watch_html = ""
+    if watch:
+        watch_html = (
+            f'<p class="ambient-hint"><a href="{escape(watch)}" target="_blank" '
+            f'rel="noopener">{escape(ui.get("youtube") or "Open video")}</a></p>'
+        )
+    platform = str(ambient.get("platform") or "")
+    return f"""
+<aside class="ambient is-collapsed" data-ambient="1" data-ambient-player="v2-embed" data-ambient-mode="embed" data-platform="{escape(platform)}" data-title-en="{escape(title_en)}" data-title-zh="{escape(title_zh)}" data-credit-en="{escape(credit_en)}" data-credit-zh="{escape(credit_zh)}">
+  <div class="ambient-mini">
+    <div class="ambient-mini-text">
+      <p class="ambient-kicker" data-i18n-ambient="label">{escape(ui['ambient_label'])}</p>
+      <p class="ambient-title ambient-title-compact" data-i18n-ambient="title">{escape(title)}</p>
+    </div>
+    <button type="button" class="ambient-expand" data-i18n-ambient="expand" aria-expanded="false">{escape(ui['ambient_expand'])}</button>
+  </div>
+  <div class="ambient-details" hidden>
+    <p class="ambient-credit" data-i18n-ambient="credit">{escape(credit)}</p>
+    {why_html}
+    {watch_html}
+    <div class="ambient-embed-wrap">
+      <iframe id="aulos-ambient-embed" src="{escape(embed_src)}" title="{escape(title)}" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe>
+    </div>
+  </div>
+  <div id="aulos-ambient" hidden aria-hidden="true" data-ambient-kind="embed"></div>
+</aside>
+"""
+
+
 def _ambient_bar(ambient: dict[str, Any], *, default_lang: str) -> str:
     from aulos_skills.ambient_playlist import resolve_ambient_audio
 
-    ambient = resolve_ambient_audio(dict(ambient or {}))
+    raw = dict(ambient or {})
+    if str(raw.get("mode") or "").lower() == "embed" or (
+        raw.get("embed_src") and not raw.get("url") and not raw.get("tracks")
+    ):
+        return _ambient_embed_bar(raw, default_lang=default_lang)
+
+    ambient = resolve_ambient_audio(raw)
     url = str(ambient.get("url") or "").strip()
     tracks = [t for t in (ambient.get("tracks") or []) if isinstance(t, dict) and t.get("url")]
     if not url and not tracks:
+        if ambient.get("embed_src"):
+            return _ambient_embed_bar(ambient, default_lang=default_lang)
         return ""
     if tracks and not url:
         url = str(tracks[0]["url"])
@@ -374,16 +430,7 @@ def _ambient_bar(ambient: dict[str, Any], *, default_lang: str) -> str:
     use_zh = is_chinese_lang(default_lang)
     title = title_zh if use_zh else title_en
     credit = credit_zh if use_zh else credit_en
-    why_en = str(ambient.get("why") or "")
-    why_zh = str(ambient.get("why_zh") or why_en)
-    why = why_zh if use_zh else why_en
-    why_html = ""
-    if why:
-        why_label = ui.get("ambient_why") or "Why this music"
-        why_html = (
-            f'<p class="ambient-why-label" data-i18n-ambient="why_label">{escape(why_label)}</p>'
-            f'<p class="ambient-why" data-i18n-ambient="why" data-why-en="{escape(why_en)}" data-why-zh="{escape(why_zh)}">{escape(why)}</p>'
-        )
+    why_html = _ambient_why_html(ambient, ui=ui, use_zh=use_zh)
 
     first = tracks[0] if tracks else None
     origin = str((first or {}).get("url") or url)
@@ -642,6 +689,23 @@ body {{
   display: grid; grid-template-columns: auto minmax(0, 1fr) auto;
   gap: 0.4rem; align-items: center;
   flex: 0 0 auto;
+}}
+.ambient[data-ambient-mode="embed"] .ambient-mini {{
+  grid-template-columns: minmax(0, 1fr) auto;
+}}
+.ambient-embed-wrap {{
+  margin-top: 0.55rem;
+  border-radius: 0.35rem;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  background: #000;
+  aspect-ratio: 16 / 9;
+}}
+.ambient-embed-wrap iframe {{
+  display: block;
+  width: 100%;
+  height: 100%;
+  border: 0;
 }}
 .ambient-mini-text {{ min-width: 0; }}
 .ambient-kicker {{
@@ -917,7 +981,23 @@ img {{ max-width: 100%; height: auto; }}
   var toggle = document.querySelector(".ambient-toggle");
   var ambient = document.querySelector(".ambient");
   var expandBtn = document.querySelector(".ambient-expand");
-  if (audio && toggle && ambient) {{
+  function wireExpand(box, btn) {{
+    if (!box || !btn || btn.getAttribute("data-wired") === "1") return;
+    btn.setAttribute("data-wired", "1");
+    btn.addEventListener("click", function () {{
+      box.classList.toggle("is-collapsed");
+      var open = !box.classList.contains("is-collapsed");
+      var details = box.querySelector(".ambient-details");
+      if (details) {{
+        if (open) details.removeAttribute("hidden"); else details.setAttribute("hidden", "");
+      }}
+      btn.setAttribute("aria-expanded", open ? "true" : "false");
+      refreshAmbientCopy(currentLang());
+    }});
+  }}
+  if (ambient && ambient.getAttribute("data-ambient-mode") === "embed") {{
+    wireExpand(ambient, expandBtn);
+  }} else if (audio && audio.tagName === "AUDIO" && toggle && ambient) {{
     var vol = parseFloat(ambient.getAttribute("data-volume") || "0.28");
     if (!isNaN(vol)) audio.volume = vol;
     var playlist = [];
@@ -1135,18 +1215,7 @@ img {{ max-width: 100%; height: auto; }}
         loadTrack(i, true);
       }});
     }});
-    if (expandBtn) {{
-      expandBtn.addEventListener("click", function () {{
-        ambient.classList.toggle("is-collapsed");
-        var open = !ambient.classList.contains("is-collapsed");
-        var details = ambient.querySelector(".ambient-details");
-        if (details) {{
-          if (open) details.removeAttribute("hidden"); else details.setAttribute("hidden", "");
-        }}
-        expandBtn.setAttribute("aria-expanded", open ? "true" : "false");
-        refreshAmbientCopy(currentLang());
-      }});
-    }}
+    wireExpand(ambient, expandBtn);
     // Soft autoplay; browsers may require the first tap on the play button.
     tryPlay();
   }}

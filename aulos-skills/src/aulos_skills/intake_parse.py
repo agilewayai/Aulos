@@ -55,14 +55,22 @@ _CN_COMPOSER_BOOK_RE = re.compile(
     r"([\u4e00-\u9fff·•．.\-]{2,20})\s*[《〈]([^》〉]{1,80})[》〉]"
 )
 _EN_COMPOSER_DASH_RE = re.compile(
+    # Require whitespace around ASCII "-" / ":" so hyphenated surnames
+    # (Mendelssohn-Bartholdy) are never treated as composer/title separators.
+    # Em/en dashes may still sit tight: "Mozart—Concerto".
     r"(?i)\b([A-ZÀ-ÖØ-Þ][\wÀ-öø-ÿ'.\-]+(?:\s+[A-ZÀ-ÖØ-Þ][\wÀ-öø-ÿ'.\-]+){0,3})"
-    r"\s*[—–\-:]\s*([^\n]{2,80})"
+    r"(?:\s*[—–]\s*|\s+[-:]\s+)([^\n]{2,160})"
 )
 _LEADING_PREPOSITIONS = re.compile(
     r"(?i)^(i('m| am)?\s+)?(listening\s+to\s+|to|by|of|for|on|about|with|from|the)\s+"
 )
 _PERFORMER_TAIL_RE = re.compile(
     r"(?i)\s+(performed by|featuring|with performers?)\b.+$"
+)
+# Diary / atelier structured lines (SPEC-021 message builder)
+_STRUCTURED_COMPOSER_LINE = re.compile(r"(?im)^Composers?:\s*(.+)$")
+_STRUCTURED_WORK_LINE = re.compile(
+    r"(?im)^(?:Work|Title|listening guide.*?for)\s*[:=]\s*[\"“]?(.+?)[\"”]?\s*$"
 )
 
 
@@ -95,7 +103,9 @@ def _alias_usable(alias: str) -> bool:
 
 def match_composer_from_catalog(text: str, composers: dict[str, Any]) -> tuple[str, str]:
     """Return (composer_id, display_name) from catalog aliases — longest alias wins."""
-    blob = (text or "").lower()
+    from aulos_skills.text_match import alias_in_text
+
+    blob = text or ""
     best: tuple[int, str, str] | None = None
     for card in composers.values():
         aliases = list(getattr(card, "aliases", None) or [])
@@ -106,7 +116,7 @@ def match_composer_from_catalog(text: str, composers: dict[str, Any]) -> tuple[s
             if not _alias_usable(alias):
                 continue
             needle = alias.lower()
-            if needle in blob:
+            if alias_in_text(needle, blob):
                 score = len(needle)
                 display = name_en or name_zh or alias
                 if best is None or score > best[0]:
@@ -122,6 +132,19 @@ def guess_composer_and_title(text: str, *, catalog_composers: dict[str, Any] | N
     composers = catalog_composers or {}
 
     composer_id, composer = match_composer_from_catalog(raw, composers)
+
+    # Structured atelier/diary fields beat free-text heuristics when present.
+    struct_composer = ""
+    m_comp = _STRUCTURED_COMPOSER_LINE.search(raw)
+    if m_comp:
+        struct_composer = m_comp.group(1).split(",")[0].strip(" .,;:")
+        if struct_composer and not composer:
+            composer = struct_composer
+            # Re-match catalog with the structured name alone for composer_id
+            if composers and not composer_id:
+                composer_id, catalog_name = match_composer_from_catalog(struct_composer, composers)
+                if catalog_name:
+                    composer = catalog_name
 
     book = _CN_COMPOSER_BOOK_RE.search(raw)
     quoted = extract_quoted_title(raw)
@@ -149,6 +172,18 @@ def guess_composer_and_title(text: str, *, catalog_composers: dict[str, Any] | N
         work_title = en_dash.group(2).strip(" .,!?:;-")
         work_title = strip_listening_boilerplate(work_title)
 
+    # Prefer structured composer over dash-parse performer chrome ("Horowitz Plays Mozart…")
+    if struct_composer:
+        if composers:
+            cid2, cname2 = match_composer_from_catalog(struct_composer, composers)
+            if cname2:
+                composer = cname2
+                composer_id = cid2 or composer_id
+            else:
+                composer = struct_composer
+        else:
+            composer = struct_composer
+
     composer = _LEADING_PREPOSITIONS.sub("", (composer or "").strip()).strip(" .,!?:;-")
     if work_title:
         work_title = _PERFORMER_TAIL_RE.sub("", work_title).strip(" .,!?:;-")
@@ -158,11 +193,8 @@ def guess_composer_and_title(text: str, *, catalog_composers: dict[str, Any] | N
         cleaned = strip_listening_boilerplate(raw)
         work_title = cleaned[:160] if len(cleaned) >= 2 else ""
 
-    # If catalog matched a composer but title still embeds the Chinese name, tidy it.
+    # If catalog matched a composer but title still embeds the name, tidy it.
     if composer and work_title:
-        for needle in filter(None, [composer, getattr(composers.get(composer_id), "name_zh", None) if composer_id else None]):
-            # name_zh via card
-            pass
         card = composers.get(composer_id) if composer_id else None
         names = [composer]
         if card is not None:
@@ -173,10 +205,23 @@ def guess_composer_and_title(text: str, *, catalog_composers: dict[str, Any] | N
                     *[str(a) for a in (getattr(card, "aliases", None) or [])],
                 ]
             )
+        # Longer aliases first (Mendelssohn-Bartholdy before Mendelssohn)
+        names = sorted({n for n in names if n}, key=len, reverse=True)
         for name in names:
             if name and name in work_title and name != work_title:
                 work_title = work_title.replace(name, " ").strip(" —–-·、， ")
                 work_title = re.sub(r"\s+", " ", work_title)
+        # Drop leftover hyphenated surname bleed (Bartholdy …) after partial strip
+        try:
+            from aulos_skills.prose_hygiene import clean_packaging_work_title
+
+            work_title = clean_packaging_work_title(work_title, composer=composer)
+        except Exception:  # noqa: BLE001
+            work_title = re.sub(
+                r"(?i)^(bartholdy|mendelssohn[- ]?bartholdy)\s+",
+                "",
+                work_title,
+            ).strip(" —–-·、， ")
 
     return {
         "work_title": work_title,

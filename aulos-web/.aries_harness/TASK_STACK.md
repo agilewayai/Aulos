@@ -9,7 +9,7 @@ fingerprint: "aries-harness/bootstrap-doc/v1"
 initialized_at: "2026-07-25T11:10:22Z"
 effective_status: "active"
 effective_since: "2026-07-25T11:10:22Z"
-content_fingerprint: "sha256:ddb8bdad4444c8ec736961a93b2170bb193822eaaa67f3537a6de615ea65515b"
+content_fingerprint: "sha256:f0618cedd44e69a10f5bd17934714caea39dfb4c70e7146aa3a467eafbfe97d9"
 trace_history_source: "filesystem-only"
 trace_last_commit_sha: ""
 trace_last_commit_at: ""
@@ -19,10 +19,11 @@ trace_revision_count: "0"
 
 ## Now
 
-- none (SPEC-006 verified)
+- none (REQ-011 diary guide lifecycle UI verified; await deploy)
 
 ## Next
 
+- Production deploy of diary guide lifecycle + plaza/diary UX (operator approval)
 - Wire live cross-service paths (web ↔ api ↔ agent/mcp)
 
 ## Later

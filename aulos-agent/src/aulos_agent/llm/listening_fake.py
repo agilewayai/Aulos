@@ -40,6 +40,9 @@ def _latest_context(messages: list[BaseMessage]) -> dict[str, Any]:
                         "rag_hits": list(data.get("rag_hits") or []),
                         "rag_mode": data.get("rag_mode") or "",
                         "disabled_skill_ids": list(data.get("disabled_skill_ids") or []),
+                        "review_llm_enabled": data.get("review_llm_enabled", True),
+                        "ambient_fallback_mode": data.get("ambient_fallback_mode") or "embed",
+                        "external_review_sources": list(data.get("external_review_sources") or []),
                         "skill_versions": {},
                         "_agent_steps": [],
                     }

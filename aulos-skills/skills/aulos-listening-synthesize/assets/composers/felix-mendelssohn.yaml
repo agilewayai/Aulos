@@ -1,0 +1,33 @@
+composer: Felix Mendelssohn
+aliases:
+- mendelssohn
+- felix mendelssohn
+- mendelssohn-bartholdy
+- felix mendelssohn-bartholdy
+- Felix Mendelssohn
+- 门德尔松
+- 菲利克斯·门德尔松
+composer_portrait:
+  image_url: https://upload.wikimedia.org/wikipedia/commons/8/87/Felix_Mendelssohn_Bartholdy.jpg
+  credit: Portrait of Felix Mendelssohn (public domain via Wikimedia Commons)
+  caption: Mendelssohn — early Romantic clarity, song without words, and Leipzig craft.
+composer_profile:
+  lifespan: 1809–1847
+  summary: 'Felix Mendelssohn brought Classical poise into early Romantic lyricism — from
+    Songs Without Words and chamber clarity to oratorio and the revival of Bach.'
+  temperament: Transparent song speech on the keyboard; elegance without emptiness.
+  place_in_oeuvre: Lieder ohne Worte stand beside the Octet, Midsummer music, and Elijah as
+    a lifelong practice of singing line in instrumental rooms.
+  place_in_history: Reception hears Mendelssohn as the bridge of Classical form and Romantic
+    feeling — salon intimacy meeting public concert craft.
+zh:
+  composer: 菲利克斯·门德尔松
+  composer_portrait:
+    caption: 门德尔松——早期浪漫的清晰、无词之歌，与莱比锡式的工艺。
+    credit: 门德尔松肖像（公有领域，经 Wikimedia Commons）
+  composer_profile:
+    lifespan: 1809–1847
+    summary: 菲利克斯·门德尔松把古典的端庄带入早期浪漫的抒情——从《无词歌》与室内乐的清晰，到清唱剧与巴赫的复兴。
+    temperament: 键盘上的透明歌咏；优雅而不空洞。
+    place_in_oeuvre: 《无词歌》与八重奏、《仲夏夜》音乐、《以利亚》并列，是器乐房间里歌唱声部的终生练习。
+    place_in_history: 接受史视门德尔松为古典形式与浪漫感受的桥梁——沙龙亲密遇见公开音乐会工艺。

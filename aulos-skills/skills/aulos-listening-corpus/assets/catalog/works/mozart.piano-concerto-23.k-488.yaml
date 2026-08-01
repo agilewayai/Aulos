@@ -1,0 +1,67 @@
+work_id: mozart.piano-concerto-23.k-488
+composer_id: wolfgang-amadeus-mozart
+canonical_title: Mozart — Piano Concerto No. 23 in A major, K. 488
+canonical_title_zh: 莫扎特 — A大调第23钢琴协奏曲，K. 488
+aliases:
+  - Piano Concerto No. 23
+  - Piano Concerto No. 23 K. 488
+  - Piano Concerto No. 23 in A major
+  - K. 488
+  - K.488
+  - K 488
+  - KV 488
+  - 第23钢琴协奏曲
+  - A大调第23钢琴协奏曲
+  - 钢琴协奏曲 K. 488
+catalog_numbers:
+  - K. 488
+  - K.488
+  - K 488
+  - KV 488
+facets:
+  instruments: [piano, orchestra]
+  ensemble: [concerto]
+  forms: [concerto, piano concerto]
+  era: classical
+family_id: piano-concerto
+corpus_key: null
+ambient_ref: null
+identity:
+  distinctive_tokens:
+    - k. 488
+    - k.488
+    - piano concerto no. 23
+    - 第23钢琴协奏曲
+    - horowitz plays mozart
+  conflict_work_ids:
+    - mozart.requiem.k-626
+  conflict_markers:
+    - requiem
+    - dies irae
+    - dies iræ
+    - lacrimosa
+    - 安魂曲
+    - 安魂
+    - 末日经
+    - 末日經
+    - 落泪之日
+    - 落淚之日
+    - kyrie fugue
+    - süssmayr
+    - sussmayr
+    # Cross-composer family pollution (guide #48 / SPEC-009Δ)
+    - duo-cello-piano
+    - cello-and-piano
+    - op. 69
+    - op. 102
+    - op.69
+    - op.102
+    - quodlibet
+    - french overture
+    - var. 16
+    - var. 25
+provenance:
+  authority: Köchel K. 488
+  notes: >
+    DG Horowitz/Giulini pressing (catno 423 287-1) is Concerto K.488 + Sonata K.333 —
+    never substitute Mozart Requiem piano transcriptions.

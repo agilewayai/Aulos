@@ -1,0 +1,30 @@
+composer: Gustav Mahler
+aliases:
+- mahler
+- gustav mahler
+- Gustav Mahler
+- 马勒
+- 古斯塔夫·马勒
+composer_portrait:
+  image_url: https://upload.wikimedia.org/wikipedia/commons/0/06/Photo_of_Gustav_Mahler_by_Moritz_N%C3%A4hr_01.jpg
+  credit: Photo of Gustav Mahler by Moritz Nähr (public domain via Wikimedia Commons)
+  caption: Mahler — late-Romantic orchestra as civic and private architecture.
+composer_profile:
+  lifespan: 1860–1911
+  summary: >
+    Gustav Mahler expanded the symphony into a world of voices, marches, and lyric
+    collapse — public orchestra craft carrying intimate farewell speech.
+  temperament: Vast architecture under fragile song; irony beside lament.
+  place_in_oeuvre: The numbered symphonies and song-symphony hybrids are one lifelong argument.
+  place_in_history: Reception hears Mahler as the hinge between Romantic monument and modern fracture.
+zh:
+  composer: 古斯塔夫·马勒
+  composer_portrait:
+    caption: 马勒——晚期浪漫管弦乐作为公共与私人建筑。
+    credit: 马勒肖像（公有领域，经 Wikimedia Commons）
+  composer_profile:
+    lifespan: 1860–1911
+    summary: 古斯塔夫·马勒把交响曲扩成声音、进行曲与抒情坍塌的世界——公共乐队工艺承载亲密的告别言说。
+    temperament: 巨大建筑下的脆弱歌声；反讽旁着哀歌。
+    place_in_oeuvre: 编号交响曲与歌曲－交响混成是同一场终生论辩。
+    place_in_history: 接受史视马勒为浪漫纪念碑与现代断裂之间的枢纽。
