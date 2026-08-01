@@ -1,6 +1,6 @@
 import { useCallback, useMemo, useState } from 'react'
 import {
-  enqueueKnowledgeJob,
+  enqueueKnowledgeJobAndWait,
   fetchKnowledgeArtifact,
   fetchKnowledgeChunkProvenance,
   fetchKnowledgeComposers,
@@ -129,7 +129,7 @@ export function useKnowledgePlane({
 
   const runJob = useCallback(
     async (sourceId: string, params: Record<string, unknown>) => {
-      const job = await enqueueKnowledgeJob(sourceId, params)
+      const job = await enqueueKnowledgeJobAndWait(sourceId, params)
       await load()
       return job
     },

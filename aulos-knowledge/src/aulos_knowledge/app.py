@@ -26,7 +26,13 @@ async def lifespan(_app: FastAPI):
         seed_default_sources(db)
     finally:
         db.close()
-    yield
+    from aulos_knowledge.job_queue import start_job_drain_loop, stop_job_drain_loop
+
+    start_job_drain_loop()
+    try:
+        yield
+    finally:
+        stop_job_drain_loop()
 
 
 def create_app() -> FastAPI:

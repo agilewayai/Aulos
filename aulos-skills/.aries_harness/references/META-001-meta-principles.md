@@ -9,7 +9,7 @@ fingerprint: "aries-harness/bootstrap-doc/v1"
 initialized_at: "2026-07-27T10:45:00Z"
 effective_status: "active"
 effective_since: "2026-07-27T10:50:00Z"
-content_fingerprint: "sha256:14944a054fda85134dd84b486f93786effbefe4c45a5934b4501f16b88e8fafe"
+content_fingerprint: "sha256:37217f2ced82b0d5c2401a835793a8a2123392e8c6c2e028e320472b132f6179"
 trace_history_source: "filesystem-only"
 trace_last_commit_sha: ""
 trace_last_commit_at: ""
@@ -27,7 +27,7 @@ Downstream: `aulos-operating-defaults` skill, workspace `AGENTS.md`, per-project
 | Field | Value |
 | --- | --- |
 | Artifact ID | META-001 |
-| Version | v2 |
+| Version | v4 |
 | Layer | MetaDefineLayer |
 | Scope | Whole Aulos monorepo + harness fleet |
 | Supersedes | ad-hoc “common sense” in chat only |
@@ -133,6 +133,38 @@ Prefer small, clear, test-backed changes over clever or sprawling diffs.
 - **Hardcoded domain** — composer/work literals in Python instead of Catalog + IdentityResolver.
 - **Symptom medicine** — third case-specific scrub/`if` instead of Catalog or contract.
 - **Sync long work on HTTP** — slow jobs must enqueue (mail, listening, ops tasks); UI stays interactive.
+
+### 3.3 Long-running work & task queues
+
+Work that may take seconds or longer **must not block** HTTP request threads or freeze operator UIs.
+
+| Rule | Practice |
+| --- | --- |
+| **Enqueue** | Return **202 Accepted** (or equivalent) with a durable task/run id — not a hung connection. |
+| **State machine** | Model explicit lifecycle: `queued` → `running` → `completed` \| `failed` (or domain-specific terminal states). |
+| **Durable row** | Persist status, timestamps, payload/result, and `error` on the owning service DB for audit and replay. |
+| **Worker** | Background thread, Redis queue, or dedicated worker process executes the job; HTTP only enqueues. |
+| **UI** | Poll task/run status or subscribe to events; show in-flight state; link to unified Ops **Tasks** when applicable. |
+| **Sync escape hatch** | `*_SYNC` / test flags may run inline in CI only — never rely on sync mode in production UX. |
+
+**Examples:** dev blog generate (`dev_blog.generate`), knowledge benchmark (`knowledge.benchmark`), listening guide compose, mail send, crawl/fetch jobs.
+
+### 3.4 Product interaction — Meta Play Simple (产品交互)
+
+Operators and listeners interact with a **product**, not with internal plumbing. Every surface must be designable as a simple playable story.
+
+| Rule | Practice |
+| --- | --- |
+| **Human nouns first** | Entry points are people, works, places, stories — not IDs, QIDs, connector names, or YAML paths. |
+| **Progressive disclosure** | Hide technical fields (QID, depth, rate limits) behind Advanced; defaults must be enough to start. |
+| **Seed the world** | Ship curated seed networks (famous composers, portraits, A–Z browse) so the first click is meaningful. |
+| **One job, one viewport** | Each screen answers one user question; do not dump admin tables as the primary UX. |
+| **Visible state** | Selection, loading, empty, and success are first-class; never a blank form waiting for expert knowledge. |
+| **Same bar as consumer UX** | Ops/admin consoles follow the same clarity bar as the listening product — “internal tool” is not an excuse. |
+
+**Anti-patterns:** requiring Wikidata QIDs to explore; empty search with no suggestions; raw API params as the only control; shipping a feature that only the implementer can operate.
+
+When building knowledge / crawl / explore flows, start from **who** (composer) and **what** (work), then derive IDs server-side.
 
 When smell is found during audit, open SPEC/ADR or insight — don't only fix the instance.
 

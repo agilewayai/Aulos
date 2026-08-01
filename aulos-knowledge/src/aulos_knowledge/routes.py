@@ -4,7 +4,8 @@ import json
 from pathlib import Path
 from typing import Any
 
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends, HTTPException, Query
+from fastapi.responses import FileResponse, Response
 from pydantic import BaseModel, Field
 from sqlalchemy.orm import Session
 
@@ -18,6 +19,7 @@ from aulos_knowledge.db import (
     KnowledgeDocument,
     MediaAsset,
     SourceAuthority,
+    SourceDiscoveryRun,
     WorkEntity,
     get_session,
     utcnow,
@@ -25,6 +27,22 @@ from aulos_knowledge.db import (
 from aulos_knowledge.connectors import connector_registered
 from aulos_knowledge.jobs import enqueue_and_maybe_run
 from aulos_knowledge.retrieve import retrieve as kb_retrieve
+from aulos_knowledge.benchmark import (
+    build_dashboard_report,
+    benchmark_run_summary,
+    get_benchmark_run,
+    list_benchmark_runs,
+    load_benchmark_suite,
+    run_benchmark,
+)
+from aulos_knowledge.benchmark_queue import enqueue_and_maybe_run as enqueue_benchmark_run
+from aulos_knowledge.explore_seeds import list_explore_seeds, prepare_famous_seed_crawls
+from aulos_knowledge.source_discovery import (
+    discovery_run_dict,
+    enqueue_discovery_crawl,
+    execute_discovery_run,
+    register_discovery_candidates,
+)
 
 router = APIRouter()
 admin_router = APIRouter(prefix="/v1/admin", dependencies=[Depends(require_admin_token)])
@@ -80,6 +98,31 @@ class JobIn(BaseModel):
     params: dict[str, Any] = Field(default_factory=dict)
 
 
+class ExploreIn(BaseModel):
+    composer_id: str = ""
+    wikidata_qid: str = ""
+    wikipedia_title: str = ""
+    max_depth: int = 2
+    max_breadth: int = 24
+    trigger: str = "ops"
+    enqueue_crawl: bool = True
+
+
+class RegisterCandidatesIn(BaseModel):
+    candidate_ids: list[str] = Field(default_factory=list)
+    min_score: float = 10.0
+
+
+class EnqueueCrawlIn(BaseModel):
+    sync: bool | None = None
+
+
+class PrepareSeedsIn(BaseModel):
+    limit: int = 8
+    sync: bool | None = None
+    featured_only: bool = True
+
+
 class RetrieveIn(BaseModel):
     query: str
     work_id: str = ""
@@ -133,6 +176,112 @@ def retrieve(body: RetrieveIn, db: Session = Depends(_db)) -> dict[str, Any]:
         composer_id=body.composer_id,
         k=body.k,
     )
+
+
+@router.get("/v1/kb/benchmark/suite")
+def benchmark_suite() -> dict[str, Any]:
+    suite = load_benchmark_suite()
+    cases = [c for c in list(suite.get("cases") or []) if isinstance(c, dict)]
+    return {
+        "revision": suite.get("revision") or "",
+        "case_count": len(cases),
+        "required_case_count": sum(1 for c in cases if not c.get("optional")),
+        "cases": [
+            {
+                "id": c.get("id"),
+                "label": c.get("label"),
+                "optional": bool(c.get("optional")),
+            }
+            for c in cases
+        ],
+    }
+
+
+@router.get("/v1/kb/benchmark/dashboard")
+def benchmark_dashboard(db: Session = Depends(_db)) -> dict[str, Any]:
+    return build_dashboard_report(db)
+
+
+@admin_router.post("/benchmark/run", status_code=200)
+def benchmark_run(
+    response: Response,
+    db: Session = Depends(_db),
+    trigger: str = "ops",
+    async_mode: bool = Query(False, alias="async"),
+) -> dict[str, Any]:
+    settings = get_settings()
+    sync = settings.sync_jobs and not async_mode
+    if sync:
+        return run_benchmark(db, trigger=trigger, sync=True)
+    row = enqueue_benchmark_run(db, trigger=trigger, sync=False)
+    response.status_code = 202
+    return benchmark_run_summary(row)
+
+
+@admin_router.get("/benchmark/runs")
+def benchmark_runs(db: Session = Depends(_db), limit: int = 20) -> list[dict[str, Any]]:
+    return list_benchmark_runs(db, limit=limit)
+
+
+@admin_router.get("/benchmark/runs/{run_id}")
+def benchmark_run_detail(run_id: int, db: Session = Depends(_db)) -> dict[str, Any]:
+    report = get_benchmark_run(db, run_id)
+    if not report:
+        raise HTTPException(404, "benchmark run not found")
+    return report
+
+
+@admin_router.get("/benchmark/runs/{run_id}/diagnosis")
+def benchmark_run_diagnosis(run_id: int, db: Session = Depends(_db)) -> dict[str, Any]:
+    from aulos_knowledge.diagnosis import diagnose_benchmark_run, get_diagnosis_for_run
+
+    existing = get_diagnosis_for_run(db, run_id)
+    if existing:
+        return existing
+    return diagnose_benchmark_run(db, run_id)
+
+
+@admin_router.post("/benchmark/runs/{run_id}/diagnose")
+def benchmark_run_diagnose(run_id: int, db: Session = Depends(_db)) -> dict[str, Any]:
+    from aulos_knowledge.diagnosis import diagnose_benchmark_run
+
+    return diagnose_benchmark_run(db, run_id)
+
+
+@admin_router.post("/improvements/{action_id}/execute")
+def improvement_execute(action_id: int, db: Session = Depends(_db)) -> dict[str, Any]:
+    from aulos_knowledge.improvement import execute_improvement_action
+
+    settings = get_settings()
+    return execute_improvement_action(db, action_id, sync=settings.sync_jobs)
+
+
+@admin_router.post("/improvements/execute-safe")
+def improvements_execute_safe(
+    diagnosis_id: int,
+    db: Session = Depends(_db),
+) -> list[dict[str, Any]]:
+    from aulos_knowledge.improvement import execute_safe_actions
+
+    settings = get_settings()
+    return execute_safe_actions(db, diagnosis_id, sync=settings.sync_jobs)
+
+
+@admin_router.post("/improve/cycle", status_code=200)
+def improve_cycle(
+    response: Response,
+    db: Session = Depends(_db),
+    benchmark_run_id: int | None = None,
+    async_mode: bool = Query(False, alias="async"),
+) -> dict[str, Any]:
+    from aulos_knowledge.improvement import run_improvement_cycle
+
+    settings = get_settings()
+    sync = settings.sync_jobs and not async_mode
+    result = run_improvement_cycle(db, benchmark_run_id=benchmark_run_id, sync=sync)
+    if not sync:
+        response.status_code = 202
+    return result
 
 
 @admin_router.get("/sources")
@@ -231,6 +380,95 @@ def suspend_source(source_id: str, db: Session = Depends(_db)) -> dict[str, Any]
     return {"ok": True, **_source_dict(row)}
 
 
+@admin_router.post("/sources/explore")
+def explore_sources(body: ExploreIn, db: Session = Depends(_db)) -> dict[str, Any]:
+    """REQ-009 — depth+breadth graph search for authority source candidates."""
+    row = execute_discovery_run(
+        db,
+        composer_id=body.composer_id.strip(),
+        wikidata_qid=body.wikidata_qid.strip().upper(),
+        wikipedia_title=body.wikipedia_title.strip(),
+        max_depth=max(1, min(body.max_depth, 4)),
+        max_breadth=max(4, min(body.max_breadth, 64)),
+        trigger=body.trigger or "ops",
+        enqueue_crawl=bool(body.enqueue_crawl),
+    )
+    return discovery_run_dict(row)
+
+
+@admin_router.get("/sources/explore/seeds")
+def explore_seeds(db: Session = Depends(_db)) -> dict[str, Any]:
+    """Product catalog for Explore: A–Z composers, famous badges, portraits."""
+    return list_explore_seeds(db)
+
+
+@admin_router.post("/sources/explore/prepare-seeds")
+def prepare_explore_seeds(body: PrepareSeedsIn | None = None, db: Session = Depends(_db)) -> dict[str, Any]:
+    """Enqueue Wikidata/Wikipedia crawls for curated famous composers (portraits + dossier)."""
+    payload = body or PrepareSeedsIn()
+    return prepare_famous_seed_crawls(
+        db,
+        sync=payload.sync,
+        limit=max(1, min(payload.limit, 64)),
+        featured_only=bool(payload.featured_only),
+    )
+
+
+@admin_router.get("/sources/explore/runs")
+def list_explore_runs(db: Session = Depends(_db), limit: int = 20) -> list[dict[str, Any]]:
+    rows = (
+        db.query(SourceDiscoveryRun)
+        .order_by(SourceDiscoveryRun.id.desc())
+        .limit(max(1, min(limit, 100)))
+        .all()
+    )
+    return [discovery_run_dict(r) for r in rows]
+
+
+@admin_router.get("/sources/explore/runs/{run_id}")
+def get_explore_run(run_id: int, db: Session = Depends(_db)) -> dict[str, Any]:
+    row = db.get(SourceDiscoveryRun, run_id)
+    if not row:
+        raise HTTPException(404, "discovery run not found")
+    return discovery_run_dict(row)
+
+
+@admin_router.post("/sources/explore/runs/{run_id}/register-candidates")
+def register_explore_candidates(
+    run_id: int,
+    body: RegisterCandidatesIn | None = None,
+    db: Session = Depends(_db),
+) -> dict[str, Any]:
+    try:
+        result = register_discovery_candidates(
+            db,
+            run_id,
+            candidate_ids=(body.candidate_ids if body and body.candidate_ids else None),
+            min_score=(body.min_score if body else 10.0),
+        )
+    except ValueError as exc:
+        raise HTTPException(404, str(exc)) from exc
+    return {"ok": True, **result}
+
+
+@admin_router.post("/sources/explore/runs/{run_id}/enqueue-crawl")
+def enqueue_explore_crawl(
+    run_id: int,
+    body: EnqueueCrawlIn | None = None,
+    db: Session = Depends(_db),
+) -> dict[str, Any]:
+    """Enqueue authority bundle crawl for the discovery seed (verified sources only)."""
+    try:
+        result = enqueue_discovery_crawl(
+            db,
+            run_id,
+            sync=(body.sync if body else None),
+        )
+    except ValueError as exc:
+        raise HTTPException(404, str(exc)) from exc
+    return {"ok": True, **result}
+
+
 @admin_router.get("/jobs")
 def list_jobs(db: Session = Depends(_db), limit: int = 50) -> list[dict[str, Any]]:
     rows = db.query(FetchJob).order_by(FetchJob.id.desc()).limit(limit).all()
@@ -249,22 +487,32 @@ def list_jobs(db: Session = Depends(_db), limit: int = 50) -> list[dict[str, Any
 
 
 @admin_router.post("/jobs")
-def create_job(body: JobIn, db: Session = Depends(_db)) -> dict[str, Any]:
+def create_job(
+    body: JobIn,
+    response: Response,
+    db: Session = Depends(_db),
+    async_mode: bool = Query(False, alias="async"),
+) -> dict[str, Any]:
+    """Enqueue crawl job. Async (202) by default when SYNC_JOBS=false or ?async=true."""
     settings = get_settings()
+    run_sync = settings.sync_jobs and not async_mode
     try:
         job = enqueue_and_maybe_run(
             db,
             source_id=body.source_id,
             params=body.params,
-            sync=settings.sync_jobs,
+            sync=run_sync,
         )
     except ValueError as exc:
         raise HTTPException(400, str(exc)) from exc
+    if not run_sync:
+        response.status_code = 202
     return {
         "id": job.id,
         "source_id": job.source_id,
         "status": job.status,
         "error": job.error,
+        "async": not run_sync,
     }
 
 
@@ -311,10 +559,82 @@ def list_composers(db: Session = Depends(_db), limit: int = 100) -> list[dict[st
             "name_en": c.name_en,
             "name_zh": c.name_zh,
             "lifespan": c.lifespan,
+            "era": getattr(c, "era", "") or "",
+            "summary_en": getattr(c, "summary_en", "") or "",
             "external_ids": json.loads(c.external_ids_json or "{}"),
         }
         for c in rows
     ]
+
+
+class BuildDossierIn(BaseModel):
+    qid: str = ""
+    wikidata_qid: str = ""
+
+
+@admin_router.get("/composers/{composer_id}/dossier")
+def admin_composer_dossier(composer_id: str, db: Session = Depends(_db)) -> dict[str, Any]:
+    from aulos_knowledge.composer_dossier import build_composer_dossier
+
+    payload = build_composer_dossier(db, composer_id)
+    if not payload:
+        raise HTTPException(404, f"composer not found: {composer_id}")
+    return payload
+
+
+@admin_router.post("/composers/{composer_id}/build-dossier", status_code=200)
+def admin_build_composer_dossier(
+    composer_id: str,
+    response: Response,
+    body: BuildDossierIn | None = None,
+    db: Session = Depends(_db),
+) -> dict[str, Any]:
+    """Enqueue Wikidata mode=composer_dossier (REQ-010). Returns 202 when async."""
+    from aulos_knowledge.composer_dossier import resolve_composer_qid
+
+    body = body or BuildDossierIn()
+    qid = resolve_composer_qid(db, composer_id, body.qid or body.wikidata_qid)
+    if not qid:
+        raise HTTPException(400, f"no Wikidata QID for composer: {composer_id}")
+    settings = get_settings()
+    try:
+        job = enqueue_and_maybe_run(
+            db,
+            source_id="wikidata",
+            params={
+                "mode": "composer_dossier",
+                "composer_id": composer_id,
+                "qid": qid,
+                "qids": [qid],
+            },
+            sync=settings.sync_jobs,
+        )
+    except ValueError as exc:
+        raise HTTPException(400, str(exc)) from exc
+    if not settings.sync_jobs:
+        response.status_code = 202
+    return {
+        "job_id": job.id,
+        "status": job.status,
+        "composer_id": composer_id,
+        "qid": qid,
+        "error": job.error or "",
+    }
+
+
+@router.get("/v1/kb/composers/{composer_id}/dossier")
+def kb_composer_dossier(
+    composer_id: str,
+    db: Session = Depends(_db),
+    _: None = Depends(require_admin_token),
+) -> dict[str, Any]:
+    """Read dossier for RAG/product (S1: same admin token gate)."""
+    from aulos_knowledge.composer_dossier import build_composer_dossier
+
+    payload = build_composer_dossier(db, composer_id)
+    if not payload:
+        raise HTTPException(404, f"composer not found: {composer_id}")
+    return payload
 
 
 @admin_router.get("/documents")
@@ -550,3 +870,17 @@ def list_media(
             }
         )
     return out
+
+
+@admin_router.get("/media/{media_id}/content")
+def media_content(media_id: int, db: Session = Depends(_db)) -> Response:
+    """Serve crawled media bytes (portraits) for OPS Explore avatars."""
+    row = db.get(MediaAsset, media_id)
+    if not row or not row.storage_path:
+        raise HTTPException(404, "media not found")
+    settings = get_settings()
+    path = Path(settings.artifact_root) / row.storage_path
+    if not path.is_file():
+        raise HTTPException(404, "media file missing on disk")
+    media_type = row.content_type or "application/octet-stream"
+    return FileResponse(path, media_type=media_type, filename=path.name)

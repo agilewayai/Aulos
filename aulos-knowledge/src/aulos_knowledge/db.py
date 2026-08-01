@@ -89,6 +89,34 @@ class ComposerEntity(Base):
     aliases_json: Mapped[str] = mapped_column(Text, default="[]")
     external_ids_json: Mapped[str] = mapped_column(Text, default="{}")
     lifespan: Mapped[str] = mapped_column(String(64), default="")
+    era: Mapped[str] = mapped_column(String(64), default="")
+    summary_en: Mapped[str] = mapped_column(Text, default="")
+    summary_zh: Mapped[str] = mapped_column(Text, default="")
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=utcnow)
+
+
+class ComposerLifeEvent(Base):
+    """REQ-010 — dated life / career event on a composer timeline."""
+
+    __tablename__ = "composer_life_events"
+
+    id: Mapped[str] = mapped_column(String(220), primary_key=True)
+    composer_id: Mapped[str] = mapped_column(String(128), ForeignKey("composers.id"), index=True)
+    event_type: Mapped[str] = mapped_column(String(48), default="other", index=True)
+    # birth|death|baptism|education|appointment|residence|marriage|travel|premiere|composition_milestone|other
+    title_en: Mapped[str] = mapped_column(String(512), default="")
+    title_zh: Mapped[str] = mapped_column(String(512), default="")
+    description: Mapped[str] = mapped_column(Text, default="")
+    date_start: Mapped[str] = mapped_column(String(32), default="", index=True)
+    date_end: Mapped[str] = mapped_column(String(32), default="")
+    place_label: Mapped[str] = mapped_column(String(255), default="")
+    place_qid: Mapped[str] = mapped_column(String(32), default="")
+    significance: Mapped[str] = mapped_column(String(16), default="minor")  # major|minor
+    external_ids_json: Mapped[str] = mapped_column(Text, default="{}")
+    source_id: Mapped[str] = mapped_column(String(64), default="", index=True)
+    artifact_id: Mapped[int | None] = mapped_column(Integer, ForeignKey("fetch_artifacts.id"), nullable=True)
+    job_id: Mapped[int | None] = mapped_column(Integer, ForeignKey("fetch_jobs.id"), nullable=True)
+    sort_key: Mapped[str] = mapped_column(String(64), default="", index=True)
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=utcnow)
 
 
@@ -97,12 +125,19 @@ class WorkEntity(Base):
 
     id: Mapped[str] = mapped_column(String(160), primary_key=True)
     composer_id: Mapped[str] = mapped_column(String(128), ForeignKey("composers.id"), index=True)
+    parent_work_id: Mapped[str | None] = mapped_column(
+        String(160), ForeignKey("works.id"), nullable=True, index=True
+    )
+    work_kind: Mapped[str] = mapped_column(String(32), default="work")
+    # work|collection|cycle|movement|arrangement
     title_en: Mapped[str] = mapped_column(String(512), default="")
     title_zh: Mapped[str] = mapped_column(String(512), default="")
     aulos_work_id: Mapped[str] = mapped_column(String(160), default="", index=True)
     catalog_numbers_json: Mapped[str] = mapped_column(Text, default="[]")
     facets_json: Mapped[str] = mapped_column(Text, default="{}")
     external_ids_json: Mapped[str] = mapped_column(Text, default="{}")
+    year_start: Mapped[str] = mapped_column(String(16), default="")
+    year_end: Mapped[str] = mapped_column(String(16), default="")
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=utcnow)
 
 
@@ -173,6 +208,68 @@ class KnowledgeChunk(Base):
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=utcnow)
 
 
+class BenchmarkRun(Base):
+    __tablename__ = "benchmark_runs"
+
+    id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)
+    status: Mapped[str] = mapped_column(String(32), default="queued")
+    overall_score: Mapped[float] = mapped_column(Float, default=0.0)
+    trigger: Mapped[str] = mapped_column(String(64), default="ops")
+    duration_ms: Mapped[int] = mapped_column(Integer, default=0)
+    suite_revision: Mapped[str] = mapped_column(String(64), default="")
+    registry_revision: Mapped[str] = mapped_column(String(64), default="")
+    report_json: Mapped[str] = mapped_column(Text, default="{}")
+    error: Mapped[str] = mapped_column(Text, default="")
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=utcnow)
+    started_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True), nullable=True)
+    finished_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True), nullable=True)
+
+
+class BenchmarkDiagnosis(Base):
+    __tablename__ = "benchmark_diagnoses"
+
+    id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)
+    benchmark_run_id: Mapped[int] = mapped_column(Integer, ForeignKey("benchmark_runs.id"), index=True)
+    status: Mapped[str] = mapped_column(String(32), default="open")
+    diagnosis_json: Mapped[str] = mapped_column(Text, default="{}")
+    markdown: Mapped[str] = mapped_column(Text, default="")
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=utcnow)
+
+
+class SourceDiscoveryRun(Base):
+    __tablename__ = "source_discovery_runs"
+
+    id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)
+    status: Mapped[str] = mapped_column(String(32), default="queued")
+    trigger: Mapped[str] = mapped_column(String(64), default="ops")
+    composer_id: Mapped[str] = mapped_column(String(128), default="")
+    wikidata_qid: Mapped[str] = mapped_column(String(32), default="")
+    graph_json: Mapped[str] = mapped_column(Text, default="{}")
+    candidates_json: Mapped[str] = mapped_column(Text, default="[]")
+    stats_json: Mapped[str] = mapped_column(Text, default="{}")
+    error: Mapped[str] = mapped_column(Text, default="")
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=utcnow)
+    started_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True), nullable=True)
+    finished_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True), nullable=True)
+
+
+class ImprovementAction(Base):
+    __tablename__ = "improvement_actions"
+
+    id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)
+    diagnosis_id: Mapped[int] = mapped_column(Integer, ForeignKey("benchmark_diagnoses.id"), index=True)
+    item_id: Mapped[str] = mapped_column(String(128), default="")
+    action_type: Mapped[str] = mapped_column(String(64), default="")
+    layer: Mapped[str] = mapped_column(String(8), default="L1")
+    auto_safe: Mapped[bool] = mapped_column(Boolean, default=False)
+    status: Mapped[str] = mapped_column(String(32), default="proposed")
+    payload_json: Mapped[str] = mapped_column(Text, default="{}")
+    result_json: Mapped[str] = mapped_column(Text, default="{}")
+    error: Mapped[str] = mapped_column(Text, default="")
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=utcnow)
+    executed_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True), nullable=True)
+
+
 _engine = None
 SessionLocal = None
 
@@ -184,6 +281,8 @@ def init_db(url: str):
     SessionLocal = sessionmaker(bind=_engine, autoflush=False, autocommit=False, future=True)
     Base.metadata.create_all(_engine)
     apply_source_authority_patches(_engine)
+    apply_benchmark_run_patches(_engine)
+    apply_composer_dossier_patches(_engine)
     return _engine
 
 
@@ -224,6 +323,73 @@ def apply_source_authority_patches(engine) -> list[str]:
                     "AND (verification_status IS NULL OR verification_status = '' OR verification_status = 'candidate')"
                 )
             )
+    return applied
+
+
+def apply_benchmark_run_patches(engine) -> list[str]:
+    """Add async benchmark columns on existing benchmark_runs tables."""
+    from sqlalchemy import inspect, text
+
+    applied: list[str] = []
+    insp = inspect(engine)
+    if not insp.has_table("benchmark_runs"):
+        return applied
+    cols = {c["name"] for c in insp.get_columns("benchmark_runs")}
+    dialect = engine.dialect.name
+    ts_type = "TIMESTAMP" if dialect != "sqlite" else "DATETIME"
+    additions: list[tuple[str, str]] = [
+        ("error", "TEXT DEFAULT ''"),
+        ("started_at", ts_type),
+        ("finished_at", ts_type),
+    ]
+    with engine.begin() as conn:
+        for name, col_type in additions:
+            if name in cols:
+                continue
+            conn.execute(text(f"ALTER TABLE benchmark_runs ADD COLUMN {name} {col_type}"))
+            applied.append(f"benchmark_runs.{name}")
+    return applied
+
+
+def apply_composer_dossier_patches(engine) -> list[str]:
+    """REQ-010 — era/summary on composers; parent/work_kind/years on works."""
+    from sqlalchemy import inspect, text
+
+    applied: list[str] = []
+    insp = inspect(engine)
+    dialect = engine.dialect.name
+
+    if insp.has_table("composers"):
+        cols = {c["name"] for c in insp.get_columns("composers")}
+        additions: list[tuple[str, str]] = [
+            ("era", "VARCHAR(64) DEFAULT ''"),
+            ("summary_en", "TEXT DEFAULT ''"),
+            ("summary_zh", "TEXT DEFAULT ''"),
+        ]
+        with engine.begin() as conn:
+            for name, col_type in additions:
+                if name in cols:
+                    continue
+                conn.execute(text(f"ALTER TABLE composers ADD COLUMN {name} {col_type}"))
+                applied.append(f"composers.{name}")
+
+    if insp.has_table("works"):
+        cols = {c["name"] for c in insp.get_columns("works")}
+        additions = [
+            ("parent_work_id", "VARCHAR(160)"),
+            ("work_kind", "VARCHAR(32) DEFAULT 'work'"),
+            ("year_start", "VARCHAR(16) DEFAULT ''"),
+            ("year_end", "VARCHAR(16) DEFAULT ''"),
+        ]
+        with engine.begin() as conn:
+            for name, col_type in additions:
+                if name in cols:
+                    continue
+                conn.execute(text(f"ALTER TABLE works ADD COLUMN {name} {col_type}"))
+                applied.append(f"works.{name}")
+
+    # composer_life_events is created via create_all; no column patch needed for greenfield.
+    _ = dialect
     return applied
 
 

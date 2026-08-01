@@ -9,7 +9,7 @@ fingerprint: "aries-harness/bootstrap-doc/v1"
 initialized_at: "2026-07-25T11:22:04Z"
 effective_status: "active"
 effective_since: "2026-07-25T11:22:04Z"
-content_fingerprint: "sha256:f0d60c009e83e161e8872259d76068532c6d7acd0450aac5248851743c6655f5"
+content_fingerprint: "sha256:939beef28725e9570299a0ec4bf5abd86180e3fa78148815b74b3a3f836da6f6"
 trace_history_source: "filesystem-only"
 trace_last_commit_sha: ""
 trace_last_commit_at: ""
@@ -19,11 +19,12 @@ trace_revision_count: "0"
 
 ## Now
 
-- Redeploy API + Ops so live Dev Blog tab is visible (optional host closeout)
+- none (knowledge console modules + dossier shipped)
 
 ## Next
 
-- Optional cron generation; optional export to harness history folder
+- Host redeploy so live Ops shows Explore / Benchmark / dossier modules
+- Optional Dev Blog cron generation; optional export to harness history folder
 
 ## Later
 

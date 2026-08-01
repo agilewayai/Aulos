@@ -457,8 +457,10 @@ export type KnowledgeJob = {
   source_id: string
   status: string
   error: string
+  async?: boolean
   created_at?: string | null
   finished_at?: string | null
+  started_at?: string | null
 }
 
 export type KnowledgeChunk = {
@@ -535,6 +537,10 @@ export function fetchKnowledgeJobs() {
   return plane('/v1/admin/jobs') as Promise<KnowledgeJob[]>
 }
 
+export function fetchKnowledgeJob(jobId: number) {
+  return plane(`/v1/admin/jobs/${jobId}`) as Promise<KnowledgeJob>
+}
+
 export function enqueueKnowledgeJob(sourceId: string, params: Record<string, unknown> = {}) {
   return plane('/v1/admin/jobs', {
     method: 'POST',
@@ -542,8 +548,118 @@ export function enqueueKnowledgeJob(sourceId: string, params: Record<string, unk
   }) as Promise<KnowledgeJob>
 }
 
+/** Enqueue crawl (async queue) and poll until terminal status. */
+export async function enqueueKnowledgeJobAndWait(
+  sourceId: string,
+  params: Record<string, unknown> = {},
+  opts: { timeoutMs?: number; intervalMs?: number } = {},
+) {
+  const timeoutMs = opts.timeoutMs ?? 120_000
+  const intervalMs = opts.intervalMs ?? 800
+  let job = await enqueueKnowledgeJob(sourceId, params)
+  if (job.status === 'succeeded' || job.status === 'failed') return job
+  const deadline = Date.now() + timeoutMs
+  while (Date.now() < deadline) {
+    await new Promise((r) => setTimeout(r, intervalMs))
+    job = await fetchKnowledgeJob(job.id)
+    if (job.status === 'succeeded' || job.status === 'failed') return job
+  }
+  return job
+}
+
 export function fetchKnowledgeComposers() {
   return plane('/v1/admin/composers') as Promise<KnowledgeComposer[]>
+}
+
+export type ComposerDossierEvent = {
+  id: string
+  event_type: string
+  title_en: string
+  title_zh: string
+  description: string
+  date_start: string
+  date_end: string
+  place_label: string
+  place_qid: string
+  significance: string
+  sort_key: string
+}
+
+export type ComposerDossierWorkNode = {
+  id: string
+  title_en: string
+  title_zh: string
+  work_kind: string
+  year_start: string
+  year_end: string
+  catalog_numbers: string[]
+  facets: Record<string, unknown>
+  children: ComposerDossierWorkNode[]
+}
+
+export type ComposerDossier = {
+  composer: {
+    id: string
+    name_en: string
+    name_zh: string
+    lifespan: string
+    era: string
+    summary_en: string
+    summary_zh: string
+    external_ids: Record<string, string>
+    famous: boolean
+  }
+  portrait: {
+    media_id: number
+    title: string
+    content_type: string
+    license_class: string
+    source_url: string
+    content_path: string
+  } | null
+  timeline: ComposerDossierEvent[]
+  works_tree: ComposerDossierWorkNode[]
+  works_count: number
+  events_count: number
+  doc_counts: { composer: number; works: number }
+}
+
+export type ComposerDossierBuildResult = {
+  job_id: number
+  status: string
+  composer_id: string
+  qid: string
+  error?: string
+}
+
+export function fetchComposerDossier(composerId: string) {
+  return plane(`/v1/admin/composers/${encodeURIComponent(composerId)}/dossier`) as Promise<ComposerDossier>
+}
+
+export async function buildComposerDossierAndWait(
+  composerId: string,
+  opts: { qid?: string; timeoutMs?: number; intervalMs?: number } = {},
+) {
+  const accepted = (await plane(`/v1/admin/composers/${encodeURIComponent(composerId)}/build-dossier`, {
+    method: 'POST',
+    body: JSON.stringify({ qid: opts.qid || '', wikidata_qid: opts.qid || '' }),
+  })) as ComposerDossierBuildResult
+  if (accepted.status === 'succeeded' || accepted.status === 'failed') return accepted
+  const timeoutMs = opts.timeoutMs ?? 180_000
+  const intervalMs = opts.intervalMs ?? 1000
+  const deadline = Date.now() + timeoutMs
+  let status = accepted.status
+  let error = accepted.error || ''
+  while (Date.now() < deadline) {
+    await new Promise((r) => setTimeout(r, intervalMs))
+    const job = await fetchKnowledgeJob(accepted.job_id)
+    status = job.status
+    error = job.error || ''
+    if (job.status === 'succeeded' || job.status === 'failed') {
+      return { ...accepted, status, error }
+    }
+  }
+  return { ...accepted, status, error }
 }
 
 export function fetchKnowledgeDocuments(opts: {
@@ -641,6 +757,152 @@ export function suspendKnowledgeSource(sourceId: string) {
   }) as Promise<KnowledgeSource & { ok: boolean }>
 }
 
+export type KnowledgeDiscoveryCandidate = {
+  id: string
+  name: string
+  base_urls: string[]
+  tier: string
+  origin_class: string
+  score: number
+  url: string
+  discovery_node?: string
+  notes?: string
+}
+
+export type KnowledgeDiscoveryCrawlJob = {
+  source_id: string
+  job_id?: number
+  status: string
+  reason?: string
+}
+
+export type KnowledgeDiscoveryRun = {
+  id: number
+  status: string
+  trigger: string
+  composer_id: string
+  wikidata_qid: string
+  graph: { nodes: Array<Record<string, unknown>>; edges: Array<Record<string, unknown>> }
+  candidates: KnowledgeDiscoveryCandidate[]
+  stats: Record<string, unknown>
+  seed_hints?: Record<string, string>
+  crawl_jobs?: KnowledgeDiscoveryCrawlJob[]
+  error: string
+  created_at: string | null
+  started_at: string | null
+  finished_at: string | null
+}
+
+export function exploreKnowledgeSources(payload: {
+  composer_id?: string
+  wikidata_qid?: string
+  wikipedia_title?: string
+  max_depth?: number
+  max_breadth?: number
+  enqueue_crawl?: boolean
+}) {
+  return plane('/v1/admin/sources/explore', {
+    method: 'POST',
+    body: JSON.stringify(payload),
+  }) as Promise<KnowledgeDiscoveryRun>
+}
+
+export type KnowledgeExploreSeed = {
+  id: string
+  name_en: string
+  name_zh: string
+  short_name: string
+  era: string
+  letter: string
+  sort_key: string
+  wikidata_qid: string
+  wikipedia_title: string
+  famous: boolean
+  featured: boolean
+  in_corpus: boolean
+  lifespan: string
+  external_ids: Record<string, string>
+  portrait: {
+    media_id: number
+    title: string
+    content_type: string
+    license_class: string
+    source_url: string
+    content_path: string
+  } | null
+}
+
+export type KnowledgeExploreSeedsResponse = {
+  seeds: KnowledgeExploreSeed[]
+  featured: KnowledgeExploreSeed[]
+  letters: string[]
+  stats: {
+    total: number
+    famous: number
+    with_portrait: number
+    in_corpus: number
+  }
+}
+
+export function fetchKnowledgeExploreSeeds() {
+  return plane('/v1/admin/sources/explore/seeds') as Promise<KnowledgeExploreSeedsResponse>
+}
+
+export function prepareKnowledgeExploreSeeds(payload?: {
+  limit?: number
+  sync?: boolean | null
+  featured_only?: boolean
+}) {
+  return plane('/v1/admin/sources/explore/prepare-seeds', {
+    method: 'POST',
+    body: JSON.stringify(payload ?? { limit: 8, featured_only: true }),
+  }) as Promise<{
+    ok: boolean
+    jobs: Array<Record<string, unknown>>
+    enqueued: number
+    composers?: number
+    sync?: boolean
+    error?: string
+  }>
+}
+
+/** Cookie-auth plane URL for <img src> portraits. */
+export function knowledgeMediaContentUrl(contentPath: string) {
+  if (!contentPath) return ''
+  if (contentPath.startsWith('/v1/ops/')) return contentPath
+  return `/v1/ops/knowledge/plane${contentPath.startsWith('/') ? '' : '/'}${contentPath}`
+}
+
+export function fetchKnowledgeDiscoveryRuns(limit = 20) {
+  return plane(`/v1/admin/sources/explore/runs?limit=${limit}`) as Promise<KnowledgeDiscoveryRun[]>
+}
+
+export function fetchKnowledgeDiscoveryRun(runId: number) {
+  return plane(`/v1/admin/sources/explore/runs/${runId}`) as Promise<KnowledgeDiscoveryRun>
+}
+
+export function registerKnowledgeDiscoveryCandidates(
+  runId: number,
+  payload?: { candidate_ids?: string[]; min_score?: number },
+) {
+  return plane(`/v1/admin/sources/explore/runs/${runId}/register-candidates`, {
+    method: 'POST',
+    body: JSON.stringify(payload ?? {}),
+  }) as Promise<{ ok: boolean; created: string[]; skipped: string[]; run_id: number }>
+}
+
+export function enqueueKnowledgeDiscoveryCrawl(runId: number) {
+  return plane(`/v1/admin/sources/explore/runs/${runId}/enqueue-crawl`, {
+    method: 'POST',
+    body: JSON.stringify({}),
+  }) as Promise<{
+    ok: boolean
+    run_id: number
+    crawl_jobs: KnowledgeDiscoveryCrawlJob[]
+    seed_hints: Record<string, string>
+  }>
+}
+
 export function quarantineKnowledgeDocument(docId: number) {
   return plane(`/v1/admin/documents/${docId}/quarantine`, {
     method: 'POST',
@@ -675,6 +937,272 @@ export function fetchKnowledgeMedia(opts: { kind?: string; entity_id?: string; l
   if (opts.limit) sp.set('limit', String(opts.limit))
   const q = sp.toString()
   return plane(`/v1/admin/media${q ? `?${q}` : ''}`) as Promise<KnowledgeMedia[]>
+}
+
+export type KnowledgeBenchmarkSuite = {
+  revision: string
+  case_count: number
+  required_case_count: number
+  cases: Array<{ id: string; label: string; optional: boolean }>
+}
+
+export type KnowledgeBenchmarkRunSummary = {
+  id: number
+  status: string
+  trigger: string
+  overall_score: number
+  grade: string | null
+  duration_ms: number
+  suite_revision: string
+  registry_revision: string
+  created_at: string | null
+  started_at?: string | null
+  finished_at?: string | null
+  error?: string
+  task_type?: string
+}
+
+export type KnowledgeBenchmarkReport = KnowledgeBenchmarkRunSummary & {
+  markdown: string
+  weights: Record<string, number>
+  error?: string
+  dimensions: Record<
+    string,
+    {
+      score: number
+      cases?: Array<{
+        id: string
+        label: string
+        passed: boolean
+        optional?: boolean
+        hits: number
+        top_score: number
+        notes?: string[]
+      }>
+    }
+  >
+}
+
+export function fetchKnowledgeBenchmarkSuite() {
+  return plane('/v1/kb/benchmark/suite') as Promise<KnowledgeBenchmarkSuite>
+}
+
+export function fetchKnowledgeBenchmarkRuns(limit = 20) {
+  return plane(`/v1/admin/benchmark/runs?limit=${limit}`) as Promise<KnowledgeBenchmarkRunSummary[]>
+}
+
+export function fetchKnowledgeBenchmarkRun(runId: number) {
+  return plane(`/v1/admin/benchmark/runs/${runId}`) as Promise<KnowledgeBenchmarkReport>
+}
+
+export function runKnowledgeBenchmark(trigger = 'ops') {
+  return plane(`/v1/admin/benchmark/run?trigger=${encodeURIComponent(trigger)}&async=true`, {
+    method: 'POST',
+  }) as Promise<KnowledgeBenchmarkRunSummary>
+}
+
+export type KnowledgeBenchmarkTaskAccepted = {
+  task_id: number
+  status: string
+  task_type: string
+  source: string
+  run_id?: number | null
+  error_detail?: string
+}
+
+export function enqueueKnowledgeBenchmarkTask(trigger = 'ops') {
+  return request<KnowledgeBenchmarkTaskAccepted>(
+    '/v1/ops/knowledge/benchmark/run',
+    { method: 'POST', body: JSON.stringify({ trigger }) },
+    true,
+  )
+}
+
+export async function waitForKnowledgeBenchmarkRun(
+  runId: number,
+  opts?: { intervalMs?: number; timeoutMs?: number },
+): Promise<KnowledgeBenchmarkReport> {
+  const intervalMs = opts?.intervalMs ?? 800
+  const timeoutMs = opts?.timeoutMs ?? 300_000
+  const start = Date.now()
+  for (;;) {
+    const row = await fetchKnowledgeBenchmarkRun(runId)
+    if (row.status === 'succeeded' && (row as KnowledgeBenchmarkReport).dimensions) {
+      return row as KnowledgeBenchmarkReport
+    }
+    if (row.status === 'failed') {
+      throw new Error(row.error || `Benchmark run #${runId} failed`)
+    }
+    if (Date.now() - start > timeoutMs) {
+      throw new Error(`Benchmark run #${runId} timed out (${row.status})`)
+    }
+    await new Promise((r) => setTimeout(r, intervalMs))
+  }
+}
+
+export async function runKnowledgeBenchmarkAndWait(
+  trigger = 'ops',
+  opts?: { intervalMs?: number; timeoutMs?: number },
+): Promise<KnowledgeBenchmarkReport> {
+  const accepted = await enqueueKnowledgeBenchmarkTask(trigger)
+  if (accepted.status === 'completed' && accepted.run_id) {
+    return waitForKnowledgeBenchmarkRun(accepted.run_id, opts)
+  }
+  if (accepted.status === 'failed') {
+    throw new Error(accepted.error_detail || `Task #${accepted.task_id} failed`)
+  }
+  const task = await waitForOpsTask(accepted.task_id, opts)
+  if (task.status === 'failed') {
+    throw new Error(task.error_detail || `Task #${accepted.task_id} failed`)
+  }
+  const runId = Number(task.result?.run_id)
+  if (!runId) {
+    throw new Error('Benchmark task completed without run_id')
+  }
+  return waitForKnowledgeBenchmarkRun(runId, opts)
+}
+
+export type KnowledgeBenchmarkDashboard = {
+  generated_at: string
+  health_status: 'healthy' | 'watch' | 'critical' | 'no_data' | string
+  headline: string
+  suite_revision: string
+  run_count: number
+  latest_run: {
+    id: number
+    overall_score: number
+    grade: string
+    duration_ms: number
+    suite_revision: string
+    registry_revision: string
+    created_at: string | null
+    trigger: string
+  } | null
+  previous_run: {
+    id: number
+    overall_score: number
+    grade: string
+    created_at: string | null
+  } | null
+  score_delta: number | null
+  trend: Array<{
+    id: number
+    score: number
+    grade: string
+    created_at: string | null
+  }>
+  dimensions: Array<{
+    id: string
+    label: string
+    score: number
+    weight_pct: number
+    details: Record<string, unknown>
+  }>
+  retrieval_summary: {
+    passed: number
+    total: number
+    failed_cases: Array<{ id: string; label: string; notes: string[] }>
+  }
+  insights: Array<{
+    severity: string
+    title: string
+    detail: string
+    action: string | null
+  }>
+  markdown_summary: string
+  weights: Record<string, number>
+}
+
+export function fetchKnowledgeBenchmarkDashboard() {
+  return plane('/v1/kb/benchmark/dashboard') as Promise<KnowledgeBenchmarkDashboard>
+}
+
+export type KnowledgeImprovementAction = {
+  id: number
+  diagnosis_id: number
+  item_id: string
+  action_type: string
+  layer: string
+  auto_safe: boolean
+  status: string
+  payload: Record<string, unknown>
+  result: Record<string, unknown>
+  error: string
+  created_at: string | null
+  executed_at: string | null
+}
+
+export type KnowledgeDiagnosisItem = {
+  id: string
+  dimension: string
+  severity: string
+  root_cause_code: string
+  title: string
+  detail: string
+  evidence: Record<string, unknown>
+  actions?: Array<Record<string, unknown>>
+}
+
+export type KnowledgeBenchmarkDiagnosis = {
+  id: number
+  diagnosis_id: number
+  benchmark_run_id: number
+  status?: string
+  overall_score: number
+  grade: string
+  score_delta: number | null
+  items: KnowledgeDiagnosisItem[]
+  actions: KnowledgeImprovementAction[]
+  engineering_tasks: Array<{
+    item_id: string
+    title: string
+    detail: string
+    payload: Record<string, unknown>
+  }>
+  action_count: number
+  auto_safe_count: number
+  markdown: string
+}
+
+export function fetchKnowledgeBenchmarkDiagnosis(runId: number) {
+  return plane(`/v1/admin/benchmark/runs/${runId}/diagnosis`) as Promise<KnowledgeBenchmarkDiagnosis>
+}
+
+export function executeKnowledgeSafeActions(diagnosisId: number) {
+  return plane(`/v1/admin/improvements/execute-safe?diagnosis_id=${diagnosisId}`, {
+    method: 'POST',
+  }) as Promise<KnowledgeImprovementAction[]>
+}
+
+export type KnowledgeImproveCycleResult = {
+  benchmark_run_id_before: number
+  benchmark_run_id_after: number
+  diagnosis_id: number
+  score_before: number
+  score_after: number | null
+  score_delta: number | null
+  actions_executed: KnowledgeImprovementAction[]
+  async_rebench?: boolean
+}
+
+export async function executeKnowledgeImproveCycle(benchmarkRunId?: number) {
+  const accepted = await request<KnowledgeBenchmarkTaskAccepted>(
+    '/v1/ops/knowledge/improve/cycle',
+    {
+      method: 'POST',
+      body: JSON.stringify({
+        benchmark_run_id: benchmarkRunId ?? null,
+        trigger: 'ops-improve',
+      }),
+    },
+    true,
+  )
+  if (accepted.status === 'completed') {
+    const task = await fetchOpsTask(accepted.task_id)
+    return task.result as KnowledgeImproveCycleResult
+  }
+  const task = await waitForOpsTask(accepted.task_id)
+  return task.result as KnowledgeImproveCycleResult
 }
 
 export type DbHaStatus = {

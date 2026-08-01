@@ -18,7 +18,7 @@ class Settings(BaseSettings):
     admin_token: str = ""  # optional shared secret for direct admin; ops uses api proxy
     catalog_root: str = ""  # default: sibling aulos-skills catalog
     redis_url: str = "redis://127.0.0.1:6379/0"
-    sync_jobs: bool = True  # run jobs in-process when True (dev)
+    sync_jobs: bool = False  # production: async queue; true only for CI/dev escape hatch
 
 
 @lru_cache
@@ -29,6 +29,6 @@ def get_settings() -> Settings:
         artifact_root=__import__("os").environ.get("AULOS_KNOWLEDGE_ARTIFACT_ROOT", default_artifacts),
         catalog_root=__import__("os").environ.get("AULOS_KNOWLEDGE_CATALOG_ROOT", ""),
         admin_token=__import__("os").environ.get("AULOS_KNOWLEDGE_ADMIN_TOKEN", ""),
-        sync_jobs=__import__("os").environ.get("AULOS_KNOWLEDGE_SYNC_JOBS", "true").lower()
+        sync_jobs=__import__("os").environ.get("AULOS_KNOWLEDGE_SYNC_JOBS", "false").lower()
         in {"1", "true", "yes"},
     )

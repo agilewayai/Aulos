@@ -8,6 +8,7 @@ export type OpsTabId =
   | 'skills'
   | 'mail'
   | 'fleet'
+  | 'dbha'
   | 'knowledge'
   | 'discogs'
   | 'blog'

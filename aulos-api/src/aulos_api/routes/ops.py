@@ -417,7 +417,7 @@ async def ops_knowledge_plane_proxy(
     _: User = Depends(require_roles("superadmin")),
 ):
     """Proxy OPS Knowledge audit UI to aulos-knowledge (SPEC-010)."""
-    from fastapi.responses import JSONResponse
+    from fastapi.responses import JSONResponse, Response
 
     from aulos_api.services.knowledge_proxy import proxy_knowledge
 
@@ -427,13 +427,104 @@ async def ops_knowledge_plane_proxy(
             body = await request.json()
         except Exception:  # noqa: BLE001
             body = None
-    status_code, data = await proxy_knowledge(
+    status_code, data, headers = await proxy_knowledge(
         request.method,
         f"/{path}",
         json_body=body,
         params=dict(request.query_params),
     )
+    if isinstance(data, (bytes, bytearray)):
+        return Response(
+            content=bytes(data),
+            status_code=status_code,
+            media_type=headers.get("content-type") or "application/octet-stream",
+        )
     return JSONResponse(content=data, status_code=status_code)
+
+
+class KnowledgeBenchmarkTaskIn(BaseModel):
+    trigger: str = "ops"
+
+
+class KnowledgeBenchmarkTaskOut(BaseModel):
+    task_id: int
+    status: str
+    task_type: str
+    source: str
+    run_id: int | None = None
+    error_detail: str = ""
+
+
+@router.post("/knowledge/benchmark/run", status_code=status.HTTP_202_ACCEPTED, response_model=KnowledgeBenchmarkTaskOut)
+def enqueue_knowledge_benchmark(
+    body: KnowledgeBenchmarkTaskIn,
+    user: User = Depends(require_roles("superadmin")),
+    db: Session = Depends(get_db),
+) -> KnowledgeBenchmarkTaskOut:
+    from aulos_api.services.task_queue import (
+        SOURCE_OPS_KNOWLEDGE,
+        TASK_KNOWLEDGE_BENCHMARK,
+        enqueue_task,
+    )
+
+    row = enqueue_task(
+        db,
+        task_type=TASK_KNOWLEDGE_BENCHMARK,
+        source=SOURCE_OPS_KNOWLEDGE,
+        payload={"trigger": body.trigger},
+        created_by_user_id=user.id,
+    )
+    run_id = None
+    if row.status == "completed":
+        try:
+            import json
+
+            result = json.loads(row.result_json or "{}")
+            if isinstance(result, dict) and result.get("run_id"):
+                run_id = int(result["run_id"])
+        except (TypeError, ValueError, json.JSONDecodeError):
+            pass
+    return KnowledgeBenchmarkTaskOut(
+        task_id=row.id,
+        status=row.status,
+        task_type=row.task_type,
+        source=row.source,
+        run_id=run_id,
+        error_detail=row.error_detail or "",
+    )
+
+
+class KnowledgeImproveCycleIn(BaseModel):
+    benchmark_run_id: int | None = None
+    trigger: str = "ops-improve"
+
+
+@router.post("/knowledge/improve/cycle", status_code=status.HTTP_202_ACCEPTED)
+def enqueue_knowledge_improve_cycle(
+    body: KnowledgeImproveCycleIn,
+    user: User = Depends(require_roles("superadmin")),
+    db: Session = Depends(get_db),
+) -> KnowledgeBenchmarkTaskOut:
+    from aulos_api.services.task_queue import SOURCE_OPS_KNOWLEDGE, TASK_KNOWLEDGE_IMPROVE, enqueue_task
+
+    row = enqueue_task(
+        db,
+        task_type=TASK_KNOWLEDGE_IMPROVE,
+        source=SOURCE_OPS_KNOWLEDGE,
+        payload={
+            "benchmark_run_id": body.benchmark_run_id,
+            "trigger": body.trigger,
+        },
+        created_by_user_id=user.id,
+    )
+    return KnowledgeBenchmarkTaskOut(
+        task_id=row.id,
+        status=row.status,
+        task_type=row.task_type,
+        source=row.source,
+        run_id=None,
+        error_detail=row.error_detail or "",
+    )
 
 
 class SkillOut(BaseModel):

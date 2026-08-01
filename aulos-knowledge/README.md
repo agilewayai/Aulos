@@ -66,8 +66,10 @@ pgvector ANN indexes are a Later TASK_STACK item — relational isolation is the
 
 ## Workers
 
-Default `AULOS_KNOWLEDGE_SYNC_JOBS=true` runs connectors in-process after enqueue (dev).
-Production: set `SYNC_JOBS=false` and run ARQ worker against Redis (see `docs/worker.md`).
+Default **async** crawl queue (META-001 §3.3): `AULOS_KNOWLEDGE_SYNC_JOBS=false` enqueues
+`fetch_jobs` and runs connectors on background threads; HTTP returns **202**. Poll
+`GET /v1/admin/jobs/{id}`. Set `SYNC_JOBS=true` only for pytest / local smoke escape hatch.
+See `docs/worker.md`.
 
 ## OPS
 

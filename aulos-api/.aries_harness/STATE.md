@@ -9,7 +9,7 @@ fingerprint: "aries-harness/bootstrap-doc/v1"
 initialized_at: "2026-07-25T11:10:22Z"
 effective_status: "active"
 effective_since: "2026-07-25T11:10:22Z"
-content_fingerprint: "sha256:950eafdcfd79106b2a7ea49288c3c05169e99aa3b4c6992d0c58da94240cccfd"
+content_fingerprint: "sha256:b27d8a54445fe50ebe45e34029401bfa6c91a647c59746bb143e32ed10ea482c"
 trace_history_source: "filesystem-only"
 trace_last_commit_sha: ""
 trace_last_commit_at: ""
@@ -19,7 +19,7 @@ trace_revision_count: "0"
 
 ## Current phase
 
-- SPEC-018 Ops task queue + dashboard shipped (pytest green; Ops Tasks tab)
+- SPEC-018 delta: `knowledge.benchmark` ops task + knowledge plane proxy shipped
 
 ## Current phase (prior)
 

@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-07-27T11:49:24+00:00",
+  "generated_at": "2026-08-01T06:31:30+00:00",
   "project_root": "/home/ubuntu/hackathon/aulos/aulos-web",
   "harness_root": "/home/ubuntu/hackathon/aulos/aulos-web/.aries_harness",
   "history_root": "/home/ubuntu/hackathon/aulos/aulos-web/.aries_harness/history",
@@ -8,16 +8,8 @@
   "branch": "main",
   "working_tree": {
     "clean": false,
-    "change_count": 103,
+    "change_count": 124,
     "changes": [
-      {
-        "status": "M",
-        "path": "AGENTS.md"
-      },
-      {
-        "status": "M",
-        "path": "CLAUDE.md"
-      },
       {
         "status": "M",
         "path": "aulos-api/.aries_harness/INDEX.md"
@@ -25,6 +17,14 @@
       {
         "status": "M",
         "path": "aulos-api/.aries_harness/JOURNAL.md"
+      },
+      {
+        "status": "M",
+        "path": "aulos-api/.aries_harness/STATE.md"
+      },
+      {
+        "status": "M",
+        "path": "aulos-api/.aries_harness/TASK_STACK.md"
       },
       {
         "status": "M",
@@ -76,19 +76,23 @@
       },
       {
         "status": "M",
-        "path": "aulos-api/.aries_harness/references/REG-001-artifact-register.md"
+        "path": "aulos-api/.aries_harness/references/specs/SPEC-018-ops-task-queue.md"
       },
       {
         "status": "M",
-        "path": "aulos-api/src/aulos_api/services/dev_blog.py"
+        "path": "aulos-api/src/aulos_api/routes/ops.py"
       },
       {
         "status": "M",
-        "path": "aulos-api/tests/test_dev_blog.py"
+        "path": "aulos-api/src/aulos_api/services/knowledge_proxy.py"
       },
       {
         "status": "M",
-        "path": "aulos-knowledge/.aries_harness/EVAL.md"
+        "path": "aulos-api/src/aulos_api/services/task_queue.py"
+      },
+      {
+        "status": "M",
+        "path": "aulos-knowledge/.aries_harness/INDEX.md"
       },
       {
         "status": "M",
@@ -101,10 +105,6 @@
       {
         "status": "M",
         "path": "aulos-knowledge/.aries_harness/TASK_STACK.md"
-      },
-      {
-        "status": "M",
-        "path": "aulos-knowledge/.aries_harness/decisions/adrs/ADR-006-allowlisted-sources-provenance.md"
       },
       {
         "status": "M",
@@ -168,15 +168,23 @@
       },
       {
         "status": "M",
-        "path": "aulos-knowledge/src/aulos_knowledge/connectors/__init__.py"
+        "path": "aulos-knowledge/README.md"
       },
       {
         "status": "M",
-        "path": "aulos-knowledge/src/aulos_knowledge/connectors/catalog_import.py"
+        "path": "aulos-knowledge/deploy/.env.example"
       },
       {
         "status": "M",
-        "path": "aulos-knowledge/src/aulos_knowledge/connectors/musicbrainz.py"
+        "path": "aulos-knowledge/docs/worker.md"
+      },
+      {
+        "status": "M",
+        "path": "aulos-knowledge/src/aulos_knowledge/app.py"
+      },
+      {
+        "status": "M",
+        "path": "aulos-knowledge/src/aulos_knowledge/config.py"
       },
       {
         "status": "M",
@@ -188,6 +196,10 @@
       },
       {
         "status": "M",
+        "path": "aulos-knowledge/src/aulos_knowledge/famous_composers.py"
+      },
+      {
+        "status": "M",
         "path": "aulos-knowledge/src/aulos_knowledge/jobs.py"
       },
       {
@@ -196,11 +208,63 @@
       },
       {
         "status": "M",
-        "path": "aulos-knowledge/src/aulos_knowledge/seed.py"
+        "path": "aulos-ops/.aries_harness/JOURNAL.md"
       },
       {
         "status": "M",
-        "path": "aulos-ops/index.html"
+        "path": "aulos-ops/.aries_harness/STATE.md"
+      },
+      {
+        "status": "M",
+        "path": "aulos-ops/.aries_harness/TASK_STACK.md"
+      },
+      {
+        "status": "M",
+        "path": "aulos-ops/.aries_harness/history/DAILY_SUMMARY_INDEX.md"
+      },
+      {
+        "status": "M",
+        "path": "aulos-ops/.aries_harness/history/DOC_TRACE.md"
+      },
+      {
+        "status": "M",
+        "path": "aulos-ops/.aries_harness/history/README.md"
+      },
+      {
+        "status": "M",
+        "path": "aulos-ops/.aries_harness/history/RETROSPECTIVE.md"
+      },
+      {
+        "status": "M",
+        "path": "aulos-ops/.aries_harness/history/ROADMAP.md"
+      },
+      {
+        "status": "M",
+        "path": "aulos-ops/.aries_harness/history/STATUS.md"
+      },
+      {
+        "status": "M",
+        "path": "aulos-ops/.aries_harness/history/TIMELINE.md"
+      },
+      {
+        "status": "M",
+        "path": "aulos-ops/.aries_harness/history/daily/2026-07-25.md"
+      },
+      {
+        "status": "M",
+        "path": "aulos-ops/.aries_harness/history/daily/2026-07-26.md"
+      },
+      {
+        "status": "M",
+        "path": "aulos-ops/.aries_harness/history/daily/2026-07-27.md"
+      },
+      {
+        "status": "M",
+        "path": "aulos-ops/.aries_harness/history/doc-trace.json"
+      },
+      {
+        "status": "M",
+        "path": "aulos-ops/.aries_harness/history/summary.json"
       },
       {
         "status": "M",
@@ -212,27 +276,31 @@
       },
       {
         "status": "M",
-        "path": "aulos-ops/src/AssetUpdateToast.tsx"
-      },
-      {
-        "status": "M",
-        "path": "aulos-ops/src/DevBlogPanel.tsx"
-      },
-      {
-        "status": "M",
-        "path": "aulos-ops/src/KnowledgePanel.tsx"
-      },
-      {
-        "status": "M",
-        "path": "aulos-ops/src/TaskQueuePanel.tsx"
-      },
-      {
-        "status": "M",
         "path": "aulos-ops/src/api.ts"
       },
       {
         "status": "M",
-        "path": "aulos-ops/src/assetVersion.ts"
+        "path": "aulos-ops/src/knowledge/KnowledgeConsole.tsx"
+      },
+      {
+        "status": "M",
+        "path": "aulos-ops/src/knowledge/constants.ts"
+      },
+      {
+        "status": "M",
+        "path": "aulos-ops/src/knowledge/modules/OverviewModule.tsx"
+      },
+      {
+        "status": "M",
+        "path": "aulos-ops/src/knowledge/types.ts"
+      },
+      {
+        "status": "M",
+        "path": "aulos-ops/src/knowledge/useKnowledgePlane.ts"
+      },
+      {
+        "status": "M",
+        "path": "aulos-ops/src/sessionScene.ts"
       },
       {
         "status": "M",
@@ -241,10 +309,6 @@
       {
         "status": "M",
         "path": "aulos-skills/.aries_harness/JOURNAL.md"
-      },
-      {
-        "status": "M",
-        "path": "aulos-skills/.aries_harness/docs/insights.md"
       },
       {
         "status": "M",
@@ -296,15 +360,7 @@
       },
       {
         "status": "M",
-        "path": "aulos-skills/.aries_harness/layers/MetaDefineLayer/README.md"
-      },
-      {
-        "status": "M",
-        "path": "aulos-skills/.aries_harness/references/REG-001-artifact-register.md"
-      },
-      {
-        "status": "M",
-        "path": "aulos-skills/skills/aulos-operating-defaults/SKILL.md"
+        "path": "aulos-skills/.aries_harness/references/META-001-meta-principles.md"
       },
       {
         "status": "M",
@@ -316,111 +372,139 @@
       },
       {
         "status": "M",
-        "path": "aulos-web/index.html"
-      },
-      {
-        "status": "M",
-        "path": "aulos-web/src/App.tsx"
-      },
-      {
-        "status": "M",
-        "path": "aulos-web/src/AssetUpdateToast.tsx"
-      },
-      {
-        "status": "M",
-        "path": "aulos-web/src/assetVersion.ts"
+        "path": "deploy/systemd/user/aulos-knowledge.service"
       },
       {
         "status": "??",
-        "path": "aulos-knowledge/.aries_harness/references/requests/REQ-008-authority-source-registry.md"
+        "path": "aulos-api/.aries_harness/history/daily/2026-08-01.md"
       },
       {
         "status": "??",
-        "path": "aulos-knowledge/src/aulos_knowledge/connectors/imslp.py"
+        "path": "aulos-api/tests/test_knowledge_benchmark_task.py"
       },
       {
         "status": "??",
-        "path": "aulos-knowledge/src/aulos_knowledge/connectors/rism.py"
+        "path": "aulos-knowledge/.aries_harness/references/requests/REQ-009-source-discovery-graph.md"
       },
       {
         "status": "??",
-        "path": "aulos-knowledge/src/aulos_knowledge/connectors/wikipedia.py"
+        "path": "aulos-knowledge/.aries_harness/references/requests/REQ-010-composer-dossier.md"
       },
       {
         "status": "??",
-        "path": "aulos-knowledge/src/aulos_knowledge/fetch_policy.py"
+        "path": "aulos-knowledge/src/aulos_knowledge/benchmark.py"
       },
       {
         "status": "??",
-        "path": "aulos-knowledge/src/aulos_knowledge/publish_policy.py"
+        "path": "aulos-knowledge/src/aulos_knowledge/benchmark_queue.py"
       },
       {
         "status": "??",
-        "path": "aulos-knowledge/src/aulos_knowledge/registry.py"
+        "path": "aulos-knowledge/src/aulos_knowledge/composer_dossier.py"
       },
       {
         "status": "??",
-        "path": "aulos-knowledge/tests/test_s2_s3_connectors.py"
+        "path": "aulos-knowledge/src/aulos_knowledge/diagnosis.py"
       },
       {
         "status": "??",
-        "path": "aulos-knowledge/tests/test_source_registry.py"
+        "path": "aulos-knowledge/src/aulos_knowledge/explore_seeds.py"
       },
       {
         "status": "??",
-        "path": "aulos-ops/src/knowledge/KnowledgeConsole.tsx"
+        "path": "aulos-knowledge/src/aulos_knowledge/improvement.py"
       },
       {
         "status": "??",
-        "path": "aulos-ops/src/knowledge/components/ProvenanceCard.tsx"
+        "path": "aulos-knowledge/src/aulos_knowledge/job_queue.py"
       },
       {
         "status": "??",
-        "path": "aulos-ops/src/knowledge/components/SourceGateBadge.tsx"
+        "path": "aulos-knowledge/src/aulos_knowledge/source_discovery.py"
       },
       {
         "status": "??",
-        "path": "aulos-ops/src/knowledge/constants.ts"
+        "path": "aulos-knowledge/tests/test_benchmark.py"
       },
       {
         "status": "??",
-        "path": "aulos-ops/src/knowledge/modules/DocumentsModule.tsx"
+        "path": "aulos-knowledge/tests/test_composer_dossier.py"
       },
       {
         "status": "??",
-        "path": "aulos-ops/src/knowledge/modules/JobsModule.tsx"
+        "path": "aulos-knowledge/tests/test_diagnosis.py"
       },
       {
         "status": "??",
-        "path": "aulos-ops/src/knowledge/modules/MediaModule.tsx"
+        "path": "aulos-knowledge/tests/test_explore_seeds.py"
       },
       {
         "status": "??",
-        "path": "aulos-ops/src/knowledge/modules/OverviewModule.tsx"
+        "path": "aulos-knowledge/tests/test_job_queue.py"
       },
       {
         "status": "??",
-        "path": "aulos-ops/src/knowledge/modules/SimulateModule.tsx"
+        "path": "aulos-knowledge/tests/test_source_discovery.py"
       },
       {
         "status": "??",
-        "path": "aulos-ops/src/knowledge/modules/SourceRegistryModule.tsx"
+        "path": "aulos-ops/src/knowledge/benchmarkUtils.ts"
       },
       {
         "status": "??",
-        "path": "aulos-ops/src/knowledge/types.ts"
+        "path": "aulos-ops/src/knowledge/components/BenchmarkDashboardReport.tsx"
       },
       {
         "status": "??",
-        "path": "aulos-ops/src/knowledge/useKnowledgePlane.ts"
+        "path": "aulos-ops/src/knowledge/components/DiscoveryGraph.tsx"
       },
       {
         "status": "??",
-        "path": "aulos-ops/src/knowledge/utils.ts"
+        "path": "aulos-ops/src/knowledge/modules/BenchmarkModule.tsx"
       },
       {
         "status": "??",
-        "path": "aulos-skills/.aries_harness/references/META-001-meta-principles.md"
+        "path": "aulos-ops/src/knowledge/modules/ComposerDossierModule.tsx"
+      },
+      {
+        "status": "??",
+        "path": "aulos-ops/src/knowledge/modules/ExploreModule.tsx"
+      },
+      {
+        "status": "??",
+        "path": "aulos-ops/src/knowledge/modules/ImproveModule.tsx"
+      },
+      {
+        "status": "??",
+        "path": "aulos-ops/src/knowledge/modules/ReportModule.tsx"
+      },
+      {
+        "status": "??",
+        "path": "aulos-ops/src/layout/OpsDashboardShell.tsx"
+      },
+      {
+        "status": "??",
+        "path": "aulos-ops/src/layout/OpsSidebar.tsx"
+      },
+      {
+        "status": "??",
+        "path": "aulos-ops/src/layout/layoutIcons.tsx"
+      },
+      {
+        "status": "??",
+        "path": "aulos-ops/src/layout/navIcons.tsx"
+      },
+      {
+        "status": "??",
+        "path": "aulos-ops/src/layout/opsNav.ts"
+      },
+      {
+        "status": "??",
+        "path": "aulos-ops/src/layout/useOpsLayout.ts"
+      },
+      {
+        "status": "??",
+        "path": "aulos-skills/.aries_harness/history/daily/2026-08-01.md"
       }
     ]
   },
@@ -460,7 +544,7 @@
       "Verify: `npm run build`."
     ],
     "needs_attention": [
-      "working tree is dirty with 103 tracked or untracked change(s)",
+      "working tree is dirty with 124 tracked or untracked change(s)",
       "no explicit next-up slice is recorded"
     ],
     "durable_reminders": [
@@ -474,15 +558,38 @@
   },
   "daily_summaries": [
     {
+      "date": "2026-08-01",
+      "journal_headings": [],
+      "journal_items": [],
+      "feature_evolution": [],
+      "git_commits": [],
+      "working_tree_hints": [
+        "M aulos-api/.aries_harness/INDEX.md",
+        "M aulos-api/.aries_harness/JOURNAL.md",
+        "M aulos-api/.aries_harness/STATE.md",
+        "M aulos-api/.aries_harness/TASK_STACK.md",
+        "M aulos-api/.aries_harness/history/DAILY_SUMMARY_INDEX.md",
+        "M aulos-api/.aries_harness/history/DOC_TRACE.md",
+        "M aulos-api/.aries_harness/history/README.md",
+        "M aulos-api/.aries_harness/history/RETROSPECTIVE.md"
+      ]
+    },
+    {
       "date": "2026-07-27",
       "journal_headings": [],
       "journal_items": [],
       "feature_evolution": [
+        "Ship authority source registry, OPS knowledge console, and refresh fleet honeycomb.",
         "Ship Ops task queue, dev blog v2, and refresh fleet honeycomb.",
         "Harden platform security, ship fleet DevOps control, and refresh harness honeycomb.",
         "Ship Ops daily Dev Blog and web forgot-password reset."
       ],
       "git_commits": [
+        {
+          "sha": "491b042",
+          "date": "2026-07-27",
+          "subject": "Ship authority source registry, OPS knowledge console, and refresh fleet honeycomb."
+        },
         {
           "sha": "5633e94",
           "date": "2026-07-27",
@@ -499,16 +606,7 @@
           "subject": "Ship Ops daily Dev Blog and web forgot-password reset."
         }
       ],
-      "working_tree_hints": [
-        "M AGENTS.md",
-        "M CLAUDE.md",
-        "M aulos-api/.aries_harness/INDEX.md",
-        "M aulos-api/.aries_harness/JOURNAL.md",
-        "M aulos-api/.aries_harness/history/DAILY_SUMMARY_INDEX.md",
-        "M aulos-api/.aries_harness/history/DOC_TRACE.md",
-        "M aulos-api/.aries_harness/history/README.md",
-        "M aulos-api/.aries_harness/history/RETROSPECTIVE.md"
-      ]
+      "working_tree_hints": []
     },
     {
       "date": "2026-07-26",

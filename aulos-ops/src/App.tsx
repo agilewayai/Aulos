@@ -52,18 +52,18 @@ import {
   registerSceneCapture,
   saveOpsScene,
   type OpsSessionScene,
+  type OpsTabId,
 } from './sessionScene'
 import { requestAssetVersionCheck } from './assetVersion'
+import { OpsDashboardShell } from './layout/OpsDashboardShell'
 import './App.css'
-
-type TabId = 'overview' | 'users' | 'llm' | 'skills' | 'mail' | 'fleet' | 'knowledge' | 'discogs' | 'blog' | 'tasks'
 
 const PENDING_SCENE: OpsSessionScene | null =
   typeof window === 'undefined' ? null : consumeOpsScene()
 
 function App() {
   const [user, setUser] = useState<User | null>(null)
-  const [tab, setTab] = useState<TabId>(() => PENDING_SCENE?.tab ?? 'overview')
+  const [tab, setTab] = useState<OpsTabId>(() => PENDING_SCENE?.tab ?? 'overview')
   const [health, setHealth] = useState<HealthResponse | null>(null)
   const [overview, setOverview] = useState<OpsOverview | null>(null)
   const [opsUsers, setOpsUsers] = useState<OpsUser[]>([])
@@ -126,7 +126,7 @@ function App() {
   const [notice, setNotice] = useState<string | null>(null)
   const [updatedAt, setUpdatedAt] = useState<string | null>(null)
   const sceneSnapshotRef = useRef({
-    tab: 'overview' as TabId,
+    tab: 'overview' as OpsTabId,
     userQuery: '',
     roleFilter: '',
     activeFilter: 'all' as 'all' | 'true' | 'false',
@@ -597,37 +597,17 @@ function App() {
   const gatewayOk = health?.status === 'ok'
 
   return (
-    <div className="shell">
+    <div className="shell ops-app">
       <div className="grid-bg" aria-hidden="true" />
-      <header className="top">
-        <div>
-          <p className="brand">Aulos Ops</p>
-          <p className="tagline">
-            {user
-              ? `Superadmin · ${user.email}`
-              : 'Admin portal — superadmin sign-in required'}
-          </p>
-        </div>
-        <div className="top-actions">
-          <button type="button" className="refresh" onClick={() => void refreshHealth()} disabled={busy}>
-            Refresh health
-          </button>
-          {user ? (
-            <button type="button" className="refresh" onClick={onLogout}>
-              Sign out
-            </button>
-          ) : null}
-        </div>
-      </header>
 
-      <main className="stage">
-        {notice ? <p className="notice" role="status">{notice}</p> : null}
-        {error ? <p className="error" role="alert">{error}</p> : null}
-
-        {!user ? (
+      {!user ? (
+        <main className="ops-auth-stage">
+          {notice ? <p className="notice" role="status">{notice}</p> : null}
+          {error ? <p className="error" role="alert">{error}</p> : null}
           <section className="auth-panel" aria-labelledby="ops-login-title">
             <form className="auth-form" onSubmit={onLogin}>
               <h1 id="ops-login-title">Superadmin sign in</h1>
+              <p className="tagline">Admin portal — superadmin sign-in required</p>
               <label htmlFor="ops-email">Email</label>
               <input
                 id="ops-email"
@@ -650,36 +630,21 @@ function App() {
               </button>
             </form>
           </section>
-        ) : (
-          <>
-            <nav className="tabs" aria-label="Ops sections">
-              {(
-                [
-                  ['overview', 'Overview'],
-                  ['users', 'Users'],
-                  ['llm', 'LLM'],
-                  ['discogs', 'Discogs'],
-                  ['knowledge', 'Knowledge console'],
-                  ['skills', 'Skills'],
-                  ['mail', 'Mail'],
-                  ['fleet', 'Fleet'],
-                  ['tasks', 'Tasks'],
-                  ['blog', 'Dev Blog'],
-                ] as const
-              ).map(([id, label]) => (
-                <button
-                  key={id}
-                  type="button"
-                  className={tab === id ? 'tab active' : 'tab'}
-                  onClick={() => {
-                    setTab(id)
-                  }}
-                >
-                  {label}
-                </button>
-              ))}
-            </nav>
-
+        </main>
+      ) : (
+        <OpsDashboardShell
+          tab={tab}
+          onTabChange={setTab}
+          user={user}
+          gatewayOk={gatewayOk}
+          health={health}
+          updatedAt={updatedAt}
+          busy={busy}
+          notice={notice}
+          error={error}
+          onRefreshHealth={() => void refreshHealth()}
+          onLogout={onLogout}
+        >
             {tab === 'overview' ? (
               <>
                 <section className="health" aria-live="polite">
@@ -1470,31 +1435,31 @@ function App() {
             ) : null}
 
             {tab === 'fleet' ? (
-              <>
-                <DbHaPanel busy={busy} setBusy={setBusy} setError={setError} setNotice={setNotice} />
-                <section className="fleet">
-                  <h2>Fleet</h2>
-                  <ul className="service-list">
-                    {AULOS_SERVICES.map((svc, index) => (
-                      <li
-                        key={svc.id}
-                        className="service-row"
-                        style={{ animationDelay: `${0.05 * index}s` }}
-                      >
-                        <div>
-                          <p className="svc-name">{svc.name}</p>
-                          <p className="svc-role">{svc.role}</p>
-                        </div>
-                        <code className="svc-path">{svc.path}</code>
-                      </li>
-                    ))}
-                  </ul>
-                </section>
-              </>
+              <section className="fleet">
+                <h2>Fleet</h2>
+                <ul className="service-list">
+                  {AULOS_SERVICES.map((svc, index) => (
+                    <li
+                      key={svc.id}
+                      className="service-row"
+                      style={{ animationDelay: `${0.05 * index}s` }}
+                    >
+                      <div>
+                        <p className="svc-name">{svc.name}</p>
+                        <p className="svc-role">{svc.role}</p>
+                      </div>
+                      <code className="svc-path">{svc.path}</code>
+                    </li>
+                  ))}
+                </ul>
+              </section>
             ) : null}
-          </>
-        )}
-      </main>
+
+            {tab === 'dbha' ? (
+              <DbHaPanel busy={busy} setBusy={setBusy} setError={setError} setNotice={setNotice} />
+            ) : null}
+        </OpsDashboardShell>
+      )}
     </div>
   )
 }

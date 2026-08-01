@@ -10,13 +10,20 @@ generated_by: "/aries-harness init"
 initialized_at: "2026-07-25T11:07:43Z"
 effective_status: "active"
 effective_since: "2026-07-25T11:07:43Z"
-content_fingerprint: "sha256:bb20e5a08d74767bf9b8dcf39712d03f646f07d13e47de583a26bc0443664a3b"
+content_fingerprint: "sha256:e36ea709441bec34661289b00cae339a08ff3439d700ddd0b89948ac94481768"
 trace_history_source: "filesystem-only"
 trace_last_commit_sha: ""
 trace_last_commit_at: ""
 trace_revision_count: "0"
 ---
 # Journal
+
+## 2026-08-01T06:35:00Z
+
+- **SPEC-018 delta:** ops task type `knowledge.benchmark` (+ improve path) via knowledge plane proxy;
+  `POST /v1/ops/knowledge/benchmark/run` enqueues durable ops task; gate
+  `tests/test_knowledge_benchmark_task.py`.
+- Honeycomb closeout with knowledge/ops knowledge-console ship.
 
 ## 2026-07-27T10:45:00Z
 

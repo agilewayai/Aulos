@@ -52,6 +52,13 @@ def run_wikidata(
     job: FetchJob,
     params: dict[str, Any],
 ) -> None:
+    mode = str(params.get("mode") or "").strip().lower()
+    if mode == "composer_dossier":
+        from aulos_knowledge.composer_dossier import run_composer_dossier
+
+        run_composer_dossier(db, source=source, job=job, params=params)
+        return
+
     qids = params.get("qids") or ["Q1339"]
     if isinstance(qids, str):
         qids = [qids]

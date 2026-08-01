@@ -10,13 +10,22 @@ generated_by: "/aries-harness init"
 initialized_at: "2026-07-25T11:20:06Z"
 effective_status: "active"
 effective_since: "2026-07-25T11:20:06Z"
-content_fingerprint: "sha256:38a535eff6359f5f079c5019e623dee0c1bd2e086d69a7aa8172bcd82440f812"
+content_fingerprint: "sha256:0027073805aea3573c3247f4f0787f23164cd7168cde72094383b99df643db6b"
 trace_history_source: "filesystem-only"
 trace_last_commit_sha: ""
 trace_last_commit_at: ""
 trace_revision_count: "0"
 ---
 # Journal
+
+## 2026-08-01T06:35:00Z
+
+- **Knowledge console ship closeout:** Explore / Benchmark / Diagnose-improve / Performance report /
+  Composer dossier modules + Ops dashboard shell/sidebar layout; Honeycomb before git push.
+
+## 2026-07-27T16:55:00Z
+
+- Knowledge **Composer dossier** module: picker + 构建履历与作品 + timeline/works tree (REQ-010).
 
 ## 2026-07-26T16:45:00Z
 

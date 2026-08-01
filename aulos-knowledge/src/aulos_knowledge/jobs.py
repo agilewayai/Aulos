@@ -1,4 +1,4 @@
-"""Job runner — sync in-process for dev; ARQ hook later."""
+"""Job runner — enqueue durable fetch_jobs; sync or async dispatch (META-001 §3.3)."""
 
 from __future__ import annotations
 
@@ -79,8 +79,14 @@ def run_job(db: Session, job_id: int) -> FetchJob:
     return job
 
 
-def enqueue_and_maybe_run(db: Session, *, source_id: str, params: dict[str, Any] | None, sync: bool) -> FetchJob:
-    job = enqueue_job(db, source_id=source_id, params=params)
-    if sync:
-        return run_job(db, job.id)
-    return job
+def enqueue_and_maybe_run(
+    db: Session,
+    *,
+    source_id: str,
+    params: dict[str, Any] | None,
+    sync: bool | None = None,
+) -> FetchJob:
+    """Compatibility entry — delegates to job_queue (async dispatch when not sync)."""
+    from aulos_knowledge.job_queue import enqueue_and_maybe_run as _enqueue
+
+    return _enqueue(db, source_id=source_id, params=params, sync=sync)

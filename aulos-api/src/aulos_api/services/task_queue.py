@@ -22,6 +22,11 @@ OPS_TASK_QUEUE_KEY = "aulos:ops:tasks:queue"
 TASK_DEV_BLOG_GENERATE = "dev_blog.generate"
 SOURCE_OPS_DEV_BLOG = "ops.dev_blog"
 
+TASK_KNOWLEDGE_BENCHMARK = "knowledge.benchmark"
+SOURCE_OPS_KNOWLEDGE = "ops.knowledge"
+
+TASK_KNOWLEDGE_IMPROVE = "knowledge.improve"
+
 _lock = threading.RLock()
 _stop = threading.Event()
 _worker_started = False
@@ -39,6 +44,8 @@ def _redis_url() -> str:
 def _handlers() -> dict[str, TaskHandler]:
     return {
         TASK_DEV_BLOG_GENERATE: _handle_dev_blog_generate,
+        TASK_KNOWLEDGE_BENCHMARK: _handle_knowledge_benchmark,
+        TASK_KNOWLEDGE_IMPROVE: _handle_knowledge_improve,
     }
 
 
@@ -259,6 +266,82 @@ def _handle_dev_blog_generate(payload: dict[str, Any]) -> dict[str, Any]:
             db.close()
 
     return asyncio.run(_run())
+
+
+def _handle_knowledge_benchmark(payload: dict[str, Any]) -> dict[str, Any]:
+    import time
+
+    import httpx
+
+    from aulos_api.config import get_settings
+    from aulos_api.services.knowledge_proxy import knowledge_base_url
+
+    trigger = str(payload.get("trigger") or "ops")
+    base = knowledge_base_url()
+    token = (get_settings().knowledge_admin_token or "").strip()
+    headers = {"Authorization": f"Bearer {token}"} if token else {}
+    deadline = time.time() + 600
+    with httpx.Client(timeout=60.0) as client:
+        resp = client.post(
+            f"{base}/v1/admin/benchmark/run",
+            params={"trigger": trigger, "async": "true"},
+            headers=headers,
+        )
+        resp.raise_for_status()
+        accepted = resp.json()
+        run_id = int(accepted["id"])
+        while time.time() < deadline:
+            detail = client.get(f"{base}/v1/admin/benchmark/runs/{run_id}", headers=headers)
+            detail.raise_for_status()
+            body = detail.json()
+            status = str(body.get("status") or "")
+            if status == "succeeded":
+                return {
+                    "run_id": run_id,
+                    "overall_score": body.get("overall_score"),
+                    "grade": body.get("grade"),
+                    "duration_ms": body.get("duration_ms"),
+                }
+            if status == "failed":
+                raise RuntimeError(str(body.get("error") or f"benchmark run {run_id} failed"))
+            time.sleep(1.0)
+    raise TimeoutError(f"benchmark run {run_id} timed out")
+
+
+def _handle_knowledge_improve(payload: dict[str, Any]) -> dict[str, Any]:
+    import time
+
+    import httpx
+
+    from aulos_api.config import get_settings
+    from aulos_api.services.knowledge_proxy import knowledge_base_url
+
+    run_id = payload.get("benchmark_run_id")
+    base = knowledge_base_url()
+    token = (get_settings().knowledge_admin_token or "").strip()
+    headers = {"Authorization": f"Bearer {token}"} if token else {}
+    params: dict[str, str] = {"async": "true"}
+    if run_id is not None:
+        params["benchmark_run_id"] = str(int(run_id))
+    with httpx.Client(timeout=120.0) as client:
+        resp = client.post(f"{base}/v1/admin/improve/cycle", params=params, headers=headers)
+        resp.raise_for_status()
+        body = resp.json()
+        after_id = body.get("benchmark_run_id_after")
+        if body.get("async_rebench") and after_id:
+            deadline = time.time() + 600
+            while time.time() < deadline:
+                detail = client.get(f"{base}/v1/admin/benchmark/runs/{after_id}", headers=headers)
+                detail.raise_for_status()
+                st = str(detail.json().get("status") or "")
+                if st == "succeeded":
+                    body["score_after"] = detail.json().get("overall_score")
+                    body["rebench_report"] = detail.json()
+                    break
+                if st == "failed":
+                    raise RuntimeError(detail.json().get("error") or "re-benchmark failed")
+                time.sleep(1.0)
+        return body
 
 
 def _run_task_by_id(task_id: int) -> None:

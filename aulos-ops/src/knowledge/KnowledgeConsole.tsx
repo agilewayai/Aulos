@@ -2,10 +2,15 @@ import { useCallback, useEffect, useState } from 'react'
 import { KNOWLEDGE_MODULES, type KnowledgeModuleId, type DocStatusFilter } from './types'
 import { useKnowledgePlane } from './useKnowledgePlane'
 import { OverviewModule } from './modules/OverviewModule'
+import { ReportModule } from './modules/ReportModule'
 import { SourceRegistryModule } from './modules/SourceRegistryModule'
 import { DocumentsModule } from './modules/DocumentsModule'
 import { JobsModule } from './modules/JobsModule'
 import { SimulateModule } from './modules/SimulateModule'
+import { BenchmarkModule } from './modules/BenchmarkModule'
+import { ImproveModule } from './modules/ImproveModule'
+import { ExploreModule } from './modules/ExploreModule'
+import { ComposerDossierModule } from './modules/ComposerDossierModule'
 import { MediaModule } from './modules/MediaModule'
 
 type Props = {
@@ -115,18 +120,17 @@ export function KnowledgeConsole({
 
   return (
     <section className="settings knowledge-panel kb-console" aria-labelledby="knowledge-title">
-      <div className="section-head kb-console-top">
+      <header className="kb-console-top ops-page-head">
         <div>
-          <h2 id="knowledge-title">Knowledge console</h2>
+          <h2 id="knowledge-title">Knowledge</h2>
           <p className="lede">
-            Query, verify, simulate, and observe the professional music knowledge plane — registry-gated
-            ingest with full provenance audit.
+            Registry-gated ingest · query · verify · simulate · observe
           </p>
         </div>
         <button type="button" className="ghost" disabled={busy} onClick={() => void refresh()}>
           Refresh
         </button>
-      </div>
+      </header>
 
       {planeReachable === false ? (
         <div className="knowledge-empty" role="status">
@@ -168,6 +172,20 @@ export function KnowledgeConsole({
               jobs={jobs}
               planeEnabled={planeEnabled}
               planeUrl={planeUrl}
+              busy={busy}
+              setBusy={setBusy}
+              setError={setError}
+              setNotice={setNotice}
+              onNavigate={setModule}
+            />
+          ) : null}
+
+          {module === 'report' && planeReachable !== false ? (
+            <ReportModule
+              busy={busy}
+              setBusy={setBusy}
+              setError={setError}
+              setNotice={setNotice}
               onNavigate={setModule}
             />
           ) : null}
@@ -180,6 +198,25 @@ export function KnowledgeConsole({
               setBusy={setBusy}
               setError={setError}
               setNotice={setNotice}
+            />
+          ) : null}
+
+          {module === 'explore' && planeReachable !== false ? (
+            <ExploreModule
+              busy={busy}
+              setBusy={setBusy}
+              setError={setError}
+              setNotice={setNotice}
+            />
+          ) : null}
+
+          {module === 'dossier' && planeReachable !== false ? (
+            <ComposerDossierModule
+              busy={busy}
+              setBusy={setBusy}
+              setError={setError}
+              setNotice={setNotice}
+              onNavigate={setModule}
             />
           ) : null}
 
@@ -226,6 +263,24 @@ export function KnowledgeConsole({
 
           {module === 'simulate' && planeReachable !== false ? (
             <SimulateModule busy={busy} setBusy={setBusy} setError={setError} />
+          ) : null}
+
+          {module === 'benchmark' && planeReachable !== false ? (
+            <BenchmarkModule
+              busy={busy}
+              setBusy={setBusy}
+              setError={setError}
+              setNotice={setNotice}
+            />
+          ) : null}
+
+          {module === 'improve' && planeReachable !== false ? (
+            <ImproveModule
+              busy={busy}
+              setBusy={setBusy}
+              setError={setError}
+              setNotice={setNotice}
+            />
           ) : null}
 
           {module === 'media' && planeReachable !== false ? (

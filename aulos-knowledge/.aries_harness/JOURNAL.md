@@ -9,13 +9,80 @@ fingerprint: "aries-harness/bootstrap-doc/v1"
 initialized_at: "2026-07-25T17:20:00+00:00"
 effective_status: "active"
 effective_since: "2026-07-25T17:20:00+00:00"
-content_fingerprint: "sha256:05f08a8f4189def6c10c23022442c04415d93f1a2fdf03c06efab42a023f2ade"
+content_fingerprint: "sha256:e46b9638d6429532209d8342763884eed8891d1825ef6682c3e3fca08852675c"
 trace_history_source: "filesystem-only"
 trace_last_commit_sha: ""
 trace_last_commit_at: ""
 trace_revision_count: "0"
 ---
 # Journal
+
+## 2026-08-01T06:35:00Z
+
+- **Ship closeout / Honeycomb:** REQ-009 source discovery + REQ-010 composer dossier + benchmark /
+  diagnose-improve + async job queues aligned in INDEX/REG-001; fleet Honeycomb before git push.
+- Gates: knowledge pytest suite (benchmark / dossier / discovery / job_queue / diagnosis) + API
+  `test_knowledge_benchmark_task`.
+
+## 2026-07-27T16:55:00Z
+
+- **REQ-010 Composer life dossier + works tree:** `composer_life_events` + works parent/kind/years +
+  composers era/summary; Wikidata `mode=composer_dossier` (claims → timeline, SPARQL P86 → works tree);
+  `GET/POST .../composers/{id}/dossier|build-dossier` (202 async); OPS **Composer dossier** module;
+  pytest mocks green; live Bach smoke: birth/death + 80 works, job succeeded.
+
+## 2026-07-27T16:50:00Z
+
+- **Crawl async queue (META-001 §3.3):** `job_queue.py` background dispatch + drain loop;
+  `POST /jobs` → **202** when async; production `SYNC_JOBS=false`; OPS polls until terminal.
+  Sync remains pytest escape hatch only.
+
+## 2026-07-27T16:45:00Z
+
+- **Fix Explore seeds 404:** redeployed `aulos-knowledge` / ops so `/explore/seeds` + `prepare-seeds` live;
+  prepare now respects `sync_jobs` (was stuck queued); featured-first portrait seed; client fallback catalog.
+
+## 2026-07-27T16:40:00Z
+
+- **Explore product UX (META-001 §3.4 Meta Play Simple):** A–Z composer picker + Famous/Featured strip;
+  `GET .../explore/seeds`, `POST .../prepare-seeds`, media content proxy for portraits; QID hidden under Advanced.
+- Expanded `FAMOUS_COMPOSERS` seed network; OPS Explore module redesigned as human-first entry.
+
+## 2026-07-27T16:20:00Z
+
+- **REQ-009 follow-on:** explore → auto-enqueue authority crawl (Wikidata/Wikipedia/MusicBrainz/IMSLP);
+  `POST .../enqueue-crawl`; diagnosis proposes `explore_sources` L1 for corpus/registry/retrieval gaps;
+  OPS interactive SVG discovery graph + crawl job panel.
+
+## 2026-07-27T13:10:00Z
+
+- **REQ-009 Source discovery:** `source_discovery.py` depth+breadth graph search from registry seeds +
+  Wikidata authority links + composer/work entities; `source_discovery_runs` table; admin explore APIs;
+  OPS **Explore sources** module; pytest `test_source_discovery.py`.
+
+## 2026-07-27T12:50:00Z
+
+- **KB-DIAG-001 / KB-IMPROVE-001:** diagnosis engine (`diagnosis.py`), improvement executor
+  (`improvement.py`), auto-diagnose after benchmark; L1 auto crawl (Wikipedia/Wikidata/catalog);
+  L3 engineering tasks for RAG/code; OPS **Diagnose & improve** module; `knowledge.improve` ops task.
+
+## 2026-07-27T12:35:00Z
+
+- **Benchmark async queue:** `benchmark_runs` state machine (queued→running→succeeded|failed);
+  `POST /v1/admin/benchmark/run?async=true` returns 202; background thread dispatch.
+- Ops task `knowledge.benchmark` via `POST /v1/ops/knowledge/benchmark/run`.
+- META-001 §3.3 long-running work & task queues.
+
+## 2026-07-27T12:25:00Z
+
+- **Performance dashboard report:** `GET /v1/kb/benchmark/dashboard` aggregates trend, insights,
+  executive summary; OPS **Performance report** module + Overview compact summary card.
+
+## 2026-07-27T12:10:00Z
+
+- **KB-BENCH-001:** benchmark suite (`data/benchmark/suite.yaml`), scoring engine (`benchmark.py`),
+  `benchmark_runs` table, admin APIs; OPS Knowledge **Benchmark** module (run, history, report).
+- SPEC-009/010 updated; `tests/test_benchmark.py`.
 
 ## 2026-07-27T11:55:00Z
 

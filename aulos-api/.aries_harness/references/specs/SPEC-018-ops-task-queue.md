@@ -9,7 +9,7 @@ fingerprint: "aries-harness/bootstrap-doc/v1"
 initialized_at: "2026-07-27T10:30:00Z"
 effective_status: "active"
 effective_since: "2026-07-27T10:30:00Z"
-content_fingerprint: "sha256:7968c856251bfec396edda6e39f26ab02d69c536b35e03e50039926ecd212a9e"
+content_fingerprint: "sha256:d6c44c0db7416f0ab717bdb8403821f365f02104d1413ce4e88f4a6267aec252"
 trace_history_source: "filesystem-only"
 trace_last_commit_sha: ""
 trace_last_commit_at: ""
@@ -35,12 +35,14 @@ Upstream: operator request — slow Ops jobs (dev blog generate/regenerate) must
 | task_type | source | Handler |
 | --- | --- | --- |
 | `dev_blog.generate` | `ops.dev_blog` | `dev_blog.generate_post` |
+| `knowledge.benchmark` | `ops.knowledge` | knowledge plane benchmark run (poll `benchmark_runs`) |
 
 ## API
 
 | Method | Path | Notes |
 | --- | --- | --- |
 | POST | `/v1/ops/dev-blog/{day}/generate` | **202** `{ task_id, status, task_type, source, post_id? }` |
+| POST | `/v1/ops/knowledge/benchmark/run` | **202** `{ task_id, status, task_type, source, run_id? }` |
 | GET | `/v1/ops/tasks/dashboard` | superadmin — queues + recent + counts |
 | GET | `/v1/ops/tasks` | filters: `status`, `task_type`, `source`, `limit` |
 | GET | `/v1/ops/tasks/{id}` | single row |

@@ -29,7 +29,8 @@ async def proxy_knowledge(
     json_body: dict[str, Any] | None = None,
     params: dict[str, Any] | None = None,
     timeout: float = 60.0,
-) -> tuple[int, Any]:
+) -> tuple[int, Any, dict[str, str]]:
+    """Returns (status, body, headers). body is dict for JSON or bytes for binary."""
     url = f"{knowledge_base_url()}{path}"
     headers: dict[str, str] = {}
     token = (get_settings().knowledge_admin_token or "").strip()
@@ -44,14 +45,18 @@ async def proxy_knowledge(
                 params=params,
                 headers=headers,
             )
+            ctype = (resp.headers.get("content-type") or "").split(";")[0].strip().lower()
+            out_headers = {"content-type": ctype} if ctype else {}
+            if ctype.startswith("image/") or ctype.startswith("audio/") or ctype == "application/octet-stream":
+                return resp.status_code, resp.content, out_headers
             try:
                 data = resp.json()
             except Exception:  # noqa: BLE001
                 data = {"detail": resp.text[:500]}
-            return resp.status_code, data
+            return resp.status_code, data, {"content-type": "application/json"}
     except httpx.HTTPError as exc:
         logger.warning("knowledge_proxy_error path=%s err=%s", path, exc)
-        return 503, {"detail": f"knowledge service unreachable: {exc}"}
+        return 503, {"detail": f"knowledge service unreachable: {exc}"}, {"content-type": "application/json"}
 
 
 def retrieve_sync(

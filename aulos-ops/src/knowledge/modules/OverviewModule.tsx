@@ -1,4 +1,7 @@
-import type { KnowledgeJob, KnowledgePlaneStats, KnowledgeSource } from '../../api'
+import { useEffect, useState } from 'react'
+import type { KnowledgeJob, KnowledgePlaneStats, KnowledgeSource, KnowledgeBenchmarkDashboard } from '../../api'
+import { fetchKnowledgeBenchmarkDashboard, runKnowledgeBenchmarkAndWait } from '../../api'
+import { BenchmarkDashboardReport } from '../components/BenchmarkDashboardReport'
 import type { KnowledgeModuleId } from '../types'
 import { sourceCanCrawl, countJobsByStatus, formatPct } from '../utils'
 
@@ -10,6 +13,10 @@ type Props = {
   jobs: KnowledgeJob[]
   planeEnabled?: boolean
   planeUrl?: string
+  busy: boolean
+  setBusy: (v: boolean) => void
+  setError: (v: string | null) => void
+  setNotice: (v: string | null) => void
   onNavigate: (module: KnowledgeModuleId) => void
 }
 
@@ -21,8 +28,34 @@ export function OverviewModule({
   jobs,
   planeEnabled,
   planeUrl,
+  busy,
+  setBusy,
+  setError,
+  setNotice,
   onNavigate,
 }: Props) {
+  const [dashboard, setDashboard] = useState<KnowledgeBenchmarkDashboard | null>(null)
+
+  useEffect(() => {
+    void fetchKnowledgeBenchmarkDashboard()
+      .then(setDashboard)
+      .catch(() => setDashboard(null))
+  }, [])
+
+  const onRunBenchmark = async () => {
+    setBusy(true)
+    setError(null)
+    try {
+      const r = await runKnowledgeBenchmarkAndWait()
+      setNotice(`Benchmark run #${r.id}: ${r.overall_score} (${r.grade})`)
+      const dash = await fetchKnowledgeBenchmarkDashboard()
+      setDashboard(dash)
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'benchmark run failed')
+    } finally {
+      setBusy(false)
+    }
+  }
   const crawlReady = sources.filter(sourceCanCrawl).length
   const jobCounts = countJobsByStatus(jobs)
   const failedRecent = jobs.filter((j) => j.status === 'failed').slice(0, 5)
@@ -62,6 +95,14 @@ export function OverviewModule({
           ) : null}
         </p>
       </header>
+
+      <BenchmarkDashboardReport
+        dashboard={dashboard}
+        variant="compact"
+        busy={busy}
+        onRunBenchmark={() => void onRunBenchmark()}
+        onNavigate={onNavigate}
+      />
 
       {planeStats ? (
         <div className="kb-bento">
@@ -168,8 +209,14 @@ export function OverviewModule({
             <button type="button" onClick={() => onNavigate('documents')}>
               Browse documents
             </button>
+            <button type="button" className="ghost" onClick={() => onNavigate('report')}>
+              Performance report
+            </button>
             <button type="button" className="ghost" onClick={() => onNavigate('simulate')}>
               RAG simulate
+            </button>
+            <button type="button" className="ghost" onClick={() => onNavigate('benchmark')}>
+              Run benchmark
             </button>
             <button type="button" className="ghost" onClick={() => onNavigate('registry')}>
               Verify sources

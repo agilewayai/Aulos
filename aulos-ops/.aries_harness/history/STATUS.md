@@ -8,10 +8,10 @@ managed_by: "aries-harness"
 fingerprint: "aries-harness/history-doc/v1"
 generated_by: "/aries-harness history-refresh"
 initialized_at: "2026-07-25T11:20:06Z"
-generated_at: "2026-07-27T11:49:30+00:00"
+generated_at: "2026-08-01T06:31:36+00:00"
 effective_status: "generated"
-effective_since: "2026-07-27T11:49:30+00:00"
-content_fingerprint: "sha256:0762e8724e47e46a7917c3130e05b9da6d74830b9b02de930c6b18127bfd8cb0"
+effective_since: "2026-08-01T06:31:36+00:00"
+content_fingerprint: "sha256:ee22fb757f33c72249ef84dd7c2cc8c463075ef9b7090869c52762b12ba8aa44"
 trace_history_source: "filesystem-only"
 trace_last_commit_sha: ""
 trace_last_commit_at: ""
@@ -19,22 +19,22 @@ trace_revision_count: "0"
 ---
 # Current Status
 
-Generated at: `2026-07-27T11:49:30+00:00`
+Generated at: `2026-08-01T06:31:36+00:00`
 
 ## Current phase
 
-- STORY-PACK-002 daily Dev Blog shipped (verify/closeout)
+- Knowledge console modules shipped (Explore / Benchmark / Improve / Report / Composer dossier)
 
 ## Branch and workspace
 
 - no branch or workspace details recorded
 - git branch: main
-- HEAD: `5633e94` Ship Ops task queue, dev blog v2, and refresh fleet honeycomb.
+- HEAD: `491b042` Ship authority source registry, OPS knowledge console, and refresh fleet honeycomb.
 - working tree: dirty
-- change: `M` `AGENTS.md`
-- change: `M` `CLAUDE.md`
 - change: `M` `aulos-api/.aries_harness/INDEX.md`
 - change: `M` `aulos-api/.aries_harness/JOURNAL.md`
+- change: `M` `aulos-api/.aries_harness/STATE.md`
+- change: `M` `aulos-api/.aries_harness/TASK_STACK.md`
 - change: `M` `aulos-api/.aries_harness/history/DAILY_SUMMARY_INDEX.md`
 - change: `M` `aulos-api/.aries_harness/history/DOC_TRACE.md`
 - change: `M` `aulos-api/.aries_harness/history/README.md`

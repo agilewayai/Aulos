@@ -1,4 +1,5 @@
 import type { CrawlSeed } from './types'
+import type { KnowledgeExploreSeed } from '../api'
 
 export const FAMOUS_SEED: CrawlSeed[] = [
   { id: 'johann-sebastian-bach', qid: 'Q1339', label: 'J.S. Bach', mb: 'Johann Sebastian Bach' },
@@ -12,6 +13,58 @@ export const FAMOUS_SEED: CrawlSeed[] = [
   { id: 'claude-debussy', qid: 'Q4700', label: 'Debussy', mb: 'Claude Debussy' },
   { id: 'igor-stravinsky', qid: 'Q7314', label: 'Stravinsky', mb: 'Igor Stravinsky' },
 ]
+
+const FEATURED_IDS = new Set([
+  'johann-sebastian-bach',
+  'wolfgang-amadeus-mozart',
+  'ludwig-van-beethoven',
+  'frederic-chopin',
+  'pyotr-ilyich-tchaikovsky',
+  'claude-debussy',
+  'franz-schubert',
+  'johannes-brahms',
+])
+
+/** Client fallback when explore/seeds API is unreachable (META-001 §3.4). */
+export function fallbackExploreSeeds(): {
+  seeds: KnowledgeExploreSeed[]
+  featured: KnowledgeExploreSeed[]
+  letters: string[]
+  stats: { total: number; famous: number; with_portrait: number; in_corpus: number }
+} {
+  const seeds: KnowledgeExploreSeed[] = FAMOUS_SEED.map((s) => {
+    const short = s.label.replace(/^J\.S\.\s+/, '') || s.label
+    const letter = short.slice(0, 1).toUpperCase()
+    return {
+      id: s.id,
+      name_en: s.mb,
+      name_zh: '',
+      short_name: short,
+      era: '',
+      letter,
+      sort_key: short.toLowerCase(),
+      wikidata_qid: s.qid,
+      wikipedia_title: s.mb,
+      famous: true,
+      featured: FEATURED_IDS.has(s.id),
+      in_corpus: false,
+      lifespan: '',
+      external_ids: { wikidata: s.qid },
+      portrait: null,
+    }
+  }).sort((a, b) => a.sort_key.localeCompare(b.sort_key))
+
+  const featured = [...FEATURED_IDS]
+    .map((id) => seeds.find((s) => s.id === id))
+    .filter(Boolean) as KnowledgeExploreSeed[]
+  const letters = [...new Set(seeds.map((s) => s.letter))].sort()
+  return {
+    seeds,
+    featured,
+    letters,
+    stats: { total: seeds.length, famous: seeds.length, with_portrait: 0, in_corpus: 0 },
+  }
+}
 
 export const REGISTERED_CONNECTORS = [
   'catalog_import',

@@ -8,10 +8,10 @@ managed_by: "aries-harness"
 fingerprint: "aries-harness/history-doc/v1"
 generated_by: "/aries-harness history-refresh"
 initialized_at: "2026-07-25T10:55:22Z"
-generated_at: "2026-07-27T11:49:41+00:00"
+generated_at: "2026-08-01T06:31:48+00:00"
 effective_status: "generated"
-effective_since: "2026-07-27T11:49:41+00:00"
-content_fingerprint: "sha256:a9eff2f4b50e39306ab99beb41eafa91a7f9c15c181e8c667f12a0b6eef4bdcb"
+effective_since: "2026-08-01T06:31:48+00:00"
+content_fingerprint: "sha256:b4b2f71cf5b2f764687d2e16af5bbae978acf417167da0cbc8ded93a798aeae6"
 trace_history_source: "filesystem-only"
 trace_last_commit_sha: ""
 trace_last_commit_at: ""
@@ -19,12 +19,13 @@ trace_revision_count: "0"
 ---
 # Daily Summary Index
 
-Generated at: `2026-07-27T11:49:41+00:00`
+Generated at: `2026-08-01T06:31:48+00:00`
 
 This index tracks the generated daily development summaries under `history/daily/`.
 
 ## Daily reports
 
+- `2026-08-01` -> `daily/2026-08-01.md`
 - `2026-07-27` -> `daily/2026-07-27.md`
 - `2026-07-26` -> `daily/2026-07-26.md`
 - `2026-07-25` -> `daily/2026-07-25.md`

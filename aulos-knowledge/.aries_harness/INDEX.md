@@ -8,10 +8,10 @@ managed_by: "aries-harness"
 fingerprint: "aries-harness/bootstrap-doc/v1"
 generated_by: "/aries-harness well-organized"
 initialized_at: "2026-07-25T17:25:00+00:00"
-last_organized_at: "2026-07-27T11:49:37+00:00"
+last_organized_at: "2026-08-01T06:31:43+00:00"
 effective_status: "generated"
-effective_since: "2026-07-27T11:49:37+00:00"
-content_fingerprint: "sha256:7e95fb49be1c9e9e614c202cb1ddc8c723748d0d32277603dbd2c9437ec297cf"
+effective_since: "2026-08-01T06:31:43+00:00"
+content_fingerprint: "sha256:47043be49c5432ac9ff4be6c9ddd265285c53f5c933aaefce18c234d1d0dbb37"
 trace_history_source: "filesystem-only"
 trace_last_commit_sha: ""
 trace_last_commit_at: ""
@@ -19,7 +19,7 @@ trace_revision_count: "0"
 ---
 # Harness Index
 
-Last organized: `2026-07-27T11:49:37+00:00`
+Last organized: `2026-08-01T06:31:43+00:00`
 
 Canonical spelling: `/aries-harness well-organized`
 
@@ -57,6 +57,8 @@ Fingerprint marker: `aries-harness` / `aries-harness/bootstrap-doc/v1`
 - role: upstream request briefs and business intent anchors
 - [REQ-007-music-knowledge-platform.md](references/requests/REQ-007-music-knowledge-platform.md)
 - [REQ-008-authority-source-registry.md](references/requests/REQ-008-authority-source-registry.md)
+- [REQ-009-source-discovery-graph.md](references/requests/REQ-009-source-discovery-graph.md)
+- [REQ-010-composer-dossier.md](references/requests/REQ-010-composer-dossier.md)
 
 #### `references/specs/`
 - role: behavior and acceptance contracts derived from requests

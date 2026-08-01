@@ -10,7 +10,7 @@ Environment=AULOS_KNOWLEDGE_HOST=127.0.0.1
 Environment=AULOS_KNOWLEDGE_PORT=5095
 Environment=AULOS_KNOWLEDGE_DB_URL=postgresql+psycopg://aulos:aulos@127.0.0.1:5433/aulos_knowledge
 Environment=AULOS_KNOWLEDGE_ARTIFACT_ROOT=/home/ubuntu/hackathon/aulos/aulos-knowledge/data/persist/artifacts
-Environment=AULOS_KNOWLEDGE_SYNC_JOBS=true
+Environment=AULOS_KNOWLEDGE_SYNC_JOBS=false
 Environment=AULOS_KNOWLEDGE_CATALOG_ROOT=/home/ubuntu/hackathon/aulos/aulos-skills/skills/aulos-listening-corpus/assets/catalog
 EnvironmentFile=-/home/ubuntu/hackathon/aulos/.run/host.env
 ExecStart=/home/ubuntu/hackathon/aulos/aulos-knowledge/.venv/bin/aulos-knowledge

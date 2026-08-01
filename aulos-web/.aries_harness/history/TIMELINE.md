@@ -8,10 +8,10 @@ managed_by: "aries-harness"
 fingerprint: "aries-harness/history-doc/v1"
 generated_by: "/aries-harness history-refresh"
 initialized_at: "2026-07-25T11:07:42Z"
-generated_at: "2026-07-27T11:49:24+00:00"
+generated_at: "2026-08-01T06:31:30+00:00"
 effective_status: "generated"
-effective_since: "2026-07-27T11:49:24+00:00"
-content_fingerprint: "sha256:91f972e14f7533201338c33ff139b26070987d789d6c48e4af41613d05b8c7d1"
+effective_since: "2026-08-01T06:31:30+00:00"
+content_fingerprint: "sha256:319a9e72efa83a343ff234ce6d8359295eb59fb9bcb22e12f3b5c4d88b8d5091"
 trace_history_source: "filesystem-only"
 trace_last_commit_sha: ""
 trace_last_commit_at: ""
@@ -19,7 +19,7 @@ trace_revision_count: "0"
 ---
 # Timeline
 
-Generated at: `2026-07-27T11:49:24+00:00`
+Generated at: `2026-08-01T06:31:30+00:00`
 
 ## Journal milestones
 
@@ -72,6 +72,7 @@ Generated at: `2026-07-27T11:49:24+00:00`
 
 ## Recent git commits
 
+- `491b042` 2026-07-27 Ship authority source registry, OPS knowledge console, and refresh fleet honeycomb.
 - `5633e94` 2026-07-27 Ship Ops task queue, dev blog v2, and refresh fleet honeycomb.
 - `c3009d2` 2026-07-27 Harden platform security, ship fleet DevOps control, and refresh harness honeycomb.
 - `0c8a847` 2026-07-27 Ship Ops daily Dev Blog and web forgot-password reset.
@@ -84,10 +85,10 @@ Generated at: `2026-07-27T11:49:24+00:00`
 
 ## Working tree snapshot
 
-- `M` `AGENTS.md`
-- `M` `CLAUDE.md`
 - `M` `aulos-api/.aries_harness/INDEX.md`
 - `M` `aulos-api/.aries_harness/JOURNAL.md`
+- `M` `aulos-api/.aries_harness/STATE.md`
+- `M` `aulos-api/.aries_harness/TASK_STACK.md`
 - `M` `aulos-api/.aries_harness/history/DAILY_SUMMARY_INDEX.md`
 - `M` `aulos-api/.aries_harness/history/DOC_TRACE.md`
 - `M` `aulos-api/.aries_harness/history/README.md`

@@ -8,10 +8,10 @@ managed_by: "aries-harness"
 fingerprint: "aries-harness/history-doc/v1"
 generated_by: "/aries-harness history-refresh"
 initialized_at: "2026-07-25T11:20:06Z"
-generated_at: "2026-07-27T11:49:30+00:00"
+generated_at: "2026-08-01T06:31:36+00:00"
 effective_status: "generated"
-effective_since: "2026-07-27T11:49:30+00:00"
-content_fingerprint: "sha256:ae92a22cb0c87970f7b96623e8aeb7366d697866a6d6dc9465b6aac1cd187735"
+effective_since: "2026-08-01T06:31:36+00:00"
+content_fingerprint: "sha256:119bd4cedef904666b28a072d15fee9e665b4f344164eac61de881e9e6072ce7"
 trace_history_source: "filesystem-only"
 trace_last_commit_sha: ""
 trace_last_commit_at: ""
@@ -19,27 +19,23 @@ trace_revision_count: "0"
 ---
 # Retrospective Snapshot
 
-Generated at: `2026-07-27T11:49:30+00:00`
+Generated at: `2026-08-01T06:31:36+00:00`
 
 ## Recent changes
 
+- **Knowledge console ship closeout:** Explore / Benchmark / Diagnose-improve / Performance report /
+- Knowledge **Composer dossier** module: picker + 构建履历与作品 + timeline/works tree (REQ-010).
 - UX: `PasswordField` Show/Hide on login password + all API key / token fields
-- SPEC-002 / STORY-PACK-002: Ops **Dev Blog** tab — list/read/generate monorepo daily product blog
-- Evidence from git + harness; LLM via Ops providers (fake offline draft); three Chinese sections
-- Verify: `aulos-api` `pytest tests/test_dev_blog.py` 5 passed; `npm run build` green
-- SPEC-010: OPS Knowledge audit UI opened — Browse/proofread, Sources, Jobs & crawl, Retrieve lab
-- Knowledge APIs: document detail+body, publish restore, composers list, document filters
 
 ## What is working
 
+- **Knowledge console ship closeout:** Explore / Benchmark / Diagnose-improve / Performance report /
+- Knowledge **Composer dossier** module: picker + 构建履历与作品 + timeline/works tree (REQ-010).
 - UX: `PasswordField` Show/Hide on login password + all API key / token fields
-- SPEC-002 / STORY-PACK-002: Ops **Dev Blog** tab — list/read/generate monorepo daily product blog
-- Evidence from git + harness; LLM via Ops providers (fake offline draft); three Chinese sections
-- Verify: `aulos-api` `pytest tests/test_dev_blog.py` 5 passed; `npm run build` green
 
 ## What needs attention
 
-- working tree is dirty with 116 tracked or untracked change(s)
+- working tree is dirty with 138 tracked or untracked change(s)
 - no explicit next-up slice is recorded
 
 ## Durable reminders

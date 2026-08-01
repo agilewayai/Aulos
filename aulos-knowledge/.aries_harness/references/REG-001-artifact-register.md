@@ -9,7 +9,7 @@ fingerprint: "aries-harness/bootstrap-doc/v1"
 initialized_at: "2026-07-25T17:25:00+00:00"
 effective_status: "active"
 effective_since: "2026-07-25T17:25:00+00:00"
-content_fingerprint: "sha256:9dcea1b38086aed128ba21fd04ed66dacc4fc706b94dd64a25ccb9e3721d9e69"
+content_fingerprint: "sha256:0ef1f9287a3d36607037d13af4bec82c4c4c3e425008cda78622e1263a164688"
 trace_history_source: "filesystem-only"
 trace_last_commit_sha: ""
 trace_last_commit_at: ""
@@ -21,6 +21,8 @@ trace_revision_count: "0"
 | --- | --- | --- | --- |
 | REQ-007 | request | references/requests/REQ-007-music-knowledge-platform.md | active |
 | REQ-008 | request | references/requests/REQ-008-authority-source-registry.md | active |
+| REQ-009 | request | references/requests/REQ-009-source-discovery-graph.md | active |
+| REQ-010 | request | references/requests/REQ-010-composer-dossier.md | active |
 | SPEC-009 | spec | references/specs/SPEC-009-knowledge-api-and-data.md | active |
 | SPEC-010 | spec | references/specs/SPEC-010-ops-knowledge-audit-ui.md | active |
 | REG-SRC-001 | registry-manifest | data/registry/sources.yaml | active |

@@ -8,10 +8,10 @@ managed_by: "aries-harness"
 fingerprint: "aries-harness/history-doc/v1"
 generated_by: "/aries-harness history-refresh"
 initialized_at: "2026-07-25T11:20:06Z"
-generated_at: "2026-07-27T11:49:30+00:00"
+generated_at: "2026-08-01T06:31:36+00:00"
 effective_status: "generated"
-effective_since: "2026-07-27T11:49:30+00:00"
-content_fingerprint: "sha256:463f091bbf05f9ef086b134c3235af2e0dea8f8ba95e2687b651accc1af6b8ef"
+effective_since: "2026-08-01T06:31:36+00:00"
+content_fingerprint: "sha256:bc9425eb4c2676918610ce7dbe25aa8d9fe7b20bcd825b1672dd0f99e3c54ad5"
 trace_history_source: "filesystem-only"
 trace_last_commit_sha: ""
 trace_last_commit_at: ""
@@ -19,9 +19,17 @@ trace_revision_count: "0"
 ---
 # Timeline
 
-Generated at: `2026-07-27T11:49:30+00:00`
+Generated at: `2026-08-01T06:31:36+00:00`
 
 ## Journal milestones
+
+### 2026-08-01T06:35:00Z
+
+- **Knowledge console ship closeout:** Explore / Benchmark / Diagnose-improve / Performance report /
+
+### 2026-07-27T16:55:00Z
+
+- Knowledge **Composer dossier** module: picker + 构建履历与作品 + timeline/works tree (REQ-010).
 
 ### 2026-07-26T16:45:00Z
 
@@ -55,6 +63,7 @@ Generated at: `2026-07-27T11:49:30+00:00`
 
 ## Recent git commits
 
+- `491b042` 2026-07-27 Ship authority source registry, OPS knowledge console, and refresh fleet honeycomb.
 - `5633e94` 2026-07-27 Ship Ops task queue, dev blog v2, and refresh fleet honeycomb.
 - `c3009d2` 2026-07-27 Harden platform security, ship fleet DevOps control, and refresh harness honeycomb.
 - `0c8a847` 2026-07-27 Ship Ops daily Dev Blog and web forgot-password reset.
@@ -67,10 +76,10 @@ Generated at: `2026-07-27T11:49:30+00:00`
 
 ## Working tree snapshot
 
-- `M` `AGENTS.md`
-- `M` `CLAUDE.md`
 - `M` `aulos-api/.aries_harness/INDEX.md`
 - `M` `aulos-api/.aries_harness/JOURNAL.md`
+- `M` `aulos-api/.aries_harness/STATE.md`
+- `M` `aulos-api/.aries_harness/TASK_STACK.md`
 - `M` `aulos-api/.aries_harness/history/DAILY_SUMMARY_INDEX.md`
 - `M` `aulos-api/.aries_harness/history/DOC_TRACE.md`
 - `M` `aulos-api/.aries_harness/history/README.md`

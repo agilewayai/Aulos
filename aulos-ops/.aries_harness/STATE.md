@@ -9,7 +9,7 @@ fingerprint: "aries-harness/bootstrap-doc/v1"
 initialized_at: "2026-07-25T11:22:04Z"
 effective_status: "active"
 effective_since: "2026-07-25T11:22:04Z"
-content_fingerprint: "sha256:cbe474780dc47d63fa23d2ad9895994d66d7d6ba3ddf4df70eaa0ca4c6288ccc"
+content_fingerprint: "sha256:15f62b4a031a5b7b8b11fcfb3fb933c6e5c53f0d4bac52e3fd46f8af4eb3ceba"
 trace_history_source: "filesystem-only"
 trace_last_commit_sha: ""
 trace_last_commit_at: ""
@@ -19,11 +19,11 @@ trace_revision_count: "0"
 
 ## Current phase
 
-- STORY-PACK-002 daily Dev Blog shipped (verify/closeout)
+- Knowledge console modules shipped (Explore / Benchmark / Improve / Report / Composer dossier)
 
 ## Active run
 
-- RUN-DEV-BLOG-001
+- RUN-KNOWLEDGE-CONSOLE-010 (closing)
 
 ## Hot facts
 
@@ -31,6 +31,7 @@ trace_revision_count: "0"
 - Role: admin and ops portal
 - Sibling services: aulos-web, aulos-api, aulos-mcp, aulos-agent, aulos-skills, aulos-ops
 - Dev Blog tab → `/v1/ops/dev-blog*` (REQ-002 / SPEC-002)
+- Knowledge plane modules under Knowledge console (SPEC-010)
 
 ## Open risks
 

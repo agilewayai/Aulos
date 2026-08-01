@@ -8,10 +8,10 @@ managed_by: "aries-harness"
 fingerprint: "aries-harness/history-doc/v1"
 generated_by: "/aries-harness history-refresh"
 initialized_at: "2026-07-25T11:07:43Z"
-generated_at: "2026-07-27T11:49:17+00:00"
+generated_at: "2026-08-01T06:31:23+00:00"
 effective_status: "generated"
-effective_since: "2026-07-27T11:49:17+00:00"
-content_fingerprint: "sha256:272dfcc41a47b9e3f5be6503e4a64b1e8c7125269f70de87b2d6763ac1a48dd3"
+effective_since: "2026-08-01T06:31:23+00:00"
+content_fingerprint: "sha256:565f164b05e53a79dfa0d394a97085fa0a47ccc664c600d23f35a776c249b043"
 trace_history_source: "filesystem-only"
 trace_last_commit_sha: ""
 trace_last_commit_at: ""
@@ -19,9 +19,14 @@ trace_revision_count: "0"
 ---
 # Timeline
 
-Generated at: `2026-07-27T11:49:17+00:00`
+Generated at: `2026-08-01T06:31:23+00:00`
 
 ## Journal milestones
+
+### 2026-08-01T06:35:00Z
+
+- **SPEC-018 delta:** ops task type `knowledge.benchmark` (+ improve path) via knowledge plane proxy;
+- Honeycomb closeout with knowledge/ops knowledge-console ship.
 
 ### 2026-07-27T10:45:00Z
 
@@ -68,16 +73,9 @@ Generated at: `2026-07-27T11:49:17+00:00`
 - Legacy `/stream` and recompose/stream enqueue then attach to job events (no long-held DB session).
 - Verify: `pytest tests/test_listening_jobs.py` + stream/recompose SSE green.
 
-### 2026-07-26T17:20:00Z
-
-- SPEC-012: per-run `chain_trace` (aulos.chain_trace/v1) in research_json for 复盘
-- Milestones: discogs → identity → lock → rag → web → llm → skill.intake/synthesize → persist
-- Auto deviations: composer/title drift, family_without_work_id
-- Routes: owner `GET /v1/listening-guides/{id}/trace`, ops `GET /v1/ops/listening-guides/{id}/trace`
-- Verify: `pytest tests/test_chain_trace.py` 4 passed
-
 ## Recent git commits
 
+- `491b042` 2026-07-27 Ship authority source registry, OPS knowledge console, and refresh fleet honeycomb.
 - `5633e94` 2026-07-27 Ship Ops task queue, dev blog v2, and refresh fleet honeycomb.
 - `c3009d2` 2026-07-27 Harden platform security, ship fleet DevOps control, and refresh harness honeycomb.
 - `0c8a847` 2026-07-27 Ship Ops daily Dev Blog and web forgot-password reset.
@@ -90,15 +88,15 @@ Generated at: `2026-07-27T11:49:17+00:00`
 
 ## Working tree snapshot
 
-- `M` `AGENTS.md`
-- `M` `CLAUDE.md`
 - `M` `aulos-api/.aries_harness/ARIES_HARNESS_FINGERPRINT.json`
 - `M` `aulos-api/.aries_harness/INDEX.md`
 - `M` `aulos-api/.aries_harness/JOURNAL.md`
-- `M` `aulos-api/.aries_harness/references/REG-001-artifact-register.md`
-- `M` `aulos-api/src/aulos_api/services/dev_blog.py`
-- `M` `aulos-api/tests/test_dev_blog.py`
-- `M` `aulos-knowledge/.aries_harness/EVAL.md`
+- `M` `aulos-api/.aries_harness/STATE.md`
+- `M` `aulos-api/.aries_harness/TASK_STACK.md`
+- `M` `aulos-api/.aries_harness/references/specs/SPEC-018-ops-task-queue.md`
+- `M` `aulos-api/src/aulos_api/routes/ops.py`
+- `M` `aulos-api/src/aulos_api/services/knowledge_proxy.py`
+- `M` `aulos-api/src/aulos_api/services/task_queue.py`
+- `M` `aulos-knowledge/.aries_harness/INDEX.md`
 - `M` `aulos-knowledge/.aries_harness/JOURNAL.md`
 - `M` `aulos-knowledge/.aries_harness/STATE.md`
-- `M` `aulos-knowledge/.aries_harness/TASK_STACK.md`
