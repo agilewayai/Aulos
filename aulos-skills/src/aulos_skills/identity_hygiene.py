@@ -51,18 +51,26 @@ class HygieneReport:
 
 
 def family_instruments_miss_title(family: dict[str, Any], title_blob: str) -> bool:
-    """True when family declares instruments and none appear in the title blob."""
+    """True when family declares instruments and required evidence misses the title.
+
+    SPEC-033: when the family names soloist-class instruments, ensemble-only hits
+    (orchestra / strings) do not count — piano-concerto must see piano evidence.
+    """
+    from aulos_skills.instrument_evidence import (
+        family_requires_soloist_evidence,
+        family_soloist_misses_blob,
+        token_hits_blob,
+    )
+
     match = dict(family.get("match") or {})
     instruments = [str(t).lower() for t in (match.get("instruments") or []) if t]
     if not instruments:
         return False
+    if family_requires_soloist_evidence(family):
+        return family_soloist_misses_blob(family, title_blob)
     blob = title_blob.lower()
     for tok in instruments:
-        if tok and tok in blob:
-            return False
-        if tok in {"cello", "violoncello", "大提琴"} and (
-            "cello" in blob or "violoncello" in blob or "大提琴" in blob
-        ):
+        if token_hits_blob(tok, blob):
             return False
     return True
 
@@ -190,7 +198,15 @@ def foreign_family_id(
         if not composer_hit:
             return fid
     forms_hit = family_forms_hit_title(family, title_blob)
-    if family_instruments_miss_title(family, title_blob) and not forms_hit:
+    # SPEC-033: soloist miss is foreign even when forms hit (concerto ≠ piano-concerto).
+    if family_instruments_miss_title(family, title_blob):
+        from aulos_skills.instrument_evidence import family_requires_soloist_evidence
+
+        if family_requires_soloist_evidence(family) or not forms_hit:
+            return fid
+    from aulos_skills.instrument_evidence import family_conflicts_blob_soloists
+
+    if family_conflicts_blob_soloists(family, title_blob):
         return fid
     instruments = [str(t).lower() for t in (match.get("instruments") or []) if t]
     strong = [
@@ -208,6 +224,10 @@ def foreign_family_id(
             "中提琴",
             "organ",
             "管风琴",
+            "piano",
+            "钢琴",
+            "oboe",
+            "双簧管",
         }
     ]
     if strong and not any(t in blob for t in strong):

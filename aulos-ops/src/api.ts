@@ -92,12 +92,22 @@ export type LlmProviderPublic = {
   ready: boolean
 }
 
+export type LlmModelOption = {
+  id: string
+  label: string
+}
+
 export type LlmConfig = {
   active_provider: string
+  draft_provider?: string
+  review_provider?: string
   ready_for_live: boolean
+  ready_for_draft?: boolean
+  ready_for_review?: boolean
   deepseek: LlmProviderPublic
   grok: LlmProviderPublic
   supported_providers: string[]
+  model_options?: Record<string, LlmModelOption[]>
 }
 
 export type EmbedConfig = {
@@ -347,6 +357,8 @@ export function updateAmbientFallbackConfig(payload: { mode: string }) {
 
 export function updateLlmConfig(payload: {
   active_provider: string
+  draft_provider?: string
+  review_provider?: string
   deepseek_api_key?: string
   deepseek_model?: string
   deepseek_base_url?: string

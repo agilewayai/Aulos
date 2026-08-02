@@ -14,7 +14,11 @@ If corpus missed or is thin, **compound** knowledge packs into a dossier width/d
 5. When family matches and corpus missed: **family structural lists win** (do not append-merge LLM/RAG flagship chambers).
 6. Scrub foreign flagship markers (`goldberg`, `bwv 988`, `哥德堡`, `aria bass`, …) unless the work is that flagship.
 7. Preserve family `ambient_audio` / `zh` packs; fill missing thesis, genesis, stature, sound, map, practice, media.
-8. Set `synthesize_hit=true` when this skill contributed chambers; record `synthesize_source`.
+8. For SPEC-034 multi-work programs, fold `program_iterations[]` into
+   `guide_sheets[]`: one sheet per program work plus one synthesis sheet.
+9. Emit `program_parallel_plan` as deterministic fan-out/fan-in metadata; gateway
+   or agent workers own actual concurrency and must not share unsafe DB/session objects.
+10. Set `synthesize_hit=true` when this skill contributed chambers; record `synthesize_source`.
 
 ## Quality bar
 
@@ -27,5 +31,6 @@ never a blank shell and never another work’s chambers.
 - Hardcoding one work’s HTML in the web app
 - Inventing Discogs/YouTube URLs
 - Overwriting a rich curated corpus with weaker LLM prose
+- Keeping multi-work output only as scalar thesis/deepdive lists instead of sheet-ready structure
 - Letting Goldberg (or any flagship) leak into unrelated cold-path dossiers via RAG/LLM
 - Keeping KB dossiers with empty titles “just in case”

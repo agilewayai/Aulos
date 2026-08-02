@@ -10,13 +10,108 @@ generated_by: "/aries-harness init"
 initialized_at: "2026-07-25T11:07:43Z"
 effective_status: "active"
 effective_since: "2026-07-25T11:07:43Z"
-content_fingerprint: "sha256:470747f5145bbf38ba74f3a1f2b9146a5d478714cdb2b79a73fe33276a07fafc"
+content_fingerprint: "sha256:20ea1705081a2bdac18cb94cb9db30257d6e3006e613999c2c4e2be6aac9c12f"
 trace_history_source: "filesystem-only"
 trace_last_commit_sha: ""
 trace_last_commit_at: ""
 trace_revision_count: "0"
 ---
 # Journal
+
+## 2026-08-02T07:24:00Z
+
+- **Production deploy sync:** root `bash deploy/aulos-ctl.sh deploy` published
+  the current dirty tree, including SPEC-034 Slice F API gateway/persist gates.
+  `aulos-api.service` restarted at `2026-08-02 15:18:38 CST` and remained active.
+- Verify: root `doctor` passed; deploy test suite -> 5 passed; root `status`
+  showed API/Web/Ops/Knowledge active; root `smoke` passed local + public health.
+  API logs showed db HA, mail, listening, and ops task workers started with Redis
+  OK plus HTTP 200 health/app paths.
+- Central deploy evidence:
+  `../aulos-skills/.aries_harness/runs/deployments/DEPLOY-2026-08-02-spec-034-slice-g-production.md`.
+  Residual: guide #59 live recompose not run.
+
+## 2026-08-02T06:21:15Z
+
+- **SPEC-034 Slice F consumer / guide #59:** hot Postgres latest guide remained
+  `#59` (created `2026-08-02T05:29:38Z`), with `eval_pass=false` but
+  `status=completed`. RCA: API credit parse first classified release artists as
+  performers when no explicit composer role existed, blocking structure-level
+  composer inference; gateway `g.program` used the global empty composer instead
+  of per-work composers; persist accepted failed eval/ambient/process gates as
+  completed.
+- Fix: Discogs core parsing now prefers explicit performer-role names over
+  blanket top-level-artist performers, allowing structure inference for
+  Hummel/Weber/Haydn class releases. Gateway program iterations carry
+  per-work composer into web research + LLM enrich. `_apply_report_to_row`
+  fail-closes on `eval_pass=false`, process hard-fail, review/decontam,
+  ambient gate, or structure hard-fails; failed reports keep HTML/steps/research
+  for review but are not KB-indexed. Guide publish + diary-guide publish require
+  `status=completed` and non-empty HTML.
+- Verify: `PYTHONPATH=. .venv/bin/pytest -q tests/test_discogs.py` -> 12 passed;
+  `PYTHONPATH=. .venv/bin/pytest -q tests/test_listening_jobs.py
+  tests/test_diary_guides.py` -> 9 passed. Broader `test_listening_guide.py`
+  still has two legacy step-id expectation failures (`intake`/`eval` vs current
+  `listening.*`/`g.*`) unrelated to this slice.
+
+## 2026-08-01T23:10:00Z
+
+- **META-001 v9 consumer (guide #57):** gateway program loop uses
+  `search_query` (catalog-first); on LLM enrich fail keeps `web_dossier` raw floor.
+  `verify_sources_to_dossier` degrades to `web_search_raw` on LLM error (no empty
+  `{}`). Persist partial raw dossiers. Verify: `test_web_verify_degrade` green.
+  Live ops: DeepSeek key 401 — operator must rotate; degrade path unblocks deepen.
+
+## 2026-08-01T22:55:00Z
+
+- **SPEC-034Δ program deepen loop (gateway):** after `g.rag`, multi-work
+  `structure_ready` runs `g.program` — per program work forced `cold_fill` web
+  (keep snippets on verify_failed) + LLM enrich; album `g.web` skips as
+  `delegated_to_program_loop`. Plan stage added; iterations travel on
+  research context / kb_dossier into Agent synthesize.
+- Verify: `test_web_research_partial` + `test_listening_plan` green.
+
+## 2026-08-01T22:40:00Z
+
+- **SPEC-034 Slice B/C (consumer):** gateway stores `release_structure` on
+  kb_dossier + research_json; `discogs.structure` chain milestone; discogs
+  context carries program map into Agent.
+- Verify: `tests/test_discogs.py` green with structure emit.
+
+## 2026-08-01T22:20:00Z
+
+- **SPEC-034 Slice A (consumer):** `analyze_discogs_release` + `build_diary_snapshot`
+  emit `release_structure` (program map / structure_ready / expansion_plan) via
+  `aulos_skills.release_structure`. META-001 §4.1 covenant owned in aulos-skills.
+- Verify: `tests/test_discogs.py` 11 passed.
+
+## 2026-08-01T22:10:00Z
+
+- **Regen pollution loop:** targeted revise / review reused masked polluted
+  `corpus_dossier` (lock BWV kept while ZH/Op. foreign remained); Rule-1 betrayal
+  previously required *no* lock numbers preserved. Fix: foreign catalog in craft
+  chambers betrays even when lock numbers are force-copied; RAG drops betraying
+  docs from hits; upsert refuses polluted indexes; recompose clears prior corpus +
+  purges same-guide/same-composer betraying KB; diary/targeted revise escalates to
+  full recompose when polluted. Tests: identity_lock + knowledge_retrieve +
+  `test_regen_pollution_gate` green.
+
+## 2026-08-01T21:55:00Z
+
+- **RAG foreign-dossier bleed (Hindemith→Bach class):** root cause was
+  `works_compatible` treating Discogs template glue (`discogs`/`performers`/`release`)
+  as distinctive identity, plus soft-filter substring `in ⊂ Hindemith`, after a
+  prior pressing was indexed with swapped composer/title. Fix: expand
+  `weak_tokens.yaml` packaging/glue list; token-boundary soft-filter; locked
+  composer gate; refuse `kb_dossier` when `dossier_betrays_identity_lock` (catches
+  self-poisoned Bach-labeled rows still carrying Op.11 chambers). Tests:
+  `tests/test_knowledge_retrieve.py` green.
+
+## 2026-08-01T21:45:00Z
+
+- **SPEC-033 (skills) intake:** `_guess_work_title` keeps program-level Discogs
+  titles when ≥2 catalog numbers are present (no single-track collapse). Test:
+  `test_multi_catalog_release_keeps_program_title`.
 
 ## 2026-08-01T21:00:00Z
 

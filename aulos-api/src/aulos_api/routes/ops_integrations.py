@@ -44,16 +44,28 @@ class LlmProviderPublic(BaseModel):
     ready: bool
 
 
+class LlmModelOption(BaseModel):
+    id: str
+    label: str
+
+
 class LlmConfigOut(BaseModel):
     active_provider: str
+    draft_provider: str = "deepseek"
+    review_provider: str = "grok"
     ready_for_live: bool
+    ready_for_draft: bool = False
+    ready_for_review: bool = False
     deepseek: LlmProviderPublic
     grok: LlmProviderPublic
     supported_providers: list[str]
+    model_options: dict[str, list[LlmModelOption]] = Field(default_factory=dict)
 
 
 class LlmConfigUpdate(BaseModel):
     active_provider: str = Field(default="fake")
+    draft_provider: str | None = None
+    review_provider: str | None = None
     deepseek_api_key: str | None = None
     deepseek_model: str | None = None
     deepseek_base_url: str | None = None
@@ -91,6 +103,8 @@ def put_llm(
         cfg = save_llm_config(
             db,
             active_provider=body.active_provider,
+            draft_provider=body.draft_provider,
+            review_provider=body.review_provider,
             deepseek_api_key=body.deepseek_api_key,
             deepseek_model=body.deepseek_model,
             deepseek_base_url=body.deepseek_base_url,

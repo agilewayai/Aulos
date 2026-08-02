@@ -1,0 +1,91 @@
+family_id: violin-concerto
+match:
+  instruments:
+  - violin
+  - 小提琴
+  - orchestra
+  - 管弦乐
+  forms:
+  - concerto
+  - violin concerto
+  - 协奏曲
+  - 小提琴协奏曲
+work_title_template: '{composer} — Violin Concerto'
+era: Baroque / Classical / Romantic concerto practice
+form: Violin concerto — ritornello / sonata dialogue between solo violin and orchestra
+listening_thesis: >
+  Hear the violin concerto as a speech contract — lock the orchestral opening character
+  and the soloist's first bowing entry before chasing brilliance; map how the cadenza
+  (when present) remembers the opening thesis rather than replacing the instrument.
+work_introduction: >
+  A violin concerto trains ear ownership of solo line vs tutti, bowing color vs massed
+  strings, and the politics of display inside form. Serious listening tracks dialogue
+  turns; the orchestra is a partner, not wallpaper under a virtuoso parade.
+genesis:
+  year: varies by opus
+  place: Court, church gallery, and public concert hall
+  publication: Numbered concertos; treat BWV/Op./K. identity as lock
+  background: Solo violin and ensemble negotiate form under public or sacred display.
+  instrument_culture: Baroque violin → modern setup; continuo vs full orchestra reshape speech.
+historical_stature:
+  reasons:
+  - Makes violin virtuosity legible as form dialogue, not only display.
+  - Cadenza and ritornello culture teach memory inside written architecture.
+  reception_arc: Court / church → Romantic star vehicle → HIP vs modern forces.
+width_points:
+- Lock the orchestral opening thesis before the solo entry.
+- Track solo vs tutti as dialogue turns, not volume contests.
+- State the violin setup era — gut/period vs modern changes the contract.
+- Cadenza (when present) is rhetoric inside form — ask what it remembers.
+depth_points:
+- Map first-movement landmarks with ear cues (ritornello returns, solo episodes).
+- Notice how the slow movement changes the conversation temperature.
+- Finale pulse and wit — how the close recalls opening character.
+listening_map:
+- label: Orchestral thesis
+  cue: Memorize the opening orchestral character before solo entry.
+- label: Solo dialogue
+  cue: Entry bowing character, development turns, cadenza memory.
+- label: Close
+  cue: Does the finale remember the opening contract intact or ironized?
+sound_world:
+  original_instrument: Period or modern violin with continuo / orchestra
+  ensemble_notes: Solo violin + ensemble; piano reductions are study aids, not the thesis.
+  modern_modes:
+  - Modern violin + modern orchestra
+  - Period instruments / reduced forces
+  - Comparative cadenza philosophies
+interpretations:
+- artist: Survey of major violinists across eras
+  album: Selected violin concertos
+  why: Clear dialogue under different violin setups.
+myths_and_caveats:
+- Coupling titles on multi-work pressings are not IntentLock work titles.
+- Piano-concerto rhetoric must not substitute for violin scoring.
+practice_notes:
+- One hearing focused only on orchestral thesis vs solo entry.
+- Second hearing mapping ritornello returns and solo episodes.
+- Journal three dialogue turns with timestamps.
+zh:
+  listening_thesis: >
+    把小提琴协奏曲当作一场言说契约来听——先锁住开场乐队性格与独奏首次运弓进入，再追光彩；
+    画出华彩（若有）如何记得开场命题，而不是换成别的独奏乐器。
+  work_introduction: >
+    小提琴协奏曲训练耳朵分辨独奏线与全奏、运弓色彩与弦乐群，以及炫技在形式内的政治。
+    认真的聆听追踪对话转折；乐队是伙伴，不是炫技游行下的壁纸。
+  width_points:
+  - 独奏进入前先锁住乐队开场命题。
+  - 把独奏与全奏当作对话转折，而非音量竞赛。
+  - 说明小提琴建制时代——改变契约。
+  - 华彩（若有）是形式内的修辞——问它记得什么。
+  depth_points:
+  - 用听觉地标画出第一乐章（利都奈罗回归、独奏段落）。
+  - 注意慢乐章如何改变对话温度。
+  - 终曲脉搏与机智——收束如何记得开场性格。
+  listening_map:
+  - label: 乐队命题
+    cue: 独奏进入前先记住开场乐队性格。
+  - label: 独奏对话
+    cue: 进入运弓性格、发展转折、华彩记忆。
+  - label: 收束
+    cue: 终曲是原样记得开场契约，还是加以反讽？

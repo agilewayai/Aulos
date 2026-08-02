@@ -49,6 +49,17 @@ async def lifespan(_app: FastAPI):
     clear_fake_mailbox()
     bootstrap_identity()
     try:
+        from aulos_api.db.session import SessionLocal
+        from aulos_api.services.llm_providers import ensure_llm_provider_slots
+
+        db = SessionLocal()
+        try:
+            ensure_llm_provider_slots(db)
+        finally:
+            db.close()
+    except Exception as exc:  # noqa: BLE001
+        logging.getLogger("aulos_api.llm").warning("llm_slots_ensure_skip err=%s", exc)
+    try:
         from aulos_api.services.db_ha import start_ha_worker
 
         start_ha_worker()

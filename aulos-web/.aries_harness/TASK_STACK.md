@@ -9,7 +9,7 @@ fingerprint: "aries-harness/bootstrap-doc/v1"
 initialized_at: "2026-07-25T11:10:22Z"
 effective_status: "active"
 effective_since: "2026-07-25T11:10:22Z"
-content_fingerprint: "sha256:f0618cedd44e69a10f5bd17934714caea39dfb4c70e7146aa3a467eafbfe97d9"
+content_fingerprint: "sha256:20b7a44b867a2663562adc01d2638dc21a80a87559c1ff835758e437a2657ccd"
 trace_history_source: "filesystem-only"
 trace_last_commit_sha: ""
 trace_last_commit_at: ""
@@ -19,11 +19,13 @@ trace_revision_count: "0"
 
 ## Now
 
-- none (REQ-011 diary guide lifecycle UI verified; await deploy)
+- none (REQ-006 / SPEC-010 desktop workspace density deployed; browser visual
+  smoke remains pending)
 
 ## Next
 
-- Production deploy of diary guide lifecycle + plaza/diary UX (operator approval)
+- Browser visual smoke for SPEC-010 desktop workspace density and live
+  multi-work sheet-mode guide
 - Wire live cross-service paths (web ↔ api ↔ agent/mcp)
 
 ## Later

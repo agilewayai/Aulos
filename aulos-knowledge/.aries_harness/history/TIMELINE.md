@@ -8,10 +8,10 @@ managed_by: "aries-harness"
 fingerprint: "aries-harness/history-doc/v1"
 generated_by: "/aries-harness history-refresh"
 initialized_at: "2026-07-25T17:25:00+00:00"
-generated_at: "2026-08-01T20:59:34+00:00"
+generated_at: "2026-08-02T07:27:26+00:00"
 effective_status: "generated"
-effective_since: "2026-08-01T20:59:34+00:00"
-content_fingerprint: "sha256:edee587868e5ad861372e4b663c97d65ae3164f513e970dd025af7f5ebb10fef"
+effective_since: "2026-08-02T07:27:26+00:00"
+content_fingerprint: "sha256:28d686d74081a3e419f85d83867d08188ad1282b46d1ae225476a7c2a556ed93"
 trace_history_source: "filesystem-only"
 trace_last_commit_sha: ""
 trace_last_commit_at: ""
@@ -19,7 +19,7 @@ trace_revision_count: "0"
 ---
 # Timeline
 
-Generated at: `2026-08-01T20:59:34+00:00`
+Generated at: `2026-08-02T07:27:26+00:00`
 
 ## Journal milestones
 
@@ -59,6 +59,7 @@ Generated at: `2026-08-01T20:59:34+00:00`
 
 ## Recent git commits
 
+- `5476efb` 2026-08-02 Ship identity freeze (SPEC-032) and listening hardenings across the fleet; refresh honeycomb.
 - `1d325d5` 2026-08-01 Ship knowledge discovery, dossier, and benchmark console; refresh fleet honeycomb.
 - `491b042` 2026-07-27 Ship authority source registry, OPS knowledge console, and refresh fleet honeycomb.
 - `5633e94` 2026-07-27 Ship Ops task queue, dev blog v2, and refresh fleet honeycomb.

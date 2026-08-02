@@ -18,12 +18,22 @@ from typing import Any
 
 import yaml
 
-# Köchel / BWV / Op. / Hob. / D. style catalog numbers
+# Köchel / BWV / Op. / Hob. / D. style catalog numbers.
+# SPEC-033: allow chained siblings after one prefix (BWV 1041 • 1042 / K. 330 / 331).
 _CATALOG_NUM_RE = re.compile(
     r"(?i)\b("
     r"(?:bwv|op\.?|opus|k\.?v?\.?|kv\.?|hob\.?|d\.?|wwv|rv)\s*"
-    r"\d{1,4}[a-z]?(?:\s*[-–—/&]\s*\d{1,4}[a-z]?)?"
+    r"\d{1,4}[a-z]?"
+    r"(?:"
+    r"\s*[-–—/&]\s*\d{1,4}[a-z]?"
+    r"|"
+    r"(?:\s*(?:[•·/,;&]|and|und)\s*\d{1,4}[a-z]?)+"
+    r")?"
     r")\b"
+)
+_CATALOG_CHAIN_RE = re.compile(
+    r"(?i)\b(?P<prefix>bwv|op\.?|opus|k\.?v?\.?|kv\.?|hob\.?|d\.?|wwv|rv)\s*"
+    r"(?P<body>\d{1,4}[a-z]?(?:\s*(?:[-–—/&•·,;]|and|und)\s*\d{1,4}[a-z]?)*)"
 )
 
 _CORE_DOSSIER_KEYS = (
@@ -71,10 +81,22 @@ def normalize_catalog_number(raw: str) -> str:
 
 def extract_catalog_numbers(text: str) -> set[str]:
     found: set[str] = set()
-    for m in _CATALOG_NUM_RE.finditer(text or ""):
-        n = normalize_catalog_number(m.group(1))
-        if n:
-            found.add(n)
+    for m in _CATALOG_CHAIN_RE.finditer(text or ""):
+        prefix = m.group("prefix") or ""
+        body = m.group("body") or ""
+        nums = re.findall(r"\d{1,4}[a-z]?", body, flags=re.I)
+        if not nums:
+            continue
+        for num in nums:
+            n = normalize_catalog_number(f"{prefix} {num}")
+            if n:
+                found.add(n)
+    # Fallback for odd single matches the chain regex missed
+    if not found:
+        for m in _CATALOG_NUM_RE.finditer(text or ""):
+            n = normalize_catalog_number(m.group(1))
+            if n:
+                found.add(n)
     return found
 
 
@@ -208,6 +230,31 @@ def _narrative_dossier_blob(dossier: dict[str, Any]) -> str:
     return "\n".join(parts)
 
 
+def _pollution_scan_blob(dossier: dict[str, Any]) -> str:
+    """Chambers where foreign-work rhetoric must not hide behind a force-copied title.
+
+    Excludes related_works / interpretations (peer citations are legal there).
+    """
+    parts = [_narrative_dossier_blob(dossier)]
+    for key in ("width_points", "depth_points", "myths_and_caveats", "practice_notes"):
+        val = dossier.get(key)
+        if isinstance(val, list):
+            parts.extend(str(x) for x in val if x)
+        elif isinstance(val, str) and val.strip():
+            parts.append(val)
+    for zkey in ("zh", "zh_hans", "zh_hant"):
+        zh = dossier.get(zkey)
+        if not isinstance(zh, dict):
+            continue
+        for key in ("width_points", "depth_points", "myths_and_caveats", "practice_notes"):
+            val = zh.get(key)
+            if isinstance(val, list):
+                parts.extend(str(x) for x in val if x)
+            elif isinstance(val, str) and val.strip():
+                parts.append(val)
+    return "\n".join(parts)
+
+
 def dossier_betrays_identity_lock(
     dossier: dict[str, Any] | None,
     *,
@@ -218,8 +265,9 @@ def dossier_betrays_identity_lock(
     """True when dossier swapped the locked work for a sibling famous piece.
 
     Class rules (all composers/works):
-    1. Lock has catalog numbers; narrative has *other* catalog numbers and
-       none of the locked numbers → betrayal.
+    1. Lock has catalog numbers; craft narrative has *other* catalog numbers →
+       betrayal even when a lock number was force-copied onto work_title/thesis
+       (regen/self-poison mask class).
     2. Lock has a form family; narrative hits opposing alien markers and
        does not preserve lock form/numbers in narrative → betrayal.
     """
@@ -230,23 +278,26 @@ def dossier_betrays_identity_lock(
         return False
 
     narrative = _narrative_dossier_blob(dossier)
-    if not narrative.strip():
+    scan = _pollution_scan_blob(dossier)
+    if not scan.strip():
         return False
     narrative_l = narrative.lower()
+    scan_l = scan.lower()
 
     lock_nums = set(lock.catalog_numbers)
-    narrative_nums = extract_catalog_numbers(narrative)
+    scan_nums = extract_catalog_numbers(scan)
 
-    # Rule 1: competing catalog numbers without preserving the lock numbers
+    # Rule 1: any competing catalog number in craft chambers is betrayal.
+    # Force-copied lock numbers must not mask foreign Op./BWV/K. pollution.
     if lock_nums:
-        foreign = narrative_nums - lock_nums
-        if foreign and not (lock_nums & narrative_nums):
+        foreign = scan_nums - lock_nums
+        if foreign:
             return True
 
     # Rule 2: opposing form-family aliens dominate thesis/form (ignore force-copied work_title)
     if not lock.alien_markers:
         return False
-    alien_hits = [m for m in lock.alien_markers if m in narrative_l]
+    alien_hits = [m for m in lock.alien_markers if m in scan_l or m in narrative_l]
     if not alien_hits:
         return False
 
@@ -257,9 +308,66 @@ def dossier_betrays_identity_lock(
         if _family_anchor_hit(narrative, list(spec.get("anchors") or [])):
             form_preserved = True
             break
+    narrative_nums = extract_catalog_numbers(narrative)
     num_preserved = bool(lock_nums & narrative_nums)
     if not form_preserved and not num_preserved:
         return True
     if lock_nums and not num_preserved and any(len(m) >= 4 for m in alien_hits):
         return True
     return False
+
+
+def identity_shell_dossier(
+    *,
+    work_title: str = "",
+    composer: str = "",
+    catalog: str = "",
+) -> dict[str, Any]:
+    """Minimal non-polluting dossier after identity betrayal scrub (regen-safe)."""
+    return {
+        "work_title": work_title or "",
+        "composer": composer or "",
+        "catalog": catalog or "",
+        "dossier_id": "",
+        "listening_thesis": "",
+        "work_introduction": "",
+        "form": "",
+        "width_points": [],
+        "depth_points": [],
+        "myths_and_caveats": [],
+        "listening_map": [],
+        "related_works": [],
+        "interpretations": [],
+        "appreciation_videos": [],
+        "vinyl_and_discography": [],
+        "zh": {},
+        "zh_hans": {},
+        "zh_hant": {},
+        "_provenance": {"scrubbed_identity_pollution": True},
+    }
+
+
+def scrub_dossier_if_identity_polluted(
+    dossier: dict[str, Any] | None,
+    *,
+    work_title: str = "",
+    work_hint: str = "",
+    raw_message: str = "",
+    composer: str = "",
+) -> tuple[dict[str, Any], bool]:
+    """Return (dossier, scrubbed). Scrub to identity shell when betrayal detected."""
+    d = dict(dossier or {})
+    if not dossier_betrays_identity_lock(
+        d, work_title=work_title or str(d.get("work_title") or ""),
+        work_hint=work_hint,
+        raw_message=raw_message,
+    ):
+        return d, False
+    return (
+        identity_shell_dossier(
+            work_title=work_title or str(d.get("work_title") or ""),
+            composer=composer or str(d.get("composer") or ""),
+            catalog=str(d.get("catalog") or ""),
+        ),
+        True,
+    )

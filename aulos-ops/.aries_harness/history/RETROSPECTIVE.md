@@ -8,10 +8,10 @@ managed_by: "aries-harness"
 fingerprint: "aries-harness/history-doc/v1"
 generated_by: "/aries-harness history-refresh"
 initialized_at: "2026-07-25T11:20:06Z"
-generated_at: "2026-08-01T20:59:26+00:00"
+generated_at: "2026-08-02T07:27:18+00:00"
 effective_status: "generated"
-effective_since: "2026-08-01T20:59:26+00:00"
-content_fingerprint: "sha256:053869a4845e5632f8ec44dcd08051c426a5b5a9da6bb5c1e29ae650b1e8b3fe"
+effective_since: "2026-08-02T07:27:18+00:00"
+content_fingerprint: "sha256:d5a69dfb057017d018517ab08160b79cd7d3c0ce64271955fec43c7533563c71"
 trace_history_source: "filesystem-only"
 trace_last_commit_sha: ""
 trace_last_commit_at: ""
@@ -19,23 +19,26 @@ trace_revision_count: "0"
 ---
 # Retrospective Snapshot
 
-Generated at: `2026-08-01T20:59:26+00:00`
+Generated at: `2026-08-02T07:27:18+00:00`
 
 ## Recent changes
 
+- **Production deploy sync:** root `bash deploy/aulos-ctl.sh deploy` published
+- Verify: root `doctor` passed; deploy test suite -> 5 passed; root `status`
+- Central deploy evidence:
 - **SPEC-031:** Guide quality — Promote to production after staging; copy states
 - **SPEC-030:** Guide quality panel shows promote candidate + Stage craft (staging
-- **Ambient fallback UI:** LLM/Listening settings radio for official Embed vs server
 
 ## What is working
 
+- **Production deploy sync:** root `bash deploy/aulos-ctl.sh deploy` published
+- Verify: root `doctor` passed; deploy test suite -> 5 passed; root `status`
+- Central deploy evidence:
 - **SPEC-031:** Guide quality — Promote to production after staging; copy states
-- **SPEC-030:** Guide quality panel shows promote candidate + Stage craft (staging
-- **Ambient fallback UI:** LLM/Listening settings radio for official Embed vs server
 
 ## What needs attention
 
-- working tree is dirty with 330 tracked or untracked change(s)
+- working tree is dirty with 196 tracked or untracked change(s)
 - no explicit next-up slice is recorded
 
 ## Durable reminders

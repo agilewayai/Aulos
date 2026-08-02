@@ -2473,9 +2473,27 @@ textarea:focus-visible {
 .diary-guide-review .section-head h4 {
   margin: 0;
 }
+.diary-guide-review-workspace {
+  display: grid;
+  gap: 0.85rem;
+}
+.diary-guide-review-main {
+  min-width: 0;
+}
+.diary-guide-review-rail {
+  display: grid;
+  gap: 0.75rem;
+  align-content: start;
+}
 .diary-guide-review .guide-frame {
   min-height: min(62vh, 36rem);
   min-height: min(62dvh, 36rem);
+}
+.guide-reader-bar-hint {
+  display: none;
+  margin: 0;
+  color: var(--ink-soft);
+  font-size: 0.78rem;
 }
 .diary-review-notes {
   display: grid;
@@ -3096,12 +3114,11 @@ textarea:focus-visible {
 .plaza-card {
   margin: 0;
   min-width: 0;
-}
-.plaza-card.is-featured {
-  grid-column: 1 / -1;
+  height: 100%;
 }
 .plaza-card-hit {
   width: 100%;
+  height: 100%;
   display: grid;
   grid-template-columns: minmax(7.5rem, 38%) 1fr;
   gap: 1rem;
@@ -3118,10 +3135,6 @@ textarea:focus-visible {
   box-shadow: var(--shadow-soft);
   transition: border-color 0.2s ease, box-shadow 0.22s ease, transform 0.22s ease;
   -webkit-tap-highlight-color: transparent;
-}
-.plaza-card.is-featured .plaza-card-hit {
-  grid-template-columns: minmax(11rem, 42%) 1fr;
-  min-height: 14rem;
 }
 .plaza-card-hit:hover,
 .plaza-card-hit:focus-visible {
@@ -3147,9 +3160,6 @@ textarea:focus-visible {
   display: block;
   aspect-ratio: 1;
 }
-.plaza-card.is-featured .plaza-card-cover {
-  min-height: 14rem;
-}
 .plaza-card-cover-empty {
   background:
     linear-gradient(145deg, color-mix(in oklab, var(--accent) 18%, var(--paper-deep)), var(--paper-deep));
@@ -3172,10 +3182,6 @@ textarea:focus-visible {
   gap: 0.45rem;
   padding: 0.95rem 1rem 1rem 0;
   min-width: 0;
-}
-.plaza-card.is-featured .plaza-card-body {
-  padding: 1.25rem 1.35rem 1.25rem 0.15rem;
-  gap: 0.55rem;
 }
 .plaza-card-byline {
   display: flex;
@@ -3226,10 +3232,6 @@ textarea:focus-visible {
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
-.plaza-card.is-featured .plaza-card-title {
-  font-size: clamp(1.35rem, 2.4vw, 1.85rem);
-  -webkit-line-clamp: 3;
-}
 .plaza-card-excerpt {
   margin: 0;
   color: var(--ink-soft);
@@ -3239,10 +3241,6 @@ textarea:focus-visible {
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
-}
-.plaza-card.is-featured .plaza-card-excerpt {
-  -webkit-line-clamp: 3;
-  font-size: 1rem;
 }
 .plaza-card-meta {
   display: flex;
@@ -3440,26 +3438,19 @@ textarea:focus-visible {
     grid-template-columns: 1fr;
     gap: 0.95rem;
   }
-  .plaza-card.is-featured {
-    grid-column: auto;
-  }
-  .plaza-card-hit,
-  .plaza-card.is-featured .plaza-card-hit {
+  .plaza-card-hit {
     grid-template-columns: 6.5rem 1fr;
     min-height: 6.5rem;
   }
-  .plaza-card-cover,
-  .plaza-card.is-featured .plaza-card-cover {
+  .plaza-card-cover {
     min-height: 6.5rem;
     aspect-ratio: 1;
   }
-  .plaza-card-body,
-  .plaza-card.is-featured .plaza-card-body {
+  .plaza-card-body {
     padding: 0.7rem 0.75rem 0.75rem 0;
     gap: 0.3rem;
   }
-  .plaza-card-title,
-  .plaza-card.is-featured .plaza-card-title {
+  .plaza-card-title {
     font-size: 1.05rem;
     -webkit-line-clamp: 2;
   }
@@ -3511,12 +3502,6 @@ textarea:focus-visible {
   }
 }
 
-@media (min-width: 861px) {
-  .plaza-card.is-featured .plaza-card-hit {
-    grid-template-columns: minmax(14rem, 36%) 1fr;
-  }
-}
-
 @media (prefers-reduced-motion: reduce) {
   .plaza-reader,
   .plaza-card-hit {
@@ -3530,11 +3515,11 @@ textarea:focus-visible {
 }
 
 /* —— 我的聆乐 blog (SPEC-009: calendar + tag cloud) —— */
-.diary-blog {
-  width: min(78rem, 100%);
-}
-.diary-blog.is-focused {
-  width: min(44rem, 100%);
+.diary-blog,
+.diary-blog.is-focused,
+.diary-blog.is-browsing {
+  width: 100%;
+  max-width: none;
 }
 .diary-head-actions {
   display: flex;
@@ -3568,14 +3553,30 @@ textarea:focus-visible {
 }
 .diary-blog-feed {
   display: grid;
-  gap: 0.95rem;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem 1.1rem;
+  align-items: stretch;
+}
+.diary-blog-card {
+  height: 100%;
 }
 .diary-blog-card .plaza-card-hit {
-  grid-template-columns: 7.5rem 1fr;
-  min-height: 7.5rem;
+  grid-template-columns: 1fr;
+  grid-template-rows: auto minmax(0, 1fr);
+  min-height: 0;
+  height: 100%;
+}
+.diary-blog-card .plaza-card-cover-wrap {
+  min-height: 0;
 }
 .diary-blog-card .plaza-card-cover {
-  min-height: 7.5rem;
+  min-height: 0;
+  aspect-ratio: 1;
+  width: 100%;
+  height: auto;
+}
+.diary-blog-card .plaza-card-body {
+  padding: 0.8rem 0.9rem 0.95rem;
 }
 .diary-status-pill {
   display: inline-flex;
@@ -3805,8 +3806,10 @@ textarea:focus-visible {
 
 @media (max-width: 960px) {
   .diary-blog,
-  .diary-blog.is-focused {
-    width: min(1120px, 100%);
+  .diary-blog.is-focused,
+  .diary-blog.is-browsing {
+    width: 100%;
+    max-width: none;
   }
   .diary-blog-layout {
     grid-template-columns: 1fr;
@@ -3822,12 +3825,22 @@ textarea:focus-visible {
   .diary-blog-aside.is-open {
     display: grid;
   }
+  .diary-blog-feed {
+    grid-template-columns: 1fr;
+    gap: 0.85rem;
+  }
   .diary-blog-card .plaza-card-hit {
     grid-template-columns: 5.75rem 1fr;
+    grid-template-rows: none;
     min-height: 5.75rem;
   }
   .diary-blog-card .plaza-card-cover {
     min-height: 5.75rem;
+    aspect-ratio: 1;
+    height: 100%;
+  }
+  .diary-blog-card .plaza-card-body {
+    padding: 0.7rem 0.75rem 0.75rem 0;
   }
   .diary-cal-day {
     min-height: var(--touch);
@@ -3835,3 +3848,305 @@ textarea:focus-visible {
 }
 
 
+
+/* —— Desktop workspace (ui-ux-pro-max: dense journal / reading shelf) ——
+   Full-bleed panes on large screens; keep ~72ch measure only for continuous prose. */
+@media (min-width: 1100px) {
+  :root {
+    --workspace-gutter: clamp(1rem, 1.6vw, 1.85rem);
+    --workspace-top: 4.15rem;
+  }
+
+  .shell-studio {
+    height: 100dvh;
+    max-height: 100dvh;
+    overflow: hidden;
+  }
+
+  .shell-studio .topbar {
+    padding-block: 0.7rem;
+  }
+
+  .shell-studio .brand {
+    font-size: clamp(1.55rem, 2.2vw, 1.95rem);
+  }
+
+  .shell-studio .tagline {
+    display: none;
+  }
+
+  .shell-studio .stage {
+    flex: 1 1 auto;
+    min-height: 0;
+    overflow: auto;
+    padding-top: 0.55rem;
+    padding-inline: var(--workspace-gutter);
+    padding-bottom: max(0.65rem, env(safe-area-inset-bottom));
+  }
+
+  .studio {
+    max-width: none;
+    width: 100%;
+    min-height: calc(100dvh - var(--workspace-top) - 1.1rem);
+    gap: 0.5rem;
+  }
+
+  .compose-dock.is-collapsed {
+    padding: 0.4rem 0.8rem;
+  }
+
+  .compose-dock.is-collapsed .compose-bar h1 {
+    font-size: 1.2rem;
+  }
+
+  .studio-tabs {
+    margin-bottom: 0.15rem;
+  }
+
+  .studio-stage {
+    flex: 1 1 auto;
+    min-height: 0;
+    height: calc(100dvh - var(--workspace-top) - 7.25rem);
+  }
+
+  .studio-pane.guide-pane {
+    height: 100%;
+    min-height: 0;
+    grid-template-rows: auto minmax(0, 1fr) auto;
+    padding: 0.75rem;
+  }
+
+  .guide-reader {
+    height: 100%;
+    min-height: 0;
+    display: grid;
+    grid-template-rows: auto minmax(0, 1fr);
+    gap: 0.4rem;
+  }
+
+  .guide-reader-bar {
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .guide-reader-bar-hint {
+    display: block;
+  }
+
+  .guide-frame,
+  .guide-reader .guide-frame {
+    min-height: 0;
+    height: 100%;
+  }
+
+  .library.studio-pane,
+  .workflow.studio-pane {
+    height: 100%;
+    min-height: 0;
+    overflow: auto;
+  }
+
+  .diary-shell {
+    width: 100%;
+    max-width: none;
+    padding: 0.65rem 0 1rem;
+    min-height: calc(100dvh - var(--workspace-top) - 0.5rem);
+    display: flex;
+    flex-direction: column;
+  }
+
+  .diary-layout {
+    flex: 1 1 auto;
+    grid-template-columns: minmax(20rem, 26rem) minmax(0, 1fr);
+    gap: 1.15rem;
+    min-height: calc(100dvh - var(--workspace-top) - 5.25rem);
+    align-items: stretch;
+  }
+
+  .diary-list-pane {
+    position: sticky;
+    top: 0.15rem;
+    align-self: start;
+    max-height: calc(100dvh - var(--workspace-top) - 1.25rem);
+    overflow: auto;
+    padding: 0.7rem 0.55rem 0.85rem;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    background: var(--panel-solid);
+    box-shadow: var(--shadow-soft);
+  }
+
+  .diary-detail {
+    min-height: calc(100dvh - var(--workspace-top) - 5.25rem);
+  }
+
+  .diary-guide-review-workspace {
+    grid-template-columns: minmax(0, 1fr) minmax(17rem, 22rem);
+    gap: 1rem;
+    align-items: stretch;
+    min-height: calc(100dvh - 16rem);
+  }
+
+  .diary-guide-review-main {
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+  }
+
+  .diary-guide-review-main .guide-reader {
+    flex: 1 1 auto;
+    min-height: calc(100dvh - 18rem);
+  }
+
+  .diary-guide-review-main .guide-frame {
+    min-height: 0;
+    height: 100%;
+  }
+
+  .diary-guide-review-rail {
+    position: sticky;
+    top: 0.25rem;
+    align-self: start;
+    max-height: calc(100dvh - var(--workspace-top) - 2rem);
+    overflow: auto;
+    padding: 0.85rem;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    background: color-mix(in oklab, var(--panel-solid) 92%, var(--paper-deep));
+    box-shadow: var(--shadow-soft);
+  }
+
+  .diary-guide-lifecycle {
+    display: grid;
+    gap: 0.45rem;
+  }
+
+  .diary-guide-lifecycle .btn {
+    width: 100%;
+  }
+
+  .plaza-shell,
+  .plaza-shell.is-reading {
+    width: 100%;
+    max-width: none;
+  }
+
+  .plaza-shell.is-reading .plaza-reader,
+  .plaza-shell.is-reading .diary-detail.plaza-reader {
+    max-width: 72ch;
+    margin-inline: auto;
+  }
+
+  .plaza-feed {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1.2rem;
+    align-items: stretch;
+  }
+
+  /* Equal album tiles: cover on top, text below — no hero lead */
+  .plaza-feed .plaza-card-hit {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto minmax(0, 1fr);
+    min-height: 0;
+  }
+
+  .plaza-feed .plaza-card-cover-wrap {
+    min-height: 0;
+  }
+
+  .plaza-feed .plaza-card-cover {
+    min-height: 0;
+    aspect-ratio: 1;
+    width: 100%;
+    height: auto;
+  }
+
+  .plaza-feed .plaza-card-body {
+    padding: 0.85rem 0.95rem 1rem;
+    gap: 0.4rem;
+  }
+
+  .diary-blog,
+  .diary-blog.is-focused,
+  .diary-blog.is-browsing {
+    width: 100%;
+    max-width: none;
+  }
+
+  /* Detail / atelier is a workspace — full width, not a prose column */
+  .diary-blog.is-focused .diary-blog-main,
+  .diary-blog-layout.is-reading .diary-blog-main {
+    max-width: none;
+    margin-inline: 0;
+    width: 100%;
+  }
+
+  .diary-blog .diary-detail.plaza-reader {
+    max-width: none;
+    width: 100%;
+  }
+
+  .diary-blog-layout {
+    grid-template-columns: minmax(0, 1fr) minmax(17.5rem, 22rem);
+    gap: 1.5rem;
+    min-height: calc(100dvh - var(--workspace-top) - 5.5rem);
+    align-items: stretch;
+  }
+
+  .diary-blog-layout.is-reading {
+    grid-template-columns: 1fr;
+  }
+
+  .diary-blog-aside {
+    top: 0.25rem;
+    max-height: calc(100dvh - var(--workspace-top) - 1.25rem);
+    overflow: auto;
+  }
+
+  .diary-blog-feed {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1.15rem;
+  }
+
+  .diary-blog-main .diary-note,
+  .diary-blog-main .diary-section textarea {
+    max-width: 72ch;
+  }
+
+  .gen-round-layout {
+    grid-template-columns: minmax(0, 1fr) minmax(16rem, 24rem);
+    align-items: stretch;
+  }
+
+  .gen-round-main .guide-reader {
+    min-height: calc(100dvh - 20rem);
+  }
+
+  .gen-round-main .guide-frame {
+    min-height: calc(100dvh - 22rem);
+  }
+}
+
+@media (min-width: 1500px) {
+  .plaza-feed {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  .diary-blog-feed {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  .diary-layout {
+    grid-template-columns: minmax(22rem, 28rem) minmax(0, 1fr);
+  }
+
+  .diary-guide-review-workspace {
+    grid-template-columns: minmax(0, 1fr) minmax(18rem, 24rem);
+  }
+}
+
+@media (min-width: 1100px) and (prefers-reduced-motion: reduce) {
+  .shell-studio .atmosphere {
+    animation: none;
+  }
+}

@@ -8,10 +8,10 @@ managed_by: "aries-harness"
 fingerprint: "aries-harness/history-doc/v1"
 generated_by: "/aries-harness history-refresh"
 initialized_at: "2026-07-25T11:20:06Z"
-generated_at: "2026-08-01T20:59:26+00:00"
+generated_at: "2026-08-02T07:27:18+00:00"
 effective_status: "generated"
-effective_since: "2026-08-01T20:59:26+00:00"
-content_fingerprint: "sha256:1073520c76eb5730b9b93a44a458ae15ec149d9a2dab668cd1620dd7b68223bc"
+effective_since: "2026-08-02T07:27:18+00:00"
+content_fingerprint: "sha256:af0316d004072b6930906dc89602ed2765ccecc26dc74efe911c0b10ee22da15"
 trace_history_source: "filesystem-only"
 trace_last_commit_sha: ""
 trace_last_commit_at: ""
@@ -19,17 +19,17 @@ trace_revision_count: "0"
 ---
 # Current Status
 
-Generated at: `2026-08-01T20:59:26+00:00`
+Generated at: `2026-08-02T07:27:18+00:00`
 
 ## Current phase
 
-- Knowledge console modules shipped (Explore / Benchmark / Improve / Report / Composer dossier)
+- Knowledge console modules shipped and redeployed (Explore / Benchmark /
 
 ## Branch and workspace
 
 - no branch or workspace details recorded
 - git branch: main
-- HEAD: `1d325d5` Ship knowledge discovery, dossier, and benchmark console; refresh fleet honeycomb.
+- HEAD: `5476efb` Ship identity freeze (SPEC-032) and listening hardenings across the fleet; refresh honeycomb.
 - working tree: dirty
 - change: `M` `aulos-agent/.aries_harness/INDEX.md`
 - change: `M` `aulos-agent/.aries_harness/history/DAILY_SUMMARY_INDEX.md`

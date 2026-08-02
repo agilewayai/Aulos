@@ -68,6 +68,71 @@ import './App.css'
 const PENDING_SCENE: OpsSessionScene | null =
   typeof window === 'undefined' ? null : consumeOpsScene()
 
+const FALLBACK_MODEL_OPTIONS: Record<string, { id: string; label: string }[]> = {
+  deepseek: [
+    { id: 'deepseek-chat', label: 'deepseek-chat (V3 — general)' },
+    { id: 'deepseek-reasoner', label: 'deepseek-reasoner (R1 — thinking)' },
+    { id: 'deepseek-v4-pro', label: 'deepseek-v4-pro' },
+    { id: 'deepseek-v4-flash', label: 'deepseek-v4-flash' },
+    { id: 'deepseek-coder', label: 'deepseek-coder' },
+  ],
+  grok: [
+    { id: 'grok-3-mini', label: 'grok-3-mini (fast / cheap)' },
+    { id: 'grok-3', label: 'grok-3' },
+    { id: 'grok-3-fast', label: 'grok-3-fast' },
+    { id: 'grok-4', label: 'grok-4' },
+    { id: 'grok-4-0709', label: 'grok-4-0709' },
+    { id: 'grok-2-1212', label: 'grok-2-1212' },
+    { id: 'grok-2-vision-1212', label: 'grok-2-vision-1212' },
+  ],
+}
+
+function ProviderModelSelect({
+  id,
+  value,
+  options,
+  onChange,
+}: {
+  id: string
+  value: string
+  options: { id: string; label: string }[]
+  onChange: (next: string) => void
+}) {
+  const known = options.some((o) => o.id === value)
+  const selectValue = known ? value : '__custom__'
+  return (
+    <div className="llm-model-picker">
+      <select
+        id={id}
+        value={selectValue}
+        onChange={(e) => {
+          const next = e.target.value
+          if (next === '__custom__') {
+            onChange(known ? '' : value)
+            return
+          }
+          onChange(next)
+        }}
+      >
+        {options.map((o) => (
+          <option key={o.id} value={o.id}>
+            {o.label}
+          </option>
+        ))}
+        <option value="__custom__">Custom model id…</option>
+      </select>
+      {selectValue === '__custom__' ? (
+        <input
+          aria-label="Custom model id"
+          value={value}
+          onChange={(e) => onChange(e.target.value)}
+          placeholder="provider-model-id"
+        />
+      ) : null}
+    </div>
+  )
+}
+
 function App() {
   const [user, setUser] = useState<User | null>(null)
   const [tab, setTab] = useState<OpsTabId>(() => PENDING_SCENE?.tab ?? 'overview')
@@ -90,6 +155,8 @@ function App() {
   const [ambientFallback, setAmbientFallback] = useState<AmbientFallbackConfig | null>(null)
   const [ambientFallbackMode, setAmbientFallbackMode] = useState<'embed' | 'stream'>('embed')
   const [llmActive, setLlmActive] = useState('fake')
+  const [llmDraftProvider, setLlmDraftProvider] = useState('deepseek')
+  const [llmReviewProvider, setLlmReviewProvider] = useState('grok')
   const [deepseekKey, setDeepseekKey] = useState('')
   const [deepseekModel, setDeepseekModel] = useState('deepseek-chat')
   const [deepseekBase, setDeepseekBase] = useState('https://api.deepseek.com')
@@ -234,6 +301,8 @@ function App() {
     const llmCfg = await fetchLlmConfig()
     setLlm(llmCfg)
     setLlmActive(llmCfg.active_provider)
+    setLlmDraftProvider(llmCfg.draft_provider || 'deepseek')
+    setLlmReviewProvider(llmCfg.review_provider || 'grok')
     setDeepseekModel(llmCfg.deepseek.model)
     setDeepseekBase(llmCfg.deepseek.base_url)
     setGrokModel(llmCfg.grok.model)
@@ -346,6 +415,8 @@ function App() {
     try {
       const cfg = await updateLlmConfig({
         active_provider: llmActive,
+        draft_provider: llmDraftProvider,
+        review_provider: llmReviewProvider,
         deepseek_api_key: deepseekKey.trim() || undefined,
         deepseek_model: deepseekModel.trim(),
         deepseek_base_url: deepseekBase.trim(),
@@ -361,9 +432,7 @@ function App() {
       const amb = await updateAmbientFallbackConfig({ mode: ambientFallbackMode })
       setAmbientFallback(amb)
       setNotice(
-        cfg.ready_for_live
-          ? `LLM saved. Active provider: ${cfg.active_provider} (live chat ready). Review LLM=${rev.enabled ? 'on' : 'off'}. Ambient fallback=${amb.mode}.`
-          : `LLM saved. Active provider: ${cfg.active_provider}. Review LLM=${rev.enabled ? 'on' : 'off'}. Ambient fallback=${amb.mode}.`,
+        `LLM saved. Active=${cfg.active_provider}; draft=${cfg.draft_provider}/${cfg.ready_for_draft ? 'ready' : 'not ready'}; review=${cfg.review_provider}/${cfg.ready_for_review ? 'ready' : 'not ready'}. Review LLM=${rev.enabled ? 'on' : 'off'}. Ambient=${amb.mode}.`,
       )
       await refreshOverview()
     } catch (err) {
@@ -470,6 +539,8 @@ function App() {
     try {
       await updateLlmConfig({
         active_provider: llmActive,
+        draft_provider: llmDraftProvider,
+        review_provider: llmReviewProvider,
         deepseek_api_key: deepseekKey.trim() || undefined,
         deepseek_model: deepseekModel.trim(),
         deepseek_base_url: deepseekBase.trim(),
@@ -950,14 +1021,18 @@ function App() {
                 <p className="settings-lead">
                   Active: <strong>{llm?.active_provider ?? '…'}</strong>
                   {' · '}
-                  live ready={llm?.ready_for_live ? 'yes' : 'no'}
+                  draft=<strong>{llm?.draft_provider ?? 'deepseek'}</strong>
+                  {llm?.ready_for_draft ? ' ✓' : ' ✗'}
+                  {' · '}
+                  review=<strong>{llm?.review_provider ?? 'grok'}</strong>
+                  {llm?.ready_for_review ? ' ✓' : ' ✗'}
                   {' · '}
                   DeepSeek {llm?.deepseek.api_key_set ? 'key set' : 'key missing'}
                   {' · '}
                   Grok {llm?.grok.api_key_set ? 'key set' : 'key missing'}
                 </p>
                 <form className="auth-form" onSubmit={onSaveLlm}>
-                  <label htmlFor="llm-active">Active provider</label>
+                  <label htmlFor="llm-active">Active provider (chat)</label>
                   <select
                     id="llm-active"
                     value={llmActive}
@@ -968,13 +1043,36 @@ function App() {
                     <option value="grok">Grok (xAI)</option>
                   </select>
 
+                  <label htmlFor="llm-draft">Draft / author provider (初稿)</label>
+                  <select
+                    id="llm-draft"
+                    value={llmDraftProvider}
+                    onChange={(e) => setLlmDraftProvider(e.target.value)}
+                  >
+                    <option value="deepseek">DeepSeek</option>
+                    <option value="grok">Grok (xAI)</option>
+                  </select>
+                  <label htmlFor="llm-review">Review provider (多 Agent 审稿)</label>
+                  <select
+                    id="llm-review"
+                    value={llmReviewProvider}
+                    onChange={(e) => setLlmReviewProvider(e.target.value)}
+                  >
+                    <option value="grok">Grok (xAI)</option>
+                    <option value="deepseek">DeepSeek</option>
+                  </select>
+                  <p className="settings-lead">
+                    Multi-agent default: draft=DeepSeek, review=Grok. Review must not share the
+                    author model (anti rubber-stamp). Revise repairs still use the draft provider.
+                  </p>
+
                   <h3>DeepSeek</h3>
                   <label htmlFor="ds-model">Model</label>
-                  <input
+                  <ProviderModelSelect
                     id="ds-model"
                     value={deepseekModel}
-                    onChange={(e) => setDeepseekModel(e.target.value)}
-                    placeholder="deepseek-chat"
+                    options={llm?.model_options?.deepseek ?? FALLBACK_MODEL_OPTIONS.deepseek}
+                    onChange={setDeepseekModel}
                   />
                   <label htmlFor="ds-base">Base URL</label>
                   <input
@@ -997,11 +1095,11 @@ function App() {
 
                   <h3>Grok (xAI)</h3>
                   <label htmlFor="gx-model">Model</label>
-                  <input
+                  <ProviderModelSelect
                     id="gx-model"
                     value={grokModel}
-                    onChange={(e) => setGrokModel(e.target.value)}
-                    placeholder="grok-3-mini"
+                    options={llm?.model_options?.grok ?? FALLBACK_MODEL_OPTIONS.grok}
+                    onChange={setGrokModel}
                   />
                   <label htmlFor="gx-base">Base URL</label>
                   <input

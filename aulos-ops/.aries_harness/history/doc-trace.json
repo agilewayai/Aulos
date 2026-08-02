@@ -1,16 +1,16 @@
 {
   "summary": {
-    "document_count": 55,
+    "document_count": 56,
     "docs_with_issues": 0,
     "dirty_docs": 0,
     "by_layer": {
       "MetaDefineLayer": 27,
-      "SharedSupportSurface": 17,
+      "SharedSupportSurface": 18,
       "RunCookingLayer": 11
     },
     "by_effective_status": {
       "active": 43,
-      "generated": 12
+      "generated": 13
     }
   },
   "documents": [
@@ -118,14 +118,14 @@
       "layer": "SharedSupportSurface",
       "declared_layer": "SharedSupportSurface",
       "effective_status": "generated",
-      "effective_since": "2026-08-01T20:59:26+00:00",
+      "effective_since": "2026-08-02T07:27:18+00:00",
       "managed_by": "aries-harness",
       "fingerprint": "aries-harness/bootstrap-doc/v1",
       "last_updated_at": "",
       "completed_at": "",
       "timebox_actual": "",
-      "content_fingerprint": "sha256:22bd0a0ff90e867be8717624555e7470df8b4c46c8cd7b7c907e785b7672f298",
-      "observed_content_fingerprint": "sha256:22bd0a0ff90e867be8717624555e7470df8b4c46c8cd7b7c907e785b7672f298",
+      "content_fingerprint": "sha256:cc94bf5456e34da4c8e5180d79174627e5fb32f096a818380bf7c428cd5370d8",
+      "observed_content_fingerprint": "sha256:cc94bf5456e34da4c8e5180d79174627e5fb32f096a818380bf7c428cd5370d8",
       "trace_history_source": "filesystem-only",
       "trace_last_commit_sha": "",
       "trace_last_commit_at": "",
@@ -137,11 +137,16 @@
         "trace_revision_count": "0"
       },
       "latest_commit": {
-        "sha": "1d325d5",
-        "date": "2026-08-01",
-        "subject": "Ship knowledge discovery, dossier, and benchmark console; refresh fleet honeycomb."
+        "sha": "5476efb",
+        "date": "2026-08-02",
+        "subject": "Ship identity freeze (SPEC-032) and listening hardenings across the fleet; refresh honeycomb."
       },
       "recent_updates": [
+        {
+          "sha": "5476efb",
+          "date": "2026-08-02",
+          "subject": "Ship identity freeze (SPEC-032) and listening hardenings across the fleet; refresh honeycomb."
+        },
         {
           "sha": "1d325d5",
           "date": "2026-08-01",
@@ -151,11 +156,6 @@
           "sha": "491b042",
           "date": "2026-07-27",
           "subject": "Ship authority source registry, OPS knowledge console, and refresh fleet honeycomb."
-        },
-        {
-          "sha": "5633e94",
-          "date": "2026-07-27",
-          "subject": "Ship Ops task queue, dev blog v2, and refresh fleet honeycomb."
         }
       ],
       "dirty": false,
@@ -175,8 +175,8 @@
       "last_updated_at": "",
       "completed_at": "",
       "timebox_actual": "",
-      "content_fingerprint": "sha256:77e1a15360404f241fb1ce1a0fd1e2233413c9ea6f60bca086944d87efd5701c",
-      "observed_content_fingerprint": "sha256:77e1a15360404f241fb1ce1a0fd1e2233413c9ea6f60bca086944d87efd5701c",
+      "content_fingerprint": "sha256:f239228cebdc8a46a79c7acd22f0e327bcacf960a62fe1dc1c1f6d09e12e100f",
+      "observed_content_fingerprint": "sha256:f239228cebdc8a46a79c7acd22f0e327bcacf960a62fe1dc1c1f6d09e12e100f",
       "trace_history_source": "filesystem-only",
       "trace_last_commit_sha": "",
       "trace_last_commit_at": "",
@@ -188,11 +188,16 @@
         "trace_revision_count": "0"
       },
       "latest_commit": {
-        "sha": "1d325d5",
-        "date": "2026-08-01",
-        "subject": "Ship knowledge discovery, dossier, and benchmark console; refresh fleet honeycomb."
+        "sha": "5476efb",
+        "date": "2026-08-02",
+        "subject": "Ship identity freeze (SPEC-032) and listening hardenings across the fleet; refresh honeycomb."
       },
       "recent_updates": [
+        {
+          "sha": "5476efb",
+          "date": "2026-08-02",
+          "subject": "Ship identity freeze (SPEC-032) and listening hardenings across the fleet; refresh honeycomb."
+        },
         {
           "sha": "1d325d5",
           "date": "2026-08-01",
@@ -202,11 +207,6 @@
           "sha": "c3009d2",
           "date": "2026-07-27",
           "subject": "Harden platform security, ship fleet DevOps control, and refresh harness honeycomb."
-        },
-        {
-          "sha": "0c8a847",
-          "date": "2026-07-27",
-          "subject": "Ship Ops daily Dev Blog and web forgot-password reset."
         }
       ],
       "dirty": false,
@@ -522,8 +522,8 @@
       "last_updated_at": "",
       "completed_at": "",
       "timebox_actual": "",
-      "content_fingerprint": "sha256:15f62b4a031a5b7b8b11fcfb3fb933c6e5c53f0d4bac52e3fd46f8af4eb3ceba",
-      "observed_content_fingerprint": "sha256:15f62b4a031a5b7b8b11fcfb3fb933c6e5c53f0d4bac52e3fd46f8af4eb3ceba",
+      "content_fingerprint": "sha256:e9b344ed71d299f399e510346f3092502891fd7766710f0317741bf4e63ff136",
+      "observed_content_fingerprint": "sha256:e9b344ed71d299f399e510346f3092502891fd7766710f0317741bf4e63ff136",
       "trace_history_source": "filesystem-only",
       "trace_last_commit_sha": "",
       "trace_last_commit_at": "",
@@ -573,8 +573,8 @@
       "last_updated_at": "",
       "completed_at": "",
       "timebox_actual": "",
-      "content_fingerprint": "sha256:939beef28725e9570299a0ec4bf5abd86180e3fa78148815b74b3a3f836da6f6",
-      "observed_content_fingerprint": "sha256:939beef28725e9570299a0ec4bf5abd86180e3fa78148815b74b3a3f836da6f6",
+      "content_fingerprint": "sha256:7a477c5254eff2ed83e5006036a134824c99ffa84e045cbf71151fffd33ab6b3",
+      "observed_content_fingerprint": "sha256:7a477c5254eff2ed83e5006036a134824c99ffa84e045cbf71151fffd33ab6b3",
       "trace_history_source": "filesystem-only",
       "trace_last_commit_sha": "",
       "trace_last_commit_at": "",
@@ -817,14 +817,14 @@
       "layer": "SharedSupportSurface",
       "declared_layer": "SharedSupportSurface",
       "effective_status": "generated",
-      "effective_since": "2026-08-01T20:26:30+00:00",
+      "effective_since": "2026-08-02T07:24:47+00:00",
       "managed_by": "aries-harness",
       "fingerprint": "aries-harness/history-doc/v1",
       "last_updated_at": "",
       "completed_at": "",
       "timebox_actual": "",
-      "content_fingerprint": "sha256:e3264466a577422bdf1041aba37ae788fc3451df8f2ee10b07fb000f151aba63",
-      "observed_content_fingerprint": "sha256:e3264466a577422bdf1041aba37ae788fc3451df8f2ee10b07fb000f151aba63",
+      "content_fingerprint": "sha256:ca3f17a170ff3ed232d7d2e7c21a3fd0331ae0e7fb98a676961fe9a1ab7f1733",
+      "observed_content_fingerprint": "sha256:ca3f17a170ff3ed232d7d2e7c21a3fd0331ae0e7fb98a676961fe9a1ab7f1733",
       "trace_history_source": "filesystem-only",
       "trace_last_commit_sha": "",
       "trace_last_commit_at": "",
@@ -836,11 +836,16 @@
         "trace_revision_count": "0"
       },
       "latest_commit": {
-        "sha": "1d325d5",
-        "date": "2026-08-01",
-        "subject": "Ship knowledge discovery, dossier, and benchmark console; refresh fleet honeycomb."
+        "sha": "5476efb",
+        "date": "2026-08-02",
+        "subject": "Ship identity freeze (SPEC-032) and listening hardenings across the fleet; refresh honeycomb."
       },
       "recent_updates": [
+        {
+          "sha": "5476efb",
+          "date": "2026-08-02",
+          "subject": "Ship identity freeze (SPEC-032) and listening hardenings across the fleet; refresh honeycomb."
+        },
         {
           "sha": "1d325d5",
           "date": "2026-08-01",
@@ -850,11 +855,6 @@
           "sha": "491b042",
           "date": "2026-07-27",
           "subject": "Ship authority source registry, OPS knowledge console, and refresh fleet honeycomb."
-        },
-        {
-          "sha": "5633e94",
-          "date": "2026-07-27",
-          "subject": "Ship Ops task queue, dev blog v2, and refresh fleet honeycomb."
         }
       ],
       "dirty": false,
@@ -868,14 +868,14 @@
       "layer": "SharedSupportSurface",
       "declared_layer": "SharedSupportSurface",
       "effective_status": "generated",
-      "effective_since": "2026-08-01T20:26:30+00:00",
+      "effective_since": "2026-08-02T07:24:47+00:00",
       "managed_by": "aries-harness",
       "fingerprint": "aries-harness/history-doc/v1",
       "last_updated_at": "",
       "completed_at": "",
       "timebox_actual": "",
-      "content_fingerprint": "sha256:ed1e6faf88b3957b18eae16489f6bf0e0e3a8679b36ae8c4a9d9c56d885e0a81",
-      "observed_content_fingerprint": "sha256:ed1e6faf88b3957b18eae16489f6bf0e0e3a8679b36ae8c4a9d9c56d885e0a81",
+      "content_fingerprint": "sha256:3661673ae95355d414f9066fd3a9b8d676e559672a672e01c23dbb4b67fb87f2",
+      "observed_content_fingerprint": "sha256:3661673ae95355d414f9066fd3a9b8d676e559672a672e01c23dbb4b67fb87f2",
       "trace_history_source": "filesystem-only",
       "trace_last_commit_sha": "",
       "trace_last_commit_at": "",
@@ -887,11 +887,16 @@
         "trace_revision_count": "0"
       },
       "latest_commit": {
-        "sha": "1d325d5",
-        "date": "2026-08-01",
-        "subject": "Ship knowledge discovery, dossier, and benchmark console; refresh fleet honeycomb."
+        "sha": "5476efb",
+        "date": "2026-08-02",
+        "subject": "Ship identity freeze (SPEC-032) and listening hardenings across the fleet; refresh honeycomb."
       },
       "recent_updates": [
+        {
+          "sha": "5476efb",
+          "date": "2026-08-02",
+          "subject": "Ship identity freeze (SPEC-032) and listening hardenings across the fleet; refresh honeycomb."
+        },
         {
           "sha": "1d325d5",
           "date": "2026-08-01",
@@ -901,11 +906,6 @@
           "sha": "491b042",
           "date": "2026-07-27",
           "subject": "Ship authority source registry, OPS knowledge console, and refresh fleet honeycomb."
-        },
-        {
-          "sha": "5633e94",
-          "date": "2026-07-27",
-          "subject": "Ship Ops task queue, dev blog v2, and refresh fleet honeycomb."
         }
       ],
       "dirty": false,
@@ -919,14 +919,14 @@
       "layer": "SharedSupportSurface",
       "declared_layer": "SharedSupportSurface",
       "effective_status": "generated",
-      "effective_since": "2026-08-01T20:26:30+00:00",
+      "effective_since": "2026-08-02T07:24:47+00:00",
       "managed_by": "aries-harness",
       "fingerprint": "aries-harness/history-doc/v1",
       "last_updated_at": "",
       "completed_at": "",
       "timebox_actual": "",
-      "content_fingerprint": "sha256:34d4992599703c2f810bb57a852f03192e2cefcc9f8683954c5a6f40e7ecbf48",
-      "observed_content_fingerprint": "sha256:34d4992599703c2f810bb57a852f03192e2cefcc9f8683954c5a6f40e7ecbf48",
+      "content_fingerprint": "sha256:d0dcabd1015e381e4a24178c052774d126aed82b31aaa0f2999a833b5246cbac",
+      "observed_content_fingerprint": "sha256:d0dcabd1015e381e4a24178c052774d126aed82b31aaa0f2999a833b5246cbac",
       "trace_history_source": "filesystem-only",
       "trace_last_commit_sha": "",
       "trace_last_commit_at": "",
@@ -938,11 +938,16 @@
         "trace_revision_count": "0"
       },
       "latest_commit": {
-        "sha": "1d325d5",
-        "date": "2026-08-01",
-        "subject": "Ship knowledge discovery, dossier, and benchmark console; refresh fleet honeycomb."
+        "sha": "5476efb",
+        "date": "2026-08-02",
+        "subject": "Ship identity freeze (SPEC-032) and listening hardenings across the fleet; refresh honeycomb."
       },
       "recent_updates": [
+        {
+          "sha": "5476efb",
+          "date": "2026-08-02",
+          "subject": "Ship identity freeze (SPEC-032) and listening hardenings across the fleet; refresh honeycomb."
+        },
         {
           "sha": "1d325d5",
           "date": "2026-08-01",
@@ -952,11 +957,6 @@
           "sha": "491b042",
           "date": "2026-07-27",
           "subject": "Ship authority source registry, OPS knowledge console, and refresh fleet honeycomb."
-        },
-        {
-          "sha": "5633e94",
-          "date": "2026-07-27",
-          "subject": "Ship Ops task queue, dev blog v2, and refresh fleet honeycomb."
         }
       ],
       "dirty": false,
@@ -970,14 +970,14 @@
       "layer": "SharedSupportSurface",
       "declared_layer": "SharedSupportSurface",
       "effective_status": "generated",
-      "effective_since": "2026-08-01T20:26:30+00:00",
+      "effective_since": "2026-08-02T07:24:47+00:00",
       "managed_by": "aries-harness",
       "fingerprint": "aries-harness/history-doc/v1",
       "last_updated_at": "",
       "completed_at": "",
       "timebox_actual": "",
-      "content_fingerprint": "sha256:372c7367fac90ec162305bcab443093d3b9aa513d9e5e0b4945328d7476ead07",
-      "observed_content_fingerprint": "sha256:372c7367fac90ec162305bcab443093d3b9aa513d9e5e0b4945328d7476ead07",
+      "content_fingerprint": "sha256:4f5ed02153dc81d3ed2ad7742527fbab49c2bbcb4e23e640373dc448b64d68e7",
+      "observed_content_fingerprint": "sha256:4f5ed02153dc81d3ed2ad7742527fbab49c2bbcb4e23e640373dc448b64d68e7",
       "trace_history_source": "filesystem-only",
       "trace_last_commit_sha": "",
       "trace_last_commit_at": "",
@@ -989,11 +989,16 @@
         "trace_revision_count": "0"
       },
       "latest_commit": {
-        "sha": "1d325d5",
-        "date": "2026-08-01",
-        "subject": "Ship knowledge discovery, dossier, and benchmark console; refresh fleet honeycomb."
+        "sha": "5476efb",
+        "date": "2026-08-02",
+        "subject": "Ship identity freeze (SPEC-032) and listening hardenings across the fleet; refresh honeycomb."
       },
       "recent_updates": [
+        {
+          "sha": "5476efb",
+          "date": "2026-08-02",
+          "subject": "Ship identity freeze (SPEC-032) and listening hardenings across the fleet; refresh honeycomb."
+        },
         {
           "sha": "1d325d5",
           "date": "2026-08-01",
@@ -1003,11 +1008,6 @@
           "sha": "491b042",
           "date": "2026-07-27",
           "subject": "Ship authority source registry, OPS knowledge console, and refresh fleet honeycomb."
-        },
-        {
-          "sha": "5633e94",
-          "date": "2026-07-27",
-          "subject": "Ship Ops task queue, dev blog v2, and refresh fleet honeycomb."
         }
       ],
       "dirty": false,
@@ -1021,14 +1021,14 @@
       "layer": "SharedSupportSurface",
       "declared_layer": "SharedSupportSurface",
       "effective_status": "generated",
-      "effective_since": "2026-08-01T20:26:30+00:00",
+      "effective_since": "2026-08-02T07:24:47+00:00",
       "managed_by": "aries-harness",
       "fingerprint": "aries-harness/history-doc/v1",
       "last_updated_at": "",
       "completed_at": "",
       "timebox_actual": "",
-      "content_fingerprint": "sha256:9d884ac98752f115a5f65c7539bd323bc4cfb28285315aa660b73c0b341e5c4f",
-      "observed_content_fingerprint": "sha256:9d884ac98752f115a5f65c7539bd323bc4cfb28285315aa660b73c0b341e5c4f",
+      "content_fingerprint": "sha256:91f7715b07253c218212b9e85c01782c80cd23d9e9af806378d4d1c50705acbb",
+      "observed_content_fingerprint": "sha256:91f7715b07253c218212b9e85c01782c80cd23d9e9af806378d4d1c50705acbb",
       "trace_history_source": "filesystem-only",
       "trace_last_commit_sha": "",
       "trace_last_commit_at": "",
@@ -1040,11 +1040,16 @@
         "trace_revision_count": "0"
       },
       "latest_commit": {
-        "sha": "1d325d5",
-        "date": "2026-08-01",
-        "subject": "Ship knowledge discovery, dossier, and benchmark console; refresh fleet honeycomb."
+        "sha": "5476efb",
+        "date": "2026-08-02",
+        "subject": "Ship identity freeze (SPEC-032) and listening hardenings across the fleet; refresh honeycomb."
       },
       "recent_updates": [
+        {
+          "sha": "5476efb",
+          "date": "2026-08-02",
+          "subject": "Ship identity freeze (SPEC-032) and listening hardenings across the fleet; refresh honeycomb."
+        },
         {
           "sha": "1d325d5",
           "date": "2026-08-01",
@@ -1054,11 +1059,6 @@
           "sha": "491b042",
           "date": "2026-07-27",
           "subject": "Ship authority source registry, OPS knowledge console, and refresh fleet honeycomb."
-        },
-        {
-          "sha": "5633e94",
-          "date": "2026-07-27",
-          "subject": "Ship Ops task queue, dev blog v2, and refresh fleet honeycomb."
         }
       ],
       "dirty": false,
@@ -1072,14 +1072,14 @@
       "layer": "SharedSupportSurface",
       "declared_layer": "SharedSupportSurface",
       "effective_status": "generated",
-      "effective_since": "2026-08-01T20:26:30+00:00",
+      "effective_since": "2026-08-02T07:24:47+00:00",
       "managed_by": "aries-harness",
       "fingerprint": "aries-harness/history-doc/v1",
       "last_updated_at": "",
       "completed_at": "",
       "timebox_actual": "",
-      "content_fingerprint": "sha256:82bc74d5e516c955c361a1b3e742b18830cd0c574e63a6c6ad6c3862a3e7ef3b",
-      "observed_content_fingerprint": "sha256:82bc74d5e516c955c361a1b3e742b18830cd0c574e63a6c6ad6c3862a3e7ef3b",
+      "content_fingerprint": "sha256:f7c71eec3c7aa7582d9c818bbf1f4ce33191e6a5fd734f1f24379f68b92420a5",
+      "observed_content_fingerprint": "sha256:f7c71eec3c7aa7582d9c818bbf1f4ce33191e6a5fd734f1f24379f68b92420a5",
       "trace_history_source": "filesystem-only",
       "trace_last_commit_sha": "",
       "trace_last_commit_at": "",
@@ -1091,11 +1091,16 @@
         "trace_revision_count": "0"
       },
       "latest_commit": {
-        "sha": "1d325d5",
-        "date": "2026-08-01",
-        "subject": "Ship knowledge discovery, dossier, and benchmark console; refresh fleet honeycomb."
+        "sha": "5476efb",
+        "date": "2026-08-02",
+        "subject": "Ship identity freeze (SPEC-032) and listening hardenings across the fleet; refresh honeycomb."
       },
       "recent_updates": [
+        {
+          "sha": "5476efb",
+          "date": "2026-08-02",
+          "subject": "Ship identity freeze (SPEC-032) and listening hardenings across the fleet; refresh honeycomb."
+        },
         {
           "sha": "1d325d5",
           "date": "2026-08-01",
@@ -1105,11 +1110,6 @@
           "sha": "491b042",
           "date": "2026-07-27",
           "subject": "Ship authority source registry, OPS knowledge console, and refresh fleet honeycomb."
-        },
-        {
-          "sha": "5633e94",
-          "date": "2026-07-27",
-          "subject": "Ship Ops task queue, dev blog v2, and refresh fleet honeycomb."
         }
       ],
       "dirty": false,
@@ -1123,14 +1123,14 @@
       "layer": "SharedSupportSurface",
       "declared_layer": "SharedSupportSurface",
       "effective_status": "generated",
-      "effective_since": "2026-08-01T20:26:30+00:00",
+      "effective_since": "2026-08-02T07:24:47+00:00",
       "managed_by": "aries-harness",
       "fingerprint": "aries-harness/history-doc/v1",
       "last_updated_at": "",
       "completed_at": "",
       "timebox_actual": "",
-      "content_fingerprint": "sha256:2f48dbb0453024eb663d20cddb22bafa693cd1dfb59ea9dc93e74dfb61d7d466",
-      "observed_content_fingerprint": "sha256:2f48dbb0453024eb663d20cddb22bafa693cd1dfb59ea9dc93e74dfb61d7d466",
+      "content_fingerprint": "sha256:0b54c48dc737e7cece81cb5aca565f7bbaaded96ddee5aabd4ef3246fa9a7c16",
+      "observed_content_fingerprint": "sha256:0b54c48dc737e7cece81cb5aca565f7bbaaded96ddee5aabd4ef3246fa9a7c16",
       "trace_history_source": "filesystem-only",
       "trace_last_commit_sha": "",
       "trace_last_commit_at": "",
@@ -1142,11 +1142,16 @@
         "trace_revision_count": "0"
       },
       "latest_commit": {
-        "sha": "1d325d5",
-        "date": "2026-08-01",
-        "subject": "Ship knowledge discovery, dossier, and benchmark console; refresh fleet honeycomb."
+        "sha": "5476efb",
+        "date": "2026-08-02",
+        "subject": "Ship identity freeze (SPEC-032) and listening hardenings across the fleet; refresh honeycomb."
       },
       "recent_updates": [
+        {
+          "sha": "5476efb",
+          "date": "2026-08-02",
+          "subject": "Ship identity freeze (SPEC-032) and listening hardenings across the fleet; refresh honeycomb."
+        },
         {
           "sha": "1d325d5",
           "date": "2026-08-01",
@@ -1156,11 +1161,6 @@
           "sha": "491b042",
           "date": "2026-07-27",
           "subject": "Ship authority source registry, OPS knowledge console, and refresh fleet honeycomb."
-        },
-        {
-          "sha": "5633e94",
-          "date": "2026-07-27",
-          "subject": "Ship Ops task queue, dev blog v2, and refresh fleet honeycomb."
         }
       ],
       "dirty": false,
@@ -1174,14 +1174,14 @@
       "layer": "SharedSupportSurface",
       "declared_layer": "SharedSupportSurface",
       "effective_status": "generated",
-      "effective_since": "2026-08-01T20:26:30+00:00",
+      "effective_since": "2026-08-02T07:24:47+00:00",
       "managed_by": "aries-harness",
       "fingerprint": "aries-harness/history-doc/v1",
       "last_updated_at": "",
       "completed_at": "",
       "timebox_actual": "",
-      "content_fingerprint": "sha256:be6289dcf1fbefcdc2ceb8be84ccf97cd1a9b27d89ab5fa977ade34c86645925",
-      "observed_content_fingerprint": "sha256:be6289dcf1fbefcdc2ceb8be84ccf97cd1a9b27d89ab5fa977ade34c86645925",
+      "content_fingerprint": "sha256:dff9cd225fd7b35bd5b0d5f2531313e2097904b72207258485c8576c7af66f83",
+      "observed_content_fingerprint": "sha256:dff9cd225fd7b35bd5b0d5f2531313e2097904b72207258485c8576c7af66f83",
       "trace_history_source": "filesystem-only",
       "trace_last_commit_sha": "",
       "trace_last_commit_at": "",
@@ -1193,11 +1193,16 @@
         "trace_revision_count": "0"
       },
       "latest_commit": {
-        "sha": "1d325d5",
-        "date": "2026-08-01",
-        "subject": "Ship knowledge discovery, dossier, and benchmark console; refresh fleet honeycomb."
+        "sha": "5476efb",
+        "date": "2026-08-02",
+        "subject": "Ship identity freeze (SPEC-032) and listening hardenings across the fleet; refresh honeycomb."
       },
       "recent_updates": [
+        {
+          "sha": "5476efb",
+          "date": "2026-08-02",
+          "subject": "Ship identity freeze (SPEC-032) and listening hardenings across the fleet; refresh honeycomb."
+        },
         {
           "sha": "1d325d5",
           "date": "2026-08-01",
@@ -1207,11 +1212,6 @@
           "sha": "491b042",
           "date": "2026-07-27",
           "subject": "Ship authority source registry, OPS knowledge console, and refresh fleet honeycomb."
-        },
-        {
-          "sha": "5633e94",
-          "date": "2026-07-27",
-          "subject": "Ship Ops task queue, dev blog v2, and refresh fleet honeycomb."
         }
       ],
       "dirty": false,
@@ -1225,14 +1225,14 @@
       "layer": "SharedSupportSurface",
       "declared_layer": "SharedSupportSurface",
       "effective_status": "generated",
-      "effective_since": "2026-08-01T20:26:30+00:00",
+      "effective_since": "2026-08-02T07:24:47+00:00",
       "managed_by": "aries-harness",
       "fingerprint": "aries-harness/history-doc/v1",
       "last_updated_at": "",
       "completed_at": "",
       "timebox_actual": "",
-      "content_fingerprint": "sha256:da9c03fe61b3e08b3285ce6f4afecaeb5724c9dc9fdc93b977a5016f08f89b09",
-      "observed_content_fingerprint": "sha256:da9c03fe61b3e08b3285ce6f4afecaeb5724c9dc9fdc93b977a5016f08f89b09",
+      "content_fingerprint": "sha256:d5fcaa34af576c07db62845a9a639f26fa39cbd1a064456211474bd8dde6d024",
+      "observed_content_fingerprint": "sha256:d5fcaa34af576c07db62845a9a639f26fa39cbd1a064456211474bd8dde6d024",
       "trace_history_source": "filesystem-only",
       "trace_last_commit_sha": "",
       "trace_last_commit_at": "",
@@ -1244,11 +1244,16 @@
         "trace_revision_count": "0"
       },
       "latest_commit": {
-        "sha": "1d325d5",
-        "date": "2026-08-01",
-        "subject": "Ship knowledge discovery, dossier, and benchmark console; refresh fleet honeycomb."
+        "sha": "5476efb",
+        "date": "2026-08-02",
+        "subject": "Ship identity freeze (SPEC-032) and listening hardenings across the fleet; refresh honeycomb."
       },
       "recent_updates": [
+        {
+          "sha": "5476efb",
+          "date": "2026-08-02",
+          "subject": "Ship identity freeze (SPEC-032) and listening hardenings across the fleet; refresh honeycomb."
+        },
         {
           "sha": "1d325d5",
           "date": "2026-08-01",
@@ -1258,11 +1263,6 @@
           "sha": "491b042",
           "date": "2026-07-27",
           "subject": "Ship authority source registry, OPS knowledge console, and refresh fleet honeycomb."
-        },
-        {
-          "sha": "5633e94",
-          "date": "2026-07-27",
-          "subject": "Ship Ops task queue, dev blog v2, and refresh fleet honeycomb."
         }
       ],
       "dirty": false,
@@ -1276,14 +1276,14 @@
       "layer": "SharedSupportSurface",
       "declared_layer": "SharedSupportSurface",
       "effective_status": "generated",
-      "effective_since": "2026-08-01T20:26:30+00:00",
+      "effective_since": "2026-08-02T07:24:47+00:00",
       "managed_by": "aries-harness",
       "fingerprint": "aries-harness/history-doc/v1",
       "last_updated_at": "",
       "completed_at": "",
       "timebox_actual": "",
-      "content_fingerprint": "sha256:d157a3b5b34cb0efc06e3aa1467bb4e1bf1666cd62b4fe8dcbc068ffaf4c2b93",
-      "observed_content_fingerprint": "sha256:d157a3b5b34cb0efc06e3aa1467bb4e1bf1666cd62b4fe8dcbc068ffaf4c2b93",
+      "content_fingerprint": "sha256:a00b60152d14e624f34de0ccc9d9b99b00d7d92a32e9384bdc868d665e98223d",
+      "observed_content_fingerprint": "sha256:a00b60152d14e624f34de0ccc9d9b99b00d7d92a32e9384bdc868d665e98223d",
       "trace_history_source": "filesystem-only",
       "trace_last_commit_sha": "",
       "trace_last_commit_at": "",
@@ -1295,11 +1295,16 @@
         "trace_revision_count": "0"
       },
       "latest_commit": {
-        "sha": "1d325d5",
-        "date": "2026-08-01",
-        "subject": "Ship knowledge discovery, dossier, and benchmark console; refresh fleet honeycomb."
+        "sha": "5476efb",
+        "date": "2026-08-02",
+        "subject": "Ship identity freeze (SPEC-032) and listening hardenings across the fleet; refresh honeycomb."
       },
       "recent_updates": [
+        {
+          "sha": "5476efb",
+          "date": "2026-08-02",
+          "subject": "Ship identity freeze (SPEC-032) and listening hardenings across the fleet; refresh honeycomb."
+        },
         {
           "sha": "1d325d5",
           "date": "2026-08-01",
@@ -1309,11 +1314,6 @@
           "sha": "491b042",
           "date": "2026-07-27",
           "subject": "Ship authority source registry, OPS knowledge console, and refresh fleet honeycomb."
-        },
-        {
-          "sha": "5633e94",
-          "date": "2026-07-27",
-          "subject": "Ship Ops task queue, dev blog v2, and refresh fleet honeycomb."
         }
       ],
       "dirty": false,
@@ -1327,14 +1327,14 @@
       "layer": "SharedSupportSurface",
       "declared_layer": "SharedSupportSurface",
       "effective_status": "generated",
-      "effective_since": "2026-08-01T20:26:30+00:00",
+      "effective_since": "2026-08-02T07:24:47+00:00",
       "managed_by": "aries-harness",
       "fingerprint": "aries-harness/history-doc/v1",
       "last_updated_at": "",
       "completed_at": "",
       "timebox_actual": "",
-      "content_fingerprint": "sha256:45987c3ef755d32df703656cc91947918c4ba794ebad2e518cb2c8a658d1abb1",
-      "observed_content_fingerprint": "sha256:45987c3ef755d32df703656cc91947918c4ba794ebad2e518cb2c8a658d1abb1",
+      "content_fingerprint": "sha256:09a025aeac8ac61bff1149aa7eb8ec1c6f7428057962c8132b8fc4ea7a1f34a6",
+      "observed_content_fingerprint": "sha256:09a025aeac8ac61bff1149aa7eb8ec1c6f7428057962c8132b8fc4ea7a1f34a6",
       "trace_history_source": "filesystem-only",
       "trace_last_commit_sha": "",
       "trace_last_commit_at": "",
@@ -1346,11 +1346,16 @@
         "trace_revision_count": "0"
       },
       "latest_commit": {
-        "sha": "1d325d5",
-        "date": "2026-08-01",
-        "subject": "Ship knowledge discovery, dossier, and benchmark console; refresh fleet honeycomb."
+        "sha": "5476efb",
+        "date": "2026-08-02",
+        "subject": "Ship identity freeze (SPEC-032) and listening hardenings across the fleet; refresh honeycomb."
       },
       "recent_updates": [
+        {
+          "sha": "5476efb",
+          "date": "2026-08-02",
+          "subject": "Ship identity freeze (SPEC-032) and listening hardenings across the fleet; refresh honeycomb."
+        },
         {
           "sha": "1d325d5",
           "date": "2026-08-01",
@@ -1360,13 +1365,39 @@
           "sha": "491b042",
           "date": "2026-07-27",
           "subject": "Ship authority source registry, OPS knowledge console, and refresh fleet honeycomb."
-        },
-        {
-          "sha": "5633e94",
-          "date": "2026-07-27",
-          "subject": "Ship Ops task queue, dev blog v2, and refresh fleet honeycomb."
         }
       ],
+      "dirty": false,
+      "issue_count": 0,
+      "issues": []
+    },
+    {
+      "path": "history/daily/2026-08-02.md",
+      "repo_path": ".aries_harness/history/daily/2026-08-02.md",
+      "doc_role": "history-daily-summary",
+      "layer": "SharedSupportSurface",
+      "declared_layer": "SharedSupportSurface",
+      "effective_status": "generated",
+      "effective_since": "2026-08-02T07:24:47+00:00",
+      "managed_by": "aries-harness",
+      "fingerprint": "aries-harness/history-doc/v1",
+      "last_updated_at": "",
+      "completed_at": "",
+      "timebox_actual": "",
+      "content_fingerprint": "sha256:785a2b0733dada9984a7e08aa0fa69e458d5487178e2f22c6e95a95fcae2fb8c",
+      "observed_content_fingerprint": "sha256:785a2b0733dada9984a7e08aa0fa69e458d5487178e2f22c6e95a95fcae2fb8c",
+      "trace_history_source": "filesystem-only",
+      "trace_last_commit_sha": "",
+      "trace_last_commit_at": "",
+      "trace_revision_count": "0",
+      "observed_trace": {
+        "trace_history_source": "filesystem-only",
+        "trace_last_commit_sha": "",
+        "trace_last_commit_at": "",
+        "trace_revision_count": "0"
+      },
+      "latest_commit": null,
+      "recent_updates": [],
       "dirty": false,
       "issue_count": 0,
       "issues": []

@@ -9,7 +9,7 @@ fingerprint: "aries-harness/bootstrap-doc/v1"
 initialized_at: "2026-07-25T11:22:04Z"
 effective_status: "active"
 effective_since: "2026-07-25T11:22:04Z"
-content_fingerprint: "sha256:f99ed5de5f36c007ba8eae70a7a6019a4b3107cbf75340191f4ff1f1fb38f52c"
+content_fingerprint: "sha256:1417718c4f6c0017dffb58852683115c5189d29bb568f0ad78981be40850804d"
 trace_history_source: "filesystem-only"
 trace_last_commit_sha: ""
 trace_last_commit_at: ""
@@ -27,6 +27,7 @@ trace_revision_count: "0"
 | REQ-006 | request | references/requests/REQ-006-work-identity-catalog.md | active |
 | REQ-007 | request | references/requests/REQ-007-node-decontam-rework.md | active |
 | REQ-008 | request | references/requests/REQ-008-adversarial-process-review.md | active |
+| REQ-024 | request | references/requests/REQ-024-discogs-release-structure-first.md | active |
 | SPEC-001 | spec | references/specs/SPEC-001-skills-harness.md | active |
 | SPEC-002 | spec | references/specs/SPEC-002-domain-runtime-listening-skills.md | active |
 | SPEC-003 | spec | references/specs/SPEC-003-salon-codex-dossier.md | active |
@@ -36,12 +37,17 @@ trace_revision_count: "0"
 | SPEC-008 | spec | references/specs/SPEC-008-work-identity-and-resolver.md | active |
 | SPEC-009 | spec | references/specs/SPEC-009-node-decontam-rework.md | active |
 | SPEC-018 | spec | references/specs/SPEC-018-adversarial-process-review.md | active |
+| SPEC-034 | spec | references/specs/SPEC-034-discogs-release-structure-first.md | active |
 | STORY-PACK-001 | story-pack | references/stories/STORY-PACK-001-bootstrap.md | active |
+| STORY-PACK-002 | story-pack | references/stories/STORY-PACK-002-discogs-release-structure.md | active |
 | ARCH-001 | architecture | decisions/architecture/ARCH-001-skills-harness-architecture.md | active |
+| ARCH-002 | architecture | decisions/architecture/ARCH-002-discogs-release-structure-meta-harness.md | active |
 | ADR-001 | adr | decisions/adrs/ADR-001-filesystem-skill-packs.md | accepted |
 | ADR-004 | adr | decisions/adrs/ADR-004-catalog-over-heuristics.md | accepted |
 | ADR-005 | adr | decisions/adrs/ADR-005-hybrid-adversarial-review.md | accepted |
+| ADR-006 | adr | decisions/adrs/ADR-006-discogs-structure-before-deepen.md | accepted |
 | DOM-002 | domain | references/domain/DOM-002-listening-identity.md | active |
+| DOM-003 | domain | references/domain/DOM-003-discogs-release-structure.md | active |
 | TRACE-001 | traceability | references/TRACE-001-value-traceability.md | active |
 | META-001 | meta-principles | references/META-001-meta-principles.md | active |
 | EC-001 | execution-card | references/tasks/EC-001-bootstrap-execution-card.md | active |

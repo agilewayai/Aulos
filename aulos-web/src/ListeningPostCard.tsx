@@ -8,7 +8,6 @@ export type ListeningPostCardProps = {
   post: ListeningDiaryPost
   onOpen: () => void
   disabled?: boolean
-  featured?: boolean
   titleAs?: 'h2' | 'h3'
   className?: string
   /** Extra byline content (status pill, author avatar, etc.) */
@@ -21,12 +20,12 @@ export type ListeningPostCardProps = {
 
 /**
  * Shared cover+title card for 聆乐广场 feed and 我的聆乐 blog list.
+ * All cards share one size in the grid (no featured lead).
  */
 export function ListeningPostCard({
   post,
   onOpen,
   disabled,
-  featured,
   titleAs = 'h2',
   className = '',
   byline,
@@ -38,7 +37,7 @@ export function ListeningPostCard({
   const TitleTag = titleAs
   return (
     <article
-      className={`plaza-card ${featured ? 'is-featured' : ''} ${className}`.trim()}
+      className={`plaza-card ${className}`.trim()}
       aria-posinset={posinset}
       aria-setsize={setsize}
     >

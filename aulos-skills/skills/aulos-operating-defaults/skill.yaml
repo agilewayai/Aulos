@@ -1,5 +1,5 @@
 id: aulos-operating-defaults
 name: Aulos Operating Defaults
-version: "0.4.1"
+version: "0.4.2"
 layer: policy
 summary: Fleet policy — Aries Harness is the mandatory default process (SPEC-first, TDD, promote, no chat-only).

@@ -309,7 +309,7 @@ def publish_diary_guide_link(db: Session, *, user_id: int, link_id: int) -> dict
     guide = get_owned_guide(db, user_id=user_id, guide_id=link.guide_id)
     if guide is None:
         raise DiaryError("Guide not found", status_code=404)
-    if guide.status != "completed" and not (guide.guide_html or "").strip():
+    if guide.status != "completed" or not (guide.guide_html or "").strip():
         raise DiaryError("Guide is not ready for review yet", status_code=409)
     published = publish_guide(db, user_id=user_id, guide_id=guide.id)
     if published is None:
@@ -405,13 +405,42 @@ def revise_diary_guide_link(
     db.add(link)
     db.commit()
 
-    recomposed = enqueue_targeted_revise_guide(
-        db,
-        user_id=user_id,
-        guide_id=guide.id,
-        review_notes=notes_clean,
-        work_hint=work_hint,
-    )
+    # Identity-polluted guides cannot be cured by chamber patches — full recompose.
+    escalate = False
+    try:
+        research = json.loads(guide.research_json or "{}")
+        dossier = dict(research.get("corpus_dossier") or {}) if isinstance(research, dict) else {}
+        from aulos_skills.identity_lock import dossier_betrays_identity_lock
+
+        escalate = bool(
+            dossier
+            and dossier_betrays_identity_lock(
+                dossier,
+                work_title=guide.work_title or "",
+                raw_message=guide.message or "",
+            )
+        )
+    except Exception:  # noqa: BLE001
+        escalate = False
+
+    if escalate:
+        from aulos_api.services.listening_guide import enqueue_recompose_guide
+
+        recomposed = enqueue_recompose_guide(
+            db,
+            user_id=user_id,
+            guide_id=guide.id,
+            message=guide.message or None,
+            work_hint=work_hint,
+        )
+    else:
+        recomposed = enqueue_targeted_revise_guide(
+            db,
+            user_id=user_id,
+            guide_id=guide.id,
+            review_notes=notes_clean,
+            work_hint=work_hint,
+        )
     if recomposed is None:
         raise DiaryError("Failed to enqueue targeted revise", status_code=400)
     db.refresh(link)

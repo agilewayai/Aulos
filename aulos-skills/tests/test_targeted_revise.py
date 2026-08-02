@@ -73,7 +73,20 @@ def test_targeted_revise_clears_portrait_keeps_unrelated_width() -> None:
 
 
 def test_human_notes_targeted_genesis_without_full_compose() -> None:
+    # Clean shelf (no foreign Op./BWV) — pollution scrub must not escalate this path.
     context = _base_context()
+    context["corpus_dossier"] = {
+        "work_title": "Piano Concerto No. 23 K. 488",
+        "composer": "Wolfgang Amadeus Mozart",
+        "form": "piano concerto",
+        "listening_thesis": "Lock the orchestral opening before the piano entry.",
+        "work_introduction": "Keep this introduction intact for identity.",
+        "listening_map": [{"label": "I", "cue": "tutti thesis"}],
+        "depth_points": ["Map ritornello returns"],
+        "width_points": ["keep-me-width-point-xyz"],
+        "myths_and_caveats": ["verify anecdotes"],
+        "genesis": {},
+    }
     composed_calls = {"n": 0}
 
     def boom(_ctx: dict) -> dict:

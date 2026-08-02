@@ -360,6 +360,48 @@ def _parse_llm_json(text: str) -> dict[str, Any]:
         return {}
 
 
+def _raw_web_dossier(
+    *,
+    work_title: str,
+    composer: str,
+    work_id: str,
+    sources: list[dict[str, Any]],
+    reason: str = "llm_unavailable",
+) -> dict[str, Any]:
+    """META-001 §4.1: LLM verify is enrich — gather must still yield a usable floor."""
+    width = [str(s.get("snippet") or "")[:280] for s in sources[:6] if s.get("snippet")]
+    titles = [str(s.get("title") or "").strip() for s in sources[:6] if s.get("title")]
+    thesis_bits = [t for t in titles if t][:2]
+    thesis = (
+        "; ".join(thesis_bits)[:240]
+        if thesis_bits
+        else f"Research notes for {work_title} gathered from open sources."
+    )
+    return {
+        "work_title": work_title,
+        "composer": composer,
+        "work_id": work_id or None,
+        "listening_thesis": thesis,
+        "width_points": width,
+        "myths_and_caveats": [
+            "Web extracts not LLM-verified — treat as leads; confirm before stating as fact.",
+            f"Degraded verify path: {reason}",
+        ],
+        "zh": {
+            "listening_thesis": f"《{work_title}》公开来源摘录（未经模型核验，仅作线索）。",
+            "width_points": width,
+            "myths_and_caveats": ["公开网页摘录未经模型核验——陈述前请再确认。"],
+        },
+        "_provenance": {
+            "method": "web_search_raw",
+            "verified": False,
+            "verified_at": _utcnow_iso(),
+            "degrade_reason": reason,
+            "sources": sources,
+        },
+    }
+
+
 async def verify_sources_to_dossier(
     db: Session,
     *,
@@ -384,27 +426,13 @@ async def verify_sources_to_dossier(
             facet_bits.append(f"{key}: {', '.join(str(v) for v in vals)}")
 
     if not cfg.ready_for_live:
-        return {
-            "work_title": work_title,
-            "composer": composer,
-            "work_id": work_id or None,
-            "listening_thesis": f"Research notes for {work_title} gathered from open sources.",
-            "width_points": [str(s.get("snippet") or "")[:280] for s in sources[:6] if s.get("snippet")],
-            "myths_and_caveats": [
-                "Web extracts not LLM-verified — treat as leads; confirm before stating as fact."
-            ],
-            "zh": {
-                "listening_thesis": f"《{work_title}》公开来源摘录（未经模型核验，仅作线索）。",
-                "width_points": [str(s.get("snippet") or "")[:280] for s in sources[:6] if s.get("snippet")],
-                "myths_and_caveats": ["公开网页摘录未经模型核验——陈述前请再确认。"],
-            },
-            "_provenance": {
-                "method": "web_search_raw",
-                "verified": False,
-                "verified_at": _utcnow_iso(),
-                "sources": sources,
-            },
-        }
+        return _raw_web_dossier(
+            work_title=work_title,
+            composer=composer,
+            work_id=work_id,
+            sources=sources,
+            reason="llm_not_ready",
+        )
 
     prompt = (
         "You are Aulos research verifier. Using ONLY the numbered sources below, "
@@ -426,13 +454,31 @@ async def verify_sources_to_dossier(
         live = await chat_with_ops_llm(db=db, message=prompt, timeout=90.0)
     except Exception as exc:  # noqa: BLE001
         logger.warning("web_verify_llm_failed work=%s err=%s", work_title, exc)
-        return {}
+        return _raw_web_dossier(
+            work_title=work_title,
+            composer=composer,
+            work_id=work_id,
+            sources=sources,
+            reason=f"llm_error:{type(exc).__name__}",
+        )
     if live is None:
-        return {}
+        return _raw_web_dossier(
+            work_title=work_title,
+            composer=composer,
+            work_id=work_id,
+            sources=sources,
+            reason="llm_empty",
+        )
     text, _provider = live
     dossier = _parse_llm_json(text)
     if not dossier:
-        return {}
+        return _raw_web_dossier(
+            work_title=work_title,
+            composer=composer,
+            work_id=work_id,
+            sources=sources,
+            reason="llm_parse_failed",
+        )
     dossier["work_title"] = work_title
     if composer:
         dossier["composer"] = composer
@@ -531,22 +577,35 @@ async def run_web_research(
     facets: dict[str, Any] | None = None,
     user_id: int | None = None,
     rag: dict[str, Any] | None = None,
+    force_action: str | None = None,
 ) -> dict[str, Any]:
-    """Full loop. Returns skipped dict when fresh; otherwise cold_fill or refresh."""
+    """Full loop. Returns skipped dict when fresh; otherwise cold_fill or refresh.
+
+    force_action: when ``cold_fill`` or ``refresh``, bypass freshness skip
+    (SPEC-034 program deepen loop — each program work must gather evidence).
+    """
     cfg = load_web_research_config(db)
     if not cfg.get("enabled"):
         return {"skipped": True, "reason": "disabled", "action": "skip"}
     if not work_title.strip():
         return {"skipped": True, "reason": "no_work_title", "action": "skip"}
 
-    decision = decide_web_research(
-        db,
-        work_title=work_title,
-        composer=composer,
-        user_id=user_id,
-        rag=rag,
-        cfg=cfg,
-    )
+    forced = str(force_action or "").strip().lower()
+    if forced in {"cold_fill", "refresh"}:
+        decision = {
+            "action": forced,
+            "reason": "forced_program_iteration",
+            "richness": _dossier_richness(dict((rag or {}).get("kb_dossier") or {})),
+        }
+    else:
+        decision = decide_web_research(
+            db,
+            work_title=work_title,
+            composer=composer,
+            user_id=user_id,
+            rag=rag,
+            cfg=cfg,
+        )
     action = str(decision.get("action") or "skip")
     if action == "skip":
         return {
@@ -580,12 +639,50 @@ async def run_web_research(
         sources=sources,
     )
     if not dossier:
+        rag_hits = [
+            f"[web:{s.get('provider')}] {s.get('title')}: {str(s.get('snippet') or '')[:220]}"
+            for s in sources
+            if s.get("snippet")
+        ]
         return {
-            "skipped": True,
+            "skipped": False,
+            "partial": True,
             "reason": "verify_failed",
             "action": action,
             "decision": decision,
             "sources": sources,
+            "dossier": {},
+            "rag_hits": rag_hits,
+            "persisted_doc_ids": [],
+            "rag_mode_suffix": "web-partial",
+        }
+    # Raw floor still counts as usable evidence (META §4.1 — LLM is enrich, not gate)
+    is_raw = str((dossier.get("_provenance") or {}).get("method") or "") == "web_search_raw"
+    if is_raw:
+        rag_hits = [
+            f"[web:{s.get('provider')}] {s.get('title')}: {str(s.get('snippet') or '')[:220]}"
+            for s in sources
+            if s.get("snippet")
+        ]
+        # Persist raw floor so next RAG is warmer even without LLM verify
+        doc_ids = persist_web_dossier(
+            db,
+            dossier=dossier,
+            user_id=user_id,
+            persist_global=bool(cfg.get("persist_global", True)),
+            merge_existing=False,
+        )
+        return {
+            "skipped": False,
+            "partial": True,
+            "reason": str((dossier.get("_provenance") or {}).get("degrade_reason") or "web_search_raw"),
+            "action": action,
+            "decision": decision,
+            "sources": sources,
+            "dossier": dossier,
+            "rag_hits": rag_hits,
+            "persisted_doc_ids": doc_ids,
+            "rag_mode_suffix": "web-partial",
         }
 
     merge_existing = action == "refresh"

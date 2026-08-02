@@ -269,6 +269,46 @@ def _run_targeted_revise_job(
     if not notes:
         raise RuntimeError("targeted_revise requires review_notes")
 
+    # Polluted snapshot → escalate to full recompose (do not patch foreign chambers).
+    try:
+        from aulos_skills.identity_lock import dossier_betrays_identity_lock
+        from aulos_api.services.knowledge_base import purge_betraying_knowledge
+
+        dossier0 = dict(research.get("corpus_dossier") or {})
+        if dossier0 and dossier_betrays_identity_lock(
+            dossier0,
+            work_title=row.work_title or "",
+            raw_message=row.message or "",
+        ):
+            logger.warning(
+                "targeted_revise_escalated_identity_pollution guide=%s", row.id
+            )
+            research["corpus_dossier"] = {}
+            research["prior_corpus_cleared_for_recompose"] = True
+            research.pop("pending_review_notes", None)
+            row.research_json = json.dumps(research, ensure_ascii=False)
+            row.updated_at = utcnow()
+            db.add(row)
+            db.commit()
+            purge_betraying_knowledge(
+                db,
+                work_title=row.work_title or "",
+                raw_message=row.message or "",
+                composer=row.composer or "",
+                source_guide_id=int(row.id),
+            )
+            # Inline recompose — do not re-enqueue (avoids double execution).
+            return run_listening_job(
+                {
+                    "guide_id": int(row.id),
+                    "user_id": int(row.user_id),
+                    "kind": "recompose",
+                    "work_hint": work_hint or row.work_title,
+                }
+            )
+    except Exception as exc:  # noqa: BLE001
+        logger.warning("targeted_revise_pollution_gate_failed guide=%s err=%s", row.id, exc)
+
     def _mark(step_id: str, title: str, status: str, detail: str = "") -> None:
         _persist_steps(
             db,

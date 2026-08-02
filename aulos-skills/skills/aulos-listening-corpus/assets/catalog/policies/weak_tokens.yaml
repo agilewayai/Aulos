@@ -61,3 +61,42 @@ tokens:
   - 交响
   - 交响乐
   - 夜曲
+  # Packaging / Discogs-template / prompt glue — never prove same-work (SPEC-033Δ)
+  - discogs
+  - performers
+  - performer
+  - ensembles
+  - ensemble
+  - composers
+  - composer
+  - release
+  - label
+  - vinyl
+  - catno
+  - write
+  - professional
+  - listening
+  - guide
+  - aspect
+  - focus
+  - unknown
+  - classical
+  - masterwork
+  - 导赏
+  - 聆乐导赏
+  - 作品导赏
+  # Short glue / key words that substring-match inside unrelated names
+  - in
+  - for
+  - and
+  - with
+  - the
+  - major
+  - minor
+  - flat
+  - sharp
+  - dur
+  - moll
+  - strings
+  - orchestra
+  - continuo

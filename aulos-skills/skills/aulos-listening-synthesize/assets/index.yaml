@@ -67,6 +67,8 @@ families:
     path: lyric-piano-miniatures.yaml
   - id: piano-concerto
     path: piano-concerto.yaml
+  - id: violin-concerto
+    path: violin-concerto.yaml
   - id: sacred-requiem
     path: sacred-requiem.yaml
   - id: symphony-orchestra

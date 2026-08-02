@@ -12,6 +12,8 @@ After width + depth dossiers exist. Produce the user-facing Salon Codex guide pa
 4. Render with `render_bilingual_guide_html` (never the legacy English-only HTML path):
    - EN + ZH panes when `zh` pack exists; default ZH for Chinese listener messages.
    - Floating ambient player (`data-ambient-player=v2`), cache-first media tiers, why-text.
+   - When `corpus_dossier.guide_sheets[]` exists, render navigable work sheets
+     plus a synthesis sheet using accessible tabs inside each language pane.
 5. Keep myths in caveats; keep ear cues in anatomy/map; keep Discogs/YouTube only when curated URLs exist.
 6. Hand HTML + summary to eval skill.
 
@@ -23,6 +25,7 @@ After width + depth dossiers exist. Produce the user-facing Salon Codex guide pa
 ## Anti-patterns
 
 - Walls of undifferentiated prose
+- Collapsing a multi-work program into one undifferentiated essay when work sheets exist
 - Emoji, purple gradients, generic “AI card” layouts
 - Hiding uncertainty
 - Inventing YouTube or Discogs links

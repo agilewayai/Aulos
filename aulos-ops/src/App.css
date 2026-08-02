@@ -2575,6 +2575,23 @@ button.linkish:hover {
   padding: 0.65rem 0.75rem;
 }
 
+.llm-model-picker {
+  display: grid;
+  gap: 0.45rem;
+  margin-bottom: 0.15rem;
+}
+
+.llm-model-picker select,
+.llm-model-picker input {
+  width: 100%;
+  min-height: 48px;
+  border: 1px solid var(--line);
+  background: #fff;
+  color: inherit;
+  font: inherit;
+  padding: 0.65rem 0.75rem;
+}
+
 .section-head {
   display: flex;
   justify-content: space-between;

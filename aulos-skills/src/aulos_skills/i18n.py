@@ -310,6 +310,8 @@ def localize_view(dossier: dict[str, Any] | None, lang: str) -> dict[str, Any]:
         "appreciation_videos",
         "vinyl_and_discography",
         "ambient_audio",
+        "guide_sheets",
+        "program_parallel_plan",
     ):
         if base.get(key):
             scaffold[key] = base[key]

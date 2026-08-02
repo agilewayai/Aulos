@@ -66,3 +66,24 @@ def test_honest_concerto_dossier_does_not_betray() -> None:
         "related_works": [{"title": "Mozart Requiem", "why": "Same composer, different form"}],
     }
     assert not dossier_betrays_identity_lock(dossier, work_title=title)
+
+
+def test_masked_foreign_catalog_still_betrays() -> None:
+    """Force-copied lock numbers must not mask a foreign catalog in thesis/ZH.
+
+    Regen class: polluted dossier keeps BWV/K. in work_title while ZH thesis
+    still narrates another work's Op./catalog — recompose/review must refuse it.
+    """
+    title = "Bach — Concerto in D minor, BWV 1060"
+    dossier = {
+        "work_title": title,
+        "composer": "Johann Sebastian Bach",
+        "listening_thesis": "Hear the concerto dialogue; remember BWV 1060.",
+        "form": "Concerto",
+        "work_introduction": "Oboe and violin with strings.",
+        "zh_hant": {
+            "listening_thesis": "欣德米特中提琴奏鸣曲 Op.11 No.5 的复调之路。",
+        },
+        "width_points": ["欣德米特本人是杰出的中提琴家"],
+    }
+    assert dossier_betrays_identity_lock(dossier, work_title=title)

@@ -50,6 +50,22 @@ INSTRUMENT_VOICES: dict[str, dict[str, str]] = {
         "map_open_en": "Lock the opening bow motive.",
         "map_open_zh": "先锁住开场弓动机。",
     },
+    "oboe": {
+        "label_en": "oboe",
+        "label_zh": "双簧管",
+        "thesis_en": "reed speech and breath line on oboe",
+        "thesis_zh": "双簧管的簧片言语与气息线条",
+        "map_open_en": "Lock the first reed entry character.",
+        "map_open_zh": "先锁住第一声簧片进入性格。",
+    },
+    "viola": {
+        "label_en": "viola",
+        "label_zh": "中提琴",
+        "thesis_en": "alto-register bow speech on viola",
+        "thesis_zh": "中提琴中音声区的弓语",
+        "map_open_en": "Lock the viola's opening speaking register.",
+        "map_open_zh": "先锁住中提琴开场的言说音区。",
+    },
     "strings": {
         "label_en": "string ensemble",
         "label_zh": "弦乐",

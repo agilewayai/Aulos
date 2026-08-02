@@ -10,13 +10,125 @@ generated_by: "/aries-harness init"
 initialized_at: "2026-07-25T11:20:05Z"
 effective_status: "active"
 effective_since: "2026-07-25T11:20:05Z"
-content_fingerprint: "sha256:d52befe0aec5f1c942d5a3f234981d5f01db96a47abdddfb42c0d6ba05f09c8a"
+content_fingerprint: "sha256:045c5531926c170c9650d0e88988969276bf22882d5ac8d9fd7830d92dba5f8c"
 trace_history_source: "filesystem-only"
 trace_last_commit_sha: ""
 trace_last_commit_at: ""
 trace_revision_count: "0"
 ---
 # Journal
+
+## 2026-08-02T07:24:00Z
+
+- **Production deploy — SPEC-034 Slice G:** operator requested production deploy,
+  so `bash deploy/aulos-ctl.sh deploy` was executed for the current dirty working
+  tree (`main` at `5476efb`). Deploy completed and restarted production services
+  at `2026-08-02 15:18:36/38 CST`.
+- Evidence memo:
+  `runs/deployments/DEPLOY-2026-08-02-spec-034-slice-g-production.md`.
+  Built artifacts observed: web `index-C4PhANvp.js` /
+  `20260802071831-5476efb`; ops `index-6KD2tYCV.js` /
+  `20260802071835-5476efb`.
+- Verify: `bash deploy/aulos-ctl.sh doctor` passed; `bash
+  deploy/aulos-ctl.sh test` -> 5 passed; `bash deploy/aulos-ctl.sh status`
+  showed `aulos-api`, `aulos-web`, `aulos-ops`, and `aulos-knowledge` active;
+  `bash deploy/aulos-ctl.sh smoke` passed local + public checks. Logs showed
+  normal API worker startup, Redis OK, media prefetch, and HTTP 200 health/app
+  paths.
+- Residuals: dirty-tree deploy rather than clean RC; no secret rotation; guide
+  `#59` not recomposed; no browser/Playwright visual smoke. Rollback owner is
+  the human host operator; rollback path is checkout known-good SHA + deploy.
+
+## 2026-08-02T06:51:16Z
+
+- **SPEC-034 Slice G / multi-work sheet mode:** Root cause was plural program data
+  being forced back into a singular guide body. Added `guide_sheets[]` from
+  `fold_program_iterations`: one work sheet per Hummel / Weber / Haydn-style
+  program identity plus a synthesis sheet. Added `program_parallel_plan`
+  (`fan_out` work units + `fan_in=synthesis_sheet`) as the safe contract for
+  later gateway/agent concurrency.
+- Compose/render upgrade: `render_bilingual_guide_html` now renders sheet tabs
+  inside each language pane with `role=tablist/tab/tabpanel`, `aria-selected`,
+  roving `tabindex`, and Arrow/Home/End keyboard support. Web stays a sandboxed
+  iframe container; no duplicate React guide UI.
+- Skill bumps: `aulos-listening-synthesize` 0.2.1 and
+  `aulos-listening-compose` 0.3.1. RCA report:
+  `runs/reports/RCA-2026-08-02-guide-59-multi-work-sheets.md`.
+- Verify: new tests failed before implementation, then passed; skills targeted
+  group 49 passed; API consumer gate 21 passed (3 warnings); `aulos-web`
+  `npm run build` passed; selected `git diff --check` passed. No production
+  deploy or live guide recomposition performed.
+
+## 2026-08-02T06:21:15Z
+
+- **SPEC-034 Slice F / guide #59 RCA:** latest hot guide `#59` (`/discogs #7083684`,
+  Hummel / Weber / Haydn piano-flute-cello trios) proved structure + program loop
+  were necessary but insufficient. `discogs.structure` was ready and `g.program`
+  deepened 3/3 works, but final merge let album/family/LLM scalars re-own
+  `composer`, `listening_thesis`, `work_introduction`, `related_works`, and
+  `sound_world`, yielding `Unknown composer` + anonymous piano-trio prose.
+- Fix: `release_structure` now safely infers top-level release artists as
+  positioned program composers only after performer/ensemble-role exclusion, and
+  propagates per-work composers through `expansion_plan` / `iter_program_works`.
+  `fold_program_iterations` rebuilds program subject scalars from iterations, and
+  `finalize_program_dossier` forces program-loop subject fields over later generic
+  layers.
+- Verify: `cd aulos-skills && .venv/bin/pytest -q tests/test_release_structure.py
+  tests/test_program_deepen.py` -> 19 passed; plus family regression group
+  `tests/test_release_structure.py tests/test_program_deepen.py
+  tests/test_family_coverage.py` -> 24 passed.
+
+## 2026-08-01T23:10:00Z
+
+- **META-001 v9 / guide #57 RCA:** Program loop *did* run (4/4, `release-program-loop`,
+  `g.web=delegated`) but chambers filled with Bach bio + “Bachlava” junk. Class
+  defects: (1) structure preferred longest Discogs polyglot `A = B = C` titles as
+  search keys; (2) LLM verify on 401 returned `{}` instead of `web_search_raw`
+  floor — LLM treated as hard gate. Fix: `canonical_discogs_title` +
+  `program_search_query`; verify degrade; fold junk-hit filter. Verify:
+  `test_release_structure` + `test_program_deepen` + API `test_web_verify_degrade`.
+  Ops note: DeepSeek API key currently 401 — rotate in OPS; loop must still deepen
+  without live LLM.
+
+## 2026-08-01T22:55:00Z
+
+- **SPEC-034Δ / META-001 v8:** RCA — album-title `g.web` hit `verify_failed` /
+  community skip; LLM stayed `agent-skills`; synthesize used single-layer
+  `release-program-expand` scaffold (no per-BWV loop). Fix: gateway `g.program`
+  iterative deepen (`program_deepen.py`) — force per-work web (partial OK) +
+  LLM → fold `release-program-loop`; album `g.web` = `delegated_to_program_loop`.
+  Verify: `test_program_deepen` + `test_release_structure` green.
+
+## 2026-08-01T22:35:00Z
+
+- **STORY-PACK-002 Slice B/C:** runtime hard-gate + program expand.
+  Intake/`IntentLock` merge program catalogs; `apply_structure_gate` refuses
+  family when multi-work not ready; scorecard `release_structure_not_ready`;
+  synthesize inserts `release-program-expand` (per-work map/deepdives + zh);
+  gateway persists structure on `research_json` + `discogs.structure` milestone.
+  Verify: `test_release_structure` + scorecard green; discogs 11; targeted_revise
+  fixture cleaned so pollution≠genesis path.
+
+## 2026-08-01T22:15:00Z
+
+- **REQ-024 / SPEC-034 / ARCH-002 / ADR-006 / DOM-003 / META-001 v7:** Discogs
+  **release structure before deepen** covenant. Full fetch → `ReleaseStructure`
+  program map → layered expand; family scaffolds must not precede structure.
+  Slice A: `aulos_skills.release_structure` + analyze/diary emit. Verify:
+  `tests/test_release_structure.py` 4 passed; API `test_discogs.py` 11 passed.
+  Next slices: runtime hard-gate + per-work expand (STORY-PACK-002 B/C).
+
+## 2026-08-01T21:45:00Z
+
+- **REQ-023 / SPEC-033 Instrument-faithful thicken + multi-work Discogs (anti-case):**
+  Probe class: multi-BWV violin/double-concerto pressing collapsed to one track and
+  unlocked `piano-concerto` from orchestra+concerto alone. Root mechanisms fixed:
+  soloist evidence gate in `_match_family` / family hygiene (hints included);
+  chained catalog-number extraction (`BWV 1041 • 1042`); Discogs keeps program title
+  when ≥2 catalog numbers; form_lock `non_piano_concerto` aliens; ProductScorecard
+  `product_solo_instrument_drift`; facet `violin-concerto`/`oboe-concerto` + family
+  pack `violin-concerto`. Verify: skills `pytest` **164 passed**; API discogs multi
+  + catno tests green. No case craft for any single pressing.
 
 ## 2026-08-01T21:50:00Z
 

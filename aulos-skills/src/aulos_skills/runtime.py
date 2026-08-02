@@ -189,10 +189,14 @@ class SkillRuntime:
         existing = dict(context.get("intent_lock") or {})
         if existing.get("work_title"):
             # Already frozen (e.g. API Discogs pre-lock) — keep truth; sync scrub mirrors.
-            outputs["intent_lock"] = existing
-            if existing.get("conflict_markers"):
+            from aulos_skills.release_structure import enrich_lock_catalogs, structure_from_context
+
+            lock = enrich_lock_catalogs(existing, structure_from_context({**context, **outputs}))
+            outputs["intent_lock"] = lock
+            context["intent_lock"] = lock
+            if lock.get("conflict_markers"):
                 markers = list(outputs.get("conflict_markers") or context.get("conflict_markers") or [])
-                for m in existing["conflict_markers"]:
+                for m in lock["conflict_markers"]:
                     if m not in markers:
                         markers.append(m)
                 outputs["conflict_markers"] = markers
@@ -220,6 +224,15 @@ class SkillRuntime:
             conflict_markers=list(outputs.get("conflict_markers") or context.get("conflict_markers") or []),
             source=source,
         )
+        from aulos_skills.release_structure import enrich_lock_catalogs, structure_from_context
+
+        lock = enrich_lock_catalogs(lock, structure_from_context({**context, **outputs}))
+        # Prefer intake-collected catalog numbers when richer
+        intake_nums = list(outputs.get("identity_lock_numbers") or [])
+        if intake_nums:
+            lock["catalog_numbers"] = sorted(
+                {*list(lock.get("catalog_numbers") or []), *intake_nums}
+            )
         outputs["intent_lock"] = lock
         context["intent_lock"] = lock
         # Keep flat mirrors for scrubbers
@@ -550,6 +563,12 @@ class SkillRuntime:
                 if key in {"raw_message", "work_hint"} and context.get(key):
                     continue
                 context[key] = value
+        # SPEC-034Δ: gateway program deepen loop bags travel via kb_dossier
+        kb0 = dict(context.get("kb_dossier") or {})
+        if kb0.get("program_iterations") and not context.get("program_iterations"):
+            context["program_iterations"] = list(kb0.get("program_iterations") or [])
+        if kb0.get("release_structure") and not context.get("release_structure"):
+            context["release_structure"] = dict(kb0.get("release_structure") or {})
         # If enrichment looks like JSON dossier, parse into llm_dossier
         if not context["llm_dossier"] and llm_enrichment:
             parsed = parse_llm_dossier_json(str(llm_enrichment))
@@ -823,6 +842,33 @@ class SkillRuntime:
             out["identity_lock_numbers"] = sorted(lock.catalog_numbers)
         if lock.form_families:
             out["identity_lock_forms"] = sorted(lock.form_families)
+
+        # SPEC-034 / META-001 §4.1 — attach Discogs release structure at intake
+        from aulos_skills.release_structure import (
+            apply_structure_gate,
+            enrich_lock_catalogs,
+            structure_from_context,
+        )
+
+        gated = apply_structure_gate({**context, **out, "kb_dossier": kb})
+        st = structure_from_context(gated)
+        if st:
+            out["release_structure"] = st
+            if gated.get("structure_hard_fails"):
+                out["structure_hard_fails"] = list(gated["structure_hard_fails"])
+            if gated.get("refuse_families"):
+                out["refuse_families"] = True
+            if gated.get("program_expand_required"):
+                out["program_expand_required"] = True
+            if gated.get("critique_corrections"):
+                out["critique_corrections"] = list(gated["critique_corrections"])
+            nums = list(out.get("identity_lock_numbers") or [])
+            enriched = enrich_lock_catalogs(
+                {"catalog_numbers": nums, "work_title": work_title, "composer": composer},
+                st,
+            )
+            if enriched.get("catalog_numbers"):
+                out["identity_lock_numbers"] = list(enriched["catalog_numbers"])
         return out
 
     def _synthesize_assets_dir(self, skill: SkillManifest) -> Path:
@@ -855,6 +901,22 @@ class SkillRuntime:
             return card
         return {}
 
+    def _family_instrument_gate(self, family: dict[str, Any], blob: str) -> bool:
+        """SPEC-033: soloist-scoped packs need soloist evidence; refuse conflicts."""
+        from aulos_skills.instrument_evidence import (
+            family_conflicts_blob_soloists,
+            family_requires_soloist_evidence,
+            family_soloist_misses_blob,
+        )
+
+        if family_requires_soloist_evidence(family) and family_soloist_misses_blob(
+            family, blob
+        ):
+            return False
+        if family_conflicts_blob_soloists(family, blob):
+            return False
+        return True
+
     def _match_family(
         self,
         skill: SkillManifest,
@@ -865,13 +927,15 @@ class SkillRuntime:
         index = self._load_synthesize_index(skill)
         blob = text.lower()
         composer_l = (composer_guess or "").lower()
-        # Prefer explicit hints (catalog family_id) — still verify path exists.
+        # Prefer explicit hints (catalog family_id) — still verify path + instrument gate.
         for hint in family_hints:
             for entry in index.get("families") or []:
                 if str(entry.get("id") or "") == hint:
                     path = self._synthesize_assets_dir(skill) / "families" / str(entry.get("path") or "")
                     if path.is_file():
-                        return yaml.safe_load(path.read_text(encoding="utf-8")) or {}
+                        hinted = yaml.safe_load(path.read_text(encoding="utf-8")) or {}
+                        if self._family_instrument_gate(hinted, blob):
+                            return hinted
         best: dict[str, Any] = {}
         best_score = 0
         for entry in index.get("families") or []:
@@ -879,6 +943,8 @@ class SkillRuntime:
             if not path.is_file():
                 continue
             family = yaml.safe_load(path.read_text(encoding="utf-8")) or {}
+            if not self._family_instrument_gate(family, blob):
+                continue
             match = dict(family.get("match") or {})
             score = 0
             evidence = 0
@@ -917,6 +983,75 @@ class SkillRuntime:
                 "synthesize_source": "corpus-passthrough",
                 "corpus_dossier": existing,
             }
+
+        # SPEC-034Δ — structure gate + iterative program deepen loop
+        from aulos_skills.program_deepen import (
+            finalize_program_dossier,
+            fold_program_iterations,
+        )
+        from aulos_skills.release_structure import (
+            apply_structure_gate,
+            build_program_expand_dossier,
+            is_multi_work_program,
+            structure_from_context,
+        )
+
+        apply_structure_gate(context)
+        release_structure = structure_from_context(context)
+        kb_for_iter = dict(context.get("kb_dossier") or {})
+        if kb_for_iter.get("program_iterations") and not context.get("program_iterations"):
+            context["program_iterations"] = list(kb_for_iter.get("program_iterations") or [])
+        program_expand: dict[str, Any] = {}
+        if (
+            is_multi_work_program(release_structure)
+            and not context.get("structure_hard_fails")
+            and (
+                context.get("program_expand_required")
+                or context.get("program_iterations")
+                or release_structure.get("structure_ready")
+            )
+        ):
+            iterations = list(context.get("program_iterations") or [])
+            if iterations:
+                program_expand = fold_program_iterations(
+                    release_structure,
+                    iterations,
+                    composer=str(
+                        context.get("composer")
+                        or context.get("composer_guess")
+                        or existing.get("composer")
+                        or ""
+                    ),
+                    work_title=str(
+                        context.get("work_title") or existing.get("work_title") or ""
+                    ),
+                    performers=list(
+                        (context.get("discogs") or {}).get("performers")
+                        or release_structure.get("performers")
+                        or []
+                    ),
+                )
+                context["program_loop_dossier"] = program_expand
+                context["program_loop_applied"] = True
+            else:
+                # Scaffold only when gateway loop did not run (tests / offline)
+                program_expand = build_program_expand_dossier(
+                    release_structure,
+                    composer=str(
+                        context.get("composer")
+                        or context.get("composer_guess")
+                        or existing.get("composer")
+                        or ""
+                    ),
+                    work_title=str(
+                        context.get("work_title") or existing.get("work_title") or ""
+                    ),
+                    performers=list(
+                        (context.get("discogs") or {}).get("performers")
+                        or release_structure.get("performers")
+                        or []
+                    ),
+                )
 
         text = f"{context.get('work_title', '')} {context.get('raw_message', '')}"
         composer_guess = str(context.get("composer_guess") or existing.get("composer") or "")
@@ -1006,6 +1141,19 @@ class SkillRuntime:
         if family:
             layers.append(family_to_dossier(family, composer=composer_name, work_title=work_title))
             sources.append(f"family:{family.get('family_id')}")
+        # SPEC-034Δ: program loop / expand wins over bare family map/deepdives
+        if program_expand:
+            layers.append(program_expand)
+            src_tag = (
+                "release-program-loop"
+                if context.get("program_loop_applied")
+                else "release-program-expand"
+            )
+            sources.append(src_tag)
+            context["program_expand_applied"] = True
+        elif context.get("structure_hard_fails"):
+            sources.append("structure-blocked")
+            context["program_expand_applied"] = False
         if card:
             layers.append(composer_to_dossier(card))
             sources.append("composer-card")
@@ -1334,6 +1482,7 @@ class SkillRuntime:
                 sources.append("knowledge-plane")
 
         merged = ensure_chamber_floor(merged, family if family else None)
+        merged = finalize_program_dossier(merged, context)
 
         merged = self._scrub_foreign_chambers(
             merged,
@@ -1358,6 +1507,18 @@ class SkillRuntime:
             "work_id": context.get("work_id"),
             "conflict_markers": list(context.get("conflict_markers") or []),
         }
+        if release_structure:
+            out["release_structure"] = release_structure
+        if merged.get("guide_sheets"):
+            out["guide_sheets"] = list(merged.get("guide_sheets") or [])
+        if merged.get("program_parallel_plan"):
+            out["program_parallel_plan"] = dict(merged.get("program_parallel_plan") or {})
+        if context.get("structure_hard_fails"):
+            out["structure_hard_fails"] = list(context["structure_hard_fails"])
+        if context.get("program_expand_applied"):
+            out["program_expand_applied"] = True
+        if context.get("refuse_families"):
+            out["refuse_families"] = True
         # SPEC-029/032: promote dry-run when unknown archetype path meets chamber floors
         if archetype_used:
             try:

@@ -275,24 +275,45 @@ def _guess_work_title(raw: dict[str, Any], artists: list[str]) -> str:
     ]
     tracks = [t for t in tracks if t]
 
-    candidates: list[str] = []
-    for cand in (title, paren_title, *tracks):
-        if cand and _WORKISH_TITLE.search(cand):
-            candidates.append(cand)
-    if candidates:
-        # Prefer the richest classical title (release / paren often beat "Variation 1").
-        candidates.sort(key=lambda s: (len(s), s), reverse=True)
-        picked = candidates[0][:160]
-    elif len(tracks) >= 2:
-        prefix = os.path.commonprefix(tracks).rstrip(" :-–—0123456789.")
-        if len(prefix) >= 8:
-            picked = prefix[:160]
+    # SPEC-033: multi catalog numbers → keep program-level shelf (do not collapse
+    # to the single longest track / BWV). IntentLock / Catalog then see multi_work.
+    multi_program = False
+    try:
+        import sys
+        from pathlib import Path
+
+        skills = Path(__file__).resolve().parents[4] / "aulos-skills" / "src"
+        if skills.is_dir() and str(skills) not in sys.path:
+            sys.path.insert(0, str(skills))
+        from aulos_skills.identity_lock import extract_catalog_numbers
+
+        catalog_blob = " ".join(x for x in (title, paren_title, *tracks) if x)
+        if len(extract_catalog_numbers(catalog_blob)) >= 2:
+            multi_program = True
+    except Exception:  # noqa: BLE001
+        multi_program = False
+
+    if multi_program and title:
+        picked = title[:160]
+    else:
+        candidates: list[str] = []
+        for cand in (title, paren_title, *tracks):
+            if cand and _WORKISH_TITLE.search(cand):
+                candidates.append(cand)
+        if candidates:
+            # Prefer the richest classical title (release / paren often beat "Variation 1").
+            candidates.sort(key=lambda s: (len(s), s), reverse=True)
+            picked = candidates[0][:160]
+        elif len(tracks) >= 2:
+            prefix = os.path.commonprefix(tracks).rstrip(" :-–—0123456789.")
+            if len(prefix) >= 8:
+                picked = prefix[:160]
+            else:
+                picked = title[:160]
+        elif tracks and (not title or title.lower() in {"classical", "various"}):
+            picked = tracks[0][:160]
         else:
             picked = title[:160]
-    elif tracks and (not title or title.lower() in {"classical", "various"}):
-        picked = tracks[0][:160]
-    else:
-        picked = title[:160]
 
     # Packaging / multi-language dump → listening-work title (systemic)
     try:
@@ -534,8 +555,10 @@ def _parse_release_core(payload: dict[str, Any]) -> dict[str, Any]:
             ensembles.append(name)
             ensemble_names.add(low)
 
+    role_performers = _role_names(extras, _PERFORMER_ROLE)
+    performer_sources = role_performers or artists
     performers: list[str] = []
-    for name in artists + _role_names(extras, _PERFORMER_ROLE):
+    for name in performer_sources:
         low = name.lower()
         if low in composer_names or low in ensemble_names:
             continue
@@ -585,6 +608,46 @@ def _parse_release_core(payload: dict[str, Any]) -> dict[str, Any]:
     }
 
 
+def _build_release_structure_safe(core: dict[str, Any]) -> dict[str, Any]:
+    """SPEC-034 / META-001 §4.1 — structure map before listening deepen."""
+    try:
+        import sys
+        from pathlib import Path
+
+        skills = Path(__file__).resolve().parents[4] / "aulos-skills" / "src"
+        if skills.is_dir() and str(skills) not in sys.path:
+            sys.path.insert(0, str(skills))
+        from aulos_skills.release_structure import (
+            assert_structure_ready,
+            build_release_structure,
+            expansion_plan,
+        )
+
+        st = build_release_structure(
+            core["raw"],
+            release_id=core.get("release_id"),
+            master_id=core.get("master_id"),
+            uri=str(core.get("uri") or ""),
+            composers=list(core.get("composers") or []),
+            performers=list(core.get("performers") or []),
+            ensembles=list(core.get("ensembles") or []),
+        )
+        d = st.to_dict()
+        d["expansion_plan"] = expansion_plan(st)
+        d["structure_hard_fails"] = assert_structure_ready(st)
+        return d
+    except Exception as exc:  # noqa: BLE001
+        logger.warning("release_structure_build_failed err=%s", exc)
+        return {
+            "schema": "aulos.release_structure/v1",
+            "structure_ready": False,
+            "gaps": ["structure_builder_error"],
+            "structure_hard_fails": ["release_structure_not_ready", "structure_gap:structure_builder_error"],
+            "program": [],
+            "shape": "unknown",
+        }
+
+
 def analyze_discogs_release(payload: dict[str, Any]) -> dict[str, Any]:
     """Turn Discogs JSON into listening-intent fields + dossier seeds."""
     core = _parse_release_core(payload)
@@ -600,8 +663,11 @@ def analyze_discogs_release(payload: dict[str, Any]) -> dict[str, Any]:
     labels = core["labels"]
     uri = core["uri"]
 
+    release_structure = _build_release_structure_safe(core)
+    if not composers and release_structure.get("composers"):
+        composers = [str(c) for c in (release_structure.get("composers") or []) if c]
     work_title = _guess_work_title(raw, artists)
-    composer = composers[0] if composers else ""
+    composer = " / ".join(composers[:8]) if len(composers) > 1 else (composers[0] if composers else "")
 
     label_note = ""
     if labels:
@@ -663,12 +729,28 @@ def analyze_discogs_release(payload: dict[str, Any]) -> dict[str, Any]:
                 "genres": list(raw.get("genres") or []),
                 "styles": list(raw.get("styles") or []),
             },
+            "release_structure": {
+                "shape": release_structure.get("shape"),
+                "structure_ready": release_structure.get("structure_ready"),
+                "program_count": len(release_structure.get("program") or []),
+                "catalog_numbers_all": list(
+                    release_structure.get("catalog_numbers_all") or []
+                )[:24],
+            },
         },
+        "release_structure": release_structure,
     }
 
     search_q = quote(" ".join(p for p in [composer, work_title] if p))
     if not uri:
         seed["vinyl_and_discography"][0]["url"] = f"https://www.discogs.com/search/?q={search_q}"
+
+    program_bits = []
+    for p in (release_structure.get("program") or [])[:8]:
+        if not isinstance(p, dict):
+            continue
+        cats = ", ".join(p.get("catalog_numbers") or [])
+        program_bits.append(f"{p.get('title')}" + (f" [{cats}]" if cats else ""))
 
     return {
         "release_id": release_id,
@@ -689,6 +771,7 @@ def analyze_discogs_release(payload: dict[str, Any]) -> dict[str, Any]:
             for t in (raw.get("tracklist") or [])
             if isinstance(t, dict) and str(t.get("title") or "").strip()
         ][:24],
+        "release_structure": release_structure,
         "listening_intent": intent,
         "work_hint": (
             f"{composer} — {work_title}".strip(" —") if composer else work_title
@@ -701,6 +784,12 @@ def analyze_discogs_release(payload: dict[str, Any]) -> dict[str, Any]:
             f"Ensembles: {ensemble_line or 'unlisted'}",
             f"Label: {label_note or 'n/a'}",
             f"URL: {uri}",
+            (
+                f"Release structure: {release_structure.get('shape')} "
+                f"ready={release_structure.get('structure_ready')} "
+                f"program={len(release_structure.get('program') or [])}"
+            ),
+            *(f"Program work: {bit}" for bit in program_bits),
         ],
     }
 
@@ -768,6 +857,10 @@ def build_diary_snapshot(payload: dict[str, Any]) -> dict[str, Any]:
     fetched_at = datetime.now(timezone.utc).isoformat().replace("+00:00", "Z")
     release_id = core["release_id"]
     uri = core["uri"]
+    release_structure = _build_release_structure_safe(core)
+    composers = core["composers"] or [
+        str(c) for c in (release_structure.get("composers") or []) if c
+    ]
     return {
         "provider": "discogs",
         "external_id": str(release_id),
@@ -775,7 +868,7 @@ def build_diary_snapshot(payload: dict[str, Any]) -> dict[str, Any]:
         "title": core["title"],
         "cover_image_url": core["cover"],
         "thumb_url": core["thumb"],
-        "composers": core["composers"],
+        "composers": composers,
         "performers": core["performers"],
         "ensembles": core["ensembles"],
         "artists": core["artists"],
@@ -788,6 +881,7 @@ def build_diary_snapshot(payload: dict[str, Any]) -> dict[str, Any]:
         "tracklist": tracklist,
         "genres": core["genres"],
         "styles": core["styles"],
+        "release_structure": release_structure,
         "fetched_at": fetched_at,
         "provenance": {
             "kind": core["kind"],
@@ -795,6 +889,8 @@ def build_diary_snapshot(payload: dict[str, Any]) -> dict[str, Any]:
             "master_id": core["master_id"],
             "uri": uri,
             "fetched_at": fetched_at,
+            "structure_ready": release_structure.get("structure_ready"),
+            "structure_shape": release_structure.get("shape"),
         },
     }
 

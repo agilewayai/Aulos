@@ -33,6 +33,36 @@ families:
       - 大提琴奏鸣
       - duo-cello
 
+  # SPEC-033: non-piano concerto shelves — refuse piano-concerto rhetoric substitution.
+  non_piano_concerto:
+    anchors:
+      - violin concerto
+      - 小提琴协奏
+      - 小提琴協奏
+      - viola concerto
+      - 中提琴协奏
+      - cello concerto
+      - 大提琴协奏
+      - oboe concerto
+      - 双簧管协奏
+      - concerto for violin
+      - concerto for oboe
+      - concerto for viola
+      - concerto for cello
+      - for oboe, violin
+      - for violin, strings
+      - double concerto
+      - 双重协奏
+    alien_markers:
+      - piano concerto
+      - 钢琴协奏
+      - 鋼琴協奏
+      - fortepiano
+      - 钢琴独奏
+      - 鋼琴獨奏
+      - piano cadenza
+      - 钢琴华彩
+
   sacred_mass:
     anchors:
       - requiem

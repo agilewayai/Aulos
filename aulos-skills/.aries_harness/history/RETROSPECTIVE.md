@@ -8,10 +8,10 @@ managed_by: "aries-harness"
 fingerprint: "aries-harness/history-doc/v1"
 generated_by: "/aries-harness history-refresh"
 initialized_at: "2026-07-25T11:20:05Z"
-generated_at: "2026-08-01T20:59:01+00:00"
+generated_at: "2026-08-02T07:26:47+00:00"
 effective_status: "generated"
-effective_since: "2026-08-01T20:59:01+00:00"
-content_fingerprint: "sha256:0612dce594f18aae8eacecd17482663a95d5cf7ace95dfef8663760fc036027b"
+effective_since: "2026-08-02T07:26:47+00:00"
+content_fingerprint: "sha256:039255257baece086662c9a8a3d8cc6c6b9fc8d0d94048b585694f57ff8f7414"
 trace_history_source: "filesystem-only"
 trace_last_commit_sha: ""
 trace_last_commit_at: ""
@@ -19,25 +19,27 @@ trace_revision_count: "0"
 ---
 # Retrospective Snapshot
 
-Generated at: `2026-08-01T20:59:01+00:00`
+Generated at: `2026-08-02T07:26:47+00:00`
 
 ## Recent changes
 
-- **REQ-022 / SPEC-032 Identity freeze + Catalog/facet hardening (anti-case):**
-- **Mechanism tour:** wrote `.aries_harness/docs/SYSTEM_MECHANISM_TOUR.md` — fleet topology,
-- **Compression — delete case/temporary localize logic:** Removed all 10 hand-authored
-- Verify: 67 skills + promote API tests green.
+- **Production deploy — SPEC-034 Slice G:** operator requested production deploy,
+- Evidence memo:
+- Verify: `bash deploy/aulos-ctl.sh doctor` passed; `bash
+- **SPEC-034 Slice G / multi-work sheet mode:** Root cause was plural program data
+- Compose/render upgrade: `render_bilingual_guide_html` now renders sheet tabs
+- Skill bumps: `aulos-listening-synthesize` 0.2.1 and
 
 ## What is working
 
-- **REQ-022 / SPEC-032 Identity freeze + Catalog/facet hardening (anti-case):**
-- **Mechanism tour:** wrote `.aries_harness/docs/SYSTEM_MECHANISM_TOUR.md` — fleet topology,
-- **Compression — delete case/temporary localize logic:** Removed all 10 hand-authored
-- Verify: 67 skills + promote API tests green.
+- **Production deploy — SPEC-034 Slice G:** operator requested production deploy,
+- Evidence memo:
+- Verify: `bash deploy/aulos-ctl.sh doctor` passed; `bash
+- **SPEC-034 Slice G / multi-work sheet mode:** Root cause was plural program data
 
 ## What needs attention
 
-- working tree is dirty with 330 tracked or untracked change(s)
+- working tree is dirty with 196 tracked or untracked change(s)
 - no explicit next-up slice is recorded
 
 ## Durable reminders

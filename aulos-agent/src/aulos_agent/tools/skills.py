@@ -102,8 +102,12 @@ def _jsonable_context(context: dict[str, Any]) -> dict[str, Any]:
     return {k: v for k, v in context.items() if not callable(v)}
 
 
-def _ops_llm_complete(system_prompt: str):
-    """Sync completer via aulos-api ops LLM (DeepSeek/Grok) when agent provider is fake."""
+def _ops_llm_complete(system_prompt: str, *, role: str = "review"):
+    """Sync completer via aulos-api ops LLM when agent provider is fake.
+
+    role='review' → Grok by default (must differ from draft/DeepSeek).
+    role='draft' → DeepSeek by default (revise / author repairs).
+    """
 
     def complete(prompt: str) -> str | None:
         try:
@@ -118,15 +122,16 @@ def _ops_llm_complete(system_prompt: str):
             db = SessionLocal()
             try:
                 cfg = load_llm_config(db)
-                if cfg.active_provider == "fake" or not cfg.ready_for_live:
+                name = cfg.resolve_role_provider(role)
+                if not name:
                     return None
-                creds = cfg.provider_creds()
+                creds = cfg.provider_creds(name)
                 if creds is None or not creds.complete:
                     return None
 
                 async def _run() -> str:
                     return await invoke_openai_compatible(
-                        provider=cfg.active_provider,
+                        provider=name,
                         creds=creds,
                         message=prompt,
                         system_prompt=system_prompt,
@@ -161,27 +166,8 @@ def _attach_intent_critic(context: dict[str, Any]) -> None:
         "You are Aulos Intent Critic. Review ONLY; never write a guide. "
         "Return ONLY JSON with verdict PASS|FAIL."
     )
-    try:
-        from aulos_agent.config.settings import get_settings
-        from aulos_agent.llm.factory import create_chat_model
-
-        cfg = get_settings()
-        if getattr(cfg, "llm_provider", "fake") == "fake":
-            context["llm_critic_complete"] = _ops_llm_complete(system)
-            return
-        model = create_chat_model(cfg)
-
-        def complete(prompt: str) -> str | None:
-            from langchain_core.messages import HumanMessage, SystemMessage
-
-            resp = model.invoke(
-                [SystemMessage(content=system), HumanMessage(content=prompt)]
-            )
-            return str(getattr(resp, "content", "") or "")
-
-        context["llm_critic_complete"] = complete
-    except Exception:  # noqa: BLE001
-        context["llm_critic_complete"] = _ops_llm_complete(system)
+    # Ops role routing: Grok review ≠ DeepSeek draft (anti rubber-stamp).
+    context["llm_critic_complete"] = _ops_llm_complete(system, role="review")
 
 
 def _attach_external_review_expert(context: dict[str, Any]) -> None:
@@ -198,27 +184,7 @@ def _attach_external_review_expert(context: dict[str, Any]) -> None:
         "Do NOT hunt or score web sources. Be critical and specific. "
         "Review ONLY; never rewrite the full guide. Return ONLY JSON."
     )
-    try:
-        from aulos_agent.config.settings import get_settings
-        from aulos_agent.llm.factory import create_chat_model
-
-        cfg = get_settings()
-        if getattr(cfg, "llm_provider", "fake") == "fake":
-            context["llm_external_review_complete"] = _ops_llm_complete(system)
-            return
-        model = create_chat_model(cfg)
-
-        def complete(prompt: str) -> str | None:
-            from langchain_core.messages import HumanMessage, SystemMessage
-
-            resp = model.invoke(
-                [SystemMessage(content=system), HumanMessage(content=prompt)]
-            )
-            return str(getattr(resp, "content", "") or "")
-
-        context["llm_external_review_complete"] = complete
-    except Exception:  # noqa: BLE001
-        context["llm_external_review_complete"] = _ops_llm_complete(system)
+    context["llm_external_review_complete"] = _ops_llm_complete(system, role="review")
 
 
 def _attach_revise_proofreader(context: dict[str, Any]) -> None:
@@ -232,27 +198,8 @@ def _attach_revise_proofreader(context: dict[str, Any]) -> None:
         "dossier fields to clear expert hard-flaw findings. Return ONLY JSON "
         "patches (thesis, points, listening_map, caveats). Do not emit full HTML."
     )
-    try:
-        from aulos_agent.config.settings import get_settings
-        from aulos_agent.llm.factory import create_chat_model
-
-        cfg = get_settings()
-        if getattr(cfg, "llm_provider", "fake") == "fake":
-            context["llm_revise_complete"] = _ops_llm_complete(system)
-            return
-        model = create_chat_model(cfg)
-
-        def complete(prompt: str) -> str | None:
-            from langchain_core.messages import HumanMessage, SystemMessage
-
-            resp = model.invoke(
-                [SystemMessage(content=system), HumanMessage(content=prompt)]
-            )
-            return str(getattr(resp, "content", "") or "")
-
-        context["llm_revise_complete"] = complete
-    except Exception:  # noqa: BLE001
-        context["llm_revise_complete"] = _ops_llm_complete(system)
+    # Author-side repair uses the draft provider (DeepSeek), not the Grok critic.
+    context["llm_revise_complete"] = _ops_llm_complete(system, role="draft")
 
 
 def _attach_review_llms(context: dict[str, Any]) -> None:

@@ -8,10 +8,10 @@ managed_by: "aries-harness"
 fingerprint: "aries-harness/bootstrap-doc/v1"
 generated_by: "/aries-harness well-organized"
 initialized_at: "2026-07-25T11:20:05Z"
-last_organized_at: "2026-08-01T20:59:01+00:00"
+last_organized_at: "2026-08-02T07:26:47+00:00"
 effective_status: "generated"
-effective_since: "2026-08-01T20:59:01+00:00"
-content_fingerprint: "sha256:ed71b12cb69414685cd2a570daedea2ff26ef4eff3776e744b4d20a0e0aa3953"
+effective_since: "2026-08-02T07:26:47+00:00"
+content_fingerprint: "sha256:1ec14cdc1734b416868d53c1a5aeeda50dd786250c57c29a66e0a74cac48f2ba"
 trace_history_source: "filesystem-only"
 trace_last_commit_sha: ""
 trace_last_commit_at: ""
@@ -19,7 +19,7 @@ trace_revision_count: "0"
 ---
 # Harness Index
 
-Last organized: `2026-08-01T20:59:01+00:00`
+Last organized: `2026-08-02T07:26:47+00:00`
 
 Canonical spelling: `/aries-harness well-organized`
 
@@ -83,6 +83,8 @@ Fingerprint marker: `aries-harness` / `aries-harness/bootstrap-doc/v1`
 - [REQ-020-promote-staging.md](references/requests/REQ-020-promote-staging.md)
 - [REQ-021-dimensional-promote.md](references/requests/REQ-021-dimensional-promote.md)
 - [REQ-022-identity-freeze-catalog-facets.md](references/requests/REQ-022-identity-freeze-catalog-facets.md)
+- [REQ-023-instrument-faithful-thicken.md](references/requests/REQ-023-instrument-faithful-thicken.md)
+- [REQ-024-discogs-release-structure-first.md](references/requests/REQ-024-discogs-release-structure-first.md)
 
 #### `references/specs/`
 - role: behavior and acceptance contracts derived from requests
@@ -110,15 +112,19 @@ Fingerprint marker: `aries-harness` / `aries-harness/bootstrap-doc/v1`
 - [SPEC-030-promote-staging.md](references/specs/SPEC-030-promote-staging.md)
 - [SPEC-031-dimensional-promote.md](references/specs/SPEC-031-dimensional-promote.md)
 - [SPEC-032-identity-freeze-catalog-facets.md](references/specs/SPEC-032-identity-freeze-catalog-facets.md)
+- [SPEC-033-instrument-faithful-thicken.md](references/specs/SPEC-033-instrument-faithful-thicken.md)
+- [SPEC-034-discogs-release-structure-first.md](references/specs/SPEC-034-discogs-release-structure-first.md)
 
 #### `references/stories/`
 - role: sprintable slices linked to specs and verification
 - [README.md](references/stories/README.md)
 - [STORY-PACK-001-bootstrap.md](references/stories/STORY-PACK-001-bootstrap.md)
+- [STORY-PACK-002-discogs-release-structure.md](references/stories/STORY-PACK-002-discogs-release-structure.md)
 
 #### `references/domain/`
 - role: domain analysis and modeling artifacts
 - [DOM-002-listening-identity.md](references/domain/DOM-002-listening-identity.md)
+- [DOM-003-discogs-release-structure.md](references/domain/DOM-003-discogs-release-structure.md)
 - [README.md](references/domain/README.md)
 
 #### `references/iterations/`
@@ -142,6 +148,7 @@ Fingerprint marker: `aries-harness` / `aries-harness/bootstrap-doc/v1`
 - role: system design and architecture packs
 - [ARCH-001-skills-harness-architecture.md](decisions/architecture/ARCH-001-skills-harness-architecture.md)
 - [ARCH-002-agent-skills-listening.md](decisions/architecture/ARCH-002-agent-skills-listening.md)
+- [ARCH-002-discogs-release-structure-meta-harness.md](decisions/architecture/ARCH-002-discogs-release-structure-meta-harness.md)
 - [ARCH-003-salon-codex-content-model.md](decisions/architecture/ARCH-003-salon-codex-content-model.md)
 - [ARCH-004-salon-synthesize-atelier.md](decisions/architecture/ARCH-004-salon-synthesize-atelier.md)
 - [README.md](decisions/architecture/README.md)
@@ -152,6 +159,7 @@ Fingerprint marker: `aries-harness` / `aries-harness/bootstrap-doc/v1`
 - [ADR-002-domain-runtime-listening-skills.md](decisions/adrs/ADR-002-domain-runtime-listening-skills.md)
 - [ADR-004-catalog-over-heuristics.md](decisions/adrs/ADR-004-catalog-over-heuristics.md)
 - [ADR-005-hybrid-adversarial-review.md](decisions/adrs/ADR-005-hybrid-adversarial-review.md)
+- [ADR-006-discogs-structure-before-deepen.md](decisions/adrs/ADR-006-discogs-structure-before-deepen.md)
 - [README.md](decisions/adrs/README.md)
 
 ## RunCookingLayer
@@ -174,6 +182,7 @@ Fingerprint marker: `aries-harness` / `aries-harness/bootstrap-doc/v1`
 - [CKPT-003-salon-codex.md](checkpoints/CKPT-003-salon-codex.md)
 - [CKPT-004-salon-synthesize.md](checkpoints/CKPT-004-salon-synthesize.md)
 - [CKPT-005-ambient-identity-gates.md](checkpoints/CKPT-005-ambient-identity-gates.md)
+- [CKPT-2026-08-02-multi-work-guide-sheets.md](checkpoints/CKPT-2026-08-02-multi-work-guide-sheets.md)
 
 #### `runs/`
 - role: run summaries and execution evidence
@@ -190,6 +199,7 @@ Fingerprint marker: `aries-harness` / `aries-harness/bootstrap-doc/v1`
 - role: iteration reports and closeouts
 - [AUDIT-001-aries-harness-process-compliance.md](runs/reports/AUDIT-001-aries-harness-process-compliance.md)
 - [EVOL-2026-07-26-locale-intake-enabler.md](runs/reports/EVOL-2026-07-26-locale-intake-enabler.md)
+- [RCA-2026-08-02-guide-59-multi-work-sheets.md](runs/reports/RCA-2026-08-02-guide-59-multi-work-sheets.md)
 - [README.md](runs/reports/README.md)
 
 #### `runs/github/`
@@ -198,6 +208,7 @@ Fingerprint marker: `aries-harness` / `aries-harness/bootstrap-doc/v1`
 
 #### `runs/deployments/`
 - role: deployment, smoke, and rollback evidence
+- [DEPLOY-2026-08-02-spec-034-slice-g-production.md](runs/deployments/DEPLOY-2026-08-02-spec-034-slice-g-production.md)
 - [README.md](runs/deployments/README.md)
 
 ## SharedSupportSurface

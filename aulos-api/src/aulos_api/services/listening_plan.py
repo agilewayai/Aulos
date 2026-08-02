@@ -9,6 +9,11 @@ GATEWAY_STAGES: tuple[tuple[str, str, str], ...] = (
     ("g.discogs", "Discogs", "Resolve /discogs release or skip when absent"),
     ("g.identity", "Identity", "Catalog identity lock for the work"),
     ("g.rag", "Knowledge", "Retrieve corpus, KB, and knowledge-plane hits"),
+    (
+        "g.program",
+        "Program deepen",
+        "Multi-work pressing: iterative deepen per program work (SPEC-034)",
+    ),
     ("g.web", "Web research", "Open-web gather when the shelf is cold"),
     ("g.extweb", "Review web", "Networked sources for external review Agent"),
     ("g.llm", "LLM enrich", "Bilingual Salon Codex enrichment"),

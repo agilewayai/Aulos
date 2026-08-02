@@ -8,10 +8,10 @@ managed_by: "aries-harness"
 fingerprint: "aries-harness/history-doc/v1"
 generated_by: "/aries-harness history-refresh"
 initialized_at: "2026-07-25T11:20:06Z"
-generated_at: "2026-08-01T20:59:26+00:00"
+generated_at: "2026-08-02T07:27:18+00:00"
 effective_status: "generated"
-effective_since: "2026-08-01T20:59:26+00:00"
-content_fingerprint: "sha256:0ecb954d3fc828c9902ef64a1bbe514663bee96e8d25f5a69b34acd5344b647e"
+effective_since: "2026-08-02T07:27:18+00:00"
+content_fingerprint: "sha256:793b2acc8c8c8a017f150bd84941fda530dbf9a0cdabdbb65b884c1e6b851c39"
 trace_history_source: "filesystem-only"
 trace_last_commit_sha: ""
 trace_last_commit_at: ""
@@ -19,9 +19,15 @@ trace_revision_count: "0"
 ---
 # Timeline
 
-Generated at: `2026-08-01T20:59:26+00:00`
+Generated at: `2026-08-02T07:27:18+00:00`
 
 ## Journal milestones
+
+### 2026-08-02T07:24:00Z
+
+- **Production deploy sync:** root `bash deploy/aulos-ctl.sh deploy` published
+- Verify: root `doctor` passed; deploy test suite -> 5 passed; root `status`
+- Central deploy evidence:
 
 ### 2026-08-01T21:00:00Z
 
@@ -51,12 +57,9 @@ Generated at: `2026-08-01T20:59:26+00:00`
 
 - **Knowledge console ship closeout:** Explore / Benchmark / Diagnose-improve / Performance report /
 
-### 2026-07-27T16:55:00Z
-
-- Knowledge **Composer dossier** module: picker + 构建履历与作品 + timeline/works tree (REQ-010).
-
 ## Recent git commits
 
+- `5476efb` 2026-08-02 Ship identity freeze (SPEC-032) and listening hardenings across the fleet; refresh honeycomb.
 - `1d325d5` 2026-08-01 Ship knowledge discovery, dossier, and benchmark console; refresh fleet honeycomb.
 - `491b042` 2026-07-27 Ship authority source registry, OPS knowledge console, and refresh fleet honeycomb.
 - `5633e94` 2026-07-27 Ship Ops task queue, dev blog v2, and refresh fleet honeycomb.

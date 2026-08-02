@@ -8,10 +8,10 @@ managed_by: "aries-harness"
 fingerprint: "aries-harness/history-doc/v1"
 generated_by: "/aries-harness history-refresh"
 initialized_at: "2026-07-25T11:20:05Z"
-generated_at: "2026-08-01T20:59:01+00:00"
+generated_at: "2026-08-02T07:26:47+00:00"
 effective_status: "generated"
-effective_since: "2026-08-01T20:59:01+00:00"
-content_fingerprint: "sha256:cdf22b3cea384690ff809b82ad0a446018f85e07aed98bd54624d86767fc8d1e"
+effective_since: "2026-08-02T07:26:47+00:00"
+content_fingerprint: "sha256:1854881f9691e4d4393604fe25eee7a93d38b2f6be5664b5b3105b0eaaa4bc3c"
 trace_history_source: "filesystem-only"
 trace_last_commit_sha: ""
 trace_last_commit_at: ""
@@ -19,17 +19,17 @@ trace_revision_count: "0"
 ---
 # Current Status
 
-Generated at: `2026-08-01T20:59:01+00:00`
+Generated at: `2026-08-02T07:26:47+00:00`
 
 ## Current phase
 
-- SPEC-032 / REQ-022 Identity freeze + Catalog/facet hardening (anti-case) shipped
+- SPEC-034 Slice G deployed to production: multi-work guides now emit work
 
 ## Branch and workspace
 
 - no branch or workspace details recorded
 - git branch: main
-- HEAD: `1d325d5` Ship knowledge discovery, dossier, and benchmark console; refresh fleet honeycomb.
+- HEAD: `5476efb` Ship identity freeze (SPEC-032) and listening hardenings across the fleet; refresh honeycomb.
 - working tree: dirty
 - change: `M` `aulos-agent/.aries_harness/INDEX.md`
 - change: `M` `aulos-agent/.aries_harness/history/DAILY_SUMMARY_INDEX.md`
@@ -66,13 +66,14 @@ Generated at: `2026-08-01T20:59:01+00:00`
 - verification command: unit (unknown-case thicken / SPEC-029): `cd aulos-skills && .venv/bin/python -m pytest tests/test_unknown_case_thicken.py -q`
 - verification command: unit (promote staging / SPEC-030): `cd aulos-skills && .venv/bin/python -m pytest tests/test_promote_staging.py -q` ；`cd aulos-api && .venv/bin/python -m pytest tests/test_promote_stage_api.py -q`
 - verification command: unit (dimensional promote / SPEC-031): `cd aulos-skills && .venv/bin/python -m pytest tests/test_dimensional_promote.py -q` ；`cd aulos-api && .venv/bin/python -m pytest tests/test_promote_production_api.py -q`
+- verification command: unit (Discogs release-structure-first / SPEC-034): `cd aulos-skills && .venv/bin/pytest -q tests/test_release_structure.py tests/test_program_deepen.py tests/test_runtime.py`; render/identity adjunct: `cd aulos-skills && .venv/bin/pytest -q tests/test_identity_hygiene.py tests/test_intake_i18n.py tests/test_media_search.py`; consumer gate: `cd aulos-api && PYTHONPATH=. .venv/bin/pytest -q tests/test_discogs.py tests/test_listening_jobs.py tests/test_diary_guides.py`
 - verification command: unit (media API): `cd aulos-api && .venv/bin/python -m pytest tests/test_media.py -q`
 - verification command: media smoke: `curl -sI 'http://127.0.0.1:5090/v1/media/audio?src=<urlencoded-commons-url>&mode=cache' | grep -i content-disposition` → must contain `inline`
 - verification command: live parity: recompose Goldberg + one cold-path Chinese work; assert bilingual + ambient in `guide_html`
 
 ## Next action
 
-- Optional: regenerate multi-work Discogs probe guides after deploy to confirm IntentLock freeze + multi_work status in production.
+- Optional: recompose guide #59 and multi-work / non-piano concerto Discogs
 - Optional: expand dimension **voice tables** and form_lock aliens from live Discogs facet histograms — still dimensional, never per-work craft.
 - Optional: knowledge-plane auto-thicken after promote-production (composer stub → dossier job).
 - Optional operator: rotate live secrets in `.run/host.env` when ready to redeploy (F1 deferred).

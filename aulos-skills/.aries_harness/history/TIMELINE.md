@@ -8,10 +8,10 @@ managed_by: "aries-harness"
 fingerprint: "aries-harness/history-doc/v1"
 generated_by: "/aries-harness history-refresh"
 initialized_at: "2026-07-25T11:20:05Z"
-generated_at: "2026-08-01T20:59:01+00:00"
+generated_at: "2026-08-02T07:26:47+00:00"
 effective_status: "generated"
-effective_since: "2026-08-01T20:59:01+00:00"
-content_fingerprint: "sha256:96cf26f24b2fd49e45560de271914c218da673e72ab1c6d7014e9e3a31744011"
+effective_since: "2026-08-02T07:26:47+00:00"
+content_fingerprint: "sha256:b54075bf566d5a74c9df75b57babf585be03028299dd42d2d51baf8dfe5389a1"
 trace_history_source: "filesystem-only"
 trace_last_commit_sha: ""
 trace_last_commit_at: ""
@@ -19,50 +19,53 @@ trace_revision_count: "0"
 ---
 # Timeline
 
-Generated at: `2026-08-01T20:59:01+00:00`
+Generated at: `2026-08-02T07:26:47+00:00`
 
 ## Journal milestones
 
-### 2026-08-01T21:50:00Z
+### 2026-08-02T07:24:00Z
 
-- **REQ-022 / SPEC-032 Identity freeze + Catalog/facet hardening (anti-case):**
+- **Production deploy — SPEC-034 Slice G:** operator requested production deploy,
+- Evidence memo:
+- Verify: `bash deploy/aulos-ctl.sh doctor` passed; `bash
+- Residuals: dirty-tree deploy rather than clean RC; no secret rotation; guide
 
-### 2026-08-01T21:30:00Z
+### 2026-08-02T06:51:16Z
 
-- **Mechanism tour:** wrote `.aries_harness/docs/SYSTEM_MECHANISM_TOUR.md` — fleet topology,
+- **SPEC-034 Slice G / multi-work sheet mode:** Root cause was plural program data
+- Compose/render upgrade: `render_bilingual_guide_html` now renders sheet tabs
+- Skill bumps: `aulos-listening-synthesize` 0.2.1 and
+- Verify: new tests failed before implementation, then passed; skills targeted
 
-### 2026-08-01T21:15:00Z
+### 2026-08-02T06:21:15Z
 
-- **Compression — delete case/temporary localize logic:** Removed all 10 hand-authored
-- Verify: 67 skills + promote API tests green.
+- **SPEC-034 Slice F / guide #59 RCA:** latest hot guide `#59` (`/discogs #7083684`,
+- Fix: `release_structure` now safely infers top-level release artists as
+- Verify: `cd aulos-skills && .venv/bin/pytest -q tests/test_release_structure.py
 
-### 2026-08-01T21:00:00Z
+### 2026-08-01T23:10:00Z
 
-- **REQ-021 / SPEC-031 Dimensional promote (anti-case):** Facet voices
-- Verify: `tests/test_dimensional_promote.py`, `test_promote_production_api.py`.
+- **META-001 v9 / guide #57 RCA:** Program loop *did* run (4/4, `release-program-loop`,
 
-### 2026-08-01T20:40:00Z
+### 2026-08-01T22:55:00Z
 
-- **REQ-020 / SPEC-030 Promote staging + ops surface:** Operator can stage
-- Verify: `tests/test_promote_staging.py`, `aulos-api/tests/test_promote_stage_api.py`.
+- **SPEC-034Δ / META-001 v8:** RCA — album-title `g.web` hit `verify_failed` /
 
-### 2026-08-01T20:25:00Z
+### 2026-08-01T22:35:00Z
 
-- **REQ-019 / SPEC-029 Unknown-Case Thicken Loop v1:** FacetClassifier → archetype
-- Verify: `tests/test_unknown_case_thicken.py` (6) + thicken regressions green.
+- **STORY-PACK-002 Slice B/C:** runtime hard-gate + program expand.
 
-### 2026-08-01T20:05:00Z
+### 2026-08-01T22:15:00Z
 
-- **REQ-018 / SPEC-028 Catalog craft + fleet dossier:** Craft YAML for all 10 Catalog
-- Verify: `tests/test_catalog_craft_coverage.py`, `tests/test_ensure_composer_dossiers.py`.
+- **REQ-024 / SPEC-034 / ARCH-002 / ADR-006 / DOM-003 / META-001 v7:** Discogs
 
-### 2026-08-01T19:55:00Z
+### 2026-08-01T21:45:00Z
 
-- **REQ-017 / SPEC-027 genre family coverage:** Added `piano-concerto`, `sacred-requiem`,
-- Verify: `tests/test_family_coverage.py` (14 related green with systemic/craft).
+- **REQ-023 / SPEC-033 Instrument-faithful thicken + multi-work Discogs (anti-case):**
 
 ## Recent git commits
 
+- `5476efb` 2026-08-02 Ship identity freeze (SPEC-032) and listening hardenings across the fleet; refresh honeycomb.
 - `1d325d5` 2026-08-01 Ship knowledge discovery, dossier, and benchmark console; refresh fleet honeycomb.
 - `491b042` 2026-07-27 Ship authority source registry, OPS knowledge console, and refresh fleet honeycomb.
 - `5633e94` 2026-07-27 Ship Ops task queue, dev blog v2, and refresh fleet honeycomb.

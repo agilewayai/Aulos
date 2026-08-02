@@ -8,8 +8,10 @@ from typing import Any
 _INSTRUMENT_TOKENS: dict[str, tuple[str, ...]] = {
     "piano": ("piano", "pianoforte", "keyboard", "钢琴", "鍵盤", "键盘"),
     "cello": ("cello", "violoncello", "大提琴"),
-    "violin": ("violin", "viola", "小提琴", "中提琴"),
-    "strings": ("string quartet", "string trio", "弦乐四重奏", "弦乐"),
+    "violin": ("violin", "小提琴"),
+    "viola": ("viola", "中提琴"),
+    "oboe": ("oboe", "双簧管"),
+    "strings": ("string quartet", "string trio", "弦乐四重奏", "弦乐", "strings"),
     "orchestra": ("orchestra", "symphony orchestra", "管弦", "乐团", "交響"),
     "voice": ("requiem", "mass", "choir", "chorus", "合唱", "弥撒", "安魂"),
 }
@@ -60,6 +62,19 @@ _ERA_TOKENS: dict[str, tuple[str, ...]] = {
 # (archetype_id, required_instrument_keys, required_form_keys, score_boost)
 _ARCHETYPE_RULES: tuple[tuple[str, frozenset[str], frozenset[str], float], ...] = (
     ("sacred-requiem", frozenset(), frozenset({"requiem"}), 0.35),
+    # Non-piano concertos must outrank piano-concerto soft unlock (SPEC-033).
+    (
+        "violin-concerto",
+        frozenset({"violin"}),
+        frozenset({"concerto"}),
+        0.36,
+    ),
+    (
+        "oboe-concerto",
+        frozenset({"oboe"}),
+        frozenset({"concerto"}),
+        0.36,
+    ),
     ("piano-concerto", frozenset({"piano"}), frozenset({"concerto"}), 0.35),
     ("symphony-orchestra", frozenset({"orchestra"}), frozenset({"symphony"}), 0.35),
     ("piano-trio", frozenset({"piano"}), frozenset({"trio"}), 0.3),
@@ -170,7 +185,17 @@ def classify_facets(
             # Duo packs must never soft-unlock without cello evidence (SPEC-032).
             if arch_id == "duo-cello-piano":
                 continue
-            if not (piano_family and need_form & form_set and not (inst_set - {"piano"})):
+            # SPEC-033: never soft-unlock piano-concerto when another soloist is present.
+            other_solo = inst_set & {
+                "violin",
+                "viola",
+                "cello",
+                "oboe",
+                "voice",
+            }
+            if arch_id == "piano-concerto" and other_solo:
+                continue
+            if not (piano_family and need_form & form_set and not (inst_set - {"piano", "orchestra", "strings"})):
                 continue
             if "piano" not in instruments:
                 instruments = ["piano", *instruments]

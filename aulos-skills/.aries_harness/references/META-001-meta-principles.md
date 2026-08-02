@@ -8,8 +8,8 @@ managed_by: "aries-harness"
 fingerprint: "aries-harness/bootstrap-doc/v1"
 initialized_at: "2026-07-27T10:45:00Z"
 effective_status: "active"
-effective_since: "2026-08-01T10:20:00Z"
-content_fingerprint: "sha256:1f205636bde6ac273c32110d6db2c8ecdbbf03489bd75a005d6e4291fde8447a"
+effective_since: "2026-08-01T22:10:00Z"
+content_fingerprint: "sha256:d001300e6f51b1384048ff81ec2bb4b36be22b6a67306213f85493c0a64f0809"
 trace_history_source: "filesystem-only"
 trace_last_commit_sha: ""
 trace_last_commit_at: ""
@@ -27,10 +27,10 @@ Downstream: `aulos-operating-defaults` skill, workspace `AGENTS.md`, per-project
 | Field | Value |
 | --- | --- |
 | Artifact ID | META-001 |
-| Version | v6 |
+| Version | v10 |
 | Layer | MetaDefineLayer |
 | Scope | Whole Aulos monorepo + harness fleet |
-| Supersedes | ad-hoc “common sense” in chat only; v5 without explicit unknown-case anti-case rule |
+| Supersedes | v9 program loop without **final subject scalar ownership + failed-gate persistence** (§4.1) |
 
 ## How to use
 
@@ -73,6 +73,9 @@ Solve problems at the source, not at the symptom.
 | Dev Blog missing AUDIT-009 | “LLM forgot” | Evidence collector truncated **newest** journal entries |
 | Solo cello suites | case-specific scrub tuples | Catalog record (symptom path superseded) |
 | Thin Discogs/NLP guides (unknown titles) | hand craft YAML / per-work thicken | **FacetClassifier → dimension templates → stage → promote-production** (SPEC-029–031) |
+| Multi-work Discogs album → thin family scaffold | hope one IntentLock title thickens | **Release structure first** (§4.1 / SPEC-034): full fetch → program map → layered deepen |
+| Program loop ran but chambers = Bach bio / Bachlava junk | keep Discogs `A = B = C` titles; hard-fail when LLM 401 | **Canonical program title + catalog-first search**; **LLM is enrich not gate** — web_search_raw floor on verify fail (§4.1) |
+| Program loop ran but final guide = `Unknown composer` / anonymous thin prose | trust map/deepdives while album/family/LLM scalars keep control; persist `eval_pass=false` as completed | **Fold-back owns final subject scalars** — per-work composer into `g.program`, program-loop composer/thesis/introduction/related/sound overrides generic layers; failed eval/process gates persist as `failed` (§4.1) |
 
 Domain detail stays in `docs/insights.md` and SPEC-008/009; this section owns the **thinking pattern**.
 
@@ -206,10 +209,47 @@ Stable seams for the listening product and ops stack. Detail lives in SPEC/ADR; 
 | --- | --- |
 | **Agent-centric product** | Core is **Agent + Skill Harness + tools**. API injects context/RAG and persists; do not grow `aulos-api` into the listening orchestration entrypoint. |
 | **Identity before enrich** | Catalog + IdentityResolver decide the work; RAG / knowledge / LLM **enrich after** identity — they must not alone choose `work_id`. |
+| **Release structure before deepen** | See **§4.1** — Discogs multi-work pressings are programs; full metadata → structure map → layered expand. Forbidden: family-scaffold thicken before program recognition. |
 | **Adversarial process review** | After each atelier node: deterministic IntentLock review; after synthesize/compose: review-only LLM Critic against the frozen lock (REQ-008 / SPEC-018 / ADR-005). Critic never rewrites identity. |
 | **Knowledge plane** | Encyclopedic music data lives in **aulos-knowledge**, not mixed into `aulos.db` with users/guides. **Authority sources** must be registered and **verified** in the Source Registry (`data/registry/sources.yaml` / REQ-008) before crawl or RAG publish. |
 | **Listening product surface** | A guide is chambers + bilingual panes + **playable ambient**, not headings alone (SPEC-005/006). Media contract and sandbox are part of the product. |
 | **Security / HTML** | Guide HTML and session cookies follow SPEC-014/015; fail closed; module seams per SPEC-016. |
+
+### 4.1 Release structure before deepen (唱片结构先于深化) — high covenant
+
+**Operator-grade rule for every Discogs-sourced listening path.** Classical pressings
+are often **multi-work programs**. Treating the album title as one work and jumping
+into a genre family scaffold is a **class defect**.
+
+| Stage | Obligation |
+| --- | --- |
+| **1. Fetch complete** | Pull the full Discogs release/master payload: credits (`artists` / `extraartists`), `tracklist` (incl. headings), `formats`, `labels`/`catno`, `images`, `genres`/`styles`, `master_id`. Title-only seeds are insufficient. |
+| **2. Structure (canonical titles)** | Build `ReleaseStructure` (`aulos.release_structure/v1`). Collapse Discogs polyglot track titles (`EN = DE = FR`) via `canonical_discogs_title` — **never** prefer the longest string. Program labels must be catalog-bearing and search-safe. |
+| **3. Gate** | `structure_ready` must hold before corpus/synthesize/thicken deepen. Incomplete program maps hard-fail — do not ship thin family prose. |
+| **4. Iterative expand (LLM-optional)** | Loop **per program work** with **catalog-first `program_search_query`**: web gather → **usable floor even if LLM verify/enrich fails** (`web_search_raw`) → optional LLM thicken → fold (`release-program-loop`). Album-title web must not short-circuit. Filter composer-bio / junk hits that lack catalog or work tokens. |
+| **5. Pressing synthesis** | Recording-level interpretations / vinyl / comparative shelf across the program. |
+
+**Hard rules**
+
+- **LLM is enrich, not a gate.** Auth failure / parse failure / not-ready must degrade to a snippet floor and continue the loop — never empty the iteration because verify returned `{}`.
+- **Search query ≠ Discogs track title.** Use composer + catalog display (`BWV 1041`) + short canonical cue. Polyglot `=` titles are a class defect at structure time.
+- **A correct middle stage is not a correct guide.** The program loop owns final
+  subject scalars (`composer`, thesis, introduction, related works, sound world)
+  after merge; failed eval/process gates must not be persisted or published as
+  completed guides.
+
+**Do / Don't**
+
+| Do | Don't |
+| --- | --- |
+| Keep the album program visible in research / snapshot / atelier. | Collapse BWV/K./Op. siblings into one longest track before mapping. |
+| Canonicalize program titles before web/LLM. | Feed `A = B = C` Discogs strings into search or map labels. |
+| Deepen each program work with its own identity lock + catalogs. | Run `family:violin-concerto` (or any family) as a substitute for missing program structure. |
+| Keep web snippets when LLM 401/unavailable. | Treat `verify_failed` / LLM auth as “skip community / stop deepen”. |
+| Preserve Discogs performers/label as pressing-level layer 5. | Case-patch one Philips/DG release id with craft YAML. |
+
+Canonical detail: **REQ-024 / SPEC-034 / ARCH-002 / ADR-006 / DOM-003**.
+Related: SPEC-033 (instrument-faithful + multi-catalog title), SPEC-032 (identity freeze).
 
 ---
 
@@ -231,6 +271,7 @@ Stable seams for the listening product and ops stack. Detail lives in SPEC/ADR; 
 | Topic | Canonical detail |
 | --- | --- |
 | Work identity / Catalog | SPEC-008, DOM-002, ADR-004, insights “Work Identity Catalog” |
+| Discogs release structure before deepen | SPEC-034, ARCH-002, ADR-006, DOM-003, REQ-024, §4.1 |
 | Family / decontam | SPEC-009, insights “Family evidence…” |
 | Locales Hans/Hant | operating-defaults + insights “Locale script tags” |
 | UTC / local display | operating-defaults + insights “Timezone” |

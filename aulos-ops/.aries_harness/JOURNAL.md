@@ -10,13 +10,26 @@ generated_by: "/aries-harness init"
 initialized_at: "2026-07-25T11:20:06Z"
 effective_status: "active"
 effective_since: "2026-07-25T11:20:06Z"
-content_fingerprint: "sha256:77e1a15360404f241fb1ce1a0fd1e2233413c9ea6f60bca086944d87efd5701c"
+content_fingerprint: "sha256:f239228cebdc8a46a79c7acd22f0e327bcacf960a62fe1dc1c1f6d09e12e100f"
 trace_history_source: "filesystem-only"
 trace_last_commit_sha: ""
 trace_last_commit_at: ""
 trace_revision_count: "0"
 ---
 # Journal
+
+## 2026-08-02T07:24:00Z
+
+- **Production deploy sync:** root `bash deploy/aulos-ctl.sh deploy` published
+  current Ops build `20260802071835-5476efb` (`assets/index-6KD2tYCV.js`).
+  `aulos-ops.service` restarted at `2026-08-02 15:18:38 CST` and remained active.
+- Verify: root `doctor` passed; deploy test suite -> 5 passed; root `status`
+  showed all four services active; root `smoke` passed local + public health.
+  Ops logs served `/`, `/health`, `version.json`, built JS, and ops API panels
+  with HTTP 200.
+- Central deploy evidence:
+  `../aulos-skills/.aries_harness/runs/deployments/DEPLOY-2026-08-02-spec-034-slice-g-production.md`.
+  Residual: no browser/Playwright visual smoke in this closeout.
 
 ## 2026-08-01T21:00:00Z
 

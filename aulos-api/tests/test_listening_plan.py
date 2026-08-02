@@ -18,6 +18,7 @@ def test_initial_plan_is_countable() -> None:
     assert len(steps) == PLAN_TOTAL
     assert all(s["status"] == "pending" for s in steps)
     assert steps[0]["id"] == "g.discogs"
+    assert any(s["id"] == "g.program" for s in steps)
     assert steps[-1]["id"] == "listening.eval"
     assert steps[0]["index"] == 1
     assert steps[-1]["index"] == PLAN_TOTAL

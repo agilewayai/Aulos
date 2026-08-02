@@ -226,6 +226,26 @@ def run_targeted_revise(
     allow_full_compose: Callable[[dict[str, Any]], dict[str, Any]] | None = None,
 ) -> dict[str, Any]:
     """Patch targeted chambers and re-render. Full compose only when scope=full."""
+    from aulos_skills.identity_lock import scrub_dossier_if_identity_polluted
+
+    # Regen class: never patch on top of a foreign-work dossier masked by lock labels.
+    dossier0 = _dossier_from_context(context)
+    scrubbed, was_polluted = scrub_dossier_if_identity_polluted(
+        dossier0,
+        work_title=str(context.get("work_title") or ""),
+        work_hint=str(context.get("work_hint") or ""),
+        raw_message=str(context.get("raw_message") or ""),
+        composer=str(context.get("composer") or ""),
+    )
+    if was_polluted:
+        context["corpus_dossier"] = scrubbed
+        context["identity_pollution_scrubbed"] = True
+        context["refuse_families"] = True
+        # Prefer full rebuild when available — targeted patches cannot unpoison.
+        if allow_full_compose is not None:
+            context["revise_scope"] = "full"
+            context["force_full_compose_identity_pollution"] = True
+
     expert_report = dict(report or context.get("external_review_report") or {})
     notes = (human_notes if human_notes is not None else str(context.get("review_notes") or "")).strip()
 
@@ -233,6 +253,8 @@ def run_targeted_revise(
     human_intents = intents_from_human_notes(notes) if notes else []
     intents = merge_intents(expert_intents, human_intents)
     scope = resolve_scope(intents)
+    if context.get("force_full_compose_identity_pollution"):
+        scope = "full"
     targets = union_targets(intents)
 
     before_html = str(context.get("guide_html") or "")

@@ -9,7 +9,7 @@ fingerprint: "aries-harness/bootstrap-doc/v1"
 initialized_at: "2026-07-25T11:10:22Z"
 effective_status: "active"
 effective_since: "2026-07-25T11:10:22Z"
-content_fingerprint: "sha256:0abb195e2d1e6e1febe2f05665f04ec91d43a5cf44437566cf2e50e051c94983"
+content_fingerprint: "sha256:68be7a27cf7d96481518237be7d85c09bc989ab9a09daea5bb10e505ae0db52d"
 trace_history_source: "filesystem-only"
 trace_last_commit_sha: ""
 trace_last_commit_at: ""
@@ -19,8 +19,13 @@ trace_revision_count: "0"
 
 ## Current phase
 
-- REQ-011 / SPEC-021Δ diary guide lifecycle (revise / unpublish / delete) shipped locally
-- REQ-010 Listening diary + plaza SNS S1–S6 + lifecycle delta (await deploy)
+- SPEC-034 Slice F deployed: Discogs program composer propagation +
+  failed-guide persistence/publish gate verified and published to production;
+  guide #59 live recompose remains pending
+- REQ-011 / SPEC-021Δ diary guide lifecycle (revise / unpublish / delete) code
+  deployed with the 2026-08-02 host deploy; dedicated feature smoke not rerun
+- REQ-010 Listening diary + plaza SNS S1–S6 + lifecycle delta code deployed
+  with the 2026-08-02 host deploy; dedicated feature smoke not rerun
 
 ## Current phase (prior)
 
@@ -28,6 +33,9 @@ trace_revision_count: "0"
 
 ## Active run
 
+- Closed + deployed: SPEC-034 Slice F guide #59 gateway/persist gate
+  (2026-08-02); live guide #59 recompose pending
+- Closed: SPEC-034Δ gateway `g.program` deepen loop + web partial (2026-08-01)
 - idle (RUN-010 S1–S6 + REQ-011 lifecycle complete)
 
 

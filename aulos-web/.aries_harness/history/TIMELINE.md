@@ -8,10 +8,10 @@ managed_by: "aries-harness"
 fingerprint: "aries-harness/history-doc/v1"
 generated_by: "/aries-harness history-refresh"
 initialized_at: "2026-07-25T11:07:42Z"
-generated_at: "2026-08-01T20:59:19+00:00"
+generated_at: "2026-08-02T07:27:11+00:00"
 effective_status: "generated"
-effective_since: "2026-08-01T20:59:19+00:00"
-content_fingerprint: "sha256:8aec61eddbbe8eb03e2b88e61b48e6c2ed1582ef2cc22bbadc1b01e0d99b4fe6"
+effective_since: "2026-08-02T07:27:11+00:00"
+content_fingerprint: "sha256:3c1d0f9553bc320372701eadbcb9c86c757cd67683cb7b94e94b06a0f6c0bfc2"
 trace_history_source: "filesystem-only"
 trace_last_commit_sha: ""
 trace_last_commit_at: ""
@@ -19,9 +19,30 @@ trace_revision_count: "0"
 ---
 # Timeline
 
-Generated at: `2026-08-01T20:59:19+00:00`
+Generated at: `2026-08-02T07:27:11+00:00`
 
 ## Journal milestones
+
+### 2026-08-02T07:24:00Z
+
+- **Production deploy sync:** root `bash deploy/aulos-ctl.sh deploy` published
+- Verify: root `doctor` passed; deploy test suite -> 5 passed; root `status`
+- Central deploy evidence:
+
+### 2026-08-01T22:00:00Z
+
+- 我的聆乐日记: drop 78rem/44rem/72ch shell squeeze; browse feed full-width album
+- Verify: `npm run build`.
+
+### 2026-08-01T21:55:00Z
+
+- Plaza feed: drop featured hero lead (first card no longer full-bleed / oversized);
+- Verify: `npm run build`.
+
+### 2026-08-01T21:50:00Z
+
+- **REQ-006 / SPEC-010 desktop workspace density:** ≥1100px full-bleed studio/diary/plaza;
+- Verify: `npm run build` green.
 
 ### 2026-08-01T16:20:00Z
 
@@ -43,26 +64,9 @@ Generated at: `2026-08-01T20:59:19+00:00`
 - **Atelier trail progress UX:** show 完成 / 跳过 / 共 breakdown; localize step status labels;
 - Verify: atelierTrailUtils.test.ts ok; npm run build green.
 
-### 2026-08-01T11:34:00Z
-
-- REQ-011 / SPEC-021Δ: 聆乐导赏工坊审阅区 — 审阅意见 textarea；按状态显示通过发布 /
-- Verify: `npm run build` green (upstream `test_diary_guides.py` 3 passed).
-
-### 2026-08-01T19:05:00Z
-
-- Diary guide review now uses the same Studio iframe path (`prepareGuideHtml` + `GUIDE_IFRAME_SANDBOX` + `.guide-frame`) instead of `dangerouslySetInnerHTML` into `.diary-guide-html` (which restyled Salon Codex HTML).
-- Verify: `npm run build`.
-
-### 2026-08-01T18:55:00Z
-
-- SPEC-019: `ProcessScorecardCard` on Studio Atelier + diary 导赏工坊 when `process_scorecard` present.
-
-### 2026-08-01T18:40:00Z
-
-- SPEC-018: `AtelierTrail` surfaces failed `listening.review` milestones as「本意偏离已拦截」.
-
 ## Recent git commits
 
+- `5476efb` 2026-08-02 Ship identity freeze (SPEC-032) and listening hardenings across the fleet; refresh honeycomb.
 - `1d325d5` 2026-08-01 Ship knowledge discovery, dossier, and benchmark console; refresh fleet honeycomb.
 - `491b042` 2026-07-27 Ship authority source registry, OPS knowledge console, and refresh fleet honeycomb.
 - `5633e94` 2026-07-27 Ship Ops task queue, dev blog v2, and refresh fleet honeycomb.

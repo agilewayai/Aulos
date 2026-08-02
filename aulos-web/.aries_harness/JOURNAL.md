@@ -10,13 +10,46 @@ generated_by: "/aries-harness init"
 initialized_at: "2026-07-25T11:07:42Z"
 effective_status: "active"
 effective_since: "2026-07-25T11:07:42Z"
-content_fingerprint: "sha256:8bed8f8e160b6f1fb52cb5eff1e8bbdfac49ae64b05ea771019f86b830e774aa"
+content_fingerprint: "sha256:d2170f933b6aba43c5273302439dc46de33e18cb1816b86e450666029b0c873f"
 trace_history_source: "filesystem-only"
 trace_last_commit_sha: ""
 trace_last_commit_at: ""
 trace_revision_count: "0"
 ---
 # Journal
+
+## 2026-08-02T07:24:00Z
+
+- **Production deploy sync:** root `bash deploy/aulos-ctl.sh deploy` published
+  current web build `20260802071831-5476efb`
+  (`assets/index-C4PhANvp.js`). `aulos-web.service` restarted at
+  `2026-08-02 15:18:38 CST` and remained active.
+- Verify: root `doctor` passed; deploy test suite -> 5 passed; root `status`
+  showed all four services active; root `smoke` passed local + public health.
+  Web logs served `/`, `/health`, `version.json`, and the built JS asset with
+  HTTP 200.
+- Central deploy evidence:
+  `../aulos-skills/.aries_harness/runs/deployments/DEPLOY-2026-08-02-spec-034-slice-g-production.md`.
+  Residual: no browser/Playwright visual smoke in this closeout.
+
+## 2026-08-01T22:00:00Z
+
+- 我的聆乐日记: drop 78rem/44rem/72ch shell squeeze; browse feed full-width album
+  grid (2/3/4 cols); detail + atelier workspace full-bleed; prose measure only on notes.
+- Verify: `npm run build`.
+
+## 2026-08-01T21:55:00Z
+
+- Plaza feed: drop featured hero lead (first card no longer full-bleed / oversized);
+  uniform grid tiles; desktop cover-on-top album shelf.
+- Verify: `npm run build`.
+
+## 2026-08-01T21:50:00Z
+
+- **REQ-006 / SPEC-010 desktop workspace density:** ≥1100px full-bleed studio/diary/plaza;
+  tall guide readers; sticky diary list + guide-review rail; plaza/blog multi-column feeds;
+  focused prose still ~72ch. ui-ux-pro-max dense journal / reading shelf.
+- Verify: `npm run build` green.
 
 ## 2026-08-01T16:20:00Z
 

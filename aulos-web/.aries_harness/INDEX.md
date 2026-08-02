@@ -8,10 +8,10 @@ managed_by: "aries-harness"
 fingerprint: "aries-harness/bootstrap-doc/v1"
 generated_by: "/aries-harness well-organized"
 initialized_at: "2026-07-25T11:07:42Z"
-last_organized_at: "2026-08-01T20:59:19+00:00"
+last_organized_at: "2026-08-02T07:27:11+00:00"
 effective_status: "generated"
-effective_since: "2026-08-01T20:59:19+00:00"
-content_fingerprint: "sha256:d3c0f090a348d5114b227731d2bdf3a685c685e87ce3b36050da2e23e461f925"
+effective_since: "2026-08-02T07:27:11+00:00"
+content_fingerprint: "sha256:63eac44057bf17bf4d9091a043bbf16f1f9810ffe1415a6b2afd9c1cd20a0c35"
 trace_history_source: "filesystem-only"
 trace_last_commit_sha: ""
 trace_last_commit_at: ""
@@ -19,7 +19,7 @@ trace_revision_count: "0"
 ---
 # Harness Index
 
-Last organized: `2026-08-01T20:59:19+00:00`
+Last organized: `2026-08-02T07:27:11+00:00`
 
 Canonical spelling: `/aries-harness well-organized`
 
@@ -65,6 +65,7 @@ Fingerprint marker: `aries-harness` / `aries-harness/bootstrap-doc/v1`
 - [REQ-001-aulos-web-bootstrap.md](references/requests/REQ-001-aulos-web-bootstrap.md)
 - [REQ-004-listening-diary-plaza-ui.md](references/requests/REQ-004-listening-diary-plaza-ui.md)
 - [REQ-005-diary-blog-calendar-tags.md](references/requests/REQ-005-diary-blog-calendar-tags.md)
+- [REQ-006-desktop-workspace-density.md](references/requests/REQ-006-desktop-workspace-density.md)
 
 #### `references/specs/`
 - role: behavior and acceptance contracts derived from requests
@@ -78,6 +79,7 @@ Fingerprint marker: `aries-harness` / `aries-harness/bootstrap-doc/v1`
 - [SPEC-007-single-pane-studio.md](references/specs/SPEC-007-single-pane-studio.md)
 - [SPEC-008-session-scene-restore.md](references/specs/SPEC-008-session-scene-restore.md)
 - [SPEC-009-diary-blog-calendar-tags.md](references/specs/SPEC-009-diary-blog-calendar-tags.md)
+- [SPEC-010-desktop-workspace-density.md](references/specs/SPEC-010-desktop-workspace-density.md)
 
 #### `references/stories/`
 - role: sprintable slices linked to specs and verification

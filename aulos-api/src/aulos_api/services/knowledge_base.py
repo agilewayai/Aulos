@@ -145,6 +145,19 @@ def _content_tokens(text: str) -> set[str]:
     return {t.lower() for t in _TOKEN_RE.findall(text or "") if t.lower() not in _STOP_TOKENS}
 
 
+def _token_in_blob(token: str, blob: str) -> bool:
+    """Word/digit-boundary match — refuse substring hits (in ⊂ Hindemith)."""
+    try:
+        _ensure_skills()
+        from aulos_skills.text_match import numeric_token_in_text
+
+        return numeric_token_in_text(token, blob)
+    except Exception:  # noqa: BLE001
+        t = (token or "").lower()
+        b = (blob or "").lower()
+        return bool(t) and re.search(rf"(?<![a-z0-9]){re.escape(t)}(?![a-z0-9])", b) is not None
+
+
 def works_compatible(
     query: str,
     *,
@@ -153,15 +166,26 @@ def works_compatible(
     doc_work_key: str = "",
     doc_work_id: str = "",
     resolved_work_id: str = "",
+    locked_composer: str = "",
     min_score: float = 0.0,
     score: float = 0.0,
 ) -> bool:
     """True when a KB document is about the same work the user asked for.
 
     Catalog work_id match is authoritative. Otherwise require distinctive overlap —
-    never composer-only or catalog-prefix-only (SPEC-008).
+    never composer-only, catalog-prefix-only, or Discogs-template glue (SPEC-008/033).
     """
     weak = _load_weak_tokens()
+    if locked_composer and doc_composer:
+        try:
+            _ensure_skills()
+            from aulos_skills.text_match import composers_compatible
+
+            if not composers_compatible(locked_composer, doc_composer):
+                return False
+        except Exception:  # noqa: BLE001
+            # Fail closed when composers look non-empty but cannot be compared.
+            return False
     if resolved_work_id and doc_work_id:
         return resolved_work_id == doc_work_id and score >= min_score
     if resolved_work_id and doc_work_key and resolved_work_id.endswith(doc_work_key):
@@ -371,6 +395,28 @@ def upsert_from_report(db: Session, *, report: Any, guide_id: int, user_id: int)
         return None
     title = str(dossier.get("work_title") or report.work_title or "")
     composer = str(dossier.get("composer") or report.composer or "")
+    # Never re-index identity-polluted dossiers — they poison future recompose/RAG.
+    try:
+        _ensure_skills()
+        from aulos_skills.identity_lock import dossier_betrays_identity_lock
+
+        msg = str(ctx.get("raw_message") or "")
+        if dossier_betrays_identity_lock(
+            dossier, work_title=title, work_hint=str(ctx.get("work_hint") or ""), raw_message=msg
+        ):
+            logger.warning(
+                "kb_upsert_refused_polluted guide=%s title=%s", guide_id, title[:80]
+            )
+            purge_betraying_knowledge(
+                db,
+                work_title=title,
+                raw_message=msg,
+                composer=composer,
+                source_guide_id=guide_id,
+            )
+            return None
+    except Exception as exc:  # noqa: BLE001
+        logger.warning("kb_upsert_pollution_gate_failed guide=%s err=%s", guide_id, exc)
     key = normalize_work_key(title, composer)
     return upsert_document(
         db,
@@ -381,6 +427,76 @@ def upsert_from_report(db: Session, *, report: Any, guide_id: int, user_id: int)
         source_guide_id=guide_id,
         user_id=user_id,
     )
+
+
+def purge_betraying_knowledge(
+    db: Session,
+    *,
+    work_title: str = "",
+    raw_message: str = "",
+    composer: str = "",
+    source_guide_id: int | None = None,
+) -> int:
+    """Delete KB rows that poison this lock (regen hygiene).
+
+    Safe scope only:
+    - documents produced by ``source_guide_id`` that betray the lock
+    - same-composer documents that betray the lock (self-poisoned Bach-labeled rows)
+    Never delete unrelated composers merely because their catalogs differ.
+    """
+    try:
+        _ensure_skills()
+        from aulos_skills.identity_lock import dossier_betrays_identity_lock
+        from aulos_skills.text_match import composers_compatible
+    except Exception:  # noqa: BLE001
+        return 0
+
+    candidates: list[KnowledgeDocument] = []
+    if source_guide_id is not None:
+        candidates.extend(
+            db.query(KnowledgeDocument)
+            .filter(KnowledgeDocument.source_guide_id == source_guide_id)
+            .all()
+        )
+    if composer:
+        # Same-composer peers (includes empty/mangled rows handled below via betrayal+compat)
+        for doc in db.query(KnowledgeDocument).limit(500).all():
+            doc_composer = str(doc.composer or "")
+            if doc_composer and composers_compatible(composer, doc_composer):
+                candidates.append(doc)
+
+    seen: set[int] = set()
+    victims: list[KnowledgeDocument] = []
+    for doc in candidates:
+        if doc.id in seen:
+            continue
+        seen.add(doc.id)
+        try:
+            meta = json.loads(doc.dossier_json or "{}")
+        except json.JSONDecodeError:
+            meta = {}
+        if not isinstance(meta, dict) or not meta:
+            continue
+        title = work_title or doc.title or ""
+        if dossier_betrays_identity_lock(
+            meta, work_title=title, raw_message=raw_message
+        ):
+            victims.append(doc)
+
+    removed = 0
+    for doc in victims:
+        db.query(KnowledgeChunk).filter(KnowledgeChunk.document_id == doc.id).delete()
+        db.delete(doc)
+        removed += 1
+    if removed:
+        db.commit()
+        logger.info(
+            "kb_purge_betraying removed=%s guide=%s title=%s",
+            removed,
+            source_guide_id,
+            (work_title or "")[:80],
+        )
+    return removed
 
 
 def seed_corpus_knowledge(db: Session) -> int:
@@ -514,6 +630,7 @@ def retrieve(
         )
 
     # Soft-filter: require ≥1 non-weak distinctive token from the query in the doc blob.
+    # Use token boundaries — substring `in` must not hit inside "Hindemith".
     weak = _load_weak_tokens()
     chunk_rows: list[tuple[KnowledgeChunk, KnowledgeDocument]] = []
     for doc in docs:
@@ -524,10 +641,20 @@ def retrieve(
             meta = {}
         if meta.get("work_id"):
             blob = f"{blob} {meta.get('work_id')}"
+        # Locked composer: drop docs that name a different composer (mangled titles too).
+        if composer and (doc.composer or "").strip():
+            try:
+                _ensure_skills()
+                from aulos_skills.text_match import composers_compatible
+
+                if not composers_compatible(composer, doc.composer or ""):
+                    continue
+            except Exception:  # noqa: BLE001
+                continue
         if hint_key and hint_key[:20] not in (doc.work_key or "") and hint_key not in (doc.work_key or ""):
             tokens = _content_tokens(hint_key.replace("-", " "))
             strong_tokens = tokens - weak
-            if strong_tokens and not any(t in blob for t in strong_tokens):
+            if strong_tokens and not any(_token_in_blob(t, blob) for t in strong_tokens):
                 continue
             if not strong_tokens:
                 continue
@@ -558,18 +685,43 @@ def retrieve(
         scored.append((score, ch, doc))
 
     scored.sort(key=lambda x: x[0], reverse=True)
+
+    def _doc_meta(doc: KnowledgeDocument) -> dict[str, Any]:
+        try:
+            return json.loads(doc.dossier_json or "{}")
+        except json.JSONDecodeError:
+            return {}
+
+    def _meta_betrays(meta: dict[str, Any]) -> bool:
+        if not meta:
+            return False
+        try:
+            _ensure_skills()
+            from aulos_skills.identity_lock import dossier_betrays_identity_lock
+
+            return bool(
+                dossier_betrays_identity_lock(
+                    meta,
+                    work_title=work_hint or query,
+                    raw_message=query,
+                )
+            )
+        except Exception:  # noqa: BLE001
+            return False
+
     compatible: list[tuple[float, KnowledgeChunk, KnowledgeDocument]] = []
     for score, ch, doc in scored:
-        try:
-            meta = json.loads(doc.dossier_json or "{}")
-        except json.JSONDecodeError:
-            meta = {}
+        meta = _doc_meta(doc)
+        # Drop self-poisoned / foreign-catalog rows from hit stream (not only kb_dossier).
+        if _meta_betrays(meta):
+            continue
         if works_compatible(
             qtext,
             doc_title=doc.title or "",
             doc_composer=doc.composer or "",
             doc_work_key=doc.work_key or "",
             doc_work_id=str(meta.get("work_id") or ""),
+            locked_composer=composer,
             min_score=0.12,
             score=float(score),
         ):
@@ -611,10 +763,39 @@ def retrieve(
             doc_composer=best_doc.composer or "",
             doc_work_key=best_doc.work_key or "",
             doc_work_id=str(meta.get("work_id") or ""),
+            locked_composer=composer,
             min_score=0.18,
             score=float(best_score),
         ):
-            kb_dossier = meta
+            # Refuse dossiers whose inner composer chamber contradicts the lock
+            # (title/composer fields on the doc row may already be overwritten).
+            inner_composer = str(meta.get("composer") or best_doc.composer or "")
+            allow = True
+            if composer and inner_composer:
+                try:
+                    _ensure_skills()
+                    from aulos_skills.text_match import composers_compatible
+
+                    allow = composers_compatible(composer, inner_composer)
+                except Exception:  # noqa: BLE001
+                    allow = False
+            # Self-poisoned indexes: Bach labels wrapping a foreign-work dossier
+            # (e.g. Op.11 viola chambers) — catch via identity-lock betrayal.
+            if allow and meta:
+                try:
+                    _ensure_skills()
+                    from aulos_skills.identity_lock import dossier_betrays_identity_lock
+
+                    if dossier_betrays_identity_lock(
+                        meta,
+                        work_title=work_hint or query,
+                        raw_message=query,
+                    ):
+                        allow = False
+                except Exception:  # noqa: BLE001
+                    pass
+            if allow:
+                kb_dossier = meta
 
     rag_hits = [h["text"] for h in hits]
     logger.info(

@@ -9,7 +9,7 @@ fingerprint: "aries-harness/bootstrap-doc/v1"
 initialized_at: "2026-07-25T11:22:04Z"
 effective_status: "active"
 effective_since: "2026-07-25T16:20:00Z"
-content_fingerprint: "sha256:2ee2947b00457ab69c8ecf3c6e0ede26314bdea79375054b840e51cac3002e5e"
+content_fingerprint: "sha256:dad4cb48a0c8d46f7954fec9209a9d1ada005397f7ba334c1e434bf4768efd95"
 trace_history_source: "filesystem-only"
 trace_last_commit_sha: ""
 trace_last_commit_at: ""
@@ -19,6 +19,14 @@ trace_revision_count: "0"
 
 ## Current phase
 
+- SPEC-034 Slice G deployed to production: multi-work guides now emit work
+  sheets + synthesis sheet and render accessible sheet tabs;
+  `program_parallel_plan` exposes fan-out/fan-in metadata for future
+  worker-safe orchestration.
+- SPEC-034 Slice F / META-001 v10 code deployed: program fold-back owns final
+  subject; failed eval/process gates fail closed (guide #59 recompose pending)
+- SPEC-034Δ / REQ-024 Discogs release-structure + program deepen + META-001 **v9** (canonical query + LLM-optional)
+- SPEC-033 / REQ-023 Instrument-faithful thicken + multi-work Discogs (anti-case) shipped
 - SPEC-032 / REQ-022 Identity freeze + Catalog/facet hardening (anti-case) shipped
 - SPEC-031 / REQ-021 Dimensional thicken + promote-to-production (anti-case) shipped
 - SPEC-030 / REQ-020 Promote staging + ops surface shipped
@@ -43,6 +51,16 @@ trace_revision_count: "0"
 
 ## Active run
 
+- Closed + deployed: SPEC-034 Slice G multi-work guide sheets + synthesis
+  fan-in (2026-08-02); production status/smoke green.
+- Closed + deployed: SPEC-034 Slice F guide #59 fold-back scalar ownership +
+  API failed-gate persistence (2026-08-02); live guide #59 recompose pending.
+- Closed: META-001 v9 canonical program query + LLM-optional web floor (2026-08-01)
+- Closed: SPEC-034Δ iterative program deepen loop + META-001 v8 (2026-08-01)
+- Closed: STORY-PACK-002 Slice B/C — runtime hard-gate + program expand (2026-08-01)
+- Closed: REQ-024 / SPEC-034 Slice A structure domain + emit + META-001 v7 (2026-08-01)
+- Next: Slice E live recompose after deploy (confirm atelier `g.program` + `release-program-loop`)
+- Closed: REQ-023 / SPEC-033 Instrument-faithful thicken + multi-work Discogs (2026-08-01)
 - Closed: REQ-022 / SPEC-032 Identity freeze + Catalog/facet hardening (2026-08-01)
 - Closed: REQ-021 / SPEC-031 Dimensional promote anti-case (2026-08-01)
 - Closed: REQ-020 / SPEC-030 Promote staging + ops surface (2026-08-01)
@@ -65,7 +83,8 @@ trace_revision_count: "0"
 
 ## Next action
 
-- Optional: regenerate multi-work Discogs probe guides after deploy to confirm IntentLock freeze + multi_work status in production.
+- Optional: recompose guide #59 and multi-work / non-piano concerto Discogs
+  probes to confirm sheet-mode guide rendering live.
 - Optional: expand dimension **voice tables** and form_lock aliens from live Discogs facet histograms — still dimensional, never per-work craft.
 - Optional: knowledge-plane auto-thicken after promote-production (composer stub → dossier job).
 - Optional operator: rotate live secrets in `.run/host.env` when ready to redeploy (F1 deferred).
@@ -84,7 +103,7 @@ trace_revision_count: "0"
 - Family match: composer-scoped packs need instrument/form evidence (not composer alone)
 - Facility: `.aries_harness/{scripts,templates}` (not package-root)
 - Canonical harness library: `git@github.com:agilewayai/aries-harness-skills.git` (`0.10.0-preview.10`)
-- Skills: compose/eval 0.3.0, synthesize 0.2.0, corpus 0.3.0, operating-defaults 0.3.3
+- Skills: compose 0.3.1, eval 0.3.0, synthesize 0.2.1, corpus 0.3.0, operating-defaults 0.4.2
 - Sibling services: aulos-web, aulos-api, aulos-mcp, aulos-agent, aulos-ops, aulos-knowledge
 - Timezone: store UTC / display OS local (operating-defaults 0.3.3; SPEC-007 on api)
 

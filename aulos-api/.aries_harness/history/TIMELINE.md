@@ -8,10 +8,10 @@ managed_by: "aries-harness"
 fingerprint: "aries-harness/history-doc/v1"
 generated_by: "/aries-harness history-refresh"
 initialized_at: "2026-07-25T11:07:43Z"
-generated_at: "2026-08-01T20:59:12+00:00"
+generated_at: "2026-08-02T07:27:02+00:00"
 effective_status: "generated"
-effective_since: "2026-08-01T20:59:12+00:00"
-content_fingerprint: "sha256:202d5b9ad79c63c5e33a909a969debacc02d7f2889bc703aed5c47fdd125157b"
+effective_since: "2026-08-02T07:27:02+00:00"
+content_fingerprint: "sha256:42920aca5c656568502f58bbbd2e6a6ebe31255d6c0d3da7c4913054da88c779"
 trace_history_source: "filesystem-only"
 trace_last_commit_sha: ""
 trace_last_commit_at: ""
@@ -19,46 +19,52 @@ trace_revision_count: "0"
 ---
 # Timeline
 
-Generated at: `2026-08-01T20:59:12+00:00`
+Generated at: `2026-08-02T07:27:02+00:00`
 
 ## Journal milestones
 
-### 2026-08-01T21:00:00Z
+### 2026-08-02T07:24:00Z
 
-- **SPEC-031:** `POST …/promote-production` graduates any staged promote_candidate
+- **Production deploy sync:** root `bash deploy/aulos-ctl.sh deploy` published
+- Verify: root `doctor` passed; deploy test suite -> 5 passed; root `status`
+- Central deploy evidence:
 
-### 2026-08-01T20:40:00Z
+### 2026-08-02T06:21:15Z
 
-- **SPEC-030:** `GET …/promote-candidates`, `POST …/{id}/promote-stage`; trace +
+- **SPEC-034 Slice F consumer / guide #59:** hot Postgres latest guide remained
+- Fix: Discogs core parsing now prefers explicit performer-role names over
+- Verify: `PYTHONPATH=. .venv/bin/pytest -q tests/test_discogs.py` -> 12 passed;
 
-### 2026-08-01T20:25:00Z
+### 2026-08-01T23:10:00Z
 
-- **SPEC-029 companion:** `_research_payload` persists `promote_candidate` +
+- **META-001 v9 consumer (guide #57):** gateway program loop uses
 
-### 2026-08-01T20:05:00Z
+### 2026-08-01T22:55:00Z
 
-- **SPEC-028 companion:** `ensure_catalog_composer_dossiers` +
+- **SPEC-034Δ program deepen loop (gateway):** after `g.rag`, multi-work
+- Verify: `test_web_research_partial` + `test_listening_plan` green.
 
-### 2026-08-01T19:50:00Z
+### 2026-08-01T22:40:00Z
 
-- **SPEC-026 companion:** `dossier_is_thin` + `enqueue_composer_dossier_build_sync`;
+- **SPEC-034 Slice B/C (consumer):** gateway stores `release_structure` on
+- Verify: `tests/test_discogs.py` green with structure emit.
 
-### 2026-08-01T19:32:00Z
+### 2026-08-01T22:20:00Z
 
-- **SPEC-025 companion:** `fetch_composer_dossier_sync` + listening thicken bag;
+- **SPEC-034 Slice A (consumer):** `analyze_discogs_release` + `build_diary_snapshot`
+- Verify: `tests/test_discogs.py` 11 passed.
 
-### 2026-08-01T19:10:00Z
+### 2026-08-01T22:10:00Z
 
-- **SPEC-024 companion:** Discogs identity lock uses Work Resolver; keeps Catalog
-- Guide #50 full-chain regen → eval **10 / pass**.
+- **Regen pollution loop:** targeted revise / review reused masked polluted
 
-### 2026-08-01T18:45:00Z
+### 2026-08-01T21:55:00Z
 
-- **REQ-013 / SPEC-023 (skills) companion:** Discogs `_guess_work_title` now runs
-- Verify: `tests/test_discogs.py` green.
+- **RAG foreign-dossier bleed (Hindemith→Bach class):** root cause was
 
 ## Recent git commits
 
+- `5476efb` 2026-08-02 Ship identity freeze (SPEC-032) and listening hardenings across the fleet; refresh honeycomb.
 - `1d325d5` 2026-08-01 Ship knowledge discovery, dossier, and benchmark console; refresh fleet honeycomb.
 - `491b042` 2026-07-27 Ship authority source registry, OPS knowledge console, and refresh fleet honeycomb.
 - `5633e94` 2026-07-27 Ship Ops task queue, dev blog v2, and refresh fleet honeycomb.

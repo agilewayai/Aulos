@@ -43,6 +43,162 @@ def _pick(item: dict[str, Any], key: str, lang: str) -> str:
     return str(item.get(key) or "")
 
 
+def _sheet_sound_html(sound: Any, *, zh: bool) -> str:
+    if isinstance(sound, dict):
+        bits: list[str] = []
+        for value in sound.values():
+            if isinstance(value, list):
+                bits.extend(str(x) for x in value if x)
+            elif value:
+                bits.append(str(value))
+        return f"<ul>{_li(bits)}</ul>" if bits else ""
+    return _p(str(sound or ""), zh=zh)
+
+
+def _render_sheet_map(rows: list[Any], *, lang: str, zh: bool) -> str:
+    blocks: list[str] = []
+    for row in rows or []:
+        if not isinstance(row, dict):
+            continue
+        label = _pick(row, "label", lang)
+        cue = _pick(row, "cue", lang)
+        if not label and not cue:
+            continue
+        blocks.append(
+            "<article class='sheet-point'>"
+            f"<h4>{escape(label or 'Cue')}</h4>"
+            f"{_p(cue, zh=zh)}"
+            "</article>"
+        )
+    return "".join(blocks)
+
+
+def _render_sheet_deepdives(rows: list[Any], *, lang: str, zh: bool) -> str:
+    blocks: list[str] = []
+    for row in rows or []:
+        if not isinstance(row, dict):
+            continue
+        title = _pick(row, "title", lang)
+        focus = _pick(row, "focus", lang)
+        note = _pick(row, "note", lang)
+        cues = list(row.get("ear_cues") or [])
+        inner = ""
+        if focus:
+            inner += f"<p class='meta-line'>{escape(focus)}</p>"
+        if note:
+            inner += _p(note, zh=zh)
+        if cues:
+            inner += f"<ul>{_li(cues)}</ul>"
+        if not title and not inner:
+            continue
+        blocks.append(
+            "<article class='sheet-point'>"
+            f"<h4>{escape(title or 'Detail')}</h4>"
+            f"{inner}"
+            "</article>"
+        )
+    return "".join(blocks)
+
+
+def _render_guide_sheets(*, lang: str, dossier: dict[str, Any]) -> str:
+    sheets = [s for s in list(dossier.get("guide_sheets") or []) if isinstance(s, dict)]
+    if len(sheets) < 2:
+        return ""
+    lang = normalize_lang(lang)
+    zh = is_chinese_lang(lang)
+    title_text = "节目单导赏" if zh else "Program sheets"
+    synthesis_text = "综合" if zh else "Synthesis"
+    work_text = "作品" if zh else "Work"
+    sources_text = "来源" if zh else "Sources"
+
+    tabs: list[str] = []
+    panels: list[str] = []
+    for i, sheet in enumerate(sheets):
+        raw_id = str(sheet.get("id") or f"sheet-{i + 1}")
+        sid = "".join(ch if ch.isalnum() or ch in "-_" else "-" for ch in raw_id) or f"sheet-{i + 1}"
+        tab_id = f"tab-{lang}-{sid}"
+        panel_id = f"panel-{lang}-{sid}"
+        selected = i == 0
+        kind = str(sheet.get("kind") or "work")
+        title = _pick(sheet, "title", lang) or (synthesis_text if kind == "synthesis" else f"{work_text} {i + 1}")
+        composer = _pick(sheet, "composer", lang)
+        catalog = _pick(sheet, "catalog", lang)
+        summary = _pick(sheet, "summary", lang)
+        kicker = synthesis_text if kind == "synthesis" else f"{work_text} {i + 1}"
+        meta_bits = [composer, catalog]
+        source_count = sheet.get("source_count")
+        if isinstance(source_count, int) and source_count > 0:
+            meta_bits.append(f"{sources_text} {source_count}")
+        meta = "".join(f"<span class='chip'>{escape(str(x))}</span>" for x in meta_bits if x)
+        map_html = _render_sheet_map(list(sheet.get("listening_map") or []), lang=lang, zh=zh)
+        deep_html = _render_sheet_deepdives(list(sheet.get("deepdives") or []), lang=lang, zh=zh)
+        sound_html = _sheet_sound_html(sheet.get("sound_world"), zh=zh)
+        related = list(sheet.get("related_works") or [])
+        related_html = ""
+        if related:
+            related_html = "<ul>" + _li(
+                [
+                    _pick(r, "title", lang) if isinstance(r, dict) else str(r)
+                    for r in related
+                ][:8]
+            ) + "</ul>"
+        path_label = escape("聆听路径" if zh else "Listening path")
+        close_label = escape("细读" if zh else "Close listening")
+        sound_label = escape("声响世界" if zh else "Sound world")
+        related_label = escape("关联作品" if zh else "Related works")
+        map_section = (
+            f"<div><h4>{path_label}</h4>{map_html}</div>" if map_html else ""
+        )
+        deep_section = (
+            f"<div><h4>{close_label}</h4>{deep_html}</div>" if deep_html else ""
+        )
+        grid_html = (
+            f'<div class="sheet-grid">{map_section}{deep_section}</div>'
+            if map_html or deep_html
+            else ""
+        )
+        sound_section = (
+            f'<div class="sheet-sound"><h4>{sound_label}</h4>{sound_html}</div>'
+            if sound_html
+            else ""
+        )
+        related_section = (
+            f'<div class="sheet-related"><h4>{related_label}</h4>{related_html}</div>'
+            if related_html
+            else ""
+        )
+
+        tabs.append(
+            f'<button type="button" id="{escape(tab_id)}" role="tab" '
+            f'aria-selected="{"true" if selected else "false"}" '
+            f'aria-controls="{escape(panel_id)}" '
+            f'tabindex="{"0" if selected else "-1"}" '
+            f'class="sheet-tab{" is-active" if selected else ""}" '
+            f'data-sheet-tab="{escape(sid)}">{escape(title)}</button>'
+        )
+        panels.append(
+            f'<section id="{escape(panel_id)}" class="sheet-panel" role="tabpanel" '
+            f'aria-labelledby="{escape(tab_id)}" data-sheet-kind="{escape(kind)}"'
+            f'{" hidden" if not selected else ""}>'
+            f"<p class='sheet-kicker'>{escape(kicker)}</p>"
+            f"<h3>{escape(title)}</h3>"
+            f"{_p(summary, zh=zh)}"
+            f"<div class='meta sheet-meta'>{meta}</div>"
+            f"{grid_html}"
+            f"{sound_section}"
+            f"{related_section}"
+            "</section>"
+        )
+    return (
+        f"<section class='guide-sheets' data-guide-sheets='1'>"
+        f"<h2>{escape(title_text)}</h2>"
+        f'<div class="sheet-tabs" role="tablist" aria-label="{escape(title_text)}">'
+        f"{''.join(tabs)}</div>"
+        f"<div class='sheet-panels'>{''.join(panels)}</div>"
+        "</section>"
+    )
+
+
 def _render_lang_article(
     *,
     lang: str,
@@ -83,6 +239,7 @@ def _render_lang_article(
     reasons = list(stature.get("reasons") or [])
     reception = str(stature.get("reception_arc") or "")
     sound = dict(dossier.get("sound_world") or {})
+    sheets_html = _render_guide_sheets(lang=lang, dossier=dossier)
 
     title = str(dossier.get("work_title") or work_title)
     composer_name = str(dossier.get("composer") or composer)
@@ -330,6 +487,7 @@ def _render_lang_article(
   <h1>{escape(title)}</h1>
   <p class="lede">{escape(lede)}</p>
   <div class="meta">{chips}</div>
+  {sheets_html}
   {"".join(sections)}
   <footer>{escape(ui['footer'])}</footer>
 </article>
@@ -802,6 +960,97 @@ body {{
 }}
 .lang-switch button.active {{ background: var(--accent); color: #1a1410; }}
 .lang-pane[hidden] {{ display: none !important; }}
+.guide-sheets {{
+  margin: 0 0 2rem;
+  padding: 1.1rem 0 0;
+  border-top: 1px solid var(--line);
+}}
+.guide-sheets > h2 {{ margin-bottom: 0.7rem; }}
+.sheet-tabs {{
+  display: flex;
+  gap: 0.4rem;
+  overflow-x: auto;
+  padding: 0 0 0.55rem;
+  margin: 0 0 1rem;
+  scrollbar-width: thin;
+}}
+.sheet-tab {{
+  appearance: none;
+  min-height: 2.75rem;
+  max-width: 16rem;
+  flex: 0 0 auto;
+  border: 1px solid var(--line);
+  background: rgba(21,28,34,0.72);
+  color: var(--mute);
+  font: inherit;
+  font-size: 0.78rem;
+  font-weight: 700;
+  line-height: 1.25;
+  letter-spacing: 0;
+  padding: 0.55rem 0.75rem;
+  cursor: pointer;
+  text-align: left;
+}}
+.sheet-tab:hover,
+.sheet-tab:focus-visible {{
+  color: var(--ink);
+  border-color: rgba(201,166,107,0.62);
+  outline: 2px solid rgba(201,166,107,0.42);
+  outline-offset: 2px;
+}}
+.sheet-tab[aria-selected="true"] {{
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #1a1410;
+}}
+.sheet-panel[hidden] {{ display: none !important; }}
+.sheet-panel {{
+  margin: 0;
+  padding: 0.95rem 0 0;
+  border-top: 1px solid var(--line);
+}}
+.sheet-kicker {{
+  margin: 0 0 0.3rem;
+  color: var(--accent);
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}}
+.sheet-panel h3 {{ margin-top: 0; }}
+.sheet-panel h4 {{
+  margin: 0 0 0.45rem;
+  color: var(--ink);
+  font-size: 0.88rem;
+  font-weight: 700;
+  letter-spacing: 0;
+}}
+.sheet-meta {{ margin-bottom: 1rem; }}
+.sheet-grid {{
+  display: grid;
+  gap: 0.75rem;
+  margin-top: 0.55rem;
+}}
+@media (min-width: 720px) {{
+  .sheet-grid {{ grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }}
+}}
+.sheet-point {{
+  padding: 0.65rem 0 0.65rem 0.85rem;
+  border-left: 2px solid rgba(201,166,107,0.72);
+  background: linear-gradient(90deg, rgba(201,166,107,0.055), transparent 72%);
+}}
+.sheet-point + .sheet-point {{ margin-top: 0.55rem; }}
+.sheet-point p:last-child,
+.sheet-point ul:last-child,
+.sheet-sound p:last-child,
+.sheet-sound ul:last-child,
+.sheet-related ul:last-child {{ margin-bottom: 0; }}
+.sheet-sound,
+.sheet-related {{
+  margin-top: 0.9rem;
+  padding-top: 0.8rem;
+  border-top: 1px solid var(--line);
+}}
 .lang-pane[data-lang="zh-Hans"] h1,
 .lang-pane[data-lang="zh-Hans"] h2,
 .lang-pane[data-lang="zh-Hans"] h3,
@@ -976,6 +1225,48 @@ img {{ max-width: 100%; height: auto; }}
   }} else {{
     refreshAmbientCopy(currentLang());
   }}
+
+  function wireSheetTabs() {{
+    document.querySelectorAll(".guide-sheets").forEach(function (group) {{
+      if (group.getAttribute("data-sheet-wired") === "1") return;
+      group.setAttribute("data-sheet-wired", "1");
+      var tabs = Array.prototype.slice.call(group.querySelectorAll('[role="tab"]'));
+      var panels = Array.prototype.slice.call(group.querySelectorAll('[role="tabpanel"]'));
+      if (!tabs.length || !panels.length) return;
+
+      function activate(next, focus) {{
+        tabs.forEach(function (tab) {{
+          var on = tab === next;
+          tab.setAttribute("aria-selected", on ? "true" : "false");
+          tab.setAttribute("tabindex", on ? "0" : "-1");
+          tab.classList.toggle("is-active", on);
+          var panelId = tab.getAttribute("aria-controls") || "";
+          panels.forEach(function (panel) {{
+            if (panel.id === panelId) {{
+              if (on) panel.removeAttribute("hidden"); else panel.setAttribute("hidden", "");
+            }}
+          }});
+        }});
+        if (focus) next.focus();
+      }}
+
+      tabs.forEach(function (tab, idx) {{
+        tab.addEventListener("click", function () {{ activate(tab, false); }});
+        tab.addEventListener("keydown", function (event) {{
+          var key = event.key;
+          var next = idx;
+          if (key === "ArrowRight" || key === "ArrowDown") next = (idx + 1) % tabs.length;
+          else if (key === "ArrowLeft" || key === "ArrowUp") next = (idx - 1 + tabs.length) % tabs.length;
+          else if (key === "Home") next = 0;
+          else if (key === "End") next = tabs.length - 1;
+          else return;
+          event.preventDefault();
+          activate(tabs[next], true);
+        }});
+      }});
+    }});
+  }}
+  wireSheetTabs();
 
   var audio = document.getElementById("aulos-ambient");
   var toggle = document.querySelector(".ambient-toggle");
@@ -1224,4 +1515,3 @@ img {{ max-width: 100%; height: auto; }}
 </body>
 </html>
 """
-

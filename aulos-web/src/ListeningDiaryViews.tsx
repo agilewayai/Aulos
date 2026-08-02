@@ -1359,96 +1359,101 @@ export function MyListeningDiary({
                         ) : null}
                       </div>
                     </div>
-                    {reviewLink.guide?.guide_html ? (
-                      <GuideReader
-                        html={reviewLink.guide.guide_html}
-                        title={reviewLink.guide.work_title || '聆乐导赏'}
-                      />
-                    ) : reviewLink.status === 'queued' ? (
-                      <p className="diary-empty">导赏正在生成，完成后可在此审阅。</p>
-                    ) : (
-                      <p className="diary-empty">正文尚未就绪，请稍候刷新。</p>
-                    )}
+                    <div className="diary-guide-review-workspace">
+                      <div className="diary-guide-review-main">
+                        {reviewLink.guide?.guide_html ? (
+                          <GuideReader
+                            html={reviewLink.guide.guide_html}
+                            title={reviewLink.guide.work_title || '聆乐导赏'}
+                          />
+                        ) : reviewLink.status === 'queued' ? (
+                          <p className="diary-empty">导赏正在生成，完成后可在此审阅。</p>
+                        ) : (
+                          <p className="diary-empty">正文尚未就绪，请稍候刷新。</p>
+                        )}
+                      </div>
+                      <aside className="diary-guide-review-rail" aria-label="审阅操作">
+                        {(reviewLink.actions?.can_revise ||
+                          reviewLink.status === 'ready_for_review' ||
+                          reviewLink.status === 'published' ||
+                          reviewLink.status === 'failed') && (
+                          <label className="diary-review-notes">
+                            <span>审阅意见</span>
+                            <textarea
+                              rows={5}
+                              value={reviewNotes}
+                              placeholder="希望加强什么、纠正什么？提交后将带意见重新生成。"
+                              onChange={(e) => setReviewNotes(e.target.value)}
+                              disabled={busy || reviewLink.status === 'queued'}
+                            />
+                          </label>
+                        )}
 
-                    {(reviewLink.actions?.can_revise ||
-                      reviewLink.status === 'ready_for_review' ||
-                      reviewLink.status === 'published' ||
-                      reviewLink.status === 'failed') && (
-                      <label className="diary-review-notes">
-                        <span>审阅意见</span>
-                        <textarea
-                          rows={3}
-                          value={reviewNotes}
-                          placeholder="希望加强什么、纠正什么？提交后将带意见重新生成。"
-                          onChange={(e) => setReviewNotes(e.target.value)}
-                          disabled={busy || reviewLink.status === 'queued'}
-                        />
-                      </label>
-                    )}
-
-                    <div className="diary-actions diary-guide-lifecycle">
-                      {reviewLink.actions?.can_publish ? (
-                        <button
-                          type="button"
-                          className="btn btn-primary"
-                          disabled={busy}
-                          onClick={() => void onPublishGuideLink(reviewLink.id)}
-                        >
-                          审阅通过并发布
-                        </button>
-                      ) : null}
-                      {reviewLink.actions?.can_unpublish ? (
-                        <button
-                          type="button"
-                          className="btn btn-ghost"
-                          disabled={busy}
-                          onClick={() => void onUnpublishGuideLink(reviewLink.id)}
-                        >
-                          撤回发布
-                        </button>
-                      ) : null}
-                      {reviewLink.actions?.can_revise ? (
-                        <button
-                          type="button"
-                          className="btn btn-primary"
-                          disabled={busy || !reviewNotes.trim()}
-                          onClick={() => void onReviseGuideLink(reviewLink.id)}
-                        >
-                          按意见重新生成
-                        </button>
-                      ) : null}
-                      {reviewLink.actions?.can_dismiss ? (
-                        <button
-                          type="button"
-                          className="btn btn-ghost"
-                          disabled={busy}
-                          title="不再出现在待审阅，可稍后删除"
-                          onClick={() => void onDismissGuideLink(reviewLink.id)}
-                        >
-                          废除
-                        </button>
-                      ) : null}
-                      {(reviewLink.actions?.can_delete || reviewLink.status === 'published') && (
-                        <button
-                          type="button"
-                          className="btn btn-ghost"
-                          disabled={busy}
-                          onClick={() => void onDeleteGuideLink(reviewLink.id)}
-                        >
-                          删除
-                        </button>
-                      )}
-                      <button
-                        type="button"
-                        className="btn btn-ghost"
-                        disabled={busy}
-                        onClick={() => {
-                          setReviewLink(null)
-                          setReviewNotes('')
-                        }}
-                      >
-                        收起
-                      </button>
+                        <div className="diary-actions diary-guide-lifecycle">
+                          {reviewLink.actions?.can_publish ? (
+                            <button
+                              type="button"
+                              className="btn btn-primary"
+                              disabled={busy}
+                              onClick={() => void onPublishGuideLink(reviewLink.id)}
+                            >
+                              审阅通过并发布
+                            </button>
+                          ) : null}
+                          {reviewLink.actions?.can_unpublish ? (
+                            <button
+                              type="button"
+                              className="btn btn-ghost"
+                              disabled={busy}
+                              onClick={() => void onUnpublishGuideLink(reviewLink.id)}
+                            >
+                              撤回发布
+                            </button>
+                          ) : null}
+                          {reviewLink.actions?.can_revise ? (
+                            <button
+                              type="button"
+                              className="btn btn-primary"
+                              disabled={busy || !reviewNotes.trim()}
+                              onClick={() => void onReviseGuideLink(reviewLink.id)}
+                            >
+                              按意见重新生成
+                            </button>
+                          ) : null}
+                          {reviewLink.actions?.can_dismiss ? (
+                            <button
+                              type="button"
+                              className="btn btn-ghost"
+                              disabled={busy}
+                              title="不再出现在待审阅，可稍后删除"
+                              onClick={() => void onDismissGuideLink(reviewLink.id)}
+                            >
+                              废除
+                            </button>
+                          ) : null}
+                          {(reviewLink.actions?.can_delete || reviewLink.status === 'published') && (
+                            <button
+                              type="button"
+                              className="btn btn-ghost"
+                              disabled={busy}
+                              onClick={() => void onDeleteGuideLink(reviewLink.id)}
+                            >
+                              删除
+                            </button>
+                          )}
+                          <button
+                            type="button"
+                            className="btn btn-ghost"
+                            disabled={busy}
+                            onClick={() => {
+                              setReviewLink(null)
+                              setReviewNotes('')
+                            }}
+                          >
+                            收起
+                          </button>
+                        </div>
+                      </aside>
                     </div>
                   </div>
                 ) : null}
@@ -1659,7 +1664,6 @@ export function ListeningPlaza({
                   <ListeningPostCard
                     key={p.id}
                     post={p}
-                    featured={index === 0 && tab === 'plaza'}
                     posinset={index + 1}
                     setsize={items.length}
                     disabled={busy}

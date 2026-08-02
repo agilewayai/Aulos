@@ -1,9 +1,9 @@
 id: aulos-listening-compose
 name: Listening Guide Compose
-version: 0.3.0
+version: 0.3.1
 layer: domain-runtime
 runtime: agent
-summary: Compose bilingual Salon Codex HTML with floating ambient player (cache-first media).
+summary: Compose bilingual Salon Codex HTML with floating ambient player and multi-work guide sheets.
 triggers:
   - listening.compose
 depends_on:

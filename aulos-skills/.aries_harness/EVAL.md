@@ -10,7 +10,7 @@ generated_by: "CKPT-005"
 initialized_at: "2026-07-25T11:20:05Z"
 effective_status: "active"
 effective_since: "2026-07-25T16:10:00Z"
-content_fingerprint: "sha256:73877626f33c8a7a558239af2a9d86f6f2d1b680219c61df99cddf2d381b6d3f"
+content_fingerprint: "sha256:44e0fa7a1b812a550c4f05814f11753347813bbd8eecbf8aee727281a038a7fc"
 trace_history_source: "filesystem-only"
 trace_last_commit_sha: ""
 trace_last_commit_at: ""
@@ -33,6 +33,7 @@ trace_revision_count: "0"
 - unit (unknown-case thicken / SPEC-029): `cd aulos-skills && .venv/bin/python -m pytest tests/test_unknown_case_thicken.py -q`
 - unit (promote staging / SPEC-030): `cd aulos-skills && .venv/bin/python -m pytest tests/test_promote_staging.py -q` ；`cd aulos-api && .venv/bin/python -m pytest tests/test_promote_stage_api.py -q`
 - unit (dimensional promote / SPEC-031): `cd aulos-skills && .venv/bin/python -m pytest tests/test_dimensional_promote.py -q` ；`cd aulos-api && .venv/bin/python -m pytest tests/test_promote_production_api.py -q`
+- unit (Discogs release-structure-first / SPEC-034): `cd aulos-skills && .venv/bin/pytest -q tests/test_release_structure.py tests/test_program_deepen.py tests/test_runtime.py`; render/identity adjunct: `cd aulos-skills && .venv/bin/pytest -q tests/test_identity_hygiene.py tests/test_intake_i18n.py tests/test_media_search.py`; consumer gate: `cd aulos-api && PYTHONPATH=. .venv/bin/pytest -q tests/test_discogs.py tests/test_listening_jobs.py tests/test_diary_guides.py`
 - unit (media API): `cd aulos-api && .venv/bin/python -m pytest tests/test_media.py -q`
 - media smoke: `curl -sI 'http://127.0.0.1:5090/v1/media/audio?src=<urlencoded-commons-url>&mode=cache' | grep -i content-disposition` → must contain `inline`
 - live parity: recompose Goldberg + one cold-path Chinese work; assert bilingual + ambient in `guide_html`
@@ -91,6 +92,14 @@ Minimum gate for listening compose/eval:
 22. Compression (2026-08-01): deleted pre-authored per-work craft YAML and case-hardcoded
     review marker lists (Bernstein / K.488 / Op.69 / rival composers / beethoven.jpg);
     foreign-chamber detection uses form_lock policy only.
+23. SPEC-034 Slice F: structure-ready multi-work programs must carry per-work composer
+    into `g.program`; `release-program-loop` owns final subject scalars
+    (`composer`, thesis, introduction, related works, sound world); failed eval/process
+    gates must not persist or publish as completed guides.
+24. SPEC-034 Slice G: structure-ready multi-work programs with iterations expose
+    `guide_sheets[]` (work sheets + synthesis sheet), `program_parallel_plan`
+    (`fan_out` + `fan_in=synthesis_sheet`), and rendered HTML sheet tabs with
+    `role="tablist"` / `role="tab"` / `role="tabpanel"` plus keyboard support.
 
 ## Layer boundary
 
@@ -100,5 +109,7 @@ Minimum gate for listening compose/eval:
 ## Execution evidence
 
 - store detailed test execution and fix notes under `runs/tests/`
+- production deploy evidence:
+  `runs/deployments/DEPLOY-2026-08-02-spec-034-slice-g-production.md`
 - checkpoint: `checkpoints/CKPT-005-ambient-identity-gates.md`
 - insights: `docs/insights.md`

@@ -10,7 +10,10 @@ Fleet-wide thinking rules live in **`aulos-skills/.aries_harness/references/META
 2. **Asset sync** — harness forced; REQ/SPEC/JOURNAL/schema/deploy stay aligned; Honeycomb closeout.
 3. **Engineering craft** — TDD, coerce LLM input, hard-fail product gates, no chat-only or symptom patches.
 4. **Architecture boundaries** — agent-centric product; identity before RAG; knowledge plane separate;
-   classical knowledge sources must be **registry-verified** (aulos-knowledge REQ-008) before crawl/RAG.
+   classical knowledge sources must be **registry-verified** (aulos-knowledge REQ-008) before crawl/RAG;
+   Discogs paths: **release structure before deepen**, program-loop fold-back owns
+   final subject scalars, and failed eval/process gates fail closed
+   (META-001 §4.1 / SPEC-034).
 
 META-001 is registered in REG-001 (MetaDefineLayer). This skill covers **how we run**; META-001 covers **how we think**. Incident detail: `docs/insights.md` with `↑ META-001 §…` back-links.
 

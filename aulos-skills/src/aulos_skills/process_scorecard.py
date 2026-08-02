@@ -198,6 +198,34 @@ def _score_identity(context: dict[str, Any], outputs: dict[str, Any]) -> tuple[i
             hard = True
             score = min(score, 1)
 
+    # SPEC-034 / META-001 §4.1 — Discogs multi-work structure readiness on intake+identity
+    from aulos_skills.release_structure import (
+        assert_structure_ready,
+        is_multi_work_program,
+        structure_from_context,
+    )
+
+    st = structure_from_context({**context, **outputs})
+    if is_multi_work_program(st):
+        fails = list(outputs.get("structure_hard_fails") or context.get("structure_hard_fails") or [])
+        if not fails:
+            fails = assert_structure_ready(st)
+        if fails or not st.get("structure_ready"):
+            findings.append(
+                Finding(
+                    "high",
+                    "release_structure_not_ready",
+                    "Multi-work Discogs pressing lacks a coherent program map before deepen",
+                )
+            )
+            hard = True
+            score = min(score, 1)
+        elif len(st.get("program") or []) >= 2:
+            # Program recognized — strengthen lock signal
+            score = min(3, score + 0)  # keep clamp path; presence already scored via catalogs
+            if lock.get("catalog_numbers") or st.get("catalog_numbers_all"):
+                score = max(score, 2)
+
     return _clamp(score), findings, hard
 
 

@@ -31,7 +31,13 @@ def test_every_catalog_work_has_registered_family() -> None:
 
 
 def test_new_families_load_and_have_zh() -> None:
-    for fid in ("piano-concerto", "sacred-requiem", "symphony-orchestra", "piano-trio"):
+    for fid in (
+        "piano-concerto",
+        "violin-concerto",
+        "sacred-requiem",
+        "symphony-orchestra",
+        "piano-trio",
+    ):
         pack = load_family_pack(fid)
         assert pack.get("family_id") == fid
         assert len(pack.get("listening_thesis") or "") >= 40

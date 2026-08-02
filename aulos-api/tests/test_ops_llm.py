@@ -53,9 +53,13 @@ def test_llm_config_defaults_and_save(client: TestClient) -> None:
     body = got.json()
     assert body["active_provider"] == "fake"
     assert body["ready_for_live"] is False
+    assert body["draft_provider"] == "deepseek"
+    assert body["review_provider"] == "grok"
     assert body["deepseek"]["model"] == "deepseek-chat"
     assert body["grok"]["model"] == "grok-3-mini"
     assert "deepseek" in body["supported_providers"]
+    assert any(o["id"] == "deepseek-chat" for o in body["model_options"]["deepseek"])
+    assert any(o["id"] == "grok-3-mini" for o in body["model_options"]["grok"])
 
     saved = client.put(
         "/v1/ops/llm",
@@ -110,6 +114,55 @@ def test_llm_test_fake_and_mocked_live(client: TestClient) -> None:
     assert probed.status_code == 200, probed.text
     assert probed.json()["provider"] == "grok"
     assert probed.json()["ok"] is True
+
+
+def test_grok_env_key_drop_in(monkeypatch: pytest.MonkeyPatch) -> None:
+    """XAI_API_KEY in env fills the Grok slot so Ops only needs a key later."""
+    from aulos_api.services.llm_providers import LlmProvidersConfig, apply_env_llm_overrides
+
+    monkeypatch.delenv("XAI_API_KEY", raising=False)
+    monkeypatch.delenv("AULOS_GROK_API_KEY", raising=False)
+    monkeypatch.delenv("AULOS_LLM_PROVIDER", raising=False)
+
+    empty = apply_env_llm_overrides(LlmProvidersConfig())
+    assert empty.grok.model == "grok-3-mini"
+    assert empty.grok.base_url == "https://api.x.ai/v1"
+    assert not empty.grok.api_key
+    assert empty.ready_for_live is False
+
+    monkeypatch.setenv("XAI_API_KEY", "xai-from-host-env")
+    monkeypatch.setenv("AULOS_LLM_PROVIDER", "grok")
+    merged = apply_env_llm_overrides(LlmProvidersConfig())
+    assert merged.grok.api_key == "xai-from-host-env"
+    assert merged.grok.model == "grok-3-mini"
+    assert merged.active_provider == "grok"
+    assert merged.ready_for_live is True
+
+
+def test_draft_and_review_providers_split() -> None:
+    """Multi-agent: draft=DeepSeek, review=Grok; review does not fall back to draft."""
+    from aulos_api.services.llm_providers import LlmProvidersConfig, ProviderCredentials
+
+    cfg = LlmProvidersConfig(
+        active_provider="deepseek",
+        draft_provider="deepseek",
+        review_provider="grok",
+        deepseek=ProviderCredentials(
+            api_key="sk-ds", model="deepseek-chat", base_url="https://api.deepseek.com"
+        ),
+        grok=ProviderCredentials(
+            api_key="xai-g", model="grok-3-mini", base_url="https://api.x.ai/v1"
+        ),
+    )
+    assert cfg.resolve_role_provider("draft") == "deepseek"
+    assert cfg.resolve_role_provider("review") == "grok"
+    assert cfg.ready_for_draft is True
+    assert cfg.ready_for_review is True
+
+    # Grok key missing → review returns None (no DeepSeek rubber-stamp)
+    cfg.grok.api_key = ""
+    assert cfg.resolve_role_provider("draft") == "deepseek"
+    assert cfg.resolve_role_provider("review") is None
 
 
 def test_chat_uses_ops_llm_when_ready(client: TestClient) -> None:

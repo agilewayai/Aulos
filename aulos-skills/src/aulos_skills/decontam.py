@@ -204,22 +204,12 @@ def _dossier_blob(dossier: dict[str, Any]) -> str:
 
 
 def family_instruments_miss_title(family: dict[str, Any], title_blob: str) -> bool:
-    """True when family declares instruments and none appear in the title blob."""
-    match = dict(family.get("match") or {})
-    instruments = [str(t).lower() for t in (match.get("instruments") or []) if t]
-    if not instruments:
-        return False
-    # Treat violon / violin as string-family peers of each other for miss detection
-    blob = title_blob.lower()
-    for tok in instruments:
-        if tok and tok in blob:
-            return False
-        # "violoncello" should not count as hit for bare "violon"
-        if tok in {"cello", "violoncello", "大提琴"} and (
-            "cello" in blob or "violoncello" in blob or "大提琴" in blob
-        ):
-            return False
-    return True
+    """True when family declares instruments and required evidence misses the title."""
+    from aulos_skills.identity_hygiene import (
+        family_instruments_miss_title as _hygiene_miss,
+    )
+
+    return _hygiene_miss(family, title_blob)
 
 
 def _strip_ambient_for_scan(blob: str) -> str:

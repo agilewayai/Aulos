@@ -60,9 +60,10 @@ export function GuideReader({
   return (
     <div className={`guide-reader ${className}`.trim()}>
       <div className="guide-reader-bar">
+        <p className="guide-reader-bar-hint">正文已铺满阅读区；需要时可进入专注模式</p>
         <button
           type="button"
-          className="btn btn-primary btn-sm guide-reader-enter"
+          className="btn btn-ghost btn-sm guide-reader-enter"
           onClick={() => setImmersive(true)}
         >
           {fullscreenLabel}

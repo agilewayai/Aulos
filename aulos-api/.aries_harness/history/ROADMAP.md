@@ -8,10 +8,10 @@ managed_by: "aries-harness"
 fingerprint: "aries-harness/history-doc/v1"
 generated_by: "/aries-harness history-refresh"
 initialized_at: "2026-07-25T11:07:43Z"
-generated_at: "2026-08-01T20:59:12+00:00"
+generated_at: "2026-08-02T07:27:02+00:00"
 effective_status: "generated"
-effective_since: "2026-08-01T20:59:12+00:00"
-content_fingerprint: "sha256:1e87974fa4ec3a15c662353bee76a9875466a874091a1bf125f884a19e5d3b17"
+effective_since: "2026-08-02T07:27:02+00:00"
+content_fingerprint: "sha256:dd45ac5df7d36219cd1e57af80d6963dab6392ee4a101564e73d9b69b1e8bcf9"
 trace_history_source: "filesystem-only"
 trace_last_commit_sha: ""
 trace_last_commit_at: ""
@@ -19,7 +19,7 @@ trace_revision_count: "0"
 ---
 # Roadmap Snapshot
 
-Generated at: `2026-08-01T20:59:12+00:00`
+Generated at: `2026-08-02T07:27:02+00:00`
 
 ## Outcome target
 

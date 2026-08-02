@@ -103,6 +103,130 @@ def test_analyze_discogs_release_extracts_composer_and_performers() -> None:
     assert "Discogs release 700123" in out["listening_intent"]
 
 
+def test_multi_catalog_release_keeps_program_title() -> None:
+    """SPEC-033: ≥2 catalog numbers must not collapse IntentLock to one track."""
+    from aulos_api.services.discogs import analyze_discogs_release
+
+    raw = {
+        "id": 3796623,
+        "title": (
+            "Violin Concertos BWV 1041 • 1042 / Double Concertos BWV 1060 • 1043"
+        ),
+        "artists": [{"name": "Arthur Grumiaux"}],
+        "extraartists": [
+            {"name": "Johann Sebastian Bach", "role": "Composed By"},
+            {"name": "Arthur Grumiaux", "role": "Violin"},
+            {"name": "New Philharmonia Orchestra", "role": "Orchestra"},
+        ],
+        "tracklist": [
+            {
+                "title": "Concerto In A Minor (BWV 1041) For Violin, Strings, And Continuo",
+                "type_": "track",
+            },
+            {
+                "title": (
+                    "Concerto In D Minor (BWV 1060) For Oboe, Violin, Strings, "
+                    "And Continuo"
+                ),
+                "type_": "track",
+            },
+            {
+                "title": (
+                    "Concerto In D Minor (BWV 1043) For Two Violins, Strings, "
+                    "And Continuo"
+                ),
+                "type_": "track",
+            },
+        ],
+        "labels": [{"name": "Philips", "catno": "9500 098"}],
+        "year": 1970,
+        "uri": "/release/3796623",
+        "genres": ["Classical"],
+    }
+    out = analyze_discogs_release({"kind": "release", "id": 3796623, "raw": raw})
+    wt = str(out.get("work_title") or "")
+    assert "1041" in wt and "1042" in wt
+    # Must not collapse to the single longest track (often one BWV only).
+    assert "1041" in wt or "Violin Concertos" in wt
+    assert wt.count("BWV 1060") <= 1
+    assert "1043" in wt or "1042" in wt
+
+
+def test_analyze_emits_release_structure_program() -> None:
+    """SPEC-034: multi-work Discogs analyze must emit structure-ready program map."""
+    from aulos_api.services.discogs import analyze_discogs_release, build_diary_snapshot
+
+    raw = {
+        "id": 3796623,
+        "title": "Violin Concertos BWV 1041 • 1042 / Double Concertos BWV 1060 • 1043",
+        "artists": [{"name": "Arthur Grumiaux"}],
+        "extraartists": [
+            {"name": "Johann Sebastian Bach", "role": "Composed By"},
+            {"name": "Arthur Grumiaux", "role": "Violin"},
+        ],
+        "tracklist": [
+            {"title": "Concerto In A Minor (BWV 1041)", "type_": "track"},
+            {"title": "Concerto In E Major (BWV 1042)", "type_": "track"},
+            {"title": "Concerto In D Minor (BWV 1060) For Oboe, Violin", "type_": "track"},
+            {"title": "Concerto In D Minor (BWV 1043) For Two Violins", "type_": "track"},
+        ],
+        "labels": [{"name": "Philips", "catno": "9500 098"}],
+        "year": 1970,
+        "uri": "/release/3796623",
+        "genres": ["Classical"],
+        "formats": [{"name": "Vinyl"}],
+    }
+    payload = {"kind": "release", "id": 3796623, "raw": raw}
+    out = analyze_discogs_release(payload)
+    st = out["release_structure"]
+    assert st["structure_ready"] is True
+    assert st["shape"] == "multi_work_program"
+    assert len(st["program"]) >= 3
+    assert st["structure_hard_fails"] == []
+    assert out["kb_seed"]["release_structure"]["shape"] == "multi_work_program"
+    snap = build_diary_snapshot(payload)
+    assert snap["release_structure"]["structure_ready"] is True
+    assert len(snap["release_structure"]["program"]) >= 3
+
+
+def test_analyze_infers_positioned_program_composers_from_release_artists() -> None:
+    """Guide #59 class: top-level artists can be composers when performers are excluded."""
+    from aulos_api.services.discogs import analyze_discogs_release, build_diary_snapshot
+
+    raw = {
+        "id": 7083684,
+        "title": "Trios Für Klavier, Flöte Und Violoncello",
+        "artists": [
+            {"name": "Johann Nepomuk Hummel"},
+            {"name": "Carl Maria von Weber"},
+            {"name": "Joseph Haydn"},
+            {"name": "Trio Parnassus"},
+        ],
+        "extraartists": [
+            {"name": "Trio Parnassus", "role": "Piano Trio"},
+            {"name": "Michael Faust", "role": "Flute"},
+            {"name": "Stanislav Apolín", "role": "Cello"},
+        ],
+        "tracklist": [
+            {"title": "Trio In E Major, Op. 78", "type_": "track"},
+            {"title": "Trio In G Minor, Op. 63", "type_": "track"},
+            {"title": "Trio In D Major, Hob. XV:16", "type_": "track"},
+        ],
+        "labels": [{"name": "MDG", "catno": "MDG 303 0434-2"}],
+        "genres": ["Classical"],
+    }
+    payload = {"kind": "release", "id": 7083684, "raw": raw}
+    out = analyze_discogs_release(payload)
+    composers = ["Johann Nepomuk Hummel", "Carl Maria von Weber", "Joseph Haydn"]
+    assert out["composers"] == composers
+    assert out["composer"] == " / ".join(composers)
+    assert out["release_structure"]["structure_ready"] is True
+    assert [p["composers"] for p in out["release_structure"]["program"]] == [[c] for c in composers]
+    snap = build_diary_snapshot(payload)
+    assert snap["composers"] == composers
+    assert [p["composers"] for p in snap["release_structure"]["program"]] == [[c] for c in composers]
+
+
 def test_catno_423_287_1_resolves_via_search(monkeypatch: pytest.MonkeyPatch) -> None:
     """Smoke fixture: DG catno 423-287-1 must not truncate to release 423."""
     from aulos_api.services import discogs as discogs_mod

@@ -90,6 +90,8 @@ Deploy **refuses** placeholder values (`REPLACE_WITH_*`, `ChangeMe`, `aulos-dev-
 
 Mailgun, LLM keys, and other integration secrets are configured in the **Ops portal** (`SystemSetting` DB) — see ADR-008 for Sprint-1 plaintext storage risk.
 
+**Grok (xAI) drop-in:** add `XAI_API_KEY=` to `.run/host.env` (see `deploy/host.env.example`), optionally set `AULOS_LLM_PROVIDER=grok`, then restart API. Model/base default to `grok-3-mini` / `https://api.x.ai/v1`. Same slot is editable under Ops → LLM providers → Grok.
+
 ## Verification gates
 
 A deploy is **not complete** until:

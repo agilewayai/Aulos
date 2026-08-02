@@ -18,6 +18,7 @@ SALON_LIST_KEYS = (
     "interpretations",
     "appreciation_videos",
     "vinyl_and_discography",
+    "guide_sheets",
 )
 
 SALON_DICT_KEYS = (
@@ -27,6 +28,7 @@ SALON_DICT_KEYS = (
     "historical_stature",
     "sound_world",
     "ambient_audio",
+    "program_parallel_plan",
     "zh",
     "zh_hans",
     "zh_hant",

@@ -173,6 +173,16 @@ def _research_payload(report: Any) -> dict[str, Any]:
     }
     if ctx.get("discogs"):
         payload["discogs"] = ctx.get("discogs")
+    if ctx.get("release_structure"):
+        payload["release_structure"] = ctx.get("release_structure")
+    if ctx.get("structure_hard_fails"):
+        payload["structure_hard_fails"] = list(ctx.get("structure_hard_fails") or [])
+    if ctx.get("program_expand_applied"):
+        payload["program_expand_applied"] = True
+    if ctx.get("program_iterations"):
+        payload["program_iterations"] = list(ctx.get("program_iterations") or [])
+    if ctx.get("program_loop") or ctx.get("program_loop_applied"):
+        payload["program_loop"] = True
     if isinstance(ctx.get("chain_trace"), dict):
         payload["chain_trace"] = ctx["chain_trace"]
     if ctx.get("intent_lock"):
@@ -440,7 +450,7 @@ async def _optional_llm_dossier(
 ) -> tuple[dict | None, str | None, str]:
     """Generic Salon Codex enricher — no composer/work branches; KB hits as evidence."""
     cfg = load_llm_config(db)
-    if not cfg.ready_for_live:
+    if not cfg.ready_for_draft:
         return None, None, "agent-skills"
     facet_bits = []
     for key in ("instruments", "forms", "era", "ensemble"):
@@ -493,7 +503,7 @@ async def _optional_llm_dossier(
         "CRITICAL: zh_hans and zh_hant required — omit neither English nor Chinese layers."
     )
     try:
-        live = await chat_with_ops_llm(db=db, message=prompt, timeout=90.0)
+        live = await chat_with_ops_llm(db=db, message=prompt, timeout=90.0, role="draft")
     except Exception as exc:  # noqa: BLE001
         logger.warning("llm_dossier_failed work=%s err=%s", work_title, exc)
         return None, None, "agent-skills"
@@ -520,14 +530,14 @@ async def _optional_llm_dossier(
 
 async def _optional_llm_note(db: Session, work_title: str) -> tuple[str | None, str]:
     cfg = load_llm_config(db)
-    if not cfg.ready_for_live:
+    if not cfg.ready_for_draft:
         return None, "agent-skills"
     prompt = (
         "You are Aulos, a classical-music research agent. "
         f"Give a compact enrichment note (max 80 words) for listening to: {work_title}."
     )
     try:
-        live = await chat_with_ops_llm(db=db, message=prompt, timeout=45.0)
+        live = await chat_with_ops_llm(db=db, message=prompt, timeout=45.0, role="draft")
     except Exception as exc:  # noqa: BLE001
         logger.warning("llm_note_failed work=%s err=%s", work_title, exc)
         return None, "agent-skills"
@@ -547,18 +557,45 @@ def _steps_as_dicts(report: Any) -> list[dict[str, Any]]:
     return out
 
 
+def _report_failure_reasons(report: Any) -> list[str]:
+    raw_ctx = getattr(report, "context", None) or {}
+    ctx = raw_ctx if isinstance(raw_ctx, dict) else {}
+    process = ctx.get("process_scorecard")
+    process = process if isinstance(process, dict) else {}
+    gates = process.get("gates") if isinstance(process.get("gates"), dict) else {}
+    rollup = process.get("rollup") if isinstance(process.get("rollup"), dict) else {}
+    reasons: list[str] = []
+    if getattr(report, "eval_pass", None) is False:
+        reasons.append("eval_pass=false")
+    if gates.get("eval_pass") is False and "eval_pass=false" not in reasons:
+        reasons.append("eval_pass=false")
+    if bool(rollup.get("hard_fail")):
+        reasons.append("process_hard_fail=true")
+    if bool(ctx.get("review_failed")) or bool(gates.get("review_failed")):
+        reasons.append("review_failed=true")
+    if bool(ctx.get("decontam_failed")) or bool(gates.get("decontam_failed")):
+        reasons.append("decontam_failed=true")
+    if gates.get("ambient_ok") is False:
+        reasons.append("ambient_ok=false")
+    hard_fails = list(ctx.get("structure_hard_fails") or [])
+    if hard_fails:
+        reasons.append("structure_hard_fails=" + ",".join(str(x) for x in hard_fails[:4]))
+    return reasons
+
+
 def _apply_report_to_row(row: ListeningGuide, *, report: Any, source: str) -> ListeningGuide:
     steps = _steps_as_dicts(report)
+    failure_reasons = _report_failure_reasons(report)
     row.work_title = report.work_title
     row.composer = report.composer
-    row.status = "completed"
+    row.status = "failed" if failure_reasons else "completed"
     row.source = source
     row.summary = report.summary
     row.guide_html = report.guide_html
     row.steps_json = json.dumps(steps)
     row.research_json = json.dumps(_research_payload(report), ensure_ascii=False)
     row.skill_versions_json = json.dumps(report.skill_versions)
-    row.error_detail = ""
+    row.error_detail = "; ".join(failure_reasons)
     row.updated_at = utcnow()
     return row
 
@@ -580,14 +617,24 @@ def _persist_report(
         db.add(row)
     db.commit()
     db.refresh(row)
-    try:
-        upsert_from_report(db, report=report, guide_id=row.id, user_id=user_id)
-    except Exception as exc:  # noqa: BLE001
-        logger.warning("kb_index_failed guide=%s err=%s", row.id, exc)
+    if row.status == "completed":
+        try:
+            upsert_from_report(db, report=report, guide_id=row.id, user_id=user_id)
+        except Exception as exc:  # noqa: BLE001
+            logger.warning("kb_index_failed guide=%s err=%s", row.id, exc)
+    else:
+        logger.warning(
+            "listening_guide_failed_gate id=%s user=%s work=%s reasons=%s",
+            row.id,
+            user_id,
+            report.work_title,
+            row.error_detail,
+        )
     logger.info(
-        "listening_guide_ok id=%s user=%s work=%s source=%s skills=%s recompose=%s",
+        "listening_guide_persisted id=%s user=%s status=%s work=%s source=%s skills=%s recompose=%s",
         row.id,
         user_id,
+        row.status,
         report.work_title,
         source,
         list(report.skill_versions.keys()),
@@ -940,6 +987,7 @@ async def _run_chain_core(
     )
     if discog:
         seed = dict(discog.get("kb_seed") or {})
+        release_structure = dict(discog.get("release_structure") or seed.get("release_structure") or {})
         if seed:
             existing = dict(rag.get("kb_dossier") or {})
             # Discogs seed wins for vinyl/interpretations; keep other KB chambers.
@@ -955,12 +1003,44 @@ async def _run_chain_core(
                 merged["work_id"] = work_id
             if family_id:
                 merged["family_id"] = family_id
+            if release_structure:
+                merged["release_structure"] = release_structure
             rag["kb_dossier"] = merged
+        if release_structure:
+            rag["release_structure"] = release_structure
         snippets = list(discog.get("rag_snippets") or [])
         if snippets:
             rag["rag_hits"] = list(snippets) + list(rag.get("rag_hits") or [])
             rag["rag_hits"] = [t for t in rag["rag_hits"] if t][:16]
             rag["rag_mode"] = f"{rag.get('rag_mode') or 'none'}+discogs"
+        # SPEC-034: structure milestone before Agent deepen
+        st_ready = bool(release_structure.get("structure_ready"))
+        st_shape = str(release_structure.get("shape") or "unknown")
+        prog_n = len(release_structure.get("program") or [])
+        trace.milestone(
+            "discogs.structure",
+            status="ok" if st_ready else ("warn" if release_structure else "skip"),
+            summary=(
+                f"ReleaseStructure shape={st_shape} ready={st_ready} program={prog_n}"
+            ),
+            facts={
+                "shape": st_shape,
+                "structure_ready": st_ready,
+                "program_count": prog_n,
+                "catalog_numbers": list(release_structure.get("catalog_numbers_all") or [])[:12],
+                "hard_fails": list(release_structure.get("structure_hard_fails") or []),
+            },
+            signals=(
+                ["structure_ready"]
+                if st_ready
+                else (["structure_not_ready"] if release_structure else [])
+            ),
+        )
+        progress.mark(
+            "g.discogs",
+            "done" if st_ready or not release_structure else "done",
+            f"structure {st_shape} ready={st_ready} program={prog_n}",
+        )
 
     if kn_bag:
         kb_merged = dict(rag.get("kb_dossier") or {})
@@ -994,21 +1074,176 @@ async def _run_chain_core(
         f"mode={rag.get('rag_mode') or 'none'} · hits={len(rag.get('rag_hits') or [])}",
     )
 
+    # SPEC-034Δ: multi-work program deepen LOOP (not a single linear pass)
+    program_iterations: list[dict[str, Any]] = []
+    release_structure_ctx = dict(
+        rag.get("release_structure")
+        or (discog or {}).get("release_structure")
+        or {}
+    )
+    try:
+        from aulos_skills.program_deepen import iter_program_works
+        from aulos_skills.release_structure import is_multi_work_program
+
+        program_works = (
+            iter_program_works(
+                release_structure_ctx,
+                composer=composer_name,
+                max_works=6,
+            )
+            if is_multi_work_program(release_structure_ctx)
+            and release_structure_ctx.get("structure_ready")
+            else []
+        )
+    except Exception as exc:  # noqa: BLE001
+        logger.warning("program_iter_plan_failed err=%s", exc)
+        program_works = []
+
+    if program_works:
+        progress.mark(
+            "g.program",
+            "running",
+            f"Deepening {len(program_works)} program works…",
+        )
+        from aulos_api.services.web_research import run_web_research
+
+        for i, pw in enumerate(program_works):
+            pw_title = str(pw.get("title") or "")
+            pw_composer = str(pw.get("composer") or composer_name or "")
+            search_q = str(pw.get("search_query") or pw_title)
+            progress.mark(
+                "g.program",
+                "running",
+                f"[{i + 1}/{len(program_works)}] {pw_composer or '?'} — {pw_title[:72]}",
+            )
+            iteration: dict[str, Any] = {
+                "index": pw.get("index", i),
+                "title": pw_title,
+                "raw_title": pw.get("raw_title") or pw_title,
+                "composer": pw_composer,
+                "composers": list(pw.get("composers") or []),
+                "search_query": search_q,
+                "catalog_numbers": list(pw.get("catalog_numbers") or []),
+                "instruments_hint": list(pw.get("instruments_hint") or []),
+            }
+            # Per-work web (force) — catalog-first query, never Discogs polyglot title
+            try:
+                web_i = await run_web_research(
+                    db,
+                    work_title=search_q,
+                    composer=pw_composer,
+                    work_id="",
+                    facets=facets,
+                    user_id=user_id,
+                    rag={"kb_dossier": {}, "rag_hits": []},
+                    force_action="cold_fill",
+                )
+                hits = [str(h) for h in (web_i.get("rag_hits") or []) if h][:6]
+                iteration["web_hits"] = hits
+                iteration["web_source_count"] = len(web_i.get("sources") or [])
+                iteration["web_skipped"] = bool(web_i.get("skipped"))
+                iteration["web_reason"] = web_i.get("reason")
+                iteration["web_partial"] = bool(web_i.get("partial"))
+                if hits:
+                    rag["rag_hits"] = list(hits) + list(rag.get("rag_hits") or [])
+                    rag["rag_hits"] = [t for t in rag["rag_hits"] if t][:20]
+                if web_i.get("dossier"):
+                    iteration["web_dossier"] = web_i.get("dossier")
+            except Exception as exc:  # noqa: BLE001
+                logger.warning("program_web_failed title=%s err=%s", pw_title[:80], exc)
+                iteration["web_skipped"] = True
+                iteration["web_reason"] = f"error:{exc}"
+            # Per-work LLM enrich (best-effort). On failure, keep web raw dossier as floor.
+            try:
+                llm_d, llm_note, llm_src = await _optional_llm_dossier(
+                    db,
+                    search_q,
+                    pw_composer,
+                    rag_hits=list(iteration.get("web_hits") or [])[:6],
+                    facets=facets,
+                    family_id=family_id,
+                )
+                if llm_d is None and llm_note is None:
+                    llm_note, llm_src = await _optional_llm_note(db, search_q)
+                if not llm_d and iteration.get("web_dossier"):
+                    llm_d = dict(iteration["web_dossier"])
+                    llm_src = f"{llm_src or 'none'}+web_raw_floor"
+                iteration["llm_dossier"] = llm_d or {}
+                iteration["llm_note"] = llm_note
+                iteration["llm_source"] = llm_src
+            except Exception as exc:  # noqa: BLE001
+                logger.warning("program_llm_failed title=%s err=%s", pw_title[:80], exc)
+                if iteration.get("web_dossier"):
+                    iteration["llm_dossier"] = dict(iteration["web_dossier"])
+                    iteration["llm_source"] = f"web_raw_floor+error:{type(exc).__name__}"
+                else:
+                    iteration["llm_source"] = f"error:{exc}"
+            program_iterations.append(iteration)
+
+        rag["program_iterations"] = program_iterations
+        if isinstance(rag.get("kb_dossier"), dict):
+            rag["kb_dossier"] = dict(rag["kb_dossier"])
+            rag["kb_dossier"]["program_iterations"] = program_iterations
+        done_n = sum(
+            1
+            for it in program_iterations
+            if it.get("web_source_count") or it.get("llm_dossier") or it.get("llm_note")
+        )
+        trace.milestone(
+            "program.deepen_loop",
+            status="ok" if done_n else "warn",
+            summary=(
+                f"Program deepen loop works={len(program_iterations)} "
+                f"with_evidence={done_n}"
+            ),
+            facts={
+                "works": len(program_iterations),
+                "with_evidence": done_n,
+                "titles": [str(it.get("title") or "")[:60] for it in program_iterations],
+            },
+            signals=["program_loop"],
+        )
+        progress.mark(
+            "g.program",
+            "done",
+            f"{done_n}/{len(program_iterations)} works gathered evidence",
+        )
+    else:
+        progress.mark("g.program", "skip", "Single-work / no program map")
+        trace.milestone(
+            "program.deepen_loop",
+            status="skip",
+            summary="No multi-work program loop",
+        )
+
     # Cold KB → open-web gather → LLM verify → persist so next RAG is stronger
+    # Multi-work: album-level web is delegated to g.program iterations.
     web_meta: dict[str, Any] = {}
     progress.mark("g.web", "running", "Web research…")
     try:
         from aulos_api.services.web_research import run_web_research
 
-        web = await run_web_research(
-            db,
-            work_title=work_title,
-            composer=composer_name,
-            work_id=work_id,
-            facets=facets,
-            user_id=user_id,
-            rag=rag,
-        )
+        if program_iterations:
+            web = {
+                "skipped": True,
+                "reason": "delegated_to_program_loop",
+                "action": "skip",
+                "decision": {
+                    "action": "skip",
+                    "reason": "delegated_to_program_loop",
+                    "iterations": len(program_iterations),
+                },
+            }
+        else:
+            web = await run_web_research(
+                db,
+                work_title=work_title,
+                composer=composer_name,
+                work_id=work_id,
+                facets=facets,
+                user_id=user_id,
+                rag=rag,
+            )
         web_meta = {
             k: web.get(k)
             for k in ("skipped", "reason", "persisted_doc_ids", "rag_mode_suffix", "action", "decision")
@@ -1162,7 +1397,18 @@ async def _run_chain_core(
             "composer": discog.get("composer"),
             "catno_query": discog.get("catno_query"),
             "command": discog.get("command"),
+            "release_structure": discog.get("release_structure"),
         }
+        if discog.get("release_structure"):
+            report.context["release_structure"] = discog.get("release_structure")
+        if rag.get("release_structure") and not report.context.get("release_structure"):
+            report.context["release_structure"] = rag.get("release_structure")
+    if program_iterations:
+        report.context["program_iterations"] = program_iterations
+        report.context["program_loop"] = True
+    elif rag.get("program_iterations"):
+        report.context["program_iterations"] = rag.get("program_iterations")
+        report.context["program_loop"] = True
 
     # Skill-side diagnostics + identity arc close
     skill_ctx = dict(report.context or {})
@@ -1491,6 +1737,8 @@ def publish_guide(db: Session, *, user_id: int, guide_id: int) -> ListeningGuide
     row = get_owned_guide(db, user_id=user_id, guide_id=guide_id)
     if row is None:
         return None
+    if row.status != "completed" or not (row.guide_html or "").strip():
+        return None
     if not row.share_slug:
         for _ in range(8):
             candidate = _new_share_slug()
@@ -1580,6 +1828,28 @@ def create_queued_guide(
     return row
 
 
+def _richer_work_hint(*, message: str, work_title: str, explicit: str | None = None) -> str:
+    """Prefer the identity surface with more catalog numbers (anti collapsed-title regen)."""
+    if (explicit or "").strip():
+        return explicit.strip()
+    try:
+        from aulos_skills.identity_lock import extract_catalog_numbers
+
+        msg_n = extract_catalog_numbers(message or "")
+        title_n = extract_catalog_numbers(work_title or "")
+        if len(msg_n) > len(title_n):
+            # Use first quoted title from Discogs template when present.
+            import re
+
+            m = re.search(r'for\s+"([^"]{8,200})"', message or "", flags=re.I)
+            if m:
+                return m.group(1).strip()
+            return (message or work_title or "")[:200]
+    except Exception:  # noqa: BLE001
+        pass
+    return (work_title or message or "").strip()[:200]
+
+
 def enqueue_recompose_guide(
     db: Session,
     *,
@@ -1599,16 +1869,40 @@ def enqueue_recompose_guide(
     row.updated_at = utcnow()
     if row.work_title.startswith("Composing") or not row.guide_html:
         row.work_title = placeholder_title(text)
+    # Drop poisoned research snapshot so recompose cannot soft-reuse foreign chambers.
+    try:
+        research = json.loads(row.research_json or "{}")
+    except json.JSONDecodeError:
+        research = {}
+    if isinstance(research, dict) and research.get("corpus_dossier"):
+        research["corpus_dossier"] = {}
+        research["prior_corpus_cleared_for_recompose"] = True
+        row.research_json = json.dumps(research, ensure_ascii=False)
     db.add(row)
     db.commit()
     db.refresh(row)
+    hint = _richer_work_hint(
+        message=text, work_title=row.work_title or "", explicit=work_hint
+    )
+    try:
+        from aulos_api.services.knowledge_base import purge_betraying_knowledge
+
+        purge_betraying_knowledge(
+            db,
+            work_title=hint or row.work_title or "",
+            raw_message=text,
+            composer=row.composer or "",
+            source_guide_id=row.id,
+        )
+    except Exception as exc:  # noqa: BLE001
+        logger.warning("kb_purge_on_recompose_failed guide=%s err=%s", row.id, exc)
     from aulos_api.services.listening_queue import enqueue_listening_job
 
     enqueue_listening_job(
         guide_id=row.id,
         user_id=user_id,
         kind="recompose",
-        work_hint=work_hint or row.work_title,
+        work_hint=hint or row.work_title,
     )
     return row
 

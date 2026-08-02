@@ -153,6 +153,48 @@ def test_enqueue_review_publish_diary_guide(client: TestClient, monkeypatch: pyt
     assert guides[0]["guide"]["share_path"]
 
 
+def test_failed_html_guide_cannot_be_published_from_diary(client: TestClient, monkeypatch: pytest.MonkeyPatch) -> None:
+    _mock_discogs(monkeypatch)
+    monkeypatch.setattr(
+        "aulos_api.services.listening_guide.create_queued_guide",
+        _fake_queued_guide,
+    )
+    token = _register_verify_login(client, "failed-guide@example.com", "Failed")
+    headers = {"Authorization": f"Bearer {token}"}
+    post_id = client.post(
+        "/v1/listening-diary",
+        headers=headers,
+        json={"provider": "discogs", "external_id": "700123"},
+    ).json()["id"]
+    enq = client.post(
+        f"/v1/listening-diary/{post_id}/guides",
+        headers=headers,
+        json={"aspect": "作品导赏"},
+    )
+    assert enq.status_code == 202, enq.text
+    link = enq.json()
+
+    from aulos_api.db import session as db_session
+    from aulos_api.db.models import ListeningGuide
+
+    assert db_session.SessionLocal is not None
+    db = db_session.SessionLocal()
+    try:
+        g = db.get(ListeningGuide, link["guide_id"])
+        assert g is not None
+        g.status = "failed"
+        g.error_detail = "eval_pass=false"
+        g.guide_html = "<article><h1>Thin failed guide</h1></article>"
+        db.add(g)
+        db.commit()
+    finally:
+        db.close()
+
+    pub = client.post(f"/v1/listening-diary/guides/{link['id']}/publish", headers=headers)
+    assert pub.status_code == 409
+    assert "not ready" in pub.text.lower()
+
+
 def test_other_user_cannot_enqueue(client: TestClient, monkeypatch: pytest.MonkeyPatch) -> None:
     _mock_discogs(monkeypatch)
     monkeypatch.setattr(

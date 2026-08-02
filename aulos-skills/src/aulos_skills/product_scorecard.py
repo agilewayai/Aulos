@@ -104,6 +104,30 @@ def score_product(
             id_score += 1
         if work_id or context.get("corpus_hit"):
             id_score += 1
+    # SPEC-033: solo-instrument betrayal vs locked title (class gate, not per-work).
+    from aulos_skills.instrument_evidence import product_solo_instrument_drift
+
+    narrative_blob = "\n".join(
+        [
+            html,
+            str(d.get("listening_thesis") or ""),
+            str(d.get("form") or ""),
+            str(d.get("work_introduction") or ""),
+            str((d.get("zh") or {}).get("listening_thesis") or "")
+            if isinstance(d.get("zh"), dict)
+            else "",
+        ]
+    )
+    title_blob = f"{title} {context.get('raw_message') or ''}"
+    if product_solo_instrument_drift(title_blob=title_blob, narrative_blob=narrative_blob):
+        findings.append(
+            ProductFinding(
+                "high",
+                "product_solo_instrument_drift",
+                "Product prose substitutes a different solo instrument than the locked title",
+            )
+        )
+        id_score = 0
     dims["identity_clarity"] = _clamp(id_score)
 
     # craft_richness

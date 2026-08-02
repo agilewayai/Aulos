@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import time
 from pathlib import Path
+from types import SimpleNamespace
 
 import pytest
 from fastapi.testclient import TestClient
@@ -192,3 +193,33 @@ def test_retry_failed_job(client: TestClient, monkeypatch: pytest.MonkeyPatch) -
     assert retried.json()["status"] in {"queued", "running"}
     again = _wait_completed(client, headers, guide_id)
     assert again["status"] == "completed"
+
+
+def test_failed_eval_report_is_not_persisted_completed() -> None:
+    from aulos_api.db.models import ListeningGuide
+    from aulos_api.services.listening_guide import _apply_report_to_row
+
+    row = ListeningGuide(user_id=1, status="running")
+    report = SimpleNamespace(
+        work_title="Trios Für Klavier, Flöte Und Violoncello",
+        composer="Unknown composer",
+        summary="Thin generic summary.",
+        guide_html="<article><h1>Thin guide</h1></article>",
+        steps=[],
+        skill_versions={"aulos-listening-synthesize": "test"},
+        eval_pass=False,
+        eval_score=7,
+        context={
+            "process_scorecard": {
+                "rollup": {"hard_fail": True, "pct": 58},
+                "gates": {"eval_pass": False, "ambient_ok": False},
+                "hard_flaws": [{"code": "ambient_missing", "note": "ambient required"}],
+            }
+        },
+    )
+
+    out = _apply_report_to_row(row, report=report, source="test")
+    assert out.status == "failed"
+    assert "eval_pass=false" in out.error_detail
+    assert "ambient_ok=false" in out.error_detail
+    assert out.guide_html

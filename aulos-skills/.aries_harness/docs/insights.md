@@ -8,7 +8,7 @@ fingerprint: "aries-harness/bootstrap-doc/v1"
 initialized_at: "2026-07-25T16:19:58+00:00"
 effective_status: "active"
 effective_since: "2026-07-25T16:19:58+00:00"
-content_fingerprint: "sha256:72fb839ef61f6b17ddc812f036b30d1eb03fdb79457b4a639db9012815a7a9dc"
+content_fingerprint: "sha256:98bf720acea64989b219e1c67ee758eb5a38d5efb56989b6eb437a8eb7b0fd8d"
 trace_history_source: "filesystem-only"
 trace_last_commit_sha: ""
 trace_last_commit_at: ""
@@ -17,6 +17,42 @@ trace_revision_count: "0"
 # Insights — aulos-skills durable baseline
 
 Programmatic thinking promoted into **[META-001](../references/META-001-meta-principles.md)** carries `↑ META-001 §…`. Domain gates and YAML details stay here + in SPEC.
+
+## 2026-08-02 — Multi-work guides need plural product structure
+
+↑ META-001 §1 + §4.1 (data shape must match product shape)
+
+- Guide #59 class continued: even after per-work composer/fold-back fixes, a
+  three-work program remains fragile if final compose has only one article body.
+- Class fix: emit `guide_sheets[]` as one sheet per work plus one synthesis sheet;
+  expose `program_parallel_plan` so future gateway/agent workers can fan out
+  work deepen and fan in to synthesis; render accessible sheet tabs in guide HTML.
+- Boundary: skills own deterministic sheet contract and self-contained guide UI;
+  actual parallel execution belongs to worker-safe gateway/agent orchestration.
+
+## 2026-08-02 — Program loop must own final subject, not only chambers
+
+↑ META-001 §1 + §4.1 (validate every stage; release structure before deepen)
+
+- Guide #59 proved a program loop can be correct in the middle and still fail at
+  the product boundary: structure was ready and 3/3 works deepened, but final
+  album/family/LLM merge re-owned scalar subject fields and shipped
+  `Unknown composer` + anonymous thin prose.
+- Multi-work Discogs fix class: release structure must carry **per-work composer**
+  into `g.program`; fold-back must rebuild final `composer`, thesis, introduction,
+  related works, and sound world from program iterations; publish/persist gates must
+  fail closed when eval/process says false.
+
+## 2026-08-01 — Discogs release structure before deepen
+
+↑ META-001 §4.1 (high covenant) · SPEC-034 / ARCH-002 / ADR-006
+
+- Multi-work pressings must **fetch complete Discogs metadata → build program map →
+  then deepen per work**. Family scaffolds before structure produce thin guides
+  (Bach violin concertos album class).
+- Artifact: `aulos.release_structure/v1`. Gate: `structure_ready`. Expand layers:
+  metadata → program_map → work_deepen* → pressing_synthesis.
+- Forbidden: case craft per release id; collapsing program into one family pack.
 
 ## 2026-08-01 — Compression: delete case patches, keep dimensional engine
 
