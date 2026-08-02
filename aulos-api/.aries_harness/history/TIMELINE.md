@@ -8,10 +8,10 @@ managed_by: "aries-harness"
 fingerprint: "aries-harness/history-doc/v1"
 generated_by: "/aries-harness history-refresh"
 initialized_at: "2026-07-25T11:07:43Z"
-generated_at: "2026-08-02T07:27:02+00:00"
+generated_at: "2026-08-02T10:06:49+00:00"
 effective_status: "generated"
-effective_since: "2026-08-02T07:27:02+00:00"
-content_fingerprint: "sha256:42920aca5c656568502f58bbbd2e6a6ebe31255d6c0d3da7c4913054da88c779"
+effective_since: "2026-08-02T10:06:49+00:00"
+content_fingerprint: "sha256:c4fc271cc28eee78193011ae207bf00e5745b1bce5df21a1f23cde42f0f8e542"
 trace_history_source: "filesystem-only"
 trace_last_commit_sha: ""
 trace_last_commit_at: ""
@@ -19,9 +19,30 @@ trace_revision_count: "0"
 ---
 # Timeline
 
-Generated at: `2026-08-02T07:27:02+00:00`
+Generated at: `2026-08-02T10:06:49+00:00`
 
 ## Journal milestones
+
+### 2026-08-02T10:02:45Z
+
+- Deployed gateway Slice H production code with `bash deploy/aulos-ctl.sh
+- Post-deploy `smoke` and `status` stayed green: `aulos-api`, `aulos-web`,
+- Production PostgreSQL guide #60 trace confirms gateway `g.program` budget work
+
+### 2026-08-02T10:15:00Z
+
+- **Review Critics → AI Code Mirror (Codex):** agent `_ops_llm_complete(role=review)`
+
+### 2026-08-02T09:50:00Z
+
+- **LLM provider: AI Code Mirror (Codex Responses relay):** Ops slot
+
+### 2026-08-02T09:44:23Z
+
+- SPEC-034 Slice H gateway fix implemented from production PostgreSQL guide #60
+- API fix: `web.research` program-deepen config now defaults to fast/budgeted
+- Ready multi-work fast mode skips album-level `g.llm`; full deepen remains
+- Tests: `tests/test_web_research_partial.py` green (4 passed).
 
 ### 2026-08-02T07:24:00Z
 
@@ -44,26 +65,9 @@ Generated at: `2026-08-02T07:27:02+00:00`
 - **SPEC-034Δ program deepen loop (gateway):** after `g.rag`, multi-work
 - Verify: `test_web_research_partial` + `test_listening_plan` green.
 
-### 2026-08-01T22:40:00Z
-
-- **SPEC-034 Slice B/C (consumer):** gateway stores `release_structure` on
-- Verify: `tests/test_discogs.py` green with structure emit.
-
-### 2026-08-01T22:20:00Z
-
-- **SPEC-034 Slice A (consumer):** `analyze_discogs_release` + `build_diary_snapshot`
-- Verify: `tests/test_discogs.py` 11 passed.
-
-### 2026-08-01T22:10:00Z
-
-- **Regen pollution loop:** targeted revise / review reused masked polluted
-
-### 2026-08-01T21:55:00Z
-
-- **RAG foreign-dossier bleed (Hindemith→Bach class):** root cause was
-
 ## Recent git commits
 
+- `9606691` 2026-08-02 Ship Discogs structure-first guide sheets
 - `5476efb` 2026-08-02 Ship identity freeze (SPEC-032) and listening hardenings across the fleet; refresh honeycomb.
 - `1d325d5` 2026-08-01 Ship knowledge discovery, dossier, and benchmark console; refresh fleet honeycomb.
 - `491b042` 2026-07-27 Ship authority source registry, OPS knowledge console, and refresh fleet honeycomb.
@@ -75,11 +79,11 @@ Generated at: `2026-08-02T07:27:02+00:00`
 - `555cf53` 2026-07-26 Ship listening product, mandatory harness, facility layout, and UTC/local time.
 - `93c0f6e` 2026-07-25 Add aulos-skills, aulos-ops, host deploy, and fleet operating defaults.
 - `7632d9b` 2026-07-25 Add aulos-web, aulos-api, and aulos-mcp sub-projects under aries-harness.
-- `0d5cb01` 2026-07-25 Initial commit: Aulos hackathon workspace with LangChain agent runtime.
 
 ## Working tree snapshot
 
 - `M` `aulos-agent/.aries_harness/INDEX.md`
+- `M` `aulos-agent/.aries_harness/JOURNAL.md`
 - `M` `aulos-agent/.aries_harness/history/DAILY_SUMMARY_INDEX.md`
 - `M` `aulos-agent/.aries_harness/history/DOC_TRACE.md`
 - `M` `aulos-agent/.aries_harness/history/README.md`
@@ -90,4 +94,3 @@ Generated at: `2026-08-02T07:27:02+00:00`
 - `M` `aulos-agent/.aries_harness/history/daily/2026-07-25.md`
 - `M` `aulos-agent/.aries_harness/history/daily/2026-07-26.md`
 - `M` `aulos-agent/.aries_harness/history/daily/2026-07-27.md`
-- `M` `aulos-agent/.aries_harness/history/daily/2026-08-01.md`

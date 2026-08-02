@@ -8,7 +8,7 @@ fingerprint: "aries-harness/bootstrap-doc/v1"
 initialized_at: "2026-07-25T16:19:58+00:00"
 effective_status: "active"
 effective_since: "2026-07-25T16:19:58+00:00"
-content_fingerprint: "sha256:98bf720acea64989b219e1c67ee758eb5a38d5efb56989b6eb437a8eb7b0fd8d"
+content_fingerprint: "sha256:e679c295790ff93666d2728206eb9d6723dd05b93687cb904c2a18f735034f25"
 trace_history_source: "filesystem-only"
 trace_last_commit_sha: ""
 trace_last_commit_at: ""
@@ -17,6 +17,22 @@ trace_revision_count: "0"
 # Insights — aulos-skills durable baseline
 
 Programmatic thinking promoted into **[META-001](../references/META-001-meta-principles.md)** carries `↑ META-001 §…`. Domain gates and YAML details stay here + in SPEC.
+
+## 2026-08-02 — Program deepen defaults must be budgeted
+
+↑ META-001 §1 + §3 + §4.1 (root cause, no sync long work, release structure before deepen)
+
+- Guide #60 production PG trace proved the perceived "third step" delay was not
+  RAG; `g.rag` was immediate, while `g.program` consumed about 711.6s and
+  album-level `g.llm` another about 174.6s.
+- Class fix: ready multi-work programs default to fast/budgeted fan-out
+  (raw-web evidence floor, no per-work Jina/verify LLM/LLM dossier/album LLM
+  unless explicitly configured full), and trace records mode/budget/elapsed.
+- Product fix: fan-in parses accidental JSON notes before prose, emits identity
+  floors for raw-web-only sheets, and instrument gates understand Discogs
+  European terms such as Klavier / Flöte / Violoncello.
+- Boundary: `ambient_ok=false` remains a fail-closed media gate; do not hide it
+  by loosening eval.
 
 ## 2026-08-02 — Multi-work guides need plural product structure
 

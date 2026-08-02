@@ -547,6 +547,37 @@ async def _optional_llm_note(db: Session, work_title: str) -> tuple[str | None, 
     return text, f"agent-skills+{provider}"
 
 
+def _program_deepen_config(db: Session) -> dict[str, Any]:
+    """Budgeted defaults for SPEC-034 multi-work fan-out.
+
+    Full per-work web verification / Jina deepen / LLM belongs behind an explicit
+    full-mode switch; the production guide path needs a fast evidence floor.
+    """
+    try:
+        from aulos_api.services.web_research import load_web_research_config
+
+        cfg = load_web_research_config(db)
+    except Exception:  # noqa: BLE001
+        cfg = {}
+    mode = str(cfg.get("program_deepen_mode") or "fast").strip().lower()
+    if mode not in {"fast", "full"}:
+        mode = "fast"
+    full = mode == "full"
+    return {
+        "mode": mode,
+        "max_works": max(1, min(12, int(cfg.get("program_deepen_max_works") or 6))),
+        "max_sources": max(1, min(12, int(cfg.get("program_deepen_max_sources") or (10 if full else 4)))),
+        "budget_seconds": max(20.0, float(cfg.get("program_deepen_budget_seconds") or (600 if full else 120))),
+        "per_work_llm": full or bool(cfg.get("program_deepen_per_work_llm")),
+        "album_llm": full or bool(cfg.get("program_deepen_album_llm")),
+        "verify_sources": full or bool(cfg.get("program_deepen_verify_sources")),
+        "agent_reach_enabled": full or bool(cfg.get("program_deepen_agent_reach_enabled")),
+        "max_variants": max(1, min(4, int(cfg.get("program_deepen_max_variants") or (3 if full else 1)))),
+        "wikipedia_limit": max(1, min(3, int(cfg.get("program_deepen_wikipedia_limit") or (3 if full else 1)))),
+        "search_timeout": max(2.0, min(12.0, float(cfg.get("program_deepen_search_timeout") or (12.0 if full else 5.0)))),
+    }
+
+
 def _steps_as_dicts(report: Any) -> list[dict[str, Any]]:
     out: list[dict[str, Any]] = []
     for s in report.steps or []:
@@ -1081,6 +1112,7 @@ async def _run_chain_core(
         or (discog or {}).get("release_structure")
         or {}
     )
+    program_cfg = _program_deepen_config(db)
     try:
         from aulos_skills.program_deepen import iter_program_works
         from aulos_skills.release_structure import is_multi_work_program
@@ -1089,7 +1121,7 @@ async def _run_chain_core(
             iter_program_works(
                 release_structure_ctx,
                 composer=composer_name,
-                max_works=6,
+                max_works=int(program_cfg["max_works"]),
             )
             if is_multi_work_program(release_structure_ctx)
             and release_structure_ctx.get("structure_ready")
@@ -1100,22 +1132,36 @@ async def _run_chain_core(
         program_works = []
 
     if program_works:
+        loop_started = time.monotonic()
+        iteration_timings: list[dict[str, Any]] = []
+        budget_exhausted = False
         progress.mark(
             "g.program",
             "running",
-            f"Deepening {len(program_works)} program works…",
+            (
+                f"Program deepen {len(program_works)} works "
+                f"(mode={program_cfg['mode']}, budget={int(program_cfg['budget_seconds'])}s)…"
+            ),
         )
         from aulos_api.services.web_research import run_web_research
 
         for i, pw in enumerate(program_works):
+            elapsed = time.monotonic() - loop_started
+            if i > 0 and elapsed >= float(program_cfg["budget_seconds"]):
+                budget_exhausted = True
+                break
             pw_title = str(pw.get("title") or "")
             pw_composer = str(pw.get("composer") or composer_name or "")
             search_q = str(pw.get("search_query") or pw_title)
             progress.mark(
                 "g.program",
                 "running",
-                f"[{i + 1}/{len(program_works)}] {pw_composer or '?'} — {pw_title[:72]}",
+                (
+                    f"[{i + 1}/{len(program_works)}] {pw_composer or '?'} — {pw_title[:72]} "
+                    f"(mode={program_cfg['mode']})"
+                ),
             )
+            iter_started = time.monotonic()
             iteration: dict[str, Any] = {
                 "index": pw.get("index", i),
                 "title": pw_title,
@@ -1125,6 +1171,7 @@ async def _run_chain_core(
                 "search_query": search_q,
                 "catalog_numbers": list(pw.get("catalog_numbers") or []),
                 "instruments_hint": list(pw.get("instruments_hint") or []),
+                "program_deepen_mode": program_cfg["mode"],
             }
             # Per-work web (force) — catalog-first query, never Discogs polyglot title
             try:
@@ -1137,6 +1184,12 @@ async def _run_chain_core(
                     user_id=user_id,
                     rag={"kb_dossier": {}, "rag_hits": []},
                     force_action="cold_fill",
+                    verify_sources=bool(program_cfg["verify_sources"]),
+                    agent_reach_enabled=bool(program_cfg["agent_reach_enabled"]),
+                    max_sources=int(program_cfg["max_sources"]),
+                    max_variants=int(program_cfg["max_variants"]),
+                    wikipedia_limit=int(program_cfg["wikipedia_limit"]),
+                    search_timeout=float(program_cfg["search_timeout"]),
                 )
                 hits = [str(h) for h in (web_i.get("rag_hits") or []) if h][:6]
                 iteration["web_hits"] = hits
@@ -1153,31 +1206,48 @@ async def _run_chain_core(
                 logger.warning("program_web_failed title=%s err=%s", pw_title[:80], exc)
                 iteration["web_skipped"] = True
                 iteration["web_reason"] = f"error:{exc}"
-            # Per-work LLM enrich (best-effort). On failure, keep web raw dossier as floor.
-            try:
-                llm_d, llm_note, llm_src = await _optional_llm_dossier(
-                    db,
-                    search_q,
-                    pw_composer,
-                    rag_hits=list(iteration.get("web_hits") or [])[:6],
-                    facets=facets,
-                    family_id=family_id,
-                )
-                if llm_d is None and llm_note is None:
-                    llm_note, llm_src = await _optional_llm_note(db, search_q)
-                if not llm_d and iteration.get("web_dossier"):
-                    llm_d = dict(iteration["web_dossier"])
-                    llm_src = f"{llm_src or 'none'}+web_raw_floor"
-                iteration["llm_dossier"] = llm_d or {}
-                iteration["llm_note"] = llm_note
-                iteration["llm_source"] = llm_src
-            except Exception as exc:  # noqa: BLE001
-                logger.warning("program_llm_failed title=%s err=%s", pw_title[:80], exc)
-                if iteration.get("web_dossier"):
-                    iteration["llm_dossier"] = dict(iteration["web_dossier"])
-                    iteration["llm_source"] = f"web_raw_floor+error:{type(exc).__name__}"
-                else:
-                    iteration["llm_source"] = f"error:{exc}"
+            if bool(program_cfg["per_work_llm"]):
+                # Per-work LLM enrich (best-effort). On failure, keep web raw dossier as floor.
+                try:
+                    llm_d, llm_note, llm_src = await _optional_llm_dossier(
+                        db,
+                        search_q,
+                        pw_composer,
+                        rag_hits=list(iteration.get("web_hits") or [])[:6],
+                        facets=facets,
+                        family_id=family_id,
+                    )
+                    if llm_d is None and llm_note is None:
+                        llm_note, llm_src = await _optional_llm_note(db, search_q)
+                    if not llm_d and iteration.get("web_dossier"):
+                        llm_d = dict(iteration["web_dossier"])
+                        llm_src = f"{llm_src or 'none'}+web_raw_floor"
+                    iteration["llm_dossier"] = llm_d or {}
+                    iteration["llm_note"] = llm_note
+                    iteration["llm_source"] = llm_src
+                except Exception as exc:  # noqa: BLE001
+                    logger.warning("program_llm_failed title=%s err=%s", pw_title[:80], exc)
+                    if iteration.get("web_dossier"):
+                        iteration["llm_dossier"] = dict(iteration["web_dossier"])
+                        iteration["llm_source"] = f"web_raw_floor+error:{type(exc).__name__}"
+                    else:
+                        iteration["llm_source"] = f"error:{exc}"
+            elif iteration.get("web_dossier"):
+                iteration["llm_dossier"] = dict(iteration["web_dossier"])
+                iteration["llm_source"] = f"program-{program_cfg['mode']}+web_raw_floor"
+            else:
+                iteration["llm_dossier"] = {}
+                iteration["llm_source"] = f"program-{program_cfg['mode']}+no_llm"
+            iteration_elapsed = round(time.monotonic() - iter_started, 3)
+            iteration["elapsed_seconds"] = iteration_elapsed
+            iteration_timings.append(
+                {
+                    "index": iteration.get("index", i),
+                    "elapsed_seconds": iteration_elapsed,
+                    "sources": iteration.get("web_source_count", 0),
+                    "llm_source": iteration.get("llm_source"),
+                }
+            )
             program_iterations.append(iteration)
 
         rag["program_iterations"] = program_iterations
@@ -1198,7 +1268,18 @@ async def _run_chain_core(
             ),
             facts={
                 "works": len(program_iterations),
+                "planned_works": len(program_works),
                 "with_evidence": done_n,
+                "mode": program_cfg["mode"],
+                "budget_seconds": program_cfg["budget_seconds"],
+                "budget_exhausted": budget_exhausted,
+                "elapsed_seconds": round(time.monotonic() - loop_started, 3),
+                "verify_sources": bool(program_cfg["verify_sources"]),
+                "per_work_llm": bool(program_cfg["per_work_llm"]),
+                "album_llm": bool(program_cfg["album_llm"]),
+                "agent_reach_enabled": bool(program_cfg["agent_reach_enabled"]),
+                "max_sources": int(program_cfg["max_sources"]),
+                "iteration_timings": iteration_timings,
                 "titles": [str(it.get("title") or "")[:60] for it in program_iterations],
             },
             signals=["program_loop"],
@@ -1206,7 +1287,10 @@ async def _run_chain_core(
         progress.mark(
             "g.program",
             "done",
-            f"{done_n}/{len(program_iterations)} works gathered evidence",
+            (
+                f"{done_n}/{len(program_iterations)} works gathered evidence "
+                f"(mode={program_cfg['mode']}, elapsed={round(time.monotonic() - loop_started, 1)}s)"
+            ),
         )
     else:
         progress.mark("g.program", "skip", "Single-work / no program map")
@@ -1300,35 +1384,55 @@ async def _run_chain_core(
         )
         progress.mark("g.web", "failed", str(exc)[:240])
 
-    progress.mark("g.llm", "running", "LLM dossier enrichment…")
-    llm_dossier, enrichment, source = await _optional_llm_dossier(
-        db,
-        work_title,
-        composer_name,
-        rag_hits=list(rag.get("rag_hits") or []),
-        facets=facets,
-        family_id=family_id,
-    )
-    if llm_dossier is None and enrichment is None:
-        enrichment, source = await _optional_llm_note(db, work_title)
-    trace.milestone(
-        "llm_enrich",
-        status="ok" if (llm_dossier or enrichment) else "skip",
-        summary=f"LLM enrich source={source}",
-        facts={
-            "source": source,
-            "has_dossier": bool(llm_dossier),
-            "has_note": bool(enrichment),
-            "family_id": family_id,
-            "identity_status": ident_status,
-            "identity_reason": ident_reason,
-        },
-    )
-    progress.mark(
-        "g.llm",
-        "done" if (llm_dossier or enrichment) else "skip",
-        f"source={source}",
-    )
+    llm_dossier: dict | None = None
+    enrichment: str | None = None
+    source = "program-fast-skip"
+    if program_iterations and not bool(program_cfg["album_llm"]):
+        trace.milestone(
+            "llm_enrich",
+            status="skip",
+            summary="LLM enrich skipped: program_fast_fan_in_owns_subject",
+            facts={
+                "source": source,
+                "has_dossier": False,
+                "has_note": False,
+                "family_id": family_id,
+                "identity_status": ident_status,
+                "identity_reason": ident_reason,
+                "program_deepen_mode": program_cfg["mode"],
+            },
+        )
+        progress.mark("g.llm", "skip", "program_fast_fan_in_owns_subject")
+    else:
+        progress.mark("g.llm", "running", "LLM dossier enrichment…")
+        llm_dossier, enrichment, source = await _optional_llm_dossier(
+            db,
+            work_title,
+            composer_name,
+            rag_hits=list(rag.get("rag_hits") or []),
+            facets=facets,
+            family_id=family_id,
+        )
+        if llm_dossier is None and enrichment is None:
+            enrichment, source = await _optional_llm_note(db, work_title)
+        trace.milestone(
+            "llm_enrich",
+            status="ok" if (llm_dossier or enrichment) else "skip",
+            summary=f"LLM enrich source={source}",
+            facts={
+                "source": source,
+                "has_dossier": bool(llm_dossier),
+                "has_note": bool(enrichment),
+                "family_id": family_id,
+                "identity_status": ident_status,
+                "identity_reason": ident_reason,
+            },
+        )
+        progress.mark(
+            "g.llm",
+            "done" if (llm_dossier or enrichment) else "skip",
+            f"source={source}",
+        )
 
     emitted: list[dict[str, Any]] = []
 

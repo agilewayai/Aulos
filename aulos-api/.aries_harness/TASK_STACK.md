@@ -9,7 +9,7 @@ fingerprint: "aries-harness/bootstrap-doc/v1"
 initialized_at: "2026-07-25T11:10:22Z"
 effective_status: "active"
 effective_since: "2026-07-25T11:10:22Z"
-content_fingerprint: "sha256:adedd60167136deea719e1ecc3f8dd916b6346aec9dfed9924c19ea020550629"
+content_fingerprint: "sha256:f0afffaa71439918063880370322af3f2ef2765c40669741740d04aecd21c638"
 trace_history_source: "filesystem-only"
 trace_last_commit_sha: ""
 trace_last_commit_at: ""
@@ -19,7 +19,8 @@ trace_revision_count: "0"
 
 ## Now
 
-- none (SPEC-034 Slice F code deployed; recompose for hot guide #59 remains pending)
+- SPEC-034 Slice H shipped and deployed — gateway program deepen budget / fast
+  raw-web path for guide #60 class; production deploy/smoke/status passed.
 
 ## Next
 

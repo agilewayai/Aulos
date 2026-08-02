@@ -17,7 +17,7 @@ from aulos_skills.release_structure import (
     program_search_query,
     structure_from_context,
 )
-from aulos_skills.salon_codex import empty_dossier, merge_dossiers
+from aulos_skills.salon_codex import empty_dossier, merge_dossiers, parse_llm_dossier_json
 
 
 _GENERIC_MAP_LABELS = {
@@ -118,6 +118,75 @@ def _first_text(values: list[Any]) -> str:
     return ""
 
 
+def _prose_text(value: Any) -> str:
+    """Return reader prose; parse accidental JSON strings before fan-in."""
+    if value in (None, "", [], {}):
+        return ""
+    if isinstance(value, dict):
+        return _first_text(
+            [
+                value.get("listening_thesis"),
+                value.get("work_introduction"),
+                value.get("summary"),
+                value.get("note"),
+                value.get("cue"),
+            ]
+        )
+    if isinstance(value, (list, tuple)):
+        bits = [_prose_text(v) for v in value]
+        return " ".join(b for b in bits if b).strip()
+    text = re.sub(r"\s+", " ", str(value or "").strip())
+    if not text:
+        return ""
+    if "{" in text and "}" in text and (
+        '"listening_thesis"' in text or "'listening_thesis'" in text or '"work_title"' in text
+    ):
+        parsed = parse_llm_dossier_json(text)
+        if parsed:
+            return _prose_text(parsed)
+        return ""
+    return text
+
+
+def _is_weak_prose(text: str) -> bool:
+    low = str(text or "").strip().lower()
+    if not low:
+        return True
+    if len(low) < 36:
+        return True
+    return any(
+        marker in low
+        for marker in (
+            "gathered from open sources",
+            "web extracts not llm-verified",
+            "no specific information",
+            "not found in the provided sources",
+            "markdown content:",
+            "url source:",
+        )
+    )
+
+
+def _identity_floor_sentence(
+    *,
+    title: str,
+    composer: str,
+    catalog: str,
+    hints: list[str],
+) -> str:
+    forces = ", ".join(hints[:4])
+    subject = f"{composer} — {title}" if composer else title
+    cat = f" ({catalog})" if catalog and catalog != "unnumbered" else ""
+    if forces:
+        return (
+            f"Lock {subject}{cat} as its own {forces} work inside this pressing; "
+            "hear its opening role-allocation before comparing it with the other program works."
+        )[:320]
+    return (
+        f"Lock {subject}{cat} as its own program work before comparing the recorded shelf."
+    )[:260]
+
+
 def _structure_program_rows(structure: dict[str, Any] | None) -> list[dict[str, Any]]:
     st = coerce_structure(structure)
     out: list[dict[str, Any]] = []
@@ -169,15 +238,26 @@ def _work_deepdive_from_iteration(it: dict[str, Any]) -> dict[str, Any]:
     cat_label = ", ".join(catalog_display(c) for c in cats) if cats else "unnumbered"
     llm = dict(it.get("llm_dossier") or {})
     web_d = dict(it.get("web_dossier") or {})
+    note_dossier = parse_llm_dossier_json(str(it.get("llm_note") or ""))
     thesis = str(
-        llm.get("listening_thesis")
-        or web_d.get("listening_thesis")
-        or it.get("llm_note")
+        _prose_text(llm.get("listening_thesis"))
+        or _prose_text(web_d.get("listening_thesis"))
+        or _prose_text(note_dossier)
+        or _prose_text(it.get("llm_note"))
         or ""
     ).strip()
-    form = str(llm.get("form") or web_d.get("form") or "").strip()
+    form = str(_prose_text(llm.get("form")) or _prose_text(web_d.get("form")) or "").strip()
+    hints = [str(h) for h in (it.get("instruments_hint") or []) if h]
+    floor = _identity_floor_sentence(
+        title=title,
+        composer=_iteration_composer(it),
+        catalog=cat_label,
+        hints=hints,
+    )
+    if _is_weak_prose(thesis):
+        thesis = floor
     ear: list[str] = []
-    if thesis and "gathered from open sources" not in thesis.lower():
+    if thesis and not _is_weak_prose(thesis):
         ear.append(thesis[:220])
     elif thesis:
         # Raw-web floor thesis is weak — prefer concrete snippets below
@@ -200,8 +280,8 @@ def _work_deepdive_from_iteration(it: dict[str, Any]) -> dict[str, Any]:
             break
     if not ear:
         ear = [
-            f"Opening contract for {title[:72]} ({cat_label})",
-            f"Solo/tutti turns ({', '.join(it.get('instruments_hint') or []) or 'ensemble'})",
+            floor,
+            f"Role allocation: {', '.join(hints) if hints else 'ensemble'}",
             "Close: what remembers the opening gesture?",
         ]
     short_label = cat_label if cats else title[:72]
@@ -212,7 +292,7 @@ def _work_deepdive_from_iteration(it: dict[str, Any]) -> dict[str, Any]:
         "focus": f"Program deepen · {cat_label}",
         "ear_cues": ear[:6],
         "catalog": cat_label,
-        "listening_thesis": thesis[:280] if thesis else "",
+        "listening_thesis": thesis[:280] if thesis else floor,
         "form": form,
         "web_sources": int(it.get("web_source_count") or 0),
         "llm_source": str(it.get("llm_source") or ""),

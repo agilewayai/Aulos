@@ -9,7 +9,7 @@ fingerprint: "aries-harness/bootstrap-doc/v1"
 initialized_at: "2026-07-25T11:22:04Z"
 effective_status: "active"
 effective_since: "2026-07-25T16:20:00Z"
-content_fingerprint: "sha256:8b423c9bdc47b401fff8fd47d82727814a326d0d319dec7e70275a6b7f680e5e"
+content_fingerprint: "sha256:2bfe0afaf01014cd492084893c98ac16699eea9eebc50f21be6a14f64843f1b1"
 trace_history_source: "filesystem-only"
 trace_last_commit_sha: ""
 trace_last_commit_at: ""
@@ -19,6 +19,13 @@ trace_revision_count: "0"
 
 ## Now
 
+- SPEC-034 Slice H shipped and deployed — guide #60 production PostgreSQL RCA:
+  perceived
+  third-step delay was `g.program` (~711.6s), not `g.rag`; default multi-work
+  deepen is fast/budgeted, full deepen is explicit config, JSON notes are parsed
+  before sheet fan-in, raw-web sheets get identity floors, and German
+  piano/flute/cello instrument tokens avoid false solo-drift gates. Production
+  deploy/smoke passed; guide #60 remains fail-closed on `ambient_ok=false`.
 - SPEC-034 Slice G shipped and deployed — multi-work guide sheets + synthesis
   fan-in: multi-work Discogs programs render one navigable work sheet per
   program work plus one synthesis/overview sheet; skill output exposes
@@ -48,6 +55,8 @@ trace_revision_count: "0"
 
 ## Next
 
+- Keep `ambient_ok=false` fail-closed until work-matched media is provided or
+  found by a separate media slice.
 - Recompose thin multi-work guides (STORY-PACK-002 Slice E) under SPEC-034 gates
 - STORY-PACK-002 Slice D: Ops/聆乐 program-map chips after sheet contract lands
 - Expand dimension voice tables from live Discogs facet histograms (dimensional only)

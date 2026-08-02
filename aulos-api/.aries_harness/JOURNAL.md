@@ -10,13 +10,52 @@ generated_by: "/aries-harness init"
 initialized_at: "2026-07-25T11:07:43Z"
 effective_status: "active"
 effective_since: "2026-07-25T11:07:43Z"
-content_fingerprint: "sha256:20ea1705081a2bdac18cb94cb9db30257d6e3006e613999c2c4e2be6aac9c12f"
+content_fingerprint: "sha256:9f38e320ad76488fd91218c2b67e70ad46150b13ffcd417bafcd61493248720f"
 trace_history_source: "filesystem-only"
 trace_last_commit_sha: ""
 trace_last_commit_at: ""
 trace_revision_count: "0"
 ---
 # Journal
+
+## 2026-08-02T10:02:45Z
+
+- Deployed gateway Slice H production code with `bash deploy/aulos-ctl.sh
+  deploy`; build/restart/ingress/local-public smoke completed successfully.
+- Post-deploy `smoke` and `status` stayed green: `aulos-api`, `aulos-web`,
+  `aulos-ops`, and `aulos-knowledge` active; API `/health` reports PostgreSQL
+  primary OK and failover OK.
+- Production PostgreSQL guide #60 trace confirms gateway `g.program` budget work
+  addresses the real slow stage; `ambient_ok=false` remains a fail-closed product
+  gate and was not bypassed.
+
+## 2026-08-02T10:15:00Z
+
+- **Review Critics → AI Code Mirror (Codex):** agent `_ops_llm_complete(role=review)`
+  now uses `invoke_provider` (Responses wire), not chat-only Completions.
+  Ops draft/review roles are canonical — env role overrides require
+  `AULOS_LLM_ROLE_ENV_OVERRIDE=1`. Verify: `tests/test_ops_llm.py` 10 passed;
+  agent `tests/test_ops_llm_critic.py` 3 passed.
+
+## 2026-08-02T09:50:00Z
+
+- **LLM provider: AI Code Mirror (Codex Responses relay):** Ops slot
+  `aicodemirror` — default model `gpt-5.5`, base
+  `https://api.aicodemirror.ai/api/codex/backend-api/codex`, `wire_api=responses`,
+  reasoning `xhigh`. Key via Ops or `AICODEMIRROR_API_KEY` in host.env.
+  Invoke path uses Responses API (`/responses`), not Chat Completions.
+  Verify: `pytest tests/test_ops_llm.py` 8 passed.
+
+## 2026-08-02T09:44:23Z
+
+- SPEC-034 Slice H gateway fix implemented from production PostgreSQL guide #60
+  RCA: `g.program` was the long stage, not `g.rag`.
+- API fix: `web.research` program-deepen config now defaults to fast/budgeted
+  mode; fast raw-web path bypasses Agent Reach/Jina and LLM verify while
+  preserving raw evidence and timing metadata.
+- Ready multi-work fast mode skips album-level `g.llm`; full deepen remains
+  explicit configuration.
+- Tests: `tests/test_web_research_partial.py` green (4 passed).
 
 ## 2026-08-02T07:24:00Z
 

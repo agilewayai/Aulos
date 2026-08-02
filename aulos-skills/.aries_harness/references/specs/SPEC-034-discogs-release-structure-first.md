@@ -9,7 +9,7 @@ fingerprint: "aries-harness/bootstrap-doc/v1"
 initialized_at: "2026-08-01T22:10:00Z"
 effective_status: "active"
 effective_since: "2026-08-01T22:10:00Z"
-content_fingerprint: "sha256:769f2b320a3a15115d037d806883610a144d985e39e6df9dd626883aed4bddd2"
+content_fingerprint: "sha256:fd03316d8b89dee69ee8e83ce271aefc9461d90cd7739bc40605423aa9015238"
 trace_history_source: "filesystem-only"
 trace_last_commit_sha: ""
 trace_last_commit_at: ""
@@ -179,3 +179,58 @@ Additional tests:
   synthesis sheet; every work sheet names its composer and has map/deepdive cues.
 - Rendered guide HTML contains a sheet tablist, selected tab state, all sheet
   panels, and work/synthesis labels.
+
+## 8. Delta 2026-08-02 — budgeted program deepen default
+
+Incident continuation: latest production PostgreSQL guide `#60` for the same
+`/discogs #7083684` trio program failed after a long run. The UI appeared to
+stall around the third visible step, but PG chain trace showed `g.rag` was
+effectively immediate and `g.program` consumed about 711.6 seconds; the
+album-level `g.llm` then consumed about 174.6 seconds.
+
+Root mechanisms:
+
+- `g.program` serialized per-work full web gather, optional Agent Reach/Jina,
+  web verify LLM, per-work LLM dossier, then an album-level LLM pass.
+- `program.deepen_loop` only emitted its milestone at loop completion, making
+  the previous visible step look responsible for the delay.
+- Rejected/degraded LLM output could leave a JSON string in `llm_note`, which
+  `fold_program_iterations` then treated as reader prose.
+- `ProductScorecard` did not recognize German instrument tokens in the locked
+  title (`Klavier`, `Flöte`, `Violoncello`) and misread historical comparison /
+  fortepiano context as solo-instrument substitution.
+
+Contract:
+
+1. Default multi-work program deepen mode is **fast + budgeted**:
+   `program_deepen_mode=fast`, `program_deepen_budget_seconds=120`,
+   `program_deepen_max_sources=4`, `program_deepen_max_variants=1`,
+   `program_deepen_wikipedia_limit=1`, `program_deepen_search_timeout=5`.
+2. Fast mode must disable per-work Jina/Agent Reach, web verify LLM, per-work
+   LLM dossier, and album-level LLM unless the operator explicitly configures
+   full mode or individual overrides.
+3. Fast mode still produces a usable work sheet: if web/LLM evidence is weak,
+   build an identity floor from program title, composer, catalog, and instrument
+   hints; do not emit empty or raw-source caveat prose as the primary subject.
+4. `program.deepen_loop` trace facts must record mode, budget, elapsed seconds,
+   budget exhaustion, and per-iteration timing so step latency is attributable.
+5. `fold_program_iterations` must parse accidental JSON notes before fan-in and
+   must never place raw JSON strings into `listening_thesis`, sheet summaries,
+   listening maps, or deepdives.
+6. Instrument-faithful gates must recognize common Discogs European instrument
+   terms for the locked title. Period instrument terms such as `fortepiano` are
+   not by themselves evidence of piano-concerto substitution when the title is a
+   piano/flute/cello trio.
+7. `ambient_ok=false` remains a fail-closed product gate; this delta fixes
+   latency, subject thickness, and false instrument drift, not missing media.
+
+Additional tests:
+
+- Default program deepen config is fast/budgeted and disables verify/Jina/LLM.
+- Fast web research bypasses LLM verify and Agent Reach while preserving raw
+  web evidence.
+- German `Klavier / Flöte / Violoncello` title plus `fortepiano` / "replaces
+  violin with flute" context does not trigger product solo-instrument drift.
+- JSON `llm_note` content is parsed before sheet fan-in.
+- Raw-web-only work iterations receive a non-empty identity floor in work
+  sheets.

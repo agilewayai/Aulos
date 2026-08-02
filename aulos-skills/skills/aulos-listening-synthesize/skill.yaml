@@ -1,6 +1,6 @@
 id: aulos-listening-synthesize
 name: Listening Salon Synthesize
-version: 0.2.1
+version: 0.2.2
 layer: domain-runtime
 runtime: agent
 summary: Compound cards + families (+ LLM) with identity hygiene and multi-work guide sheet fold-back.

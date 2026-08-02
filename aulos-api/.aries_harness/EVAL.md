@@ -10,7 +10,7 @@ generated_by: "/aries-harness init"
 initialized_at: "2026-07-25T11:07:43Z"
 effective_status: "active"
 effective_since: "2026-07-25T11:07:43Z"
-content_fingerprint: "sha256:75a0f1425e473d41dd514b69f3d298f10a14d910d82cc8a8c30183bb9bf30260"
+content_fingerprint: "sha256:5acf137cbe89cfe89a0a29d1caf3d854c765d54da2d907fc73b0e0ce8d736447"
 trace_history_source: "filesystem-only"
 trace_last_commit_sha: ""
 trace_last_commit_at: ""
@@ -22,7 +22,7 @@ trace_revision_count: "0"
 
 - lint:
 - typecheck:
-- test: `pytest tests/test_dev_blog.py` (SPEC-009); `pytest tests/test_auth.py` (SPEC-002 incl. forgot/reset); `pytest tests/test_email_templates.py tests/test_mailgun.py` (SPEC-010); `pytest tests/test_mail_queue.py` (SPEC-011); `pytest tests/test_discogs.py` (SPEC-008 + search autocomplete + SPEC-034 structure); `pytest tests/test_chain_trace.py` (SPEC-012); `pytest tests/test_diary_guides.py` (SPEC-021 / REQ-011 lifecycle); `PYTHONPATH=. .venv/bin/pytest -q tests/test_listening_jobs.py tests/test_diary_guides.py` (failed eval/publish gate)
+- test: `pytest tests/test_dev_blog.py` (SPEC-009); `pytest tests/test_auth.py` (SPEC-002 incl. forgot/reset); `pytest tests/test_email_templates.py tests/test_mailgun.py` (SPEC-010); `pytest tests/test_mail_queue.py` (SPEC-011); `pytest tests/test_discogs.py` (SPEC-008 + search autocomplete + SPEC-034 structure); `pytest tests/test_chain_trace.py` (SPEC-012); `pytest tests/test_diary_guides.py` (SPEC-021 / REQ-011 lifecycle); `PYTHONPATH=. .venv/bin/pytest -q tests/test_listening_jobs.py tests/test_diary_guides.py` (failed eval/publish gate); `.venv/bin/pytest -q tests/test_web_research_partial.py` (SPEC-034 Slice H program deepen budget / fast raw-web path)
 
 ## Acceptance notes
 
@@ -35,6 +35,7 @@ trace_revision_count: "0"
 - Chain trace: `research_json.chain_trace` + owner/ops `/trace` routes for 复盘
 - Diary guide lifecycle: revise with notes → queued; unpublish → ready; delete hard-removes exclusive unpublished guide (`test_diary_guides.py`)
 - Failed listening reports (`eval_pass=false`, process hard-fail, ambient/review/decontam/structure gates) persist as `failed`, remain inspectable, are not KB-indexed, and cannot be published directly or via diary guide links.
+- SPEC-034 Slice H: multi-work `g.program` defaults to fast/budgeted production behavior; fast path bypasses per-work Agent Reach/Jina and LLM verify while preserving raw web evidence and timing metadata.
 
 ## Layer boundary
 

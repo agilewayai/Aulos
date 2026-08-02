@@ -102,19 +102,36 @@ def _jsonable_context(context: dict[str, Any]) -> dict[str, Any]:
     return {k: v for k, v in context.items() if not callable(v)}
 
 
+def _ensure_aulos_api_path() -> None:
+    """Allow agent process to import aulos_api from the monorepo sibling."""
+    try:
+        import aulos_api  # noqa: F401
+        return
+    except ImportError:
+        pass
+    sibling = Path(__file__).resolve().parents[4] / "aulos-api" / "src"
+    if sibling.is_dir() and str(sibling) not in sys.path:
+        sys.path.insert(0, str(sibling))
+
+
 def _ops_llm_complete(system_prompt: str, *, role: str = "review"):
     """Sync completer via aulos-api ops LLM when agent provider is fake.
 
-    role='review' → Grok by default (must differ from draft/DeepSeek).
-    role='draft' → DeepSeek by default (revise / author repairs).
+    role='review' → Ops review_provider (Grok by default; may be AI Code Mirror /
+    Codex Responses). Must not silently fall back onto the draft author model.
+    role='draft' → Ops draft_provider (DeepSeek by default) for revise repairs.
+
+    Uses ``invoke_provider`` so chat Completions *and* Responses (Codex relay)
+    wires both work when the operator switches Review → AI Code Mirror.
     """
 
     def complete(prompt: str) -> str | None:
         try:
             import asyncio
 
+            _ensure_aulos_api_path()
             from aulos_api.db.session import SessionLocal, get_engine, init_db
-            from aulos_api.services.llm_providers import invoke_openai_compatible, load_llm_config
+            from aulos_api.services.llm_providers import invoke_provider, load_llm_config
 
             init_db()
             get_engine()
@@ -129,13 +146,16 @@ def _ops_llm_complete(system_prompt: str, *, role: str = "review"):
                 if creds is None or not creds.complete:
                     return None
 
+                # Codex Responses relays often need a longer budget than chat.
+                timeout = 150.0 if (creds.wire_api or "").lower() == "responses" else 120.0
+
                 async def _run() -> str:
-                    return await invoke_openai_compatible(
+                    return await invoke_provider(
                         provider=name,
                         creds=creds,
                         message=prompt,
                         system_prompt=system_prompt,
-                        timeout=120.0,
+                        timeout=timeout,
                     )
 
                 try:
@@ -146,7 +166,9 @@ def _ops_llm_complete(system_prompt: str, *, role: str = "review"):
                     import concurrent.futures
 
                     with concurrent.futures.ThreadPoolExecutor(max_workers=1) as pool:
-                        return pool.submit(lambda: asyncio.run(_run())).result(timeout=150)
+                        return pool.submit(lambda: asyncio.run(_run())).result(
+                            timeout=timeout + 30.0
+                        )
                 return asyncio.run(_run())
             finally:
                 db.close()
@@ -166,7 +188,7 @@ def _attach_intent_critic(context: dict[str, Any]) -> None:
         "You are Aulos Intent Critic. Review ONLY; never write a guide. "
         "Return ONLY JSON with verdict PASS|FAIL."
     )
-    # Ops role routing: Grok review ≠ DeepSeek draft (anti rubber-stamp).
+    # Ops role routing: review_provider (Grok or AI Code Mirror) ≠ draft author.
     context["llm_critic_complete"] = _ops_llm_complete(system, role="review")
 
 
@@ -198,7 +220,7 @@ def _attach_revise_proofreader(context: dict[str, Any]) -> None:
         "dossier fields to clear expert hard-flaw findings. Return ONLY JSON "
         "patches (thesis, points, listening_map, caveats). Do not emit full HTML."
     )
-    # Author-side repair uses the draft provider (DeepSeek), not the Grok critic.
+    # Author-side repair uses the draft provider, not the review critic.
     context["llm_revise_complete"] = _ops_llm_complete(system, role="draft")
 
 

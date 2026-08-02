@@ -32,6 +32,7 @@ WEB_RESEARCH_SETTING_KEY = "web.research"
 
 # Default: re-check open web weekly even when local dossier looks complete.
 DEFAULT_REFRESH_AFTER_HOURS = 168
+DEFAULT_PROGRAM_DEEPEN_BUDGET_SECONDS = 120
 
 
 def _utcnow() -> datetime:
@@ -40,6 +41,15 @@ def _utcnow() -> datetime:
 
 def _utcnow_iso() -> str:
     return _utcnow().replace(microsecond=0).isoformat().replace("+00:00", "Z")
+
+
+def _bool_setting(data: dict[str, Any], key: str, default: bool) -> bool:
+    raw = data.get(key)
+    if raw is None:
+        return default
+    if isinstance(raw, str):
+        return raw.strip().lower() not in {"0", "false", "no", "off"}
+    return bool(raw)
 
 
 def _parse_iso(ts: str | None) -> datetime | None:
@@ -68,7 +78,7 @@ def load_web_research_config(db: Session) -> dict[str, Any]:
         except json.JSONDecodeError:
             data = {}
     return {
-        "enabled": bool(data.get("enabled", True)),
+        "enabled": _bool_setting(data, "enabled", True),
         "min_rag_hits": int(data.get("min_rag_hits") or 3),
         "min_dossier_richness": int(data.get("min_dossier_richness") or 5),
         "refresh_after_hours": int(
@@ -77,10 +87,28 @@ def load_web_research_config(db: Session) -> dict[str, Any]:
             else DEFAULT_REFRESH_AFTER_HOURS
         ),
         "brave_api_key": str(data.get("brave_api_key") or ""),
-        "persist_global": bool(data.get("persist_global", True)),
+        "persist_global": _bool_setting(data, "persist_global", True),
         "max_sources": int(data.get("max_sources") or 10),
         # Agent Reach search enabler (Jina deepen); social/cookie paths remain denied.
-        "agent_reach_enabled": bool(data.get("agent_reach_enabled", True)),
+        "agent_reach_enabled": _bool_setting(data, "agent_reach_enabled", True),
+        # SPEC-034 latency defaults: multi-work program deepen is fast/budgeted.
+        "program_deepen_mode": str(data.get("program_deepen_mode") or "fast").strip().lower(),
+        "program_deepen_max_works": int(data.get("program_deepen_max_works") or 6),
+        "program_deepen_max_sources": int(data.get("program_deepen_max_sources") or 4),
+        "program_deepen_budget_seconds": int(
+            data.get("program_deepen_budget_seconds") or DEFAULT_PROGRAM_DEEPEN_BUDGET_SECONDS
+        ),
+        "program_deepen_per_work_llm": _bool_setting(data, "program_deepen_per_work_llm", False),
+        "program_deepen_album_llm": _bool_setting(data, "program_deepen_album_llm", False),
+        "program_deepen_verify_sources": _bool_setting(data, "program_deepen_verify_sources", False),
+        "program_deepen_agent_reach_enabled": _bool_setting(
+            data,
+            "program_deepen_agent_reach_enabled",
+            False,
+        ),
+        "program_deepen_max_variants": int(data.get("program_deepen_max_variants") or 1),
+        "program_deepen_wikipedia_limit": int(data.get("program_deepen_wikipedia_limit") or 1),
+        "program_deepen_search_timeout": float(data.get("program_deepen_search_timeout") or 5.0),
     }
 
 
@@ -95,6 +123,17 @@ def save_web_research_config(
     persist_global: bool | None = None,
     max_sources: int | None = None,
     agent_reach_enabled: bool | None = None,
+    program_deepen_mode: str | None = None,
+    program_deepen_max_works: int | None = None,
+    program_deepen_max_sources: int | None = None,
+    program_deepen_budget_seconds: int | None = None,
+    program_deepen_per_work_llm: bool | None = None,
+    program_deepen_album_llm: bool | None = None,
+    program_deepen_verify_sources: bool | None = None,
+    program_deepen_agent_reach_enabled: bool | None = None,
+    program_deepen_max_variants: int | None = None,
+    program_deepen_wikipedia_limit: int | None = None,
+    program_deepen_search_timeout: float | None = None,
 ) -> dict[str, Any]:
     current = load_web_research_config(db)
     if enabled is not None:
@@ -114,6 +153,29 @@ def save_web_research_config(
         current["max_sources"] = max(3, int(max_sources))
     if agent_reach_enabled is not None:
         current["agent_reach_enabled"] = bool(agent_reach_enabled)
+    if program_deepen_mode is not None:
+        mode = str(program_deepen_mode or "fast").strip().lower()
+        current["program_deepen_mode"] = mode if mode in {"fast", "full"} else "fast"
+    if program_deepen_max_works is not None:
+        current["program_deepen_max_works"] = max(1, min(12, int(program_deepen_max_works)))
+    if program_deepen_max_sources is not None:
+        current["program_deepen_max_sources"] = max(1, min(12, int(program_deepen_max_sources)))
+    if program_deepen_budget_seconds is not None:
+        current["program_deepen_budget_seconds"] = max(20, min(900, int(program_deepen_budget_seconds)))
+    if program_deepen_per_work_llm is not None:
+        current["program_deepen_per_work_llm"] = bool(program_deepen_per_work_llm)
+    if program_deepen_album_llm is not None:
+        current["program_deepen_album_llm"] = bool(program_deepen_album_llm)
+    if program_deepen_verify_sources is not None:
+        current["program_deepen_verify_sources"] = bool(program_deepen_verify_sources)
+    if program_deepen_agent_reach_enabled is not None:
+        current["program_deepen_agent_reach_enabled"] = bool(program_deepen_agent_reach_enabled)
+    if program_deepen_max_variants is not None:
+        current["program_deepen_max_variants"] = max(1, min(4, int(program_deepen_max_variants)))
+    if program_deepen_wikipedia_limit is not None:
+        current["program_deepen_wikipedia_limit"] = max(1, min(3, int(program_deepen_wikipedia_limit)))
+    if program_deepen_search_timeout is not None:
+        current["program_deepen_search_timeout"] = max(2.0, min(12.0, float(program_deepen_search_timeout)))
     row = db.query(SystemSetting).filter(SystemSetting.key == WEB_RESEARCH_SETTING_KEY).one_or_none()
     payload = json.dumps(
         {
@@ -125,6 +187,17 @@ def save_web_research_config(
             "persist_global": current["persist_global"],
             "max_sources": current["max_sources"],
             "agent_reach_enabled": current["agent_reach_enabled"],
+            "program_deepen_mode": current["program_deepen_mode"],
+            "program_deepen_max_works": current["program_deepen_max_works"],
+            "program_deepen_max_sources": current["program_deepen_max_sources"],
+            "program_deepen_budget_seconds": current["program_deepen_budget_seconds"],
+            "program_deepen_per_work_llm": current["program_deepen_per_work_llm"],
+            "program_deepen_album_llm": current["program_deepen_album_llm"],
+            "program_deepen_verify_sources": current["program_deepen_verify_sources"],
+            "program_deepen_agent_reach_enabled": current["program_deepen_agent_reach_enabled"],
+            "program_deepen_max_variants": current["program_deepen_max_variants"],
+            "program_deepen_wikipedia_limit": current["program_deepen_wikipedia_limit"],
+            "program_deepen_search_timeout": current["program_deepen_search_timeout"],
         },
         ensure_ascii=False,
     )
@@ -152,6 +225,21 @@ def public_web_research_config(cfg: dict[str, Any] | None = None) -> dict[str, A
         "persist_global": bool(c.get("persist_global", True)),
         "max_sources": int(c.get("max_sources") or 10),
         "agent_reach_enabled": bool(c.get("agent_reach_enabled", True)),
+        "program_deepen_mode": str(c.get("program_deepen_mode") or "fast"),
+        "program_deepen_max_works": int(c.get("program_deepen_max_works") or 6),
+        "program_deepen_max_sources": int(c.get("program_deepen_max_sources") or 4),
+        "program_deepen_budget_seconds": int(
+            c.get("program_deepen_budget_seconds") or DEFAULT_PROGRAM_DEEPEN_BUDGET_SECONDS
+        ),
+        "program_deepen_per_work_llm": bool(c.get("program_deepen_per_work_llm", False)),
+        "program_deepen_album_llm": bool(c.get("program_deepen_album_llm", False)),
+        "program_deepen_verify_sources": bool(c.get("program_deepen_verify_sources", False)),
+        "program_deepen_agent_reach_enabled": bool(
+            c.get("program_deepen_agent_reach_enabled", False)
+        ),
+        "program_deepen_max_variants": int(c.get("program_deepen_max_variants") or 1),
+        "program_deepen_wikipedia_limit": int(c.get("program_deepen_wikipedia_limit") or 1),
+        "program_deepen_search_timeout": float(c.get("program_deepen_search_timeout") or 5.0),
     }
 
 
@@ -578,6 +666,12 @@ async def run_web_research(
     user_id: int | None = None,
     rag: dict[str, Any] | None = None,
     force_action: str | None = None,
+    verify_sources: bool = True,
+    agent_reach_enabled: bool | None = None,
+    max_sources: int | None = None,
+    max_variants: int | None = None,
+    wikipedia_limit: int | None = None,
+    search_timeout: float | None = None,
 ) -> dict[str, Any]:
     """Full loop. Returns skipped dict when fresh; otherwise cold_fill or refresh.
 
@@ -619,8 +713,15 @@ async def run_web_research(
         work_title=work_title,
         composer=composer,
         brave_api_key=str(cfg.get("brave_api_key") or ""),
-        max_sources=int(cfg.get("max_sources") or 10),
-        agent_reach_enabled=bool(cfg.get("agent_reach_enabled", True)),
+        max_sources=int(max_sources if max_sources is not None else (cfg.get("max_sources") or 10)),
+        agent_reach_enabled=(
+            bool(cfg.get("agent_reach_enabled", True))
+            if agent_reach_enabled is None
+            else bool(agent_reach_enabled)
+        ),
+        max_variants=max_variants,
+        wikipedia_limit=int(wikipedia_limit if wikipedia_limit is not None else 3),
+        search_timeout=float(search_timeout if search_timeout is not None else 12.0),
     )
     if not sources:
         return {
@@ -628,6 +729,39 @@ async def run_web_research(
             "reason": "no_sources",
             "action": action,
             "decision": decision,
+        }
+
+    if not verify_sources:
+        dossier = _raw_web_dossier(
+            work_title=work_title,
+            composer=composer,
+            work_id=work_id,
+            sources=sources,
+            reason="web_search_raw_unverified",
+        )
+        rag_hits = [
+            f"[web:{s.get('provider')}] {s.get('title')}: {str(s.get('snippet') or '')[:220]}"
+            for s in sources
+            if s.get("snippet")
+        ]
+        doc_ids = persist_web_dossier(
+            db,
+            dossier=dossier,
+            user_id=user_id,
+            persist_global=bool(cfg.get("persist_global", True)),
+            merge_existing=False,
+        )
+        return {
+            "skipped": False,
+            "partial": True,
+            "reason": "web_search_raw_unverified",
+            "action": action,
+            "decision": decision,
+            "sources": sources,
+            "dossier": dossier,
+            "rag_hits": rag_hits,
+            "persisted_doc_ids": doc_ids,
+            "rag_mode_suffix": "web-fast-raw",
         }
 
     dossier = await verify_sources_to_dossier(

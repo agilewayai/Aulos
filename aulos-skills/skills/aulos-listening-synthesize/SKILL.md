@@ -18,7 +18,10 @@ If corpus missed or is thin, **compound** knowledge packs into a dossier width/d
    `guide_sheets[]`: one sheet per program work plus one synthesis sheet.
 9. Emit `program_parallel_plan` as deterministic fan-out/fan-in metadata; gateway
    or agent workers own actual concurrency and must not share unsafe DB/session objects.
-10. Set `synthesize_hit=true` when this skill contributed chambers; record `synthesize_source`.
+10. In fast program-deepen mode, never surface raw JSON notes or web-caveat placeholders;
+    parse JSON note payloads first and use composer/title/catalog/instrument identity floors
+    when external evidence is weak.
+11. Set `synthesize_hit=true` when this skill contributed chambers; record `synthesize_source`.
 
 ## Quality bar
 
@@ -32,5 +35,6 @@ never a blank shell and never another work’s chambers.
 - Inventing Discogs/YouTube URLs
 - Overwriting a rich curated corpus with weaker LLM prose
 - Keeping multi-work output only as scalar thesis/deepdive lists instead of sheet-ready structure
+- Letting rejected LLM JSON or raw-web caveats become reader-facing sheet summaries
 - Letting Goldberg (or any flagship) leak into unrelated cold-path dossiers via RAG/LLM
 - Keeping KB dossiers with empty titles “just in case”

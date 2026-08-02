@@ -13,6 +13,8 @@ _SOLOIST_MARKERS: tuple[str, ...] = (
     "piano",
     "pianoforte",
     "fortepiano",
+    "klavier",
+    "clavier",
     "keyboard",
     "harpsichord",
     "钢琴",
@@ -24,11 +26,17 @@ _SOLOIST_MARKERS: tuple[str, ...] = (
     "viola",
     "cello",
     "violoncello",
+    "violoncelle",
     "小提琴",
     "中提琴",
     "大提琴",
     "oboe",
     "flute",
+    "flöte",
+    "floete",
+    "flote",
+    "flauto",
+    "flûte",
     "clarinet",
     "bassoon",
     "horn",
@@ -87,26 +95,47 @@ def soloist_tokens(instruments: list[str]) -> list[str]:
     return [str(t).lower() for t in instruments if is_soloist_token(str(t))]
 
 
+def _fold_latin_instrument_text(text: str) -> str:
+    return (
+        (text or "")
+        .lower()
+        .replace("ö", "o")
+        .replace("û", "u")
+        .replace("ü", "u")
+        .replace("é", "e")
+        .replace("è", "e")
+    )
+
+
 def token_hits_blob(token: str, blob: str) -> bool:
     t = (token or "").lower().strip()
     b = (blob or "").lower()
+    folded = _fold_latin_instrument_text(b)
+    haystack = f"{b} {folded}"
     if not t or not b:
         return False
-    if t in b:
+    if t in haystack:
         return True
     # Peer aliases
     if t in {"cello", "violoncello", "大提琴"} and (
-        "cello" in b or "violoncello" in b or "大提琴" in b
+        "cello" in haystack or "violoncello" in haystack or "violoncelle" in haystack or "大提琴" in b
     ):
         return True
     if t in {"violin", "violon", "小提琴"} and (
-        "violin" in b or "小提琴" in b
+        "violin" in haystack or "violino" in haystack or "violon" in haystack or "小提琴" in b
     ):
         return True
     if t in {"viola", "中提琴"} and ("viola" in b or "中提琴" in b):
         return True
     if t in {"piano", "pianoforte", "fortepiano", "钢琴", "鍵盤", "键盘"} and (
-        "piano" in b or "钢琴" in b or "鍵盤" in b or "键盘" in b or "fortepiano" in b
+        "piano" in haystack
+        or "fortepiano" in haystack
+        or "pianoforte" in haystack
+        or "klavier" in haystack
+        or "clavier" in haystack
+        or "钢琴" in b
+        or "鍵盤" in b
+        or "键盘" in b
     ):
         return True
     if t in {"oboe", "双簧管"} and ("oboe" in b or "双簧管" in b):
@@ -135,21 +164,23 @@ def family_soloist_misses_blob(family: dict[str, Any], blob: str) -> bool:
 def blob_soloist_markers(blob: str) -> set[str]:
     """Coarse soloist classes present in a title/message blob."""
     b = (blob or "").lower()
+    folded = _fold_latin_instrument_text(b)
+    haystack = f"{b} {folded}"
     found: set[str] = set()
     checks: tuple[tuple[str, tuple[str, ...]], ...] = (
-        ("piano", ("piano", "fortepiano", "pianoforte", "钢琴", "鍵盤", "键盘")),
-        ("violin", ("violin", "小提琴")),
+        ("piano", ("piano", "fortepiano", "pianoforte", "klavier", "clavier", "钢琴", "鍵盤", "键盘")),
+        ("violin", ("violin", "violino", "violon", "小提琴")),
         ("viola", ("viola", "中提琴")),
-        ("cello", ("cello", "violoncello", "大提琴")),
+        ("cello", ("cello", "violoncello", "violoncelle", "大提琴")),
         ("oboe", ("oboe", "双簧管")),
-        ("flute", ("flute", "长笛")),
+        ("flute", ("flute", "flöte", "floete", "flote", "flauto", "flûte", "长笛")),
         ("clarinet", ("clarinet", "单簧管", "單簧管")),
         ("organ", ("organ", "管风琴")),
         ("guitar", ("guitar", "吉他")),
         ("voice", ("choir", "chorus", "requiem", "合唱", "弥撒", "安魂")),
     )
     for cls, needles in checks:
-        if any(n in b for n in needles):
+        if any(n in haystack for n in needles):
             found.add(cls)
     return found
 
@@ -188,8 +219,7 @@ def product_solo_instrument_drift(
         "piano concerto" in narr
         or "钢琴协奏" in narr
         or "鋼琴協奏" in narr
-        or "fortepiano" in narr
-        or ("cadenza" in narr and "piano" in narr)
-        or ("华彩" in narr and "钢琴" in narr)
+        or ("cadenza" in narr and ("piano" in narr or "fortepiano" in narr or "klavier" in narr))
+        or ("华彩" in narr and ("钢琴" in narr or "fortepiano" in narr))
     )
     return piano_rhetoric

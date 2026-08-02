@@ -10,7 +10,7 @@ generated_by: "CKPT-005"
 initialized_at: "2026-07-25T11:20:05Z"
 effective_status: "active"
 effective_since: "2026-07-25T16:10:00Z"
-content_fingerprint: "sha256:44e0fa7a1b812a550c4f05814f11753347813bbd8eecbf8aee727281a038a7fc"
+content_fingerprint: "sha256:66b2dd2f815d28bd10237d9afb2596bdca8327c23e0b56eeba2d62b71ee6550a"
 trace_history_source: "filesystem-only"
 trace_last_commit_sha: ""
 trace_last_commit_at: ""
@@ -34,6 +34,7 @@ trace_revision_count: "0"
 - unit (promote staging / SPEC-030): `cd aulos-skills && .venv/bin/python -m pytest tests/test_promote_staging.py -q` ；`cd aulos-api && .venv/bin/python -m pytest tests/test_promote_stage_api.py -q`
 - unit (dimensional promote / SPEC-031): `cd aulos-skills && .venv/bin/python -m pytest tests/test_dimensional_promote.py -q` ；`cd aulos-api && .venv/bin/python -m pytest tests/test_promote_production_api.py -q`
 - unit (Discogs release-structure-first / SPEC-034): `cd aulos-skills && .venv/bin/pytest -q tests/test_release_structure.py tests/test_program_deepen.py tests/test_runtime.py`; render/identity adjunct: `cd aulos-skills && .venv/bin/pytest -q tests/test_identity_hygiene.py tests/test_intake_i18n.py tests/test_media_search.py`; consumer gate: `cd aulos-api && PYTHONPATH=. .venv/bin/pytest -q tests/test_discogs.py tests/test_listening_jobs.py tests/test_diary_guides.py`
+- unit (SPEC-034 Slice H latency / instrument drift): `cd aulos-skills && .venv/bin/pytest -q tests/test_program_deepen.py tests/test_instrument_faithful_thicken.py`; API budget gate: `cd aulos-api && .venv/bin/pytest -q tests/test_web_research_partial.py`
 - unit (media API): `cd aulos-api && .venv/bin/python -m pytest tests/test_media.py -q`
 - media smoke: `curl -sI 'http://127.0.0.1:5090/v1/media/audio?src=<urlencoded-commons-url>&mode=cache' | grep -i content-disposition` → must contain `inline`
 - live parity: recompose Goldberg + one cold-path Chinese work; assert bilingual + ambient in `guide_html`
@@ -100,6 +101,13 @@ Minimum gate for listening compose/eval:
     `guide_sheets[]` (work sheets + synthesis sheet), `program_parallel_plan`
     (`fan_out` + `fan_in=synthesis_sheet`), and rendered HTML sheet tabs with
     `role="tablist"` / `role="tab"` / `role="tabpanel"` plus keyboard support.
+25. SPEC-034 Slice H: default `g.program` is fast/budgeted for production:
+    no per-work Jina, web verify LLM, per-work LLM, or album LLM unless full
+    mode is explicitly enabled; trace records mode/budget/elapsed/timings.
+    Fan-in must parse JSON notes before product prose, build identity floors
+    for raw-web-only work sheets, and must not flag German piano/flute/cello
+    trio titles as solo-instrument drift because of fortepiano or historical
+    violin-comparison prose.
 
 ## Layer boundary
 
@@ -111,5 +119,7 @@ Minimum gate for listening compose/eval:
 - store detailed test execution and fix notes under `runs/tests/`
 - production deploy evidence:
   `runs/deployments/DEPLOY-2026-08-02-spec-034-slice-g-production.md`
+- RCA:
+  `runs/reports/RCA-2026-08-02-guide-60-program-deepen-budget.md`
 - checkpoint: `checkpoints/CKPT-005-ambient-identity-gates.md`
 - insights: `docs/insights.md`

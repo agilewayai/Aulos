@@ -8,10 +8,10 @@ managed_by: "aries-harness"
 fingerprint: "aries-harness/history-doc/v1"
 generated_by: "/aries-harness history-refresh"
 initialized_at: "2026-07-25T11:20:06Z"
-generated_at: "2026-08-02T07:27:18+00:00"
+generated_at: "2026-08-02T10:07:07+00:00"
 effective_status: "generated"
-effective_since: "2026-08-02T07:27:18+00:00"
-content_fingerprint: "sha256:793b2acc8c8c8a017f150bd84941fda530dbf9a0cdabdbb65b884c1e6b851c39"
+effective_since: "2026-08-02T10:07:07+00:00"
+content_fingerprint: "sha256:aa6584e298422c9ac35da2bc7da27941f250435dad40e16212a43f2289be3c19"
 trace_history_source: "filesystem-only"
 trace_last_commit_sha: ""
 trace_last_commit_at: ""
@@ -19,9 +19,21 @@ trace_revision_count: "0"
 ---
 # Timeline
 
-Generated at: `2026-08-02T07:27:18+00:00`
+Generated at: `2026-08-02T10:07:07+00:00`
 
 ## Journal milestones
+
+### 2026-08-02T10:15:00Z
+
+- **Review role → AI Code Mirror (Codex)** label/hint on LLM console; Ops is
+
+### 2026-08-02T10:05:00Z
+
+- **LLM settings UX (ui-ux-pro-max):** extracted `LlmSettingsPanel` — status KPI
+
+### 2026-08-02T09:50:00Z
+
+- **LLM tab: AI Code Mirror provider** — Codex Responses mid-relay slot in Ops
 
 ### 2026-08-02T07:24:00Z
 
@@ -45,20 +57,9 @@ Generated at: `2026-08-02T07:27:18+00:00`
 
 - **REQ-010 Δ Composer dossier UI:** works panel tabs 题材 / 时间线 / 树; shows year, catalog,
 
-### 2026-08-01T18:55:00Z
-
-- SPEC-019: Ops tab **Guide quality** (`GuideQualityPanel`) — multi-guide rollup table + node dim expand via trace.
-
-### 2026-08-01T18:40:00Z
-
-- SPEC-018: LLM settings tab hosts `listening.review_llm` Intent Critic switch (saved with LLM form).
-
-### 2026-08-01T06:35:00Z
-
-- **Knowledge console ship closeout:** Explore / Benchmark / Diagnose-improve / Performance report /
-
 ## Recent git commits
 
+- `9606691` 2026-08-02 Ship Discogs structure-first guide sheets
 - `5476efb` 2026-08-02 Ship identity freeze (SPEC-032) and listening hardenings across the fleet; refresh honeycomb.
 - `1d325d5` 2026-08-01 Ship knowledge discovery, dossier, and benchmark console; refresh fleet honeycomb.
 - `491b042` 2026-07-27 Ship authority source registry, OPS knowledge console, and refresh fleet honeycomb.
@@ -70,11 +71,11 @@ Generated at: `2026-08-02T07:27:18+00:00`
 - `555cf53` 2026-07-26 Ship listening product, mandatory harness, facility layout, and UTC/local time.
 - `93c0f6e` 2026-07-25 Add aulos-skills, aulos-ops, host deploy, and fleet operating defaults.
 - `7632d9b` 2026-07-25 Add aulos-web, aulos-api, and aulos-mcp sub-projects under aries-harness.
-- `0d5cb01` 2026-07-25 Initial commit: Aulos hackathon workspace with LangChain agent runtime.
 
 ## Working tree snapshot
 
 - `M` `aulos-agent/.aries_harness/INDEX.md`
+- `M` `aulos-agent/.aries_harness/JOURNAL.md`
 - `M` `aulos-agent/.aries_harness/history/DAILY_SUMMARY_INDEX.md`
 - `M` `aulos-agent/.aries_harness/history/DOC_TRACE.md`
 - `M` `aulos-agent/.aries_harness/history/README.md`
@@ -85,4 +86,3 @@ Generated at: `2026-08-02T07:27:18+00:00`
 - `M` `aulos-agent/.aries_harness/history/daily/2026-07-25.md`
 - `M` `aulos-agent/.aries_harness/history/daily/2026-07-26.md`
 - `M` `aulos-agent/.aries_harness/history/daily/2026-07-27.md`
-- `M` `aulos-agent/.aries_harness/history/daily/2026-08-01.md`

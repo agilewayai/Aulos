@@ -10,13 +10,19 @@ generated_by: "/aries-harness init"
 initialized_at: "2026-07-25T10:55:22Z"
 effective_status: "active"
 effective_since: "2026-07-25T10:55:22Z"
-content_fingerprint: "sha256:0f4326c4a9dcacee31696a05dfe7195438cb98bb24e65cc7fba5a3f234467ba6"
+content_fingerprint: "sha256:83ffcae9561e344bd7f7478195859324c3773779f9ddcbb0779b9ea131c415cf"
 trace_history_source: "filesystem-only"
 trace_last_commit_sha: ""
 trace_last_commit_at: ""
 trace_revision_count: "0"
 ---
 # Journal
+
+## 2026-08-02T10:15:00Z
+
+- **Review Critics Codex path:** `_ops_llm_complete` → `invoke_provider` so Ops
+  Review=AI Code Mirror (Responses) works for Intent Critic + external_review.
+  Verify: `tests/test_ops_llm_critic.py` 3 passed.
 
 ## 2026-07-25T17:15:00Z
 

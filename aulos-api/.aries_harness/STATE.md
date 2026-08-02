@@ -9,7 +9,7 @@ fingerprint: "aries-harness/bootstrap-doc/v1"
 initialized_at: "2026-07-25T11:10:22Z"
 effective_status: "active"
 effective_since: "2026-07-25T11:10:22Z"
-content_fingerprint: "sha256:68be7a27cf7d96481518237be7d85c09bc989ab9a09daea5bb10e505ae0db52d"
+content_fingerprint: "sha256:b2264a9ffff51bedaf395b30261fa4bd3eea5f503395752e9adf3cdaa92663f4"
 trace_history_source: "filesystem-only"
 trace_last_commit_sha: ""
 trace_last_commit_at: ""
@@ -19,6 +19,10 @@ trace_revision_count: "0"
 
 ## Current phase
 
+- SPEC-034 Slice H deployed in gateway: multi-work `g.program` now defaults
+  to fast/budgeted production execution (raw web floor, no per-work Jina/verify
+  LLM/LLM dossier, no album LLM unless full mode configured) with timing facts
+  in chain trace; production deploy/smoke passed on 2026-08-02T10:02Z.
 - SPEC-034 Slice F deployed: Discogs program composer propagation +
   failed-guide persistence/publish gate verified and published to production;
   guide #59 live recompose remains pending
@@ -33,6 +37,9 @@ trace_revision_count: "0"
 
 ## Active run
 
+- Closed + deployed: SPEC-034 Slice H guide #60 RCA/code; API focused tests,
+  production deploy, smoke, status, and PostgreSQL evidence green
+  (2026-08-02).
 - Closed + deployed: SPEC-034 Slice F guide #59 gateway/persist gate
   (2026-08-02); live guide #59 recompose pending
 - Closed: SPEC-034Δ gateway `g.program` deepen loop + web partial (2026-08-01)

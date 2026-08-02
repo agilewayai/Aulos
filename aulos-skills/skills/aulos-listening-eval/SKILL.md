@@ -21,6 +21,10 @@ After compose, before showing the guide as final (or to annotate caveats).
 - Identity-resolved guides (`work_id` / `family_hints` / corpus|synthesize hit) missing ≥4 of
   composer / genesis / stature / sound / interpretations / media chambers → **fail**
   (Goldberg atelier parity bar — filled by family pack or corpus, not case hardcode)
+- Instrument-faithful check: true solo-instrument substitution fails, but period-instrument
+  context (`fortepiano`) and historical comparison ("flute instead of violin") must not fail
+  a locked piano/flute/cello title; recognize Discogs European terms such as
+  Klavier / Flöte / Violoncello.
 
 ## Procedure
 

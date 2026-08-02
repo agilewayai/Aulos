@@ -8,10 +8,10 @@ managed_by: "aries-harness"
 fingerprint: "aries-harness/history-doc/v1"
 generated_by: "/aries-harness history-refresh"
 initialized_at: "2026-07-25T11:20:06Z"
-generated_at: "2026-08-02T07:27:18+00:00"
+generated_at: "2026-08-02T10:07:07+00:00"
 effective_status: "generated"
-effective_since: "2026-08-02T07:27:18+00:00"
-content_fingerprint: "sha256:d5a69dfb057017d018517ab08160b79cd7d3c0ce64271955fec43c7533563c71"
+effective_since: "2026-08-02T10:07:07+00:00"
+content_fingerprint: "sha256:bb5c0d3a7778437c13786fe258644753ddb45c42e204b1e8b480cbcffc8866a9"
 trace_history_source: "filesystem-only"
 trace_last_commit_sha: ""
 trace_last_commit_at: ""
@@ -19,26 +19,23 @@ trace_revision_count: "0"
 ---
 # Retrospective Snapshot
 
-Generated at: `2026-08-02T07:27:18+00:00`
+Generated at: `2026-08-02T10:07:07+00:00`
 
 ## Recent changes
 
-- **Production deploy sync:** root `bash deploy/aulos-ctl.sh deploy` published
-- Verify: root `doctor` passed; deploy test suite -> 5 passed; root `status`
-- Central deploy evidence:
-- **SPEC-031:** Guide quality — Promote to production after staging; copy states
-- **SPEC-030:** Guide quality panel shows promote candidate + Stage craft (staging
+- **Review role → AI Code Mirror (Codex)** label/hint on LLM console; Ops is
+- **LLM settings UX (ui-ux-pro-max):** extracted `LlmSettingsPanel` — status KPI
+- **LLM tab: AI Code Mirror provider** — Codex Responses mid-relay slot in Ops
 
 ## What is working
 
-- **Production deploy sync:** root `bash deploy/aulos-ctl.sh deploy` published
-- Verify: root `doctor` passed; deploy test suite -> 5 passed; root `status`
-- Central deploy evidence:
-- **SPEC-031:** Guide quality — Promote to production after staging; copy states
+- **Review role → AI Code Mirror (Codex)** label/hint on LLM console; Ops is
+- **LLM settings UX (ui-ux-pro-max):** extracted `LlmSettingsPanel` — status KPI
+- **LLM tab: AI Code Mirror provider** — Codex Responses mid-relay slot in Ops
 
 ## What needs attention
 
-- working tree is dirty with 196 tracked or untracked change(s)
+- working tree is dirty with 144 tracked or untracked change(s)
 - no explicit next-up slice is recorded
 
 ## Durable reminders

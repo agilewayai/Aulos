@@ -9,7 +9,7 @@ fingerprint: "aries-harness/bootstrap-doc/v1"
 initialized_at: "2026-07-25T11:22:04Z"
 effective_status: "active"
 effective_since: "2026-07-25T16:20:00Z"
-content_fingerprint: "sha256:dad4cb48a0c8d46f7954fec9209a9d1ada005397f7ba334c1e434bf4768efd95"
+content_fingerprint: "sha256:77b0a3fb3d158ba8bbd00308242e74a067e10d36477d77fff66e043932c43fe0"
 trace_history_source: "filesystem-only"
 trace_last_commit_sha: ""
 trace_last_commit_at: ""
@@ -19,6 +19,13 @@ trace_revision_count: "0"
 
 ## Current phase
 
+- SPEC-034 Slice H deployed: production guide #60 RCA confirmed the perceived
+  "step 3" latency was actually `g.program` (~711.6s) plus album `g.llm`
+  (~174.6s) on PostgreSQL trace; default multi-work deepen is now
+  fast/budgeted, JSON notes are parsed before sheet fan-in, raw-web sheets get
+  identity floors, and German trio instrument terms no longer false-flag solo
+  drift. Production deploy and scripted smoke passed on 2026-08-02T10:02Z;
+  guide #60 remains failed by design on `ambient_ok=false`.
 - SPEC-034 Slice G deployed to production: multi-work guides now emit work
   sheets + synthesis sheet and render accessible sheet tabs;
   `program_parallel_plan` exposes fan-out/fan-in metadata for future
@@ -51,6 +58,10 @@ trace_revision_count: "0"
 
 ## Active run
 
+- Closed + deployed: SPEC-034 Slice H guide #60 program-deepen latency /
+  subject-thickness RCA + code (2026-08-02); focused tests, production deploy,
+  smoke, status, and PostgreSQL evidence green. `ambient_ok=false` remains a
+  fail-closed residual.
 - Closed + deployed: SPEC-034 Slice G multi-work guide sheets + synthesis
   fan-in (2026-08-02); production status/smoke green.
 - Closed + deployed: SPEC-034 Slice F guide #59 fold-back scalar ownership +
@@ -83,6 +94,9 @@ trace_revision_count: "0"
 
 ## Next action
 
+- Do not loosen `ambient_ok=false`; recompose guide #60 only after a
+  work-matched media/ambient candidate is available or a separate media slice
+  resolves the ambient gate.
 - Optional: recompose guide #59 and multi-work / non-piano concerto Discogs
   probes to confirm sheet-mode guide rendering live.
 - Optional: expand dimension **voice tables** and form_lock aliens from live Discogs facet histograms — still dimensional, never per-work craft.
@@ -103,7 +117,7 @@ trace_revision_count: "0"
 - Family match: composer-scoped packs need instrument/form evidence (not composer alone)
 - Facility: `.aries_harness/{scripts,templates}` (not package-root)
 - Canonical harness library: `git@github.com:agilewayai/aries-harness-skills.git` (`0.10.0-preview.10`)
-- Skills: compose 0.3.1, eval 0.3.0, synthesize 0.2.1, corpus 0.3.0, operating-defaults 0.4.2
+- Skills: compose 0.3.1, eval 0.3.1, synthesize 0.2.2, corpus 0.3.0, operating-defaults 0.4.2
 - Sibling services: aulos-web, aulos-api, aulos-mcp, aulos-agent, aulos-ops, aulos-knowledge
 - Timezone: store UTC / display OS local (operating-defaults 0.3.3; SPEC-007 on api)
 

@@ -10,13 +10,31 @@ generated_by: "/aries-harness init"
 initialized_at: "2026-07-25T11:20:06Z"
 effective_status: "active"
 effective_since: "2026-07-25T11:20:06Z"
-content_fingerprint: "sha256:f239228cebdc8a46a79c7acd22f0e327bcacf960a62fe1dc1c1f6d09e12e100f"
+content_fingerprint: "sha256:0d2ff0927e2bc0c52009a2035e258f2b939bd849ccaf0785333305bd96d7a7fd"
 trace_history_source: "filesystem-only"
 trace_last_commit_sha: ""
 trace_last_commit_at: ""
 trace_revision_count: "0"
 ---
 # Journal
+
+## 2026-08-02T10:15:00Z
+
+- **Review role → AI Code Mirror (Codex)** label/hint on LLM console; Ops is
+  canonical for draft/review switching.
+
+## 2026-08-02T10:05:00Z
+
+- **LLM settings UX (ui-ux-pro-max):** extracted `LlmSettingsPanel` — status KPI
+  strip, role routing cards, accordion provider credentials, listening option
+  cards, sticky save bar; draft=review warning; SVG chevrons (no emoji icons);
+  reduced-motion respected. Verify: `npm run build` green.
+
+## 2026-08-02T09:50:00Z
+
+- **LLM tab: AI Code Mirror provider** — Codex Responses mid-relay slot in Ops
+  LLM form (active/draft/review + Test). Key left blank for operator fill.
+  Build: `npm run build` green.
 
 ## 2026-08-02T07:24:00Z
 

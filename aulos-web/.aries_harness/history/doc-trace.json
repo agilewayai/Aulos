@@ -113,14 +113,14 @@
       "layer": "SharedSupportSurface",
       "declared_layer": "SharedSupportSurface",
       "effective_status": "generated",
-      "effective_since": "2026-08-02T07:27:11+00:00",
+      "effective_since": "2026-08-02T10:06:59+00:00",
       "managed_by": "aries-harness",
       "fingerprint": "aries-harness/bootstrap-doc/v1",
       "last_updated_at": "",
       "completed_at": "",
       "timebox_actual": "",
-      "content_fingerprint": "sha256:63eac44057bf17bf4d9091a043bbf16f1f9810ffe1415a6b2afd9c1cd20a0c35",
-      "observed_content_fingerprint": "sha256:63eac44057bf17bf4d9091a043bbf16f1f9810ffe1415a6b2afd9c1cd20a0c35",
+      "content_fingerprint": "sha256:f994d117e1461ee7834991a77fe39f9fd8d2576d713504bc01f980b486448caf",
+      "observed_content_fingerprint": "sha256:f994d117e1461ee7834991a77fe39f9fd8d2576d713504bc01f980b486448caf",
       "trace_history_source": "filesystem-only",
       "trace_last_commit_sha": "",
       "trace_last_commit_at": "",
@@ -132,11 +132,16 @@
         "trace_revision_count": "0"
       },
       "latest_commit": {
-        "sha": "5476efb",
+        "sha": "9606691",
         "date": "2026-08-02",
-        "subject": "Ship identity freeze (SPEC-032) and listening hardenings across the fleet; refresh honeycomb."
+        "subject": "Ship Discogs structure-first guide sheets"
       },
       "recent_updates": [
+        {
+          "sha": "9606691",
+          "date": "2026-08-02",
+          "subject": "Ship Discogs structure-first guide sheets"
+        },
         {
           "sha": "5476efb",
           "date": "2026-08-02",
@@ -146,11 +151,6 @@
           "sha": "1d325d5",
           "date": "2026-08-01",
           "subject": "Ship knowledge discovery, dossier, and benchmark console; refresh fleet honeycomb."
-        },
-        {
-          "sha": "491b042",
-          "date": "2026-07-27",
-          "subject": "Ship authority source registry, OPS knowledge console, and refresh fleet honeycomb."
         }
       ],
       "dirty": false,
@@ -183,11 +183,16 @@
         "trace_revision_count": "0"
       },
       "latest_commit": {
-        "sha": "5476efb",
+        "sha": "9606691",
         "date": "2026-08-02",
-        "subject": "Ship identity freeze (SPEC-032) and listening hardenings across the fleet; refresh honeycomb."
+        "subject": "Ship Discogs structure-first guide sheets"
       },
       "recent_updates": [
+        {
+          "sha": "9606691",
+          "date": "2026-08-02",
+          "subject": "Ship Discogs structure-first guide sheets"
+        },
         {
           "sha": "5476efb",
           "date": "2026-08-02",
@@ -197,11 +202,6 @@
           "sha": "c3009d2",
           "date": "2026-07-27",
           "subject": "Harden platform security, ship fleet DevOps control, and refresh harness honeycomb."
-        },
-        {
-          "sha": "0c8a847",
-          "date": "2026-07-27",
-          "subject": "Ship Ops daily Dev Blog and web forgot-password reset."
         }
       ],
       "dirty": false,
@@ -515,11 +515,16 @@
         "trace_revision_count": "0"
       },
       "latest_commit": {
-        "sha": "5476efb",
+        "sha": "9606691",
         "date": "2026-08-02",
-        "subject": "Ship identity freeze (SPEC-032) and listening hardenings across the fleet; refresh honeycomb."
+        "subject": "Ship Discogs structure-first guide sheets"
       },
       "recent_updates": [
+        {
+          "sha": "9606691",
+          "date": "2026-08-02",
+          "subject": "Ship Discogs structure-first guide sheets"
+        },
         {
           "sha": "5476efb",
           "date": "2026-08-02",
@@ -529,11 +534,6 @@
           "sha": "c3009d2",
           "date": "2026-07-27",
           "subject": "Harden platform security, ship fleet DevOps control, and refresh harness honeycomb."
-        },
-        {
-          "sha": "0c8a847",
-          "date": "2026-07-27",
-          "subject": "Ship Ops daily Dev Blog and web forgot-password reset."
         }
       ],
       "dirty": false,
@@ -566,11 +566,16 @@
         "trace_revision_count": "0"
       },
       "latest_commit": {
-        "sha": "5476efb",
+        "sha": "9606691",
         "date": "2026-08-02",
-        "subject": "Ship identity freeze (SPEC-032) and listening hardenings across the fleet; refresh honeycomb."
+        "subject": "Ship Discogs structure-first guide sheets"
       },
       "recent_updates": [
+        {
+          "sha": "9606691",
+          "date": "2026-08-02",
+          "subject": "Ship Discogs structure-first guide sheets"
+        },
         {
           "sha": "5476efb",
           "date": "2026-08-02",
@@ -580,11 +585,6 @@
           "sha": "c3009d2",
           "date": "2026-07-27",
           "subject": "Harden platform security, ship fleet DevOps control, and refresh harness honeycomb."
-        },
-        {
-          "sha": "0c8a847",
-          "date": "2026-07-27",
-          "subject": "Ship Ops daily Dev Blog and web forgot-password reset."
         }
       ],
       "dirty": false,
@@ -777,14 +777,14 @@
       "layer": "SharedSupportSurface",
       "declared_layer": "SharedSupportSurface",
       "effective_status": "generated",
-      "effective_since": "2026-08-02T07:24:40+00:00",
+      "effective_since": "2026-08-02T10:04:49+00:00",
       "managed_by": "aries-harness",
       "fingerprint": "aries-harness/history-doc/v1",
       "last_updated_at": "",
       "completed_at": "",
       "timebox_actual": "",
-      "content_fingerprint": "sha256:93346076b52ca0ef45baa3464ac2825d96f077a1071ddd03b56017e176429081",
-      "observed_content_fingerprint": "sha256:93346076b52ca0ef45baa3464ac2825d96f077a1071ddd03b56017e176429081",
+      "content_fingerprint": "sha256:61c226836587a77c28956fd74506a8e59ebfd20fafc844684f5141ecd600781b",
+      "observed_content_fingerprint": "sha256:61c226836587a77c28956fd74506a8e59ebfd20fafc844684f5141ecd600781b",
       "trace_history_source": "filesystem-only",
       "trace_last_commit_sha": "",
       "trace_last_commit_at": "",
@@ -796,11 +796,16 @@
         "trace_revision_count": "0"
       },
       "latest_commit": {
-        "sha": "5476efb",
+        "sha": "9606691",
         "date": "2026-08-02",
-        "subject": "Ship identity freeze (SPEC-032) and listening hardenings across the fleet; refresh honeycomb."
+        "subject": "Ship Discogs structure-first guide sheets"
       },
       "recent_updates": [
+        {
+          "sha": "9606691",
+          "date": "2026-08-02",
+          "subject": "Ship Discogs structure-first guide sheets"
+        },
         {
           "sha": "5476efb",
           "date": "2026-08-02",
@@ -810,11 +815,6 @@
           "sha": "1d325d5",
           "date": "2026-08-01",
           "subject": "Ship knowledge discovery, dossier, and benchmark console; refresh fleet honeycomb."
-        },
-        {
-          "sha": "491b042",
-          "date": "2026-07-27",
-          "subject": "Ship authority source registry, OPS knowledge console, and refresh fleet honeycomb."
         }
       ],
       "dirty": false,
@@ -828,14 +828,14 @@
       "layer": "SharedSupportSurface",
       "declared_layer": "SharedSupportSurface",
       "effective_status": "generated",
-      "effective_since": "2026-08-02T07:24:40+00:00",
+      "effective_since": "2026-08-02T10:04:49+00:00",
       "managed_by": "aries-harness",
       "fingerprint": "aries-harness/history-doc/v1",
       "last_updated_at": "",
       "completed_at": "",
       "timebox_actual": "",
-      "content_fingerprint": "sha256:eea4be68a9a6210a8e19a0fc3c8e82ade793afa736fab513f523dc2ea6e712af",
-      "observed_content_fingerprint": "sha256:eea4be68a9a6210a8e19a0fc3c8e82ade793afa736fab513f523dc2ea6e712af",
+      "content_fingerprint": "sha256:f66c0cfedd4cf5eda09846bda5a198973cea209545af8beaa75d7db4b0379f9a",
+      "observed_content_fingerprint": "sha256:f66c0cfedd4cf5eda09846bda5a198973cea209545af8beaa75d7db4b0379f9a",
       "trace_history_source": "filesystem-only",
       "trace_last_commit_sha": "",
       "trace_last_commit_at": "",
@@ -847,11 +847,16 @@
         "trace_revision_count": "0"
       },
       "latest_commit": {
-        "sha": "5476efb",
+        "sha": "9606691",
         "date": "2026-08-02",
-        "subject": "Ship identity freeze (SPEC-032) and listening hardenings across the fleet; refresh honeycomb."
+        "subject": "Ship Discogs structure-first guide sheets"
       },
       "recent_updates": [
+        {
+          "sha": "9606691",
+          "date": "2026-08-02",
+          "subject": "Ship Discogs structure-first guide sheets"
+        },
         {
           "sha": "5476efb",
           "date": "2026-08-02",
@@ -861,11 +866,6 @@
           "sha": "1d325d5",
           "date": "2026-08-01",
           "subject": "Ship knowledge discovery, dossier, and benchmark console; refresh fleet honeycomb."
-        },
-        {
-          "sha": "491b042",
-          "date": "2026-07-27",
-          "subject": "Ship authority source registry, OPS knowledge console, and refresh fleet honeycomb."
         }
       ],
       "dirty": false,
@@ -879,14 +879,14 @@
       "layer": "SharedSupportSurface",
       "declared_layer": "SharedSupportSurface",
       "effective_status": "generated",
-      "effective_since": "2026-08-02T07:24:40+00:00",
+      "effective_since": "2026-08-02T10:04:49+00:00",
       "managed_by": "aries-harness",
       "fingerprint": "aries-harness/history-doc/v1",
       "last_updated_at": "",
       "completed_at": "",
       "timebox_actual": "",
-      "content_fingerprint": "sha256:a34756c3122e3ac9faf8261fdf46502425824e376f034a12e46b2dc2ccc2c901",
-      "observed_content_fingerprint": "sha256:a34756c3122e3ac9faf8261fdf46502425824e376f034a12e46b2dc2ccc2c901",
+      "content_fingerprint": "sha256:749a07d8f766a641232966c0be385ae2f5913def9a25dbbdc09548b6d97ceb4e",
+      "observed_content_fingerprint": "sha256:749a07d8f766a641232966c0be385ae2f5913def9a25dbbdc09548b6d97ceb4e",
       "trace_history_source": "filesystem-only",
       "trace_last_commit_sha": "",
       "trace_last_commit_at": "",
@@ -898,11 +898,16 @@
         "trace_revision_count": "0"
       },
       "latest_commit": {
-        "sha": "5476efb",
+        "sha": "9606691",
         "date": "2026-08-02",
-        "subject": "Ship identity freeze (SPEC-032) and listening hardenings across the fleet; refresh honeycomb."
+        "subject": "Ship Discogs structure-first guide sheets"
       },
       "recent_updates": [
+        {
+          "sha": "9606691",
+          "date": "2026-08-02",
+          "subject": "Ship Discogs structure-first guide sheets"
+        },
         {
           "sha": "5476efb",
           "date": "2026-08-02",
@@ -912,11 +917,6 @@
           "sha": "1d325d5",
           "date": "2026-08-01",
           "subject": "Ship knowledge discovery, dossier, and benchmark console; refresh fleet honeycomb."
-        },
-        {
-          "sha": "491b042",
-          "date": "2026-07-27",
-          "subject": "Ship authority source registry, OPS knowledge console, and refresh fleet honeycomb."
         }
       ],
       "dirty": false,
@@ -930,14 +930,14 @@
       "layer": "SharedSupportSurface",
       "declared_layer": "SharedSupportSurface",
       "effective_status": "generated",
-      "effective_since": "2026-08-02T07:24:40+00:00",
+      "effective_since": "2026-08-02T10:04:49+00:00",
       "managed_by": "aries-harness",
       "fingerprint": "aries-harness/history-doc/v1",
       "last_updated_at": "",
       "completed_at": "",
       "timebox_actual": "",
-      "content_fingerprint": "sha256:9b7f73735c4e846644dd93da655a51176de8c22cea07b4e7670443b6573bb47b",
-      "observed_content_fingerprint": "sha256:9b7f73735c4e846644dd93da655a51176de8c22cea07b4e7670443b6573bb47b",
+      "content_fingerprint": "sha256:5cf39ba863b50c5e052fb446a98748227931479135afb35536ac6f7c62e66812",
+      "observed_content_fingerprint": "sha256:5cf39ba863b50c5e052fb446a98748227931479135afb35536ac6f7c62e66812",
       "trace_history_source": "filesystem-only",
       "trace_last_commit_sha": "",
       "trace_last_commit_at": "",
@@ -949,11 +949,16 @@
         "trace_revision_count": "0"
       },
       "latest_commit": {
-        "sha": "5476efb",
+        "sha": "9606691",
         "date": "2026-08-02",
-        "subject": "Ship identity freeze (SPEC-032) and listening hardenings across the fleet; refresh honeycomb."
+        "subject": "Ship Discogs structure-first guide sheets"
       },
       "recent_updates": [
+        {
+          "sha": "9606691",
+          "date": "2026-08-02",
+          "subject": "Ship Discogs structure-first guide sheets"
+        },
         {
           "sha": "5476efb",
           "date": "2026-08-02",
@@ -963,11 +968,6 @@
           "sha": "1d325d5",
           "date": "2026-08-01",
           "subject": "Ship knowledge discovery, dossier, and benchmark console; refresh fleet honeycomb."
-        },
-        {
-          "sha": "491b042",
-          "date": "2026-07-27",
-          "subject": "Ship authority source registry, OPS knowledge console, and refresh fleet honeycomb."
         }
       ],
       "dirty": false,
@@ -981,14 +981,14 @@
       "layer": "SharedSupportSurface",
       "declared_layer": "SharedSupportSurface",
       "effective_status": "generated",
-      "effective_since": "2026-08-02T07:24:40+00:00",
+      "effective_since": "2026-08-02T10:04:49+00:00",
       "managed_by": "aries-harness",
       "fingerprint": "aries-harness/history-doc/v1",
       "last_updated_at": "",
       "completed_at": "",
       "timebox_actual": "",
-      "content_fingerprint": "sha256:3d4197858ddf1fc94090958213013a05592251c82a346963af076099009b6f2d",
-      "observed_content_fingerprint": "sha256:3d4197858ddf1fc94090958213013a05592251c82a346963af076099009b6f2d",
+      "content_fingerprint": "sha256:ce03e70bcaeafada5ae8a5f81cb84159971ca8bd01d409b2d6aeb94e65dc9884",
+      "observed_content_fingerprint": "sha256:ce03e70bcaeafada5ae8a5f81cb84159971ca8bd01d409b2d6aeb94e65dc9884",
       "trace_history_source": "filesystem-only",
       "trace_last_commit_sha": "",
       "trace_last_commit_at": "",
@@ -1000,11 +1000,16 @@
         "trace_revision_count": "0"
       },
       "latest_commit": {
-        "sha": "5476efb",
+        "sha": "9606691",
         "date": "2026-08-02",
-        "subject": "Ship identity freeze (SPEC-032) and listening hardenings across the fleet; refresh honeycomb."
+        "subject": "Ship Discogs structure-first guide sheets"
       },
       "recent_updates": [
+        {
+          "sha": "9606691",
+          "date": "2026-08-02",
+          "subject": "Ship Discogs structure-first guide sheets"
+        },
         {
           "sha": "5476efb",
           "date": "2026-08-02",
@@ -1014,11 +1019,6 @@
           "sha": "1d325d5",
           "date": "2026-08-01",
           "subject": "Ship knowledge discovery, dossier, and benchmark console; refresh fleet honeycomb."
-        },
-        {
-          "sha": "491b042",
-          "date": "2026-07-27",
-          "subject": "Ship authority source registry, OPS knowledge console, and refresh fleet honeycomb."
         }
       ],
       "dirty": false,
@@ -1032,14 +1032,14 @@
       "layer": "SharedSupportSurface",
       "declared_layer": "SharedSupportSurface",
       "effective_status": "generated",
-      "effective_since": "2026-08-02T07:24:40+00:00",
+      "effective_since": "2026-08-02T10:04:49+00:00",
       "managed_by": "aries-harness",
       "fingerprint": "aries-harness/history-doc/v1",
       "last_updated_at": "",
       "completed_at": "",
       "timebox_actual": "",
-      "content_fingerprint": "sha256:bc9010dd8cad9db0b8b8003f2bf18f8630dd3bf850e547a3084efed9192942c7",
-      "observed_content_fingerprint": "sha256:bc9010dd8cad9db0b8b8003f2bf18f8630dd3bf850e547a3084efed9192942c7",
+      "content_fingerprint": "sha256:ffc8c99c9e10fd0fd3aec7f890708740048bbc2562bced97ea8ae78a27ece7ef",
+      "observed_content_fingerprint": "sha256:ffc8c99c9e10fd0fd3aec7f890708740048bbc2562bced97ea8ae78a27ece7ef",
       "trace_history_source": "filesystem-only",
       "trace_last_commit_sha": "",
       "trace_last_commit_at": "",
@@ -1051,11 +1051,16 @@
         "trace_revision_count": "0"
       },
       "latest_commit": {
-        "sha": "5476efb",
+        "sha": "9606691",
         "date": "2026-08-02",
-        "subject": "Ship identity freeze (SPEC-032) and listening hardenings across the fleet; refresh honeycomb."
+        "subject": "Ship Discogs structure-first guide sheets"
       },
       "recent_updates": [
+        {
+          "sha": "9606691",
+          "date": "2026-08-02",
+          "subject": "Ship Discogs structure-first guide sheets"
+        },
         {
           "sha": "5476efb",
           "date": "2026-08-02",
@@ -1065,11 +1070,6 @@
           "sha": "1d325d5",
           "date": "2026-08-01",
           "subject": "Ship knowledge discovery, dossier, and benchmark console; refresh fleet honeycomb."
-        },
-        {
-          "sha": "491b042",
-          "date": "2026-07-27",
-          "subject": "Ship authority source registry, OPS knowledge console, and refresh fleet honeycomb."
         }
       ],
       "dirty": false,
@@ -1083,14 +1083,14 @@
       "layer": "SharedSupportSurface",
       "declared_layer": "SharedSupportSurface",
       "effective_status": "generated",
-      "effective_since": "2026-08-02T07:24:40+00:00",
+      "effective_since": "2026-08-02T10:04:49+00:00",
       "managed_by": "aries-harness",
       "fingerprint": "aries-harness/history-doc/v1",
       "last_updated_at": "",
       "completed_at": "",
       "timebox_actual": "",
-      "content_fingerprint": "sha256:2e18612d724cfe77fd47e41e17572242dfe16b29bc0255ab50b8219e01a25a37",
-      "observed_content_fingerprint": "sha256:2e18612d724cfe77fd47e41e17572242dfe16b29bc0255ab50b8219e01a25a37",
+      "content_fingerprint": "sha256:9813142d37cc491716e54c2a65ab2e8b41b6d8a2faad3816bb97dead2f2bddf2",
+      "observed_content_fingerprint": "sha256:9813142d37cc491716e54c2a65ab2e8b41b6d8a2faad3816bb97dead2f2bddf2",
       "trace_history_source": "filesystem-only",
       "trace_last_commit_sha": "",
       "trace_last_commit_at": "",
@@ -1102,11 +1102,16 @@
         "trace_revision_count": "0"
       },
       "latest_commit": {
-        "sha": "5476efb",
+        "sha": "9606691",
         "date": "2026-08-02",
-        "subject": "Ship identity freeze (SPEC-032) and listening hardenings across the fleet; refresh honeycomb."
+        "subject": "Ship Discogs structure-first guide sheets"
       },
       "recent_updates": [
+        {
+          "sha": "9606691",
+          "date": "2026-08-02",
+          "subject": "Ship Discogs structure-first guide sheets"
+        },
         {
           "sha": "5476efb",
           "date": "2026-08-02",
@@ -1116,11 +1121,6 @@
           "sha": "1d325d5",
           "date": "2026-08-01",
           "subject": "Ship knowledge discovery, dossier, and benchmark console; refresh fleet honeycomb."
-        },
-        {
-          "sha": "491b042",
-          "date": "2026-07-27",
-          "subject": "Ship authority source registry, OPS knowledge console, and refresh fleet honeycomb."
         }
       ],
       "dirty": false,
@@ -1134,14 +1134,14 @@
       "layer": "SharedSupportSurface",
       "declared_layer": "SharedSupportSurface",
       "effective_status": "generated",
-      "effective_since": "2026-08-02T07:24:40+00:00",
+      "effective_since": "2026-08-02T10:04:49+00:00",
       "managed_by": "aries-harness",
       "fingerprint": "aries-harness/history-doc/v1",
       "last_updated_at": "",
       "completed_at": "",
       "timebox_actual": "",
-      "content_fingerprint": "sha256:16c8aeab6587bc7f5bccb00dbfeb1e18bde739cfdfa45b459fa8fd9b1b3c3dcc",
-      "observed_content_fingerprint": "sha256:16c8aeab6587bc7f5bccb00dbfeb1e18bde739cfdfa45b459fa8fd9b1b3c3dcc",
+      "content_fingerprint": "sha256:fb5b8f5a32745702eef1ede40ea150776292c682966e68f2e720316b8eaec395",
+      "observed_content_fingerprint": "sha256:fb5b8f5a32745702eef1ede40ea150776292c682966e68f2e720316b8eaec395",
       "trace_history_source": "filesystem-only",
       "trace_last_commit_sha": "",
       "trace_last_commit_at": "",
@@ -1153,11 +1153,16 @@
         "trace_revision_count": "0"
       },
       "latest_commit": {
-        "sha": "5476efb",
+        "sha": "9606691",
         "date": "2026-08-02",
-        "subject": "Ship identity freeze (SPEC-032) and listening hardenings across the fleet; refresh honeycomb."
+        "subject": "Ship Discogs structure-first guide sheets"
       },
       "recent_updates": [
+        {
+          "sha": "9606691",
+          "date": "2026-08-02",
+          "subject": "Ship Discogs structure-first guide sheets"
+        },
         {
           "sha": "5476efb",
           "date": "2026-08-02",
@@ -1167,11 +1172,6 @@
           "sha": "1d325d5",
           "date": "2026-08-01",
           "subject": "Ship knowledge discovery, dossier, and benchmark console; refresh fleet honeycomb."
-        },
-        {
-          "sha": "491b042",
-          "date": "2026-07-27",
-          "subject": "Ship authority source registry, OPS knowledge console, and refresh fleet honeycomb."
         }
       ],
       "dirty": false,
@@ -1185,14 +1185,14 @@
       "layer": "SharedSupportSurface",
       "declared_layer": "SharedSupportSurface",
       "effective_status": "generated",
-      "effective_since": "2026-08-02T07:24:40+00:00",
+      "effective_since": "2026-08-02T10:04:49+00:00",
       "managed_by": "aries-harness",
       "fingerprint": "aries-harness/history-doc/v1",
       "last_updated_at": "",
       "completed_at": "",
       "timebox_actual": "",
-      "content_fingerprint": "sha256:90af870a86622b08f86133b9c0e1ea66a63eaf56067bec2fffe1c417a090adae",
-      "observed_content_fingerprint": "sha256:90af870a86622b08f86133b9c0e1ea66a63eaf56067bec2fffe1c417a090adae",
+      "content_fingerprint": "sha256:64c1f4a9fa855c77649224fac58d4227d46ac154504be55e81d604e8ef04d1a2",
+      "observed_content_fingerprint": "sha256:64c1f4a9fa855c77649224fac58d4227d46ac154504be55e81d604e8ef04d1a2",
       "trace_history_source": "filesystem-only",
       "trace_last_commit_sha": "",
       "trace_last_commit_at": "",
@@ -1204,11 +1204,16 @@
         "trace_revision_count": "0"
       },
       "latest_commit": {
-        "sha": "5476efb",
+        "sha": "9606691",
         "date": "2026-08-02",
-        "subject": "Ship identity freeze (SPEC-032) and listening hardenings across the fleet; refresh honeycomb."
+        "subject": "Ship Discogs structure-first guide sheets"
       },
       "recent_updates": [
+        {
+          "sha": "9606691",
+          "date": "2026-08-02",
+          "subject": "Ship Discogs structure-first guide sheets"
+        },
         {
           "sha": "5476efb",
           "date": "2026-08-02",
@@ -1218,11 +1223,6 @@
           "sha": "1d325d5",
           "date": "2026-08-01",
           "subject": "Ship knowledge discovery, dossier, and benchmark console; refresh fleet honeycomb."
-        },
-        {
-          "sha": "491b042",
-          "date": "2026-07-27",
-          "subject": "Ship authority source registry, OPS knowledge console, and refresh fleet honeycomb."
         }
       ],
       "dirty": false,
@@ -1236,14 +1236,14 @@
       "layer": "SharedSupportSurface",
       "declared_layer": "SharedSupportSurface",
       "effective_status": "generated",
-      "effective_since": "2026-08-02T07:24:40+00:00",
+      "effective_since": "2026-08-02T10:04:49+00:00",
       "managed_by": "aries-harness",
       "fingerprint": "aries-harness/history-doc/v1",
       "last_updated_at": "",
       "completed_at": "",
       "timebox_actual": "",
-      "content_fingerprint": "sha256:509dae3f753dfab223e1c71b4cee0a58ca7a571e8beec00b7e392d04286eace5",
-      "observed_content_fingerprint": "sha256:509dae3f753dfab223e1c71b4cee0a58ca7a571e8beec00b7e392d04286eace5",
+      "content_fingerprint": "sha256:a55ffad96d28f5e7bd390438303544c34c68066a9aa91cbaed723dc1df96a1af",
+      "observed_content_fingerprint": "sha256:a55ffad96d28f5e7bd390438303544c34c68066a9aa91cbaed723dc1df96a1af",
       "trace_history_source": "filesystem-only",
       "trace_last_commit_sha": "",
       "trace_last_commit_at": "",
@@ -1255,11 +1255,16 @@
         "trace_revision_count": "0"
       },
       "latest_commit": {
-        "sha": "5476efb",
+        "sha": "9606691",
         "date": "2026-08-02",
-        "subject": "Ship identity freeze (SPEC-032) and listening hardenings across the fleet; refresh honeycomb."
+        "subject": "Ship Discogs structure-first guide sheets"
       },
       "recent_updates": [
+        {
+          "sha": "9606691",
+          "date": "2026-08-02",
+          "subject": "Ship Discogs structure-first guide sheets"
+        },
         {
           "sha": "5476efb",
           "date": "2026-08-02",
@@ -1269,11 +1274,6 @@
           "sha": "1d325d5",
           "date": "2026-08-01",
           "subject": "Ship knowledge discovery, dossier, and benchmark console; refresh fleet honeycomb."
-        },
-        {
-          "sha": "491b042",
-          "date": "2026-07-27",
-          "subject": "Ship authority source registry, OPS knowledge console, and refresh fleet honeycomb."
         }
       ],
       "dirty": false,
@@ -1287,14 +1287,14 @@
       "layer": "SharedSupportSurface",
       "declared_layer": "SharedSupportSurface",
       "effective_status": "generated",
-      "effective_since": "2026-08-02T07:24:40+00:00",
+      "effective_since": "2026-08-02T10:04:49+00:00",
       "managed_by": "aries-harness",
       "fingerprint": "aries-harness/history-doc/v1",
       "last_updated_at": "",
       "completed_at": "",
       "timebox_actual": "",
-      "content_fingerprint": "sha256:079d290e92cab3de59e3a47a62a9533d233dd9bbe1ab053dc272c441e6cb8db5",
-      "observed_content_fingerprint": "sha256:079d290e92cab3de59e3a47a62a9533d233dd9bbe1ab053dc272c441e6cb8db5",
+      "content_fingerprint": "sha256:01642b20ce2d2b37049cc923dfd57ea76db72febc90badbdbd70249431c0114b",
+      "observed_content_fingerprint": "sha256:01642b20ce2d2b37049cc923dfd57ea76db72febc90badbdbd70249431c0114b",
       "trace_history_source": "filesystem-only",
       "trace_last_commit_sha": "",
       "trace_last_commit_at": "",
@@ -1306,11 +1306,16 @@
         "trace_revision_count": "0"
       },
       "latest_commit": {
-        "sha": "5476efb",
+        "sha": "9606691",
         "date": "2026-08-02",
-        "subject": "Ship identity freeze (SPEC-032) and listening hardenings across the fleet; refresh honeycomb."
+        "subject": "Ship Discogs structure-first guide sheets"
       },
       "recent_updates": [
+        {
+          "sha": "9606691",
+          "date": "2026-08-02",
+          "subject": "Ship Discogs structure-first guide sheets"
+        },
         {
           "sha": "5476efb",
           "date": "2026-08-02",
@@ -1320,11 +1325,6 @@
           "sha": "1d325d5",
           "date": "2026-08-01",
           "subject": "Ship knowledge discovery, dossier, and benchmark console; refresh fleet honeycomb."
-        },
-        {
-          "sha": "491b042",
-          "date": "2026-07-27",
-          "subject": "Ship authority source registry, OPS knowledge console, and refresh fleet honeycomb."
         }
       ],
       "dirty": false,
@@ -1338,14 +1338,14 @@
       "layer": "SharedSupportSurface",
       "declared_layer": "SharedSupportSurface",
       "effective_status": "generated",
-      "effective_since": "2026-08-02T07:24:40+00:00",
+      "effective_since": "2026-08-02T10:04:49+00:00",
       "managed_by": "aries-harness",
       "fingerprint": "aries-harness/history-doc/v1",
       "last_updated_at": "",
       "completed_at": "",
       "timebox_actual": "",
-      "content_fingerprint": "sha256:9dcdc063afdd2a233da5af1882b9950ec5bd42722ad00864accc5d5ff93538a9",
-      "observed_content_fingerprint": "sha256:9dcdc063afdd2a233da5af1882b9950ec5bd42722ad00864accc5d5ff93538a9",
+      "content_fingerprint": "sha256:214c634990499ff69c8b3d667530e0c6647940f809fbb38e34d5fdab5b935b65",
+      "observed_content_fingerprint": "sha256:214c634990499ff69c8b3d667530e0c6647940f809fbb38e34d5fdab5b935b65",
       "trace_history_source": "filesystem-only",
       "trace_last_commit_sha": "",
       "trace_last_commit_at": "",
@@ -1356,8 +1356,28 @@
         "trace_last_commit_at": "",
         "trace_revision_count": "0"
       },
-      "latest_commit": null,
-      "recent_updates": [],
+      "latest_commit": {
+        "sha": "9606691",
+        "date": "2026-08-02",
+        "subject": "Ship Discogs structure-first guide sheets"
+      },
+      "recent_updates": [
+        {
+          "sha": "9606691",
+          "date": "2026-08-02",
+          "subject": "Ship Discogs structure-first guide sheets"
+        },
+        {
+          "sha": "5476efb",
+          "date": "2026-08-02",
+          "subject": "Ship identity freeze (SPEC-032) and listening hardenings across the fleet; refresh honeycomb."
+        },
+        {
+          "sha": "1d325d5",
+          "date": "2026-08-01",
+          "subject": "Ship knowledge discovery, dossier, and benchmark console; refresh fleet honeycomb."
+        }
+      ],
       "dirty": false,
       "issue_count": 0,
       "issues": []
@@ -2011,8 +2031,18 @@
         "trace_last_commit_at": "",
         "trace_revision_count": "0"
       },
-      "latest_commit": null,
-      "recent_updates": [],
+      "latest_commit": {
+        "sha": "9606691",
+        "date": "2026-08-02",
+        "subject": "Ship Discogs structure-first guide sheets"
+      },
+      "recent_updates": [
+        {
+          "sha": "9606691",
+          "date": "2026-08-02",
+          "subject": "Ship Discogs structure-first guide sheets"
+        }
+      ],
       "dirty": false,
       "issue_count": 0,
       "issues": []
@@ -2503,8 +2533,18 @@
         "trace_last_commit_at": "",
         "trace_revision_count": "0"
       },
-      "latest_commit": null,
-      "recent_updates": [],
+      "latest_commit": {
+        "sha": "9606691",
+        "date": "2026-08-02",
+        "subject": "Ship Discogs structure-first guide sheets"
+      },
+      "recent_updates": [
+        {
+          "sha": "9606691",
+          "date": "2026-08-02",
+          "subject": "Ship Discogs structure-first guide sheets"
+        }
+      ],
       "dirty": false,
       "issue_count": 0,
       "issues": []

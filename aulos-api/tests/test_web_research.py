@@ -189,14 +189,6 @@ async def test_run_web_research_cold_fill_then_skip_when_fresh(client: TestClien
         assert decision["action"] == "skip"
         assert decision["reason"] == "fresh"
 
-        second = await run_web_research(
-            db,
-            work_title="Frédéric Chopin — Mazurkas",
-            composer="Frédéric Chopin",
-            work_id="chopin.mazurkas",
-            user_id=1,
-            rag=rich_rag,
-        )
         # decide uses real now — set TTL huge via config so second skips
         save_web_research_config(db, refresh_after_hours=24 * 365)
         second = await run_web_research(

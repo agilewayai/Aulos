@@ -8,10 +8,10 @@ managed_by: "aries-harness"
 fingerprint: "aries-harness/history-doc/v1"
 generated_by: "/aries-harness history-refresh"
 initialized_at: "2026-07-25T11:07:42Z"
-generated_at: "2026-08-02T07:27:11+00:00"
+generated_at: "2026-08-02T10:06:59+00:00"
 effective_status: "generated"
-effective_since: "2026-08-02T07:27:11+00:00"
-content_fingerprint: "sha256:8a75403ccb543b032b36e7103e6c8d56c65690531b0f1c3c024e7b0071280043"
+effective_since: "2026-08-02T10:06:59+00:00"
+content_fingerprint: "sha256:3d66c0a269cf233fefc8608bab05850245167071e8930d05008f6a00d17b5fe5"
 trace_history_source: "filesystem-only"
 trace_last_commit_sha: ""
 trace_last_commit_at: ""
@@ -19,7 +19,7 @@ trace_revision_count: "0"
 ---
 # Document Trace
 
-Generated at: `2026-08-02T07:27:11+00:00`
+Generated at: `2026-08-02T10:06:59+00:00`
 
 ## Summary
 
@@ -67,14 +67,14 @@ Generated at: `2026-08-02T07:27:11+00:00`
 
 - role: harness-index
 - layer: SharedSupportSurface
-- effective status: generated since 2026-08-02T07:27:11+00:00
-- content fingerprint: `sha256:63eac44057bf17bf4d9091a043bbf16f1f9810ffe1415a6b2afd9c1cd20a0c35`
+- effective status: generated since 2026-08-02T10:06:59+00:00
+- content fingerprint: `sha256:f994d117e1461ee7834991a77fe39f9fd8d2576d713504bc01f980b486448caf`
 - trace: filesystem-only / count=0 / sha=none
-- latest revision: `5476efb` 2026-08-02 Ship identity freeze (SPEC-032) and listening hardenings across the fleet; refresh honeycomb.
+- latest revision: `9606691` 2026-08-02 Ship Discogs structure-first guide sheets
 - dirty: no
 - earlier revisions:
+  - `5476efb` 2026-08-02 Ship identity freeze (SPEC-032) and listening hardenings across the fleet; refresh honeycomb.
   - `1d325d5` 2026-08-01 Ship knowledge discovery, dossier, and benchmark console; refresh fleet honeycomb.
-  - `491b042` 2026-07-27 Ship authority source registry, OPS knowledge console, and refresh fleet honeycomb.
 
 ### JOURNAL.md
 
@@ -83,11 +83,11 @@ Generated at: `2026-08-02T07:27:11+00:00`
 - effective status: active since 2026-07-25T11:07:42Z
 - content fingerprint: `sha256:d2170f933b6aba43c5273302439dc46de33e18cb1816b86e450666029b0c873f`
 - trace: filesystem-only / count=0 / sha=none
-- latest revision: `5476efb` 2026-08-02 Ship identity freeze (SPEC-032) and listening hardenings across the fleet; refresh honeycomb.
+- latest revision: `9606691` 2026-08-02 Ship Discogs structure-first guide sheets
 - dirty: no
 - earlier revisions:
+  - `5476efb` 2026-08-02 Ship identity freeze (SPEC-032) and listening hardenings across the fleet; refresh honeycomb.
   - `c3009d2` 2026-07-27 Harden platform security, ship fleet DevOps control, and refresh harness honeycomb.
-  - `0c8a847` 2026-07-27 Ship Ops daily Dev Blog and web forgot-password reset.
 
 ### MEMORY.md
 
@@ -168,11 +168,11 @@ Generated at: `2026-08-02T07:27:11+00:00`
 - effective status: active since 2026-07-25T11:10:22Z
 - content fingerprint: `sha256:6c55852c0b6f48454144a28f47ffebdd6cc5dd9ff5ea1bd074bdb7ff5d3854cc`
 - trace: filesystem-only / count=0 / sha=none
-- latest revision: `5476efb` 2026-08-02 Ship identity freeze (SPEC-032) and listening hardenings across the fleet; refresh honeycomb.
+- latest revision: `9606691` 2026-08-02 Ship Discogs structure-first guide sheets
 - dirty: no
 - earlier revisions:
+  - `5476efb` 2026-08-02 Ship identity freeze (SPEC-032) and listening hardenings across the fleet; refresh honeycomb.
   - `c3009d2` 2026-07-27 Harden platform security, ship fleet DevOps control, and refresh harness honeycomb.
-  - `0c8a847` 2026-07-27 Ship Ops daily Dev Blog and web forgot-password reset.
 
 ### TASK_STACK.md
 
@@ -181,11 +181,11 @@ Generated at: `2026-08-02T07:27:11+00:00`
 - effective status: active since 2026-07-25T11:10:22Z
 - content fingerprint: `sha256:20b7a44b867a2663562adc01d2638dc21a80a87559c1ff835758e437a2657ccd`
 - trace: filesystem-only / count=0 / sha=none
-- latest revision: `5476efb` 2026-08-02 Ship identity freeze (SPEC-032) and listening hardenings across the fleet; refresh honeycomb.
+- latest revision: `9606691` 2026-08-02 Ship Discogs structure-first guide sheets
 - dirty: no
 - earlier revisions:
+  - `5476efb` 2026-08-02 Ship identity freeze (SPEC-032) and listening hardenings across the fleet; refresh honeycomb.
   - `c3009d2` 2026-07-27 Harden platform security, ship fleet DevOps control, and refresh harness honeycomb.
-  - `0c8a847` 2026-07-27 Ship Ops daily Dev Blog and web forgot-password reset.
 
 ### decisions/adrs/ADR-001-vite-react-runtime.md
 
@@ -237,154 +237,157 @@ Generated at: `2026-08-02T07:27:11+00:00`
 
 - role: history-daily-summary-index
 - layer: SharedSupportSurface
-- effective status: generated since 2026-08-02T07:24:40+00:00
-- content fingerprint: `sha256:93346076b52ca0ef45baa3464ac2825d96f077a1071ddd03b56017e176429081`
+- effective status: generated since 2026-08-02T10:04:49+00:00
+- content fingerprint: `sha256:61c226836587a77c28956fd74506a8e59ebfd20fafc844684f5141ecd600781b`
 - trace: filesystem-only / count=0 / sha=none
-- latest revision: `5476efb` 2026-08-02 Ship identity freeze (SPEC-032) and listening hardenings across the fleet; refresh honeycomb.
+- latest revision: `9606691` 2026-08-02 Ship Discogs structure-first guide sheets
 - dirty: no
 - earlier revisions:
+  - `5476efb` 2026-08-02 Ship identity freeze (SPEC-032) and listening hardenings across the fleet; refresh honeycomb.
   - `1d325d5` 2026-08-01 Ship knowledge discovery, dossier, and benchmark console; refresh fleet honeycomb.
-  - `491b042` 2026-07-27 Ship authority source registry, OPS knowledge console, and refresh fleet honeycomb.
 
 ### history/DOC_TRACE.md
 
 - role: history-doc-trace
 - layer: SharedSupportSurface
-- effective status: generated since 2026-08-02T07:24:40+00:00
-- content fingerprint: `sha256:eea4be68a9a6210a8e19a0fc3c8e82ade793afa736fab513f523dc2ea6e712af`
+- effective status: generated since 2026-08-02T10:04:49+00:00
+- content fingerprint: `sha256:f66c0cfedd4cf5eda09846bda5a198973cea209545af8beaa75d7db4b0379f9a`
 - trace: filesystem-only / count=0 / sha=none
-- latest revision: `5476efb` 2026-08-02 Ship identity freeze (SPEC-032) and listening hardenings across the fleet; refresh honeycomb.
+- latest revision: `9606691` 2026-08-02 Ship Discogs structure-first guide sheets
 - dirty: no
 - earlier revisions:
+  - `5476efb` 2026-08-02 Ship identity freeze (SPEC-032) and listening hardenings across the fleet; refresh honeycomb.
   - `1d325d5` 2026-08-01 Ship knowledge discovery, dossier, and benchmark console; refresh fleet honeycomb.
-  - `491b042` 2026-07-27 Ship authority source registry, OPS knowledge console, and refresh fleet honeycomb.
 
 ### history/README.md
 
 - role: history-readme
 - layer: SharedSupportSurface
-- effective status: generated since 2026-08-02T07:24:40+00:00
-- content fingerprint: `sha256:a34756c3122e3ac9faf8261fdf46502425824e376f034a12e46b2dc2ccc2c901`
+- effective status: generated since 2026-08-02T10:04:49+00:00
+- content fingerprint: `sha256:749a07d8f766a641232966c0be385ae2f5913def9a25dbbdc09548b6d97ceb4e`
 - trace: filesystem-only / count=0 / sha=none
-- latest revision: `5476efb` 2026-08-02 Ship identity freeze (SPEC-032) and listening hardenings across the fleet; refresh honeycomb.
+- latest revision: `9606691` 2026-08-02 Ship Discogs structure-first guide sheets
 - dirty: no
 - earlier revisions:
+  - `5476efb` 2026-08-02 Ship identity freeze (SPEC-032) and listening hardenings across the fleet; refresh honeycomb.
   - `1d325d5` 2026-08-01 Ship knowledge discovery, dossier, and benchmark console; refresh fleet honeycomb.
-  - `491b042` 2026-07-27 Ship authority source registry, OPS knowledge console, and refresh fleet honeycomb.
 
 ### history/RETROSPECTIVE.md
 
 - role: history-retrospective
 - layer: SharedSupportSurface
-- effective status: generated since 2026-08-02T07:24:40+00:00
-- content fingerprint: `sha256:9b7f73735c4e846644dd93da655a51176de8c22cea07b4e7670443b6573bb47b`
+- effective status: generated since 2026-08-02T10:04:49+00:00
+- content fingerprint: `sha256:5cf39ba863b50c5e052fb446a98748227931479135afb35536ac6f7c62e66812`
 - trace: filesystem-only / count=0 / sha=none
-- latest revision: `5476efb` 2026-08-02 Ship identity freeze (SPEC-032) and listening hardenings across the fleet; refresh honeycomb.
+- latest revision: `9606691` 2026-08-02 Ship Discogs structure-first guide sheets
 - dirty: no
 - earlier revisions:
+  - `5476efb` 2026-08-02 Ship identity freeze (SPEC-032) and listening hardenings across the fleet; refresh honeycomb.
   - `1d325d5` 2026-08-01 Ship knowledge discovery, dossier, and benchmark console; refresh fleet honeycomb.
-  - `491b042` 2026-07-27 Ship authority source registry, OPS knowledge console, and refresh fleet honeycomb.
 
 ### history/ROADMAP.md
 
 - role: history-roadmap
 - layer: SharedSupportSurface
-- effective status: generated since 2026-08-02T07:24:40+00:00
-- content fingerprint: `sha256:3d4197858ddf1fc94090958213013a05592251c82a346963af076099009b6f2d`
+- effective status: generated since 2026-08-02T10:04:49+00:00
+- content fingerprint: `sha256:ce03e70bcaeafada5ae8a5f81cb84159971ca8bd01d409b2d6aeb94e65dc9884`
 - trace: filesystem-only / count=0 / sha=none
-- latest revision: `5476efb` 2026-08-02 Ship identity freeze (SPEC-032) and listening hardenings across the fleet; refresh honeycomb.
+- latest revision: `9606691` 2026-08-02 Ship Discogs structure-first guide sheets
 - dirty: no
 - earlier revisions:
+  - `5476efb` 2026-08-02 Ship identity freeze (SPEC-032) and listening hardenings across the fleet; refresh honeycomb.
   - `1d325d5` 2026-08-01 Ship knowledge discovery, dossier, and benchmark console; refresh fleet honeycomb.
-  - `491b042` 2026-07-27 Ship authority source registry, OPS knowledge console, and refresh fleet honeycomb.
 
 ### history/STATUS.md
 
 - role: history-status
 - layer: SharedSupportSurface
-- effective status: generated since 2026-08-02T07:24:40+00:00
-- content fingerprint: `sha256:bc9010dd8cad9db0b8b8003f2bf18f8630dd3bf850e547a3084efed9192942c7`
+- effective status: generated since 2026-08-02T10:04:49+00:00
+- content fingerprint: `sha256:ffc8c99c9e10fd0fd3aec7f890708740048bbc2562bced97ea8ae78a27ece7ef`
 - trace: filesystem-only / count=0 / sha=none
-- latest revision: `5476efb` 2026-08-02 Ship identity freeze (SPEC-032) and listening hardenings across the fleet; refresh honeycomb.
+- latest revision: `9606691` 2026-08-02 Ship Discogs structure-first guide sheets
 - dirty: no
 - earlier revisions:
+  - `5476efb` 2026-08-02 Ship identity freeze (SPEC-032) and listening hardenings across the fleet; refresh honeycomb.
   - `1d325d5` 2026-08-01 Ship knowledge discovery, dossier, and benchmark console; refresh fleet honeycomb.
-  - `491b042` 2026-07-27 Ship authority source registry, OPS knowledge console, and refresh fleet honeycomb.
 
 ### history/TIMELINE.md
 
 - role: history-timeline
 - layer: SharedSupportSurface
-- effective status: generated since 2026-08-02T07:24:40+00:00
-- content fingerprint: `sha256:2e18612d724cfe77fd47e41e17572242dfe16b29bc0255ab50b8219e01a25a37`
+- effective status: generated since 2026-08-02T10:04:49+00:00
+- content fingerprint: `sha256:9813142d37cc491716e54c2a65ab2e8b41b6d8a2faad3816bb97dead2f2bddf2`
 - trace: filesystem-only / count=0 / sha=none
-- latest revision: `5476efb` 2026-08-02 Ship identity freeze (SPEC-032) and listening hardenings across the fleet; refresh honeycomb.
+- latest revision: `9606691` 2026-08-02 Ship Discogs structure-first guide sheets
 - dirty: no
 - earlier revisions:
+  - `5476efb` 2026-08-02 Ship identity freeze (SPEC-032) and listening hardenings across the fleet; refresh honeycomb.
   - `1d325d5` 2026-08-01 Ship knowledge discovery, dossier, and benchmark console; refresh fleet honeycomb.
-  - `491b042` 2026-07-27 Ship authority source registry, OPS knowledge console, and refresh fleet honeycomb.
 
 ### history/daily/2026-07-25.md
 
 - role: history-daily-summary
 - layer: SharedSupportSurface
-- effective status: generated since 2026-08-02T07:24:40+00:00
-- content fingerprint: `sha256:16c8aeab6587bc7f5bccb00dbfeb1e18bde739cfdfa45b459fa8fd9b1b3c3dcc`
+- effective status: generated since 2026-08-02T10:04:49+00:00
+- content fingerprint: `sha256:fb5b8f5a32745702eef1ede40ea150776292c682966e68f2e720316b8eaec395`
 - trace: filesystem-only / count=0 / sha=none
-- latest revision: `5476efb` 2026-08-02 Ship identity freeze (SPEC-032) and listening hardenings across the fleet; refresh honeycomb.
+- latest revision: `9606691` 2026-08-02 Ship Discogs structure-first guide sheets
 - dirty: no
 - earlier revisions:
+  - `5476efb` 2026-08-02 Ship identity freeze (SPEC-032) and listening hardenings across the fleet; refresh honeycomb.
   - `1d325d5` 2026-08-01 Ship knowledge discovery, dossier, and benchmark console; refresh fleet honeycomb.
-  - `491b042` 2026-07-27 Ship authority source registry, OPS knowledge console, and refresh fleet honeycomb.
 
 ### history/daily/2026-07-26.md
 
 - role: history-daily-summary
 - layer: SharedSupportSurface
-- effective status: generated since 2026-08-02T07:24:40+00:00
-- content fingerprint: `sha256:90af870a86622b08f86133b9c0e1ea66a63eaf56067bec2fffe1c417a090adae`
+- effective status: generated since 2026-08-02T10:04:49+00:00
+- content fingerprint: `sha256:64c1f4a9fa855c77649224fac58d4227d46ac154504be55e81d604e8ef04d1a2`
 - trace: filesystem-only / count=0 / sha=none
-- latest revision: `5476efb` 2026-08-02 Ship identity freeze (SPEC-032) and listening hardenings across the fleet; refresh honeycomb.
+- latest revision: `9606691` 2026-08-02 Ship Discogs structure-first guide sheets
 - dirty: no
 - earlier revisions:
+  - `5476efb` 2026-08-02 Ship identity freeze (SPEC-032) and listening hardenings across the fleet; refresh honeycomb.
   - `1d325d5` 2026-08-01 Ship knowledge discovery, dossier, and benchmark console; refresh fleet honeycomb.
-  - `491b042` 2026-07-27 Ship authority source registry, OPS knowledge console, and refresh fleet honeycomb.
 
 ### history/daily/2026-07-27.md
 
 - role: history-daily-summary
 - layer: SharedSupportSurface
-- effective status: generated since 2026-08-02T07:24:40+00:00
-- content fingerprint: `sha256:509dae3f753dfab223e1c71b4cee0a58ca7a571e8beec00b7e392d04286eace5`
+- effective status: generated since 2026-08-02T10:04:49+00:00
+- content fingerprint: `sha256:a55ffad96d28f5e7bd390438303544c34c68066a9aa91cbaed723dc1df96a1af`
 - trace: filesystem-only / count=0 / sha=none
-- latest revision: `5476efb` 2026-08-02 Ship identity freeze (SPEC-032) and listening hardenings across the fleet; refresh honeycomb.
+- latest revision: `9606691` 2026-08-02 Ship Discogs structure-first guide sheets
 - dirty: no
 - earlier revisions:
+  - `5476efb` 2026-08-02 Ship identity freeze (SPEC-032) and listening hardenings across the fleet; refresh honeycomb.
   - `1d325d5` 2026-08-01 Ship knowledge discovery, dossier, and benchmark console; refresh fleet honeycomb.
-  - `491b042` 2026-07-27 Ship authority source registry, OPS knowledge console, and refresh fleet honeycomb.
 
 ### history/daily/2026-08-01.md
 
 - role: history-daily-summary
 - layer: SharedSupportSurface
-- effective status: generated since 2026-08-02T07:24:40+00:00
-- content fingerprint: `sha256:079d290e92cab3de59e3a47a62a9533d233dd9bbe1ab053dc272c441e6cb8db5`
+- effective status: generated since 2026-08-02T10:04:49+00:00
+- content fingerprint: `sha256:01642b20ce2d2b37049cc923dfd57ea76db72febc90badbdbd70249431c0114b`
 - trace: filesystem-only / count=0 / sha=none
-- latest revision: `5476efb` 2026-08-02 Ship identity freeze (SPEC-032) and listening hardenings across the fleet; refresh honeycomb.
+- latest revision: `9606691` 2026-08-02 Ship Discogs structure-first guide sheets
 - dirty: no
 - earlier revisions:
+  - `5476efb` 2026-08-02 Ship identity freeze (SPEC-032) and listening hardenings across the fleet; refresh honeycomb.
   - `1d325d5` 2026-08-01 Ship knowledge discovery, dossier, and benchmark console; refresh fleet honeycomb.
-  - `491b042` 2026-07-27 Ship authority source registry, OPS knowledge console, and refresh fleet honeycomb.
 
 ### history/daily/2026-08-02.md
 
 - role: history-daily-summary
 - layer: SharedSupportSurface
-- effective status: generated since 2026-08-02T07:24:40+00:00
-- content fingerprint: `sha256:9dcdc063afdd2a233da5af1882b9950ec5bd42722ad00864accc5d5ff93538a9`
+- effective status: generated since 2026-08-02T10:04:49+00:00
+- content fingerprint: `sha256:214c634990499ff69c8b3d667530e0c6647940f809fbb38e34d5fdab5b935b65`
 - trace: filesystem-only / count=0 / sha=none
-- latest revision: no git history recorded
+- latest revision: `9606691` 2026-08-02 Ship Discogs structure-first guide sheets
 - dirty: no
+- earlier revisions:
+  - `5476efb` 2026-08-02 Ship identity freeze (SPEC-032) and listening hardenings across the fleet; refresh honeycomb.
+  - `1d325d5` 2026-08-01 Ship knowledge discovery, dossier, and benchmark console; refresh fleet honeycomb.
 
 ### layers/MetaDefineLayer/README.md
 
@@ -552,7 +555,7 @@ Generated at: `2026-08-02T07:27:11+00:00`
 - effective status: active since 2026-08-01T21:45:00Z
 - content fingerprint: `sha256:6782ec8a8152e315cb2b341e13799734304cb2a1a52d41b49665fe0ea72264a9`
 - trace: filesystem-only / count=0 / sha=none
-- latest revision: no git history recorded
+- latest revision: `9606691` 2026-08-02 Ship Discogs structure-first guide sheets
 - dirty: no
 
 ### references/risks/README.md
@@ -676,7 +679,7 @@ Generated at: `2026-08-02T07:27:11+00:00`
 - effective status: active since 2026-08-01T21:45:00Z
 - content fingerprint: `sha256:b1e19261bde9110a8113c24f3e802b5681b72aadb647f103f943be3d2c77196f`
 - trace: filesystem-only / count=0 / sha=none
-- latest revision: no git history recorded
+- latest revision: `9606691` 2026-08-02 Ship Discogs structure-first guide sheets
 - dirty: no
 
 ### references/stories/README.md

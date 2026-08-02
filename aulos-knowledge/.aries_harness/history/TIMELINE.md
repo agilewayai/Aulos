@@ -8,10 +8,10 @@ managed_by: "aries-harness"
 fingerprint: "aries-harness/history-doc/v1"
 generated_by: "/aries-harness history-refresh"
 initialized_at: "2026-07-25T17:25:00+00:00"
-generated_at: "2026-08-02T07:27:26+00:00"
+generated_at: "2026-08-02T10:07:16+00:00"
 effective_status: "generated"
-effective_since: "2026-08-02T07:27:26+00:00"
-content_fingerprint: "sha256:28d686d74081a3e419f85d83867d08188ad1282b46d1ae225476a7c2a556ed93"
+effective_since: "2026-08-02T10:07:16+00:00"
+content_fingerprint: "sha256:9adafbb182cda20c1d7917e4a518c2f438c3392c84c67bcaff96eb7f11e56935"
 trace_history_source: "filesystem-only"
 trace_last_commit_sha: ""
 trace_last_commit_at: ""
@@ -19,7 +19,7 @@ trace_revision_count: "0"
 ---
 # Timeline
 
-Generated at: `2026-08-02T07:27:26+00:00`
+Generated at: `2026-08-02T10:07:16+00:00`
 
 ## Journal milestones
 
@@ -59,6 +59,7 @@ Generated at: `2026-08-02T07:27:26+00:00`
 
 ## Recent git commits
 
+- `9606691` 2026-08-02 Ship Discogs structure-first guide sheets
 - `5476efb` 2026-08-02 Ship identity freeze (SPEC-032) and listening hardenings across the fleet; refresh honeycomb.
 - `1d325d5` 2026-08-01 Ship knowledge discovery, dossier, and benchmark console; refresh fleet honeycomb.
 - `491b042` 2026-07-27 Ship authority source registry, OPS knowledge console, and refresh fleet honeycomb.
@@ -70,11 +71,11 @@ Generated at: `2026-08-02T07:27:26+00:00`
 - `555cf53` 2026-07-26 Ship listening product, mandatory harness, facility layout, and UTC/local time.
 - `93c0f6e` 2026-07-25 Add aulos-skills, aulos-ops, host deploy, and fleet operating defaults.
 - `7632d9b` 2026-07-25 Add aulos-web, aulos-api, and aulos-mcp sub-projects under aries-harness.
-- `0d5cb01` 2026-07-25 Initial commit: Aulos hackathon workspace with LangChain agent runtime.
 
 ## Working tree snapshot
 
 - `M` `aulos-agent/.aries_harness/INDEX.md`
+- `M` `aulos-agent/.aries_harness/JOURNAL.md`
 - `M` `aulos-agent/.aries_harness/history/DAILY_SUMMARY_INDEX.md`
 - `M` `aulos-agent/.aries_harness/history/DOC_TRACE.md`
 - `M` `aulos-agent/.aries_harness/history/README.md`
@@ -85,4 +86,3 @@ Generated at: `2026-08-02T07:27:26+00:00`
 - `M` `aulos-agent/.aries_harness/history/daily/2026-07-25.md`
 - `M` `aulos-agent/.aries_harness/history/daily/2026-07-26.md`
 - `M` `aulos-agent/.aries_harness/history/daily/2026-07-27.md`
-- `M` `aulos-agent/.aries_harness/history/daily/2026-08-01.md`

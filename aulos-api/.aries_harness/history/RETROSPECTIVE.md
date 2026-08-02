@@ -8,10 +8,10 @@ managed_by: "aries-harness"
 fingerprint: "aries-harness/history-doc/v1"
 generated_by: "/aries-harness history-refresh"
 initialized_at: "2026-07-25T11:07:43Z"
-generated_at: "2026-08-02T07:27:02+00:00"
+generated_at: "2026-08-02T10:06:49+00:00"
 effective_status: "generated"
-effective_since: "2026-08-02T07:27:02+00:00"
-content_fingerprint: "sha256:5dfbff4957de4aabb850fab37323f3c6f3631273822d1e7e2a74fe4d66f7493f"
+effective_since: "2026-08-02T10:06:49+00:00"
+content_fingerprint: "sha256:52f41b29d75707d864eb0dd0796461d6418bea4b32b39a348d3dd5b8d3922610"
 trace_history_source: "filesystem-only"
 trace_last_commit_sha: ""
 trace_last_commit_at: ""
@@ -19,27 +19,26 @@ trace_revision_count: "0"
 ---
 # Retrospective Snapshot
 
-Generated at: `2026-08-02T07:27:02+00:00`
+Generated at: `2026-08-02T10:06:49+00:00`
 
 ## Recent changes
 
-- **Production deploy sync:** root `bash deploy/aulos-ctl.sh deploy` published
-- Verify: root `doctor` passed; deploy test suite -> 5 passed; root `status`
-- Central deploy evidence:
-- **SPEC-034 Slice F consumer / guide #59:** hot Postgres latest guide remained
-- Fix: Discogs core parsing now prefers explicit performer-role names over
-- Verify: `PYTHONPATH=. .venv/bin/pytest -q tests/test_discogs.py` -> 12 passed;
+- Deployed gateway Slice H production code with `bash deploy/aulos-ctl.sh
+- Post-deploy `smoke` and `status` stayed green: `aulos-api`, `aulos-web`,
+- Production PostgreSQL guide #60 trace confirms gateway `g.program` budget work
+- **Review Critics → AI Code Mirror (Codex):** agent `_ops_llm_complete(role=review)`
+- **LLM provider: AI Code Mirror (Codex Responses relay):** Ops slot
 
 ## What is working
 
-- **Production deploy sync:** root `bash deploy/aulos-ctl.sh deploy` published
-- Verify: root `doctor` passed; deploy test suite -> 5 passed; root `status`
-- Central deploy evidence:
-- **SPEC-034 Slice F consumer / guide #59:** hot Postgres latest guide remained
+- Deployed gateway Slice H production code with `bash deploy/aulos-ctl.sh
+- Post-deploy `smoke` and `status` stayed green: `aulos-api`, `aulos-web`,
+- Production PostgreSQL guide #60 trace confirms gateway `g.program` budget work
+- **Review Critics → AI Code Mirror (Codex):** agent `_ops_llm_complete(role=review)`
 
 ## What needs attention
 
-- working tree is dirty with 196 tracked or untracked change(s)
+- working tree is dirty with 144 tracked or untracked change(s)
 - no explicit next-up slice is recorded
 
 ## Durable reminders

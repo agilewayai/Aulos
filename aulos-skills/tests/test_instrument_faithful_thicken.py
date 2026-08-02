@@ -126,3 +126,34 @@ def test_product_scorecard_flags_solo_instrument_betrayal() -> None:
     )
     assert any(f.code == "product_solo_instrument_drift" for f in card.findings)
     assert card.dimensions.get("identity_clarity", 3) == 0
+
+
+def test_product_scorecard_allows_german_flute_cello_piano_trio_context() -> None:
+    html = (
+        '<section data-lang="en">'
+        "The piano-flute-cello combination offered a colourful alternative to the standard "
+        "violin trio. Haydn replaces the violin with a flute; fortepiano, wooden flute and "
+        "gut-string cello shape the sound world."
+        "</section>"
+        '<section data-lang="zh-Hans">这张唱片锁定钢琴、长笛与大提琴三重奏。</section>'
+    )
+    card = score_product(
+        html=html,
+        context={
+            "work_title": "Trios Für Klavier, Flöte Und Violoncello",
+            "composer": "Johann Nepomuk Hummel / Carl Maria von Weber / Joseph Haydn",
+            "intent_lock": {
+                "composer": "Johann Nepomuk Hummel / Carl Maria von Weber / Joseph Haydn"
+            },
+        },
+        dossier={
+            "composer": "Johann Nepomuk Hummel / Carl Maria von Weber / Joseph Haydn",
+            "work_title": "Trios Für Klavier, Flöte Und Violoncello",
+            "listening_thesis": (
+                "Hear the pressing as three locked works for piano, flute and cello."
+            ),
+            "form": "Multi-work program for piano, flute and cello",
+            "zh": {"listening_thesis": "把这张唱片听成三部钢琴、长笛与大提琴作品。"},
+        },
+    )
+    assert not any(f.code == "product_solo_instrument_drift" for f in card.findings)

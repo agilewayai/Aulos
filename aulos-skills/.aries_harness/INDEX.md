@@ -8,10 +8,10 @@ managed_by: "aries-harness"
 fingerprint: "aries-harness/bootstrap-doc/v1"
 generated_by: "/aries-harness well-organized"
 initialized_at: "2026-07-25T11:20:05Z"
-last_organized_at: "2026-08-02T07:26:47+00:00"
+last_organized_at: "2026-08-02T10:06:32+00:00"
 effective_status: "generated"
-effective_since: "2026-08-02T07:26:47+00:00"
-content_fingerprint: "sha256:1ec14cdc1734b416868d53c1a5aeeda50dd786250c57c29a66e0a74cac48f2ba"
+effective_since: "2026-08-02T10:06:32+00:00"
+content_fingerprint: "sha256:955cae55a112c0d6df106bc88d1621378ffc0fa041b1c3833674047297d62411"
 trace_history_source: "filesystem-only"
 trace_last_commit_sha: ""
 trace_last_commit_at: ""
@@ -19,7 +19,7 @@ trace_revision_count: "0"
 ---
 # Harness Index
 
-Last organized: `2026-08-02T07:26:47+00:00`
+Last organized: `2026-08-02T10:06:32+00:00`
 
 Canonical spelling: `/aries-harness well-organized`
 
@@ -200,6 +200,7 @@ Fingerprint marker: `aries-harness` / `aries-harness/bootstrap-doc/v1`
 - [AUDIT-001-aries-harness-process-compliance.md](runs/reports/AUDIT-001-aries-harness-process-compliance.md)
 - [EVOL-2026-07-26-locale-intake-enabler.md](runs/reports/EVOL-2026-07-26-locale-intake-enabler.md)
 - [RCA-2026-08-02-guide-59-multi-work-sheets.md](runs/reports/RCA-2026-08-02-guide-59-multi-work-sheets.md)
+- [RCA-2026-08-02-guide-60-program-deepen-budget.md](runs/reports/RCA-2026-08-02-guide-60-program-deepen-budget.md)
 - [README.md](runs/reports/README.md)
 
 #### `runs/github/`
@@ -209,6 +210,7 @@ Fingerprint marker: `aries-harness` / `aries-harness/bootstrap-doc/v1`
 #### `runs/deployments/`
 - role: deployment, smoke, and rollback evidence
 - [DEPLOY-2026-08-02-spec-034-slice-g-production.md](runs/deployments/DEPLOY-2026-08-02-spec-034-slice-g-production.md)
+- [DEPLOY-2026-08-02-spec-034-slice-h-production.md](runs/deployments/DEPLOY-2026-08-02-spec-034-slice-h-production.md)
 - [README.md](runs/deployments/README.md)
 
 ## SharedSupportSurface

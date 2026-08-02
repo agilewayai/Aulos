@@ -8,10 +8,10 @@ managed_by: "aries-harness"
 fingerprint: "aries-harness/history-doc/v1"
 generated_by: "/aries-harness history-refresh"
 initialized_at: "2026-07-25T10:55:22Z"
-generated_at: "2026-08-02T07:27:32+00:00"
+generated_at: "2026-08-02T10:07:22+00:00"
 effective_status: "generated"
-effective_since: "2026-08-02T07:27:32+00:00"
-content_fingerprint: "sha256:f1138a7aba8281126e4d9582f419a8a89c649e7f3172c5384623187714afa25d"
+effective_since: "2026-08-02T10:07:22+00:00"
+content_fingerprint: "sha256:9d469d110936c53bc8fecda3a8e54acd2910a285c5df7b10a4cbb8960b0b0f1b"
 trace_history_source: "filesystem-only"
 trace_last_commit_sha: ""
 trace_last_commit_at: ""
@@ -19,7 +19,7 @@ trace_revision_count: "0"
 ---
 # Current Status
 
-Generated at: `2026-08-02T07:27:32+00:00`
+Generated at: `2026-08-02T10:07:22+00:00`
 
 ## Current phase
 
@@ -29,16 +29,16 @@ Generated at: `2026-08-02T07:27:32+00:00`
 
 - no branch or workspace details recorded
 - git branch: main
-- HEAD: `5476efb` Ship identity freeze (SPEC-032) and listening hardenings across the fleet; refresh honeycomb.
+- HEAD: `9606691` Ship Discogs structure-first guide sheets
 - working tree: dirty
 - change: `M` `aulos-agent/.aries_harness/ARIES_HARNESS_FINGERPRINT.json`
 - change: `M` `aulos-agent/.aries_harness/INDEX.md`
+- change: `M` `aulos-agent/.aries_harness/JOURNAL.md`
 - change: `M` `aulos-agent/.aries_harness/history/DAILY_SUMMARY_INDEX.md`
 - change: `M` `aulos-agent/.aries_harness/history/DOC_TRACE.md`
 - change: `M` `aulos-agent/.aries_harness/history/README.md`
 - change: `M` `aulos-agent/.aries_harness/history/RETROSPECTIVE.md`
 - change: `M` `aulos-agent/.aries_harness/history/ROADMAP.md`
-- change: `M` `aulos-agent/.aries_harness/history/STATUS.md`
 
 ## Current milestone
 

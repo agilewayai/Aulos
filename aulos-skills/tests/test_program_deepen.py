@@ -275,6 +275,108 @@ def test_fold_iterations_builds_work_sheets_and_synthesis() -> None:
     ]
 
 
+def test_fold_iterations_parses_json_note_before_sheet_fanin() -> None:
+    st = build_release_structure(
+        {
+            "title": "Trios Für Klavier, Flöte Und Violoncello",
+            "tracklist": [{"title": "Trio In E Major, Op. 78", "type_": "track"}],
+        }
+    ).to_dict()
+    st["shape"] = "multi_work_program"
+    st["program"].append(
+        {
+            "index": 1,
+            "title": "Trio In G Minor, Op. 63",
+            "catalog_numbers": ["op63"],
+            "composers": ["Carl Maria von Weber"],
+        }
+    )
+    st["structure_ready"] = True
+    st["program"][0]["composers"] = ["Johann Nepomuk Hummel"]
+
+    iterations = [
+        {
+            "index": 0,
+            "title": "Trio In E Major, Op. 78",
+            "composer": "Johann Nepomuk Hummel",
+            "catalog_numbers": ["op78"],
+            "llm_note": (
+                '{"work_title":"Op. 78 Trio In E Major",'
+                '"listening_thesis":"Hummel Op. 78 balances piano, flute and cello in salon dialogue.",'
+                '"form":"Piano, flute and cello trio"}'
+            ),
+            "web_hits": ["Hummel Op. 78 piano flute cello trio"],
+            "web_source_count": 1,
+            "llm_source": "agent-skills+deepseek+lock-reject",
+        },
+        {
+            "index": 1,
+            "title": "Trio In G Minor, Op. 63",
+            "composer": "Carl Maria von Weber",
+            "catalog_numbers": ["op63"],
+            "llm_dossier": {
+                "listening_thesis": "Weber Op. 63 turns the same forces toward theatre."
+            },
+            "web_source_count": 1,
+        },
+    ]
+    dossier = fold_program_iterations(st, iterations, composer="", work_title=st["release_title"])
+    blob = str(dossier.get("listening_thesis") or "") + str(dossier.get("guide_sheets") or "")
+    assert '"work_title"' not in blob
+    assert "Hummel Op. 78 balances piano, flute and cello" in blob
+    assert all(not str(s.get("summary") or "").lstrip().startswith("{") for s in dossier["guide_sheets"])
+
+
+def test_fold_iterations_uses_identity_floor_for_raw_web_only_sheet() -> None:
+    st = build_release_structure(
+        {
+            "title": "Trios Für Klavier, Flöte Und Violoncello",
+            "tracklist": [
+                {"title": "Trio Für Klavier, Violoncello Und Flöte A-dur, Op. 78", "type_": "track"},
+                {"title": "Trio Für Klavier, Flöte Und Violoncello G-moll, Op. 63", "type_": "track"},
+            ],
+        }
+    ).to_dict()
+    st["shape"] = "multi_work_program"
+    st["structure_ready"] = True
+    for row, composer in zip(st["program"], ["Johann Nepomuk Hummel", "Carl Maria von Weber"]):
+        row["composers"] = [composer]
+
+    dossier = fold_program_iterations(
+        st,
+        [
+            {
+                "index": 0,
+                "title": "Trio Für Klavier, Violoncello Und Flöte A-dur, Op. 78",
+                "composer": "Johann Nepomuk Hummel",
+                "catalog_numbers": ["op78"],
+                "instruments_hint": ["piano", "flute", "cello"],
+                "web_dossier": {
+                    "listening_thesis": "Research notes gathered from open sources.",
+                    "_provenance": {"method": "web_search_raw"},
+                },
+                "web_hits": ["Johann Nepomuk Hummel biography only"],
+                "web_source_count": 1,
+            },
+            {
+                "index": 1,
+                "title": "Trio Für Klavier, Flöte Und Violoncello G-moll, Op. 63",
+                "composer": "Carl Maria von Weber",
+                "catalog_numbers": ["op63"],
+                "instruments_hint": ["piano", "flute", "cello"],
+                "llm_dossier": {"listening_thesis": "Weber Op. 63 turns the same trio forces theatrical."},
+                "web_source_count": 1,
+            },
+        ],
+        composer="",
+        work_title=st["release_title"],
+    )
+    sheet = dossier["guide_sheets"][0]
+    assert "Johann Nepomuk Hummel" in sheet["summary"]
+    assert "piano, flute, cello" in sheet["summary"]
+    assert "open sources" not in sheet["summary"].lower()
+
+
 def test_render_multi_work_sheets_as_accessible_tabs() -> None:
     dossier = {
         "work_title": "Trios Für Klavier, Flöte Und Violoncello",

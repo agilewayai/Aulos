@@ -1,6 +1,6 @@
 id: aulos-listening-eval
 name: Listening Guide Eval
-version: 0.3.0
+version: 0.3.1
 layer: domain-runtime
 runtime: agent
 summary: Rubric + hard ambient gate for Salon Codex (bilingual, chambers, ear cues, craft).

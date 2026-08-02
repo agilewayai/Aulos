@@ -90,6 +90,8 @@ export type LlmProviderPublic = {
   model: string
   base_url: string
   ready: boolean
+  wire_api?: string
+  reasoning_effort?: string
 }
 
 export type LlmModelOption = {
@@ -106,6 +108,7 @@ export type LlmConfig = {
   ready_for_review?: boolean
   deepseek: LlmProviderPublic
   grok: LlmProviderPublic
+  aicodemirror?: LlmProviderPublic
   supported_providers: string[]
   model_options?: Record<string, LlmModelOption[]>
 }
@@ -365,6 +368,10 @@ export function updateLlmConfig(payload: {
   grok_api_key?: string
   grok_model?: string
   grok_base_url?: string
+  aicodemirror_api_key?: string
+  aicodemirror_model?: string
+  aicodemirror_base_url?: string
+  aicodemirror_reasoning_effort?: string
 }) {
   return request<LlmConfig>(
     '/v1/ops/llm',

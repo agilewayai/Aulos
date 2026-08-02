@@ -8,10 +8,10 @@ managed_by: "aries-harness"
 fingerprint: "aries-harness/history-doc/v1"
 generated_by: "/aries-harness history-refresh"
 initialized_at: "2026-07-25T11:20:05Z"
-generated_at: "2026-08-02T07:26:47+00:00"
+generated_at: "2026-08-02T10:06:32+00:00"
 effective_status: "generated"
-effective_since: "2026-08-02T07:26:47+00:00"
-content_fingerprint: "sha256:4e87249ff7197d52b4aaaba6e45aeb8aeec464f1f248824f041c5ee5ac331fca"
+effective_since: "2026-08-02T10:06:32+00:00"
+content_fingerprint: "sha256:5e3c64caa609c32d52969a93576df95bfac3bc068f50c4a6c820ef9bf4f47bfa"
 trace_history_source: "filesystem-only"
 trace_last_commit_sha: ""
 trace_last_commit_at: ""
@@ -19,7 +19,7 @@ trace_revision_count: "0"
 ---
 # Roadmap Snapshot
 
-Generated at: `2026-08-02T07:26:47+00:00`
+Generated at: `2026-08-02T10:06:32+00:00`
 
 ## Outcome target
 
@@ -31,15 +31,15 @@ Generated at: `2026-08-02T07:26:47+00:00`
 
 ## Now
 
+- Do not loosen `ambient_ok=false`; recompose guide #60 only after a
 - Optional: recompose guide #59 and multi-work / non-piano concerto Discogs
 - Optional: expand dimension **voice tables** and form_lock aliens from live Discogs facet histograms — still dimensional, never per-work craft.
-- Optional: knowledge-plane auto-thicken after promote-production (composer stub → dossier job).
 
 ## Next
 
+- Do not loosen `ambient_ok=false`; recompose guide #60 only after a
 - Optional: recompose guide #59 and multi-work / non-piano concerto Discogs
 - Optional: expand dimension **voice tables** and form_lock aliens from live Discogs facet histograms — still dimensional, never per-work craft.
-- Optional: knowledge-plane auto-thicken after promote-production (composer stub → dossier job).
 
 ## Later / guardrails
 

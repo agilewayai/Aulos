@@ -8,10 +8,10 @@ managed_by: "aries-harness"
 fingerprint: "aries-harness/history-doc/v1"
 generated_by: "/aries-harness history-refresh"
 initialized_at: "2026-07-25T11:20:05Z"
-generated_at: "2026-08-02T07:26:47+00:00"
+generated_at: "2026-08-02T10:06:32+00:00"
 effective_status: "generated"
-effective_since: "2026-08-02T07:26:47+00:00"
-content_fingerprint: "sha256:b54075bf566d5a74c9df75b57babf585be03028299dd42d2d51baf8dfe5389a1"
+effective_since: "2026-08-02T10:06:32+00:00"
+content_fingerprint: "sha256:8c378bc306cdbfef96571434642c7434833c8c0e158fb4d74755ff692d68b782"
 trace_history_source: "filesystem-only"
 trace_last_commit_sha: ""
 trace_last_commit_at: ""
@@ -19,9 +19,24 @@ trace_revision_count: "0"
 ---
 # Timeline
 
-Generated at: `2026-08-02T07:26:47+00:00`
+Generated at: `2026-08-02T10:06:32+00:00`
 
 ## Journal milestones
+
+### 2026-08-02T10:02:45Z
+
+- Deployed SPEC-034 Slice H to production with `bash deploy/aulos-ctl.sh deploy`;
+- Ran separate post-deploy `bash deploy/aulos-ctl.sh smoke` and
+- PostgreSQL-only RCA evidence for guide #60 remains: `program.deepen_loop`
+- Deploy evidence recorded in
+
+### 2026-08-02T09:44:23Z
+
+- SPEC-034 Slice H: production PostgreSQL guide #60 RCA completed for
+- Finding: perceived third-step latency was not `g.rag`; PG trace shows
+- Skills fix: program fan-in parses JSON notes before prose, emits deterministic
+- Skill bumps: `aulos-listening-synthesize` 0.2.2 and
+- Tests: `tests/test_program_deepen.py tests/test_instrument_faithful_thicken.py`
 
 ### 2026-08-02T07:24:00Z
 
@@ -55,16 +70,9 @@ Generated at: `2026-08-02T07:26:47+00:00`
 
 - **STORY-PACK-002 Slice B/C:** runtime hard-gate + program expand.
 
-### 2026-08-01T22:15:00Z
-
-- **REQ-024 / SPEC-034 / ARCH-002 / ADR-006 / DOM-003 / META-001 v7:** Discogs
-
-### 2026-08-01T21:45:00Z
-
-- **REQ-023 / SPEC-033 Instrument-faithful thicken + multi-work Discogs (anti-case):**
-
 ## Recent git commits
 
+- `9606691` 2026-08-02 Ship Discogs structure-first guide sheets
 - `5476efb` 2026-08-02 Ship identity freeze (SPEC-032) and listening hardenings across the fleet; refresh honeycomb.
 - `1d325d5` 2026-08-01 Ship knowledge discovery, dossier, and benchmark console; refresh fleet honeycomb.
 - `491b042` 2026-07-27 Ship authority source registry, OPS knowledge console, and refresh fleet honeycomb.
@@ -76,11 +84,11 @@ Generated at: `2026-08-02T07:26:47+00:00`
 - `555cf53` 2026-07-26 Ship listening product, mandatory harness, facility layout, and UTC/local time.
 - `93c0f6e` 2026-07-25 Add aulos-skills, aulos-ops, host deploy, and fleet operating defaults.
 - `7632d9b` 2026-07-25 Add aulos-web, aulos-api, and aulos-mcp sub-projects under aries-harness.
-- `0d5cb01` 2026-07-25 Initial commit: Aulos hackathon workspace with LangChain agent runtime.
 
 ## Working tree snapshot
 
 - `M` `aulos-agent/.aries_harness/INDEX.md`
+- `M` `aulos-agent/.aries_harness/JOURNAL.md`
 - `M` `aulos-agent/.aries_harness/history/DAILY_SUMMARY_INDEX.md`
 - `M` `aulos-agent/.aries_harness/history/DOC_TRACE.md`
 - `M` `aulos-agent/.aries_harness/history/README.md`
@@ -91,4 +99,3 @@ Generated at: `2026-08-02T07:26:47+00:00`
 - `M` `aulos-agent/.aries_harness/history/daily/2026-07-25.md`
 - `M` `aulos-agent/.aries_harness/history/daily/2026-07-26.md`
 - `M` `aulos-agent/.aries_harness/history/daily/2026-07-27.md`
-- `M` `aulos-agent/.aries_harness/history/daily/2026-08-01.md`

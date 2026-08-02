@@ -92,6 +92,8 @@ Mailgun, LLM keys, and other integration secrets are configured in the **Ops por
 
 **Grok (xAI) drop-in:** add `XAI_API_KEY=` to `.run/host.env` (see `deploy/host.env.example`), optionally set `AULOS_LLM_PROVIDER=grok`, then restart API. Model/base default to `grok-3-mini` / `https://api.x.ai/v1`. Same slot is editable under Ops → LLM providers → Grok.
 
+**AI Code Mirror (Codex relay) drop-in:** add `AICODEMIRROR_API_KEY=` to `.run/host.env`, then restart API. Defaults: model `gpt-5.5`, base `https://api.aicodemirror.ai/api/codex/backend-api/codex`, `wire_api=responses`. In Ops → LLM providers set **Review / critic** to **AI Code Mirror (Codex)** (and enable Intent Critic). Draft/review roles are Ops-canonical — env `AULOS_LLM_REVIEW_PROVIDER` only applies when `AULOS_LLM_ROLE_ENV_OVERRIDE=1`.
+
 ## Verification gates
 
 A deploy is **not complete** until:

@@ -42,6 +42,8 @@ class LlmProviderPublic(BaseModel):
     model: str
     base_url: str
     ready: bool
+    wire_api: str = "chat"
+    reasoning_effort: str | None = None
 
 
 class LlmModelOption(BaseModel):
@@ -58,6 +60,7 @@ class LlmConfigOut(BaseModel):
     ready_for_review: bool = False
     deepseek: LlmProviderPublic
     grok: LlmProviderPublic
+    aicodemirror: LlmProviderPublic
     supported_providers: list[str]
     model_options: dict[str, list[LlmModelOption]] = Field(default_factory=dict)
 
@@ -72,6 +75,10 @@ class LlmConfigUpdate(BaseModel):
     grok_api_key: str | None = None
     grok_model: str | None = None
     grok_base_url: str | None = None
+    aicodemirror_api_key: str | None = None
+    aicodemirror_model: str | None = None
+    aicodemirror_base_url: str | None = None
+    aicodemirror_reasoning_effort: str | None = None
 
 
 class LlmTestRequest(BaseModel):
@@ -111,6 +118,10 @@ def put_llm(
             grok_api_key=body.grok_api_key,
             grok_model=body.grok_model,
             grok_base_url=body.grok_base_url,
+            aicodemirror_api_key=body.aicodemirror_api_key,
+            aicodemirror_model=body.aicodemirror_model,
+            aicodemirror_base_url=body.aicodemirror_base_url,
+            aicodemirror_reasoning_effort=body.aicodemirror_reasoning_effort,
         )
     except ValueError as exc:
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=str(exc)) from exc
@@ -170,6 +181,17 @@ class WebResearchConfigOut(BaseModel):
     persist_global: bool = True
     max_sources: int = 10
     agent_reach_enabled: bool = True
+    program_deepen_mode: str = "fast"
+    program_deepen_max_works: int = 6
+    program_deepen_max_sources: int = 4
+    program_deepen_budget_seconds: int = 120
+    program_deepen_per_work_llm: bool = False
+    program_deepen_album_llm: bool = False
+    program_deepen_verify_sources: bool = False
+    program_deepen_agent_reach_enabled: bool = False
+    program_deepen_max_variants: int = 1
+    program_deepen_wikipedia_limit: int = 1
+    program_deepen_search_timeout: float = 5.0
 
 
 class WebResearchConfigUpdate(BaseModel):
@@ -181,6 +203,17 @@ class WebResearchConfigUpdate(BaseModel):
     persist_global: bool | None = None
     max_sources: int | None = None
     agent_reach_enabled: bool | None = None
+    program_deepen_mode: str | None = None
+    program_deepen_max_works: int | None = None
+    program_deepen_max_sources: int | None = None
+    program_deepen_budget_seconds: int | None = None
+    program_deepen_per_work_llm: bool | None = None
+    program_deepen_album_llm: bool | None = None
+    program_deepen_verify_sources: bool | None = None
+    program_deepen_agent_reach_enabled: bool | None = None
+    program_deepen_max_variants: int | None = None
+    program_deepen_wikipedia_limit: int | None = None
+    program_deepen_search_timeout: float | None = None
 
 
 @router.get("/web-research", response_model=WebResearchConfigOut)
@@ -207,6 +240,17 @@ def put_web_research(
         persist_global=body.persist_global,
         max_sources=body.max_sources,
         agent_reach_enabled=body.agent_reach_enabled,
+        program_deepen_mode=body.program_deepen_mode,
+        program_deepen_max_works=body.program_deepen_max_works,
+        program_deepen_max_sources=body.program_deepen_max_sources,
+        program_deepen_budget_seconds=body.program_deepen_budget_seconds,
+        program_deepen_per_work_llm=body.program_deepen_per_work_llm,
+        program_deepen_album_llm=body.program_deepen_album_llm,
+        program_deepen_verify_sources=body.program_deepen_verify_sources,
+        program_deepen_agent_reach_enabled=body.program_deepen_agent_reach_enabled,
+        program_deepen_max_variants=body.program_deepen_max_variants,
+        program_deepen_wikipedia_limit=body.program_deepen_wikipedia_limit,
+        program_deepen_search_timeout=body.program_deepen_search_timeout,
     )
     return WebResearchConfigOut(**cfg)
 
@@ -319,5 +363,4 @@ def put_ambient_fallback(
 ) -> AmbientFallbackOut:
     mode = save_ambient_fallback_mode(db, mode=body.mode)
     return AmbientFallbackOut(**public_ambient_fallback_config(db) | {"mode": mode})
-
 

@@ -8,10 +8,10 @@ managed_by: "aries-harness"
 fingerprint: "aries-harness/history-doc/v1"
 generated_by: "/aries-harness history-refresh"
 initialized_at: "2026-07-25T11:20:05Z"
-generated_at: "2026-08-02T07:26:47+00:00"
+generated_at: "2026-08-02T10:06:32+00:00"
 effective_status: "generated"
-effective_since: "2026-08-02T07:26:47+00:00"
-content_fingerprint: "sha256:1854881f9691e4d4393604fe25eee7a93d38b2f6be5664b5b3105b0eaaa4bc3c"
+effective_since: "2026-08-02T10:06:32+00:00"
+content_fingerprint: "sha256:2fc544f93508ba7502db1ec6b95064a0ef14cc1d35cae0b9bb267882e866b6f6"
 trace_history_source: "filesystem-only"
 trace_last_commit_sha: ""
 trace_last_commit_at: ""
@@ -19,26 +19,26 @@ trace_revision_count: "0"
 ---
 # Current Status
 
-Generated at: `2026-08-02T07:26:47+00:00`
+Generated at: `2026-08-02T10:06:32+00:00`
 
 ## Current phase
 
-- SPEC-034 Slice G deployed to production: multi-work guides now emit work
+- SPEC-034 Slice H deployed: production guide #60 RCA confirmed the perceived
 
 ## Branch and workspace
 
 - no branch or workspace details recorded
 - git branch: main
-- HEAD: `5476efb` Ship identity freeze (SPEC-032) and listening hardenings across the fleet; refresh honeycomb.
+- HEAD: `9606691` Ship Discogs structure-first guide sheets
 - working tree: dirty
 - change: `M` `aulos-agent/.aries_harness/INDEX.md`
+- change: `M` `aulos-agent/.aries_harness/JOURNAL.md`
 - change: `M` `aulos-agent/.aries_harness/history/DAILY_SUMMARY_INDEX.md`
 - change: `M` `aulos-agent/.aries_harness/history/DOC_TRACE.md`
 - change: `M` `aulos-agent/.aries_harness/history/README.md`
 - change: `M` `aulos-agent/.aries_harness/history/RETROSPECTIVE.md`
 - change: `M` `aulos-agent/.aries_harness/history/ROADMAP.md`
 - change: `M` `aulos-agent/.aries_harness/history/STATUS.md`
-- change: `M` `aulos-agent/.aries_harness/history/TIMELINE.md`
 
 ## Current milestone
 
@@ -67,12 +67,14 @@ Generated at: `2026-08-02T07:26:47+00:00`
 - verification command: unit (promote staging / SPEC-030): `cd aulos-skills && .venv/bin/python -m pytest tests/test_promote_staging.py -q` ；`cd aulos-api && .venv/bin/python -m pytest tests/test_promote_stage_api.py -q`
 - verification command: unit (dimensional promote / SPEC-031): `cd aulos-skills && .venv/bin/python -m pytest tests/test_dimensional_promote.py -q` ；`cd aulos-api && .venv/bin/python -m pytest tests/test_promote_production_api.py -q`
 - verification command: unit (Discogs release-structure-first / SPEC-034): `cd aulos-skills && .venv/bin/pytest -q tests/test_release_structure.py tests/test_program_deepen.py tests/test_runtime.py`; render/identity adjunct: `cd aulos-skills && .venv/bin/pytest -q tests/test_identity_hygiene.py tests/test_intake_i18n.py tests/test_media_search.py`; consumer gate: `cd aulos-api && PYTHONPATH=. .venv/bin/pytest -q tests/test_discogs.py tests/test_listening_jobs.py tests/test_diary_guides.py`
+- verification command: unit (SPEC-034 Slice H latency / instrument drift): `cd aulos-skills && .venv/bin/pytest -q tests/test_program_deepen.py tests/test_instrument_faithful_thicken.py`; API budget gate: `cd aulos-api && .venv/bin/pytest -q tests/test_web_research_partial.py`
 - verification command: unit (media API): `cd aulos-api && .venv/bin/python -m pytest tests/test_media.py -q`
 - verification command: media smoke: `curl -sI 'http://127.0.0.1:5090/v1/media/audio?src=<urlencoded-commons-url>&mode=cache' | grep -i content-disposition` → must contain `inline`
 - verification command: live parity: recompose Goldberg + one cold-path Chinese work; assert bilingual + ambient in `guide_html`
 
 ## Next action
 
+- Do not loosen `ambient_ok=false`; recompose guide #60 only after a
 - Optional: recompose guide #59 and multi-work / non-piano concerto Discogs
 - Optional: expand dimension **voice tables** and form_lock aliens from live Discogs facet histograms — still dimensional, never per-work craft.
 - Optional: knowledge-plane auto-thicken after promote-production (composer stub → dossier job).

@@ -21,11 +21,7 @@ import {
   fetchDiscogsConfig,
   fetchKnowledgeStats,
   resendUserVerification,
-  testLlmProvider,
   testMailgun,
-  updateLlmConfig,
-  updateListeningReviewConfig,
-  updateAmbientFallbackConfig,
   updateEmbedConfig,
   updateWebResearchConfig,
   updateDiscogsConfig,
@@ -52,6 +48,7 @@ import { GuideQualityPanel } from './GuideQualityPanel'
 import { DbHaPanel } from './DbHaPanel'
 import { DevBlogPanel } from './DevBlogPanel'
 import { TaskQueuePanel } from './TaskQueuePanel'
+import { LlmSettingsPanel } from './LlmSettingsPanel'
 import { PasswordField } from './PasswordField'
 import { formatDateTime, formatTime } from './time'
 import {
@@ -67,71 +64,6 @@ import './App.css'
 
 const PENDING_SCENE: OpsSessionScene | null =
   typeof window === 'undefined' ? null : consumeOpsScene()
-
-const FALLBACK_MODEL_OPTIONS: Record<string, { id: string; label: string }[]> = {
-  deepseek: [
-    { id: 'deepseek-chat', label: 'deepseek-chat (V3 — general)' },
-    { id: 'deepseek-reasoner', label: 'deepseek-reasoner (R1 — thinking)' },
-    { id: 'deepseek-v4-pro', label: 'deepseek-v4-pro' },
-    { id: 'deepseek-v4-flash', label: 'deepseek-v4-flash' },
-    { id: 'deepseek-coder', label: 'deepseek-coder' },
-  ],
-  grok: [
-    { id: 'grok-3-mini', label: 'grok-3-mini (fast / cheap)' },
-    { id: 'grok-3', label: 'grok-3' },
-    { id: 'grok-3-fast', label: 'grok-3-fast' },
-    { id: 'grok-4', label: 'grok-4' },
-    { id: 'grok-4-0709', label: 'grok-4-0709' },
-    { id: 'grok-2-1212', label: 'grok-2-1212' },
-    { id: 'grok-2-vision-1212', label: 'grok-2-vision-1212' },
-  ],
-}
-
-function ProviderModelSelect({
-  id,
-  value,
-  options,
-  onChange,
-}: {
-  id: string
-  value: string
-  options: { id: string; label: string }[]
-  onChange: (next: string) => void
-}) {
-  const known = options.some((o) => o.id === value)
-  const selectValue = known ? value : '__custom__'
-  return (
-    <div className="llm-model-picker">
-      <select
-        id={id}
-        value={selectValue}
-        onChange={(e) => {
-          const next = e.target.value
-          if (next === '__custom__') {
-            onChange(known ? '' : value)
-            return
-          }
-          onChange(next)
-        }}
-      >
-        {options.map((o) => (
-          <option key={o.id} value={o.id}>
-            {o.label}
-          </option>
-        ))}
-        <option value="__custom__">Custom model id…</option>
-      </select>
-      {selectValue === '__custom__' ? (
-        <input
-          aria-label="Custom model id"
-          value={value}
-          onChange={(e) => onChange(e.target.value)}
-          placeholder="provider-model-id"
-        />
-      ) : null}
-    </div>
-  )
-}
 
 function App() {
   const [user, setUser] = useState<User | null>(null)
@@ -151,18 +83,7 @@ function App() {
   const [mailgun, setMailgun] = useState<MailgunConfig | null>(null)
   const [llm, setLlm] = useState<LlmConfig | null>(null)
   const [listeningReview, setListeningReview] = useState<ListeningReviewConfig | null>(null)
-  const [reviewLlmEnabled, setReviewLlmEnabled] = useState(true)
   const [ambientFallback, setAmbientFallback] = useState<AmbientFallbackConfig | null>(null)
-  const [ambientFallbackMode, setAmbientFallbackMode] = useState<'embed' | 'stream'>('embed')
-  const [llmActive, setLlmActive] = useState('fake')
-  const [llmDraftProvider, setLlmDraftProvider] = useState('deepseek')
-  const [llmReviewProvider, setLlmReviewProvider] = useState('grok')
-  const [deepseekKey, setDeepseekKey] = useState('')
-  const [deepseekModel, setDeepseekModel] = useState('deepseek-chat')
-  const [deepseekBase, setDeepseekBase] = useState('https://api.deepseek.com')
-  const [grokKey, setGrokKey] = useState('')
-  const [grokModel, setGrokModel] = useState('grok-3-mini')
-  const [grokBase, setGrokBase] = useState('https://api.x.ai/v1')
   const [embed, setEmbed] = useState<EmbedConfig | null>(null)
   const [embedProvider, setEmbedProvider] = useState('local')
   const [embedKey, setEmbedKey] = useState('')
@@ -300,30 +221,17 @@ function App() {
     setApiKey('')
     const llmCfg = await fetchLlmConfig()
     setLlm(llmCfg)
-    setLlmActive(llmCfg.active_provider)
-    setLlmDraftProvider(llmCfg.draft_provider || 'deepseek')
-    setLlmReviewProvider(llmCfg.review_provider || 'grok')
-    setDeepseekModel(llmCfg.deepseek.model)
-    setDeepseekBase(llmCfg.deepseek.base_url)
-    setGrokModel(llmCfg.grok.model)
-    setGrokBase(llmCfg.grok.base_url)
-    setDeepseekKey('')
-    setGrokKey('')
     try {
       const rev = await fetchListeningReviewConfig()
       setListeningReview(rev)
-      setReviewLlmEnabled(rev.enabled)
     } catch {
       setListeningReview(null)
-      setReviewLlmEnabled(true)
     }
     try {
       const amb = await fetchAmbientFallbackConfig()
       setAmbientFallback(amb)
-      setAmbientFallbackMode(amb.mode === 'stream' ? 'stream' : 'embed')
     } catch {
       setAmbientFallback(null)
-      setAmbientFallbackMode('embed')
     }
     try {
       const emb = await fetchEmbedConfig()
@@ -402,41 +310,6 @@ function App() {
       setNotice('Signed in as superadmin.')
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Login failed')
-    } finally {
-      setBusy(false)
-    }
-  }
-
-  async function onSaveLlm(event: FormEvent) {
-    event.preventDefault()
-    setBusy(true)
-    setError(null)
-    setNotice(null)
-    try {
-      const cfg = await updateLlmConfig({
-        active_provider: llmActive,
-        draft_provider: llmDraftProvider,
-        review_provider: llmReviewProvider,
-        deepseek_api_key: deepseekKey.trim() || undefined,
-        deepseek_model: deepseekModel.trim(),
-        deepseek_base_url: deepseekBase.trim(),
-        grok_api_key: grokKey.trim() || undefined,
-        grok_model: grokModel.trim(),
-        grok_base_url: grokBase.trim(),
-      })
-      setLlm(cfg)
-      setDeepseekKey('')
-      setGrokKey('')
-      const rev = await updateListeningReviewConfig({ enabled: reviewLlmEnabled })
-      setListeningReview(rev)
-      const amb = await updateAmbientFallbackConfig({ mode: ambientFallbackMode })
-      setAmbientFallback(amb)
-      setNotice(
-        `LLM saved. Active=${cfg.active_provider}; draft=${cfg.draft_provider}/${cfg.ready_for_draft ? 'ready' : 'not ready'}; review=${cfg.review_provider}/${cfg.ready_for_review ? 'ready' : 'not ready'}. Review LLM=${rev.enabled ? 'on' : 'off'}. Ambient=${amb.mode}.`,
-      )
-      await refreshOverview()
-    } catch (err) {
-      setError(err instanceof Error ? err.message : 'LLM save failed')
     } finally {
       setBusy(false)
     }
@@ -527,36 +400,6 @@ function App() {
       )
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Discogs save failed')
-    } finally {
-      setBusy(false)
-    }
-  }
-
-  async function onTestLlm(provider?: string) {
-    setBusy(true)
-    setError(null)
-    setNotice(null)
-    try {
-      await updateLlmConfig({
-        active_provider: llmActive,
-        draft_provider: llmDraftProvider,
-        review_provider: llmReviewProvider,
-        deepseek_api_key: deepseekKey.trim() || undefined,
-        deepseek_model: deepseekModel.trim(),
-        deepseek_base_url: deepseekBase.trim(),
-        grok_api_key: grokKey.trim() || undefined,
-        grok_model: grokModel.trim(),
-        grok_base_url: grokBase.trim(),
-      })
-      const result = await testLlmProvider(provider)
-      setNotice(result.detail)
-      const cfg = await fetchLlmConfig()
-      setLlm(cfg)
-      setDeepseekKey('')
-      setGrokKey('')
-      await refreshOverview()
-    } catch (err) {
-      setError(err instanceof Error ? err.message : 'LLM test failed')
     } finally {
       setBusy(false)
     }
@@ -1016,184 +859,37 @@ function App() {
             ) : null}
 
             {tab === 'llm' ? (
-              <section className="settings llm" aria-labelledby="llm-title">
-                <h2 id="llm-title">LLM providers</h2>
-                <p className="settings-lead">
-                  Active: <strong>{llm?.active_provider ?? '…'}</strong>
-                  {' · '}
-                  draft=<strong>{llm?.draft_provider ?? 'deepseek'}</strong>
-                  {llm?.ready_for_draft ? ' ✓' : ' ✗'}
-                  {' · '}
-                  review=<strong>{llm?.review_provider ?? 'grok'}</strong>
-                  {llm?.ready_for_review ? ' ✓' : ' ✗'}
-                  {' · '}
-                  DeepSeek {llm?.deepseek.api_key_set ? 'key set' : 'key missing'}
-                  {' · '}
-                  Grok {llm?.grok.api_key_set ? 'key set' : 'key missing'}
-                </p>
-                <form className="auth-form" onSubmit={onSaveLlm}>
-                  <label htmlFor="llm-active">Active provider (chat)</label>
-                  <select
-                    id="llm-active"
-                    value={llmActive}
-                    onChange={(e) => setLlmActive(e.target.value)}
-                  >
-                    <option value="fake">fake (echo / offline)</option>
-                    <option value="deepseek">DeepSeek</option>
-                    <option value="grok">Grok (xAI)</option>
-                  </select>
-
-                  <label htmlFor="llm-draft">Draft / author provider (初稿)</label>
-                  <select
-                    id="llm-draft"
-                    value={llmDraftProvider}
-                    onChange={(e) => setLlmDraftProvider(e.target.value)}
-                  >
-                    <option value="deepseek">DeepSeek</option>
-                    <option value="grok">Grok (xAI)</option>
-                  </select>
-                  <label htmlFor="llm-review">Review provider (多 Agent 审稿)</label>
-                  <select
-                    id="llm-review"
-                    value={llmReviewProvider}
-                    onChange={(e) => setLlmReviewProvider(e.target.value)}
-                  >
-                    <option value="grok">Grok (xAI)</option>
-                    <option value="deepseek">DeepSeek</option>
-                  </select>
-                  <p className="settings-lead">
-                    Multi-agent default: draft=DeepSeek, review=Grok. Review must not share the
-                    author model (anti rubber-stamp). Revise repairs still use the draft provider.
-                  </p>
-
-                  <h3>DeepSeek</h3>
-                  <label htmlFor="ds-model">Model</label>
-                  <ProviderModelSelect
-                    id="ds-model"
-                    value={deepseekModel}
-                    options={llm?.model_options?.deepseek ?? FALLBACK_MODEL_OPTIONS.deepseek}
-                    onChange={setDeepseekModel}
-                  />
-                  <label htmlFor="ds-base">Base URL</label>
-                  <input
-                    id="ds-base"
-                    value={deepseekBase}
-                    onChange={(e) => setDeepseekBase(e.target.value)}
-                    placeholder="https://api.deepseek.com"
-                  />
-                  <label htmlFor="ds-key">API key</label>
-                  <PasswordField
-                    id="ds-key"
-                    autoComplete="off"
-                    secretLabel="API key"
-                    value={deepseekKey}
-                    onChange={(e) => setDeepseekKey(e.target.value)}
-                    placeholder={
-                      llm?.deepseek.api_key_set ? '•••••••• (leave blank to keep)' : 'sk-...'
+              <div className="llm-tab-stack">
+                <LlmSettingsPanel
+                  busy={busy}
+                  setBusy={setBusy}
+                  setError={setError}
+                  setNotice={setNotice}
+                  onAfterChange={async () => {
+                    const cfg = await fetchLlmConfig()
+                    setLlm(cfg)
+                    try {
+                      setListeningReview(await fetchListeningReviewConfig())
+                    } catch {
+                      /* keep prior */
                     }
-                  />
+                    try {
+                      setAmbientFallback(await fetchAmbientFallbackConfig())
+                    } catch {
+                      /* keep prior */
+                    }
+                    await refreshOverview()
+                  }}
+                  initialLlm={llm}
+                  initialReview={listeningReview}
+                  initialAmbient={ambientFallback}
+                />
 
-                  <h3>Grok (xAI)</h3>
-                  <label htmlFor="gx-model">Model</label>
-                  <ProviderModelSelect
-                    id="gx-model"
-                    value={grokModel}
-                    options={llm?.model_options?.grok ?? FALLBACK_MODEL_OPTIONS.grok}
-                    onChange={setGrokModel}
-                  />
-                  <label htmlFor="gx-base">Base URL</label>
-                  <input
-                    id="gx-base"
-                    value={grokBase}
-                    onChange={(e) => setGrokBase(e.target.value)}
-                    placeholder="https://api.x.ai/v1"
-                  />
-                  <label htmlFor="gx-key">API key</label>
-                  <PasswordField
-                    id="gx-key"
-                    autoComplete="off"
-                    secretLabel="API key"
-                    value={grokKey}
-                    onChange={(e) => setGrokKey(e.target.value)}
-                    placeholder={llm?.grok.api_key_set ? '•••••••• (leave blank to keep)' : 'xai-...'}
-                  />
-
-                  <h3>Adversarial review (SPEC-018)</h3>
-                  <p className="settings-lead">
-                    Deterministic IntentLock review always runs. This switch gates the optional LLM
-                    Critic after synthesize/compose ({listeningReview?.key ?? 'listening.review_llm'}).
-                  </p>
-                  <label htmlFor="review-llm" className="checkbox-row">
-                    <input
-                      id="review-llm"
-                      type="checkbox"
-                      checked={reviewLlmEnabled}
-                      onChange={(e) => setReviewLlmEnabled(e.target.checked)}
-                    />{' '}
-                    Enable LLM Intent Critic (listening.review_llm)
-                  </label>
-
-                  <h3>Ambient fallback (SPEC-006)</h3>
-                  <p className="settings-lead">
-                    When no work-matched open recording exists, choose platform fallback
-                    ({ambientFallback?.key ?? 'listening.ambient_fallback_mode'}). Default is
-                    official Embed (compliance-first). Stream uses optional server-side yt-dlp.
-                  </p>
-                  <label htmlFor="ambient-fallback-embed" className="checkbox-row">
-                    <input
-                      id="ambient-fallback-embed"
-                      type="radio"
-                      name="ambient-fallback"
-                      checked={ambientFallbackMode === 'embed'}
-                      onChange={() => setAmbientFallbackMode('embed')}
-                    />{' '}
-                    Official Embed (YouTube / Bilibili)
-                  </label>
-                  <label htmlFor="ambient-fallback-stream" className="checkbox-row">
-                    <input
-                      id="ambient-fallback-stream"
-                      type="radio"
-                      name="ambient-fallback"
-                      checked={ambientFallbackMode === 'stream'}
-                      onChange={() => setAmbientFallbackMode('stream')}
-                    />{' '}
-                    Server stream extract (ops opt-in; ToS / fragility risk)
-                  </label>
-
-                  <button type="submit" disabled={busy}>
-                    {busy ? 'Saving…' : 'Save LLM settings'}
-                  </button>
-                </form>
-                <div className="llm-test-actions">
-                  <button
-                    type="button"
-                    className="refresh"
-                    disabled={busy}
-                    onClick={() => void onTestLlm(llmActive)}
-                  >
-                    Test active provider
-                  </button>
-                  <button
-                    type="button"
-                    className="refresh"
-                    disabled={busy}
-                    onClick={() => void onTestLlm('deepseek')}
-                  >
-                    Test DeepSeek
-                  </button>
-                  <button
-                    type="button"
-                    className="refresh"
-                    disabled={busy}
-                    onClick={() => void onTestLlm('grok')}
-                  >
-                    Test Grok
-                  </button>
-                </div>
-
-                <h2 id="embed-title" style={{ marginTop: '2rem' }}>
-                  Embeddings (RAG)
-                </h2>
+                <section
+                  className="settings llm-integrations"
+                  aria-labelledby="embed-title"
+                >
+                  <h2 id="embed-title">Embeddings (RAG)</h2>
                 <p className="settings-lead">
                   provider=<strong>{embed?.provider ?? '…'}</strong>
                   {' · '}
@@ -1353,7 +1049,8 @@ function App() {
                   </button>{' '}
                   tab.
                 </p>
-              </section>
+                </section>
+              </div>
             ) : null}
 
             {tab === 'discogs' ? (

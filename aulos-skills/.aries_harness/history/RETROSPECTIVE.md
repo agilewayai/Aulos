@@ -8,10 +8,10 @@ managed_by: "aries-harness"
 fingerprint: "aries-harness/history-doc/v1"
 generated_by: "/aries-harness history-refresh"
 initialized_at: "2026-07-25T11:20:05Z"
-generated_at: "2026-08-02T07:26:47+00:00"
+generated_at: "2026-08-02T10:06:32+00:00"
 effective_status: "generated"
-effective_since: "2026-08-02T07:26:47+00:00"
-content_fingerprint: "sha256:039255257baece086662c9a8a3d8cc6c6b9fc8d0d94048b585694f57ff8f7414"
+effective_since: "2026-08-02T10:06:32+00:00"
+content_fingerprint: "sha256:9ce2cad3651a6fdd004c0fbc0360011478ce726233250ff9f4be94f9f19d600a"
 trace_history_source: "filesystem-only"
 trace_last_commit_sha: ""
 trace_last_commit_at: ""
@@ -19,27 +19,27 @@ trace_revision_count: "0"
 ---
 # Retrospective Snapshot
 
-Generated at: `2026-08-02T07:26:47+00:00`
+Generated at: `2026-08-02T10:06:32+00:00`
 
 ## Recent changes
 
-- **Production deploy — SPEC-034 Slice G:** operator requested production deploy,
-- Evidence memo:
-- Verify: `bash deploy/aulos-ctl.sh doctor` passed; `bash
-- **SPEC-034 Slice G / multi-work sheet mode:** Root cause was plural program data
-- Compose/render upgrade: `render_bilingual_guide_html` now renders sheet tabs
-- Skill bumps: `aulos-listening-synthesize` 0.2.1 and
+- Deployed SPEC-034 Slice H to production with `bash deploy/aulos-ctl.sh deploy`;
+- Ran separate post-deploy `bash deploy/aulos-ctl.sh smoke` and
+- PostgreSQL-only RCA evidence for guide #60 remains: `program.deepen_loop`
+- SPEC-034 Slice H: production PostgreSQL guide #60 RCA completed for
+- Finding: perceived third-step latency was not `g.rag`; PG trace shows
+- Skills fix: program fan-in parses JSON notes before prose, emits deterministic
 
 ## What is working
 
-- **Production deploy — SPEC-034 Slice G:** operator requested production deploy,
-- Evidence memo:
-- Verify: `bash deploy/aulos-ctl.sh doctor` passed; `bash
-- **SPEC-034 Slice G / multi-work sheet mode:** Root cause was plural program data
+- Deployed SPEC-034 Slice H to production with `bash deploy/aulos-ctl.sh deploy`;
+- Ran separate post-deploy `bash deploy/aulos-ctl.sh smoke` and
+- PostgreSQL-only RCA evidence for guide #60 remains: `program.deepen_loop`
+- SPEC-034 Slice H: production PostgreSQL guide #60 RCA completed for
 
 ## What needs attention
 
-- working tree is dirty with 196 tracked or untracked change(s)
+- working tree is dirty with 144 tracked or untracked change(s)
 - no explicit next-up slice is recorded
 
 ## Durable reminders

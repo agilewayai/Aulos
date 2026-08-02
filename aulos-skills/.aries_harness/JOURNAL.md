@@ -10,13 +10,43 @@ generated_by: "/aries-harness init"
 initialized_at: "2026-07-25T11:20:05Z"
 effective_status: "active"
 effective_since: "2026-07-25T11:20:05Z"
-content_fingerprint: "sha256:045c5531926c170c9650d0e88988969276bf22882d5ac8d9fd7830d92dba5f8c"
+content_fingerprint: "sha256:91cbf31f5aa2a7ee9de98cde1d6b6ae241e8260f3f6194a1656c7946749927a2"
 trace_history_source: "filesystem-only"
 trace_last_commit_sha: ""
 trace_last_commit_at: ""
 trace_revision_count: "0"
 ---
 # Journal
+
+## 2026-08-02T10:02:45Z
+
+- Deployed SPEC-034 Slice H to production with `bash deploy/aulos-ctl.sh deploy`;
+  script-built web/ops, restarted systemd user services, applied k3s ingress,
+  and ran local/public smoke green.
+- Ran separate post-deploy `bash deploy/aulos-ctl.sh smoke` and
+  `bash deploy/aulos-ctl.sh status`; API/web/ops/knowledge active, public
+  health green, DB HA reports `active_role=primary`, `primary_ok=true`,
+  `failover_ok=true`.
+- PostgreSQL-only RCA evidence for guide #60 remains: `program.deepen_loop`
+  was the slow stage (~711.6s), `rag` was immediate after structure, and final
+  failed status is still `eval_pass=false; ambient_ok=false`.
+- Deploy evidence recorded in
+  `runs/deployments/DEPLOY-2026-08-02-spec-034-slice-h-production.md`.
+
+## 2026-08-02T09:44:23Z
+
+- SPEC-034 Slice H: production PostgreSQL guide #60 RCA completed for
+  `/discogs #7083684` Hummel / Weber / Haydn piano-flute-cello trios.
+- Finding: perceived third-step latency was not `g.rag`; PG trace shows
+  `g.program` about 711.6s and album `g.llm` about 174.6s.
+- Skills fix: program fan-in parses JSON notes before prose, emits deterministic
+  identity floors for raw-web-only work sheets, and recognizes German/EU
+  instrument terms so Klavier / Flöte / Violoncello is not false-flagged.
+- Skill bumps: `aulos-listening-synthesize` 0.2.2 and
+  `aulos-listening-eval` 0.3.1.
+- Tests: `tests/test_program_deepen.py tests/test_instrument_faithful_thicken.py`
+  green (20 passed). RCA:
+  `runs/reports/RCA-2026-08-02-guide-60-program-deepen-budget.md`.
 
 ## 2026-08-02T07:24:00Z
 
